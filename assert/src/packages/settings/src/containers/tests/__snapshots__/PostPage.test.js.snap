@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Post Page should render correctly 1`] = `
+<div>
+  <table
+    className="settings-content"
+  >
+    <tbody>
+      <tr>
+        <th>
+          Add thumbnail to post
+        </th>
+        <td>
+          <Switch
+            active={true}
+            className="settings-switch parse-pictures"
+            fieldName="addThumbnail"
+            onClick={[MockFunction]}
+          />
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Parse all pictures
+        </th>
+        <td>
+          <Switch
+            active={false}
+            className="settings-switch download-pictures"
+            fieldName="downloadPictures"
+            onClick={[MockFunction]}
+          />
+          <p
+            className="description"
+          >
+            Parsed pictures urls will be add to your post body. More
+            <a
+              href="#"
+            >
+              info
+            </a>
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table
+    className="sub-settings-content hidden"
+  >
+    <tbody>
+      <tr>
+        <th>
+          Show select pictures dialog
+        </th>
+        <td>
+          <Switch
+            active={true}
+            className="settings-switch download-pictures"
+            fieldName="downloadPictures"
+            onClick={[MockFunction]}
+          />
+          <p
+            className="description"
+          >
+            Parsed pictures urls will be add to your post body. More
+            <a
+              href="#"
+            >
+              info
+            </a>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Maximum Pictures to add
+        </th>
+        <td>
+          <InputField
+            className="settings-class-container"
+            fieldName="MaxPictures"
+            onBlur={[MockFunction]}
+            onEnterPress={[MockFunction]}
+            value={5}
+          />
+          <p
+            className="description"
+          >
+            You can specify maximum number of pictures to add to your post.
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

@@ -1,0 +1,23 @@
+
+.icon-heart-empty:before { content: '\e81a'; } /* '' */
+.icon-cancel:before { content: '\e82b'; } /* '' */
+.icon-eye:before { content: '\e848'; } /* '' */
+.icon-edit:before { content: '\e855'; } /* '' */
+.icon-left-open:before { content: '\e87b'; } /* '' */
+.icon-right-open:before { content: '\e87c'; } /* '' */
+.icon-up-open:before { content: '\e87d'; } /* '' */
+.icon-floppy:before { content: '\e8bc'; } /* '' */
+.icon-menu-1:before { content: '\e8d3'; } /* '' */
+.icon-info-1:before { content: '\e8e0'; } /* '' */
+.icon-clock:before { content: '\e924'; } /* '' */
+.icon-down-open-1:before { content: '\e935'; } /* '' */
+.icon-warning-empty:before { content: '\ea0e'; } /* '' */
+.icon-cancel-5:before { content: '\ec08'; } /* '' */
+.icon-art-gallery:before { content: '\ec2c'; } /* '' */
+.icon-search-7:before { content: '\ee00'; } /* '' */
+.icon-comment-6:before { content: '\ee0e'; } /* '' */
+.icon-ok-6:before { content: '\ee3a'; } /* '' */
+.icon-download-5:before { content: '\f02e'; } /* '' */
+.icon-wordpress:before { content: '\f19a'; } /* '' */
+.icon-share:before { content: '\f1e0'; } /* '' */
+.icon-newspaper:before { content: '\f1ea'; } /* '' */

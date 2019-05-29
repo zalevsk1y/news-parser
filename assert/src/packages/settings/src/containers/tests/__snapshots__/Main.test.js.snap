@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Main should render correctly 1`] = `
+<div
+  className="wrap wrap-parsing"
+>
+  <Connect(Message) />
+  <div
+    className="parsing-title"
+  >
+    <h1>
+      Settings
+    </h1>
+  </div>
+   
+  <div
+    className="settings-main-tabs"
+  >
+    <bound createTabs
+      tabs={
+        Array [
+          Object {
+            "className": "general",
+            "name": "General",
+            "status": true,
+          },
+          Object {
+            "className": "post",
+            "name": "Post",
+            "status": false,
+          },
+        ]
+      }
+    />
+  </div>
+   
+  <div
+    className="settings-container"
+  >
+    <renderPage
+      name="General"
+    />
+  </div>
+  <Button
+    action="save"
+    className="button-primary"
+    onClick={[Function]}
+    value="Save Settings"
+  />
+  <Button
+    action="reset"
+    className="button-secondary"
+    onClick={[Function]}
+    value="Reset Settings"
+  />
+</div>
+`;

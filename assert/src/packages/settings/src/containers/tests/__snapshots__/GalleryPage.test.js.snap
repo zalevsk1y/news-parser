@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Gallery Page should render correctly 1`] = `
+<div>
+  <table
+    className="settings-content"
+  >
+    <tbody>
+      <tr>
+        <th>
+          Add Gallery to post.
+        </th>
+        <td>
+          <Switch
+            active={false}
+            className="settings-switch add-gallery"
+            fieldName="addGallery"
+            onClick={[MockFunction]}
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table
+    className="sub-settings-content hidden"
+  >
+    <tbody>
+      <tr>
+        <th>
+          Shortcode for gallery
+        </th>
+        <td>
+          <Input
+            className="settings-shortcode"
+            fieldName="shortCode"
+            onBlur={[MockFunction]}
+          />
+          <p
+            className="description"
+          >
+            You can add short code for additional gallery plugin.More 
+            <a
+              href="#"
+            >
+              info
+            </a>
+            .
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Parameter name for gallery
+        </th>
+        <td>
+          <Input
+            className="settings-parameter-name"
+            fieldName="parameterName"
+            onBlur={[MockFunction]}
+          />
+          <p
+            className="description"
+          >
+            You can specify name of parameter for pictures IDs.More 
+            <a
+              href="#"
+            >
+              info
+            </a>
+            .
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
