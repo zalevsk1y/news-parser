@@ -3,12 +3,6 @@
 exports[`Message should render message that match snapshot 1`] = `
 <div
   className="message container row "
-  style={
-    Object {
-      "marginLeft": "135px",
-      "width": "1080px",
-    }
-  }
 >
   <div
     className="message-content"

@@ -7,7 +7,7 @@ describe('Indicator',()=>{
     const component=create(<Indicator isAnimate={false}/>);
     const indicator=component.root.findByType('span');
     it('should  not show and animate indicator when isAnimate prop is false',()=>{
-        expect(indicator.props.style).toEqual({"left": "-90%", "opacity": 0})
+        expect(indicator.props.style).toEqual({"left": "-90%", "opacity": 0,"top":false})
     });
     it ('should animate indicator when isAnimate prop is true',()=>{
         const instance=component.getInstance();
@@ -20,7 +20,7 @@ describe('Indicator',()=>{
             }
         };
         component.update(<Indicator isAnimate={true} step={0.5}/>)
-        expect(indicator.props.style).toEqual({"left": "-87.5%", "opacity": 1})
+        expect(indicator.props.style).toEqual({"left": "-87.5%", "opacity": 1,"top":false})
     })
    
 })

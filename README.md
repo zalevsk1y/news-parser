@@ -4,7 +4,6 @@
 
 
 
-
 ### Features
 
 *   Clean Design.
@@ -19,7 +18,6 @@
 This will download the latest developer copy of News-parser.
 
 ## How to use this plugin?
-
 
 
 
