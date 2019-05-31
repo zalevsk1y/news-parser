@@ -1,0 +1,79 @@
+# Copyright (C) 2019 Evgeny S.Zalevskiy <2600@ukr.net>
+# This file is distributed under the same license as the News Parser plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: News Parser 0.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/news-parser\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2019-05-31T17:21:25+03:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.2.0\n"
+"X-Domain: news-parser\n"
+
+#. Plugin Name of the plugin
+msgid "News Parser"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "http://bestplugin.com"
+msgstr ""
+
+#. Description of the plugin
+msgid "Parse full text news from RSS Feed"
+msgstr ""
+
+#. Author of the plugin
+msgid "Evgeny S.Zalevskiy <2600@ukr.net>"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://github.com/zalevsk1y/"
+msgstr ""
+
+#: inc/Models/PostModel.php:53
+msgid "Source"
+msgstr ""
+
+#: inc/Message/Errors.php:8
+msgid "Sorry XML file cannot be downloaded"
+msgstr ""
+
+#: inc/Message/Errors.php:10
+msgid "Sorry XML file has wrong format"
+msgstr ""
+
+#: inc/Message/Errors.php:12
+msgid "Sorry some internal error.Try again later"
+msgstr ""
+
+#: inc/Message/Errors.php:14
+msgid "Sorry, post was not created for some reasons."
+msgstr ""
+
+#: inc/Message/Errors.php:16
+msgid "Some program error has occurred"
+msgstr ""
+
+#: inc/Message/Errors.php:18
+msgid "No Title"
+msgstr ""
+
+#: inc/Message/Errors.php:20
+msgid "No Body"
+msgstr ""
+
+#: inc/Message/Errors.php:22
+msgid "Sorry temporary settings cannot be saved"
+msgstr ""
+
+#: inc/Message/Success.php:9
+msgid "XML File successfully parsed."
+msgstr ""
+
+#: inc/Message/Success.php:11
+msgid "Post was successful saved as 'draft'."
+msgstr ""

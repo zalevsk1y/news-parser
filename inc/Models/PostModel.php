@@ -15,9 +15,9 @@ class PostModel implements ModelInterface{
     public $links=array();
 
     public function __construct($data){
-        if(!$data['title']) throw new MyException (Errors::NO_TITLE);
+        if(!$data['title']) throw new MyException (Errors::text('NO_TITLE'));
         $this->title=$data['title'];
-        if(!$data['body']) throw new MyException (Errors::NO_BODY);
+        if(!$data['body']) throw new MyException (Errors::text('NO_BODY'));
         $this->body=$data['body'];
         $this->image=$data['image'];
         $this->gallery=$data['gallery'];
@@ -28,7 +28,7 @@ class PostModel implements ModelInterface{
     public function createDraft(){
         $this->postId=$this->createPostWordPress();  
         if ($this->postId == 0) {
-            throw new MyException(Errors::POST_WAS_NOT_CREATED);
+            throw new MyException(Errors::text('POST_WAS_NOT_CREATED'));
         }
         $this->getPostLinksWordpress();
         $this->status='draft';
@@ -50,7 +50,7 @@ class PostModel implements ModelInterface{
         $this->gallery['ids']=$img_ids_array;
     }
     public function addSource(){
-        $this->body.='<br> <a href="'.$this->data['link'].'">'.__('Source').'</a>';
+        $this->body.='<br> <a href="'.$this->data['link'].'">'.__('Source','news-parser').'</a>';
         $this->updatePostWordPress('post_content',$this->body);
     }
     public function getAttributes($format='array'){

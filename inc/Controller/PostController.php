@@ -56,7 +56,7 @@ class PostController implements ControllerInterface {
                 ->downloadGalleryPictures()
                 ->createGalleryShortcode();
             
-            $response=$this->formatResponse->post($post->getAttributes())->message('success',Success::POST_SAVED_AS_DRAFT)->get('json');
+            $response=$this->formatResponse->post($post->getAttributes())->message('success',Success::text('POST_SAVED_AS_DRAFT'))->get('json');
            
         }catch(MyException $e){
             $response=$this->formatResponse->message('error',$e->getMessage())->get('json');

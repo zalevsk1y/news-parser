@@ -7,6 +7,7 @@ Version: 0.1.0
 Author: Evgeny S.Zalevskiy <2600@ukr.net>
 Author URI: https://github.com/zalevsk1y/
 License: MIT
+Text Domain: news-parser
  */
 ?>
 <?php

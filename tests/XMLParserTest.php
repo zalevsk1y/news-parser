@@ -30,7 +30,7 @@ class XMLParserTest extends TestCase{
     }
     public function testParseException(){
         $this->expectException(MyException::Class,'Wrong Exception class. Should be instance of MyException');
-        $this->expectExceptionMessage(Errors::XML_PARSING,'Wrong error message.');
+        $this->expectExceptionMessage(Errors::text('XML_PARSING'),'Wrong error message.');
         $data=$this->xmlParser->parse($this->wrongXml);
     }
 }

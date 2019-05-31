@@ -34,7 +34,7 @@ class ParseContent
     protected function download($url)
     {
         $data = file_get_contents($url);
-        if(!$data)throw new MyException(Errors::FILE_DOWNLOAD);   
+        if(!$data)throw new MyException(Errors::text('FILE_DOWNLOAD'));   
         return $data;
     }
     protected function parse($url){

@@ -26,7 +26,7 @@ class ListController implements ControllerInterface{
         try{
             $listData=$this->listParser->get($url);
             $list=$this->listFactory->get($listData);
-            $response=$this->formatResponse->list($list->getAttributes())->message('success',Success::RSS_LIST_PARSED)->get('json');
+            $response=$this->formatResponse->list($list->getAttributes())->message('success',Success::text('RSS_LIST_PARSED'))->get('json');
         }catch(MyException $e){
             $response=$this->formatResponse->message('error',$e->getMessage())->get('json');
         }

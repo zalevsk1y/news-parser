@@ -37,7 +37,7 @@ class XMLParser implements ParserInterface
         
         if($errors){
             libxml_clear_errors();
-            throw new MyException(Errors::XML_PARSING);
+            throw new MyException(Errors::text('XML_PARSING'));
         }
         
         return $data;
