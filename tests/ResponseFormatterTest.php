@@ -16,9 +16,9 @@ class ResponseFormatterTest extends TestCase{
     }
     public function testPostGetProp(){
         $mock_data=include('assert/mockPostData.php');
-        $response=$this->formatter->post($mock_data)->message($mock_data['msg']['status'],$mock_data['msg']['text'])->get('object');
+        $response=$this->formatter->post($mock_data)->message($mock_data['msg']['type'],$mock_data['msg']['text'])->get('object');
  
-        $this->assertEquals($response->msg->status,$mock_data['msg']['status']);
+        $this->assertEquals($response->msg->type,$mock_data['msg']['type']);
         $this->assertEquals($response->msg->text,$mock_data['msg']['text']);
 
     }
@@ -32,7 +32,7 @@ class ResponseFormatterTest extends TestCase{
     }
     public function testGetReturnFormat(){
         $mock_data=include('assert/mockPostData.php');
-        $response=$this->formatter->post($mock_data)->message($mock_data['msg']['status'],$mock_data['msg']['text'])->get('json');
+        $response=$this->formatter->post($mock_data)->message($mock_data['msg']['type'],$mock_data['msg']['text'])->get('json');
         json_decode($response);
         $this->assertEquals(json_last_error() === JSON_ERROR_NONE,true);
     

@@ -5,7 +5,10 @@ return (object)array(
         'addSource'=>false
     ),
     'post'=>(object)array(
-        'downloadPictures'=>true
+        'parseOtherPictures'=>true,
+        'showPicturesDialog'=>false,
+        'maxPictures'=>5
+
     ),
     'gallery'=>(object)array(
         'addGallery'=>false

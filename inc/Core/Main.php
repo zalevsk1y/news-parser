@@ -22,9 +22,10 @@ class Main
   
     public function __construct(MenuPageInterface $menu_page)
     {   
-       $this->config=Config::get();
-       $this->menuPage=$menu_page;
        $this->init();
+
+       $this->menuPage=$menu_page;
+      
        
         
     }
@@ -38,10 +39,12 @@ class Main
     {
         add_action('admin_menu',array($this,'addMainMenu'));
         add_action('admin_enqueue_scripts',array($this,'setStyles'));
+        add_action('init',array($this,'loadTextDomain'));
        
 
         
     }
+  
     /**
      * Autoload for classes based on PSR
      *
@@ -69,6 +72,9 @@ class Main
        
         
     }
+    public function loadTextDomain(){
+        load_plugin_textdomain( NEWS_PARSER_SLUG, false, NEWS_PARSER_DIR_NAME . '/lang' ); 
+    }
 
     /**
      * Initiate menu controller.Submenu classes in $this->settings->menu->dependencies
@@ -77,6 +83,7 @@ class Main
      * @return void
      */
     public function addMainMenu(){
+        $this->config=Config::get();
         $menu=$this->config->menu;
         add_menu_page($menu->page_title,$menu->menu_title,$menu->capability,$menu->menu_slug,'',$menu->icon);
         $this->addSubMenus();

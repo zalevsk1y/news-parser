@@ -1,0 +1,93 @@
+# Copyright (C) 2019 Evgeny S.Zalevskiy <2600@ukr.net>
+# This file is distributed under the same license as the News Parser plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: News Parser 0.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/news-parser\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2019-06-05T16:58:18+03:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.2.0\n"
+"X-Domain: news-parser\n"
+
+#. Plugin Name of the plugin
+#: config.php:13
+msgid "News Parser"
+msgstr "Парсер новостей"
+
+#. Plugin URI of the plugin
+msgid "http://bestplugin.com"
+msgstr "http://bestplugin.com"
+
+#. Description of the plugin
+msgid "Parse full text news from RSS Feed"
+msgstr "Разбор полнотекстовых новостей из RSS ленты"
+
+#. Author of the plugin
+msgid "Evgeny S.Zalevskiy <2600@ukr.net>"
+msgstr "Евгений С. Залевский <2600@ukr.net>"
+
+#. Author URI of the plugin
+msgid "https://github.com/zalevsk1y/"
+msgstr "https://github.com/zalevsk1y/"
+
+#: config.php:22
+msgid "Parsing"
+msgstr "Парсинг"
+
+#: config.php:30
+msgid "Settings"
+msgstr "Настройки"
+
+#: config.php:38
+msgid "About"
+msgstr "Около"
+
+#: inc/Models/PostModel.php:53
+msgid "Source"
+msgstr "Источник"
+
+#: inc/Message/Errors.php:8
+msgid "Sorry XML file cannot be downloaded"
+msgstr "Извините, файл XML не может быть загружен"
+
+#: inc/Message/Errors.php:10
+msgid "Sorry XML file has wrong format"
+msgstr "Извините, XML-файл имеет неправильный формат"
+
+#: inc/Message/Errors.php:12
+msgid "Sorry some internal error.Try again later"
+msgstr "Извините за внутреннюю ошибку. Попробуйте позже"
+
+#: inc/Message/Errors.php:14
+msgid "Sorry, post was not created for some reasons."
+msgstr "Извините, пост не был создан по некоторым причинам."
+
+#: inc/Message/Errors.php:16
+msgid "Some program error has occurred"
+msgstr "Произошла какая-то программная ошибка"
+
+#: inc/Message/Errors.php:18
+msgid "No Title"
+msgstr "Без названия"
+
+#: inc/Message/Errors.php:20
+msgid "No Body"
+msgstr "Нет тела"
+
+#: inc/Message/Errors.php:22
+msgid "Sorry temporary settings cannot be saved"
+msgstr "Извините, временные настройки не могут быть сохранены"
+
+#: inc/Message/Success.php:9
+msgid "XML File successfully parsed."
+msgstr "XML-файл успешно проанализирован."
+
+#: inc/Message/Success.php:11
+msgid "Post was successful saved as 'draft'."
+msgstr "Сообщение успешно сохранено как черновик."
+

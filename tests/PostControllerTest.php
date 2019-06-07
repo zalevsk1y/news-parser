@@ -22,9 +22,9 @@ class CreatePostControllerTest extends TestCase{
         $stub_post_model->method('addSource');
         $stub_post_model->method('createGalleryShortcode');
         $stub_post_model->method('getAttributes')->willReturn(array());
-        $stub_parsing_post_content=$this->createMock(Models\ParsingPostContent::class);
+        $stub_parsing_post_content=$this->createMock(Parser\ParseContent::class);
         $stub_parsing_post_content->method('get')->willReturn($mockData);
-        $stub_response_formatter=$this->createMock(Models\ResponseFormatter::class);
+        $stub_response_formatter=$this->createMock(Utils\ResponseFormatter::class);
         $stub_response_formatter->method('post')->willReturn($stub_response_formatter);
         $stub_response_formatter->method('message')->willReturn($stub_response_formatter);
         $stub_response_formatter->method('get')->willReturn( $expectedJSON);

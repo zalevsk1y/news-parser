@@ -21,6 +21,7 @@ define("NEWS_PARSER_SLUG",       'news-parser');
 define("NEWS_PARSER_SETTINGS_SLUG",       'news_parser_settings');
 define('NEWS_PARSER_PLUGIN_URL', plugins_url('',__FILE__));
 define("NEWS_PARSER_DIR",        plugin_dir_path( __FILE__ ));
+define("NEWS_PARSER_DIR_NAME",   basename(dirname(__FILE__)));
 define("PARSER_CACHE_FILE_PATH", plugin_dir_path( __FILE__ ).'cache/');
 define("PARSER_CACHE_FILENAME",  'parsing_cache');
 define("PARSER_NO_IMAGE_PATH",   plugins_url('',__FILE__).'/images/no-image.svg');

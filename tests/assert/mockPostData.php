@@ -4,7 +4,7 @@ return
     array(
         'err'=>0,
         'msg'=>array(
-            'status'=>'success',
+            'type'=>'success',
             'text'=>'Post was parsed!'
         ),
        
