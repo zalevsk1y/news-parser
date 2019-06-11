@@ -139,7 +139,6 @@ class HTMLParser implements ParserInterface
         ->postGalleryRegExp("/original\=\"(.*?\.jpg)/i")
         ->postGalleryRegExp("/data\-src\=\"(.*?\.jpg)/i")
         ->postGalleryRegExp("/data\-srcset\=\"(.*?\.jpg)/i")
-        ->openGrapheImageFind()
         ->get();
         return $gallery?:'';
     }

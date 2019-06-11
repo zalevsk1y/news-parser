@@ -4,7 +4,7 @@ namespace Utils;
 
 class ResponseFormatter {
  
-    protected $data=array();
+    protected $data=array('err'=>0);
     protected $action;
 
     public function post(array $data){
@@ -28,12 +28,12 @@ class ResponseFormatter {
         );
             return $this;
     }
+    public function error($code){
+        $this->data['err']=$code;
+        return $this;
+    }
     public function message($status,$text=''){
-        if($status=='error'){
-            $this->data['err']=1;
-        }else{
-            $this->data['err']=0;
-        }
+        
         if($status=='none'){
             $this->data['msg']=false;
         }else{

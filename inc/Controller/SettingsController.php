@@ -34,7 +34,7 @@ class SettingsController{
             );
          }catch(MyException $e){
              $response=array(
-             'main'=>$this->formatter->message('error',Errors::text('SETTINGS_CANNOT_BE_SAVED'))->get('array'),
+             'main'=>$this->formatter->error(1)->message('error',Errors::text('SETTINGS_CANNOT_BE_SAVED'))->get('array'),
              'settings'=>array()
              );
          }
@@ -48,7 +48,7 @@ class SettingsController{
                 $message=$this->formatter->message('success',Success::text('SETTINGS_SAVED'))->get('array');
             }
         }catch(MyException $e){
-            $message=$this->formatter->message('error',Errors::text('SETTINGS_CANNOT_BE_SAVED'))->get('array');
+            $message=$this->formatter->error(1)->message('error',Errors::text('SETTINGS_CANNOT_BE_SAVED'))->get('array');
         }
         $main_response=array(
             'main'=>$message

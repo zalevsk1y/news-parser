@@ -6,7 +6,7 @@ import Indicator from './Indicator';
 import {connect} from 'react-redux';
 
 import {parseRSSList} from '../actions/';
-import {getNonce} from '@news-parser/helpers'
+import {getNonce,scrollTo,getYOffset,getXOffset} from '@news-parser/helpers'
 import ModalGallery from './ModalGallery'
 import PropTypes from 'prop-types';
 import Translate from './Translate'
@@ -17,6 +17,7 @@ class Main extends React.Component {
         this.init();
         this.state={scroll:true};
         this.scroll=this.scroll.bind(this);
+        this.pageYOffset=0;
     }
     init(){
         const nonce=getNonce({page:'parse',action:'get'});
@@ -25,6 +26,13 @@ class Main extends React.Component {
     }
     scroll(state){
         this.setState({scroll:!state});
+    }
+    componentDidUpdate(prevProps,prevState){
+        if(this.state.scroll&&!prevState.scroll)scrollTo(getXOffset,this.pageYOffset);
+    }
+    shouldComponentUpdate(nextProps, nextState){
+        if(this.state.scroll&&!nextState.scroll)this.pageYOffset=getYOffset();
+        return true;
     }
     render() {
         const scrollClass=this.state.scroll?"":" no-scroll";

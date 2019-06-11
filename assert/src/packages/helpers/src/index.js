@@ -13,6 +13,15 @@ export function getLanguage(){
     const className=config.lang.class;
     return document.querySelector('.'+className).dataset['lang'].substring(0,2);
 }
+export function getYOffset(){
+    return window.pageYOffset;
+}
+export function getXOffset(){
+    return window.pageXOffset;
+}
+export function scrollTo(x,y){
+    window.scrollTo(parseInt(x),parseInt(y));
+}
 export function getNonce(params){
     const id=config.nonce.id[params.page],
           dataset=config.nonce.dataset[params.page][params.action];
