@@ -5,6 +5,7 @@ import Switch from '../components/Switch';
 import InputField from '../components/InputField';
 import {POST_FIELD_NAME} from '../actions/index';
 import PropTypes from 'prop-types';
+import Translate from './Translate';
 
 export const PostPage = ({settings, toggleAddThumbnail, toggleParseOtherPictures, toggleShowPicturesDialog,changeMaxPictures}) => (
     <div>
@@ -12,7 +13,7 @@ export const PostPage = ({settings, toggleAddThumbnail, toggleParseOtherPictures
         <tbody>
             <tr>
                 <th>
-                    Add thumbnail to post
+                    <Translate>Add main image to post</Translate>
                 </th>
                 <td>
                     <Switch
@@ -24,7 +25,7 @@ export const PostPage = ({settings, toggleAddThumbnail, toggleParseOtherPictures
             </tr>
             <tr>
                 <th>
-                    Parse all pictures 
+                    <Translate>Parse all pictures</Translate> 
                 </th>
                 <td>
 
@@ -34,8 +35,8 @@ export const PostPage = ({settings, toggleAddThumbnail, toggleParseOtherPictures
                         onClick={toggleParseOtherPictures}
                         fieldName='downloadPictures'></Switch>
                     <p className="description">
-                        Parsed pictures urls will be add to your post body. More
-                        <a href="#">info</a>
+                        <Translate>Try to parse additional image from the page.More</Translate>&nbsp;
+                        <a href="#"><Translate>info</Translate></a>
                     </p>
 
                 </td>
@@ -46,7 +47,7 @@ export const PostPage = ({settings, toggleAddThumbnail, toggleParseOtherPictures
         <tbody>    
         <tr>
                 <th>
-                    Show select pictures dialog
+                    <Translate>Show select pictures dialog</Translate>
                 </th>
                 <td>
                     <Switch
@@ -55,8 +56,8 @@ export const PostPage = ({settings, toggleAddThumbnail, toggleParseOtherPictures
                         onClick={toggleShowPicturesDialog}
                         fieldName='downloadPictures'></Switch>
                     <p className="description">
-                        Parsed pictures urls will be add to your post body. More
-                        <a href="#">info</a>
+                        <Translate>Show preview of all parsed images in additional window.More</Translate>&nbsp;
+                        <a href="#"><Translate>info</Translate></a>
                     </p>
 
                 </td>
@@ -64,7 +65,7 @@ export const PostPage = ({settings, toggleAddThumbnail, toggleParseOtherPictures
             
             <tr>
                 <th>
-                    Maximum Pictures to add
+                    <Translate>Maximum pictures to add</Translate>
                 </th>
                 <td>
                     <InputField
@@ -74,7 +75,7 @@ export const PostPage = ({settings, toggleAddThumbnail, toggleParseOtherPictures
                         fieldName={'MaxPictures'}
                         value={settings.maxPictures}/>
                     <p className="description">
-                        You can specify maximum number of pictures to add to your post.
+                        <Translate>You can specify maximum number of pictures to add to your post</Translate>
                     </p>
 
                 </td>

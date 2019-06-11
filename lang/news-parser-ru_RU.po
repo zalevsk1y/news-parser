@@ -45,7 +45,7 @@ msgstr "Настройки"
 
 #: config.php:38
 msgid "About"
-msgstr "Около"
+msgstr "О программе"
 
 #: inc/Models/PostModel.php:53
 msgid "Source"

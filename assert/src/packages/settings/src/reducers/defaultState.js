@@ -3,7 +3,7 @@ export const defaultState={
     main:{
         isFetching:false,
         error:false,
-        message:false
+        message:false,
     },
     settings:{
         general:{

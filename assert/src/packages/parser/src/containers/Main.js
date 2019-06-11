@@ -5,12 +5,11 @@ import Posts from './Posts';
 import Indicator from './Indicator';
 import {connect} from 'react-redux';
 
-
 import {parseRSSList} from '../actions/';
 import {getNonce} from '@news-parser/helpers'
 import ModalGallery from './ModalGallery'
 import PropTypes from 'prop-types';
-
+import Translate from './Translate'
 
 class Main extends React.Component {
     constructor(props){
@@ -33,7 +32,7 @@ class Main extends React.Component {
             <div className={"wrap wrap-parsing"+scrollClass} >
                 <ModalGallery onStateChange={this.scroll} />
                 <div className="parsing-title">
-                    <h1>Parse News</h1>
+                    <h1><Translate>Parse News</Translate></h1>
                 </div>
                 <Indicator step={0.5}/>
                 <Message />

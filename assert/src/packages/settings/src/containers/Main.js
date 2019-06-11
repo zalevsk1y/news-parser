@@ -9,10 +9,12 @@ import {main} from '../actions/index'
 import {getNonce} from '@news-parser/helpers';
 import Message from "./Message";
 import PropTypes from 'prop-types';
+import Translate from './Translate';
 
 export class Main extends React.Component {
     constructor(props){
       super(props);
+
       this.state={tabsArray:props.tabs};
       this.createTabs=this.createTabs.bind(this)
       this.selectHandler=this.selectHandler.bind(this)
@@ -61,14 +63,18 @@ export class Main extends React.Component {
       
      
     }
-   
+    translate(text){
+      return (<Translate>{text}</Translate>)
+    }
     render() {
       var tabId=this.state.currentID||0;
       return (
         <div className='wrap wrap-parsing'>
           <Message />
           <div className="parsing-title">
-              <h1>Settings</h1>
+              <h1>
+                <Translate>Settings</Translate>
+                </h1>
           </div> {/*parsing-title*/}
           <div className="settings-main-tabs" >
              <this.createTabs tabs={this.state.tabsArray}/>
@@ -76,8 +82,8 @@ export class Main extends React.Component {
           <div className='settings-container'>
             <this.renderPage name={this.state.tabsArray[tabId].name}/>
           </div>{/*settings-main-tabs*/}
-          <Button onClick={this.saveSettings} value='Save Settings' className='button-primary' action='save'></Button>
-          <Button onClick={this.resetToDefault} value='Reset Settings' className='button-secondary' action='reset'></Button>
+          <Button onClick={this.saveSettings} value={this.translate("Save settings")} className='button-primary' action='save'></Button>
+          <Button onClick={this.resetToDefault} value={this.translate('Reset settings')} className='button-secondary' action='reset'></Button>
         </div> 
       );
     }

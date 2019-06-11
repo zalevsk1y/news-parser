@@ -7,7 +7,9 @@ exports[`General Page should render correctly 1`] = `
   <tbody>
     <tr>
       <th>
-        Add a link to the source
+        <Connect(Translate)>
+          Add a link to the source
+        </Connect(Translate)>
       </th>
       <td>
         <Switch

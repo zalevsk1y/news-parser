@@ -53,7 +53,8 @@ module.exports={
 				"@news-parser/message": path.resolve(__dirname,"src/packages/message/src/index.js"),
 				"@news-parser/gallery-dialog": path.resolve(__dirname,"src/packages/gallery-dialog/src/index.js"),
 				"@news-parser/helpers": path.resolve(__dirname,"src/packages/helpers/src/index.js"),
-				"@news-parser/config": path.resolve(__dirname,"src/packages/config/src/index.js")
+				"@news-parser/config": path.resolve(__dirname,"src/packages/config/src/index.js"),
+				"@news-parser/translate": path.resolve(__dirname,"src/packages/translate/src/index.js")
 			}
 	},
 	devServer:{

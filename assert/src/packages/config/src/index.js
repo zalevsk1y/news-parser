@@ -29,6 +29,9 @@ const config={
     },
     amedia:{
         phone:782
+    },
+    lang:{
+        class:'wrap'
     }
 } 
 

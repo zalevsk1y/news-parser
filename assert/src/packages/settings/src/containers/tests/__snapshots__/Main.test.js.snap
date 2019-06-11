@@ -9,7 +9,9 @@ exports[`Main should render correctly 1`] = `
     className="parsing-title"
   >
     <h1>
-      Settings
+      <Connect(Translate)>
+        Settings
+      </Connect(Translate)>
     </h1>
   </div>
    
@@ -45,13 +47,21 @@ exports[`Main should render correctly 1`] = `
     action="save"
     className="button-primary"
     onClick={[Function]}
-    value="Save Settings"
+    value={
+      <Connect(Translate)>
+        Save settings
+      </Connect(Translate)>
+    }
   />
   <Button
     action="reset"
     className="button-secondary"
     onClick={[Function]}
-    value="Reset Settings"
+    value={
+      <Connect(Translate)>
+        Reset settings
+      </Connect(Translate)>
+    }
   />
 </div>
 `;

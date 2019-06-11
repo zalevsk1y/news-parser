@@ -11,13 +11,15 @@ export function main(state={},action){
             return {...state,
                 isFetching:false,
                 error:action.data.err,
-                message:action.data.msg
+                message:action.data.msg,
+                lang:action.data.lang
             }
         default:
             return {...state,
                 isFetching:false,
                 error:false,
-                message:false
+                message:false,
+              
     };
     }
 }
