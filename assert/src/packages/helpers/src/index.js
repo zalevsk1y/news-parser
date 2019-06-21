@@ -8,7 +8,10 @@ export function uriToJson(uri){
     }
     return {};
 }
-
+export function logErrorToService(error, info){
+    const parameters=config.emulateJSON?oldServerData({error,info}):newServerData({error,info});
+    fetch(config.errorLogApi.report,parameters)
+}
 export function getLanguage(){
     const className=config.lang.class;
     return document.querySelector('.'+className).dataset['lang'].substring(0,2);
@@ -46,18 +49,23 @@ export function combineSubReducers(parentReducer,childReducerName,childReducer){
         return {...mainState};
     }
 }
-export function oldServerData(parameterName,body){
-    const encodedBody=objectToUrlEncoded(body);
+export function oldServerData(data){
     const options= {
         method: 'POST',
         headers: {
         'Accept': 'application/x-www-form-urlencoded',
         'Content-Type': 'application/x-www-form-urlencoded',
         
-        },
+        }
    }
-   var body=encodeURIComponent(parameterName)+'='+encodedBody;
-   if(parameterName)options.body=body;
+   if (data){
+        const paramName=Object.keys(data);
+        var body='';
+        paramName.forEach((item)=>{
+                body=+body?'&'+encodeURIComponent(item)+'='+objectToUrlEncoded(data[item]):encodeURIComponent(item)+'='+objectToUrlEncoded(data[item]);
+        });
+        options.body=body;
+    }
    return options;
 }
 

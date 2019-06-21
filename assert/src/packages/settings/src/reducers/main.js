@@ -14,6 +14,12 @@ export function main(state={},action){
                 message:action.data.msg,
                 lang:action.data.lang
             }
+        case types.main.FETCH_ERROR:
+            return {...state,
+                isFetching:false,
+                error:action.data.error,
+                message:action.data.message
+            }
         default:
             return {...state,
                 isFetching:false,

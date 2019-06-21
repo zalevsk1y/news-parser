@@ -9,36 +9,42 @@ import settingsReducer from './reducers/index';
 import thunkMiddleware from 'redux-thunk';
 import {main} from './actions/index';
 import {getNonce} from '@news-parser/helpers';
-import { LocalizeProvider } from "react-localize-redux";
-export const store=createStore(settingsReducer,applyMiddleware(thunkMiddleware));
+import ErrorBoundary from "@news-parser/error-handler"
 
+export const store=createStore(settingsReducer,applyMiddleware(thunkMiddleware));
+window.addEventListener('error',function(event){
+    alert('error');
+})
 window.addEventListener('load',()=>{
     const nonce=getNonce({page:'settings',action:'get'});
     store.dispatch(main.getSettingsFromServer(store.dispatch,nonce));
+  
     ReactDOM.render(
-        <LocalizeProvider>
+        
             <Provider store={store}>
-                <Main tabs={
-                    [
-                        {   
-                            className:'general',
-                            active:true,
-                            name:'General'
-                        },
-                        {   
-                            className:'post',
-                            active:false,
-                            name:'Post'
-                        },
-                        {
-                            className:'gallery',
-                            active:false,
-                            name:'Gallery'
-                        }
-                    ]
-                }/>
+                <ErrorBoundary>
+                    <Main tabs={
+                        [
+                            {   
+                                className:'general',
+                                active:true,
+                                name:'General'
+                            },
+                            {   
+                                className:'post',
+                                active:false,
+                                name:'Post'
+                            },
+                            {
+                                className:'gallery',
+                                active:false,
+                                name:'Gallery'
+                            }
+                        ]
+                    }/>
+                </ErrorBoundary>
             </Provider>
-            </LocalizeProvider>,
+            ,
              document.getElementById('settings-app'));
 
 })
