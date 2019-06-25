@@ -13,8 +13,6 @@ use Parser\HTMLParser;
  * @package  Parser
  * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
  * @license  MIT https://opensource.org/licenses/MIT
- * @version  1.0.0
- * @link     https://github.com/2600BottlesOnTheWall
  */
 
 class GetContentTest extends TestCase

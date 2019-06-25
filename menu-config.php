@@ -4,7 +4,6 @@
  * @package  Menu
  * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
  * @license  MIT
- * @link     https://github.com/2600BottlesOnTheWall
  */
 
 return (object) array(

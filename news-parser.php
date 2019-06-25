@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: News Parser
-Plugin URI: http://bestplugin.com
+Plugin URI: https://github.com/zalevsk1y/news-parser
 Description: Parse full text news from RSS Feed
-Version: 0.1.0
+Version: 0.2.0
 Author: Evgeny S.Zalevskiy <2600@ukr.net>
 Author URI: https://github.com/zalevsk1y/
 License: MIT
@@ -16,7 +16,7 @@ include 'autoload.php';
 include 'vendor/autoload.php';
 
 
-define('NEWS_PARSER_VERSION',    '1.0.0');
+define('NEWS_PARSER_VERSION',    '0.2.0');
 define("NEWS_PARSER_SLUG",       'news-parser');
 define("NEWS_PARSER_SETTINGS_SLUG",       'news_parser_settings');
 define('NEWS_PARSER_PLUGIN_URL', plugins_url('',__FILE__));
