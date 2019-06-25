@@ -1,1 +1,0 @@
-<?php echo 'Post "'. $title.'" was saved as "draft".You can preview by click the ' ?>

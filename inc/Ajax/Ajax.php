@@ -8,9 +8,9 @@ use Message\Errors;
 use Message\Success;
 use Exception\MyException;
 /**
- * Ajax class.Initialize the plugin. Load settings.
+ * Ajax singleton class provide API to the front end 
  *
- * @package NewsParser
+ * @package Ajax
  * @author  Evgeny S.Zalevskiy <2600@ukr.net>
  * @license MIT <https://opensource.org/licenses/MIT>
  */
@@ -88,8 +88,8 @@ use Exception\MyException;
             break;
             case 'single':
                 if(!check_ajax_referer('parsing_news_api')) wp_die();
-                if(isset($_POST['options'])){
-                    $options=$_POST['options'];
+                if(isset($_POST['gallery'])){
+                    $options=$_POST['gallery'];
                 }else{
                     $options=null;
                 }

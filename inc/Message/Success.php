@@ -1,6 +1,14 @@
 <?php
 namespace Message;
 
+/**
+ * Class success message storage
+ *
+ *
+ * @package  Message
+ * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
+ * @license  MIT
+ */
 class Success{
 
     public static function text($slug){

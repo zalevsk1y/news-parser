@@ -2,12 +2,11 @@
 namespace Utils;
 use Exception\MyException;
 /**
- * Simple IOC container for resolving dependency injection
+ * Class manipulates plugin settings using WP methods
  *
  * @package  Utils
  * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
  * @license  MIT
- * @link     https://github.com/2600BottlesOnTheWall
  */
 
 class Settings
@@ -21,12 +20,29 @@ class Settings
         }
         $this->settings=$options;
     }
-    public function deleteSettings(){
+    /**
+     * Delete settings from the WP db delete_option()
+     *
+     * @return void
+     */
+    public static function deleteSettings(){
         \delete_option(NEWS_PARSER_SETTINGS_SLUG);
     }
+    /**
+     * Get settings data function in useful format
+     *
+     * @param string $type
+     * @return object|array|json
+     */
     public function get($type='object'){
         return $this->transformDatatype($type,$this->settings);
     }
+    /**
+     * Set new settings using WP update_option()
+     *
+     * @param array $new_settings
+     * @return boolean
+     */
     public function set(array $new_settings){
         //$newSettings is not sql sanitized, wp function update_options sanitize data so there's no need to run any extra san functions
         // /src/wp-includes/option.php 
@@ -50,6 +66,12 @@ class Settings
         }
         return $child;
     }
+    /**
+     * Get default settings
+     *
+     * @param string $type
+     * @return object|array|json
+     */
     public function getDefault($type='object'){
         return $this->transformDatatype($type,$this->default());
     }

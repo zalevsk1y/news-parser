@@ -14,6 +14,17 @@ use Interfaces\FactoryInterface;
 
 use Exception\MyException;
 
+/**
+ *Class creates and formats list from RSS feed
+ *
+ * PHP version 7.2.1
+ *
+ * 
+ * @package  Controller
+ * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
+ * @license  MIT
+ * 
+ */
 
 class ListController implements ControllerInterface{
     public function __construct(ParseContent $listParser,Settings $settings,ResponseFormatter $formatter,FactoryInterface $listFactory){
@@ -23,6 +34,7 @@ class ListController implements ControllerInterface{
         $this->listFactory=$listFactory;
     }
     public function get(string $url,string $options=null){
+        
         try{
             $listData=$this->listParser->get($url);
             $list=$this->listFactory->get($listData);

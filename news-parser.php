@@ -30,18 +30,16 @@ define("AJAX_SETTINGS_API",      'news_parser_settings_api');
 
 
 $modules=[];
-$conf=include(NEWS_PARSER_DIR.'/config.php');
+
 //---Admin menu modules
-$modules['menu_page']         =new Menu\Admin\MenuPage();
+$modules['menu_page']         =new Menu\Admin\MenuPage();   
 $modules['main']              =new Core\Main($modules['menu_page']);
 //---Parser modules
 $modules['XML_parser']        =new Parser\XMLParser();
 //--vendor HTML parser
 $modules['sunra_parser']      =new Sunra\PhpSimple\HtmlDomParser();
-$modules['html_parser']       =new Parser\HTMLParser($modules['sunra_parser']);
-//--facades for parser
-$modules['parsing_post']      =new Parser\ParseContent($modules['html_parser'],3600);
-$modules['parsing_rss_list']  =new Parser\ParseContent($modules['XML_parser']);
+$modules['html_parser']       =new Parser\HTMLParser($modules['sunra_parser'],3600);
+
 //---Controllers 
 //--deps
 $modules['settings']          =new Utils\Settings();
@@ -49,11 +47,12 @@ $modules['response_formatter']=new Utils\ResponseFormatter();
 $modules['list_factory']      =new Factory\ListFactory();
 $modules['post_factory']      =new Factory\PostFactory();
 //--controllers
-$module['list_controller']    =new Controller\ListController($modules['parsing_rss_list'],$modules['settings'],$modules['response_formatter'],$modules['list_factory']);
-$module['post_controller']    =new Controller\PostController($modules['parsing_post'],$modules['settings'],$modules['response_formatter'],$modules['post_factory']);
+$module['list_controller']    =new Controller\ListController($modules['XML_parser'],$modules['settings'],$modules['response_formatter'],$modules['list_factory']);
+$module['post_controller']    =new Controller\PostController($modules['html_parser'],$modules['settings'],$modules['response_formatter'],$modules['post_factory']);
 $module['settings_controller']=new Controller\SettingsController($modules['settings'],$modules['response_formatter']);
 //---Ajax
 $modules['ajax_controller']   =new Ajax\Ajax($module['list_controller'],$module['post_controller'],$module['settings_controller'] );
 
 
-register_uninstall_hook( __FILE__, array($modules['settings'],'deleteSettings'));
+register_uninstall_hook( __FILE__, 'Utils\Settings::deleteSettings');
+

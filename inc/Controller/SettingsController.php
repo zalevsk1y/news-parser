@@ -7,11 +7,29 @@ use Message\Errors;
 use Message\Success;
 use Utils\ResponseFormatter;
 
+
+/**
+ * Class controller for the settings
+ *
+ * PHP version 7.2.1
+ *
+ *
+ * @package  Controller
+ * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
+ * @license  MIT
+ *
+ */
+
 class SettingsController{
     public function __construct(Settings $settings,ResponseFormatter $formatter){
         $this->settings=$settings;
         $this->formatter=$formatter;
     }
+    /**
+     * Get current settings 
+     *
+     * @return string json format
+     */
     public function get(){
        try{
            $response=array(
@@ -26,6 +44,11 @@ class SettingsController{
         }
        return \json_encode($response);
     }
+    /**
+     * Get default settings 
+     *
+     * @return string json format
+     */
     public function getDefault(){
         try{
             $response=array(
@@ -40,6 +63,12 @@ class SettingsController{
          }
         return \json_encode($response);
     }
+    /**
+     * Save settings 
+     *
+     * @param string $new_settings new settings
+     * @return string message json format
+     */
     public function set(string $new_settings){
         try{
             $decode_data=\stripslashes($new_settings);
