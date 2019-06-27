@@ -38,8 +38,8 @@ class ParseContent
     protected function getFromCache($url)
     {
 
-        $hashId = sha1($url);
-        return get_transient($hashId);
+        $hash_id = sha1($url);
+        return get_transient($hash_id);
 
     }
     /**
@@ -51,23 +51,25 @@ class ParseContent
      */
     protected function setCache($url, $data)
     {
-        $hashId = sha1($url);
-        return set_transient($hashId, $data, $this->cache_expiration);
+        $hash_id = sha1($url);
+        return set_transient($hash_id, $data, $this->cache_expiration);
     }
     /**
      * Download page
      *
-     * @param string $url
+     * @param string $url url of page 
+     * 
      * @return string HTML page data
      */
     protected function download($url)
     {
-        $data = file_get_contents($url);
-        if (!$data) {
+        $data = wp_remote_get($url);
+        $response_code= wp_remote_retrieve_response_code($data);
+        if ($response_code!=200) {
             throw new MyException(Errors::text('FILE_DOWNLOAD'));
         }
-
-        return $data;
+        $body=wp_remote_retrieve_body($data);
+        return $body;
     }
     /**
      * Get data to transfer to parser
