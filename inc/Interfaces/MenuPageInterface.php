@@ -1,5 +1,5 @@
 <?php
-namespace Interfaces;
+namespace NewsParserPlugin\Interfaces;
 
 /**
  * Interface for Menu pages class.

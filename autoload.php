@@ -1,13 +1,19 @@
 <?php
+/**
+ * Autoload function for news-parser-plugin
+ *
+ * @param string $class full class name
+ * 
+ * @return void
+ */
+function news_parser_plugin_autoload($class)
+{   
+    $cl = str_replace(array(NEWS_PARSER_PLUGIN_ROOT_NAMESPACE,'\\'), array('', '/'), $class);
 
-
-function my_class($class){
-    $cl=str_replace('\\','/',$class);
-    $path=__DIR__.DIRECTORY_SEPARATOR.'inc'.DIRECTORY_SEPARATOR.$cl.".php";
+    $path = __DIR__ . DIRECTORY_SEPARATOR . 'inc' . DIRECTORY_SEPARATOR . $cl . ".php";
     if (file_exists($path)) {
         include $path;
     }
 }
-//set_include_path(__DIR__);
-spl_autoload_register("my_class");
-?>
+
+spl_autoload_register("news_parser_plugin_autoload");

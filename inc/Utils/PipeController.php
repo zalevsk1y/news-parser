@@ -1,5 +1,5 @@
 <?php
-namespace Utils;
+namespace NewsParserPlugin\Utils;
 
 /**
  * Class creates pipe that pass data thru every method or function that connect to the pipe.
@@ -28,7 +28,7 @@ class PipeController
     /**
      * Init func
      *
-     * @param object $object pass instance of class method of witch you would use in pipe
+     * @param object $object pass instance of class method of witch you would use NewsParserPlugin\in pipe
      * @param $inputData data that would be passed thru the pipe
      */
     public function __construct($object, $inputData)

@@ -1,12 +1,12 @@
 <?php
 
-namespace Parser;
+namespace NewsParserPlugin\Parser;
 
-use Exception\MyException;
-use Interfaces\ParserInterface;
-use Message\Errors;
-use Utils\ChainController;
-use Utils\PipeController;
+use NewsParserPlugin\Exception\MyException;
+use NewsParserPlugin\Interfaces\ParserInterface;
+use NewsParserPlugin\Message\Errors;
+use NewsParserPlugin\Utils\ChainController;
+use NewsParserPlugin\Utils\PipeController;
 
 /**
  * Class for parsing XML files (using libxml) from rss-feed to get list of posts.
@@ -155,7 +155,7 @@ class XMLParser extends ParseContent
             ->parseImageMedia($xml)
             ->parseImageDescription($text)
             ->get();
-        return $image ?: PARSER_NO_IMAGE_PATH;
+        return $image ?: NEWS_PARSER_PLUGIN_NO_IMAGE_PATH;
     }
 
     /**

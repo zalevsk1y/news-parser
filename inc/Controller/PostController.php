@@ -1,17 +1,16 @@
 <?php
+namespace NewsParserPlugin\Controller;
 
-namespace Controller;
-
-use Exception\MyException;
-use Interfaces\ControllerInterface;
-use Interfaces\FactoryInterface;
-use Message\Error;
-use Message\Success;
-use Models\PostModel;
-use Parser\ParseContent;
-use Utils\PipeController;
-use Utils\ResponseFormatter;
-use Utils\Settings;
+use NewsParserPlugin\Exception\MyException;
+use NewsParserPlugin\Interfaces\ControllerInterface;
+use NewsParserPlugin\Interfaces\FactoryInterface;
+use NewsParserPlugin\Message\Error;
+use NewsParserPlugin\Message\Success;
+use NewsParserPlugin\Models\PostModel;
+use NewsParserPlugin\Parser\ParseContent;
+use NewsParserPlugin\Utils\PipeController;
+use NewsParserPlugin\Utils\ResponseFormatter;
+use NewsParserPlugin\Utils\Settings;
 
 /**
  * Class controller for post
@@ -180,7 +179,7 @@ class PostController implements ControllerInterface
      */
     protected function pipe($input_data)
     {
-        return new PipeController($this,$input_data);
+        return new PipeController($this, $input_data);
     }
 
 }

@@ -1,7 +1,7 @@
 <?php 
-namespace Factory;
-use Models\ListModel;
-use Interfaces\FactoryInterface;
+namespace NewsParserPlugin\Factory;
+use NewsParserPlugin\Models\ListModel;
+use NewsParserPlugin\Interfaces\FactoryInterface;
 
 /**
  * Class factory fo creating list objects

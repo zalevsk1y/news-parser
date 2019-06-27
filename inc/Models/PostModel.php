@@ -1,9 +1,9 @@
 <?php
-namespace Models;
+namespace NewsParserPlugin\Models;
 
-use Exception\MyException;
-use Interfaces\ModelInterface;
-use Message\Errors;
+use NewsParserPlugin\Exception\MyException;
+use NewsParserPlugin\Interfaces\ModelInterface;
+use NewsParserPlugin\Message\Errors;
 
 /**
  * Class creates post model as facade to wordpress function
@@ -168,7 +168,7 @@ class PostModel implements ModelInterface
      *
      * @param string $image url of image
      * @param int $id post ID in WP
-     * @param boolean $post_thumb if image will use as main image of the post
+     * @param boolean $post_thumb if image will use NewsParserPlugin\as main image of the post
      * @return int image ID
      */
     protected function attachImageToPostWordpress($image, $id, $post_thumb = false)

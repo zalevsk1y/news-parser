@@ -1,15 +1,14 @@
 <?php
-namespace Menu\Admin;
+namespace NewsParserPlugin\Menu\Admin;
 
-use Interfaces\MenuPageInterface;
+use NewsParserPlugin\Interfaces\MenuPageInterface;
 
 /**
  * Class renders menu page.
  *
- *
- * @package  Menu
- * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
- * @license  MIT
+ * @package Menu
+ * @author  Evgeniy S.Zalevskiy <2600@ukr.net>
+ * @license MIT
  */
 
 class MenuPage implements MenuPageInterface
@@ -20,7 +19,7 @@ class MenuPage implements MenuPageInterface
     {
         $args = $this->args;
         if (is_null($this->template)) {
-            throw new \Exception('No template was set.Use setTemplate(templateName) to set template file before render it.');
+            throw new \Exception('No template was set.use NewsParserPlugin\setTemplate(templateName) to set template file before render it.');
         }
         include $this->template;
     }

@@ -1,9 +1,9 @@
 <?php
 
 require 'autoload.php';
-use PHPUnit\Framework\TestCase;
-use Controller\PostController;
-//use Factory\PostFactory;
+use NewsParserPlugin\PHPUnit\Framework\TestCase;
+use NewsParserPlugin\Controller\PostController;
+//use NewsParserPlugin\Factory\PostFactory;
 
 
 class CreatePostControllerTest extends TestCase{

@@ -1,5 +1,5 @@
 <?php
-namespace Utils;
+namespace NewsParserPlugin\Utils;
 
 /**
  * Class creating chain from method of any class.

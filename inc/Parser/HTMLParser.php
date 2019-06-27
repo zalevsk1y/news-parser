@@ -1,9 +1,9 @@
 <?php
-namespace Parser;
+namespace NewsParserPlugin\Parser;
 
-use Interfaces\ParserInterface;
+use NewsParserPlugin\Interfaces\ParserInterface;
 use Sunra\PhpSimple\HtmlDomParser;
-use Utils\ChainController;
+use NewsParserPlugin\Utils\ChainController;
 
 /**
  * HTML parser class 
@@ -24,11 +24,11 @@ class HTMLParser extends ParseContent
     protected $dom = null;
     protected $rawHTML = null;
     /**
-     * You could use any of HTML parsers.
+     * You could use NewsParserPlugin\any of HTML parsers.
      * But they should have method ::find() and getAttribute;
      * And should return array.
      *
-     * @param HtmlDomParser $HTMLParserClass You can use any Parser that have same interface.
+     * @param HtmlDomParser $HTMLParserClass You can use NewsParserPlugin\any Parser that have same interface.
      */
     public function __construct(HtmlDomParser $HTMLParserClass,$cache_expiration = 600)
     {
@@ -252,7 +252,7 @@ class HTMLParser extends ParseContent
         return preg_replace($pattern, '', $data);
     }
     /**
-     * Facade for chain building class. Use ::get() function at the end to get result.
+     * Facade for chain building class. use NewsParserPlugin\::get() function at the end to get result.
      *
      * @return object ChainController
      */

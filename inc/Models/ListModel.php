@@ -1,7 +1,7 @@
 <?php
-namespace Models;
+namespace NewsParserPlugin\Models;
 
-use Interfaces\ModelInterface;
+use NewsParserPlugin\Interfaces\ModelInterface;
 
 /**
  * Class list of posts parsed from xml RSS feed model.

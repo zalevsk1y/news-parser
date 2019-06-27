@@ -1,9 +1,9 @@
 <?php
-namespace Parser;
+namespace NewsParserPlugin\Parser;
 
-use Exception\MyException;
-use Interfaces\ParserInterface;
-use Message\Errors;
+use NewsParserPlugin\Exception\MyException;
+use NewsParserPlugin\Interfaces\ParserInterface;
+use NewsParserPlugin\Message\Errors;
 
 /**
  * Class middleware for parser.

@@ -1,6 +1,6 @@
 <?php
 
-namespace View;
+namespace NewsParserPlugin\View;
 
 /**
  * Class loading template file and render it with args.

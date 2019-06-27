@@ -1,5 +1,5 @@
 <?php
-namespace Exception;
+namespace NewsParserPlugin\Exception;
 
 /**
  * Class for handle plugins exception

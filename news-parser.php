@@ -11,21 +11,22 @@ Text Domain: news-parser
  */
 ?>
 <?php
+namespace NewsParserPlugin;
 
-include 'autoload.php';
-include 'vendor/autoload.php';
 
-define('NEWS_PARSER_VERSION', '0.2.0');
-define("NEWS_PARSER_SLUG", 'news-parser');
-define("NEWS_PARSER_SETTINGS_SLUG", 'news_parser_settings');
+define('NEWS_PARSER_PLUGIN_VERSION', '0.2.0');
+define("NEWS_PARSER_PLUGIN_SLUG", 'news-parser');
+define("NEWS_PARSER_PLUGIN_ROOT_NAMESPACE", 'NewsParserPlugin');
+define("NEWS_PARSER_PLUGIN_SETTINGS_SLUG", 'news_parser_settings');
 define('NEWS_PARSER_PLUGIN_URL', plugins_url('', __FILE__));
-define("NEWS_PARSER_DIR", plugin_dir_path(__FILE__));
-define("NEWS_PARSER_DIR_NAME", basename(dirname(__FILE__)));
-define("PARSER_CACHE_FILE_PATH", plugin_dir_path(__FILE__) . 'cache/');
-define("PARSER_CACHE_FILENAME", 'parsing_cache');
-define("PARSER_NO_IMAGE_PATH", plugins_url('', __FILE__) . '/images/no-image.svg');
-define("AJAX_PARSING_API", 'news_parser_parsing_api');
-define("AJAX_SETTINGS_API", 'news_parser_settings_api');
+define("NEWS_PARSER_PLUGIN_DIR", plugin_dir_path(__FILE__));
+define("NEWS_PARSER_PLUGIN_DIR_NAME", basename(dirname(__FILE__)));
+define("NEWS_PARSER_PLUGIN_NO_IMAGE_PATH", plugins_url('', __FILE__) . '/images/no-image.svg');
+define("NEWS_PARSER_PLUGIN_AJAX_PARSING_API", 'news_parser_parsing_api');
+define("NEWS_PARSER_PLUGIN_AJAX_SETTINGS_API", 'news_parser_settings_api');
+
+require 'autoload.php';
+require 'vendor/autoload.php';
 
 $modules = [];
 
@@ -35,7 +36,7 @@ $modules['main'] = new Core\Main($modules['menu_page']);
 //---Parser modules
 $modules['XML_parser'] = new Parser\XMLParser();
 //--vendor HTML parser
-$modules['sunra_parser'] = new Sunra\PhpSimple\HtmlDomParser();
+$modules['sunra_parser'] = new \Sunra\PhpSimple\HtmlDomParser();
 $modules['html_parser'] = new Parser\HTMLParser($modules['sunra_parser'], 3600);
 
 //---Controllers
@@ -51,4 +52,4 @@ $module['settings_controller'] = new Controller\SettingsController($modules['set
 //---Ajax
 $modules['ajax_controller'] = new Ajax\Ajax($module['list_controller'], $module['post_controller'], $module['settings_controller']);
 
-register_uninstall_hook(__FILE__, 'Utils\Settings::deleteSettings');
+\register_uninstall_hook(__FILE__, 'Utils\Settings::deleteSettings');

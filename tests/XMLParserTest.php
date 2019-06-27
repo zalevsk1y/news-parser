@@ -1,12 +1,12 @@
 <?php
 
 require __DIR__.'/../autoload.php';
-use PHPUnit\Framework\TestCase;
-use Parser\XMLParser;
-use Message\Errors;
-use Exception\MyException;
+use NewsParserPlugin\PHPUnit\Framework\TestCase;
+use NewsParserPlugin\Parser\XMLParser;
+use NewsParserPlugin\Message\Errors;
+use NewsParserPlugin\Exception\MyException;
 
-define("PARSER_NO_IMAGE_PATH",   '/images/no-image.svg');
+define("NEWS_PARSER_PLUGIN_NO_IMAGE_PATH",   '/images/no-image.svg');
 
 class XMLParserTest extends TestCase{
     public $xmlParser;

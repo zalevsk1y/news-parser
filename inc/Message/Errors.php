@@ -1,5 +1,5 @@
 <?php
-namespace Message;
+namespace NewsParserPlugin\Message;
 
 /**
  * Class error message storage

@@ -1,6 +1,6 @@
 <?php
-namespace Utils;
-use Exception\MyException;
+namespace NewsParserPlugin\Utils;
+use NewsParserPlugin\Exception\MyException;
 /**
  * Class manipulates plugin settings using WP methods
  *
@@ -13,10 +13,10 @@ class Settings
 {
     protected $settings;
     public function __construct(){
-        $options=\get_option(NEWS_PARSER_SETTINGS_SLUG);
+        $options=\get_option(NEWS_PARSER_PLUGIN_SETTINGS_SLUG);
         if(!$options){
             $options=$this->default();
-            \add_option(NEWS_PARSER_SETTINGS_SLUG,$options);    
+            \add_option(NEWS_PARSER_PLUGIN_SETTINGS_SLUG,$options);    
         }
         $this->settings=$options;
     }
@@ -26,7 +26,7 @@ class Settings
      * @return void
      */
     public static function deleteSettings(){
-        \delete_option(NEWS_PARSER_SETTINGS_SLUG);
+        \delete_option(NEWS_PARSER_PLUGIN_SETTINGS_SLUG);
     }
     /**
      * Get settings data function in useful format
@@ -58,7 +58,7 @@ class Settings
         }
     
         $this->settings=json_encode($settings_array);
-        return \update_option(NEWS_PARSER_SETTINGS_SLUG,$this->settings);
+        return \update_option(NEWS_PARSER_PLUGIN_SETTINGS_SLUG,$this->settings);
     }
     protected function arrayCopy(array $parent,array $child){
         foreach($parent as $key=>$value){

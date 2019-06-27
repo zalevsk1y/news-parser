@@ -1,8 +1,8 @@
 
 <?php
 require 'autoload.php';
-use PHPUnit\Framework\TestCase;
-use Utils\ResponseFormatter;
+use NewsParserPlugin\PHPUnit\Framework\TestCase;
+use NewsParserPlugin\Utils\ResponseFormatter;
 
 
 

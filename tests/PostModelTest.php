@@ -1,8 +1,8 @@
 
 <?php
 require 'autoload.php';
-use PHPUnit\Framework\TestCase;
-use Models\PostModel;
+use NewsParserPlugin\PHPUnit\Framework\TestCase;
+use NewsParserPlugin\Models\PostModel;
 
 class PostModelTest extends TestCase{
     protected function setUp(){

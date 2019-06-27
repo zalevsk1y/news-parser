@@ -1,6 +1,6 @@
 <?php
 
-namespace Utils;
+namespace NewsParserPlugin\Utils;
 
 /**
  * Class load menu config file.
@@ -16,7 +16,7 @@ class MenuConfig
     public static function get()
     {
         if (!static::$config) {
-            static::$config = include NEWS_PARSER_DIR . 'menu-config.php';
+            static::$config = include NEWS_PARSER_PLUGIN_DIR . 'menu-config.php';
         }
 
         return static::$config;
