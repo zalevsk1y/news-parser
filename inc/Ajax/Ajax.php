@@ -16,7 +16,6 @@ use NewsParserPlugin\Utils\Sanitize;
 
 class Ajax
 {
-    protected $search;
     protected $post;
     protected $list;
     protected $settings;
