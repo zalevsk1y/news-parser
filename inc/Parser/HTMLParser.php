@@ -1,24 +1,24 @@
 <?php
 namespace NewsParserPlugin\Parser;
 
-use NewsParserPlugin\Interfaces\ParserInterface;
-use Sunra\PhpSimple\HtmlDomParser;
 use NewsParserPlugin\Utils\ChainController;
+use NewsParserPlugin\Utils\Sanitize;
+use Sunra\PhpSimple\HtmlDomParser;
 
 /**
- * HTML parser class 
+ * HTML parser class
  * Parse data from html using Sunra\PhpSimple and regular expression
  *
  * PHP version 7.2.1
  *
- * 
+ *
  * @package  Parser
  * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
  * @license  MIT
- * 
+ *
  */
 
-class HTMLParser extends ParseContent 
+class HTMLParser extends ParseContent
 {
     protected $parser;
     protected $dom = null;
@@ -30,7 +30,7 @@ class HTMLParser extends ParseContent
      *
      * @param HtmlDomParser $HTMLParserClass You can use NewsParserPlugin\any Parser that have same interface.
      */
-    public function __construct(HtmlDomParser $HTMLParserClass,$cache_expiration = 600)
+    public function __construct(HtmlDomParser $HTMLParserClass, $cache_expiration = 600)
     {
         parent::__construct($cache_expiration);
         $this->parser = $HTMLParserClass;
@@ -42,17 +42,17 @@ class HTMLParser extends ParseContent
      * [image] - post main image url @string unescaped
      * [body] - post body @string
      * [gallery] - post image gallery array|'' empty string if none
-     * 
+     *
      * @return StdClass
      */
     protected function parse($data)
     {
         $this->dom = $this->parser::str_get_html($data);
         $this->rawHTML = $data;
-        $this->post['title'] = $this->postTitle();
-        $this->post['image'] = $this->postImage();
-        $this->post['body'] = $this->postBody(true);
-        $this->post['gallery'] = $this->postGallery();
+        $this->post['title'] = esc_html($this->postTitle());
+        $this->post['image'] = Sanitize::sanitizeImageURL($this->postImage());
+        $this->post['body'] = $this->postBody();
+        $this->post['gallery'] = Sanitize::sanitizeUrlArray($this->postGallery());
         return $this->post;
     }
     /**
@@ -94,15 +94,14 @@ class HTMLParser extends ParseContent
     /**
      * Parse post body
      *
-     * @param boolean $removeTags - should html tags be removed
      *
      * @return string
      */
 
-    public function postBody(Bool $removeTags)
+    public function postBody()
     {
         //Parse body inside <p> tag
-        $body = $this->parseBodyTagP($removeTags);
+        $body = $this->parseBodyTagP();
         return $body ?: '';
 
     }
@@ -165,17 +164,17 @@ class HTMLParser extends ParseContent
     /**
      * Parse body of the post that in <p> Tags;
      *
-     * @param bool $removeTags Should be HTML tags be removed.
+     *
      *
      * @return string
      */
 
-    public function parseBodyTagP(Bool $removeTags)
+    public function parseBodyTagP()
     {
         $matchesBodies = $this->find('p');
         $result = [];
         foreach ($matchesBodies as $match) {
-            $result[] = "<p>" . $match->plaintext . "</p>";
+            $result[] = "<p>" . esc_html($match->plaintext) . "</p>";
         }
         $output = implode('', $result);
         return $output == "<p></p>" ? false : $output;

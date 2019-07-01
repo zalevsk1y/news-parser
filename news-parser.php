@@ -50,6 +50,6 @@ $module['list_controller'] = new Controller\ListController($modules['XML_parser'
 $module['post_controller'] = new Controller\PostController($modules['html_parser'], $modules['settings'], $modules['response_formatter'], $modules['post_factory']);
 $module['settings_controller'] = new Controller\SettingsController($modules['settings'], $modules['response_formatter']);
 //---Ajax
-$modules['ajax_controller'] = new Ajax\Ajax($module['list_controller'], $module['post_controller'], $module['settings_controller']);
+$modules['ajax_controller'] =  Ajax\Ajax::getInstance($module['list_controller'], $module['post_controller'], $module['settings_controller']);
 
 \register_uninstall_hook(__FILE__, 'Utils\Settings::deleteSettings');

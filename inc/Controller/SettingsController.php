@@ -7,7 +7,7 @@ use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Utils\Settings;
-
+use NewsParserPlugin\Interfaces\ControllerInterface;
 /**
  * Class controller for the settings
  *
@@ -20,8 +20,10 @@ use NewsParserPlugin\Utils\Settings;
  *
  */
 
-class SettingsController
+class SettingsController 
 {
+    protected $settings;
+    protected $formatter;
     public function __construct(Settings $settings, ResponseFormatter $formatter)
     {
         $this->settings = $settings;
@@ -74,11 +76,11 @@ class SettingsController
      * 
      * @return string message json format
      */
-    public function set(string $new_settings)
+    public function set(array $new_settings)
     {
         try {
-            $decode_data = \stripslashes($new_settings);
-            $message = $this->settings->set(\json_decode($decode_data, true));
+            
+            $message = $this->settings->set($new_settings);
             if ($message) {
                 $message = $this->formatter->message('success', Success::text('SETTINGS_SAVED'))->get('array');
             }

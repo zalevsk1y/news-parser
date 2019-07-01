@@ -23,12 +23,14 @@ use NewsParserPlugin\Utils\Settings;
  * @license  MIT
  *
  */
-class PostController implements ControllerInterface
+class PostController 
 {
     protected $postFactory;
     protected $postData;
     protected $settings;
     protected $formatResponse;
+    protected $postParser;
+
 
     public function __construct(ParseContent $postParser, Settings $settings, ResponseFormatter $formatter, FactoryInterface $postFactory)
     {
@@ -42,24 +44,19 @@ class PostController implements ControllerInterface
      * All facade of PostModel class methods created for convenience of using in pipe
      *
      * @param string $url of post that should be parsed and saved as draft
-     * @param string $options [gallery images that was selected]
+     * @param array $options [gallery images that was selected]
      * @return void
      */
-    public function get(string $url, string $options = null)
+    public function get(string $url, array $options = null)
     {
         try {
-            $parsed_data = $result = $this->postParser->get($url, $this->settings->post);
-            $parsed_data['authorId'] = get_current_user_id();
+            $parsed_data =$this->postParser->get($url);
+            $parsed_data['authorId'] = \get_current_user_id();
 
             //unescaped url
 
             $parsed_data['sourceUrl'] = $url;
-            if (!is_null($options)) {
-                $options = $this->pipe($options)
-                    ->func('stripslashes', array("data"))
-                    ->func('json_decode', array("data", true))
-                    ->get();
-            }
+         
             $post = $this->postFactory->get($parsed_data);
             //if option "show image selection dialog window" gallery data will send as response
             if (!$this->imagesWasSelected($options) && !empty($post->gallery)) {
@@ -162,7 +159,7 @@ class PostController implements ControllerInterface
      * Create gallery shortcode and add it to post body
      *
      * @param PostModel $post
-     * @return void
+     * @return PostModel
      */
     public function createGalleryShortcode(PostModel $post)
     {
@@ -175,7 +172,7 @@ class PostController implements ControllerInterface
      * Facade for pipe Utils\PipeController
      *
      * @param $input_data data that would be transferred thru the pipe
-     * @return void
+     * @return PipeController
      */
     protected function pipe($input_data)
     {

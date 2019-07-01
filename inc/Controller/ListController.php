@@ -22,8 +22,13 @@ use NewsParserPlugin\Utils\Settings;
  *
  */
 
-class ListController implements ControllerInterface
+class ListController 
 {
+    protected $listParser;
+    protected $settings;
+    protected $formatter;
+    protected $listFactory;
+    
     public function __construct(ParseContent $listParser, Settings $settings, ResponseFormatter $formatter, FactoryInterface $listFactory)
     {
         $this->listParser = $listParser;
@@ -31,7 +36,7 @@ class ListController implements ControllerInterface
         $this->formatResponse = $formatter;
         $this->listFactory = $listFactory;
     }
-    public function get(string $url, string $options = null)
+    public function get(string $url, array $options = null)
     {
 
         try {

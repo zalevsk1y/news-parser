@@ -7,7 +7,7 @@ use NewsParserPlugin\Interfaces\ParserInterface;
 use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Utils\ChainController;
 use NewsParserPlugin\Utils\PipeController;
-
+use NewsParserPlugin\Utils\Sanitize;
 /**
  * Class for parsing XML files (using libxml) from rss-feed to get list of posts.
  *
@@ -105,11 +105,11 @@ class XMLParser extends ParseContent
             $link = $item->link;
             $image = $this->parseImage($item, $item->description);
             $response[] = (object) array(
-                'title' => $title,
-                'pubDate' => $date,
-                'description' => $description,
-                'link' => (string)$link,
-                'image' => $image,
+                'title' => esc_html($title),
+                'pubDate' => esc_html($date),
+                'description' => esc_html($description),
+                'link' => Sanitize::sanitizeURL((string)$link),
+                'image' => Sanitize::sanitizeURL((string)$image),
                 'status' => 'parsed',
             );
         }

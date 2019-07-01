@@ -25,6 +25,7 @@ class PostModel implements ModelInterface
     public $sourceUrl;
     public $postId;
     public $links = array();
+    public $authorId;
 
     public function __construct($data)
     {
@@ -93,14 +94,14 @@ class PostModel implements ModelInterface
      */
     public function addSource()
     {
-        $this->body .= '<br> <a href="' . $this->sourceUrl . '">' . __('Source', 'news-parser') . '</a>';
+        $this->body .= '<br> <a href="' . $this->sourceUrl . '">' . \__('Source', 'news-parser') . '</a>';
         $this->updatePostWordPress('post_content', $this->body);
     }
     /**
      * Return Post data in array|json|object format
      *
      * @param string $format
-     * @return array|json|object
+     * @return array|string|object
      */
     public function getAttributes($format = 'array')
     {
@@ -136,7 +137,7 @@ class PostModel implements ModelInterface
             return;
         }
 
-        $output = ' [' . esc_html($shortcode) . ' ' . esc_html($paramName) . '=' . implode(',', $gallery) . ']';
+        $output = ' [' . \esc_html($shortcode) . ' ' . \esc_html($paramName) . '=' . implode(',', $gallery) . ']';
         $this->body .= $output;
         $this->updatePostWordPress('post_content', $this->body);
     }
@@ -156,8 +157,8 @@ class PostModel implements ModelInterface
             'post_author' => $this->authorId,
 
         );
-        $postId = wp_insert_post($post_data);
-        if (is_wp_error($postId)) {
+        $postId = \wp_insert_post($post_data);
+        if (\is_wp_error($postId)) {
             throw new MyException($postId->get_error_message());
         } else {
             return $postId;
@@ -176,12 +177,12 @@ class PostModel implements ModelInterface
         $url = $image;
         $post_id = $id;
         $desc = "image";
-        $img_id = media_sideload_image($url, $post_id, $desc, 'id');
-        if (is_wp_error($img_id)) {
+        $img_id = \media_sideload_image($url, $post_id, $desc, 'id');
+        if (\is_wp_error($img_id)) {
             throw new MyException($img_id->get_error_message());
         } else {
             if ($post_thumb) {
-                set_post_thumbnail($post_id, $img_id);
+                \set_post_thumbnail($post_id, $img_id);
             }
 
             return $img_id;
@@ -200,7 +201,7 @@ class PostModel implements ModelInterface
             'ID' => $this->postId,
             $update_item => $data,
         ];
-        wp_update_post($post_array);
+        \wp_update_post($post_array);
     }
     /**
      * Get links to the saved WP post
@@ -210,9 +211,9 @@ class PostModel implements ModelInterface
     protected function getPostLinksWordpress()
     {
         $post_id = $this->postId;
-        $this->links['previewLink'] = get_post_permalink($post_id);
-        $this->links['editLink'] = get_edit_post_link($post_id, '');
-        $this->links['deleteLink'] = get_delete_post_link($post_id);
+        $this->links['previewLink'] = \get_post_permalink($post_id);
+        $this->links['editLink'] = \get_edit_post_link($post_id, '');
+        $this->links['deleteLink'] = \get_delete_post_link($post_id);
 
     }
 }
