@@ -81,7 +81,7 @@ class Ajax
                 }
 
                 $new_settings = \sanitize_text_field($_POST['settings']);
-                $new_settings = \json_decode(stripslashes($new_setting), true);
+                $new_settings = \json_decode(\stripslashes($new_settings), true);
                 $response = $this->settings->set($new_settings);
                 echo $response;
                 \wp_die();

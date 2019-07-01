@@ -28,6 +28,7 @@ class ListController
     protected $settings;
     protected $formatter;
     protected $listFactory;
+    protected $formatResponse;
     
     public function __construct(ParseContent $listParser, Settings $settings, ResponseFormatter $formatter, FactoryInterface $listFactory)
     {
@@ -36,7 +37,7 @@ class ListController
         $this->formatResponse = $formatter;
         $this->listFactory = $listFactory;
     }
-    public function get(string $url, array $options = null)
+    public function get(string $url)
     {
 
         try {
