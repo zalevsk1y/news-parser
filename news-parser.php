@@ -29,10 +29,11 @@ require 'autoload.php';
 require 'vendor/autoload.php';
 
 $modules = [];
-
+//---Menu config file loader module
+$modules['menu_config']=new Utils\MenuConfig(NEWS_PARSER_PLUGIN_DIR.'menu-config.php');
 //---Admin menu modules
 $modules['menu_page'] = new Menu\Admin\MenuPage();
-$modules['main'] = new Core\Main($modules['menu_page']);
+$modules['main'] = new Core\Main($modules['menu_page'],$modules['menu_config']);
 //---Parser modules
 $modules['XML_parser'] = new Parser\XMLParser();
 //--vendor HTML parser

@@ -119,7 +119,9 @@ class Ajax
                 }
 
                 if (isset($_POST['gallery'])) {
-                    $options = Sanitize::sanitizeUrlArray(json_decode(stripslashes($_POST['gallery'], true)));
+                    $unslashed_gallery=stripslashes($_POST['gallery']);
+                    $gallery=json_decode($temp, true);
+                    $options = Sanitize::sanitizeUrlArray($gallery);
                 } else {
                     $options = null;
                 }

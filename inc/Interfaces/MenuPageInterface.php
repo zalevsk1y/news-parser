@@ -1,6 +1,6 @@
 <?php
 namespace NewsParserPlugin\Interfaces;
-
+use NewsParserPlugin\Utils\MenuConfig;
 /**
  * Interface for Menu pages class.
  * 
@@ -11,6 +11,6 @@ namespace NewsParserPlugin\Interfaces;
  */
 interface MenuPageInterface
 {
-    public function render();
-    public function setTemplate($template);
+    public function init(MenuConfig $config);
+
 }

@@ -15,7 +15,7 @@ Class Sanitize{
         $link=self::pipe($url)
         ->func('trim',array('data'))
         ->func('preg_replace',array('/^(http(s)?)?:?\/*/u','http$2://','data'))
-        ->func('str_replace',array(array('<','>','\\','(',')'),'','data'))
+        ->func('str_replace',array(array('*','<','>','\\','(',')'),'','data'))
         ->func('htmlspecialchars',array('data', 11,'UTF-8',true))
         ->get();
         return $link;
