@@ -28,7 +28,7 @@ class TemplateRender
     public function render()
     {
         if(count($this->args)>0){
-            foreach ($object_args as $key => $item) {
+            foreach ($this->args as $key => $item) {
                 ${$key} = $item;
             }
         }

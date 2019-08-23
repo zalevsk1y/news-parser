@@ -26,7 +26,7 @@ News-parser is a plugin for Wordpress that allows you to easily receive the full
 
 This will download the latest developer copy of News-parser.
 
-## How to use NewsParserPlugin\this plugin?
+## How to use NewsParserPlugin plugin?
 
 Just enter the address of the RSS source in the search bar and click "Parse RSS Feed" button, you will receive a list of articles from this source. In order to save the draft, simply click on the download check in the lower right corner of the block with the post interesting for you and it will be saved as a draft. Go to the menu item Posts-> All Posts in your admin panel to find the draft of the post you parsed. If everything suits you, you can simply publish this post or edit it at your discretion.
 
