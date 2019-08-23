@@ -5,6 +5,11 @@
 /.pnp
 /vendor
 .pnp.js
+#do not ignor 
+!/vendor/composer
+!/vendor/sunra
+
+
 
 # testing
 /coverage
