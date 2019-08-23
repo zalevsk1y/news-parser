@@ -3,6 +3,7 @@
 # dependencies
 /assert/node_modules
 /.pnp
+/vendor
 .pnp.js
 
 # testing
