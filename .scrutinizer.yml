@@ -5,6 +5,7 @@ filter:
         - '*/build/*'
         - '*/devServer/*'
         - 'public/'
+        - 'vendor/'
         - 'tests/'
 checks:
     javascript: true
