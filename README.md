@@ -1,4 +1,7 @@
 !['Alt text'](banner_header.png)
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/zalevsk1y/news-parser/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/zalevsk1y/news-parser/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/zalevsk1y/news-parser/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/zalevsk1y/news-parser/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/zalevsk1y/news-parser/badges/build.png?b=master)](https://scrutinizer-ci.com/g/zalevsk1y/news-parser/build-status/master)
+
 # News-parser Wordpress Plugin
 
 News-parser is a plugin for Wordpress that allows you to easily receive the full text of the article, as well as images from the site using an RSS feed. Parsed information from the site is saved as a draft,which you can just publish or edit at your discretion. This makes it easy to create content for your site.
