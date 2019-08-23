@@ -3,11 +3,11 @@
 # dependencies
 /assert/node_modules
 /.pnp
-/vendor
+vendor/*
 .pnp.js
 #do not ignor 
-!/vendor/composer
-!/vendor/sunra
+!/vendor/composer/
+!/vendor/sunra/
 
 
 
