@@ -31,7 +31,7 @@ export const GalleryPage=({settings,addGallery,shortCode,parameterName})=>(
                                 <td>
                                     <Input className="settings-shortcode" onBlur={shortCode} fieldName='shortCode' value={settings.shortCode}/>
                                     <p className="description">
-                                        <Translate>You can add short code for additional gallery plugin.More</Translate> &nbsp;<a href="#"><Translate>info</Translate></a>. 
+                                        <Translate>You can add short code for additional gallery plugin.More</Translate> &nbsp;<a href="?page=news-parser-menu-about#news-parser-settings"><Translate>info</Translate></a>. 
                                     </p>
                                 </td>
                             </tr>
@@ -42,7 +42,7 @@ export const GalleryPage=({settings,addGallery,shortCode,parameterName})=>(
                                 <td>
                                     <Input className="settings-parameter-name" onBlur={parameterName} fieldName='parameterName' value={settings.parameterName}/>
                                     <p className="description">
-                                        <Translate>You can specify name of parameter for pictures IDs.More</Translate>&nbsp;<a href="#"><Translate>info</Translate></a>. 
+                                        <Translate>You can specify name of parameter for pictures IDs.More</Translate>&nbsp;<a href="?page=news-parser-menu-about#news-parser-settings"><Translate>info</Translate></a>. 
                                     </p>
                                 </td>
                             </tr>

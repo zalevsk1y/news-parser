@@ -36,7 +36,7 @@ export const PostPage = ({settings, toggleAddThumbnail, toggleParseOtherPictures
                         fieldName='downloadPictures'></Switch>
                     <p className="description">
                         <Translate>Try to parse additional image from the page.More</Translate>&nbsp;
-                        <a href="#"><Translate>info</Translate></a>
+                        <a href="?page=news-parser-menu-about#news-parser-settings"><Translate>info</Translate></a>
                     </p>
 
                 </td>
@@ -57,7 +57,7 @@ export const PostPage = ({settings, toggleAddThumbnail, toggleParseOtherPictures
                         fieldName='downloadPictures'></Switch>
                     <p className="description">
                         <Translate>Show preview of all parsed images in additional window.More</Translate>&nbsp;
-                        <a href="#"><Translate>info</Translate></a>
+                        <a href="?page=news-parser-menu-about#news-parser-settings"><Translate>info</Translate></a>
                     </p>
 
                 </td>
