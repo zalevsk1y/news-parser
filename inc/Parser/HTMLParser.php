@@ -120,7 +120,7 @@ class HTMLParser extends ParseContent
             ->postGalleryRegExp("/data\-srcset\=\"(.*?\.jpg)/i")
             ->postGalleryRegExp("/data\-orig\-file\=\"(.*?\.jpg)/i")
             ->get();
-        return $gallery ?: '';
+        return $gallery ?: [];
     }
     /**
      * Parse title based on OpenGraphe marks <meta property=og:title content="...">
@@ -191,7 +191,7 @@ class HTMLParser extends ParseContent
     public function ImageFinder($findPattern)
     {
         $imageUrl = $this->find($findPattern);
-        if ( $imageUrl&&!count($imageUrl)) {
+        if ( $imageUrl===false||!count($imageUrl)) {
             return false;
         }
         $gallery = array();
