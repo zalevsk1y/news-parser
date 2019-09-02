@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import config from '@news-parser/config';
 
 export class Message extends React.Component{
     constructor(props){

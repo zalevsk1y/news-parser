@@ -191,7 +191,7 @@ class HTMLParser extends ParseContent
     public function ImageFinder($findPattern)
     {
         $imageUrl = $this->find($findPattern);
-        if (!count($imageUrl)) {
+        if ( $imageUrl&&!count($imageUrl)) {
             return false;
         }
         $gallery = array();

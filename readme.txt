@@ -3,7 +3,7 @@ Contributors: bikkel
 Donate link: 
 Author: Evgeniy Zalevskiy
 Tags: news-parser, wordpress news-parser plugin, News-Parser, wordpress  News-Parser plugin, rss parser, autopilot, news parser, News Parser, wordpress News Parser plugin
-Requires PHP: 7.2
+Requires PHP: 7.0
 Requires at least: 3.5.0
 Tested up to: 5.2.2
 Stable tag: 0.2.0
