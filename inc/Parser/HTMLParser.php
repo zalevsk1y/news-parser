@@ -196,7 +196,6 @@ class HTMLParser extends ParseContent
         }
         $gallery = array();
         foreach ($imageUrl as $image) {
-            $test = $image->getAttribute('alt');
             $url = $image->getAttribute('alt') ? $image->getAttribute('src') : false;
             if ($url && strpos($url, '.jpg')) {
                 $gallery[] = $url;

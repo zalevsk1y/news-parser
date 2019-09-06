@@ -62,8 +62,8 @@ class ParseContent
      * @return string HTML page data
      */
     protected function download($url)
-    {
-        $data = wp_remote_get($url);
+    {   $request_args=array('user-agent'=>'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36');
+        $data = wp_remote_get($url,$request_args);
         $response_code= wp_remote_retrieve_response_code($data);
         if ($response_code!=200) {
             throw new MyException(Errors::text('FILE_DOWNLOAD'));
