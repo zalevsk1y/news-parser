@@ -54,13 +54,23 @@ class ResponseFormatter {
             return $this;
     }
     /**
-     * Return erro message in case some errors
+     * Format answer for rawHtML request.
+     *
+     * @param string $data Raw HTML data .
+     * @return void
+     */
+    public function rawHTML($data){
+        $this->data['data']=esc_html($data);
+        return $this;
+    }
+    /**
+     * Return error message in case some errors
      *
      * @param int $code code of error
      * @return object return this for chain building
      */
     public function error($code){
-        $this->data['err']=$code;
+        $this->data['err']=esc_html($code);
         return $this;
     }
     /**
@@ -77,8 +87,8 @@ class ResponseFormatter {
         }else{
             $this->data['msg']=array(
             
-                    'type'=>$status,
-                    'text'=>$text,
+                    'type'=>esc_html($status),
+                    'text'=>esc_html($text),
                     'timestamp'=>time()
                 
             );

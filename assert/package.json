@@ -9,13 +9,15 @@
     "redux":"~4.0.1",
     "redux-thunk": "~2.3.0",
     "prop-types":"15.7.2",
-    "module-alias":"~2.2.0"
+    "module-alias":"~2.2.0",
+    "dompurify":"~2.0.7"
 
   },
   "scripts": {
    "test":"jest",
    "updateSnapshot":"jest --updateSnapshot",
     "build": "webpack --mode production",
+    "dev": "webpack --mode development",
     "start":"webpack-dev-server"
 
   },

@@ -50,7 +50,19 @@ class Main
 
             \wp_enqueue_style(NEWS_PARSER_PLUGIN_SLUG . '-media_views', NEWS_PARSER_PLUGIN_URL . '/public/css/media-views.css');
             \wp_enqueue_style(NEWS_PARSER_PLUGIN_SLUG . '-style', NEWS_PARSER_PLUGIN_URL . '/public/css/my-style.css');
-            \wp_enqueue_script('main-parser--bundle-main', NEWS_PARSER_PLUGIN_URL . '/public/js/parser.bundle.js');
+            \wp_enqueue_script('main-parser-bundle-main', NEWS_PARSER_PLUGIN_URL . '/public/js/parser.bundle.js');
+            wp_enqueue_script(array(NEWS_PARSER_PLUGIN_SLUG.'-rest-nonce',NEWS_PARSER_PLUGIN_SLUG.'-rest-api') );
+            $nonce=array(
+                'root'=>esc_url_raw(rest_url()),
+                'pluginUrl'=>esc_url_raw(NEWS_PARSER_PLUGIN_URL),
+                'nonce'=>wp_create_nonce('wp_rest')
+            );
+            wp_localize_script('main-parser-bundle-main','newsParserRestNonce',$nonce);
+            $rest_api_endpoints=array(
+                'visualConstructor'=>rest_url('news-parser/v1/visual-constructor/'),
+            );
+            wp_localize_script('main-parser-bundle-main','newsParserRestApi',$rest_api_endpoints);
+           
         }
         if (strrpos($hook, $this->config->menu->subs[1]->menu_slug) != false) {
 

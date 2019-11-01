@@ -43,9 +43,11 @@ class HTMLParser extends ParseContent
      * [body] - post body @string
      * [gallery] - post image gallery array|'' empty string if none
      *
+     * @param string $data
+     * @param array $options
      * @return StdClass
      */
-    protected function parse($data)
+    protected function parse($data,$options)
     {
         $this->dom = $this->parser::str_get_html($data);
         $this->rawHTML = $data;
@@ -77,18 +79,20 @@ class HTMLParser extends ParseContent
      * @return string Image url
      */
     public function postImage()
-    {
-        $imageUrl = $this->chain()
+    {   $alt=$this->getFirstWordOfTitle();
+        $images = $this->chain()
         // Parse gallery images based on Schema.org marks
-            ->imageFinder('meta[property=og:image]')
+            ->find('meta[property=og:image]')
         // Parse gallery images based on OpenGraph marks
-            ->imageFinder('img')
+            ->imageFinder('img',$alt,'htmlDomParser')
             ->get();
-        if (!count($imageUrl)) {
+        if (!count($images)) {
             return false;
         }
-
-        return is_array($imageUrl) ? $imageUrl[0] : $imageUrl;
+        return $this->chain($images[0])
+            ->getAttribute('content')
+            ->getAttribute('src')
+            ->get();
     }
 
     /**
@@ -112,15 +116,29 @@ class HTMLParser extends ParseContent
      * @return array Array of parsed images url
      */
 
-    public function postGallery()
-    {
-        $gallery = $this->chain()
-            ->postGalleryRegExp("/original\=\"(.*?\.jpg)/i")
-            ->postGalleryRegExp("/data\-src\=\"(.*?\.jpg)/i")
-            ->postGalleryRegExp("/data\-srcset\=\"(.*?\.jpg)/i")
-            ->postGalleryRegExp("/data\-orig\-file\=\"(.*?\.jpg)/i")
+    public function postGallery()   
+    {   $gallery=array();
+        $alt=$this->getFirstWordOfTitle();
+        $image_tags=$this->imageFinder('img',$alt,'tag');
+        if(count($image_tags)>0){
+            $image_tags=implode(' ',$image_tags);
+        }
+        $images = $this->chain()
+            ->customSourceGalleryRegExp("/original\=\"(.*?)\"/i",$image_tags)
+            ->customSourceGalleryRegExp("/data\-src\=\"(.*?)\"/i",$image_tags)
+            ->customSourceGalleryRegExp("/data\-srcset\=\"(.*?)\"/i",$image_tags)
+            ->customSourceGalleryRegExp("/srcset\=\"(.*?)\"/i",$image_tags)
+            ->customSourceGalleryRegExp("/data\-orig\-file\=\"(.*?)\"/i",$image_tags)
+            ->customSourceGalleryRegExp("/src\=\"(.*?)\"/i",$image_tags)
             ->get();
-        return $gallery ?: [];
+        foreach($images as $image){
+            $result=$this->customSourceGalleryRegExp("/(http.*?\.(jpg|png))/i",$image);
+            $array_count=is_array($result)?count($result):0;
+            if($array_count>0){
+                $gallery[]=$result[$array_count-1];
+            }
+        }
+        return $gallery;
     }
     /**
      * Parse title based on OpenGraphe marks <meta property=og:title content="...">
@@ -184,11 +202,13 @@ class HTMLParser extends ParseContent
      * optimization to avoid parsing to many unnecessary images.
      *
      * @param string  $findPattern - PhpSimple find pattern https://simplehtmldom.sourceforge.io/
+     * @param string $alt part of alt string. 
+     * @param string $output [htmlDomParser|tag] htmlDomParse - return htmlDomParse object,tag - return outerText tag as string 
      *
      * @return array Array of image urls parsed from page
      */
 
-    public function ImageFinder($findPattern)
+    public function ImageFinder($findPattern,$alt,$output='tag')
     {
         $imageUrl = $this->find($findPattern);
         if ( $imageUrl===false||!count($imageUrl)) {
@@ -196,24 +216,28 @@ class HTMLParser extends ParseContent
         }
         $gallery = array();
         foreach ($imageUrl as $image) {
-            $url = $image->getAttribute('alt') ? $image->getAttribute('src') : false;
-            if ($url && strpos($url, '.jpg')) {
-                $gallery[] = $url;
+            if (false!==$alt_of_image=$image->getAttribute('alt')&&$alt&&-1!==strpos($alt_of_image,$alt)){ 
+                switch($output){
+                    case 'htmlDomParser':
+                            $gallery[] = $image;
+                        break;
+                    case 'tag':
+                        $gallery[] = $image->outertext;
+                        break;
+                }
             }
-
         }
         return count($gallery) ? $gallery : false;
     }
     /**
-     * Parse images for gallery using regular expression
+     * Parse images for gallery using regular expression from post rawHTML.
      *
      * @param string $pattern should be valid regular expression
-     *
-     * @return array parsed images ulr
+     * @param string $source
+     * @return array|bool parsed images ulr
      */
-    public function postGalleryRegExp($pattern)
-    {
-        preg_match_all($pattern, $this->rawHTML, $matches);
+    public function customSourceGalleryRegExp ($pattern,$source){
+        preg_match_all($pattern,$source, $matches);
         if (count($matches[1])) {
             $large = $matches[1];
         } else {
@@ -221,6 +245,17 @@ class HTMLParser extends ParseContent
         }
 
         return $large;
+    }
+    /**
+     * Parse images for gallery using regular expression from post rawHTML
+     *
+     * @param string $pattern should be valid regular expression
+     *
+     * @return array parsed images ulr
+     */
+    public function postGalleryRegExp($pattern)
+    {
+       return $this->customSourceGalleryRegExp($pattern,$this->rawHTML);
     }
 
     /**
@@ -235,6 +270,19 @@ class HTMLParser extends ParseContent
     {
         $result = $this->dom->find($query);
         return count($result) ? $result : false;
+    }
+    /**
+     * Returns first word of array.
+     *
+     * @return string|false
+     */
+    protected function getFirstWordOfTitle(){
+      
+        if($this->post['title']) {
+            $words_array=explode(' ',$this->post['title']);
+            return $words_array[0];
+        }
+        return false;
     }
 
     /**
@@ -252,10 +300,13 @@ class HTMLParser extends ParseContent
     /**
      * Facade for chain building class. use NewsParserPlugin\::get() function at the end to get result.
      *
+     * @param object|null object which methods will be called in chain.
+     * 
      * @return object ChainController
      */
-    protected function chain()
+    protected function chain($object=null)
     {
-        return new ChainController($this);
+        $object=is_null($object)?$this:$object;
+        return new ChainController($object);
     }
 }

@@ -11,7 +11,9 @@ export const types = {
     OPEN_DIALOG:'OPEN_DIALOG',
     CLOSE_DIALOG:'CLOSE_DIALOG',
     CREATE_MESSAGE:'CREATE_MESSAGE',
-    FETCH_ERROR:'FETCH_ERROR'
+    FETCH_ERROR:'FETCH_ERROR',
+    OPEN_VISUAL_CONSTRUCTOR:'OPEN_VISUAL_CONSTRUCTOR',
+    CLOSE_VISUAL_CONSTRUCTOR:'CLOSE_VISUAL_CONSTRUCTOR'
 }
 
 export function requestPostsList(url) {
@@ -44,10 +46,9 @@ export function receivePostsList(url, posts) {
         date: false
     }
 }
-export function receiveError(url, data) {
+export function receiveError(data) {
     return {
         type: types.RECEIVE_ERROR,
-         url,
          data}
 }
 export function receivePost(url, post) {
@@ -70,9 +71,10 @@ export function createMessage(type,text){
 }
 export function openDialog(url,dialogData){
     const dialog=dialogData.dialog;
+    let  newData;
     switch(dialog.type){
         case 'gallery':
-            var newData=dialog.data?dialog.data.map((item,key)=>{
+            newData=dialog.data?dialog.data.map((item,key)=>{
                 return {
                     id:key,
                     url:item,
@@ -87,9 +89,12 @@ export function openDialog(url,dialogData){
                     }     
                 }):[];
             break;
+        case 'visualConstructor':
+            break;
         default:
-        var newData=dialog.data;
+            newData=dialog.data;
     }
+   
     dialogData.dialog.data=newData;
     return {
         type:types.OPEN_DIALOG,
@@ -97,12 +102,22 @@ export function openDialog(url,dialogData){
         data: dialogData
     }
 }
+export function openVisualConstructor(){
+    return {
+        type:types.OPEN_VISUAL_CONSTRUCTOR
+    }
+}
+export function closeVisualConstructor(){
+    return {
+        type:types.CLOSE_VISUAL_CONSTRUCTOR
+    }
+}
 export function closeDialog(){
     return {
         type:types.CLOSE_DIALOG
     }
 }
-function fetchError(error){
+export function fetchError(error){
     return {
         type:types.FETCH_ERROR,
         data:{
@@ -126,7 +141,7 @@ export function parseRSSList(params) {
                 if (!json.err) {
                     dispatch(receivePostsList(params.url, json))
                 } else {
-                    dispatch(receiveError(params.url, json));
+                    dispatch(receiveError( json));
                 }
             })
             .catch(error=>{
@@ -141,7 +156,7 @@ export function parsePage (params) {
     return dispatch => {
         return fetch(requestUrl,parameters)
             .then(response => response.json())
-            .then((json, error) => {
+            .then((json) => {
                 if(json){  
                     switch(true){
                         case(json.dialog!==undefined):
@@ -152,7 +167,7 @@ export function parsePage (params) {
                             dispatch(receivePost(params.url, json));
                             break;
                         case (json.err==1):
-                            dispatch(receiveError(params.url, json));
+                            dispatch(receiveError( json));
                             break;
                     }
                 }

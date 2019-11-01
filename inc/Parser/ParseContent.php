@@ -17,7 +17,7 @@ use NewsParserPlugin\Message\Errors;
  * @author   Evgeniy S.Zalevskiy <2600@urk.net>
  * @license  MIT
  */
-class ParseContent 
+abstract class ParseContent 
 {
     
     protected $cache_expiration;
@@ -26,7 +26,14 @@ class ParseContent
 
         $this->cache_expiration = $cache_expiration;
     }
-
+    /**
+     * Undocumented function
+     *
+     * @param string $data
+     * @param array $options
+     * @return array|stdClass
+     */
+    abstract protected function parse($data,$options);
     /**
      * Get data from cache using wordpress get_transient()
      *
@@ -74,19 +81,20 @@ class ParseContent
     /**
      * Get data to transfer to parser
      *
-     * @param [type] $url
+     * @param string $url
+     * @param array $options
      * @return void
      */
-    public function get($url)
+    public function get($url,$options=array())
     {
         $data = $this->getFromCache($url);
         if ($data) {
-            $response = $this->parse($data);
+            $response = $this->parse($data,$options);
             return $response;
         }
         $data = $this->download($url);
         $this->setCache($url, $data);
-        $response = $this->parse($data);
+        $response = $this->parse($data,$options);
 
         return $response;
     }

@@ -1,12 +1,11 @@
 const path = require("path");
 const bodyParser=require('body-parser');
-
+const https=require("https");
 module.exports=(app,server)=>{
 
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.get('/admin.php',(req,res)=>{
-    console.log()
     switch(req.query.page.trim()){
         case('news-parser-main-menu'):
             res.sendFile(path.join(__dirname,"assert/index.development.parser.html"))
@@ -17,7 +16,21 @@ app.get('/admin.php',(req,res)=>{
     }
     
 })
+app.get('/parse.php',(req,res)=>{
+    let url=req.query.url.trim(),
+        body='';
+        https.get(url,(response)=>{
+            response.on('data',(chunk)=>{
+                body+=chunk;
+            })
+            response.on('end',()=>{
+                res.send(body)
+            })
+        });
 
+    
+
+})
 app.post('/admin-ajax.php',(req,res)=>{
     var response={};
     //check nonce 

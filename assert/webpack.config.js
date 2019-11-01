@@ -48,6 +48,9 @@ module.exports={
 			  }
 		],
 	},
+	externals:{
+		'globals':'window'
+	},
 	resolve: {
 		alias: {
 				"@news-parser/message": path.resolve(__dirname,"src/packages/message/src/index.js"),
@@ -55,11 +58,12 @@ module.exports={
 				"@news-parser/helpers": path.resolve(__dirname,"src/packages/helpers/src/index.js"),
 				"@news-parser/config": path.resolve(__dirname,"src/packages/config/src/index.js"),
 				"@news-parser/translate": path.resolve(__dirname,"src/packages/translate/src/index.js"),
-				"@news-parser/error-handler": path.resolve(__dirname,"src/packages/error-handler/src/index.js")
+				"@news-parser/error-handler": path.resolve(__dirname,"src/packages/error-handler/src/index.js"),
+				"@news-parser/visual-constructor":path.resolve(__dirname,"src/packages/visual-constructor/src/")
 			}
 	},
 	devServer:{
-		port:9000,
+		port:9001,
 		contentBase: [path.resolve(__dirname, '../public/'),path.join(__dirname,'devServer/assert')],
 		index:path.join(__dirname, 'devServer/index.html'),
 		before:devServer

@@ -11,6 +11,7 @@ import Message from "./Message";
 import PropTypes from 'prop-types';
 import Translate from './Translate';
 
+
 export class Main extends React.Component {
     constructor(props){
       super(props);

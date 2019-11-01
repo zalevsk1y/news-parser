@@ -5,7 +5,7 @@ export const initialStateParse={
             action:'main',
             actionParams:false,
             message:false,
-            dialog:{},
+            dialog:false,
             error:0,
             items:{}
 }

@@ -1,7 +1,9 @@
 import React from 'react';
+import {Fragment} from 'react';
 import Image from '../components/Image';
 import {connect} from 'react-redux';
-import {parsePage,createMessage} from '../actions';
+import {parsePage,createMessage,openDialog} from '../actions';
+import Icons from '../components/Icons';
 
 import PropTypes from 'prop-types';
 import {getNonce} from '@news-parser/helpers'
@@ -10,30 +12,44 @@ export class Post extends React.Component {
     constructor(props){
         super(props);
         this.footer=this.footer.bind(this);
+        this.openVisualConstructor=this.openVisualConstructor.bind(this);
     }
     footer(props){
-        let className,onClick;
+        var footer=[],_this=this;
         switch (props.status){
             case 'draft':
-                className='fo fo-preview';
-                onClick=(event)=>{
-                    event.preventDefault();
-                    const newWindow=window.open(props.editLink,'_blank');
-                    newWindow.focus();}
-                
+                onClickPreviewPage=(event)=>{
+                        event.preventDefault();
+                        const newWindow=window.open(props.editLink,'_blank');
+                        newWindow.focus();
+                    }
+                footer.push(<Icons className='fo fo-edit' title="Preview created post" onClick={onClickPreviewPage}/>)
                 break;
             case 'parsed':
-                className='fo fo-download';
-                onClick=()=>{props.isFetching?props.message('info','Please wait data is parsing'):props.parsePage(props.link,props.postId)}
+                let onClickParsePage=()=>{
+                        props.isFetching?props.message('info','Please wait data is parsing'):props.parsePage(props.link,props.postId)
+                    },
+                    onClickVisualConstructor=()=>{
+                        _this.openVisualConstructor();
+                        
+                    };
+                footer.push(<Icons className='fo fo-download' title="Parse post" onClick={onClickParsePage}/>,
+                        <Icons className='fo fo-visual-constructor' title='Visual constructor' onClick={onClickVisualConstructor} />);
                 break;
             default:
                 console.error('Wrong post type: '+props.status)
         }
         return (
             <div className="footer-post">
-                <span className={className} onClick={onClick}></span>
+                {footer.map((icon,key)=><Fragment key={key.toString()}>{icon}</Fragment>)}
             </div>
         )
+    }
+    openVisualConstructor(){
+       
+        this.props.openVisualConstructor(this.props.link,{dialog:{
+            type:'visualConstructor'
+        }})
     }
     render(){
     return (
@@ -94,6 +110,10 @@ function mapDispatchToProps(dispatch){
         },
         message:(type,text)=>{
             dispatch(createMessage(type,text))
+        },
+        openVisualConstructor:(url,dialogData)=>{
+           
+            dispatch(openDialog(url,dialogData))
         }
     }
 }

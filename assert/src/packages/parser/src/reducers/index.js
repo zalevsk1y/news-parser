@@ -2,7 +2,7 @@ import {combineReducers} from 'redux';
 import {types} from '../actions';
 import {initialStateParse,initialStateRoute} from './initState';
 import {combineSubReducers} from '@news-parser/helpers';
-import {dialog} from './galleryDialog'
+import dialog from './dialog'
 
 export function parse (state=initialStateParse,action){
 
@@ -40,6 +40,7 @@ export function parse (state=initialStateParse,action){
                 error:action.post.err
             };
         case types.OPEN_DIALOG:
+ 
             return {...state,
                 isFetching:false,
                 url:action.url,
@@ -53,6 +54,7 @@ export function parse (state=initialStateParse,action){
                  action:'main',
                  dialog:false
             }
+   
         case types.FETCH_ERROR:
             return {
                 ...state,

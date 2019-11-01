@@ -88,6 +88,7 @@ export class ModalGallery extends React.Component{
         )
     }
     render(){
+      
         const modalVisibility=this.state.status?"":" hidden";
         
         return (

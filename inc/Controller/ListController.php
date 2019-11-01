@@ -39,7 +39,6 @@ class ListController
     }
     public function get(string $url)
     {
-
         try {
             $listData = $this->listParser->get($url);
             $list = $this->listFactory->get($listData);

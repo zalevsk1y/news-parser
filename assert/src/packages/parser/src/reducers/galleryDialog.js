@@ -1,6 +1,7 @@
 import {types} from '../actions/galleryDialog';
 
-export function dialog(state={},action){
+
+export function galleryDialog(state={},action){
     switch(action.type){
         case types.SELECT_PICTURE:
             var data=state.data.map((item)=>{
@@ -33,6 +34,6 @@ export function dialog(state={},action){
             })
             return {...state,data};
         default:
-        return {...state}
+            return {...state};
     }
 }

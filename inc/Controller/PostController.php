@@ -40,7 +40,7 @@ class PostController
         $this->postFactory = $postFactory;
     }
     /**
-     * Get create post draft and return response in proper format
+     * Create post draft and return response in proper format
      * All facade of PostModel class methods created for convenience of using in pipe
      *
      * @param string $url of post that should be parsed and saved as draft
