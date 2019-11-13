@@ -1,6 +1,6 @@
 import React from 'react';
 import {getPluginDirUrl,hash} from '@news-parser/helpers';
-import {selectTitle,selectFeaturedImage,selectContent,removeContent} from '../actions/frame';
+import {selectTitle,selectFeaturedMedia,selectContent,removeContent} from '../actions/frame';
 import {connect} from 'react-redux';
 import DOMPurify from 'dompurify';
 
@@ -17,7 +17,7 @@ export class Frame extends React.Component{
             sanitizedDOM=DOMPurify.sanitize(this.props.data,{ADD_TAGS:['link'],WHOLE_DOCUMENT:true}),
             cssLink=document.createElement('link');
         this.getTitle();
-        this.getFeaturedImage();
+        this.getFeaturedMedia();
       
         cssLink.href = getPluginDirUrl()+"/public/css/frame-style.css"; 
         cssLink.rel = "stylesheet"; 
@@ -54,13 +54,13 @@ export class Frame extends React.Component{
         }
        
     }
-    getFeaturedImage(){
+    getFeaturedMedia(){
         const pattern=/\<meta property\=\"og\:image\" content\=\"(.*?)\"/i;
         let image=this.props.data.match(pattern);
        
         if(image.hasOwnProperty('1')){
             
-            this.props.selectFeaturedImage(image[1]);
+            this.props.selectFeaturedMedia(image[1]);
         }
         
     }
@@ -146,8 +146,8 @@ function mapDispatchToProps(dispatch){
         selectTitle:function(title){
             dispatch(selectTitle(title))
         },
-        selectFeaturedImage:function(url){
-            dispatch(selectFeaturedImage(url));
+        selectFeaturedMedia:function(url){
+            dispatch(selectFeaturedMedia(url));
         },
         selectContent:function(hash,content){
             dispatch(selectContent(hash,content))

@@ -1,7 +1,7 @@
 import {types} from '../actions/option';
 
 export const defaultOptionsState={
-    noFeaturedImage:false,
+    noFeaturedMedia:false,
     downloadImages:true,
     addSource:false,
     saveParsingTemplate:false
@@ -10,9 +10,9 @@ export const defaultOptionsState={
 export function options(state=defaultOptionsState,action){
 
     switch (action.type){
-        case types.TOGGLE_NO_FEATURED_IMAGE:
+        case types.TOGGLE_NO_FEATURED_MEDIA:
             return {...state,
-                noFeaturedImage:!state.noFeaturedImage
+                noFeaturedMedia:!state.noFeaturedMedia
             }
         default:
             return {...state}

@@ -1,6 +1,7 @@
 import {getRestNonce,getAjaxNonce,getApiEndpoint,sendApiRequest,decodeHTMLEntities,getPostEditLink} from '@news-parser/helpers';
 import {PostModel} from '@news-parser/helpers/classes/PostModel'
-import {fetchError,receiveError, closeDialog,receivePost} from '../../../parser/src/actions/index'
+import {fetchError,receiveError, closeDialog,receivePost,createMessage} from '../../../parser/src/actions/index'
+import { MediaModel } from '../../../helpers/src/classes/MediaModel';
 export const types = {
     GET_PAGE_HTML: 'GET_PAGE_HTML',
     DIALOG_START_FETCHING: 'DIALOG_START_FETCHING',
@@ -49,14 +50,10 @@ export function getPageHTML(pageUrl,dispatch){
                     dispatch(getPostHTML(receivedData))
                    
                 })
-                
-              
-                  
-    }
-      
+        }
 }
 export function createPostDraft(postId,postUrl,postData,options,dispatch){
-    let nonce=getRestNonce(),
+    const nonce=getRestNonce(),
         post=new PostModel({url:postUrl,postData,restApiRoot:getApiEndpoint('root'),options});
   
     dispatch(sendRequestToServer());
@@ -64,24 +61,36 @@ export function createPostDraft(postId,postUrl,postData,options,dispatch){
         return post
             .nonceAuth(nonce)
             .createPostDraft()
-            .then(receive=>{
+            .then(postData=>{
                 dispatch(receiveRequestFromServer());
                 dispatch(closeDialog());
-                if(receive.err==0){
+                    let receive={};
                     receive.msg={
                         type:"success",
                         text:'Post "'+post.title+'" was successfully parsed and save as "draft".'
                     }
-                    receive.data={...receive.data,
+                    receive.data={
                             status:'draft',
                             _id:postId,
                             post_id:post.id,
-                            link:getPostEditLink(post.id)
+                            link:getPostEditLink(post.id),
+                            postData
                         };
-                    dispatch(receivePost(postUrl,receive));
-                }else{
-                    dispatch(receiveError(receivedData))
-                }   
+                    if(!options.noFeaturedMedia){
+                        let media= new MediaModel(getApiEndpoint('media'));
+                        media.nonceAuth(getAjaxNonce()).create(post.featuredMedia,post.title,post.id)
+                            .then(mediaData=>{
+                                if(mediaData.err==0&&mediaData.data.mediaId){
+                                    post.updatePost({'featured_media':mediaData.data.mediaId})
+                                }else{
+                                    if(mediaData.hasOwnProperty('msg')){
+                                        dispatch(createMessage(mediaData.msg.type,mediaData.msg.text));
+                                    }
+                                }
+                            })
+                            
+                    }
+                    dispatch(receivePost(postUrl,receive)); 
             })
             .catch(error=>{
                 dispatch(fetchError(error))

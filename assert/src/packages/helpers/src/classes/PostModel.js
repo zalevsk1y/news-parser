@@ -27,37 +27,23 @@ export class PostModel{
                 status:'draft',
                 title:this.title,
                 content:this.content
-            };
-        let featuredMedia=this.featuredMedia,
+            },
             $this=this;
+            
         return fetch(url,{
                 method:'POST',
                 headers:this.headers,
                 body:JSON.stringify(body)
              }).then(response=>response.json())
-               .then(postData=>{
-                if(featuredMedia){
-                    $this.postId=postData.id;
-                    return $this.createMedia().nonceAuth(getAjaxNonce()).create(featuredMedia,$this.title,postData.id)
-                        .then(mediaData=>{
-                            if(mediaData.err==0&&mediaData.data.mediaId)$this.updatePost({'featured_media':mediaData.data.mediaId})
-                            mediaData.data.postData=postData;
-                            return mediaData;
-                    })
-                }else{
-                    return {
-                        err:0,
-                        msg:'',
-                        data:{
-                            postData:postData
-                        }
-                    };
-                }
-        })
+             .then(postData=>{
+                $this.id=postData.id;
+                return postData;
+             })
+
     }
     updatePost(params){
-        if(!this.postId)throw new Error('No post ID was set. Post could not be updated');
-        let url=this.rootApi+this.endPoint+'/'+this.postId;
+        if(!this.id)throw new Error('No post ID was set. Post could not be updated');
+        let url=this.rootApi+this.endPoint+'/'+this.id;
         return fetch(url,{
             method:'POST',
             headers:this.headers,

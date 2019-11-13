@@ -37897,11 +37897,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var MediaModel =
 /*#__PURE__*/
 function () {
-  function MediaModel(rootApi) {
+  function MediaModel(endPoint) {
     _classCallCheck(this, MediaModel);
 
-    if (!rootApi) throw new Error('No rootApi was set.');
-    this.endPoint = Object(_index__WEBPACK_IMPORTED_MODULE_1__["getApiEndpoint"])('media');
+    this.endPoint = endPoint;
     this.headers = {
       'Content-Type': 'application/json',
       'accept': 'application/json'
@@ -38042,8 +38041,7 @@ function () {
         status: 'draft',
         title: this.title,
         content: this.content
-      };
-      var featuredMedia = this.featuredMedia,
+      },
           $this = this;
       return fetch(url, {
         method: 'POST',
@@ -38052,31 +38050,15 @@ function () {
       }).then(function (response) {
         return response.json();
       }).then(function (postData) {
-        if (featuredMedia) {
-          $this.postId = postData.id;
-          return $this.createMedia().nonceAuth(Object(_index__WEBPACK_IMPORTED_MODULE_1__["getAjaxNonce"])()).create(featuredMedia, $this.title, postData.id).then(function (mediaData) {
-            if (mediaData.err == 0 && mediaData.data.mediaId) $this.updatePost({
-              'featured_media': mediaData.data.mediaId
-            });
-            mediaData.data.postData = postData;
-            return mediaData;
-          });
-        } else {
-          return {
-            err: 0,
-            msg: '',
-            data: {
-              postData: postData
-            }
-          };
-        }
+        $this.id = postData.id;
+        return postData;
       });
     }
   }, {
     key: "updatePost",
     value: function updatePost(params) {
-      if (!this.postId) throw new Error('No post ID was set. Post could not be updated');
-      var url = this.rootApi + this.endPoint + '/' + this.postId;
+      if (!this.id) throw new Error('No post ID was set. Post could not be updated');
+      var url = this.rootApi + this.endPoint + '/' + this.id;
       return fetch(url, {
         method: 'POST',
         headers: this.headers,
@@ -38287,7 +38269,7 @@ function getAjaxNonce() {
 }
 function getPostEditLink(id) {
   var linkTemplate = newsParserSettings.editPostLink;
-  return linkTemplate.replace('${postId}', id);
+  return linkTemplate.replace('$postId', id);
 }
 function sendApiRequest(_ref) {
   var url = _ref.url,
@@ -40248,22 +40230,21 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************************************!*\
   !*** ./src/packages/visual-constructor/src/actions/frame.js ***!
   \**************************************************************/
-/*! exports provided: types, selectTitle, selectFeaturedImage, selectContent, removeContent */
+/*! exports provided: types, selectTitle, selectFeaturedMedia, selectContent, removeContent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "types", function() { return types; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectTitle", function() { return selectTitle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectFeaturedImage", function() { return selectFeaturedImage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectFeaturedMedia", function() { return selectFeaturedMedia; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectContent", function() { return selectContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeContent", function() { return removeContent; });
 var types = {
   SELECT_TITLE: 'SELECT_TITLE',
-  SELECT_FEATURED_IMAGE: 'SELECT_FEATURED_IMAGE',
+  SELECT_FEATURED_MEDIA: 'SELECT_FEATURED_MEDIA',
   SELECT_CONTENT: 'SELECT_CONTENT',
-  REMOVE_CONTENT: 'REMOVE_CONTENT',
-  TOGGLE_NO_FEATURED_IMAGE: 'TOGGLE_NO_FEATURED_IMAGE'
+  REMOVE_CONTENT: 'REMOVE_CONTENT'
 };
 function selectTitle(title) {
   return {
@@ -40271,9 +40252,9 @@ function selectTitle(title) {
     title: title
   };
 }
-function selectFeaturedImage(url) {
+function selectFeaturedMedia(url) {
   return {
-    type: types.SELECT_FEATURED_IMAGE,
+    type: types.SELECT_FEATURED_MEDIA,
     url: url
   };
 }
@@ -40311,9 +40292,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
 /* harmony import */ var _news_parser_helpers_classes_PostModel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @news-parser/helpers/classes/PostModel */ "./src/packages/helpers/src/classes/PostModel.js");
 /* harmony import */ var _parser_src_actions_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../parser/src/actions/index */ "./src/packages/parser/src/actions/index.js");
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+/* harmony import */ var _helpers_src_classes_MediaModel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../helpers/src/classes/MediaModel */ "./src/packages/helpers/src/classes/MediaModel.js");
 
 
 
@@ -40378,25 +40357,38 @@ function createPostDraft(postId, postUrl, postData, options, dispatch) {
   });
   dispatch(sendRequestToServer());
   return function (dispatch) {
-    return post.nonceAuth(nonce).createPostDraft().then(function (receive) {
+    return post.nonceAuth(nonce).createPostDraft().then(function (postData) {
       dispatch(receiveRequestFromServer());
       dispatch(Object(_parser_src_actions_index__WEBPACK_IMPORTED_MODULE_2__["closeDialog"])());
+      var receive = {};
+      receive.msg = {
+        type: "success",
+        text: 'Post "' + post.title + '" was successfully parsed and save as "draft".'
+      };
+      receive.data = {
+        status: 'draft',
+        _id: postId,
+        post_id: post.id,
+        link: Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getPostEditLink"])(post.id),
+        postData: postData
+      };
 
-      if (receive.err == 0) {
-        receive.msg = {
-          type: "success",
-          text: 'Post "' + post.title + '" was successfully parsed and save as "draft".'
-        };
-        receive.data = _objectSpread({}, receive.data, {
-          status: 'draft',
-          _id: postId,
-          post_id: post.id,
-          link: Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getPostEditLink"])(post.id)
+      if (!options.noFeaturedMedia) {
+        var media = new _helpers_src_classes_MediaModel__WEBPACK_IMPORTED_MODULE_3__["MediaModel"](Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getApiEndpoint"])('media'));
+        media.nonceAuth(Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getAjaxNonce"])()).create(post.featuredMedia, post.title, post.id).then(function (mediaData) {
+          if (mediaData.err == 0 && mediaData.data.mediaId) {
+            post.updatePost({
+              'featured_media': mediaData.data.mediaId
+            });
+          } else {
+            if (mediaData.hasOwnProperty('msg')) {
+              dispatch(Object(_parser_src_actions_index__WEBPACK_IMPORTED_MODULE_2__["createMessage"])(mediaData.msg.type, mediaData.msg.text));
+            }
+          }
         });
-        dispatch(Object(_parser_src_actions_index__WEBPACK_IMPORTED_MODULE_2__["receivePost"])(postUrl, receive));
-      } else {
-        dispatch(Object(_parser_src_actions_index__WEBPACK_IMPORTED_MODULE_2__["receiveError"])(receivedData));
       }
+
+      dispatch(Object(_parser_src_actions_index__WEBPACK_IMPORTED_MODULE_2__["receivePost"])(postUrl, receive));
     }).catch(function (error) {
       dispatch(Object(_parser_src_actions_index__WEBPACK_IMPORTED_MODULE_2__["fetchError"])(error));
     });
@@ -40409,19 +40401,19 @@ function createPostDraft(postId, postUrl, postData, options, dispatch) {
 /*!***************************************************************!*\
   !*** ./src/packages/visual-constructor/src/actions/option.js ***!
   \***************************************************************/
-/*! exports provided: types, toggleNoFeaturedImage */
+/*! exports provided: types, toggleNoFeaturedMedia */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "types", function() { return types; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleNoFeaturedImage", function() { return toggleNoFeaturedImage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleNoFeaturedMedia", function() { return toggleNoFeaturedMedia; });
 var types = {
-  TOGGLE_NO_FEATURED_IMAGE: 'TOGGLE_NO_FEATURED_IMAGE'
+  TOGGLE_NO_FEATURED_MEDIA: 'TOGGLE_NO_FEATURED_MEDIA'
 };
-function toggleNoFeaturedImage() {
+function toggleNoFeaturedMedia() {
   return {
-    type: types.TOGGLE_NO_FEATURED_IMAGE
+    type: types.TOGGLE_NO_FEATURED_MEDIA
   };
 }
 
@@ -40501,7 +40493,7 @@ function (_React$Component) {
       }),
           cssLink = document.createElement('link');
       this.getTitle();
-      this.getFeaturedImage();
+      this.getFeaturedMedia();
       cssLink.href = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["getPluginDirUrl"])() + "/public/css/frame-style.css";
       cssLink.rel = "stylesheet";
       cssLink.type = "text/css";
@@ -40541,13 +40533,13 @@ function (_React$Component) {
       }
     }
   }, {
-    key: "getFeaturedImage",
-    value: function getFeaturedImage() {
+    key: "getFeaturedMedia",
+    value: function getFeaturedMedia() {
       var pattern = /\<meta property\=\"og\:image\" content\=\"(.*?)\"/i;
       var image = this.props.data.match(pattern);
 
       if (image.hasOwnProperty('1')) {
-        this.props.selectFeaturedImage(image[1]);
+        this.props.selectFeaturedMedia(image[1]);
       }
     }
   }, {
@@ -40650,8 +40642,8 @@ function mapDispatchToProps(dispatch) {
     selectTitle: function selectTitle(title) {
       dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_2__["selectTitle"])(title));
     },
-    selectFeaturedImage: function selectFeaturedImage(url) {
-      dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_2__["selectFeaturedImage"])(url));
+    selectFeaturedMedia: function selectFeaturedMedia(url) {
+      dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_2__["selectFeaturedMedia"])(url));
     },
     selectContent: function selectContent(hash, content) {
       dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_2__["selectContent"])(hash, content));
@@ -40723,7 +40715,7 @@ function (_React$Component) {
     _this.state = {};
     _this.changeStateInputTitle = _this.changeStateInputTitle.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.selectTitle = _this.selectTitle.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.selectFeaturedImage = _this.selectFeaturedImage.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.selectFeaturedMedia = _this.selectFeaturedMedia.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -40742,15 +40734,15 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "selectFeaturedImage",
-    value: function selectFeaturedImage() {
+    key: "selectFeaturedMedia",
+    value: function selectFeaturedMedia() {
       var options = this.props.options || {},
           body = this.props.body || {};
-      if (options.noFeaturedImage) return;
+      if (options.noFeaturedMedia) return;
 
       for (var item in body) {
         if (body[item].tagName === 'IMG') {
-          body[item].content && this.props.selectFeaturedImage(body[item].content);
+          body[item].content && this.props.selectFeaturedMedia(body[item].content);
           break;
         }
       }
@@ -40759,7 +40751,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var options = this.props.options || {};
-      var noImage = options.noFeaturedImage ? ' no-featured-image' : '';
+      var noImage = options.noFeaturedMedia ? ' no-featured-image' : '';
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "inner-sidebar-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoBox"], {
@@ -40775,14 +40767,14 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "howto"
       }, "If you want to change featured image, select image you would like to choose in the constructor and click \"Change image\" button."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_elements_Checkbox__WEBPACK_IMPORTED_MODULE_2__["Checkbox"], {
-        value: options.noFeaturedImage,
-        onClick: this.props.toggleNoFeaturedImage
+        value: options.noFeaturedMedia,
+        onClick: this.props.toggleNoFeaturedMedia
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "howto inline-bl"
       }, "No featured image."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoFooter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
         class: "button button-primary button-large",
-        onClick: this.selectFeaturedImage
+        onClick: this.selectFeaturedMedia
       }, "Change image"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoBox"], {
         title: "Post title"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoBody"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.props.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
@@ -40840,14 +40832,14 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    toggleNoFeaturedImage: function toggleNoFeaturedImage() {
-      dispatch(Object(_actions_option__WEBPACK_IMPORTED_MODULE_5__["toggleNoFeaturedImage"])());
+    toggleNoFeaturedMedia: function toggleNoFeaturedMedia() {
+      dispatch(Object(_actions_option__WEBPACK_IMPORTED_MODULE_5__["toggleNoFeaturedMedia"])());
     },
     selectTitle: function selectTitle(newTitle) {
       dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_6__["selectTitle"])(newTitle));
     },
-    selectFeaturedImage: function selectFeaturedImage(url) {
-      dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_6__["selectFeaturedImage"])(url));
+    selectFeaturedMedia: function selectFeaturedMedia(url) {
+      dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_6__["selectFeaturedMedia"])(url));
     }
   };
 }
@@ -41179,7 +41171,7 @@ function frame() {
         title: action.title
       });
 
-    case _actions_frame__WEBPACK_IMPORTED_MODULE_0__["types"].SELECT_FEATURED_IMAGE:
+    case _actions_frame__WEBPACK_IMPORTED_MODULE_0__["types"].SELECT_FEATURED_MEDIA:
       return _objectSpread({}, state, {
         image: action.url
       });
@@ -41289,7 +41281,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var defaultOptionsState = {
-  noFeaturedImage: false,
+  noFeaturedMedia: false,
   downloadImages: true,
   addSource: false,
   saveParsingTemplate: false
@@ -41299,9 +41291,9 @@ function options() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case _actions_option__WEBPACK_IMPORTED_MODULE_0__["types"].TOGGLE_NO_FEATURED_IMAGE:
+    case _actions_option__WEBPACK_IMPORTED_MODULE_0__["types"].TOGGLE_NO_FEATURED_MEDIA:
       return _objectSpread({}, state, {
-        noFeaturedImage: !state.noFeaturedImage
+        noFeaturedMedia: !state.noFeaturedMedia
       });
 
     default:

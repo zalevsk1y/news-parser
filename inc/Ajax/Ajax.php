@@ -99,7 +99,6 @@ class Ajax
     }
     public function mediaApi()
     {  
-        
         $this->checkPermission('parsing_news_api');
         $json_post = json_decode(file_get_contents('php://input'),TRUE);
         $request=$this->prepareArgs($json_post,array(

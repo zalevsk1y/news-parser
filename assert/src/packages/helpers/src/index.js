@@ -54,7 +54,7 @@ export function getAjaxNonce(){
 }
 export function getPostEditLink(id){
     let linkTemplate=newsParserSettings.editPostLink;
-    return linkTemplate.replace('${postId}',id);
+    return linkTemplate.replace('$postId',id);
 }
 export function sendApiRequest({url,nonce,method,data}){
     let options={

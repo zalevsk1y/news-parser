@@ -3,8 +3,8 @@ import {InfoBox,InfoBody,InfoFooter} from '../containers/InfoBox';
 import {Checkbox} from '../containers/elements/Checkbox'
 import Input from '../containers/elements/Input'
 import {connect} from 'react-redux';
-import { toggleNoFeaturedImage } from '../actions/option';
-import {selectTitle,selectFeaturedImage} from '../actions/frame';
+import { toggleNoFeaturedMedia } from '../actions/option';
+import {selectTitle,selectFeaturedMedia} from '../actions/frame';
 
 export class  SidebarRight extends React.Component{
     constructor(props){
@@ -12,7 +12,7 @@ export class  SidebarRight extends React.Component{
         this.state={}
         this.changeStateInputTitle=this.changeStateInputTitle.bind(this);
         this.selectTitle=this.selectTitle.bind(this);
-        this.selectFeaturedImage=this.selectFeaturedImage.bind(this)
+        this.selectFeaturedMedia=this.selectFeaturedMedia.bind(this)
     }
     selectTitle(){
         
@@ -23,20 +23,20 @@ export class  SidebarRight extends React.Component{
         if(!value||value===this.state.title)return;
         this.setState({title:value})
     }
-    selectFeaturedImage(){
+    selectFeaturedMedia(){
         const options=this.props.options||{},
                 body=this.props.body||{};
-        if(options.noFeaturedImage) return;
+        if(options.noFeaturedMedia) return;
         for(var item in body){
             if(body[item].tagName==='IMG'){
-                body[item].content&&this.props.selectFeaturedImage(body[item].content);
+                body[item].content&&this.props.selectFeaturedMedia(body[item].content);
                 break;
             }
         }
     }
     render(){
         const options=this.props.options||{};
-        const noImage=options.noFeaturedImage?' no-featured-image':'';
+        const noImage=options.noFeaturedMedia?' no-featured-image':'';
         return (
             
                 <div className="inner-sidebar-container" >
@@ -47,7 +47,7 @@ export class  SidebarRight extends React.Component{
                             <p className="howto">
                                 If you want to change featured image, select image you would like to choose in the constructor and click "Change image" button.
                             </p>
-                            <Checkbox value={options.noFeaturedImage} onClick={this.props.toggleNoFeaturedImage} />
+                            <Checkbox value={options.noFeaturedMedia} onClick={this.props.toggleNoFeaturedMedia} />
                             <p className="howto inline-bl">
                                 No featured image.                            
                             </p>
@@ -55,7 +55,7 @@ export class  SidebarRight extends React.Component{
                         </p>
                     </InfoBody>
                     <InfoFooter>
-                        <button type="button" class="button button-primary button-large" onClick={this.selectFeaturedImage}>Change image</button>
+                        <button type="button" class="button button-primary button-large" onClick={this.selectFeaturedMedia}>Change image</button>
                     </InfoFooter>
                 </InfoBox>
                 <InfoBox title="Post title">
@@ -117,14 +117,14 @@ export class  SidebarRight extends React.Component{
     }
     function mapDispatchToProps(dispatch){
         return {
-            toggleNoFeaturedImage:function(){
-                dispatch(toggleNoFeaturedImage())
+            toggleNoFeaturedMedia:function(){
+                dispatch(toggleNoFeaturedMedia())
             },
             selectTitle:function(newTitle){
                 dispatch(selectTitle(newTitle))
             },
-            selectFeaturedImage:function(url){
-                dispatch(selectFeaturedImage(url))
+            selectFeaturedMedia:function(url){
+                dispatch(selectFeaturedMedia(url))
             }
         }
     }

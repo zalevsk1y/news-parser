@@ -35934,7 +35934,7 @@ function getAjaxNonce() {
 }
 function getPostEditLink(id) {
   var linkTemplate = newsParserSettings.editPostLink;
-  return linkTemplate.replace('${postId}', id);
+  return linkTemplate.replace('$postId', id);
 }
 function sendApiRequest(_ref) {
   var url = _ref.url,

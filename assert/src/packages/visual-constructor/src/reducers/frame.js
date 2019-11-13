@@ -8,7 +8,7 @@ export function frame (state={},action){
             return {...state,
                     title:action.title
             }
-        case types.SELECT_FEATURED_IMAGE: 
+        case types.SELECT_FEATURED_MEDIA: 
             return {...state,
                     image:action.url
             }

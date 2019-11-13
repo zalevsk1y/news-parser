@@ -57,7 +57,7 @@ class VisualConstructorController {
     public function saveMedia($url,$postId,$alt=''){
         $img_id = \media_sideload_image($url, $postId, $alt, 'id');
         if (\is_wp_error($img_id)) {
-            $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');
+            $response = $this->formatResponse->error(1)->message('error', $img_id->get_error_message())->get('json');
         } else{
             $response=$this->formatResponse->media($img_id)->get('json');
         }

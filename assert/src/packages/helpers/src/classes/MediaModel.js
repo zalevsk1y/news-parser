@@ -3,10 +3,8 @@ import {getApiEndpoint} from '../index'
 
 export class MediaModel{
   
-    constructor(rootApi){
-        if(!rootApi)throw new Error('No rootApi was set.')
-     
-        this.endPoint=getApiEndpoint('media');
+    constructor(endPoint){
+        this.endPoint=endPoint;
         this.headers={
             'Content-Type': 'application/json',
             'accept': 'application/json',

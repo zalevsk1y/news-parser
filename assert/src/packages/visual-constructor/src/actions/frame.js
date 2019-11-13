@@ -1,9 +1,8 @@
 export const types={
     SELECT_TITLE:'SELECT_TITLE',
-    SELECT_FEATURED_IMAGE:'SELECT_FEATURED_IMAGE',
+    SELECT_FEATURED_MEDIA:'SELECT_FEATURED_MEDIA',
     SELECT_CONTENT:'SELECT_CONTENT',
     REMOVE_CONTENT:'REMOVE_CONTENT',
-    TOGGLE_NO_FEATURED_IMAGE:'TOGGLE_NO_FEATURED_IMAGE'
 }
 
 export function selectTitle(title){
@@ -12,9 +11,9 @@ export function selectTitle(title){
         title
     }
 }
-export function selectFeaturedImage(url){
+export function selectFeaturedMedia(url){
     return {
-        type:types.SELECT_FEATURED_IMAGE,
+        type:types.SELECT_FEATURED_MEDIA,
         url
     }
 }
