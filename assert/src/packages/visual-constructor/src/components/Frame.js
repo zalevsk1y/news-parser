@@ -1,13 +1,15 @@
 import React from 'react';
-import {getPluginDirUrl} from '@news-parser/helpers';
-import {selectTitle,selectFeaturedImage} from '../actions';
+import {getPluginDirUrl,hash} from '@news-parser/helpers';
+import {selectTitle,selectFeaturedImage,selectContent,removeContent} from '../actions/frame';
 import {connect} from 'react-redux';
 import DOMPurify from 'dompurify';
+
 
 export class Frame extends React.Component{
     constructor(props){
         super(props);
         this.frameRef=React.createRef();
+        this.clickHandler=this.clickHandler.bind(this);
     }
     componentDidMount(){
         
@@ -70,12 +72,59 @@ export class Frame extends React.Component{
         const className=event.target.className;
                 event.target.className=className.replace(' mouse-over','');
     }
+    parseElementData(element){
+        let parentElement=element.parentElement,
+            parsedData={};
+        parsedData.tagName=element.tagName;
+        parsedData.className=element.className.replace(' parser-select','').replace(' mouse-over','');
+        parsedData.content=parsedData.tagName==='IMG'?element.src:element.innerText;
+        let bodyScrollTop=this.frameRef.current.contentWindow.document.body.scrollTop;
+        parsedData.offsetTop=element.getBoundingClientRect().top+bodyScrollTop;
+        let parent;
+        while(true){
+            if(parentElement.className){
+                parent={
+                    tagName:parentElement.tagName,
+                    className:parentElement.className,
+                    offsetTop:parentElement.offsetTop
+                }
+                break;
+            }else{
+                parentElement=parentElement.parentElement
+                if (parentElement.tagName==='BODY'){
+                    parent={
+                        tagName:'BODY',
+                        className:null,
+                        offsetTop:parentElement.offsetTop
+                    }
+                    break;
+                }
+            }
+        }
+        parsedData.parent=parent;
+        let elementHash=hash((Math.random()).toString());
+        element.id=elementHash;
+        this.props.selectContent(elementHash,parsedData)
+
+    }
+    removeSelectedElement(element){
+        const hash=element.id;
+        hash&&this.props.removeContent(hash)
+    }
     clickHandler(event){
     
         event.preventDefault();
-        const className=event.target.className;
-        event.target.className=className.search(' parser-select')===-1?className+' parser-select':className.replace(' parser-select','');
-        event.target.getAttribute('src')?console.log(event.target.getAttribute('src')):console.log(event.target.innerHTML)
+        const className=event.target.className,
+              element=event.target;
+        if(className.search(' parser-select')===-1){
+            element.className=className+' parser-select';
+            this.parseElementData(element);
+        }else{
+            element.className=className.replace(' parser-select','');
+            this.removeSelectedElement(element);
+        }
+       
+      
     }
     render(){
        
@@ -99,6 +148,12 @@ function mapDispatchToProps(dispatch){
         },
         selectFeaturedImage:function(url){
             dispatch(selectFeaturedImage(url));
+        },
+        selectContent:function(hash,content){
+            dispatch(selectContent(hash,content))
+        },
+        removeContent:function(hash){
+            dispatch(removeContent(hash))
         }
     }
 }

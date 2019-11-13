@@ -12,6 +12,7 @@ class Input extends React.Component {
     }
     handleChange  (event)  {
         this.setState({value: event.target.value});
+        this.props.onChange(event.target.value);
     }
 
 
@@ -23,8 +24,8 @@ class Input extends React.Component {
     }
     render() {
         return (
-            <textarea className={(this.props.className||'')+' post-title-input'} onChange={this.handleChange} rows='3'>
-                {this.state.value}
+            <textarea className={(this.props.className||'')+' post-title-input'} onChange={this.handleChange} rows='3' value={this.state.value}>
+                
             </textarea>
             )
     }
@@ -34,4 +35,5 @@ export default Input
 
 Input.propTypes={
     value:PropTypes.string,
+    onChange:PropTypes.func
 }

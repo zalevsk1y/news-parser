@@ -23,7 +23,7 @@ define("NEWS_PARSER_PLUGIN_DIR", plugin_dir_path(__FILE__));
 define("NEWS_PARSER_PLUGIN_DIR_NAME", basename(dirname(__FILE__)));
 define("NEWS_PARSER_PLUGIN_NO_IMAGE_PATH", plugins_url('', __FILE__) . '/images/no-image.svg');
 define("NEWS_PARSER_PLUGIN_AJAX_PARSING_API", 'news_parser_parsing_api');
-define("NEWS_PARSER_PLUGIN_AJAX_SETTINGS_API", 'news_parser_settings_api');
+define("NEWS_PARSER_PLUGIN_AJAX_MEDIA_API", 'news_parser_media_api');
 
 require 'autoload.php';
 require 'vendor/autoload.php';
@@ -53,7 +53,7 @@ $modules['post_controller'] = new Controller\PostController($modules['html_parse
 $modules['settings_controller'] = new Controller\SettingsController($modules['settings'], $modules['response_formatter']);
 $modules['visual_constructor_controller']=new Controller\VisualConstructorController($modules['html_raw'],$modules['response_formatter']);
 //---Ajax
-$modules['ajax_controller'] =  Ajax\Ajax::getInstance($modules['list_controller'], $modules['post_controller'], $modules['settings_controller']);
+$modules['ajax_controller'] =  Ajax\Ajax::getInstance($modules['list_controller'], $modules['visual_constructor_controller'],$modules['response_formatter']);
 //---Rest
 $modules['rest_visual_constructor']= new Rest\VisualConstructorRestController($modules['visual_constructor_controller']);
 \register_uninstall_hook(__FILE__, 'Utils\Settings::deleteSettings');

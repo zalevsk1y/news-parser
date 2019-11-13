@@ -2,9 +2,8 @@
 namespace NewsParserPlugin\Ajax;
 
 use NewsParserPlugin\Controller\ListController;
-use NewsParserPlugin\Controller\PostController;
-use NewsParserPlugin\Controller\SettingsController;
-use NewsParserPlugin\Utils\Sanitize;
+use NewsParserPlugin\Utils\ResponseFormatter;
+use NewsParserPlugin\Controller\VisualConstructorController;
 
 /**
  * Ajax singleton class provide API to the front end
@@ -16,130 +15,188 @@ use NewsParserPlugin\Utils\Sanitize;
 
 class Ajax
 {
-    protected $post;
+    protected $formatResponse;
     protected $list;
-    protected $settings;
+    protected $visual;
     protected static $instance;
 
-    protected function __construct(ListController $listController, PostController $postController, SettingsController $settingsController)
+    protected function __construct(ListController $listController,VisualConstructorController $visual,ResponseFormatter $formatResponse)
     {
         $this->list = $listController;
-        $this->post = $postController;
-        $this->settings = $settingsController;
+        $this->visual  = $visual;
+        $this->formatResponse=$formatResponse;
         $this->init();
     }
-    public static function getInstance(ListController $listController, PostController $postController, SettingsController $settingsController)
+    public static function getInstance(ListController $listController,VisualConstructorController $visual,ResponseFormatter $formatResponse)
     {
         if (self::$instance) {
             return self::$instance;
         } else {
-            self::$instance = new self($listController, $postController, $settingsController);
+            self::$instance = new self($listController, $visual,$formatResponse);
             return self::$instance;
         }
     }
     protected function init()
     {
         \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API, array($this, 'parsingApi'));
-        \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_SETTINGS_API, array($this, 'settingsApi'));
+        \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_MEDIA_API, array($this, 'mediaApi'));
 
     }
-
-    public function settingsApi()
-    {
-        if (!\is_admin()) {
-            \wp_die();
+    /**
+     * Check if user have rights to publish posts and check nonce.
+     *
+     * @param string $nonce Nonce slug that was used.
+     * @return \WP_Error|bool
+     */
+    protected function checkPermission($nonce){
+        if (!\check_ajax_referer($nonce)||!\is_admin()) {
+            return new \WP_Error('ajax_forbidden', Errors::text('NO_RIGHTS_TO_PUBLISH'));
         }
-
-        if (isset($_GET['status'])) {
-            $status = \sanitize_text_field($_GET['status']);
-        } else if (!isset($_GET['status'])) {
-            \wp_die();
+        return true;
+    }
+    public function getPostDataRaw($request){
+        $page_url=$request['url'];
+        return $this->visual->getRawHTML($page_url,array('remove_scripts'=>true));
+    }
+    protected function checkArgType($arg,$type,$description=''){
+        $error_message='%s %s should be a %s but %s given.';
+        $desc=$description?:'Argument';
+        $arg_type=gettype($arg); 
+        if($arg_type!==$type)  return new \WP_Error('wrong_argument_type',
+            esc_html(sprintf($error_message,
+                $desc,
+                $arg,
+                $arg_type)
+            ));
+        return true;
+    }
+    protected function prepareArgs($dirty_request,$args_params){
+        $dirty_post=$dirty_request;
+        $clean_post=[];
+        foreach($args_params as $key=>$arg){
+            if(key_exists($key,$dirty_post)){
+                $dirty_arg=$dirty_post[$key];
+                if(is_wp_error($e=$this->checkArgType($dirty_arg,$arg['type'],$arg['description']))){
+                    $this->sendError($e->get_error_message());
+                }
+                //validate arguments.
+                if(!call_user_func($arg['validate_callback'],$dirty_arg)){
+                    $this->sendError($arg['description'].' is not valid parameter.');
+                }
+                //sanitize arguments.
+                if($clean_arg=call_user_func($arg['sanitize_callback'],$dirty_arg)){
+                    $clean_post[$key]=$clean_arg;
+                }
+            }
         }
-        switch ($status) {
-            case 'get':
-                if (!\check_ajax_referer('parsing_settings_api_get')) {
-                    \wp_die();
-                }
-
-                $response = $this->settings->get('json');
-                echo $response;
-                \wp_die();
-                break;
-            case 'default':
-                if (!\check_ajax_referer('parsing_settings_api_get')) {
-                    \wp_die();
-                }
-
-                $response = $this->settings->getDefault();
-                echo $response;
-                \wp_die();
-                break;
-            case 'save':
-                if (!\check_ajax_referer('parsing_settings_api_save')) {
-                   \wp_die();
-                }
-
-                $new_settings = \sanitize_text_field($_POST['settings']);
-                $new_settings = \json_decode(\stripslashes($new_settings), true);
-                $response = $this->settings->set($new_settings);
-                echo $response;
-                \wp_die();
-                break;
-        }
+        return $clean_post;
+    }
+    protected function sendError($message){
+        $clean_message=esc_html($message);
+        $formated_response=$this->formatResponse->error(1)->message('error',$clean_message)->get('json');
+        echo $formated_response;
+        \wp_die();
+    }
+    public function mediaApi()
+    {  
+        
+        $this->checkPermission('parsing_news_api');
+        $json_post = json_decode(file_get_contents('php://input'),TRUE);
+        $request=$this->prepareArgs($json_post,array(
+                'url'=>array(
+                    'description'=>esc_html__('Image url',NEWS_PARSER_PLUGIN_SLUG),
+                    'type'=>'string',
+                    'validate_callback'=>array($this,'validateImageUrl'),
+                    'sanitize_callback'=>function($input_url){
+                        return esc_url_raw($input_url);
+                    }
+                ),
+                'options'=>array(
+                    'description'=>esc_html__('Post body',NEWS_PARSER_PLUGIN_SLUG),
+                    'type'=>'array',
+                    'validate_callback'=>array($this,'validateOptionsArray'),
+                    'sanitize_callback'=>array($this,'sanitizeOptionsArray')
+                )
+        ));
+       $response=$this->visual->saveMedia($request['url'],$request['options']['postId'],$request['options']['alt']);
+       echo $response;
         \wp_die();
     }
 
     public function parsingApi()
     {
-        if (!\is_admin()) {
-           \wp_die();
-        }
-
-        if (isset($_GET['status'])) {
-            $status = \sanitize_text_field($_GET['status']);
-        } else if (!isset($_GET['status'])) {
-            \wp_die();
-        }
-        if (isset($_GET['url'])) {
-            $url = Sanitize::sanitizeURL($_GET['url']);
-        } else {
-            \wp_die();
-        };
+        $this->checkPermission('parsing_news_api');
+        $request=$this->prepareArgs($_GET,array(
+            'url'=>array(
+                'description'=>esc_html__('Page url',NEWS_PARSER_PLUGIN_SLUG),
+                'type'=>'string',
+                'validate_callback'=>function($url){
+                    return wp_http_validate_url($url);
+                },
+                'sanitize_callback'=>function($input_url){
+                    return esc_url_raw($input_url);
+                }
+            ),
+            'status'=>array(
+                'description'=>esc_html__('Action status that should be applied.',NEWS_PARSER_PLUGIN_SLUG),
+                'type'=>'string',
+                'validate_callback'=>function($status){
+                    if(strpos('list',$status)!==false) return 'list';
+                    if(strpos('single',$status)!==false) return 'single';
+                    return false;
+                },
+                'sanitize_callback'=>function($status){
+                    return sanitize_text_field($status);
+                }
+            )
+        ));
+        
+            $status = $request['status'];
+            $url = $request['url'];
         switch ($status) {
             case 'list':
-                if (!\check_ajax_referer('parsing_news_api')) {
-                    \wp_die();
-                }
-
                 $response = $this->createList($url);
                 break;
             case 'single':
-                if (!\check_ajax_referer('parsing_news_api')) {
-                    \wp_die();
-                }
-
-                if (isset($_POST['gallery'])) {
-                    $unslashed_gallery=stripslashes($_POST['gallery']);
-                    $gallery=json_decode($unslashed_gallery, true);
-                    $options = Sanitize::sanitizeUrlArray($gallery);
-                } else {
-                    $options = null;
-                }
-
-                $response = $this->createPostDraft($url, $options);
+                $response = $this->visual->getRawHTML($url, array('remove_scripts'=>true));
                 break;
         }
         echo $response;
         \wp_die();
     }
-
-    protected function sanitizeUrlArray(array $urls_array)
-    {
-        $output = [];
-        foreach ($urls_array as $key => $item) {
-            $output[$key] = Sanitize::sanitizeImageURL($item);
+        /**
+     * Validate is input data is url.
+     *
+     * @param string $input_url String that should be validate.
+     * @return void
+     */
+    public function validateUrl($input_url){
+        return \wp_http_validate_url($input_url);
+    }
+      /**
+     * Validate is input url is link to the image.
+     *
+     * @param string $input_image_url String that should be validate.
+     * @return void
+     */
+    public function validateImageUrl($input_url){
+        $filetype=wp_check_filetype($input_url);
+        $mime_type=$filetype['type'];
+        if(strpos($mime_type,'image')!==false){
+            return $input_url;
         }
-        return $output;
+        return false;
+    }
+    public function validateOptionsArray($options){
+        if(!array_key_exists('postId',$options)) return false;
+        if(!array_key_exists('alt',$options)) return false;
+        return $options;
+    }
+    public function sanitizeOptionsArray($options){
+        $new_array=[];
+        $new_array['postId']=preg_replace('/[^0-9]/','',$options['postId']);
+        $new_array['alt']=sanitize_title($options['alt']);
+        return $new_array;
     }
     protected function createList($url)
     {

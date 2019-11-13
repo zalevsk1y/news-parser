@@ -18,12 +18,12 @@ export class Post extends React.Component {
         var footer=[],_this=this;
         switch (props.status){
             case 'draft':
-                onClickPreviewPage=(event)=>{
+                let onClickEditPost=(event)=>{
                         event.preventDefault();
                         const newWindow=window.open(props.editLink,'_blank');
                         newWindow.focus();
                     }
-                footer.push(<Icons className='fo fo-edit' title="Preview created post" onClick={onClickPreviewPage}/>)
+                footer.push(<Icons className='fo fo-edit' title="Edit post" onClick={onClickEditPost}/>)
                 break;
             case 'parsed':
                 let onClickParsePage=()=>{
@@ -46,8 +46,8 @@ export class Post extends React.Component {
         )
     }
     openVisualConstructor(){
-       
         this.props.openVisualConstructor(this.props.link,{dialog:{
+            postId:this.props.postId,
             type:'visualConstructor'
         }})
     }
@@ -112,7 +112,6 @@ function mapDispatchToProps(dispatch){
             dispatch(createMessage(type,text))
         },
         openVisualConstructor:(url,dialogData)=>{
-           
             dispatch(openDialog(url,dialogData))
         }
     }

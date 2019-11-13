@@ -25,15 +25,36 @@ export function getXOffset(){
 export function scrollTo(x,y){
     window.scrollTo(parseInt(x),parseInt(y));
 }
+
+export function hash(str){
+    var hash = 0,
+    char;
+    if (str.length == 0) return hash;
+    for (var i = 0,end=str.length; i <end ; i++) {
+        char = str.charCodeAt(i);
+        hash = ((hash<<5)-hash)+char;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return Math.abs(hash);
+
+}
 export function getNonce(params){
     const id=config.nonce.id[params.page],
           dataset=config.nonce.dataset[params.page][params.action];
-    var nonce=document.getElementById(id).dataset[dataset];
+    let nonce=document.getElementById(id).dataset[dataset];
     return nonce;
 }
 export function getRestNonce(){
-    var nonce=newsParserRestNonce.nonce;
+    let nonce=newsParserSettings.restApiNonce;
     return nonce;
+}
+export function getAjaxNonce(){
+    let nonce=newsParserSettings.ajaxApiNonce;
+    return nonce;
+}
+export function getPostEditLink(id){
+    let linkTemplate=newsParserSettings.editPostLink;
+    return linkTemplate.replace('${postId}',id);
 }
 export function sendApiRequest({url,nonce,method,data}){
     let options={
@@ -47,8 +68,8 @@ export function sendApiRequest({url,nonce,method,data}){
     return fetch(url,options)
 }
 export function getApiEndpoint(api){
-    var nonce=newsParserRestApi[api];
-    return nonce;
+    var endpoint=newsParserApiEndpoints[api];
+    return endpoint;
 }
 
 export function getUrlWithParams(params){
@@ -79,14 +100,17 @@ export function decodeHTMLEntities(text) {
     return text;
 }
 export function getPluginDirUrl(){
-    return newsParserRestNonce.pluginUrl;
+    return newsParserSettings.pluginUrl;
 }
-export function combineSubReducers(parentReducer,childReducerName,childReducer){
+export function combineSubReducers(parentReducer,childReducers={}){
     return (state,action)=>{
-        var mainState=parentReducer(state,action),
-            childState=childReducer(mainState[childReducerName],action);
-        mainState[childReducerName]={...childState};
-        return {...mainState};
+        let newState=parentReducer(state,action);
+        for (var reducerName in childReducers){
+        
+                newState[reducerName]=childReducers[reducerName].call(this,newState[reducerName],action)
+         
+        }
+        return newState;
     }
 }
 export function oldServerData(data){

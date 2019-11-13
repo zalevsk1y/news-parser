@@ -1,10 +1,10 @@
 
 import {galleryDialog} from './galleryDialog';
-import {visualConstructorDialog} from './visualConstructorDialog';
-import {visualConstructorModal} from '@news-parser/visual-constructor/reducers'
+import visualConstructor from '@news-parser/visual-constructor/reducers'
 
 export default function dialog(state={},action){
-    let subReducers=[galleryDialog,visualConstructorDialog,visualConstructorModal],
+
+let subReducers=[galleryDialog,visualConstructor],
         newState=state;
         subReducers.forEach(reducer => {
             newState=reducer.call(this,newState,action)

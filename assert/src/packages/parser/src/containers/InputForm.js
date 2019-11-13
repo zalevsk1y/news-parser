@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {parsePage,parseRSSList} from '../actions';
+import {parsePage,parseRSSList,openDialog} from '../actions'; 
 import {getNonce,getUrlWithParams} from '@news-parser/helpers';
 import PropTypes from 'prop-types';
 import Translate from './Translate';
@@ -19,10 +19,12 @@ export class InputForm extends React.Component{
     }
 
     handleParsePageSubmit(event){
-        if(this.props.isFetching)return; 
-        const nonce=getNonce({page:'parse',action:'get'});
         event.preventDefault();
-        this.props.parsePage(nonce,this.state.inputValue)
+        if(this.props.isFetching)return; 
+        this.props.openVisualConstructor(this.state.inputValue,{dialog:{
+            postId:undefined,
+            type:'visualConstructor'
+        }})
     }
     handleParseListSubmit(event){
         const params={action:'list',url:this.state.inputValue};
@@ -64,7 +66,9 @@ function mapDispatchToProps(dispatch){
         parsePage:(nonce,url)=>{
             dispatch(parsePage({dispatch,nonce,url}));
         },
-   
+        openVisualConstructor:(url,dialogData)=>{
+            dispatch(openDialog(url,dialogData))
+        }
     }
 
 }

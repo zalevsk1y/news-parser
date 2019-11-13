@@ -11,7 +11,7 @@ namespace NewsParserPlugin\Utils;
 
 class ResponseFormatter {
  
-    protected $data=array('err'=>0);
+    protected $data=array('err'=>0,'msg'=>false);
     protected $action;
 /**
  * Format answer after post draw was created
@@ -57,10 +57,22 @@ class ResponseFormatter {
      * Format answer for rawHtML request.
      *
      * @param string $data Raw HTML data .
-     * @return void
+     * @return object return this for chain building
      */
     public function rawHTML($data){
         $this->data['data']=esc_html($data);
+        return $this;
+    }
+    /**
+     * Media
+     *
+     * @param string $id
+     * @return object return this for chain building
+     */
+    public function media($id){
+        $this->data['data']=array(
+            'mediaId'=>esc_html($id)
+        );
         return $this;
     }
     /**

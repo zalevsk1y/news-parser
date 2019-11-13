@@ -12,6 +12,7 @@ export class VisualConstructor extends React.Component{
     constructor(props){
         super(props);
         this.close=this.close.bind(this);
+        this.createPostDraft=this.createPostDraft.bind(this)
     }
     close(){
         this.props.onStateChange(false);
@@ -21,7 +22,9 @@ export class VisualConstructor extends React.Component{
         this.props.onStateChange(true);
         this.props.getFrameData(this.props.url);
     }
-
+    createPostDraft(){
+        this.props.createPostDraft(this.props.postId,this.props.url,this.props.parsedData,this.props.options)
+    }
     render(){
         return (
             <div className="media-modal-wrapper">
@@ -36,15 +39,15 @@ export class VisualConstructor extends React.Component{
                     </div>
                     <div className="modal-main">
                         <div className="parsed-data-container">
-                            {(this.props.frameData&&<Frame />)}
+                            {(this.props.rawHTML&&<Frame />)}
                         </div>
                         <div className="modal-right-side-bar">
-                        {(this.props.frameData&&<SidebarRight />)}
+                        {(this.props.rawHTML&&<SidebarRight />)}
                         </div>
                         
                     </div>
                     <div className='modal-footer'>
-                        <div type="button" className="button button-large button-primary">Parse Page</div>
+                        <div type="button" className="button button-large button-primary" onClick={this.createPostDraft}>Parse Page</div>
                     </div>
                 </div>
                 <div className="media-modal-backdrop"></div>

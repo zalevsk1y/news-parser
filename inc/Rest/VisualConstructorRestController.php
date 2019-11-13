@@ -1,11 +1,11 @@
 <?php
 namespace NewsParserPlugin\Rest;
 use   NewsParserPlugin\Controller\VisualConstructorController;
-;
+use   NewsParserPlugin\Message\Errors;
 /**
  * Rest controller for Visual constructor modal window.
  * GET /news-parser/v1/visual-constructor/{url} return content of site from requested url.
- * POST /news-parser/v1/visual-constructor/
+ * POST /news-parser/v1/visual-constructor/media/
  * 
  * PHP version 7.0
  * 
@@ -61,7 +61,7 @@ use   NewsParserPlugin\Controller\VisualConstructorController;
             $this->namespace,
             $this->resource_name . '/(?P<url>.+)',
             array(
-                'method' => 'GET',
+                'methods' => 'GET',
                 'callback' => array($this, 'getPostDataRaw'),
                 'permission_callback' => array($this, 'checkPermission'),
                 'args' => array(
@@ -79,53 +79,26 @@ use   NewsParserPlugin\Controller\VisualConstructorController;
         );
         register_rest_route(
             $this->namespace,
-            $this->resource_name,
+            $this->resource_name.'/media',
             array(
-                'method'=>'POST',
-                'callback'=>array($this,'createPostDraft'),
+                'methods'=>'POST',
+                'callback'=>array($this,'downloadMedia'),
                 'permission_callback'=>array($this,'checkPermission'),
                 'args'=>array(
-                        'title'=>array(
-                            'description'=>esc_html__('Post title',NEWS_PARSER_PLUGIN_SLUG),
-                            'type'=>'string',
-                            'validate_callback'=>array($this,'validateInputIsString'),
-                            'sanitize_callback'=>function($title){
-                                return sanitize_title($title);
-                            }
-                        ),
-                        'body'=>array(
-                            'description'=>esc_html__('Post body',NEWS_PARSER_PLUGIN_SLUG),
-                            'type'=>'string',
-                            'validate_callback'=>array($this,'validateInputIsString'),
-                            'sanitize_callback'=>function($post_body){
-                                return wp_filter_post_kses($post_body);
-                            }
-                        ),
-                        'image'=>array(
-                            'description'=>esc_html__('Featured image url',NEWS_PARSER_PLUGIN_SLUG),
+                        'url'=>array(
+                            'description'=>esc_html__('Image url',NEWS_PARSER_PLUGIN_SLUG),
                             'type'=>'string',
                             'validate_callback'=>array($this,'validateImageUrl'),
-                            'sanitize_callback'=>function($url){
-                                return esc_url_raw($url);
-                            }
-                        ),
-                        'sourceUrl'=>array(
-                            'description'=>esc_html__('Urs of source page',NEWS_PARSER_PLUGIN_SLUG),
-                            'type'=>'string',
-                            'validate_callback'=>array($this,'validateUrl'),
-                            'sanitize_callback'=>function($url){
-                                return esc_url_raw($url);
+                            'sanitize_callback'=>function($input_url){
+                                return esc_url_raw($input_url);
                             }
                         ),
                         'options'=>array(
-                            'description'=>esc_html__('Array of page parsing options',NEWS_PARSER_PLUGIN_SLUG),
+                            'description'=>esc_html__('Post body',NEWS_PARSER_PLUGIN_SLUG),
                             'type'=>'array',
-                            'validate_callback'=>function($options){
-                                return is_array($options);
-                            },
-                            'sanitize_callback'=>array($this,'sanitizeArrayOfOptions')
+                            'validate_callback'=>array($this,'validateOptionsArray'),
+                            'sanitize_callback'=>array($this,'sanitizeOptionsArray')
                         )
-                    
                 )
             )
         );   
@@ -137,11 +110,23 @@ use   NewsParserPlugin\Controller\VisualConstructorController;
      * @param \WP_REST_Request $request Instance contains info about request.
      * @return string
      */
-    function getPostDataRaw(\WP_REST_Request $request){
+    public function getPostDataRaw(\WP_REST_Request $request){
         $page_url=$request['url'];
     
         return $this->rawHTML->get($page_url,array('remove_scripts'=>true));
     
+    }
+    public function downloadMedia(\WP_REST_Request $request){
+        $media_url=$request['url'];
+        $media_options=$request['options'];
+        $img_id = \media_sideload_image($media_url, $media_options['postId'], $media_options['alt'], 'id');
+        if (\is_wp_error($img_id)) {
+            return $img_id->get_error_message();
+        } 
+        if($media_options['type']==='featured_image'){
+            \set_post_thumbnail($media_options['postId'], $img_id);
+        }
+        return get_post($img_id);
     }
     /**
      * Check if user have rights to read posts.
@@ -162,7 +147,7 @@ use   NewsParserPlugin\Controller\VisualConstructorController;
      * 
      * @param string $inputData Data that would be checked.
      */
-    function validateInputIsString($input_data){
+    public function validateInputIsString($input_data){
         return is_string($inputData);
     }
     /**
@@ -171,7 +156,7 @@ use   NewsParserPlugin\Controller\VisualConstructorController;
      * @param string $input_url String that should be validate.
      * @return void
      */
-    function validateUrl($input_url){
+    public function validateUrl($input_url){
         return wp_http_validate_url($input_url);
     }
       /**
@@ -180,12 +165,26 @@ use   NewsParserPlugin\Controller\VisualConstructorController;
      * @param string $input_image_url String that should be validate.
      * @return void
      */
-    function validateImageUrl($input_url){
+    public function validateImageUrl($input_url){
         $filetype=wp_check_filetype($input_url);
         $mime_type=$filetype['type'];
         if(strpos($mime_type,'image')!==false){
             return $input_url;
         }
         return false;
+    }
+    public function validateOptionsArray($options){
+        if(!array_key_exists('postId',$options)) return false;
+        if(!array_key_exists('type',$options)) return false;
+        if(!array_key_exists('alt',$options)) return false;
+        return $options;
+    }
+    public function sanitizeOptionsArray($options){
+        $new_array=[];
+        $new_array['postId']=preg_replace('/[^0-9]/','',$options['postId']);
+        if(strpos('featured_image',$options['type'])) $new_array['type']='featured_image';
+        if(strpos('post_image',$options['type'])) $new_array['type']='post_image';
+        $new_array['alt']=sanitize_title($options['alt']);
+        return $new_array;
     }
  }

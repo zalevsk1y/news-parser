@@ -35,7 +35,7 @@ export function parse (state=initialStateParse,action){
             return {...state,
                 isFetching:false,
                 url:action.url,
-                action:'post',
+                action:'main',
                 message:action.post.msg,
                 error:action.post.err
             };
@@ -91,4 +91,4 @@ export function route(state=initialStateRoute,action){
     }
 }
 
-export default combineReducers({parse:combineSubReducers(parse,'dialog',dialog),route});
+export default combineReducers({parse:combineSubReducers(parse,{'dialog':dialog}),route});

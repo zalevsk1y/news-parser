@@ -70,11 +70,10 @@ export function createMessage(type,text){
     }
 }
 export function openDialog(url,dialogData){
-    const dialog=dialogData.dialog;
-    let  newData;
+    let dialog=dialogData.dialog;
     switch(dialog.type){
         case 'gallery':
-            newData=dialog.data?dialog.data.map((item,key)=>{
+                dialog.data=dialog.data?dialog.data.map((item,key)=>{
                 return {
                     id:key,
                     url:item,
@@ -88,14 +87,20 @@ export function openDialog(url,dialogData){
                     }
                     }     
                 }):[];
+
             break;
         case 'visualConstructor':
+                let additionalData={
+                    url,
+                    isFetching:false,
+                    rawHTML:false,
+                    parsedData:{}
+                };
+                dialog=Object.assign(dialog,additionalData)
             break;
-        default:
-            newData=dialog.data;
     }
    
-    dialogData.dialog.data=newData;
+    dialogData.dialog=dialog;
     return {
         type:types.OPEN_DIALOG,
         url:url,

@@ -35,14 +35,31 @@ class VisualConstructorController {
      *
      * @param string $url Url of the page.
      * @param array $options Array of options.
-     * @return void
+     * @return string
      */
-    public function get($url,$options=array()){
+    public function getRawHTML($url,$options=array()){
         try{
             $html_data=$this->parser->get($url,$options);
             $response=$html_data;
         }catch(MyException $e){
             $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');
+        }
+        return $response;
+    }
+    /**
+     * Saves attached media.
+     *
+     * @param string $url Url of image that should be download.
+     * @param string $id Post id.
+     * @param string $alt Description of image.
+     * @return string 
+     */
+    public function saveMedia($url,$postId,$alt=''){
+        $img_id = \media_sideload_image($url, $postId, $alt, 'id');
+        if (\is_wp_error($img_id)) {
+            $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');
+        } else{
+            $response=$this->formatResponse->media($img_id)->get('json');
         }
         return $response;
     }

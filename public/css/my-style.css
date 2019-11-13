@@ -313,7 +313,7 @@ frame{
     content: "\E850"
 }
 
-.close-post-menu {}
+
 
 .post-image {
     height: auto;
@@ -721,4 +721,23 @@ li {
 }
 .post-title-input{
     width:100%;
+}
+
+.inline-bl{
+    display: inline-block;
+    margin:0 0 0 0.3em;
+    width:80%;
+}
+
+.no-featured-image{
+    opacity: 0.3;
+}
+
+.info-box-container{
+    margin: 0.5em 0 0 0;
+}
+.info-box-container input{
+    top: 6px;
+    vertical-align: top;
+    position: relative;
 }

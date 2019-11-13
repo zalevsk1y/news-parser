@@ -35846,7 +35846,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************************!*\
   !*** ./src/packages/helpers/src/index.js ***!
   \*******************************************/
-/*! exports provided: uriToJson, logErrorToService, getLanguage, getYOffset, getXOffset, scrollTo, getNonce, getRestNonce, sendApiRequest, getApiEndpoint, getUrlWithParams, decodeHTMLEntities, getPluginDirUrl, combineSubReducers, oldServerData, newServerData */
+/*! exports provided: uriToJson, logErrorToService, getLanguage, getYOffset, getXOffset, scrollTo, hash, getNonce, getRestNonce, getAjaxNonce, getPostEditLink, sendApiRequest, getApiEndpoint, getUrlWithParams, decodeHTMLEntities, getPluginDirUrl, combineSubReducers, oldServerData, newServerData */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -35857,8 +35857,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getYOffset", function() { return getYOffset; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getXOffset", function() { return getXOffset; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scrollTo", function() { return scrollTo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hash", function() { return hash; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getNonce", function() { return getNonce; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRestNonce", function() { return getRestNonce; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAjaxNonce", function() { return getAjaxNonce; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPostEditLink", function() { return getPostEditLink; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sendApiRequest", function() { return sendApiRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getApiEndpoint", function() { return getApiEndpoint; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUrlWithParams", function() { return getUrlWithParams; });
@@ -35868,10 +35871,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "oldServerData", function() { return oldServerData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "newServerData", function() { return newServerData; });
 /* harmony import */ var _news_parser_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/config */ "./src/packages/config/src/index.js");
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 function uriToJson(uri) {
   if (!uri) return {};
@@ -35906,6 +35905,19 @@ function getXOffset() {
 function scrollTo(x, y) {
   window.scrollTo(parseInt(x), parseInt(y));
 }
+function hash(str) {
+  var hash = 0,
+      char;
+  if (str.length == 0) return hash;
+
+  for (var i = 0, end = str.length; i < end; i++) {
+    char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+
+  return Math.abs(hash);
+}
 function getNonce(params) {
   var id = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].nonce.id[params.page],
       dataset = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].nonce.dataset[params.page][params.action];
@@ -35913,8 +35925,16 @@ function getNonce(params) {
   return nonce;
 }
 function getRestNonce() {
-  var nonce = newsParserRestNonce.nonce;
+  var nonce = newsParserSettings.restApiNonce;
   return nonce;
+}
+function getAjaxNonce() {
+  var nonce = newsParserSettings.ajaxApiNonce;
+  return nonce;
+}
+function getPostEditLink(id) {
+  var linkTemplate = newsParserSettings.editPostLink;
+  return linkTemplate.replace('${postId}', id);
 }
 function sendApiRequest(_ref) {
   var url = _ref.url,
@@ -35932,8 +35952,8 @@ function sendApiRequest(_ref) {
   return fetch(url, options);
 }
 function getApiEndpoint(api) {
-  var nonce = newsParserRestApi[api];
-  return nonce;
+  var endpoint = newsParserApiEndpoints[api];
+  return endpoint;
 }
 function getUrlWithParams(params) {
   var url = window.location.pathname + _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].root;
@@ -35953,14 +35973,20 @@ function decodeHTMLEntities(text) {
   return text;
 }
 function getPluginDirUrl() {
-  return newsParserRestNonce.pluginUrl;
+  return newsParserSettings.pluginUrl;
 }
-function combineSubReducers(parentReducer, childReducerName, childReducer) {
+function combineSubReducers(parentReducer) {
+  var _this = this;
+
+  var childReducers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   return function (state, action) {
-    var mainState = parentReducer(state, action),
-        childState = childReducer(mainState[childReducerName], action);
-    mainState[childReducerName] = _objectSpread({}, childState);
-    return _objectSpread({}, mainState);
+    var newState = parentReducer(state, action);
+
+    for (var reducerName in childReducers) {
+      newState[reducerName] = childReducers[reducerName].call(_this, newState[reducerName], action);
+    }
+
+    return newState;
   };
 }
 function oldServerData(data) {

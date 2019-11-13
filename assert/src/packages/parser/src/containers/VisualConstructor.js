@@ -1,23 +1,17 @@
  
 import {connect} from 'react-redux';
 import {closeDialog} from '../actions/';
-import {getPageHTML} from '../actions/visualConstructorDialog';
+import {getPageHTML,createPostDraft} from '../../../visual-constructor/src/actions';
 import VisualConstructor from '@news-parser/visual-constructor/index';
-import {getNonce} from '@news-parser/helpers';
+
 
 function mapStateToProps(state){
  
     const status=state.parse.hasOwnProperty('dialog')&&state.parse.dialog.type==='visualConstructor',
-          url=state.parse.url,
-          isFetching=state.parse.dialog.hasOwnProperty('isFetching')&&state.parse.dialog.isFetching===true,
-          frameData=state.parse.dialog.hasOwnProperty('rawHTML')?state.parse.dialog.rawHTML:false;
-
-    return {
-        open:status,
-        url,
-        isFetching,
-        frameData
-    }
+          dialog=state.parse.hasOwnProperty('dialog')?state.parse.dialog:{};
+    return {...dialog,
+        status    
+    };
 }
 function mapDispatchToProps(dispatch){
     return {
@@ -26,6 +20,9 @@ function mapDispatchToProps(dispatch){
         },
         getFrameData:function (url){
             dispatch(getPageHTML(url,dispatch))
+        },
+        createPostDraft:function(id,url,postData,options){
+            dispatch(createPostDraft(id,url,postData,options,dispatch));
         }
     }
 }

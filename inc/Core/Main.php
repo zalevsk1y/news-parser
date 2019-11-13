@@ -55,13 +55,20 @@ class Main
             $nonce=array(
                 'root'=>esc_url_raw(rest_url()),
                 'pluginUrl'=>esc_url_raw(NEWS_PARSER_PLUGIN_URL),
-                'nonce'=>wp_create_nonce('wp_rest')
+                'restApiNonce'=>wp_create_nonce('wp_rest'),
+                'ajaxApiNonce'=>wp_create_nonce('parsing_news_api'),
+                'editPostLink'=>esc_url_raw(admin_url( 'post.php?post=${postId}&action=edit' ))
             );
-            wp_localize_script('main-parser-bundle-main','newsParserRestNonce',$nonce);
+            wp_localize_script('main-parser-bundle-main','newsParserSettings',$nonce);
             $rest_api_endpoints=array(
-                'visualConstructor'=>rest_url('news-parser/v1/visual-constructor/'),
+                'root'=>esc_url_raw(rest_url()),
+                'visualConstructor'=>esc_url_raw((rest_url('news-parser/v1/visual-constructor/'))),
+                'media'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_MEDIA_API)),
+                'parsing'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API)),
+                'rootRestApi'=>esc_url_raw(rest_url()),
+                'rootAjaxApi'=>esc_url_raw(admin_url('admin-ajax.php'))
             );
-            wp_localize_script('main-parser-bundle-main','newsParserRestApi',$rest_api_endpoints);
+            wp_localize_script('main-parser-bundle-main','newsParserApiEndpoints',$rest_api_endpoints);
            
         }
         if (strrpos($hook, $this->config->menu->subs[1]->menu_slug) != false) {
