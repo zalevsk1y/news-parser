@@ -1,11 +1,12 @@
 import config from "@news-parser/config";
-import {oldServerData,newServerData} from '@news-parser/helpers'
+import {oldServerData,newServerData,getAjaxNonce} from '@news-parser/helpers'
 
 export const types = {
     REQUEST_POSTS_LIST: 'REQUEST_POSTS_LIST',
     REQUEST_SINGLE_POST: 'REQUEST_SINGLE_POST',
     RECEIVE_POSTS_LIST: 'RECEIVE_POSTS_LIST',
     RECEIVE_SINGLE_POST: 'RECEIVE_SINGLE_POST',
+    SELECT_POST:'SELECT_POST',
     RECEIVE_ERROR: 'RECEIVE_ERROR',
     SET_ROUTE: 'SET_ROUTE',
     OPEN_DIALOG:'OPEN_DIALOG',
@@ -25,6 +26,7 @@ export function requestPostsList(url) {
 export function setRoute(params) {
     return {
         type: types.SET_ROUTE,
+        page:params.page,
         action: params.action || false,
         url: params.url
             ? decodeURIComponent(params.url)
@@ -57,6 +59,12 @@ export function receivePost(url, post) {
         url: url,
         post,
         date: false
+    }
+}
+export function selectPost(_id){
+    return {
+        type: types.SELECT_POST,
+        _id
     }
 }
 export function createMessage(type,text){
@@ -137,7 +145,8 @@ export function fetchError(error){
 }
 export function parseRSSList(params) {
     params.dispatch(requestPostsList(params.url));
-    const requestUrl=config.parsingApi.list + encodeURIComponent(params.url)+'&_wpnonce='+params.nonce;
+    const nonce=getAjaxNonce();
+    const requestUrl=config.parsingApi.list + encodeURIComponent(params.url)+'&_wpnonce='+nonce;
     const parameters=config.emulateJSON?oldServerData(params.options):newServerData(params.options);
     return dispatch => {
         return fetch(requestUrl,parameters)
@@ -154,19 +163,31 @@ export function parseRSSList(params) {
             })
     }
 }
+export function parseSelected(selectedPosts,dispatch){
+    return dispatch=>{
+        const promise=new Promise(resolve=>{
+            resolve();
+        });
+        selectedPosts.forEach(post=>{
+            promise.then(()=>{
+                return dispatch(parsePage({url:post.link,id:post._id,dispatch}))
+            })
+        })
+        return promise;
+    }
+}
 export function parsePage (params) {
-    params.dispatch(requestPost(params.url,params.id));
-    const requestUrl=config.parsingApi.single + encodeURIComponent(params.url)+'&_wpnonce='+params.nonce;
-    const parameters=config.emulateJSON?oldServerData(params.options):newServerData(params.options);
+    const dispatch=params.dispatch,
+        nonce=getAjaxNonce(),
+        requestUrl=config.parsingApi.multi + encodeURIComponent(params.url)+'&_wpnonce='+nonce,
+        parameters=config.emulateJSON?oldServerData(params.options):newServerData(params.options);
+    dispatch(requestPost(params.url,params.id));
     return dispatch => {
         return fetch(requestUrl,parameters)
             .then(response => response.json())
             .then((json) => {
                 if(json){  
                     switch(true){
-                        case(json.dialog!==undefined):
-                            dispatch(openDialog(params.url,json))
-                            break;
                         case (json.data!==undefined):
                             json.data._id = params.id;
                             dispatch(receivePost(params.url, json));

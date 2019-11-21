@@ -37978,6 +37978,126 @@ function () {
 
 /***/ }),
 
+/***/ "./src/packages/helpers/src/classes/Parser.js":
+/*!****************************************************!*\
+  !*** ./src/packages/helpers/src/classes/Parser.js ***!
+  \****************************************************/
+/*! exports provided: Parser */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Parser", function() { return Parser; });
+/* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
+function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+var Parser =
+/*#__PURE__*/
+function () {
+  function Parser(frameElement) {
+    _classCallCheck(this, Parser);
+
+    this.document = frameElement.current.contentWindow.document;
+  }
+
+  _createClass(Parser, [{
+    key: "parseElementData",
+    value: function parseElementData(el) {
+      var element = el,
+          parsedData = {};
+      parsedData.tagName = element.tagName;
+      parsedData.className = element.className.replace(' parser-select', '').replace(' mouse-over', '');
+
+      switch (parsedData.tagName) {
+        case 'IMG':
+          parsedData.content = this.parseImageContent(element);
+          break;
+
+        case 'UL':
+          parsedData.content = this.parseListContent(element);
+          break;
+
+        default:
+          parsedData.content = element.innerText;
+      }
+
+      parsedData.offsetTop = this.getOffsetTop(element);
+      parsedData.parent = this.getParent(element);
+      var elementHash = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["hash"])(Math.random().toString());
+      return {
+        elementHash: elementHash,
+        parsedData: parsedData
+      };
+    }
+  }, {
+    key: "getOffsetTop",
+    value: function getOffsetTop(element) {
+      var bodyScrollTop = this.document.body.scrollTop;
+      return element.getBoundingClientRect().top + bodyScrollTop;
+    }
+  }, {
+    key: "parseImageContent",
+    value: function parseImageContent(el) {
+      var element = el;
+      return {
+        src: element.src,
+        alt: element.alt
+      };
+    }
+  }, {
+    key: "parseListContent",
+    value: function parseListContent(el) {
+      var liCollection = el.children;
+      if (!liCollection.length) return [];
+      return Array.prototype.map.call(liCollection, function (item) {
+        return item.innerText;
+      });
+    }
+  }, {
+    key: "getParent",
+    value: function getParent(el) {
+      var element = el,
+          parentElement = element.parentElement;
+      var parent;
+
+      while (true) {
+        if (parentElement.className) {
+          parent = {
+            tagName: parentElement.tagName,
+            className: parentElement.className,
+            offsetTop: parentElement.offsetTop
+          };
+          break;
+        } else {
+          parentElement = (_readOnlyError("parentElement"), parentElement.parentElement);
+
+          if (parentElement.tagName === 'BODY') {
+            parent = {
+              tagName: 'BODY',
+              className: null,
+              offsetTop: parentElement.offsetTop
+            };
+            break;
+          }
+        }
+      }
+
+      return parent;
+    }
+  }]);
+
+  return Parser;
+}();
+
+/***/ }),
+
 /***/ "./src/packages/helpers/src/classes/PostModel.js":
 /*!*******************************************************!*\
   !*** ./src/packages/helpers/src/classes/PostModel.js ***!
@@ -38086,13 +38206,17 @@ function () {
             break;
 
           case 'IMG':
-            postBody += _this.image(item.content, content.title);
+            postBody += _this.image(item.content.src, item.content.alt);
             break;
 
           case 'H1':
           case 'H2':
           case 'H3':
             postBody += _this.heading(item.content, item.tagName.toLowerCase());
+            break;
+
+          case 'UL':
+            postBody += _this.list(item.content);
             break;
         }
       });
@@ -38115,7 +38239,8 @@ function () {
     key: "heading",
     value: function heading(text, type) {
       var cleanContent = this.sanitize(text),
-          heading = '<!-- wp:heading --><' + type + '>' + cleanContent + '</' + type + '><!-- /wp:heading -->';
+          level = type.replace('h', ''),
+          heading = '<!-- wp:heading {"level":' + level + '} --><' + type + '>' + cleanContent + '</' + type + '><!-- /wp:heading -->';
       return heading;
     }
   }, {
@@ -38125,6 +38250,17 @@ function () {
           cleanAlt = this.sanitize(alt),
           image = '<!-- wp:image --><figure class="wp-block-image"><img src="' + cleanUrl + '" alt="' + cleanAlt + '"/></figure><!-- /wp:image -->';
       return image;
+    }
+  }, {
+    key: "list",
+    value: function list(listArray) {
+      var listBegin = '<!-- wp:list --><ul>',
+          list = '',
+          listEnd = '</ul><!-- /wp:list -->';
+      listArray.forEach(function (item) {
+        list += '<li>' + item + '</li>';
+      });
+      return listBegin + list + listEnd;
     }
   }, {
     key: "quote",
@@ -40432,10 +40568,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
-/* harmony import */ var _actions_frame__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/frame */ "./src/packages/visual-constructor/src/actions/frame.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! dompurify */ "./node_modules/dompurify/dist/purify.js");
-/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(dompurify__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _news_parser_helpers_classes_Parser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @news-parser/helpers/classes/Parser */ "./src/packages/helpers/src/classes/Parser.js");
+/* harmony import */ var _actions_frame__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/frame */ "./src/packages/visual-constructor/src/actions/frame.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! dompurify */ "./node_modules/dompurify/dist/purify.js");
+/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(dompurify__WEBPACK_IMPORTED_MODULE_5__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -40467,6 +40604,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+
 var Frame =
 /*#__PURE__*/
 function (_React$Component) {
@@ -40487,7 +40625,7 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       var doc = this.frameRef.current.contentWindow.document,
-          sanitizedDOM = dompurify__WEBPACK_IMPORTED_MODULE_4___default.a.sanitize(this.props.data, {
+          sanitizedDOM = dompurify__WEBPACK_IMPORTED_MODULE_5___default.a.sanitize(this.props.data, {
         ADD_TAGS: ['link'],
         WHOLE_DOCUMENT: true
       }),
@@ -40506,6 +40644,7 @@ function (_React$Component) {
       doc.addEventListener('click', this.clickHandler);
       var imgArray = doc.getElementsByTagName('img');
       this.imageLazyLoad(imgArray);
+      this.parser = new _news_parser_helpers_classes_Parser__WEBPACK_IMPORTED_MODULE_2__["Parser"](this.frameRef);
     }
   }, {
     key: "imageLazyLoad",
@@ -40557,39 +40696,10 @@ function (_React$Component) {
   }, {
     key: "parseElementData",
     value: function parseElementData(element) {
-      var parentElement = element.parentElement,
-          parsedData = {};
-      parsedData.tagName = element.tagName;
-      parsedData.className = element.className.replace(' parser-select', '').replace(' mouse-over', '');
-      parsedData.content = parsedData.tagName === 'IMG' ? element.src : element.innerText;
-      var bodyScrollTop = this.frameRef.current.contentWindow.document.body.scrollTop;
-      parsedData.offsetTop = element.getBoundingClientRect().top + bodyScrollTop;
-      var parent;
+      var _this$parser$parseEle = this.parser.parseElementData(element),
+          elementHash = _this$parser$parseEle.elementHash,
+          parsedData = _this$parser$parseEle.parsedData;
 
-      while (true) {
-        if (parentElement.className) {
-          parent = {
-            tagName: parentElement.tagName,
-            className: parentElement.className,
-            offsetTop: parentElement.offsetTop
-          };
-          break;
-        } else {
-          parentElement = parentElement.parentElement;
-
-          if (parentElement.tagName === 'BODY') {
-            parent = {
-              tagName: 'BODY',
-              className: null,
-              offsetTop: parentElement.offsetTop
-            };
-            break;
-          }
-        }
-      }
-
-      parsedData.parent = parent;
-      var elementHash = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["hash"])(Math.random().toString());
       element.id = elementHash;
       this.props.selectContent(elementHash, parsedData);
     }
@@ -40640,21 +40750,21 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     selectTitle: function selectTitle(title) {
-      dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_2__["selectTitle"])(title));
+      dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_3__["selectTitle"])(title));
     },
     selectFeaturedMedia: function selectFeaturedMedia(url) {
-      dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_2__["selectFeaturedMedia"])(url));
+      dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_3__["selectFeaturedMedia"])(url));
     },
     selectContent: function selectContent(hash, content) {
-      dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_2__["selectContent"])(hash, content));
+      dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_3__["selectContent"])(hash, content));
     },
     removeContent: function removeContent(hash) {
-      dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_2__["removeContent"])(hash));
+      dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_3__["removeContent"])(hash));
     }
   };
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps, mapDispatchToProps)(Frame));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["connect"])(mapStateToProps, mapDispatchToProps)(Frame));
 
 /***/ }),
 

@@ -23,6 +23,9 @@ class HTMLParser extends ParseContent
     protected $parser;
     protected $dom = null;
     protected $rawHTML = null;
+    protected $post=array();
+    protected $options;
+
     /**
      * You could use NewsParserPlugin\any of HTML parsers.
      * But they should have method ::find() and getAttribute;
@@ -40,21 +43,21 @@ class HTMLParser extends ParseContent
      * Structure :
      * [title] - post title @string
      * [image] - post main image url @string unescaped
-     * [body] - post body @string
-     * [gallery] - post image gallery array|'' empty string if none
+     * [content] - post content @array
+     * 
      *
      * @param string $data
      * @param array $options
      * @return StdClass
      */
-    protected function parse($data,$options)
+    public function parse($data,$options)
     {
+        if (!empty($options))$this->options=$options;
         $this->dom = $this->parser::str_get_html($data);
         $this->rawHTML = $data;
         $this->post['title'] = esc_html($this->postTitle());
         $this->post['image'] = Sanitize::sanitizeImageURL($this->postImage());
         $this->post['body'] = $this->postBody();
-        $this->post['gallery'] = Sanitize::sanitizeUrlArray($this->postGallery());
         return $this->post;
     }
     /**
@@ -104,42 +107,14 @@ class HTMLParser extends ParseContent
 
     public function postBody()
     {
+       
         //Parse body inside <p> tag
         $body = $this->parseBodyTagP();
         return $body ?: '';
 
     }
-
-    /**
-     * Parse gallery
-     *
-     * @return array Array of parsed images url
-     */
-
-    public function postGallery()   
-    {   $gallery=array();
-        $alt=$this->getFirstWordOfTitle();
-        $image_tags=$this->imageFinder('img',$alt,'tag');
-        if(count($image_tags)>0){
-            $image_tags=implode(' ',$image_tags);
-        }
-        $images = $this->chain()
-            ->customSourceGalleryRegExp("/original\=\"(.*?)\"/i",$image_tags)
-            ->customSourceGalleryRegExp("/data\-src\=\"(.*?)\"/i",$image_tags)
-            ->customSourceGalleryRegExp("/data\-srcset\=\"(.*?)\"/i",$image_tags)
-            ->customSourceGalleryRegExp("/srcset\=\"(.*?)\"/i",$image_tags)
-            ->customSourceGalleryRegExp("/data\-orig\-file\=\"(.*?)\"/i",$image_tags)
-            ->customSourceGalleryRegExp("/src\=\"(.*?)\"/i",$image_tags)
-            ->get();
-        foreach($images as $image){
-            $result=$this->customSourceGalleryRegExp("/(http.*?\.(jpg|png))/i",$image);
-            $array_count=is_array($result)?count($result):0;
-            if($array_count>0){
-                $gallery[]=$result[$array_count-1];
-            }
-        }
-        return $gallery;
-    }
+   
+    
     /**
      * Parse title based on OpenGraphe marks <meta property=og:title content="...">
      *
@@ -229,34 +204,7 @@ class HTMLParser extends ParseContent
         }
         return count($gallery) ? $gallery : false;
     }
-    /**
-     * Parse images for gallery using regular expression from post rawHTML.
-     *
-     * @param string $pattern should be valid regular expression
-     * @param string $source
-     * @return array|bool parsed images ulr
-     */
-    public function customSourceGalleryRegExp ($pattern,$source){
-        preg_match_all($pattern,$source, $matches);
-        if (count($matches[1])) {
-            $large = $matches[1];
-        } else {
-            $large = false;
-        }
-
-        return $large;
-    }
-    /**
-     * Parse images for gallery using regular expression from post rawHTML
-     *
-     * @param string $pattern should be valid regular expression
-     *
-     * @return array parsed images ulr
-     */
-    public function postGalleryRegExp($pattern)
-    {
-       return $this->customSourceGalleryRegExp($pattern,$this->rawHTML);
-    }
+   
 
     /**
      * Facade for ::find() method of Sunra\PhpSimple

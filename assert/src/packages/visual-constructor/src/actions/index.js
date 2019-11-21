@@ -1,7 +1,7 @@
 import {getRestNonce,getAjaxNonce,getApiEndpoint,sendApiRequest,decodeHTMLEntities,getPostEditLink} from '@news-parser/helpers';
 import {PostModel} from '@news-parser/helpers/classes/PostModel'
-import {fetchError,receiveError, closeDialog,receivePost,createMessage} from '../../../parser/src/actions/index'
-import { MediaModel } from '../../../helpers/src/classes/MediaModel';
+import {fetchError,receiveError, closeDialog,receivePost,createMessage} from '@news-parser/parser-rss/actions/index'
+import { MediaModel } from '@news-parser/helpers/classes/MediaModel';
 export const types = {
     GET_PAGE_HTML: 'GET_PAGE_HTML',
     DIALOG_START_FETCHING: 'DIALOG_START_FETCHING',

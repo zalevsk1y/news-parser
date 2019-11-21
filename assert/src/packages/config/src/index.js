@@ -9,7 +9,8 @@ const config={
     },
     parsingApi:{
         list:'admin-ajax.php?action=news_parser_parsing_api&status=list&url=',
-        single:'admin-ajax.php?action=news_parser_parsing_api&status=single&url='
+        single:'admin-ajax.php?action=news_parser_parsing_api&status=single&url=',
+        multi:'admin-ajax.php?action=news_parser_parsing_api&status=multi&url='
     },
     errorReport:{
         url:'https://github.com/zalevsk1y/news-parser/issues/new'

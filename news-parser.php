@@ -40,20 +40,20 @@ $modules['html_raw']=new Parser\HTMLRaw(600);
 //--vendor HTML parser
 $modules['sunra_parser'] = new \Sunra\PhpSimple\HtmlDomParser();
 $modules['html_parser'] = new Parser\HTMLParser($modules['sunra_parser'], 3600);
-
+$modules['html_pattern_parser'] = new Parser\HTMLPatternParser($modules['sunra_parser'], 3600);
 //---Controllers
 //--deps
 $modules['settings'] = new Utils\Settings();
 $modules['response_formatter'] = new Utils\ResponseFormatter();
 $modules['list_factory'] = new Factory\ListFactory();
-$modules['post_factory'] = new Factory\PostFactory();
+$modules['post_factory'] = new Factory\PostGutenbergFactory();
 //--controllers
 $modules['list_controller'] = new Controller\ListController($modules['XML_parser'], $modules['settings'], $modules['response_formatter'], $modules['list_factory']);
-$modules['post_controller'] = new Controller\PostController($modules['html_parser'], $modules['settings'], $modules['response_formatter'], $modules['post_factory']);
+$modules['post_controller'] = new Controller\PostController($modules['html_pattern_parser'], $modules['settings'], $modules['response_formatter'], $modules['post_factory']);
 $modules['settings_controller'] = new Controller\SettingsController($modules['settings'], $modules['response_formatter']);
 $modules['visual_constructor_controller']=new Controller\VisualConstructorController($modules['html_raw'],$modules['response_formatter']);
 //---Ajax
-$modules['ajax_controller'] =  Ajax\Ajax::getInstance($modules['list_controller'], $modules['visual_constructor_controller'],$modules['response_formatter']);
+$modules['ajax_controller'] =  Ajax\Ajax::getInstance($modules['list_controller'], $modules['visual_constructor_controller'],$modules['post_controller']);
 //---Rest
 $modules['rest_visual_constructor']= new Rest\VisualConstructorRestController($modules['visual_constructor_controller']);
 \register_uninstall_hook(__FILE__, 'Utils\Settings::deleteSettings');

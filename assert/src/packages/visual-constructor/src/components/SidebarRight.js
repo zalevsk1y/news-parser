@@ -15,7 +15,6 @@ export class  SidebarRight extends React.Component{
         this.selectFeaturedMedia=this.selectFeaturedMedia.bind(this)
     }
     selectTitle(){
-        
         if(!this.state.title)return;
         this.props.selectTitle(this.state.title)
     }
@@ -29,7 +28,7 @@ export class  SidebarRight extends React.Component{
         if(options.noFeaturedMedia) return;
         for(var item in body){
             if(body[item].tagName==='IMG'){
-                body[item].content&&this.props.selectFeaturedMedia(body[item].content);
+                body[item].content&&this.props.selectFeaturedMedia(body[item].content.src);
                 break;
             }
         }
@@ -75,12 +74,6 @@ export class  SidebarRight extends React.Component{
                 <InfoBox title="Extra options">
                     <InfoBody>
                         <div class="info-box-container">
-                            <Checkbox value={options.downloadImages} onClick={this.props.toggleDownloadImages} />
-                            <p className="howto inline-bl">
-                                Download pictures.                            
-                            </p>
-                        </div>
-                        <div class="info-box-container">
                             <Checkbox value={options.sourceLink} onClick={this.props.toggleSourceLink} />
                             <p className="howto inline-bl">
                                 Add source link to the post.                            
@@ -102,7 +95,7 @@ export class  SidebarRight extends React.Component{
 }
 
     function mapStateToProps(state){
-    
+        console.log(state.parse.dialog.parsedData)
         const title=state.parse.dialog.hasOwnProperty('parsedData')?state.parse.dialog.parsedData.title:undefined,
               image=state.parse.dialog.hasOwnProperty('parsedData')?state.parse.dialog.parsedData.image:undefined,
               options=state.parse.dialog.hasOwnProperty('parsedData')?state.parse.dialog.options:undefined,

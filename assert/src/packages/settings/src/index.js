@@ -8,7 +8,7 @@ import { createStore,applyMiddleware } from 'redux';
 import settingsReducer from './reducers/index';
 import thunkMiddleware from 'redux-thunk';
 import {main} from './actions/index';
-import {getNonce} from '@news-parser/helpers';
+import {getAjaxNonce} from '@news-parser/helpers';
 import ErrorBoundary from "@news-parser/error-handler"
 
 export const store=createStore(settingsReducer,applyMiddleware(thunkMiddleware));
@@ -16,7 +16,7 @@ window.addEventListener('error',function(event){
     alert('error');
 })
 window.addEventListener('load',()=>{
-    const nonce=getNonce({page:'settings',action:'get'});
+    const nonce=getAjaxNonce();
     store.dispatch(main.getSettingsFromServer(store.dispatch,nonce));
   
     ReactDOM.render(

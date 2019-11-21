@@ -30,7 +30,7 @@ window.addEventListener('load',()=>{
                     <Main />
                 </ErrorBoundary>
             </Provider>
-       , document.getElementById('parsing-app'));
+       , document.getElementById('parsing-rss-app'));
 })
 
 

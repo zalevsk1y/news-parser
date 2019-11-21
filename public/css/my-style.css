@@ -82,13 +82,13 @@ frame{
 }
 
 .main-button {
-    margin: 10px 3px 3px 0px;
+    margin: 0px 3px 3px 4px;
     border: 1px solid #c6c6c6;
     border-radius: 2px;
     color: #757575;
     background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);
     width: 144px;
-    height: 40px;
+    height: 44px;
 }
 
 .main-button:hover {
@@ -182,7 +182,14 @@ frame{
 .fo-visual-constructor::before {
     content: '\E848';
 }
-
+.fo-select::before{
+    content:'\E828'
+}
+.icon-selected{
+    border: solid 1px;
+    padding: 1px;
+    color: #0073aa;
+}
 .post-container {
     float: left;
     width: 30%;
@@ -196,10 +203,12 @@ frame{
     display: flex;
     flex-direction: column;
 }
-
-.post-parsed {
+.mt-10{
+    margin-top:10px;
+}
+.highlight {
     box-shadow: 3px 2px 5px rgba(0, 0, 0, 0.3);
-    border: none;
+   
 }
 
 .post-time {

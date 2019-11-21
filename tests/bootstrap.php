@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file
  *
- * @package News_Parser
+ * @package My_Gallery
  */
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );

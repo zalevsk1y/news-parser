@@ -1,5 +1,6 @@
 import React from 'react';
-import {getPluginDirUrl,hash} from '@news-parser/helpers';
+import {getPluginDirUrl} from '@news-parser/helpers';
+import {Parser} from '@news-parser/helpers/classes/Parser'
 import {selectTitle,selectFeaturedMedia,selectContent,removeContent} from '../actions/frame';
 import {connect} from 'react-redux';
 import DOMPurify from 'dompurify';
@@ -10,9 +11,10 @@ export class Frame extends React.Component{
         super(props);
         this.frameRef=React.createRef();
         this.clickHandler=this.clickHandler.bind(this);
+        
     }
     componentDidMount(){
-        
+    
         let doc=this.frameRef.current.contentWindow.document,
             sanitizedDOM=DOMPurify.sanitize(this.props.data,{ADD_TAGS:['link'],WHOLE_DOCUMENT:true}),
             cssLink=document.createElement('link');
@@ -31,6 +33,7 @@ export class Frame extends React.Component{
         doc.addEventListener('click',this.clickHandler);
         var imgArray=doc.getElementsByTagName('img');
         this.imageLazyLoad(imgArray);
+        this.parser=new Parser(this.frameRef);
     }
     imageLazyLoad(imgElements){
         [...imgElements].forEach(imgTag=>{
@@ -73,39 +76,9 @@ export class Frame extends React.Component{
                 event.target.className=className.replace(' mouse-over','');
     }
     parseElementData(element){
-        let parentElement=element.parentElement,
-            parsedData={};
-        parsedData.tagName=element.tagName;
-        parsedData.className=element.className.replace(' parser-select','').replace(' mouse-over','');
-        parsedData.content=parsedData.tagName==='IMG'?element.src:element.innerText;
-        let bodyScrollTop=this.frameRef.current.contentWindow.document.body.scrollTop;
-        parsedData.offsetTop=element.getBoundingClientRect().top+bodyScrollTop;
-        let parent;
-        while(true){
-            if(parentElement.className){
-                parent={
-                    tagName:parentElement.tagName,
-                    className:parentElement.className,
-                    offsetTop:parentElement.offsetTop
-                }
-                break;
-            }else{
-                parentElement=parentElement.parentElement
-                if (parentElement.tagName==='BODY'){
-                    parent={
-                        tagName:'BODY',
-                        className:null,
-                        offsetTop:parentElement.offsetTop
-                    }
-                    break;
-                }
-            }
-        }
-        parsedData.parent=parent;
-        let elementHash=hash((Math.random()).toString());
+        let {elementHash,parsedData}=this.parser.parseElementData(element)
         element.id=elementHash;
         this.props.selectContent(elementHash,parsedData)
-
     }
     removeSelectedElement(element){
         const hash=element.id;

@@ -58,39 +58,22 @@ class PostController
             $parsed_data['sourceUrl'] = $url;
          
             $post = $this->postFactory->get($parsed_data);
-            //if option "show image selection dialog window" gallery data will send as response
-            if (!$this->imagesWasSelected($options) && !empty($post->gallery)) {
-                return $this->formatResponse->dialog('gallery', $post->gallery)->message('none')->get('json');
-            }
+ 
             //Stages of post draw creating
             $this->pipe($post)
                 ->createDraft()
                 ->addSource()
-                ->addPostThumbnail()
-                ->updateImageGallery($options)
-                ->downloadGalleryPictures()
-                ->createGalleryShortcode();
+                ->addPostThumbnail();
+               
 
-            $response = $this->formatResponse->post($post->getAttributes())->message('success', Success::text('POST_SAVED_AS_DRAFT'))->get('json');
+            $response = $this->formatResponse->post($post->getAttributes())->message('success', sprintf(Success::text('POST_SAVED_AS_DRAFT'),$post->title))->get('json');
 
         } catch (MyException $e) {
             $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');
         }
         return $response;
     }
-    /**
-     * Check if parseOtherPictures and showPicturesDialog options was selected than should return gallery images for modal gallery window.
-     *
-     * @param $options
-     * @return boolean
-     */
-    public function imagesWasSelected($options)
-    {
-        if ($this->settings->post->parseOtherPictures && $this->settings->post->showPicturesDialog && !$options) {
-            return false;
-        }
-        return true;
-    }
+   
     /**
      * Create WP post draft
      *
@@ -128,46 +111,8 @@ class PostController
         }
         return $post;
     }
-    /**
-     * Update images in the post gallery
-     *
-     * @param array $new_gallery
-     * @param PostModel $post
-     * @return PostModel
-     */
-    public function updateImageGallery($new_gallery, PostModel $post)
-    {
-        if (!empty($new_gallery) && is_array($new_gallery) && isset($new_gallery)) {
-            $post->gallery = $new_gallery;
-        }
-        return $post;
-    }
-    /**
-     * Download pictures and attach then to the post
-     *
-     * @param PostModel $post
-     * @return PostModel
-     */
-    public function downloadGalleryPictures(PostModel $post)
-    {
-        if ($this->settings->post->parseOtherPictures) {
-            $post->downloadGalleryPictures($this->settings->post->maxPictures);
-        }
-        return $post;
-    }
-    /**
-     * Create gallery shortcode and add it to post body
-     *
-     * @param PostModel $post
-     * @return PostModel
-     */
-    public function createGalleryShortcode(PostModel $post)
-    {
-        if ($this->settings->gallery->addGallery && !empty($post->gallery)) {
-            $post->createGalleryShortcode($this->settings->gallery->shortCode, $this->settings->gallery->parameterName);
-        }
-        return $post;
-    }
+   
+   
     /**
      * Facade for pipe Utils\PipeController
      *

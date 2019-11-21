@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import {types} from '../actions';
 import {initialStateParse,initialStateRoute} from './initState';
-import {combineSubReducers} from '@news-parser/helpers';
+import {combineSubReducers,decodeQuotes} from '@news-parser/helpers';
 import dialog from './dialog'
 
 export function parse (state=initialStateParse,action){
@@ -27,11 +27,12 @@ export function parse (state=initialStateParse,action){
                 }
             };
         case types.RECEIVE_SINGLE_POST:
-            if(action.post.data._id){
+            if(action.post.data._id!==undefined){
                 state.items.data[action.post.data._id].status=action.post.data.status;
                 state.items.data[action.post.data._id].postId=action.post.data.post_id;
                 state.items.data[action.post.data._id].editLink=action.post.data.link;
             }
+            if(action.post.msg)action.post.msg.text=decodeQuotes(action.post.msg.text);
             return {...state,
                 isFetching:false,
                 url:action.url,
@@ -39,6 +40,17 @@ export function parse (state=initialStateParse,action){
                 message:action.post.msg,
                 error:action.post.err
             };
+        case types.SELECT_POST:
+            if(state.items.data[action._id].status!=='selected'){
+                state.items.data[action._id].status='selected';
+            } else if(state.items.data[action._id].status==='selected'){
+                state.items.data[action._id].status='parsed';
+            }
+            return {...state,
+                items:{...state.items,
+                    data:[...state.items.data]
+                }
+            }
         case types.OPEN_DIALOG:
  
             return {...state,
@@ -85,7 +97,7 @@ export function parse (state=initialStateParse,action){
 export function route(state=initialStateRoute,action){
  
     if(action.type===types.SET_ROUTE){
-        return {...state,action:action.action,url:action.url}
+        return {...state,action:action.action,url:action.url,page:action.page}
     }else{
         return {...state}
     }

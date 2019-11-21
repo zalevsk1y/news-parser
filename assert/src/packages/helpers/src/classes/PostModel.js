@@ -65,12 +65,15 @@ export class PostModel{
                     postBody+=this.paragraph(item.content);
                     break;
                 case 'IMG':
-                    postBody+=this.image(item.content,content.title);
+                    postBody+=this.image(item.content.src,item.content.alt);
                     break;
                 case 'H1':
                 case 'H2':
                 case 'H3':
                     postBody+=this.heading(item.content,item.tagName.toLowerCase());
+                    break;
+                case 'UL':
+                    postBody+=this.list(item.content);
                     break;
             }
         })
@@ -87,7 +90,8 @@ export class PostModel{
     }
     heading(text,type){
         let cleanContent=this.sanitize(text),
-            heading='<!-- wp:heading --><'+type+'>'+cleanContent+'</'+type+'><!-- /wp:heading -->';
+            level=type.replace('h',''),
+            heading='<!-- wp:heading {"level":'+level+'} --><'+type+'>'+cleanContent+'</'+type+'><!-- /wp:heading -->';
         return heading;
     }
     image(url,alt){
@@ -95,6 +99,16 @@ export class PostModel{
             cleanAlt=this.sanitize(alt),
             image='<!-- wp:image --><figure class="wp-block-image"><img src="'+cleanUrl+'" alt="'+cleanAlt+'"/></figure><!-- /wp:image -->'
         return image;
+    }
+    list(listArray){
+        let listBegin='<!-- wp:list --><ul>',
+            list='',
+            listEnd='</ul><!-- /wp:list -->';
+            listArray.forEach(item=>{
+                list+='<li>'+item+'</li>'
+            })
+        return listBegin+list+listEnd;
+
     }
     quote(text){
         let cleanContent=this.sanitize(text),   

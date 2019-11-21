@@ -99,6 +99,9 @@ export function decodeHTMLEntities(text) {
 
     return text;
 }
+export function decodeQuotes(text){
+    return text.replace(/&quot;/g,'"');
+}
 export function getPluginDirUrl(){
     return newsParserSettings.pluginUrl;
 }

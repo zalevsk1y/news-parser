@@ -9,7 +9,7 @@ const devServer=require("./devServer/devServer.js")
 module.exports={
     devtool: 'source-map',
     entry:{
-        parser:'./src/packages/parser/src/index.js',
+        parser_rss:'./src/packages/parser-rss/src/index.js',
         settings:'./src/packages/settings/src/index.js'
     },
     output:{
@@ -58,6 +58,7 @@ module.exports={
 				"@news-parser/helpers": path.resolve(__dirname,"src/packages/helpers/src/"),
 				"@news-parser/config": path.resolve(__dirname,"src/packages/config/src/index.js"),
 				"@news-parser/translate": path.resolve(__dirname,"src/packages/translate/src/index.js"),
+				"@news-parser/parser-rss": path.resolve(__dirname,"src/packages/parser-rss/src/"),
 				"@news-parser/error-handler": path.resolve(__dirname,"src/packages/error-handler/src/index.js"),
 				"@news-parser/visual-constructor":path.resolve(__dirname,"src/packages/visual-constructor/src/")
 			}

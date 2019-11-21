@@ -2,7 +2,7 @@
 namespace NewsParserPlugin\Ajax;
 
 use NewsParserPlugin\Controller\ListController;
-use NewsParserPlugin\Utils\ResponseFormatter;
+use NewsParserPlugin\Controller\PostController;
 use NewsParserPlugin\Controller\VisualConstructorController;
 
 /**
@@ -15,24 +15,24 @@ use NewsParserPlugin\Controller\VisualConstructorController;
 
 class Ajax
 {
-    protected $formatResponse;
+    protected $post;
     protected $list;
     protected $visual;
     protected static $instance;
 
-    protected function __construct(ListController $listController,VisualConstructorController $visual,ResponseFormatter $formatResponse)
+    protected function __construct(ListController $listController,VisualConstructorController $visual,PostController $post)
     {
         $this->list = $listController;
         $this->visual  = $visual;
-        $this->formatResponse=$formatResponse;
+        $this->post=$post;
         $this->init();
     }
-    public static function getInstance(ListController $listController,VisualConstructorController $visual,ResponseFormatter $formatResponse)
+    public static function getInstance(ListController $listController,VisualConstructorController $visual,PostController $post)
     {
         if (self::$instance) {
             return self::$instance;
         } else {
-            self::$instance = new self($listController, $visual,$formatResponse);
+            self::$instance = new self($listController, $visual,$post);
             return self::$instance;
         }
     }
@@ -93,9 +93,8 @@ class Ajax
     }
     protected function sendError($message){
         $clean_message=esc_html($message);
-        $formated_response=$this->formatResponse->error(1)->message('error',$clean_message)->get('json');
-        echo $formated_response;
-        \wp_die();
+        $response=array('error'=>$clean_message);
+        \wp_send_json($response);
     }
     public function mediaApi()
     {  
@@ -142,6 +141,7 @@ class Ajax
                 'validate_callback'=>function($status){
                     if(strpos('list',$status)!==false) return 'list';
                     if(strpos('single',$status)!==false) return 'single';
+                    if(strpos('multi',$status)!==false) return 'multi';
                     return false;
                 },
                 'sanitize_callback'=>function($status){
@@ -159,10 +159,13 @@ class Ajax
             case 'single':
                 $response = $this->visual->getRawHTML($url, array('remove_scripts'=>true));
                 break;
+            case 'multi':
+                $response=$this->post->get($url);
         }
         echo $response;
         \wp_die();
     }
+
         /**
      * Validate is input data is url.
      *

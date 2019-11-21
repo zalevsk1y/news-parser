@@ -2,7 +2,7 @@ import React from 'react';
 import {Fragment} from 'react';
 import Image from '../components/Image';
 import {connect} from 'react-redux';
-import {parsePage,createMessage,openDialog} from '../actions';
+import {parsePage,createMessage,openDialog,selectPost} from '../actions';
 import Icons from '../components/Icons';
 
 import PropTypes from 'prop-types';
@@ -13,6 +13,7 @@ export class Post extends React.Component {
         super(props);
         this.footer=this.footer.bind(this);
         this.openVisualConstructor=this.openVisualConstructor.bind(this);
+        this.selectPost=this.selectPost.bind(this);
     }
     footer(props){
         var footer=[],_this=this;
@@ -25,16 +26,10 @@ export class Post extends React.Component {
                     }
                 footer.push(<Icons className='fo fo-edit' title="Edit post" onClick={onClickEditPost}/>)
                 break;
+            case 'selected':
             case 'parsed':
-                let onClickParsePage=()=>{
-                        props.isFetching?props.message('info','Please wait data is parsing'):props.parsePage(props.link,props.postId)
-                    },
-                    onClickVisualConstructor=()=>{
-                        _this.openVisualConstructor();
-                        
-                    };
-                footer.push(<Icons className='fo fo-download' title="Parse post" onClick={onClickParsePage}/>,
-                        <Icons className='fo fo-visual-constructor' title='Visual constructor' onClick={onClickVisualConstructor} />);
+                footer.push(<Icons className={'fo fo-select'+(props.status==='selected'?' icon-selected':'')} title={props.status==='selected'?'Unselect post':'Select post'} onClick={this.selectPost}/>,
+                        <Icons className='fo fo-visual-constructor' title='Visual constructor' onClick={this.openVisualConstructor} />);
                 break;
             default:
                 console.error('Wrong post type: '+props.status)
@@ -45,6 +40,9 @@ export class Post extends React.Component {
             </div>
         )
     }
+    selectPost(){
+        this.props.selectPost(this.props._id)
+    }
     openVisualConstructor(){
         this.props.openVisualConstructor(this.props.link,{dialog:{
             postId:this.props.postId,
@@ -53,7 +51,7 @@ export class Post extends React.Component {
     }
     render(){
     return (
-        <div className={"post-container "+(this.props.status==="draft"?"post-parsed":"")}>
+        <div className={"post-container "+((this.props.status==="draft"||this.props.status==="selected")?"highlight":"")}>
             <div className="post-time">
                 <span className="fo fo-clock"></span>
                 <span className="post-time-header">{this.props.pubDate}</span>
@@ -113,13 +111,16 @@ function mapDispatchToProps(dispatch){
         },
         openVisualConstructor:(url,dialogData)=>{
             dispatch(openDialog(url,dialogData))
+        },
+        selectPost:(_id)=>{
+            dispatch(selectPost(_id))
         }
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Post);
 
 Post.propTypes={
-    status:PropTypes.oneOf(['draft','parsed']).isRequired,
+    status:PropTypes.oneOf(['draft','parsed','selected']).isRequired,
     title:PropTypes.string.isRequired,
     image:PropTypes.string.isRequired,
     description:PropTypes.string.isRequired,

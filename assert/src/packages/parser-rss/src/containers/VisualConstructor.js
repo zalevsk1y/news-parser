@@ -1,8 +1,8 @@
  
 import {connect} from 'react-redux';
-import {closeDialog} from '../actions/';
-import {getPageHTML,createPostDraft} from '../../../visual-constructor/src/actions';
-import VisualConstructor from '@news-parser/visual-constructor/index';
+import {closeDialog} from '../actions';
+import {getPageHTML,createPostDraft} from '@news-parser/visual-constructor/actions';
+import VisualConstructor from '@news-parser/visual-constructor';
 
 
 function mapStateToProps(state){

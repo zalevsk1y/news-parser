@@ -40,7 +40,6 @@ class PostModel implements ModelInterface
 
         $this->body = $data['body'];
         $this->image = $data['image'];
-        $this->gallery = $data['gallery'];
         $this->sourceUrl = $data['sourceUrl'];
         $this->authorId = $data['authorId'];
         $this->status = 'parsed';
