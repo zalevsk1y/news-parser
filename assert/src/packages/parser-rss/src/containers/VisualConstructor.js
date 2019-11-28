@@ -1,7 +1,7 @@
  
 import {connect} from 'react-redux';
 import {closeDialog} from '../actions';
-import {getPageHTML,createPostDraft} from '@news-parser/visual-constructor/actions';
+import {getPageHTML,createPostDraft,saveParsingTemplate} from '@news-parser/visual-constructor/actions';
 import VisualConstructor from '@news-parser/visual-constructor';
 
 
@@ -22,7 +22,11 @@ function mapDispatchToProps(dispatch){
             dispatch(getPageHTML(url,dispatch))
         },
         createPostDraft:function(id,url,postData,options){
-            dispatch(createPostDraft(id,url,postData,options,dispatch));
+            if(options.saveParsingTemplate){
+                dispatch(saveParsingTemplate({url,postData,dispatch,options}))
+            }else{
+                dispatch(createPostDraft(id,url,postData,options,dispatch));
+            }
         }
     }
 }

@@ -1,25 +1,19 @@
 import {MediaModel} from './MediaModel';
-import {getAjaxNonce} from '../index'
+import {Rest} from './Rest';
+import {sortByOffset} from '../traits/sortByOffset'
 
-export class PostModel{
+export class PostModel extends Rest{
     
     constructor({postData,restApiRoot,options,url}){
+        super(restApiRoot);
         this.content=this.formatParsedData(postData);
         this.title=postData.title;
         this.featuredMedia=postData.image;
         this.url=url
-        if(!restApiRoot)throw new Error('No restApiRoot was set.')
-        this.rootApi=restApiRoot;
         this.options=options;
         this.endPoint='wp/v2/posts';
-        this.headers={
-            'Content-Type': 'application/json',
-            'accept': 'application/json',
-        }
-    }
-    nonceAuth(nonce){
-        this.headers['X-WP-Nonce']=nonce;
-        return this;
+        this.sortByOffset=sortByOffset;
+       
     }
     createPostDraft(){
         let url=this.rootApi+this.endPoint,
@@ -53,7 +47,8 @@ export class PostModel{
     }
     
     formatParsedData(content){
-        const contentArray=this.sortByOffset(content.body);
+        const contentArray=sortByOffset(content.body);
+        console.log(this);
         let postBody='';
         contentArray.forEach(item=>{
             switch(item.tagName){
@@ -118,30 +113,7 @@ export class PostModel{
     sanitize(content){
         return content.replace(/<.*?>/g,'');
     }
-    sortByOffset(objectOfContent){
-        const sortedContent=[],
-        objectCopy={...objectOfContent};
-        
-        while(true){
-            if(!Object.keys(objectCopy).length) break;
-            let minIndex={
-                index:0,
-                offsetTop:Math.pow(10,10)
-            }
-            for (var item in objectCopy){
-                if(objectCopy[item].offsetTop<minIndex.offsetTop){
-                    minIndex.offsetTop=objectCopy[item].offsetTop;
-                    minIndex.index=item;
-                }
-            }
-            sortedContent.push(objectCopy[minIndex.index]);
-            delete objectCopy[minIndex.index]
-        }
-        return sortedContent;
-    }
-    createMedia(){
-        let media= new MediaModel(this.rootApi);
-        return media
-    }
+   
+
 
 }

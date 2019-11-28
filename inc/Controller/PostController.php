@@ -27,17 +27,19 @@ class PostController
 {
     protected $postFactory;
     protected $postData;
-    protected $settings;
+    protected $optionsFactory;
+    protected $options;
     protected $formatResponse;
     protected $postParser;
 
 
-    public function __construct(ParseContent $postParser, Settings $settings, ResponseFormatter $formatter, FactoryInterface $postFactory)
+    public function __construct(ParseContent $postParser, FactoryInterface $optionsFactory, ResponseFormatter $formatter, FactoryInterface $postFactory)
     {
         $this->postParser = $postParser;
-        $this->settings = $settings->get();
+        $this->optionsFactory = $optionsFactory;
         $this->formatResponse = $formatter;
         $this->postFactory = $postFactory;
+        
     }
     /**
      * Create post draft and return response in proper format
@@ -47,12 +49,14 @@ class PostController
      * @param array $options [gallery images that was selected]
      * @return void
      */
-    public function get(string $url, array $options = null)
+    public function get($url, $options=array())
     {
         try {
-            $parsed_data =$this->postParser->get($url);
+            
+            $parsing_options=$this->optionsFactory->get($url);
+            $parsed_data =$this->postParser->get($url,$parsing_options->getAttributes('object'));
             $parsed_data['authorId'] = \get_current_user_id();
-
+            $this->options=$parsing_options->getExtraOptions();
             //unescaped url
 
             $parsed_data['sourceUrl'] = $url;
@@ -93,7 +97,7 @@ class PostController
      */
     public function addPostThumbnail(PostModel $post)
     {
-        if ($this->settings->post->addThumbnail) {
+        if ($this->options['addFeaturedMedia']) {
             $post->addPostThumbnail();
         }
         return $post;
@@ -106,7 +110,7 @@ class PostController
      */
     public function addSource(PostModel $post)
     {
-        if ($this->settings->general->addSource) {
+        if ($this->options['addSource']) {
             $post->addSource();
         }
         return $post;

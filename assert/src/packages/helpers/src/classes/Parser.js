@@ -19,7 +19,7 @@ export class Parser{
                 parsedData.content=element.innerText;
         }
         parsedData.offsetTop=this.getOffsetTop(element);
-        parsedData.parent=this.getParent(element);
+        parsedData.parent=this.getParentsArray(element);
         let elementHash=hash(Math.random().toString());
         return {
             elementHash,
@@ -44,29 +44,21 @@ export class Parser{
             return item.innerText;
         })
     }
-    getParent(el){
+    getParentsArray(el){
         const element=el;
         let parentElement=element.parentElement,
-            parent;
+            parent=[];
         while(true){
             if(parentElement.className){
-                parent={
-                    tagName:parentElement.tagName,
+                parent.push({
                     className:parentElement.className,
-                    offsetTop:parentElement.offsetTop
-                }
-                break;
-            }else{
-                parentElement=parentElement.parentElement
-                if (parentElement.tagName==='BODY'){
-                    parent={
-                        tagName:'BODY',
-                        className:null,
-                        offsetTop:parentElement.offsetTop
-                    }
-                    break;
-                }
+                    tagName:parentElement.tagName
+                })
             }
+            if (parentElement.tagName==='BODY'){
+                break;
+            }
+            parentElement=parentElement.parentElement;
         }
         return parent;
     }

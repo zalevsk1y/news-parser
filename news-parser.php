@@ -24,6 +24,7 @@ define("NEWS_PARSER_PLUGIN_DIR_NAME", basename(dirname(__FILE__)));
 define("NEWS_PARSER_PLUGIN_NO_IMAGE_PATH", plugins_url('', __FILE__) . '/images/no-image.svg');
 define("NEWS_PARSER_PLUGIN_AJAX_PARSING_API", 'news_parser_parsing_api');
 define("NEWS_PARSER_PLUGIN_AJAX_MEDIA_API", 'news_parser_media_api');
+define("NEWS_PARSER_PLUGIN_AJAX_OPTIONS_API", 'news_parser_options_api');
 
 require 'autoload.php';
 require 'vendor/autoload.php';
@@ -47,13 +48,15 @@ $modules['settings'] = new Utils\Settings();
 $modules['response_formatter'] = new Utils\ResponseFormatter();
 $modules['list_factory'] = new Factory\ListFactory();
 $modules['post_factory'] = new Factory\PostGutenbergFactory();
+$modules['options_factory'] = new Factory\OptionsFactory();
 //--controllers
 $modules['list_controller'] = new Controller\ListController($modules['XML_parser'], $modules['settings'], $modules['response_formatter'], $modules['list_factory']);
-$modules['post_controller'] = new Controller\PostController($modules['html_pattern_parser'], $modules['settings'], $modules['response_formatter'], $modules['post_factory']);
+$modules['post_controller'] = new Controller\PostController($modules['html_pattern_parser'], $modules['options_factory'], $modules['response_formatter'], $modules['post_factory']);
 $modules['settings_controller'] = new Controller\SettingsController($modules['settings'], $modules['response_formatter']);
+$module['option_controller']=new Controller\OptionsController($modules['options_factory'],$modules['response_formatter']);
 $modules['visual_constructor_controller']=new Controller\VisualConstructorController($modules['html_raw'],$modules['response_formatter']);
 //---Ajax
-$modules['ajax_controller'] =  Ajax\Ajax::getInstance($modules['list_controller'], $modules['visual_constructor_controller'],$modules['post_controller']);
+$modules['ajax_controller'] =  Ajax\Ajax::getInstance($modules['list_controller'], $modules['visual_constructor_controller'],$modules['post_controller'],$module['option_controller']);
 //---Rest
 $modules['rest_visual_constructor']= new Rest\VisualConstructorRestController($modules['visual_constructor_controller']);
 \register_uninstall_hook(__FILE__, 'Utils\Settings::deleteSettings');

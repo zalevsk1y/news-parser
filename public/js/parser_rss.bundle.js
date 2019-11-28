@@ -37101,8 +37101,7 @@ function () {
   }, {
     key: "create",
     value: function create(url, alt, postId) {
-      console.log(this);
-      var restUrl = this.endPoint,
+      var ajaxUrl = this.endPoint,
           body = {
         url: url,
         options: {
@@ -37110,8 +37109,8 @@ function () {
           postId: postId
         }
       };
-      if (this.nonce) restUrl += '&_wpnonce=' + this.nonce;
-      return fetch(restUrl, {
+      if (this.nonce) ajaxUrl += '&_wpnonce=' + this.nonce;
+      return fetch(ajaxUrl, {
         method: 'POST',
         headers: this.headers,
         body: JSON.stringify(body)
@@ -37212,7 +37211,7 @@ function () {
       }
 
       parsedData.offsetTop = this.getOffsetTop(element);
-      parsedData.parent = this.getParent(element);
+      parsedData.parent = this.getParentsArray(element);
       var elementHash = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["hash"])(Math.random().toString());
       return {
         elementHash: elementHash,
@@ -37244,32 +37243,25 @@ function () {
       });
     }
   }, {
-    key: "getParent",
-    value: function getParent(el) {
+    key: "getParentsArray",
+    value: function getParentsArray(el) {
       var element = el;
       var parentElement = element.parentElement,
-          parent;
+          parent = [];
 
       while (true) {
         if (parentElement.className) {
-          parent = {
-            tagName: parentElement.tagName,
+          parent.push({
             className: parentElement.className,
-            offsetTop: parentElement.offsetTop
-          };
-          break;
-        } else {
-          parentElement = parentElement.parentElement;
-
-          if (parentElement.tagName === 'BODY') {
-            parent = {
-              tagName: 'BODY',
-              className: null,
-              offsetTop: parentElement.offsetTop
-            };
-            break;
-          }
+            tagName: parentElement.tagName
+          });
         }
+
+        if (parentElement.tagName === 'BODY') {
+          break;
+        }
+
+        parentElement = parentElement.parentElement;
       }
 
       return parent;
@@ -37292,10 +37284,9 @@ function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PostModel", function() { return PostModel; });
 /* harmony import */ var _MediaModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MediaModel */ "./src/packages/helpers/src/classes/MediaModel.js");
-/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../index */ "./src/packages/helpers/src/index.js");
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+/* harmony import */ var _Rest__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Rest */ "./src/packages/helpers/src/classes/Rest.js");
+/* harmony import */ var _traits_sortByOffset__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../traits/sortByOffset */ "./src/packages/helpers/src/traits/sortByOffset.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -37303,12 +37294,27 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
 
 
 var PostModel =
 /*#__PURE__*/
-function () {
+function (_Rest) {
+  _inherits(PostModel, _Rest);
+
   function PostModel(_ref) {
+    var _this;
+
     var postData = _ref.postData,
         restApiRoot = _ref.restApiRoot,
         options = _ref.options,
@@ -37316,27 +37322,18 @@ function () {
 
     _classCallCheck(this, PostModel);
 
-    this.content = this.formatParsedData(postData);
-    this.title = postData.title;
-    this.featuredMedia = postData.image;
-    this.url = url;
-    if (!restApiRoot) throw new Error('No restApiRoot was set.');
-    this.rootApi = restApiRoot;
-    this.options = options;
-    this.endPoint = 'wp/v2/posts';
-    this.headers = {
-      'Content-Type': 'application/json',
-      'accept': 'application/json'
-    };
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PostModel).call(this, restApiRoot));
+    _this.content = _this.formatParsedData(postData);
+    _this.title = postData.title;
+    _this.featuredMedia = postData.image;
+    _this.url = url;
+    _this.options = options;
+    _this.endPoint = 'wp/v2/posts';
+    _this.sortByOffset = _traits_sortByOffset__WEBPACK_IMPORTED_MODULE_2__["sortByOffset"];
+    return _this;
   }
 
   _createClass(PostModel, [{
-    key: "nonceAuth",
-    value: function nonceAuth(nonce) {
-      this.headers['X-WP-Nonce'] = nonce;
-      return this;
-    }
-  }, {
     key: "createPostDraft",
     value: function createPostDraft() {
       var url = this.rootApi + this.endPoint,
@@ -37373,33 +37370,34 @@ function () {
   }, {
     key: "formatParsedData",
     value: function formatParsedData(content) {
-      var _this = this;
+      var _this2 = this;
 
-      var contentArray = this.sortByOffset(content.body);
+      var contentArray = Object(_traits_sortByOffset__WEBPACK_IMPORTED_MODULE_2__["sortByOffset"])(content.body);
+      console.log(this);
       var postBody = '';
       contentArray.forEach(function (item) {
         switch (item.tagName) {
           case 'SPAN':
-            postBody += _this.simpleText(item.content);
+            postBody += _this2.simpleText(item.content);
             break;
 
           case 'DIV':
           case 'P':
-            postBody += _this.paragraph(item.content);
+            postBody += _this2.paragraph(item.content);
             break;
 
           case 'IMG':
-            postBody += _this.image(item.content.src, item.content.alt);
+            postBody += _this2.image(item.content.src, item.content.alt);
             break;
 
           case 'H1':
           case 'H2':
           case 'H3':
-            postBody += _this.heading(item.content, item.tagName.toLowerCase());
+            postBody += _this2.heading(item.content, item.tagName.toLowerCase());
             break;
 
           case 'UL':
-            postBody += _this.list(item.content);
+            postBody += _this2.list(item.content);
             break;
         }
       });
@@ -37457,41 +37455,238 @@ function () {
     value: function sanitize(content) {
       return content.replace(/<.*?>/g, '');
     }
-  }, {
-    key: "sortByOffset",
-    value: function sortByOffset(objectOfContent) {
-      var sortedContent = [],
-          objectCopy = _objectSpread({}, objectOfContent);
-
-      while (true) {
-        if (!Object.keys(objectCopy).length) break;
-        var minIndex = {
-          index: 0,
-          offsetTop: Math.pow(10, 10)
-        };
-
-        for (var item in objectCopy) {
-          if (objectCopy[item].offsetTop < minIndex.offsetTop) {
-            minIndex.offsetTop = objectCopy[item].offsetTop;
-            minIndex.index = item;
-          }
-        }
-
-        sortedContent.push(objectCopy[minIndex.index]);
-        delete objectCopy[minIndex.index];
-      }
-
-      return sortedContent;
-    }
-  }, {
-    key: "createMedia",
-    value: function createMedia() {
-      var media = new _MediaModel__WEBPACK_IMPORTED_MODULE_0__["MediaModel"](this.rootApi);
-      return media;
-    }
   }]);
 
   return PostModel;
+}(_Rest__WEBPACK_IMPORTED_MODULE_1__["Rest"]);
+
+/***/ }),
+
+/***/ "./src/packages/helpers/src/classes/Rest.js":
+/*!**************************************************!*\
+  !*** ./src/packages/helpers/src/classes/Rest.js ***!
+  \**************************************************/
+/*! exports provided: Rest */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Rest", function() { return Rest; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Rest =
+/*#__PURE__*/
+function () {
+  function Rest(restApiRoot) {
+    _classCallCheck(this, Rest);
+
+    if (!restApiRoot) throw new Error('No restApiRoot was set.');
+    this.rootApi = restApiRoot;
+    this.headers = {
+      'Content-Type': 'application/json',
+      'accept': 'application/json'
+    };
+  }
+
+  _createClass(Rest, [{
+    key: "nonceAuth",
+    value: function nonceAuth(nonce) {
+      this.headers['X-WP-Nonce'] = nonce;
+      return this;
+    }
+  }]);
+
+  return Rest;
+}();
+
+/***/ }),
+
+/***/ "./src/packages/helpers/src/classes/TemplateModel.js":
+/*!***********************************************************!*\
+  !*** ./src/packages/helpers/src/classes/TemplateModel.js ***!
+  \***********************************************************/
+/*! exports provided: TemplateModel */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TemplateModel", function() { return TemplateModel; });
+/* harmony import */ var _Rest__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Rest */ "./src/packages/helpers/src/classes/Rest.js");
+/* harmony import */ var _traits_sortByOffset__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../traits/sortByOffset */ "./src/packages/helpers/src/traits/sortByOffset.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var TemplateModel =
+/*#__PURE__*/
+function () {
+  function TemplateModel(_ref) {
+    var postData = _ref.postData,
+        options = _ref.options,
+        url = _ref.url,
+        ajaxEndPoint = _ref.ajaxEndPoint;
+
+    _classCallCheck(this, TemplateModel);
+
+    this.endPoint = ajaxEndPoint;
+    this.sortByOffset = _traits_sortByOffset__WEBPACK_IMPORTED_MODULE_1__["sortByOffset"];
+    this.url = url;
+    this.options = options;
+    this.postData = postData;
+    this.headers = {
+      'Content-Type': 'application/json',
+      'accept': 'application/json'
+    };
+  }
+
+  _createClass(TemplateModel, [{
+    key: "nonceAuth",
+    value: function nonceAuth(nonce) {
+      this.nonce = nonce;
+      this.endPoint += '&_wpnonce=' + this.nonce;
+      return this;
+    }
+  }, {
+    key: "create",
+    value: function create() {
+      var _this = this;
+
+      var $this = this,
+          arrayOfElements = Object.keys(this.postData.body).map(function (propName) {
+        return $this.postData.body[propName];
+      }),
+          cleanedData = this.removeDuplicate(arrayOfElements),
+          sortedData = this.sortByDOMPosition(cleanedData);
+      var containerTagName = sortedData[0].parent[0].tagName.toLowerCase(),
+          containerClassName = sortedData[0].parent[0].className.trim(),
+          container = {
+        tagName: containerTagName,
+        className: containerClassName,
+        searchTemplate: containerTagName + '[class=' + containerClassName + ']',
+        children: []
+      },
+          template = {
+        url: this.url,
+        extraOptions: this.options,
+        template: container
+      };
+      sortedData.forEach(function (item) {
+        var tagName = item.tagName.toLowerCase(),
+            searchTemplate = _this.createSearchTemplate(item, containerClassName);
+
+        container.children.push({
+          tagName: tagName,
+          searchTemplate: searchTemplate,
+          position: 'all'
+        });
+      });
+      return template;
+    }
+  }, {
+    key: "createSearchTemplate",
+    value: function createSearchTemplate(item, containerClassName) {
+      var classNameArray = item.className.trim().split(' '),
+          className,
+          parentTagName = item.parent[0].tagName.toLowerCase(),
+          parentClassName = item.parent[0].className.trim(),
+          tagName = item.tagName.toLowerCase();
+      classNameArray.forEach(function (partName) {
+        if (partName.search(/([0-9])/g) === -1 && !className) {
+          className = partName;
+        }
+      });
+      className = className || item.className.trim();
+      return className ? tagName + '[class=' + className + ']' : parentClassName !== containerClassName ? parentTagName + '[class=' + parentClassName + '] ' + tagName : tagName;
+    }
+  }, {
+    key: "removeDuplicate",
+    value: function removeDuplicate(arrayOfItems) {
+      var tempArray = _toConsumableArray(arrayOfItems);
+
+      var newArray = [],
+          $this = this;
+
+      var _loop = function _loop() {
+        var itemObject = tempArray.shift();
+        tempArray = tempArray.filter(function (item) {
+          if (!$this.theSame(itemObject, item)) return item;
+        });
+        newArray.push(itemObject);
+
+        if (tempArray.length <= 1) {
+          tempArray.length === 1 && newArray.push(tempArray[0]);
+          return "break";
+        }
+      };
+
+      while (true) {
+        var _ret = _loop();
+
+        if (_ret === "break") break;
+      }
+
+      return newArray;
+    }
+  }, {
+    key: "theSame",
+    value: function theSame(itemObject1, itemObject2) {
+      var result = true;
+
+      if (itemObject1.tagName !== itemObject2.tagName) {
+        return false;
+      }
+
+      if (itemObject1.className !== itemObject2.className) {
+        return false;
+      }
+
+      if (itemObject1.parent.length !== itemObject2.parent.length) {
+        return false;
+      }
+
+      return result;
+    }
+  }, {
+    key: "sortByDOMPosition",
+    value: function sortByDOMPosition(arrayOfElements) {
+      var newArray = _toConsumableArray(arrayOfElements);
+
+      newArray.sort(function (item1, item2) {
+        return item1.parent.length - item2.parent.length;
+      });
+      return newArray;
+    }
+  }, {
+    key: "save",
+    value: function save() {
+      var template = this.create();
+      return fetch(this.endPoint, {
+        method: 'POST',
+        headers: this.headers,
+        body: JSON.stringify(template)
+      }).then(function (response) {
+        return response.json();
+      });
+    }
+  }]);
+
+  return TemplateModel;
 }();
 
 /***/ }),
@@ -37684,6 +37879,47 @@ function objectToUrlEncoded(obj) {
 }
 
 var nonceSettingsPage = null;
+
+/***/ }),
+
+/***/ "./src/packages/helpers/src/traits/sortByOffset.js":
+/*!*********************************************************!*\
+  !*** ./src/packages/helpers/src/traits/sortByOffset.js ***!
+  \*********************************************************/
+/*! exports provided: sortByOffset */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sortByOffset", function() { return sortByOffset; });
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function sortByOffset(objectOfContent) {
+  var sortedContent = [],
+      objectCopy = _objectSpread({}, objectOfContent);
+
+  while (true) {
+    if (!Object.keys(objectCopy).length) break;
+    var minIndex = {
+      index: 0,
+      offsetTop: Math.pow(10, 10)
+    };
+
+    for (var item in objectCopy) {
+      if (objectCopy[item].offsetTop < minIndex.offsetTop) {
+        minIndex.offsetTop = objectCopy[item].offsetTop;
+        minIndex.index = item;
+      }
+    }
+
+    sortedContent.push(objectCopy[minIndex.index]);
+    delete objectCopy[minIndex.index];
+  }
+
+  return sortedContent;
+}
 
 /***/ }),
 
@@ -39206,7 +39442,16 @@ function mapDispatchToProps(dispatch) {
       dispatch(Object(_news_parser_visual_constructor_actions__WEBPACK_IMPORTED_MODULE_2__["getPageHTML"])(url, dispatch));
     },
     createPostDraft: function createPostDraft(id, url, postData, options) {
-      dispatch(Object(_news_parser_visual_constructor_actions__WEBPACK_IMPORTED_MODULE_2__["createPostDraft"])(id, url, postData, options, dispatch));
+      if (options.saveParsingTemplate) {
+        dispatch(Object(_news_parser_visual_constructor_actions__WEBPACK_IMPORTED_MODULE_2__["saveParsingTemplate"])({
+          url: url,
+          postData: postData,
+          dispatch: dispatch,
+          options: options
+        }));
+      } else {
+        dispatch(Object(_news_parser_visual_constructor_actions__WEBPACK_IMPORTED_MODULE_2__["createPostDraft"])(id, url, postData, options, dispatch));
+      }
     }
   };
 }
@@ -39661,7 +39906,7 @@ function removeContent(hash) {
 /*!**************************************************************!*\
   !*** ./src/packages/visual-constructor/src/actions/index.js ***!
   \**************************************************************/
-/*! exports provided: types, sendRequestToServer, receiveRequestFromServer, getPostHTML, getPageHTML, createPostDraft */
+/*! exports provided: types, sendRequestToServer, receiveRequestFromServer, getPostHTML, getPageHTML, createPostDraft, saveParsingTemplate */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -39672,10 +39917,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPostHTML", function() { return getPostHTML; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPageHTML", function() { return getPageHTML; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPostDraft", function() { return createPostDraft; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveParsingTemplate", function() { return saveParsingTemplate; });
 /* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
 /* harmony import */ var _news_parser_helpers_classes_PostModel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @news-parser/helpers/classes/PostModel */ "./src/packages/helpers/src/classes/PostModel.js");
-/* harmony import */ var _news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @news-parser/parser-rss/actions/index */ "./src/packages/parser-rss/src/actions/index.js");
-/* harmony import */ var _news_parser_helpers_classes_MediaModel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @news-parser/helpers/classes/MediaModel */ "./src/packages/helpers/src/classes/MediaModel.js");
+/* harmony import */ var _news_parser_helpers_classes_TemplateModel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @news-parser/helpers/classes/TemplateModel */ "./src/packages/helpers/src/classes/TemplateModel.js");
+/* harmony import */ var _news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @news-parser/parser-rss/actions/index */ "./src/packages/parser-rss/src/actions/index.js");
+/* harmony import */ var _news_parser_helpers_classes_MediaModel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @news-parser/helpers/classes/MediaModel */ "./src/packages/helpers/src/classes/MediaModel.js");
+
 
 
 
@@ -39723,7 +39971,7 @@ function getPageHTML(pageUrl, dispatch) {
       }
 
       if (receivedData.hasOwnProperty('err') && receivedData.err == 1) {
-        dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_2__["receiveError"])(receivedData));
+        dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["receiveError"])(receivedData));
       }
 
       dispatch(getPostHTML(receivedData));
@@ -39742,7 +39990,7 @@ function createPostDraft(postId, postUrl, postData, options, dispatch) {
   return function (dispatch) {
     return post.nonceAuth(nonce).createPostDraft().then(function (postData) {
       dispatch(receiveRequestFromServer());
-      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_2__["closeDialog"])());
+      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["closeDialog"])());
       var receive = {};
       receive.msg = {
         type: "success",
@@ -39756,8 +40004,8 @@ function createPostDraft(postId, postUrl, postData, options, dispatch) {
         postData: postData
       };
 
-      if (!options.noFeaturedMedia) {
-        var media = new _news_parser_helpers_classes_MediaModel__WEBPACK_IMPORTED_MODULE_3__["MediaModel"](Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getApiEndpoint"])('media'));
+      if (options.addFeaturedMedia) {
+        var media = new _news_parser_helpers_classes_MediaModel__WEBPACK_IMPORTED_MODULE_4__["MediaModel"](Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getApiEndpoint"])('media'));
         media.nonceAuth(Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getAjaxNonce"])()).create(post.featuredMedia, post.title, post.id).then(function (mediaData) {
           if (mediaData.err == 0 && mediaData.data.mediaId) {
             post.updatePost({
@@ -39765,15 +40013,38 @@ function createPostDraft(postId, postUrl, postData, options, dispatch) {
             });
           } else {
             if (mediaData.hasOwnProperty('msg')) {
-              dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_2__["createMessage"])(mediaData.msg.type, mediaData.msg.text));
+              dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["createMessage"])(mediaData.msg.type, mediaData.msg.text));
             }
           }
         });
       }
 
-      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_2__["receivePost"])(postUrl, receive));
+      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["receivePost"])(postUrl, receive));
     }).catch(function (error) {
-      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_2__["fetchError"])(error));
+      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["fetchError"])(error));
+    });
+  };
+}
+function saveParsingTemplate(_ref) {
+  var url = _ref.url,
+      postData = _ref.postData,
+      dispatch = _ref.dispatch,
+      options = _ref.options;
+  options.url = url;
+  var nonce = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getAjaxNonce"])(),
+      template = new _news_parser_helpers_classes_TemplateModel__WEBPACK_IMPORTED_MODULE_2__["TemplateModel"]({
+    url: url,
+    postData: postData,
+    ajaxEndPoint: Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getApiEndpoint"])('options'),
+    options: options
+  });
+  return function (dispatch) {
+    return template.nonceAuth(nonce).save().then(function (data) {
+      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["closeDialog"])());
+      if (data.err == 1) dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["receiveError"])(receivedData));
+      if (data.hasOwnProperty('msg')) dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["createMessage"])(data.msg.type, data.msg.text));
+    }).catch(function (error) {
+      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["fetchError"])(error));
     });
   };
 }
@@ -39784,19 +40055,33 @@ function createPostDraft(postId, postUrl, postData, options, dispatch) {
 /*!***************************************************************!*\
   !*** ./src/packages/visual-constructor/src/actions/option.js ***!
   \***************************************************************/
-/*! exports provided: types, toggleNoFeaturedMedia */
+/*! exports provided: types, toggleAddFeaturedMedia, toggleAddSource, toggleSaveParsingTemplate */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "types", function() { return types; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleNoFeaturedMedia", function() { return toggleNoFeaturedMedia; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleAddFeaturedMedia", function() { return toggleAddFeaturedMedia; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleAddSource", function() { return toggleAddSource; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleSaveParsingTemplate", function() { return toggleSaveParsingTemplate; });
 var types = {
-  TOGGLE_NO_FEATURED_MEDIA: 'TOGGLE_NO_FEATURED_MEDIA'
+  TOGGLE_ADD_FEATURED_MEDIA: 'TOGGLE_ADD_FEATURED_MEDIA',
+  TOGGLE_SAVE_PARSING_TEMPLATE: 'TOGGLE_SAVE_PARSING_TEMPLATE',
+  ADD_SOURCE: 'ADD_SOURCE'
 };
-function toggleNoFeaturedMedia() {
+function toggleAddFeaturedMedia() {
   return {
-    type: types.TOGGLE_NO_FEATURED_MEDIA
+    type: types.TOGGLE_ADD_FEATURED_MEDIA
+  };
+}
+function toggleAddSource() {
+  return {
+    type: types.ADD_SOURCE
+  };
+}
+function toggleSaveParsingTemplate() {
+  return {
+    type: types.TOGGLE_SAVE_PARSING_TEMPLATE
   };
 }
 
@@ -40108,7 +40393,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var options = this.props.options || {};
-      var noImage = options.noFeaturedMedia ? ' no-featured-image' : '';
+      var noImage = !options.addFeaturedMedia ? ' no-featured-image' : '';
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "inner-sidebar-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoBox"], {
@@ -40124,8 +40409,8 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "howto"
       }, "If you want to change featured image, select image you would like to choose in the constructor and click \"Change image\" button."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_elements_Checkbox__WEBPACK_IMPORTED_MODULE_2__["Checkbox"], {
-        value: options.noFeaturedMedia,
-        onClick: this.props.toggleNoFeaturedMedia
+        value: !options.addFeaturedMedia,
+        onClick: this.props.toggleAddFeaturedMedia
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "howto inline-bl"
       }, "No featured image."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoFooter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -40168,7 +40453,6 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 function mapStateToProps(state) {
-  console.log(state.parse.dialog.parsedData);
   var title = state.parse.dialog.hasOwnProperty('parsedData') ? state.parse.dialog.parsedData.title : undefined,
       image = state.parse.dialog.hasOwnProperty('parsedData') ? state.parse.dialog.parsedData.image : undefined,
       options = state.parse.dialog.hasOwnProperty('parsedData') ? state.parse.dialog.options : undefined,
@@ -40183,14 +40467,17 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    toggleNoFeaturedMedia: function toggleNoFeaturedMedia() {
-      dispatch(Object(_actions_option__WEBPACK_IMPORTED_MODULE_5__["toggleNoFeaturedMedia"])());
+    toggleAddFeaturedMedia: function toggleAddFeaturedMedia() {
+      dispatch(Object(_actions_option__WEBPACK_IMPORTED_MODULE_5__["toggleAddFeaturedMedia"])());
     },
     selectTitle: function selectTitle(newTitle) {
       dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_6__["selectTitle"])(newTitle));
     },
     selectFeaturedMedia: function selectFeaturedMedia(url) {
       dispatch(Object(_actions_frame__WEBPACK_IMPORTED_MODULE_6__["selectFeaturedMedia"])(url));
+    },
+    toggleSaveParsingTemplate: function toggleSaveParsingTemplate() {
+      dispatch(Object(_actions_option__WEBPACK_IMPORTED_MODULE_5__["toggleSaveParsingTemplate"])());
     }
   };
 }
@@ -40632,8 +40919,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var defaultOptionsState = {
-  noFeaturedMedia: false,
-  downloadImages: true,
+  addFeaturedMedia: true,
   addSource: false,
   saveParsingTemplate: false
 };
@@ -40642,10 +40928,22 @@ function options() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case _actions_option__WEBPACK_IMPORTED_MODULE_0__["types"].TOGGLE_NO_FEATURED_MEDIA:
+    case _actions_option__WEBPACK_IMPORTED_MODULE_0__["types"].TOGGLE_ADD_FEATURED_MEDIA:
       return _objectSpread({}, state, {
-        noFeaturedMedia: !state.noFeaturedMedia
+        addFeaturedMedia: !state.addFeaturedMedia
       });
+
+    case _actions_option__WEBPACK_IMPORTED_MODULE_0__["types"].TOGGLE_SAVE_PARSING_TEMPLATE:
+      return _objectSpread({}, state, {
+        saveParsingTemplate: !state.saveParsingTemplate
+      });
+
+    case _actions_option__WEBPACK_IMPORTED_MODULE_0__["types"].ADD_SOURCE:
+      {
+        return _objectSpread({}, state, {
+          addSource: !state.addSource
+        });
+      }
 
     default:
       return _objectSpread({}, state);

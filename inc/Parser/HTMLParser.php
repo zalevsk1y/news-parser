@@ -57,7 +57,7 @@ class HTMLParser extends ParseContent
         $this->rawHTML = $data;
         $this->post['title'] = esc_html($this->postTitle());
         $this->post['image'] = Sanitize::sanitizeImageURL($this->postImage());
-        $this->post['body'] = $this->postBody();
+        $this->post['body'] = $this->postBody($options);
         return $this->post;
     }
     /**
@@ -105,7 +105,7 @@ class HTMLParser extends ParseContent
      * @return string
      */
 
-    public function postBody()
+    public function postBody($options)
     {
        
         //Parse body inside <p> tag

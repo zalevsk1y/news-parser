@@ -15,17 +15,17 @@ export class MediaModel{
         return this;
     }
     create(url,alt,postId){
-        console.log(this);
-        let restUrl=this.endPoint,
+
+        let ajaxUrl=this.endPoint,
             body={url,
                 options:{
                     alt,
                     postId
                 }
             };
-        if(this.nonce)restUrl+='&_wpnonce='+this.nonce;
+        if(this.nonce)ajaxUrl+='&_wpnonce='+this.nonce;
 
-        return fetch(restUrl,{
+        return fetch(ajaxUrl,{
             method:'POST',
             headers:this.headers,
             body:JSON.stringify(body)

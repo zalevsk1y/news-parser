@@ -85,7 +85,7 @@ abstract class ParseContent
      * @param array $options
      * @return void
      */
-    public function get($url,$options=array())
+    public function get($url,$options=null)
     {
         $data = $this->getFromCache($url);
         if ($data) {

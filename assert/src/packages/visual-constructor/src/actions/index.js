@@ -1,5 +1,6 @@
 import {getRestNonce,getAjaxNonce,getApiEndpoint,sendApiRequest,decodeHTMLEntities,getPostEditLink} from '@news-parser/helpers';
-import {PostModel} from '@news-parser/helpers/classes/PostModel'
+import {PostModel} from '@news-parser/helpers/classes/PostModel';
+import {TemplateModel} from '@news-parser/helpers/classes/TemplateModel'
 import {fetchError,receiveError, closeDialog,receivePost,createMessage} from '@news-parser/parser-rss/actions/index'
 import { MediaModel } from '@news-parser/helpers/classes/MediaModel';
 export const types = {
@@ -76,7 +77,7 @@ export function createPostDraft(postId,postUrl,postData,options,dispatch){
                             link:getPostEditLink(post.id),
                             postData
                         };
-                    if(!options.noFeaturedMedia){
+                    if(options.addFeaturedMedia){
                         let media= new MediaModel(getApiEndpoint('media'));
                         media.nonceAuth(getAjaxNonce()).create(post.featuredMedia,post.title,post.id)
                             .then(mediaData=>{
@@ -91,6 +92,24 @@ export function createPostDraft(postId,postUrl,postData,options,dispatch){
                             
                     }
                     dispatch(receivePost(postUrl,receive)); 
+            })
+            .catch(error=>{
+                dispatch(fetchError(error))
+            });    
+    }
+}
+export function saveParsingTemplate({url,postData,dispatch,options}){
+    options.url=url;
+    const nonce=getAjaxNonce(),
+        template=new TemplateModel({url,postData,ajaxEndPoint:getApiEndpoint('options'),options});
+    return dispatch=>{
+        return template
+            .nonceAuth(nonce)
+            .save()
+            .then(data=>{
+                dispatch(closeDialog());
+                if(data.err==1) dispatch(receiveError(receivedData));
+                if(data.hasOwnProperty('msg'))dispatch(createMessage(data.msg.type,data.msg.text));
             })
             .catch(error=>{
                 dispatch(fetchError(error))

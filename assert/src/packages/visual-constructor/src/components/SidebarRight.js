@@ -3,7 +3,7 @@ import {InfoBox,InfoBody,InfoFooter} from '../containers/InfoBox';
 import {Checkbox} from '../containers/elements/Checkbox'
 import Input from '../containers/elements/Input'
 import {connect} from 'react-redux';
-import { toggleNoFeaturedMedia } from '../actions/option';
+import { toggleAddFeaturedMedia,toggleSaveParsingTemplate } from '../actions/option';
 import {selectTitle,selectFeaturedMedia} from '../actions/frame';
 
 export class  SidebarRight extends React.Component{
@@ -35,7 +35,7 @@ export class  SidebarRight extends React.Component{
     }
     render(){
         const options=this.props.options||{};
-        const noImage=options.noFeaturedMedia?' no-featured-image':'';
+        const noImage=!options.addFeaturedMedia?' no-featured-image':'';
         return (
             
                 <div className="inner-sidebar-container" >
@@ -46,7 +46,7 @@ export class  SidebarRight extends React.Component{
                             <p className="howto">
                                 If you want to change featured image, select image you would like to choose in the constructor and click "Change image" button.
                             </p>
-                            <Checkbox value={options.noFeaturedMedia} onClick={this.props.toggleNoFeaturedMedia} />
+                            <Checkbox value={!options.addFeaturedMedia} onClick={this.props.toggleAddFeaturedMedia} />
                             <p className="howto inline-bl">
                                 No featured image.                            
                             </p>
@@ -95,7 +95,7 @@ export class  SidebarRight extends React.Component{
 }
 
     function mapStateToProps(state){
-        console.log(state.parse.dialog.parsedData)
+  
         const title=state.parse.dialog.hasOwnProperty('parsedData')?state.parse.dialog.parsedData.title:undefined,
               image=state.parse.dialog.hasOwnProperty('parsedData')?state.parse.dialog.parsedData.image:undefined,
               options=state.parse.dialog.hasOwnProperty('parsedData')?state.parse.dialog.options:undefined,
@@ -110,14 +110,17 @@ export class  SidebarRight extends React.Component{
     }
     function mapDispatchToProps(dispatch){
         return {
-            toggleNoFeaturedMedia:function(){
-                dispatch(toggleNoFeaturedMedia())
+            toggleAddFeaturedMedia:function(){
+                dispatch(toggleAddFeaturedMedia())
             },
             selectTitle:function(newTitle){
                 dispatch(selectTitle(newTitle))
             },
             selectFeaturedMedia:function(url){
                 dispatch(selectFeaturedMedia(url))
+            },
+            toggleSaveParsingTemplate:function(){
+                dispatch(toggleSaveParsingTemplate());
             }
         }
     }

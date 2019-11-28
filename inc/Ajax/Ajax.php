@@ -4,7 +4,7 @@ namespace NewsParserPlugin\Ajax;
 use NewsParserPlugin\Controller\ListController;
 use NewsParserPlugin\Controller\PostController;
 use NewsParserPlugin\Controller\VisualConstructorController;
-
+use NewsParserPlugin\Controller\OptionsController;
 /**
  * Ajax singleton class provide API to the front end
  *
@@ -18,21 +18,23 @@ class Ajax
     protected $post;
     protected $list;
     protected $visual;
+    protected $options;
     protected static $instance;
 
-    protected function __construct(ListController $listController,VisualConstructorController $visual,PostController $post)
+    protected function __construct(ListController $listController,VisualConstructorController $visual,PostController $post, OptionsController $options)
     {
         $this->list = $listController;
         $this->visual  = $visual;
         $this->post=$post;
+        $this->options=$options;
         $this->init();
     }
-    public static function getInstance(ListController $listController,VisualConstructorController $visual,PostController $post)
+    public static function getInstance(ListController $listController,VisualConstructorController $visual,PostController $post,OptionsController $options)
     {
         if (self::$instance) {
             return self::$instance;
         } else {
-            self::$instance = new self($listController, $visual,$post);
+            self::$instance = new self($listController, $visual,$post,$options);
             return self::$instance;
         }
     }
@@ -40,6 +42,7 @@ class Ajax
     {
         \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API, array($this, 'parsingApi'));
         \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_MEDIA_API, array($this, 'mediaApi'));
+        \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_OPTIONS_API, array($this, 'optionsApi'));
 
     }
     /**
@@ -59,13 +62,13 @@ class Ajax
         return $this->visual->getRawHTML($page_url,array('remove_scripts'=>true));
     }
     protected function checkArgType($arg,$type,$description=''){
-        $error_message='%s %s should be a %s but %s given.';
+        $error_message='%s should be a %s but %s given.';
         $desc=$description?:'Argument';
         $arg_type=gettype($arg); 
         if($arg_type!==$type)  return new \WP_Error('wrong_argument_type',
             esc_html(sprintf($error_message,
                 $desc,
-                $arg,
+                $type,
                 $arg_type)
             ));
         return true;
@@ -121,6 +124,41 @@ class Ajax
         \wp_die();
     }
 
+    public function optionsApi(){
+        $this->checkPermission('parsing_news_api');
+        $json_post=json_decode(file_get_contents('php://input'),TRUE);
+        $request=$this->prepareArgs($json_post,array(
+            'url'=>array(
+                'description'=>'Url of post that was taken as example of template',
+                'type'=>'string',
+                'validate_callback'=>function($url){
+                    return wp_http_validate_url($url);
+                },
+                'sanitize_callback'=>function($input_url){
+                    return esc_url_raw($input_url);
+                }
+            ),
+            'extraOptions'=>array(
+                'description'=>'Extra options for automated parsing pages',
+                'type'=>'array',
+                'validate_callback'=>array($this,'validateExtraOptions'),
+                'sanitize_callback'=>array($this,'sanitizeExtraOptions')
+            ),
+            'template'=>array(
+                'description'=>'Template for automate parsing post',
+                'type'=>'array',
+                'validate_callback'=>array($this,'validateTemplate'),
+                'sanitize_callback'=>array($this,'sanitizeTemplate')
+            )
+        ));
+        $options=array(
+            'extraOptions'=>$request['extraOptions'],
+            'template'=>$request['template']
+        );
+        $respond=$this->options->save($request['extraOptions']['url'],$options);
+        echo $respond;
+        wp_die();
+    }
     public function parsingApi()
     {
         $this->checkPermission('parsing_news_api');
@@ -154,7 +192,7 @@ class Ajax
             $url = $request['url'];
         switch ($status) {
             case 'list':
-                $response = $this->createList($url);
+                $response = $this->list->get($url);
                 break;
             case 'single':
                 $response = $this->visual->getRawHTML($url, array('remove_scripts'=>true));
@@ -200,13 +238,20 @@ class Ajax
         $new_array['alt']=sanitize_title($options['alt']);
         return $new_array;
     }
-    protected function createList($url)
-    {
-        return $this->list->get($url);
+    public function sanitizeExtraOptions($extra_options){
+        return $extra_options;
     }
-    protected function createPostDraft($url, $options)
-    {
-        return $this->post->get($url, $options);
+    public function validateExtraOptions($extra_options){
+        return $extra_options;
     }
+    public function sanitizeTemplate($template){
+        return $template;
+    }
+    public function validateTemplate($template){
+        return $template;
+    }
+
+
+
 
 }

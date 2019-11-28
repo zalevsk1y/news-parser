@@ -15,6 +15,10 @@ class Errors
     public static function text($slug)
     {
         switch ($slug) {
+            case 'TEMPLATE_NOT_SAVED':
+                return \__('Template could not be saved right now.', 'news-parser');
+            case 'NO_TEMPLATE':
+                return \__('Post could not be parsed, because there is no template for that kind of posts.');
             case 'FILE_DOWNLOAD':
                 return \__('Sorry file cannot be downloaded', 'news-parser');
             case 'XML_PARSING':

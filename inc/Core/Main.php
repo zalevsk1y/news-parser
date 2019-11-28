@@ -65,6 +65,7 @@ class Main
                 'visualConstructor'=>esc_url_raw((rest_url('news-parser/v1/visual-constructor/'))),
                 'media'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_MEDIA_API)),
                 'parsing'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API)),
+                'options'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_OPTIONS_API)),
                 'rootRestApi'=>esc_url_raw(rest_url()),
                 'rootAjaxApi'=>esc_url_raw(admin_url('admin-ajax.php'))
             );
