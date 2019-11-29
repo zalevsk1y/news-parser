@@ -15,11 +15,10 @@ class Ajax{
         return true;
     }
     protected function prepareArgs($dirty_request,$args_params){
-        $dirty_post=$dirty_request;
-        $clean_post=[];
+        $clean_request=array();
         foreach($args_params as $key=>$arg){
-            if(key_exists($key,$dirty_post)){
-                $dirty_arg=$dirty_post[$key];
+            if(key_exists($key,$dirty_request)){
+                $dirty_arg=$dirty_request[$key];
                 if(is_wp_error($e=$this->checkArgType($dirty_arg,$arg['type'],$arg['description']))){
                     $this->sendError($e->get_error_message());
                 }

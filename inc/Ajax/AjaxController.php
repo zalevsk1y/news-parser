@@ -87,7 +87,7 @@ class AjaxController extends Ajax
                     'description'=>esc_html__('Post body',NEWS_PARSER_PLUGIN_SLUG),
                     'type'=>'array',
                     'validate_callback'=>array($this,'validateOptionsArray'),
-                    'sanitize_callback'=>array($this,'sanitizeOptionsArray')
+                    'sanitize_callback'=>array($this,'sanitizeMediaOptionsArray')
                 )
         ));
        $response=$this->visual->saveMedia($request['url'],$request['options']['postId'],$request['options']['alt']);
