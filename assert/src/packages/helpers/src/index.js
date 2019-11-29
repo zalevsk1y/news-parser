@@ -1,4 +1,5 @@
 import config from "@news-parser/config";
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from "constants";
 
 export function uriToJson(uri){
     if (!uri) return {};
@@ -98,6 +99,11 @@ export function decodeHTMLEntities(text) {
         text = text.replace(new RegExp('&'+entities[i][0]+';', 'g'), entities[i][1]);
 
     return text;
+}
+export function sprintf(text){
+    let args=[].slice.call(arguments,1),
+        i=0;
+    return text.replace(/%s/g,()=>args[i++])
 }
 export function decodeQuotes(text){
     return text.replace(/&quot;/g,'"');

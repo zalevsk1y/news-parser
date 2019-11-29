@@ -1,5 +1,5 @@
 import React from 'react';
-import {getPluginDirUrl} from '@news-parser/helpers';
+import {getPluginDirUrl,sprintf} from '@news-parser/helpers';
 import {Parser} from '@news-parser/helpers/classes/Parser'
 import {selectTitle,selectFeaturedMedia,selectContent,removeContent} from '../actions/frame';
 import {connect} from 'react-redux';
@@ -11,16 +11,14 @@ export class Frame extends React.Component{
         super(props);
         this.frameRef=React.createRef();
         this.clickHandler=this.clickHandler.bind(this);
-        
     }
     componentDidMount(){
-    
-        let doc=this.frameRef.current.contentWindow.document,
-            sanitizedDOM=DOMPurify.sanitize(this.props.data,{ADD_TAGS:['link'],WHOLE_DOCUMENT:true}),
+        let DOMData=this.replaceYouTubeFrames(this.props.data),
+            doc=this.frameRef.current.contentWindow.document,
+            sanitizedDOM=DOMPurify.sanitize(DOMData,{ADD_TAGS:['link'],WHOLE_DOCUMENT:true}),
             cssLink=document.createElement('link');
         this.getTitle();
         this.getFeaturedMedia();
-      
         cssLink.href = getPluginDirUrl()+"/public/css/frame-style.css"; 
         cssLink.rel = "stylesheet"; 
         cssLink.type = "text/css";
@@ -47,6 +45,14 @@ export class Frame extends React.Component{
             };
 
         })
+    }
+    replaceYouTubeFrames(dom){
+        let hashPattern=/\<iframe.*?src\=[\"\'].*?youtube\.com\/embed\/(.*?)[?\"\'].*?<\/iframe>/g,
+            replacement='<img class="news-parser-youtube" src='+getPluginDirUrl()+"/public/images/youtube-video.jpeg"+' data-hash="$1"></img>',
+            newDom=dom.replace(hashPattern,replacement);
+            console.log(newDom);
+            return newDom;
+
     }
     getTitle(){
         const pattern=/\<meta property\=\"og\:title\" content\=\"(.*?)\"/i;

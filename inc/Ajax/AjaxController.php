@@ -166,7 +166,7 @@ class AjaxController extends Ajax
                 $response = $this->list->get($url);
                 break;
             case 'single':
-                $response = $this->visual->getRawHTML($url, array('remove_scripts'=>true));
+                $response = $this->visual->getRawHTML($url);
                 break;
             case 'multi':
                 $response=$this->post->get($url);
