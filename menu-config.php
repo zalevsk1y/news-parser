@@ -32,14 +32,6 @@ return  array(
                 'template' => NEWS_PARSER_PLUGIN_DIR . '/template/menu/parsing-page-menu.php',
             ),
              array(
-                'page_title' => 'News Parser Settings',
-                'parent_slug' => NEWS_PARSER_PLUGIN_SLUG . '-main-menu',
-                'menu_title' => __('Settings', 'news-parser'),
-                'capability' => 'manage_options',
-                'menu_slug' => NEWS_PARSER_PLUGIN_SLUG . '-menu-settings',
-                'template' => NEWS_PARSER_PLUGIN_DIR . '/template/menu/settings-menu.php',
-            ),
-             array(
                 'page_title' => 'About News Parser',
                 'parent_slug' => NEWS_PARSER_PLUGIN_SLUG . '-main-menu',
                 'menu_title' => __('About', 'news-parser'),
