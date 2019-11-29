@@ -56,6 +56,4 @@ $module['option_controller']=new Controller\OptionsController($modules['options_
 $modules['visual_constructor_controller']=new Controller\VisualConstructorController($modules['html_raw'],$modules['response_formatter']);
 //---Ajax
 $modules['ajax_controller'] =  Ajax\AjaxController::getInstance($modules['list_controller'], $modules['visual_constructor_controller'],$modules['post_controller'],$module['option_controller']);
-//---Rest
-$modules['rest_visual_constructor']= new Rest\VisualConstructorRestController($modules['visual_constructor_controller']);
 \register_uninstall_hook(__FILE__, 'Utils\Settings::deleteSettings');
