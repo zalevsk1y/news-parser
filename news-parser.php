@@ -47,7 +47,7 @@ $modules['html_pattern_parser'] = new Parser\HTMLPatternParser($modules['sunra_p
 $modules['settings'] = new Utils\Settings();
 $modules['response_formatter'] = new Utils\ResponseFormatter();
 $modules['list_factory'] = new Factory\ListFactory();
-$modules['post_factory'] = new Factory\PostGutenbergFactory();
+$modules['post_factory'] = new Factory\PostFactory();
 $modules['options_factory'] = new Factory\OptionsFactory();
 //--controllers
 $modules['list_controller'] = new Controller\ListController($modules['XML_parser'], $modules['settings'], $modules['response_formatter'], $modules['list_factory']);
