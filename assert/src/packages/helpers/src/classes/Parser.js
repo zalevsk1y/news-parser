@@ -17,10 +17,13 @@ export class Parser{
                 break;
             case 'VIDEO':
                 parsedData.content=element.dataset.hash||false;
+                parsedData.tagName='IFRAME';
+                parsedData.className=element.className.replace('news-parser-youtube','').replace(' parser-select','').replace(' mouse-over',''); 
                 break;
             default:
                 parsedData.content=element.innerText;
         }
+        console.log(parsedData.tagName);
         parsedData.offsetTop=this.getOffsetTop(element);
         parsedData.parent=this.getParentsArray(element);
         let elementHash=hash(Math.random().toString());

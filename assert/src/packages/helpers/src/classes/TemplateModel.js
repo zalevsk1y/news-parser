@@ -24,23 +24,16 @@ export class TemplateModel{
                 return $this.postData.body[propName]
             }),
             cleanedData=this.removeDuplicate(arrayOfElements),
-            sortedData=this.sortByDOMPosition(cleanedData);
-        let containerTagName=sortedData[0].parent[0].tagName.toLowerCase(),
-            containerClassName=sortedData[0].parent[0].className.trim(),
-            container={
-                tagName:containerTagName,
-                className:containerClassName,
-                searchTemplate:containerTagName+'[class='+containerClassName+']',
-                children:[]
-        },
-            template={
+            sortedData=this.sortByDOMPosition(cleanedData),
+            container=this.createContainer(sortedData);
+        let template={
                 url:this.url,
                 extraOptions:this.options,
                 template:container
             };
         sortedData.forEach(item=>{
             let tagName=item.tagName.toLowerCase(),
-                searchTemplate=this.createSearchTemplate(item,containerClassName);
+                searchTemplate=this.createSearchTemplate(item,container.className);
             container.children.push({
                 tagName,
                 searchTemplate,
@@ -49,19 +42,54 @@ export class TemplateModel{
         })
         return template;
     }
+    createContainer(arrayOfItems){
+        
+        let arrayOfParents=arrayOfItems[0].parent,
+            $this=this;
+        for(var key in arrayOfParents){
+            let hasParent=true,
+                parentItem=arrayOfParents[key];
+            arrayOfItems.forEach(item=>{
+                if(!$this.hasParent(item,parentItem)) hasParent=false;
+            })
+            
+            if(hasParent){
+                let className=parentItem.className.trim(),
+                    tagName=parentItem.tagName.toLowerCase();
+                return {
+                    className,
+                    tagName,
+                    searchTemplate:tagName+'[class='+className+']',
+                    children:[]
+                }
+            }
+        }
+    }
+    hasParent(item,parentItem){
+        for(var key in item.parent){
+            let parent=item.parent[key];
+            
+            if(parent.tagName==parentItem.tagName&&parent.className==parentItem.className){
+                return true;
+            }
+        }
+        return false;
+    }
     createSearchTemplate(item,containerClassName){
-        let classNameArray=item.className.trim().split(' '),
-            className,
-            parentTagName=item.parent[0].tagName.toLowerCase(),
+        let parentTagName=item.parent[0].tagName.toLowerCase(),
             parentClassName=item.parent[0].className.trim(),
-            tagName=item.tagName.toLowerCase();
-        classNameArray.forEach(partName=>{
-            if(partName.search(/([0-9])/g)===-1&&!className){
-                className=partName;
+            tagName=item.tagName.toLowerCase(),
+            className=this.getClassName(item.className);
+        return className?tagName+'.'+className:parentClassName!==containerClassName?parentTagName+'.'+this.getClassName(parentClassName)+' '+tagName:tagName;
+    }
+    getClassName(className,index=0){
+        let classNameArray=className.trim().split(' '),
+        noDigitsClassNames=classNameArray.filter(partName=>{
+            if(partName.search(/([0-9])/g)===-1){
+                return partName.trim();
             }
         });
-        className=className||item.className.trim();
-        return className?tagName+'[class='+className+']':parentClassName!==containerClassName?parentTagName+'[class='+parentClassName+'] '+tagName:tagName;
+        return noDigitsClassNames.length?noDigitsClassNames[index]:classNameArray[0];
     }
     removeDuplicate(arrayOfItems){
         let tempArray=[...arrayOfItems];

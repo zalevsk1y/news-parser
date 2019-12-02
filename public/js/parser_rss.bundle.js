@@ -37219,12 +37219,15 @@ function () {
 
         case 'VIDEO':
           parsedData.content = element.dataset.hash || false;
+          parsedData.tagName = 'IFRAME';
+          parsedData.className = element.className.replace('news-parser-youtube', '').replace(' parser-select', '').replace(' mouse-over', '');
           break;
 
         default:
           parsedData.content = element.innerText;
       }
 
+      console.log(parsedData.tagName);
       parsedData.offsetTop = this.getOffsetTop(element);
       parsedData.parent = this.getParentsArray(element);
       var elementHash = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["hash"])(Math.random().toString());
@@ -37550,6 +37553,8 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -37597,23 +37602,16 @@ function () {
         return $this.postData.body[propName];
       }),
           cleanedData = this.removeDuplicate(arrayOfElements),
-          sortedData = this.sortByDOMPosition(cleanedData);
-      var containerTagName = sortedData[0].parent[0].tagName.toLowerCase(),
-          containerClassName = sortedData[0].parent[0].className.trim(),
-          container = {
-        tagName: containerTagName,
-        className: containerClassName,
-        searchTemplate: containerTagName + '[class=' + containerClassName + ']',
-        children: []
-      },
-          template = {
+          sortedData = this.sortByDOMPosition(cleanedData),
+          container = this.createContainer(sortedData);
+      var template = {
         url: this.url,
         extraOptions: this.options,
         template: container
       };
       sortedData.forEach(function (item) {
         var tagName = item.tagName.toLowerCase(),
-            searchTemplate = _this.createSearchTemplate(item, containerClassName);
+            searchTemplate = _this.createSearchTemplate(item, container.className);
 
         container.children.push({
           tagName: tagName,
@@ -37624,20 +37622,71 @@ function () {
       return template;
     }
   }, {
+    key: "createContainer",
+    value: function createContainer(arrayOfItems) {
+      var arrayOfParents = arrayOfItems[0].parent,
+          $this = this;
+
+      var _loop = function _loop() {
+        var hasParent = true,
+            parentItem = arrayOfParents[key];
+        arrayOfItems.forEach(function (item) {
+          if (!$this.hasParent(item, parentItem)) hasParent = false;
+        });
+
+        if (hasParent) {
+          var className = parentItem.className.trim(),
+              tagName = parentItem.tagName.toLowerCase();
+          return {
+            v: {
+              className: className,
+              tagName: tagName,
+              searchTemplate: tagName + '[class=' + className + ']',
+              children: []
+            }
+          };
+        }
+      };
+
+      for (var key in arrayOfParents) {
+        var _ret = _loop();
+
+        if (_typeof(_ret) === "object") return _ret.v;
+      }
+    }
+  }, {
+    key: "hasParent",
+    value: function hasParent(item, parentItem) {
+      for (var key in item.parent) {
+        var parent = item.parent[key];
+
+        if (parent.tagName == parentItem.tagName && parent.className == parentItem.className) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+  }, {
     key: "createSearchTemplate",
     value: function createSearchTemplate(item, containerClassName) {
-      var classNameArray = item.className.trim().split(' '),
-          className,
-          parentTagName = item.parent[0].tagName.toLowerCase(),
+      var parentTagName = item.parent[0].tagName.toLowerCase(),
           parentClassName = item.parent[0].className.trim(),
-          tagName = item.tagName.toLowerCase();
-      classNameArray.forEach(function (partName) {
-        if (partName.search(/([0-9])/g) === -1 && !className) {
-          className = partName;
+          tagName = item.tagName.toLowerCase(),
+          className = this.getClassName(item.className);
+      return className ? tagName + '.' + className + ' ' : parentClassName !== containerClassName ? parentTagName + '.' + this.getClassName(parentClassName) + ' ' + tagName : tagName;
+    }
+  }, {
+    key: "getClassName",
+    value: function getClassName(className) {
+      var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      var classNameArray = className.trim().split(' '),
+          noDigitsClassNames = classNameArray.filter(function (partName) {
+        if (partName.search(/([0-9])/g) === -1) {
+          return partName.trim();
         }
       });
-      className = className || item.className.trim();
-      return className ? tagName + '[class=' + className + ']' : parentClassName !== containerClassName ? parentTagName + '[class=' + parentClassName + '] ' + tagName : tagName;
+      return noDigitsClassNames.length ? noDigitsClassNames[index] : classNameArray[0];
     }
   }, {
     key: "removeDuplicate",
@@ -37647,7 +37696,7 @@ function () {
       var newArray = [],
           $this = this;
 
-      var _loop = function _loop() {
+      var _loop2 = function _loop2() {
         var itemObject = tempArray.shift();
         tempArray = tempArray.filter(function (item) {
           if (!$this.theSame(itemObject, item)) return item;
@@ -37661,9 +37710,9 @@ function () {
       };
 
       while (true) {
-        var _ret = _loop();
+        var _ret2 = _loop2();
 
-        if (_ret === "break") break;
+        if (_ret2 === "break") break;
       }
 
       return newArray;

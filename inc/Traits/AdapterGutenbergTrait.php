@@ -26,10 +26,23 @@ trait AdapterGutenbergTrait{
                 case 'ul':
                     $post_content.=$this->list($el);
                     break;
+                case 'iframe':
+                    $post_content.=$this->youtubeVideo($el);
+                    break;
             }
         }
         $data['body']=$post_content;
         return $data;
+    }
+    protected function youtubeVideo($element){
+        $hash=$element['content'];
+        $video='<!-- wp:core-embed/youtube {"url":"https://youtu.be/%1$s","type":"video","providerNameSlug":"youtube","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->'.
+            '<figure class="wp-block-embed-youtube wp-block-embed is-type-video is-provider-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">'.
+            'https://youtu.be/%1$s</div></figure><!-- /wp:core-embed/youtube -->';
+        return sprintf(
+            $video,
+            preg_replace('/[^a-zA-z\_]/i','',$hash)
+        );
     }
     protected function heading($element){
         $level=$this->getDigitsOnly($element['tagName']);
