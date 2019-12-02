@@ -15,6 +15,9 @@ export class Parser{
             case 'UL':
                 parsedData.content=this.parseListContent(element);
                 break;
+            case 'VIDEO':
+                parsedData.content=element.dataset.hash||false;
+                break;
             default:
                 parsedData.content=element.innerText;
         }

@@ -37217,6 +37217,10 @@ function () {
           parsedData.content = this.parseListContent(element);
           break;
 
+        case 'VIDEO':
+          parsedData.content = element.dataset.hash || false;
+          break;
+
         default:
           parsedData.content = element.innerText;
       }
@@ -37294,7 +37298,7 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PostModel", function() { return PostModel; });
-/* harmony import */ var _MediaModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MediaModel */ "./src/packages/helpers/src/classes/MediaModel.js");
+/* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
 /* harmony import */ var _Rest__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Rest */ "./src/packages/helpers/src/classes/Rest.js");
 /* harmony import */ var _traits_sortByOffset__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../traits/sortByOffset */ "./src/packages/helpers/src/traits/sortByOffset.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -37384,7 +37388,6 @@ function (_Rest) {
       var _this2 = this;
 
       var contentArray = Object(_traits_sortByOffset__WEBPACK_IMPORTED_MODULE_2__["sortByOffset"])(content.body);
-      console.log(this);
       var postBody = '';
       contentArray.forEach(function (item) {
         switch (item.tagName) {
@@ -37410,6 +37413,10 @@ function (_Rest) {
           case 'UL':
             postBody += _this2.list(item.content);
             break;
+
+          case 'VIDEO':
+            postBody += _this2.youtubeVideo(item.content);
+            break;
         }
       });
       return postBody;
@@ -37419,6 +37426,13 @@ function (_Rest) {
     value: function simpleText(text) {
       var cleanContent = this.sanitize(text);
       return cleanContent;
+    }
+  }, {
+    key: "youtubeVideo",
+    value: function youtubeVideo(hash) {
+      var video = '<!-- wp:core-embed/youtube {"url":"https://youtu.be/%s","type":"video","providerNameSlug":"youtube","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->' + '<figure class="wp-block-embed-youtube wp-block-embed is-type-video is-provider-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">' + 'https://youtu.be/%s</div></figure><!-- /wp:core-embed/youtube -->',
+          cleanHash = hash.replace(/[^a-zA-Z\_]/g, '');
+      return Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["sprintf"])(video, cleanHash, cleanHash);
     }
   }, {
     key: "paragraph",
@@ -40219,9 +40233,8 @@ function (_React$Component) {
     key: "replaceYouTubeFrames",
     value: function replaceYouTubeFrames(dom) {
       var hashPattern = /\<iframe.*?src\=[\"\'].*?youtube\.com\/embed\/(.*?)[?\"\'].*?<\/iframe>/g,
-          replacement = '<img class="news-parser-youtube" src=' + Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["getPluginDirUrl"])() + "/public/images/youtube-video.jpeg" + ' data-hash="$1"></img>',
+          replacement = '<video class="news-parser-youtube" poster=' + Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["getPluginDirUrl"])() + "/public/images/youtube-video.jpeg" + ' data-hash="$1">',
           newDom = dom.replace(hashPattern, replacement);
-      console.log(newDom);
       return newDom;
     }
   }, {

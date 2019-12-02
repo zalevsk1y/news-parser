@@ -1,5 +1,5 @@
 import React from 'react';
-import {getPluginDirUrl,sprintf} from '@news-parser/helpers';
+import {getPluginDirUrl} from '@news-parser/helpers';
 import {Parser} from '@news-parser/helpers/classes/Parser'
 import {selectTitle,selectFeaturedMedia,selectContent,removeContent} from '../actions/frame';
 import {connect} from 'react-redux';
@@ -48,9 +48,8 @@ export class Frame extends React.Component{
     }
     replaceYouTubeFrames(dom){
         let hashPattern=/\<iframe.*?src\=[\"\'].*?youtube\.com\/embed\/(.*?)[?\"\'].*?<\/iframe>/g,
-            replacement='<img class="news-parser-youtube" src='+getPluginDirUrl()+"/public/images/youtube-video.jpeg"+' data-hash="$1"></img>',
+            replacement='<video class="news-parser-youtube" poster='+getPluginDirUrl()+"/public/images/youtube-video.jpeg"+' data-hash="$1">',
             newDom=dom.replace(hashPattern,replacement);
-            console.log(newDom);
             return newDom;
 
     }
