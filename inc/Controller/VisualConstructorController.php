@@ -23,7 +23,7 @@ class VisualConstructorController {
     /**
      * Init function.
      *
-     * @param ParseContent $postParser
+     * @param ParseContent $parser
      * @param ResponseFormatter $formatter
      */
     public function __construct(ParseContent $parser, ResponseFormatter $formatter){
@@ -50,7 +50,7 @@ class VisualConstructorController {
      * Saves attached media.
      *
      * @param string $url Url of image that should be download.
-     * @param string $id Post id.
+     * @param string $postId Post id.
      * @param string $alt Description of image.
      * @return string 
      */
