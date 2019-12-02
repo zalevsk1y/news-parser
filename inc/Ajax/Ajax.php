@@ -28,11 +28,11 @@ class Ajax{
                 }
                 //sanitize arguments.
                 if($clean_arg=call_user_func($arg['sanitize_callback'],$dirty_arg)){
-                    $clean_post[$key]=$clean_arg;
+                    $clean_request[$key]=$clean_arg;
                 }
             }
         }
-        return $clean_post;
+        return $clean_request;
     }
     protected function sendError($message){
         $clean_message=esc_html($message);
