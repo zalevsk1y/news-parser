@@ -170,6 +170,10 @@ class AjaxController extends Ajax
                 break;
             case 'multi':
                 $response=$this->post->get($url);
+                break;
+            default:
+                $response='';
+                break;
         }
         echo $response;
         \wp_die();
