@@ -123,26 +123,7 @@ class PostModel implements ModelInterface
                 return $data_array;
         }
     }
-    /**
-     * Create shortcode for gallery to add to the post body
-     *[$hortcode $paramName=[prams]]
-     *
-     * @param string $hortcode name of short code
-     * @param string $paramName
-     * @return void
-     */
-    public function createGalleryShortcode($shortcode, $paramName)
-    {
-
-        $gallery = $this->gallery['ids'];
-        if (count($gallery) == 0) {
-            return;
-        }
-
-        $output = ' [' . \esc_html($shortcode) . ' ' . \esc_html($paramName) . '=' . implode(',', $gallery) . ']';
-        $this->body .= $output;
-        $this->updatePostWordPress('post_content', $this->body);
-    }
+    
     /**
      * Create wordpress post
      *
