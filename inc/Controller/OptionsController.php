@@ -16,7 +16,8 @@ class OptionsController{
         $this->formatResponse=$formatter;
     }
     public function save($url,$options){
-        $optionsModel=$this->optionsFactory->get($url);
+        
+        $optionsModel=$this->optionsFactory->get(parse_url($url));
         try{
             $optionsModel->save($options);
             $response=$this->formatResponse->message('success',Success::text('TEMPLATE_SAVED'))->get('json');

@@ -8,7 +8,6 @@ use NewsParserPlugin\Message\Error;
 use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Models\PostModel;
 use NewsParserPlugin\Parser\ParseContent;
-use NewsParserPlugin\Utils\PipeController;
 use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Traits\AdapterGutenbergTrait;
 
@@ -47,10 +46,9 @@ class PostController
      * All facade of PostModel class methods created for convenience of using in pipe
      *
      * @param string $url of post that should be parsed and saved as draft
-     * @param array $options [gallery images that was selected]
      * @return void
      */
-    public function get($url, $options=array())
+    public function get($url)
     {
         try {
             
@@ -67,10 +65,7 @@ class PostController
             $post = $this->postFactory->get($parsed_data);
  
             //Stages of post draw creating
-            $this->pipe($post)
-                ->createDraft()
-                ->addSource()
-                ->addPostThumbnail();
+            $this->createDraft($post)->addSource($post)->addPostThumbnail($post);
                
 
             $response = $this->formatResponse->post($post->getAttributes())->message('success', sprintf(Success::text('POST_SAVED_AS_DRAFT'),$post->title))->get('json');
@@ -85,50 +80,39 @@ class PostController
      * Create WP post draft
      *
      * @param PostModel $post
-     * @return PostModel
+     * @return PostController
      */
     public function createDraft(PostModel $post)
     {
         $post->createDraft();
-        return $post;
+        return $this;
     }
     /**
      * Add main image to the post
      *
      * @param PostModel $post
-     * @return PostModel
+     * @return PostController
      */
     public function addPostThumbnail(PostModel $post)
     {
         if ($this->options['addFeaturedMedia']) {
             $post->addPostThumbnail();
         }
-        return $post;
+        return $this;
     }
     /**
      * Add link to the source
      *
      * @param PostModel $post
-     * @return PostModel
+     * @return PostController
      */
     public function addSource(PostModel $post)
     {
         if ($this->options['addSource']) {
             $post->addSource();
         }
-        return $post;
+        return $this;
     }
    
-   
-    /**
-     * Facade for pipe Utils\PipeController
-     *
-     * @param $input_data data that would be transferred thru the pipe
-     * @return PipeController
-     */
-    protected function pipe($input_data)
-    {
-        return new PipeController($this, $input_data);
-    }
 
 }
