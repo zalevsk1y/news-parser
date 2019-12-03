@@ -65,9 +65,7 @@ abstract class ParseContent
      * Download page
      *
      * @param string $url url of page. 
-     * 
      * @throws MyException if data could not be downloaded.
-     * 
      * @return string HTML page data.
      */
     protected function download($url)

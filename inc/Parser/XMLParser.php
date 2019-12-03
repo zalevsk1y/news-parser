@@ -64,7 +64,7 @@ class XMLParser extends ParseContent
         $data = simplexml_load_string($str);
         $errors = libxml_get_errors();
 
-        if ($errors) {
+        if (!empty($errors)) {
             libxml_clear_errors();
             throw new MyException(Errors::text('XML_PARSING'));
         }
@@ -73,11 +73,11 @@ class XMLParser extends ParseContent
     }
     protected function sanitizeUrl($url)
     {
-        return htmlspecialchars($url);
+        return \esc_url_raw($url);
     }
     protected function sanitizeText($str)
     {
-        return htmlspecialchars($str);
+        return \esc_html($str);
     }
     /**
      * Format data for output.
@@ -96,11 +96,8 @@ class XMLParser extends ParseContent
     protected function formatData($data)
     {
         $response = array();
-        $namespaces = $data->getNamespaces(true);
-        foreach ($data->channel->item as $item) {$image = null;
-
+        foreach ($data->channel->item as $item) {
             $title = (string) ($item->title);
-
             $date = $this->sanitizeText($item->pubDate);
             $description = $this->parseDescription($item->description);
             $link = $item->link;
@@ -144,7 +141,7 @@ class XMLParser extends ParseContent
      * <media:content> http://www.rssboard.org/media-rss#media-content
      * <description> search image tag in description using regular expression
      *
-     * @param string $xml Object created by simplexml_load_string() function
+     * @param \SimpleXMLElement $xml Object created by simplexml_load_string() function
      * @param string $text
      * @return string image url or default image rl image if false
      */
@@ -212,7 +209,7 @@ class XMLParser extends ParseContent
      * Parse image according RSS 2.0 specification
      * https://en.wikipedia.org/wiki/RSS_enclosure
      *
-     * @param object $xml
+     * @param \SimpleXMLElement $xml
      * @return string|boolean url image or false
      */
     public function parseImageEnclosure($xml)
@@ -227,7 +224,7 @@ class XMLParser extends ParseContent
      * Parse image using
      * <media:content> http://www.rssboard.org/media-rss#media-content
      *
-     * @param string $xml
+     * @param \SimpleXMLElement $xml
      * @return string|boolean image url or false
      */
     public function parseImageMedia($xml)
