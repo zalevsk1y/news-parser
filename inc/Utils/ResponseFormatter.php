@@ -111,7 +111,7 @@ class ResponseFormatter {
      * Return answer data in array|object|json format
      *
      * @param string $format array|object|json
-     * @return array|object|json
+     * @return array|object|string
      */
     public function get($format){
         $json=json_encode($this->data);

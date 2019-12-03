@@ -31,7 +31,7 @@ abstract class ParseContent
      *
      * @param string $data Data string that would be parsed.
      * @param array $options Array with additional options.
-     * @return array|stdClass
+     * @return array|stdClass|string
      */
     abstract protected function parse($data,$options);
     /**

@@ -14,7 +14,7 @@ trait ValidateDataTrait{
       /**
      * Validate is input url is link to the image.
      *
-     * @param string $input_image_url String that should be validate.
+     * @param string $input_url String that should be validate.
      * @return void
      */
     public function validateImageUrl($input_url){

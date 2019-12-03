@@ -2,7 +2,6 @@
 namespace NewsParserPlugin\Parser;
 
 use NewsParserPlugin\Utils\ChainController;
-use NewsParserPlugin\Utils\Sanitize;
 use Sunra\PhpSimple\HtmlDomParser;
 
 /**
@@ -56,7 +55,7 @@ class HTMLParser extends ParseContent
         $this->dom = $this->parser::str_get_html($data);
         $this->rawHTML = $data;
         $this->post['title'] = esc_html($this->postTitle());
-        $this->post['image'] = Sanitize::sanitizeImageURL($this->postImage());
+        $this->post['image'] = esc_url_raw($this->postImage());
         $this->post['body'] = $this->postBody($options);
         return $this->post;
     }
