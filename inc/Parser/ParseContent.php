@@ -27,10 +27,10 @@ abstract class ParseContent
         $this->cache_expiration = $cache_expiration;
     }
     /**
-     * Undocumented function
+     * Parsed data and create object or array with parsed data.
      *
-     * @param string $data
-     * @param array $options
+     * @param string $data Data string that would be parsed.
+     * @param array $options Array with additional options.
      * @return array|stdClass
      */
     abstract protected function parse($data,$options);
@@ -39,7 +39,7 @@ abstract class ParseContent
      *
      *
      * @param string $url
-     * @return void
+     * @return string|bool
      */
 
     protected function getFromCache($url)
@@ -54,7 +54,7 @@ abstract class ParseContent
      *
      * @param string $url
      * @param $data
-     * @return void
+     * @return bool
      */
     protected function setCache($url, $data)
     {
@@ -64,9 +64,11 @@ abstract class ParseContent
     /**
      * Download page
      *
-     * @param string $url url of page 
+     * @param string $url url of page. 
      * 
-     * @return string HTML page data
+     * @throws MyException if data could not be downloaded.
+     * 
+     * @return string HTML page data.
      */
     protected function download($url)
     {   $request_args=array('user-agent'=>'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36');
@@ -83,7 +85,7 @@ abstract class ParseContent
      *
      * @param string $url
      * @param array $options
-     * @return void
+     * @return string
      */
     public function get($url,$options=null)
     {

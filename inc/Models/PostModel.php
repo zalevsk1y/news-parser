@@ -123,7 +123,6 @@ class PostModel implements ModelInterface
                 return $data_array;
         }
     }
-    
     /**
      * Create wordpress post
      *

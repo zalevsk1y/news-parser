@@ -16,9 +16,11 @@ class OptionsController{
         $this->formatResponse=$formatter;
     }
     public function save($url,$options){
-        
-        $optionsModel=$this->optionsFactory->get(parse_url($url));
+        $parsed_url=parse_url($url);
+     
         try{
+            if(!is_array($parsed_url)) throw new MyException (Errors::text('WRONG_OPTIONS_URL'));
+            $optionsModel=$this->optionsFactory->get($parsed_url);
             $optionsModel->save($options);
             $response=$this->formatResponse->message('success',Success::text('TEMPLATE_SAVED'))->get('json');
             

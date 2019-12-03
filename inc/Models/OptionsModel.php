@@ -9,6 +9,7 @@ class OptionsModel implements ModelInterface{
     protected $resourceUrl;
     protected $extraOptions;
     protected $parseTemplate;
+    protected $hash;
     public function __construct($url){
         $this->resourceUrl=$url;
         $this->hash=sha1($this->resourceUrl);

@@ -79,7 +79,7 @@ class HTMLParser extends ParseContent
     /**
      * Parse main image of the post based on Open Graphe protocol and simple image tag search .
      *
-     * @return string Image url
+     * @return string|bool Image url
      */
     public function postImage()
     {   $alt=$this->getFirstWordOfTitle();
@@ -159,13 +159,14 @@ class HTMLParser extends ParseContent
      *
      *
      *
-     * @return string
+     * @return string|bool
      */
 
     public function parseBodyTagP()
     {
         $matchesBodies = $this->find('p');
         $result = [];
+        if(empty($matchesBodies)||!is_array($matchesBodies))return false;
         foreach ($matchesBodies as $match) {
             $result[] = "<p>" . esc_html($match->plaintext) . "</p>";
         }
@@ -180,7 +181,7 @@ class HTMLParser extends ParseContent
      * @param string $alt part of alt string. 
      * @param string $output [htmlDomParser|tag] htmlDomParse - return htmlDomParse object,tag - return outerText tag as string 
      *
-     * @return array Array of image urls parsed from page
+     * @return array|bool Array of image urls parsed from page
      */
 
     public function ImageFinder($findPattern,$alt,$output='tag')
@@ -190,8 +191,9 @@ class HTMLParser extends ParseContent
             return false;
         }
         $gallery = array();
+        if(empty($imageUrl)||!is_array($imageUrl))return false;
         foreach ($imageUrl as $image) {
-            if (false!==$alt_of_image=$image->getAttribute('alt')&&$alt&&-1!==strpos($alt_of_image,$alt)){ 
+            if (false!==$alt_of_image=$image->getAttribute('alt')&&$alt&&strpos($alt_of_image,$alt)!==false){ 
                 switch($output){
                     case 'htmlDomParser':
                             $gallery[] = $image;

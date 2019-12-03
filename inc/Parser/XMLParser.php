@@ -267,7 +267,7 @@ class XMLParser extends ParseContent
     /**
      * Function facade for Utils\PipeController
      *
-     * @param $input_data daat that would be transferred thru the pipe
+     * @param $input_data data that would be transferred thru the pipe
      * @return void
      */
     protected function pipe($input_data)
