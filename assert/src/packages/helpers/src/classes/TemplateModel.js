@@ -1,10 +1,8 @@
-import {Rest} from './Rest';
-import {sortByOffset} from '../traits/sortByOffset';
+
 
 export class TemplateModel{
     constructor({postData,options,url,ajaxEndPoint}){
         this.endPoint=ajaxEndPoint;
-        this.sortByOffset=sortByOffset;
         this.url=url;
         this.options=options;
         this.postData=postData;

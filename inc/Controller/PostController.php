@@ -52,7 +52,7 @@ class PostController
     {
         try {
             
-            $parsing_options=$this->optionsFactory->get($url);
+            $parsing_options=$this->optionsFactory->get(parse_url($url));
             $parsed_data =$this->postParser->get($url,$parsing_options->getAttributes('object'));
             //Transform post body data for PostModel class and adds gutenberg editor blocks marking. 
             $parsed_data=$this->createGutenbergBlocks($parsed_data);

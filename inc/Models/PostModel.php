@@ -52,7 +52,7 @@ class PostModel implements ModelInterface
     public function createDraft()
     {
         $this->postId = $this->createPostWordPress();
-        if ($this->postId == 0) {
+        if ($this->postId === 0) {
             throw new MyException(Errors::text('POST_WAS_NOT_CREATED'));
         }
         $this->getPostLinksWordpress();
@@ -93,7 +93,10 @@ class PostModel implements ModelInterface
      */
     public function addSource()
     {
-        $this->body .= '<br> <a href="' . $this->sourceUrl . '">' . \__('Source', 'news-parser') . '</a>';
+        $this->body .= sprintf('<br> <a href="%s">%s</a>',
+            \esc_url_raw($this->sourceUrl),
+            \__('Source ', NEWS_PARSER_PLUGIN_SLUG)
+        );
         $this->updatePostWordPress('post_content', $this->body);
     }
     /**

@@ -1,7 +1,7 @@
 
-import {sprintf} from '@news-parser/helpers';
+import {sprintf,escHTML} from '@news-parser/helpers';
 import {Rest} from './Rest';
-import {sortByOffset} from '../traits/sortByOffset'
+import {sortByOffset} from '../traits/sortByOffset';
 
 export class PostModel extends Rest{
     
@@ -48,7 +48,7 @@ export class PostModel extends Rest{
     }
     
     formatParsedData(content){
-        const contentArray=sortByOffset(content.body);
+        const contentArray=this.sortByOffset(content.body);
         let postBody='';
         contentArray.forEach(item=>{
             switch(item.tagName){
@@ -82,47 +82,67 @@ export class PostModel extends Rest{
         return cleanContent;
     }
     youtubeVideo(hash){
-        let video='<!-- wp:core-embed/youtube {"url":"https://youtu.be/%s","type":"video","providerNameSlug":"youtube","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->'+
+        let video='<!-- wp:core-embed/youtube {"url":"https://youtu.be/%1$s","type":"video","providerNameSlug":"youtube","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->'+
             '<figure class="wp-block-embed-youtube wp-block-embed is-type-video is-provider-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">'+
-            'https://youtu.be/%s</div></figure><!-- /wp:core-embed/youtube -->',
+            'https://youtu.be/%1$s</div></figure><!-- /wp:core-embed/youtube -->',
             cleanHash=hash.replace(/[^a-zA-Z\_]/g,'');
-        return sprintf(video,cleanHash,cleanHash)
+        return sprintf(video,cleanHash)
 
     }
     paragraph(text){
-        let cleanContent=this.sanitize(text),
-            paragraph='<!-- wp:paragraph --><p>'+cleanContent+'</p><!-- /wp:paragraph -->';
-        return paragraph;
+        let paragraph='<!-- wp:paragraph --><p>%s</p><!-- /wp:paragraph -->';
+        return sprintf(paragraph,this.sanitize(text));
     }
     heading(text,type){
         let cleanContent=this.sanitize(text),
             level=type.replace('h',''),
-            heading='<!-- wp:heading {"level":'+level+'} --><'+type+'>'+cleanContent+'</'+type+'><!-- /wp:heading -->';
-        return heading;
+            heading='<!-- wp:heading {"level":%1$s} --><%2$s>%3$s</%2$s><!-- /wp:heading -->';
+        return sprintf(heading,level,this.sanitize(type),cleanContent);
     }
     image(url,alt){
         let cleanUrl=this.sanitize(url),
             cleanAlt=this.sanitize(alt),
-            image='<!-- wp:image --><figure class="wp-block-image"><img src="'+cleanUrl+'" alt="'+cleanAlt+'"/></figure><!-- /wp:image -->'
-        return image;
+            image='<!-- wp:image --><figure class="wp-block-image"><img src="%s" alt="%s"/></figure><!-- /wp:image -->'
+        return sprintf(image,cleanUrl,cleanAlt);
     }
     list(listArray){
         let listBegin='<!-- wp:list --><ul>',
             list='',
             listEnd='</ul><!-- /wp:list -->';
             listArray.forEach(item=>{
-                list+='<li>'+item+'</li>'
+                list+='<li>'+this.sanitize(item)+'</li>'
             })
         return listBegin+list+listEnd;
 
     }
     quote(text){
         let cleanContent=this.sanitize(text),   
-            quote='<!-- wp:quote --><blockquote class="wp-block-quote"><p>'+cleanContent+'</p><p></p></blockquote><!-- /wp:quote -->';
-        return quote;
+            quote='<!-- wp:quote --><blockquote class="wp-block-quote"><p>%s</p><p></p></blockquote><!-- /wp:quote -->';
+        return sprintf(quote,cleanContent);
+    }
+    sortByOffset(objectOfContent){
+        const sortedContent=[],
+        objectCopy={...objectOfContent};
+        
+        while(true){
+            if(!Object.keys(objectCopy).length) break;
+            let minIndex={
+                index:0,
+                offsetTop:Math.pow(10,10)
+            }
+            for (var item in objectCopy){
+                if(objectCopy[item].offsetTop<minIndex.offsetTop){
+                    minIndex.offsetTop=objectCopy[item].offsetTop;
+                    minIndex.index=item;
+                }
+            }
+            sortedContent.push(objectCopy[minIndex.index]);
+            delete objectCopy[minIndex.index]
+        }
+        return sortedContent;
     }
     sanitize(content){
-        return content.replace(/<.*?>/g,'');
+        return escHTML(content);
     }
    
 

@@ -51,7 +51,7 @@ class HTMLPatternParser extends HTMLParser{
                     case 'img':
                         $el_data['content']=array(
                             'alt'=>$el->alt,
-                            'src'=>$el->attr['data-src']?:$el->src
+                            'src'=>(is_array($el->attr)&&array_key_exists($el->attr,'data-src'))?$el->attr['data-src']:$el->src
                         );
                         break;
                     case 'ul':
