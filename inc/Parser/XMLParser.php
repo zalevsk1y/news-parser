@@ -7,6 +7,7 @@ use NewsParserPlugin\Interfaces\ParserInterface;
 use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Utils\ChainController;
 use NewsParserPlugin\Utils\PipeController;
+use NewsParserPlugin\Traits\PipeTrait;
 /**
  * Class for parsing XML files (using libxml) from rss-feed to get list of posts.
  *
@@ -21,6 +22,7 @@ use NewsParserPlugin\Utils\PipeController;
 class XMLParser extends ParseContent 
 {
     
+    use PipeTrait;
 
     public function __construct($cache_expiration=60){
        parent::__construct($cache_expiration);
@@ -70,14 +72,7 @@ class XMLParser extends ParseContent
 
         return $data;
     }
-    protected function sanitizeUrl($url)
-    {
-        return \esc_url_raw($url);
-    }
-    protected function sanitizeText($str)
-    {
-        return \esc_html($str);
-    }
+
     /**
      * Format data for output.
      * Structure:
@@ -97,16 +92,16 @@ class XMLParser extends ParseContent
         $response = array();
         foreach ($data->channel->item as $item) {
             $title = (string) ($item->title);
-            $date = $this->sanitizeText($item->pubDate);
+            $date = \esc_html($item->pubDate);
             $description = $this->parseDescription($item->description);
             $link = $item->link;
             $image = $this->parseImage($item, $item->description);
             $response[] = (object) array(
-                'title' => $this->sanitizeText($title),
-                'pubDate' => $this->sanitizeText($date),
-                'description' => $this->sanitizeText($description),
-                'link' => $this->sanitizeUrl((string)$link),
-                'image' => $this->sanitizeUrl((string)$image),
+                'title' => \esc_html($title),
+                'pubDate' => \esc_html($date),
+                'description' => \esc_html($description),
+                'link' => \esc_url_raw((string)$link),
+                'image' => \esc_url_raw((string)$image),
                 'status' => 'parsed',
             );
         }
@@ -213,10 +208,11 @@ class XMLParser extends ParseContent
      */
     public function parseImageEnclosure($xml)
     {
+
         if (property_exists($xml, 'enclosure')) {
             $image = (string) $xml->enclosure->attributes()->url;
         }
-        return $image ?: false;
+        return isset($image) ?$image: false;
     }
     /**
      * Parse image using
@@ -227,12 +223,11 @@ class XMLParser extends ParseContent
      */
     public function parseImageMedia($xml)
     {
-        $image = false;
         $media_node = $xml->children('media', true);
         if (isset($media_node->thumbnail)) {
             $image = (string) $media_node->thumbnail->attributes()->url;
         }
-        return $image ?: false;
+        return isset($image) ?$image: false;
     }
     /**
      * Parse image from description using regular expression
@@ -242,13 +237,12 @@ class XMLParser extends ParseContent
      */
     public function parseImageDescription($text)
     {
-        $image = false;
         if (gettype($text) == "object") {
             $text = (string) $text;
         }
         $text = trim($text);
         $image = $this->regExp('src\=\"([^\"|\']*\.[jpg|png|tiff]..)', $text);
-        return $image ?: false;
+        return isset($image) ?$image: false;
     }
     /**
      * Function facade for Utils\ChainController;
@@ -258,15 +252,5 @@ class XMLParser extends ParseContent
     protected function chain()
     {
         return new ChainController($this);
-    }
-    /**
-     * Function facade for Utils\PipeController
-     *
-     * @param $input_data data that would be transferred thru the pipe
-     * @return void
-     */
-    protected function pipe($input_data)
-    {
-        return new PipeController($this,$input_data);
     }
 }

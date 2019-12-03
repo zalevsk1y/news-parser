@@ -4,6 +4,7 @@ namespace NewsParserPlugin\Parser;
 use NewsParserPlugin\Utils\ChainController;
 use Sunra\PhpSimple\HtmlDomParser;
 
+use NewsParserPlugin\Traits\PipeTrait;
 /**
  * HTML parser class
  * Parse data from html using Sunra\PhpSimple and regular expression
@@ -24,6 +25,8 @@ class HTMLParser extends ParseContent
     protected $rawHTML = null;
     protected $post=array();
     protected $options;
+
+    use PipeTrait;
 
     /**
      * You could use NewsParserPlugin\any of HTML parsers.
@@ -52,8 +55,12 @@ class HTMLParser extends ParseContent
     public function parse($data,$options)
     {
         if (!empty($options))$this->options=$options;
-        $this->dom = $this->parser::str_get_html($data);
-        $this->rawHTML = $data;
+        $clean_html=$this->pipe($data)
+            ->removeScriptTags()
+            ->removeStyleTags()
+            ->get();
+        $this->dom = $this->parser::str_get_html($clean_html);
+        $this->rawHTML = $clean_html;
         $this->post['title'] = esc_html($this->postTitle());
         $this->post['image'] = esc_url_raw($this->postImage());
         $this->post['body'] = $this->postBody($options);

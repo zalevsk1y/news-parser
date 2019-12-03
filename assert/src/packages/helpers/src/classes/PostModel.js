@@ -1,7 +1,7 @@
 
 import {sprintf,escHTML} from '@news-parser/helpers';
 import {Rest} from './Rest';
-import {sortByOffset} from '../traits/sortByOffset';
+
 
 export class PostModel extends Rest{
     
@@ -13,7 +13,6 @@ export class PostModel extends Rest{
         this.url=url
         this.options=options;
         this.endPoint='wp/v2/posts';
-        this.sortByOffset=sortByOffset;
        
     }
     createPostDraft(){
@@ -70,7 +69,7 @@ export class PostModel extends Rest{
                 case 'UL':
                     postBody+=this.list(item.content);
                     break;
-                case 'VIDEO':
+                case 'IFRAME':
                     postBody+=this.youtubeVideo(item.content);
                     break;
             }
@@ -85,7 +84,7 @@ export class PostModel extends Rest{
         let video='<!-- wp:core-embed/youtube {"url":"https://youtu.be/%1$s","type":"video","providerNameSlug":"youtube","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->'+
             '<figure class="wp-block-embed-youtube wp-block-embed is-type-video is-provider-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">'+
             'https://youtu.be/%1$s</div></figure><!-- /wp:core-embed/youtube -->',
-            cleanHash=hash.replace(/[^a-zA-Z\_]/g,'');
+            cleanHash=hash.replace(/[^0-9a-zA-Z\_]/g,'');
         return sprintf(video,cleanHash)
 
     }

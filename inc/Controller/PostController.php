@@ -51,8 +51,9 @@ class PostController
     public function get($url)
     {
         try {
-            
-            $parsing_options=$this->optionsFactory->get(parse_url($url));
+            $parsed_url=parse_url($url);
+            if(!is_array($parsed_url)) throw new MyException (Errors::text('WRONG_OPTIONS_URL'));
+            $parsing_options=$this->optionsFactory->get($parsed_url);
             $parsed_data =$this->postParser->get($url,$parsing_options->getAttributes('object'));
             //Transform post body data for PostModel class and adds gutenberg editor blocks marking. 
             $parsed_data=$this->createGutenbergBlocks($parsed_data);

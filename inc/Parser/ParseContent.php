@@ -6,7 +6,7 @@ use NewsParserPlugin\Interfaces\ParserInterface;
 use NewsParserPlugin\Message\Errors;
 
 /**
- * Class middleware for parser.
+ * Base abstract class for parser.
  * Download data
  * Store in the cache
  * Provides data to parser
@@ -85,10 +85,10 @@ abstract class ParseContent
      * @param array $options
      * @return string
      */
-    public function get($url,$options=null)
+    public function get($url,$options=array())
     {
         $data = $this->getFromCache($url);
-        if ($data) {
+        if ($data!==false) {
             $response = $this->parse($data,$options);
             return $response;
         }
@@ -98,5 +98,10 @@ abstract class ParseContent
 
         return $response;
     }
-
+    public function removeScriptTags($data){
+        return preg_replace('/<script(>|.)[\s\S]*?<\/script>/i','',$data);
+    }
+    public function removeStyleTags($data){
+        return preg_replace('/<style(>|.)[\s\S]*?<\/style\>/i','',$data);
+    }
 }

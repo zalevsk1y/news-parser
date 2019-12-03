@@ -37301,7 +37301,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PostModel", function() { return PostModel; });
 /* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
 /* harmony import */ var _Rest__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Rest */ "./src/packages/helpers/src/classes/Rest.js");
-/* harmony import */ var _traits_sortByOffset__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../traits/sortByOffset */ "./src/packages/helpers/src/traits/sortByOffset.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
@@ -37323,7 +37322,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
 
 
 
@@ -37349,7 +37347,6 @@ function (_Rest) {
     _this.url = url;
     _this.options = options;
     _this.endPoint = 'wp/v2/posts';
-    _this.sortByOffset = _traits_sortByOffset__WEBPACK_IMPORTED_MODULE_2__["sortByOffset"];
     return _this;
   }
 
@@ -37419,7 +37416,7 @@ function (_Rest) {
             postBody += _this2.list(item.content);
             break;
 
-          case 'VIDEO':
+          case 'IFRAME':
             postBody += _this2.youtubeVideo(item.content);
             break;
         }
@@ -37436,7 +37433,7 @@ function (_Rest) {
     key: "youtubeVideo",
     value: function youtubeVideo(hash) {
       var video = '<!-- wp:core-embed/youtube {"url":"https://youtu.be/%1$s","type":"video","providerNameSlug":"youtube","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->' + '<figure class="wp-block-embed-youtube wp-block-embed is-type-video is-provider-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">' + 'https://youtu.be/%1$s</div></figure><!-- /wp:core-embed/youtube -->',
-          cleanHash = hash.replace(/[^a-zA-Z\_]/g, '');
+          cleanHash = hash.replace(/[^0-9a-zA-Z\_]/g, '');
       return Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["sprintf"])(video, cleanHash);
     }
   }, {
@@ -37994,47 +37991,6 @@ function objectToUrlEncoded(obj) {
 }
 
 var nonceSettingsPage = null;
-
-/***/ }),
-
-/***/ "./src/packages/helpers/src/traits/sortByOffset.js":
-/*!*********************************************************!*\
-  !*** ./src/packages/helpers/src/traits/sortByOffset.js ***!
-  \*********************************************************/
-/*! exports provided: sortByOffset */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sortByOffset", function() { return sortByOffset; });
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function sortByOffset(objectOfContent) {
-  var sortedContent = [],
-      objectCopy = _objectSpread({}, objectOfContent);
-
-  while (true) {
-    if (!Object.keys(objectCopy).length) break;
-    var minIndex = {
-      index: 0,
-      offsetTop: Math.pow(10, 10)
-    };
-
-    for (var item in objectCopy) {
-      if (objectCopy[item].offsetTop < minIndex.offsetTop) {
-        minIndex.offsetTop = objectCopy[item].offsetTop;
-        minIndex.index = item;
-      }
-    }
-
-    sortedContent.push(objectCopy[minIndex.index]);
-    delete objectCopy[minIndex.index];
-  }
-
-  return sortedContent;
-}
 
 /***/ }),
 

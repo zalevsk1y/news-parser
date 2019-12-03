@@ -34,7 +34,7 @@ class HTMLRaw extends ParseContent{
      */
     protected function parse($data,$options){
         if(array_key_exists('remove_scripts',$options)&&$options['remove_scripts']){
-            return preg_replace('/\<script.*?\<\/script\>/i','',$data);
+            return $this->removeScriptTags($data);
         }
         return $data;
 

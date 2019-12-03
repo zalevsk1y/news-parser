@@ -41,7 +41,7 @@ trait AdapterGutenbergTrait{
             'https://youtu.be/%1$s</div></figure><!-- /wp:core-embed/youtube -->';
         return sprintf(
             $video,
-            preg_replace('/[^a-zA-z\_]/i','',$hash)
+            \esc_html($hash)
         );
     }
     protected function heading($element){
@@ -61,7 +61,6 @@ trait AdapterGutenbergTrait{
     protected function image($element){
         $clean_src=\esc_url_raw($element['content']['src']);
         $clean_alt=esc_html($element['content']['alt']);
-        if(!$this->validateImageUrl($clean_src)) return;
         return '<!-- wp:image --><figure class="wp-block-image"><img src="'.$clean_src.'" alt="'.$clean_alt.'"/></figure><!-- /wp:image -->';
     }
     protected function list($el){
@@ -74,23 +73,10 @@ trait AdapterGutenbergTrait{
                 esc_html($li)
             );
         }
-        return $list_begin+$list+$lis_end;
+        return $list_begin+$list+$list_end;
     }
     protected function getDigitsOnly($str){
         return preg_replace('/[^0-9]/i','',$str);
     }
-    /**
-     * Validate is input url is link to the image.
-     *
-     * @param string $input_image_url String that should be validate.
-     * @return void
-     */
-    public function validateImageUrl($input_url){
-        $filetype=wp_check_filetype($input_url);
-        $mime_type=$filetype['type'];
-        if(strpos($mime_type,'image')!==false){
-            return $input_url;
-        }
-        return false;
-    }
+
 }
