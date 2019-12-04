@@ -1,7 +1,7 @@
 <?php
 namespace NewsParserPlugin\Parser;
-use Sunra\PhpSimple\HtmlDomParser;
 use NewsParserPlugin\Parser\HTMLParser;
+use Sunra\PhpSimple\HtmlDomParser;
 
 class HTMLPatternParser extends HTMLParser{
 

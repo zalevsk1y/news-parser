@@ -2,7 +2,6 @@
 namespace NewsParserPlugin\Parser;
 
 use NewsParserPlugin\Exception\MyException;
-use NewsParserPlugin\Interfaces\ParserInterface;
 use NewsParserPlugin\Message\Errors;
 
 /**
@@ -21,6 +20,10 @@ abstract class ParseContent
 {
     
     protected $cache_expiration;
+
+    /**
+     * @param integer $cache_expiration
+     */
     public function __construct($cache_expiration)
     {
 
@@ -53,7 +56,7 @@ abstract class ParseContent
      * Set cache using wordpress set_transient
      *
      * @param string $url
-     * @param $data
+     * @param string $data
      * @return bool
      */
     protected function setCache($url, $data)
@@ -98,6 +101,10 @@ abstract class ParseContent
 
         return $response;
     }
+
+    /**
+     * @param string $data
+     */
     public function removeScriptTags($data){
         return preg_replace('/<script(>|.)[\s\S]*?<\/script>/i','',$data);
     }
