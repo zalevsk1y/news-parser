@@ -14,7 +14,7 @@ class HTMLPatternParser extends HTMLParser{
      * Parse post body
      *
      *
-     * @return string
+     * @return array
      */
 
     public function postBody($options)
@@ -36,7 +36,7 @@ class HTMLPatternParser extends HTMLParser{
         $this->parseContainer($elements);
         
        
-        return $this->body ?: '';
+        return $this->body ?: array();
 
     }
     protected function parseContainer($elements){

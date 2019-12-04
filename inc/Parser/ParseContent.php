@@ -88,7 +88,7 @@ abstract class ParseContent
     public function get($url,$options=array())
     {
         $data = $this->getFromCache($url);
-        if ($data!==false) {
+        if (gettype($data)==='string') {
             $response = $this->parse($data,$options);
             return $response;
         }
