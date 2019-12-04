@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1575463509">
-  <project timestamp="1575463509">
+<coverage generated="1575466645">
+  <project timestamp="1575466645">
     <package name="NewsParserPlugin\Ajax">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Ajax/Ajax.php">
         <class name="NewsParserPlugin\Ajax\Ajax" namespace="NewsParserPlugin\Ajax">
