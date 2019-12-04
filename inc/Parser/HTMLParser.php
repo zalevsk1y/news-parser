@@ -165,7 +165,7 @@ class HTMLParser extends ParseContent
      *
      *
      *
-     * @return string|bool
+     * @return false|string
      */
 
     public function parseBodyTagP()
@@ -258,7 +258,7 @@ class HTMLParser extends ParseContent
      *
      * @param object|null object which methods will be called in chain.
      * 
-     * @return object ChainController
+     * @return ChainController ChainController
      */
     protected function chain($object=null)
     {

@@ -1,6 +1,5 @@
 <?php
 namespace NewsParserPlugin\Parser;
-use Sunra\PhpSimple\HtmlDomParser;
 use NewsParserPlugin\Parser\HTMLParser;
 use NewsParserPlugin\Traits\AdapterGutenbergTrait;
 
@@ -13,6 +12,7 @@ use NewsParserPlugin\Traits\AdapterGutenbergTrait;
  * @author  Evgeniy S.Zalevskiy <2600@ukr.net>
  * @license MIT
  */
+
 
 class HTMLPatternParser extends HTMLParser{
 

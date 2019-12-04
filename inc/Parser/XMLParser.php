@@ -3,11 +3,9 @@
 namespace NewsParserPlugin\Parser;
 
 use NewsParserPlugin\Exception\MyException;
-use NewsParserPlugin\Interfaces\ParserInterface;
 use NewsParserPlugin\Message\Errors;
-use NewsParserPlugin\Utils\ChainController;
-use NewsParserPlugin\Utils\PipeController;
 use NewsParserPlugin\Traits\PipeTrait;
+use NewsParserPlugin\Utils\ChainController;
 /**
  * Class for parsing XML files (using libxml) from rss-feed to get list of posts.
  *
@@ -56,7 +54,7 @@ class XMLParser extends ParseContent
      *
      * @param string $str string in xml format
      *
-     * @return object
+     * @return \SimpleXMLElement
      */
 
     protected function xmlParser(string $str)
@@ -83,7 +81,7 @@ class XMLParser extends ParseContent
      * [image] - main post image url
      * [status] - status of post parsed - if post was not saved as draft and draft -when post saved as draft
      *
-     * @param object $data object created by simplexml_load_string() function;
+     * @param \SimpleXMLElement $data object created by simplexml_load_string() function;
      *
      * @return array parsed data
      */
@@ -155,7 +153,7 @@ class XMLParser extends ParseContent
      *
      * @param int $length length of string
      * @param string $text text to cut
-     * @return void
+     * @return string
      */
 
     public function cutText($length, $text)
@@ -186,7 +184,7 @@ class XMLParser extends ParseContent
      *
      * @param string $pattern regular expression pattern without wrapper '//'
      * @param string $string to search in
-     * @return string|boolean found data or false
+     * @return string|false found data or false
      */
     public function regExp($pattern, $string)
     {
@@ -204,7 +202,7 @@ class XMLParser extends ParseContent
      * https://en.wikipedia.org/wiki/RSS_enclosure
      *
      * @param \SimpleXMLElement $xml
-     * @return string|boolean url image or false
+     * @return string|false url image or false
      */
     public function parseImageEnclosure($xml)
     {
@@ -219,7 +217,7 @@ class XMLParser extends ParseContent
      * <media:content> http://www.rssboard.org/media-rss#media-content
      *
      * @param \SimpleXMLElement $xml
-     * @return string|boolean image url or false
+     * @return string|false image url or false
      */
     public function parseImageMedia($xml)
     {
@@ -233,7 +231,7 @@ class XMLParser extends ParseContent
      * Parse image from description using regular expression
      *
      * @param $text text of description
-     * @return string|boolean
+     * @return string|false
      */
     public function parseImageDescription($text)
     {
