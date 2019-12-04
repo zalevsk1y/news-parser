@@ -44,13 +44,13 @@ $modules['html_parser'] = new Parser\HTMLParser($modules['sunra_parser'], 3600);
 $modules['html_pattern_parser'] = new Parser\HTMLPatternParser($modules['sunra_parser'], 3600);
 //---Controllers
 //--deps
-$modules['settings'] = new Utils\Settings();
+
 $modules['response_formatter'] = new Utils\ResponseFormatter();
 $modules['list_factory'] = new Factory\ListFactory();
 $modules['post_factory'] = new Factory\PostFactory();
 $modules['options_factory'] = new Factory\OptionsFactory();
 //--controllers
-$modules['list_controller'] = new Controller\ListController($modules['XML_parser'], $modules['settings'], $modules['response_formatter'], $modules['list_factory']);
+$modules['list_controller'] = new Controller\ListController($modules['XML_parser'], $modules['response_formatter'], $modules['list_factory']);
 $modules['post_controller'] = new Controller\PostController($modules['html_pattern_parser'], $modules['options_factory'], $modules['response_formatter'], $modules['post_factory']);
 $module['option_controller']=new Controller\OptionsController($modules['options_factory'],$modules['response_formatter']);
 $modules['visual_constructor_controller']=new Controller\VisualConstructorController($modules['html_raw'],$modules['response_formatter']);

@@ -22,10 +22,11 @@ class HTMLPatternParserTest extends \WP_UnitTestCase{
         $dom_parser=new HtmlDomParser();
         $this->parser=new HTMLPatternParserGetRewrite($dom_parser);
     }
-    public function testTest()
+    public function testParse()
     {   
         $test_file=file_get_contents(__DIR__.'/mocks/parsePage.html');
-        echo var_dump($this->parser->get($test_file));
-        $this->assertTrue(true);
+        $parsing_options=json_decode(file_get_contents(__DIR__.'/mocks/parsingOptions.json'),true);
+        $postArray=$this->parser->get($test_file,$parsing_options);
+        $this->assertIsArray($postArray);
     }
 }

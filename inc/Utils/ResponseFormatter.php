@@ -24,7 +24,7 @@ class ResponseFormatter {
         $this->data['data']=array(
             'post_id'=>$data['post_id'],
             'status'=>$data['status'],
-            'link'=>$data['previewLink']
+            'link'=>$data['links']['editLink']
         );
         return $this;
     }

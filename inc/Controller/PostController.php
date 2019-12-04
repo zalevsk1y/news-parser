@@ -9,7 +9,7 @@ use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Models\PostModel;
 use NewsParserPlugin\Parser\ParseContent;
 use NewsParserPlugin\Utils\ResponseFormatter;
-use NewsParserPlugin\Traits\AdapterGutenbergTrait;
+
 
 /**
  * Class controller for post
@@ -31,7 +31,6 @@ class PostController
     protected $formatResponse;
     protected $postParser;
 
-    use AdapterGutenbergTrait;
 
     public function __construct(ParseContent $postParser, FactoryInterface $optionsFactory, ResponseFormatter $formatter, FactoryInterface $postFactory)
     {
@@ -54,9 +53,8 @@ class PostController
             $parsed_url=parse_url($url);
             if(!is_array($parsed_url)) throw new MyException (Errors::text('WRONG_OPTIONS_URL'));
             $parsing_options=$this->optionsFactory->get($parsed_url);
-            $parsed_data =$this->postParser->get($url,$parsing_options->getAttributes('object'));
-            //Transform post body data for PostModel class and adds gutenberg editor blocks marking. 
-            $parsed_data=$this->createGutenbergBlocks($parsed_data);
+            $parsed_data =$this->postParser->get($url,$parsing_options->getAttributes('array'));
+           
             $parsed_data['authorId'] = \get_current_user_id();
             $this->options=$parsing_options->getExtraOptions();
             //unescaped url

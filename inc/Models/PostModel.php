@@ -109,7 +109,7 @@ class PostModel implements ModelInterface
     {
         $data_array = array(
             'title' => $this->title,
-            'previewLink' => $this->links['previewLink'],
+            'links' => $this->links,
             'status' => $this->status,
             'post_id' => $this->postId,
         );

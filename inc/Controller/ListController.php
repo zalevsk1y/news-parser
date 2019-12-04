@@ -30,10 +30,9 @@ class ListController
     protected $listFactory;
     protected $formatResponse;
     
-    public function __construct(ParseContent $listParser, Settings $settings, ResponseFormatter $formatter, FactoryInterface $listFactory)
+    public function __construct(ParseContent $listParser, ResponseFormatter $formatter, FactoryInterface $listFactory)
     {
         $this->listParser = $listParser;
-        $this->settings = $settings;
         $this->formatResponse = $formatter;
         $this->listFactory = $listFactory;
     }

@@ -2,28 +2,53 @@
 namespace NewsParserPlugin\Parser;
 use Sunra\PhpSimple\HtmlDomParser;
 use NewsParserPlugin\Parser\HTMLParser;
+use NewsParserPlugin\Traits\AdapterGutenbergTrait;
+
+/**
+ * Parse html using pre saved template pattern.
+ *
+ * PHP version 5.4
+ *
+ * @package Parser
+ * @author  Evgeniy S.Zalevskiy <2600@ukr.net>
+ * @license MIT
+ */
 
 class HTMLPatternParser extends HTMLParser{
 
-    private $body=array();
+    /**
+     * Trait that provide methods that convert array body data to string for post model
+     * using gutenberg editor blocks markup.
+     * 
+     * @method createGutenbergBlocks convert array of body elements data.
+     */
+    use AdapterGutenbergTrait;
 
+    /**
+     * Init function.
+     *
+     * @param HtmlDomParser $HTMLParserClass vendor html parser.
+     * @param integer $cache_expiration cache expiration time.
+     */
     public function __construct(HtmlDomParser $HTMLParserClass, $cache_expiration = 600){
         parent::__construct($HTMLParserClass,$cache_expiration);
     }
     /**
      * Parse post body
      *
-     *
-     * @return array
+     * @uses AdapterGutenbergTrait::createGutenbergBlocks convert array of elements into string.
+     * @param array $options  parsing template pattern['extraOptions','template'].
+     * @return string data that would be saved as post content.
      */
 
     public function postBody($options)
     {   
-       
         $search_template='';
-        $template=$options->getTemplate();
+        $template=$options['template'];
         
         foreach($template['children'] as $child_element){
+            //Create search template for Sunra\HtmlDomParser::find method
+            //https://simplehtmldom.sourceforge.io/manual.htm How to find HTML elements? section.
             $search_template.=$child_element['searchTemplate'].',';
         }
         $search_template=substr($search_template,0,-1);
@@ -33,13 +58,20 @@ class HTMLPatternParser extends HTMLParser{
             return '';
         }
         $elements=$container[0]->find($search_template);
-        $this->parseContainer($elements);
+        $body=$this->parseContainer($elements);
         
        
-        return $this->body ?: array();
+        return $body ? $this->createGutenbergBlocks($body):'';
 
     }
+    /**
+     * Iterate over array of HtmlDomParser elements and parse data.
+     * 
+     * @param array $elements array of HtmlDomParser elements objects
+     * @return array ['tagName'=>string,'content'=>string|array]
+     */
     protected function parseContainer($elements){
+        $body=array();
         foreach($elements as $el){
             $el_tag=$el->tag;     
                 $el_data=array(
@@ -47,33 +79,32 @@ class HTMLPatternParser extends HTMLParser{
                 );
                 switch($el_tag){
                     case 'img':
+                    //If element is image content element will be type of array. 
                         $el_data['content']=array(
                             'alt'=>$el->alt,
+                            //if lazy load attribute data-src exists take that as source of image if none take src attribute. 
                             'src'=>(is_array($el->attr)&&array_key_exists('data-src',$el->attr))?$el->attr['data-src']:$el->src
                         );
                         break;
                     case 'ul':
+                        //if element is list content element will be type of array. 
                         $el_data['content']=array();
                         foreach($el->find('li') as $li){
                             $el_data['content'][]=$this->removeTags($li->innertext);
                         }
                         break;
                     case 'iframe':
+                        //find youtube video ID.
                         preg_match('/youtube\.com\/embed\/(.*)[?|\'|\"]/i',$el->src,$match);
+                        //remove any symbols except that is allowed.
                         $el_data['content']=$match[1]?preg_replace('/[^0-9a-zA-Z\_]/i','',$match[1]):'';
                         break;
                     default:
                         $el_data['content']=$this->removeTags(trim($el->innertext));
                 }
-                $this->body[]=$el_data;
+                $body[]=$el_data;
             };
+            return $body;
     }
-    protected function isElementInTemplate($tag,$class_name,$container){
-        foreach($container['children'] as $el){
-            if($el['tagName']===$tag&&((strpos($class_name,$el['className'])!==false)||$el['className']===false)){
-                return $el;
-            }
-        }
-        return false;
-    }
+
 }

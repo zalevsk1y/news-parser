@@ -3,9 +3,9 @@ namespace  NewsParserPlugin\Traits;
 
 trait AdapterGutenbergTrait{
 
-    protected function createGutenbergBlocks($data){
+    protected function createGutenbergBlocks($body){
         $post_content='';
-        $content_array=$data['body'];
+        $content_array=$body;
         foreach($content_array as $el){
             switch ($el['tagName']){
                 case 'h1':
@@ -31,8 +31,7 @@ trait AdapterGutenbergTrait{
                     break;
             }
         }
-        $data['body']=$post_content;
-        return $data;
+        return $post_content;
     }
     protected function youtubeVideo($element){
         $hash=$element['content'];
