@@ -1,8 +1,6 @@
 <?php
 namespace NewsParserPlugin\Parser;
 
-use NewsParserPlugin\Utils\ChainController;
-use Sunra\PhpSimple\HtmlDomParser;
 use NewsParserPlugin\Traits\PipeTrait;
 use NewsParserPlugin\Traits\ChainTrait;
 /**

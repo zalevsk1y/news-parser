@@ -1,5 +1,6 @@
 <?php
 namespace NewsParserPlugin\Parser;
+
 use NewsParserPlugin\Parser\HTMLParser;
 use NewsParserPlugin\Traits\AdapterGutenbergTrait;
 

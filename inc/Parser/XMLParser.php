@@ -5,7 +5,8 @@ namespace NewsParserPlugin\Parser;
 use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Traits\PipeTrait;
-use NewsParserPlugin\Utils\ChainController;
+use NewsParserPlugin\Traits\ChainTrait;
+
 /**
  * Class for parsing XML files (using libxml) from rss-feed to get list of posts.
  *
@@ -19,9 +20,23 @@ use NewsParserPlugin\Utils\ChainController;
 
 class XMLParser extends ParseContent 
 {
-    
+    /**
+     * Adds function with pipe factory.
+     * 
+     * @method protected pipe() Function factory for Utils\PipeController creation.
+     */
     use PipeTrait;
-
+    /**
+     * Adds function with chain factory.
+     * 
+     * @method protected chain() Function factory for Utils\PipeController creation.
+     */
+    use ChainTrait;
+    /**
+    * Init function
+    *
+    * @param integer $cache_expiration
+    */
     public function __construct($cache_expiration=60){
        parent::__construct($cache_expiration);
     }
