@@ -8,6 +8,9 @@ class HTMLPatternParserGetRewrite extends HTMLPatternParser {
     {
         parent::__construct($dom_parser);
     }
+    public function setDOM($htmlData){
+        $this->dom=$this->parser::str_get_html($htmlData);
+    }
     public function get($page_html,$option=array())
     {
         return $this->parse($page_html,$option);
@@ -22,11 +25,14 @@ class HTMLPatternParserTest extends \WP_UnitTestCase{
         $dom_parser=new HtmlDomParser();
         $this->parser=new HTMLPatternParserGetRewrite($dom_parser);
     }
-    public function testParse()
+    public function testPostBody()
     {   
-        $test_file=file_get_contents(__DIR__.'/mocks/parsePage.html');
+        $test_file=file_get_contents(__DIR__.'/mocks/testHTMLPatternParser.html');
         $parsing_options=json_decode(file_get_contents(__DIR__.'/mocks/parsingOptions.json'),true);
-        $postArray=$this->parser->get($test_file,$parsing_options);
-        $this->assertIsArray($postArray);
+        $this->parser->setDOM($test_file);
+        $post_body=$this->parser->postBody($parsing_options);
+        $post_body_snapshot=file_get_contents(__DIR__.'/mocks/parsedSnapshot.html');
+        $this->assertIsString($post_body);
+        $this->assertEquals($post_body_snapshot,$post_body);
     }
 }

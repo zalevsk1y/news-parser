@@ -3,7 +3,7 @@ namespace NewsParserPlugin\Traits;
 use NewsParserPlugin\Utils\PipeController;
 trait PipeTrait{
     /**
-     * Function facade for Utils\PipeController
+     * Function factory for Utils\PipeController
      *
      * @param $input_data data that would be transferred thru the pipe
      * @return void

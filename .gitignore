@@ -5,10 +5,7 @@
 /.pnp
 vendor/*
 .pnp.js
-#do not ignor 
-!/vendor/composer/
-!/vendor/sunra/
-!/vendor/autoload.php
+
 
 
 

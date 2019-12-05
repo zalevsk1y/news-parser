@@ -3,8 +3,8 @@ namespace NewsParserPlugin\Parser;
 
 use NewsParserPlugin\Utils\ChainController;
 use Sunra\PhpSimple\HtmlDomParser;
-
 use NewsParserPlugin\Traits\PipeTrait;
+use NewsParserPlugin\Traits\ChainTrait;
 /**
  * HTML parser class
  * Parse data from html using Sunra\PhpSimple and regular expression
@@ -25,15 +25,23 @@ class HTMLParser extends ParseContent
     protected $rawHTML = null;
     protected $post=array();
     protected $options;
-
+    /**
+     * Adds function with pipe factory.
+     * 
+     * @method protected pipe() Function factory for Utils\PipeController creation.
+     */
     use PipeTrait;
+    /**
+     * Adds function with chain factory.
+     * 
+     * @method protected chain() Function factory for Utils\PipeController creation.
+     */
+    use ChainTrait;
 
     /**
-     * You could use NewsParserPlugin\any of HTML parsers.
-     * But they should have method ::find() and getAttribute;
-     * And should return array.
+     * Init function.
      *
-     * @param HtmlDomParser $HTMLParserClass You can use NewsParserPlugin\any Parser that have same interface.
+     * @param HtmlDomParser $HTMLParserClass HTML parser https://github.com/sunra/php-simple-html-dom-parser.
      */
     public function __construct(HtmlDomParser $HTMLParserClass, $cache_expiration = 600)
     {
@@ -41,16 +49,16 @@ class HTMLParser extends ParseContent
         $this->parser = $HTMLParserClass;
     }
     /**
-     * Create StdClass object from parsed data.
+     * Create array from parsed data.
      * Structure :
      * [title] - post title @string
-     * [image] - post main image url @string unescaped
-     * [content] - post content @array
+     * [image] - post main image url @string
+     * [body] - post content @string|@array
      * 
-     *
-     * @param string $data
-     * @param array $options
-     * @return StdClass
+     * @uses PipeTrait::pipe()
+     * @param string $data HTML data.
+     * @param array $options template options for parsing post content. 
+     * @return array
      */
     public function parse($data,$options)
     {
@@ -68,7 +76,8 @@ class HTMLParser extends ParseContent
     }
     /**
      * Parse post title based on both OpenGraph marks and Schema.org marks.
-     *
+     * 
+     * @uses ChainTrait::chain()
      * @return string
      */
 
@@ -85,8 +94,10 @@ class HTMLParser extends ParseContent
     /**
      * Parse main image of the post based on Open Graphe protocol and simple image tag search .
      *
+     * @uses ChainTrait::chain()
      * @return string|bool Image url
      */
+
     public function postImage()
     {   $alt=$this->getFirstWordOfTitle();
         $images = $this->chain()
@@ -107,7 +118,7 @@ class HTMLParser extends ParseContent
     /**
      * Parse post body
      *
-     *
+     * @param array $options parse template patterns for   
      * @return string
      */
 
@@ -119,7 +130,6 @@ class HTMLParser extends ParseContent
         return $body ?: '';
 
     }
-   
     
     /**
      * Parse title based on OpenGraphe marks <meta property=og:title content="...">
@@ -219,7 +229,7 @@ class HTMLParser extends ParseContent
      *
      * @param string $query Search query.https://simplehtmldom.sourceforge.io/
      *
-     * @return array|HtmlDomParser
+     * @return array|bool of HtmlDomParser objects if found.
      */
 
     public function find($query)
@@ -253,16 +263,5 @@ class HTMLParser extends ParseContent
     {
         return preg_replace($pattern, '', $data);
     }
-    /**
-     * Facade for chain building class. use NewsParserPlugin\::get() function at the end to get result.
-     *
-     * @param object|null object which methods will be called in chain.
-     * 
-     * @return ChainController ChainController
-     */
-    protected function chain($object=null)
-    {
-        $object=is_null($object)?$this:$object;
-        return new ChainController($object);
-    }
+
 }

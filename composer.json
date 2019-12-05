@@ -1,11 +1,6 @@
 {
   "name":"news-parser/news-parser",
   "description": "Wordpress  plugin allows you to easily and quickly receive text and images from the site and from rss feed.",
-  "autoload":{
-    "psr-4":{
-      "Sunra\\":"vendor/sunra/php-simple-html-dom-parser/Src/Sunra/PhpSimple/"
-    }
-  },
   "require": {
     "sunra/php-simple-html-dom-parser": "1.5.2"
   },

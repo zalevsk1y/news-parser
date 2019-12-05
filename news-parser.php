@@ -26,8 +26,9 @@ define("NEWS_PARSER_PLUGIN_AJAX_PARSING_API", 'news_parser_parsing_api');
 define("NEWS_PARSER_PLUGIN_AJAX_MEDIA_API", 'news_parser_media_api');
 define("NEWS_PARSER_PLUGIN_AJAX_OPTIONS_API", 'news_parser_options_api');
 
+
 require 'autoload.php';
-//require 'vendor/autoload.php';
+if(\file_exists('vendor/autoload.php')) require 'vendor/autoload.php';
 
 $modules = [];
 //---Menu config file loader module
