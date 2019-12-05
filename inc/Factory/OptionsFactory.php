@@ -15,6 +15,12 @@ use NewsParserPlugin\Interfaces\FactoryInterface;
  *
  */
 class OptionsFactory implements FactoryInterface{
+   /**
+    * Get instance of OptionsModel class.
+    *
+    * @param array $url
+    * @return NewsParserPlugin\Models\OptionsModel;
+    */
    public function get($url){
     return new OptionsModel($url['host']);
    }

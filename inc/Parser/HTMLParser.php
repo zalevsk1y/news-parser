@@ -79,7 +79,7 @@ class HTMLParser extends ParseContent
      * Parse post title based on both OpenGraph marks and inside h1 tag.
      * 
      * @uses ChainTrait::chain()
-     * @return string|bool
+     * @return false|string
      */
 
     public function postTitle()
@@ -96,7 +96,7 @@ class HTMLParser extends ParseContent
      * Parse main image of the post based on Open Graphe protocol and simple image tag search .
      *
      * @uses ChainTrait::chain()
-     * @return string|bool Image url
+     * @return false|string Image url
      */
 
     public function postImage()
@@ -137,7 +137,7 @@ class HTMLParser extends ParseContent
     /**
      * Parse title based on OpenGraphe marks <meta property=og:title content="...">
      *
-     * @return string|bool title
+     * @return false|string title
      */
 
     public function openGrapheTitleFind()
@@ -151,7 +151,7 @@ class HTMLParser extends ParseContent
      *
      * @param string  $pattern regular expression pattern
      *
-     * @return string|bool
+     * @return false|string
      */
 
     public function regExp($pattern)
@@ -185,7 +185,7 @@ class HTMLParser extends ParseContent
      *
      * @param string $query Search query.https://simplehtmldom.sourceforge.io/
      *
-     * @return array|bool of HtmlDomParser objects if found.
+     * @return false|array of HtmlDomParser objects if found.
      */
 
     public function find($query)
