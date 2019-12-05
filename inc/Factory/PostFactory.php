@@ -6,7 +6,7 @@ use NewsParserPlugin\Interfaces\FactoryInterface;
 /**
  * Class factory fo creating post objects
  *
- * PHP version 7.2.1
+ * PHP version 5.6
  *
  *
  * @package  Factory
@@ -15,7 +15,18 @@ use NewsParserPlugin\Interfaces\FactoryInterface;
  *
  */
 class PostFactory implements FactoryInterface{
-   public function get(array $data){
+   /**
+    * Get instance of PostModel class.
+    *
+    * @param array $data Structure: 
+     * [title] - post title @string
+     * [image] - post main image url @string
+     * [body] - post content @string|@array
+     * [sourceUrl]-url of source page @string
+     * [authorId]- id of wp-post author
+    * @return NewsParserPlugin\Models\PostModel
+    */
+   public function get($data){
     return new PostModel($data);
    }
 }

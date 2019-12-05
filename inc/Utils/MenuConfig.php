@@ -28,7 +28,7 @@ class MenuConfig
      * @param string $format format of output config
      * @return object|array|string
      */
-    public function get(string $format='object')
+    public function get($format='object')
     {
         $config_json=json_encode($this->config);
         switch($format){
@@ -46,7 +46,7 @@ class MenuConfig
      * @param array $config
      * @return void
      */
-    protected function verifyFormat(array $config){
+    protected function verifyFormat($config){
         $check_main_menu=array_diff_key($this->main_menu_keys,$config);
         if(count($check_main_menu)>0){
             throw new \Exception('Wrong main menu config file format.No needed keys in config file '.implode(',',$check_main_menu));

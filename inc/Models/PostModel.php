@@ -32,12 +32,10 @@ class PostModel implements ModelInterface
         if (!$data['title']) {
             throw new MyException(Errors::text('NO_TITLE'));
         }
-
         $this->title = $data['title'];
         if (!$data['body']) {
             throw new MyException(Errors::text('NO_BODY'));
         }
-
         $this->body = $data['body'];
         $this->image = $data['image'];
         $this->sourceUrl = $data['sourceUrl'];

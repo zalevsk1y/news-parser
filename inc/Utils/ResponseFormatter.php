@@ -17,9 +17,9 @@ class ResponseFormatter {
  * Format answer after post draw was created
  *
  * @param array $data should contain post_id,status,link
- * @return object return this for chain building
+ * @return ResponseFormatter return this for chain building
  */
-    public function post(array $data){
+    public function post($data){
         $this->action='post';
         $this->data['data']=array(
             'post_id'=>$data['post_id'],
@@ -32,9 +32,9 @@ class ResponseFormatter {
      * Format answer for parse rss list request
      *
      * @param array $data array of list objects
-     * @return object return this for chain building
+     * @return ResponseFormatter return this for chain building
      */
-    public function list(array $data){
+    public function list($data){
         $this->action='list';
         $this->data['data']=$data;
         return $this;
@@ -44,7 +44,7 @@ class ResponseFormatter {
      *
      * @param string $type type of dialog window current 'gallery' only
      * @param array $data array of image urls for dialog window
-     * @return object return this for chain building
+     * @return ResponseFormatter return this for chain building
      */
     public function dialog($type,$data){
         $this->data['dialog']=array(
@@ -57,7 +57,7 @@ class ResponseFormatter {
      * Format answer for rawHtML request.
      *
      * @param string $data Raw HTML data .
-     * @return object return this for chain building
+     * @return ResponseFormatter return this for chain building
      */
     public function rawHTML($data){
         $this->data['data']=esc_html($data);
@@ -67,7 +67,7 @@ class ResponseFormatter {
      * Media
      *
      * @param string $id
-     * @return object return this for chain building
+     * @return ResponseFormatter return this for chain building
      */
     public function media($id){
         $this->data['data']=array(
@@ -79,7 +79,7 @@ class ResponseFormatter {
      * Return error message in case some errors
      *
      * @param int $code code of error
-     * @return object return this for chain building
+     * @return ResponseFormatter return this for chain building
      */
     public function error($code){
         $this->data['err']=esc_html($code);
@@ -90,7 +90,7 @@ class ResponseFormatter {
      *
      * @param string $status success|error|Info
      * @param string $text
-     * @return object return this for chain building
+     * @return ResponseFormatter return this for chain building
      */
     public function message($status,$text=''){
         

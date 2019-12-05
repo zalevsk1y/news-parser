@@ -3,7 +3,7 @@ namespace NewsParserPlugin\Interfaces;
 /**
  * Interface for factories
  *
- * PHP version 7.2.1
+ * PHP version 5.6
  *
  *
  * @package  Interfaces
