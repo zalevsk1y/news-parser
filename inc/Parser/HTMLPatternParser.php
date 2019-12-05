@@ -95,14 +95,14 @@ class HTMLPatternParser extends HTMLParser{
                         break;
                     case 'iframe':
                         //find youtube video ID.
-                        preg_match('/youtube\.com\/embed\/(.*)[?|\'|\"]/i',$el->src,$match);
+                        preg_match('/youtube\.com\/embed\/([a-zA-Z0-9\_]*)/i',$el->src,$match);
                         //remove any symbols except that is allowed.
-                        $el_data['content']=$match[1]?preg_replace('/[^0-9a-zA-Z\_]/i','',$match[1]):'';
+                        $el_data['content']=array_key_exists(1,$match)?$match[1]:false;
                         break;
                     default:
                         $el_data['content']=$this->removeTags(trim($el->innertext));
                 }
-                $body[]=$el_data;
+                if($el_data!==false) $body[]=$el_data;
             };
             return $body;
     }

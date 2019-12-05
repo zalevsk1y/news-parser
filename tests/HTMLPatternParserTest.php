@@ -16,7 +16,12 @@ class HTMLPatternParserGetRewrite extends HTMLPatternParser {
         return $this->parse($page_html,$option);
     }
 }
-
+/**
+ * Test parser class.
+ * 
+ * @uses Sunra\PhpSimple\HtmlDomParser
+ * 
+ */
 class HTMLPatternParserTest extends \WP_UnitTestCase{
     protected $testFile;
     protected $parser;
@@ -25,6 +30,11 @@ class HTMLPatternParserTest extends \WP_UnitTestCase{
         $dom_parser=new HtmlDomParser();
         $this->parser=new HTMLPatternParserGetRewrite($dom_parser);
     }
+    /**
+     * @covers NewsParserPlugin\Parser\HTMLPatternParser::postBody
+     * @covers NewsParserPlugin\Parser\HTMLPatternParser::parseContainer
+     * @return void
+     */
     public function testPostBody()
     {   
         $test_file=file_get_contents(__DIR__.'/mocks/testHTMLPatternParser.html');
@@ -32,7 +42,8 @@ class HTMLPatternParserTest extends \WP_UnitTestCase{
         $this->parser->setDOM($test_file);
         $post_body=$this->parser->postBody($parsing_options);
         $post_body_snapshot=file_get_contents(__DIR__.'/mocks/parsedSnapshot.html');
-        $this->assertIsString($post_body);
+        //phpUnit ver. 5.7 does not have assertIsString assertion 
+        $this->assertEquals(gettype($post_body),'string');
         $this->assertEquals($post_body_snapshot,$post_body);
     }
 }

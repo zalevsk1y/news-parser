@@ -68,11 +68,11 @@ trait AdapterGutenbergTrait{
         $list_end='</ul><!-- /wp:list -->';
         $li_elements=$el['content'];
         foreach($li_elements as $li){
-            $list+=sprintf('<li>%s</li>',
+            $list.=sprintf('<li>%s</li>',
                 esc_html($li)
             );
         }
-        return $list_begin+$list+$list_end;
+        return $list_begin.$list.$list_end;
     }
     protected function getDigitsOnly($str){
         return preg_replace('/[^0-9]/i','',$str);

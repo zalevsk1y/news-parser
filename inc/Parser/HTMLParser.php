@@ -60,6 +60,7 @@ class HTMLParser extends ParseContent
      * @param array $options template options for parsing post content. 
      * @return array
      */
+
     public function parse($data,$options)
     {
         if (!empty($options))$this->options=$options;
@@ -75,10 +76,10 @@ class HTMLParser extends ParseContent
         return $this->post;
     }
     /**
-     * Parse post title based on both OpenGraph marks and Schema.org marks.
+     * Parse post title based on both OpenGraph marks and inside h1 tag.
      * 
      * @uses ChainTrait::chain()
-     * @return string
+     * @return string|bool
      */
 
     public function postTitle()
@@ -86,8 +87,8 @@ class HTMLParser extends ParseContent
         $title = $this->chain()
         // Parse title based on OpenGraph marks
             ->openGrapheTitleFind()
-        // Parse title based on Schema.org marks
-            ->titleRegExp("/\<h1\>(.*?)\<\/h1\>/i")
+        // Parse title inside h1 tag
+            ->regExp("/\<h1\>(.*?)\<\/h1\>/i")
             ->get();
         return $title;
     }
@@ -99,18 +100,20 @@ class HTMLParser extends ParseContent
      */
 
     public function postImage()
-    {   $alt=$this->getFirstWordOfTitle();
+    {   $alt=$this->post['title'];
+        $searchPattern='img[alt='.$alt.']';
         $images = $this->chain()
         // Parse gallery images based on Schema.org marks
             ->find('meta[property=og:image]')
-        // Parse gallery images based on OpenGraph marks
-            ->imageFinder('img',$alt,'htmlDomParser')
+        // Parse gallery images based image tag search
+            ->find($searchPattern)
             ->get();
-        if (!count($images)) {
+        if (empty($images)) {
             return false;
         }
         return $this->chain($images[0])
             ->getAttribute('content')
+            ->getAttribute('data-src')
             ->getAttribute('src')
             ->get();
     }
@@ -134,40 +137,28 @@ class HTMLParser extends ParseContent
     /**
      * Parse title based on OpenGraphe marks <meta property=og:title content="...">
      *
-     * @return string title
+     * @return string|bool title
      */
 
     public function openGrapheTitleFind()
     {
-
         $title_items = $this->find('meta[property=og:title]');
-        $title = false;
-        if ($title_items && !is_array($title_items)) {
-            $title = $title_items->getAttribute('content');
-        } else if ($title_items && is_array($title_items) && count($title_items)) {
-            $title = $title_items[0]->getAttribute('content');
-        } else if (!count($title_items)) {
-            $title = false;
-        }
-        return $title;
-
+        if(false===$title_items||!is_array($title_items)||empty($title_items)) return false;
+        return $title_items[0]->getAttribute('content');
     }
     /**
      * Parse title with Regular expression
      *
      * @param string  $pattern regular expression pattern
      *
-     * @return string
+     * @return string|bool
      */
 
-    public function titleRegExp($pattern)
+    public function regExp($pattern)
     {
         preg_match($pattern, $this->rawHTML, $matches);
-        if (!count($matches)) {
-            return false;
-        }
-
-        return $matches[0];
+        if (empty($matches))return false;
+        return $matches[1];
     }
 
     /**
@@ -190,41 +181,6 @@ class HTMLParser extends ParseContent
         return $output == "<p></p>" ? false : $output;
     }
     /**
-     * Find image using vendor Sunra\PhpSimple\HtmlDomParser. Tag <img> should have alt property as part of SEO
-     * optimization to avoid parsing to many unnecessary images.
-     *
-     * @param string  $findPattern - PhpSimple find pattern https://simplehtmldom.sourceforge.io/
-     * @param string $alt part of alt string. 
-     * @param string $output [htmlDomParser|tag] htmlDomParse - return htmlDomParse object,tag - return outerText tag as string 
-     *
-     * @return array|bool Array of image urls parsed from page
-     */
-
-    public function ImageFinder($findPattern,$alt,$output='tag')
-    {
-        $imageUrl = $this->find($findPattern);
-        if ( $imageUrl===false||!count($imageUrl)) {
-            return false;
-        }
-        $gallery = array();
-        if(empty($imageUrl)||!is_array($imageUrl))return false;
-        foreach ($imageUrl as $image) {
-            if (false!==$alt_of_image=$image->getAttribute('alt')&&$alt&&strpos($alt_of_image,$alt)!==false){ 
-                switch($output){
-                    case 'htmlDomParser':
-                            $gallery[] = $image;
-                        break;
-                    case 'tag':
-                        $gallery[] = $image->outertext;
-                        break;
-                }
-            }
-        }
-        return count($gallery) ? $gallery : false;
-    }
-   
-
-    /**
      * Facade for ::find() method of Sunra\PhpSimple
      *
      * @param string $query Search query.https://simplehtmldom.sourceforge.io/
@@ -235,22 +191,8 @@ class HTMLParser extends ParseContent
     public function find($query)
     {
         $result = $this->dom->find($query);
-        return count($result) ? $result : false;
+        return !empty($result) ? $result : false;
     }
-    /**
-     * Returns first word of array.
-     *
-     * @return string|false
-     */
-    protected function getFirstWordOfTitle(){
-      
-        if($this->post['title']) {
-            $words_array=explode(' ',$this->post['title']);
-            return $words_array[0];
-        }
-        return false;
-    }
-
     /**
      * Remove HTML tags from the text.
      *
@@ -263,5 +205,5 @@ class HTMLParser extends ParseContent
     {
         return preg_replace($pattern, '', $data);
     }
-
 }
+

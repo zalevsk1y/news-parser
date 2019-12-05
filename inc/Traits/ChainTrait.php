@@ -1,5 +1,6 @@
 <?php
 namespace NewsParserPlugin\Traits;
+use NewsParserPlugin\Utils\ChainController;
 
 trait ChainTrait{
   

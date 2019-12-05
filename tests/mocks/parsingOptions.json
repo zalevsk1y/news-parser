@@ -23,6 +23,16 @@
                 "tagName":"p",
                 "searchTemplate":"div.postBody p",
                 "position":"all"
+            },
+            "3":{
+                "tagName":"img",
+                "searchTemplate":"div.image-gallery img",
+                "position":"all"
+            },
+            "4":{
+                "tagName":"ul",
+                "searchTemplate":"ul.list",
+                "position":"all"
             }
         }
     }
