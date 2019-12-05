@@ -49,6 +49,12 @@ class HTMLParserTest extends \WP_UnitTestCase{
         $src=$this->parser->postImage();
         $this->assertEquals($src,$expectedSrc);
     }
+    public function testPostBody(){
+        $this->getMocks();
+        $this->parser->setDOM($this->openGraph);
+        $body=$this->parser->postBody(array());
+        $this->assertEquals($body,'<p>Post Content.</p>');
+    }
     public function HTMLDataTitle(){
         ($this->openGraph||$this->noMarkup)||$this->getMocks();
         return array(

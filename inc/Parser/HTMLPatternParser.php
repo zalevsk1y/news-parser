@@ -6,7 +6,7 @@ use NewsParserPlugin\Traits\AdapterGutenbergTrait;
 /**
  * Parse html using pre saved template pattern.
  *
- * PHP version 5.4
+ * PHP version 5.6
  *
  * @package Parser
  * @author  Evgeniy S.Zalevskiy <2600@ukr.net>
@@ -27,7 +27,6 @@ class HTMLPatternParser extends HTMLParser{
     /**
      * Init function.
      *
-     * @param Sunra\PhpSimple\HtmlDomParser $HTMLParserClass vendor html parser.
      * @param integer $cache_expiration cache expiration time.
      */
     public function __construct( $cache_expiration = 600){

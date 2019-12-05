@@ -8,8 +8,9 @@ use NewsParserPlugin\Traits\ChainTrait;
 /**
  * HTML parser class
  * Parse data from html using Sunra\PhpSimple and regular expression
+ * https://github.com/sunra/php-simple-html-dom-parser
  *
- * PHP version 7.2.1
+ * PHP version 5.6
  *
  *
  * @package  Parser
@@ -20,10 +21,33 @@ use NewsParserPlugin\Traits\ChainTrait;
 
 class HTMLParser extends ParseContent
 {
-    protected $parser;
-    protected $dom = null;
-    protected $rawHTML = null;
+    /**
+     * instance of HtmlDomParser
+     *
+     * @var object simplehtmldom_1_5\simple_html_dom
+     */
+    protected $dom;
+    /**
+     * String with HTML data.
+     *
+     * @var string
+     */
+    protected $rawHTML;
+    /**
+     * Parsed data.
+     * Structure :
+     * [title] - post title @string
+     * [image] - post main image url @string
+     * [body] - post content @string|@array
+     *
+     * @var array
+     */
     protected $post=array();
+    /**
+     * Parsing options
+     * 
+     * @var [type]
+     */
     protected $options;
     /**
      * Adds function with pipe factory.
@@ -41,7 +65,6 @@ class HTMLParser extends ParseContent
     /**
      * Init function.
      *
-     * @param HtmlDomParser $HTMLParserClass HTML parser https://github.com/sunra/php-simple-html-dom-parser.
      */
     public function __construct($cache_expiration = 600)
     {
@@ -206,7 +229,7 @@ class HTMLParser extends ParseContent
         return preg_replace($pattern, '', $data);
     }
     /**
-     * Create instance of simplehtmldom_1_5\simple_html_dom
+     * Create instance of simplehtmldom_1_5\simple_html_dom  https://github.com/sunra/php-simple-html-dom-parser.
      *
      * @param string $html
      * @return object simplehtmldom_1_5\simple_html_dom
