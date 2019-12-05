@@ -43,10 +43,10 @@ class HTMLParser extends ParseContent
      *
      * @param HtmlDomParser $HTMLParserClass HTML parser https://github.com/sunra/php-simple-html-dom-parser.
      */
-    public function __construct(HtmlDomParser $HTMLParserClass, $cache_expiration = 600)
+    public function __construct($cache_expiration = 600)
     {
         parent::__construct($cache_expiration);
-        $this->parser = $HTMLParserClass;
+       
     }
     /**
      * Create array from parsed data.
@@ -68,7 +68,7 @@ class HTMLParser extends ParseContent
             ->removeScriptTags()
             ->removeStyleTags()
             ->get();
-        $this->dom = $this->parser::str_get_html($clean_html);
+        $this->dom = $this->createDOM($clean_html);
         $this->rawHTML = $clean_html;
         $this->post['title'] = esc_html($this->postTitle());
         $this->post['image'] = esc_url_raw($this->postImage());
@@ -204,6 +204,15 @@ class HTMLParser extends ParseContent
     protected function removeTags($data, $pattern = '@(<[^>]*>)@')
     {
         return preg_replace($pattern, '', $data);
+    }
+    /**
+     * Create instance of simplehtmldom_1_5\simple_html_dom
+     *
+     * @param string $html
+     * @return object simplehtmldom_1_5\simple_html_dom
+     */
+    protected  function createDOM($html){
+        return HtmlDomParser::str_get_html($html);
     }
 }
 

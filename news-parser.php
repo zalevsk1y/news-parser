@@ -40,9 +40,8 @@ $modules['main'] = new Core\Main($modules['menu_page'],$modules['menu_config']);
 $modules['XML_parser'] = new Parser\XMLParser();
 $modules['html_raw']=new Parser\HTMLRaw(600);
 //--vendor HTML parser
-$modules['sunra_parser'] = new \Sunra\PhpSimple\HtmlDomParser();
-$modules['html_parser'] = new Parser\HTMLParser($modules['sunra_parser'], 3600);
-$modules['html_pattern_parser'] = new Parser\HTMLPatternParser($modules['sunra_parser'], 3600);
+$modules['html_parser'] = new Parser\HTMLParser( 3600);
+$modules['html_pattern_parser'] = new Parser\HTMLPatternParser( 3600);
 //---Controllers
 //--deps
 

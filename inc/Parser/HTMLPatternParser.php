@@ -30,8 +30,8 @@ class HTMLPatternParser extends HTMLParser{
      * @param Sunra\PhpSimple\HtmlDomParser $HTMLParserClass vendor html parser.
      * @param integer $cache_expiration cache expiration time.
      */
-    public function __construct(\Sunra\PhpSimple\HtmlDomParser $HTMLParserClass, $cache_expiration = 600){
-        parent::__construct($HTMLParserClass,$cache_expiration);
+    public function __construct( $cache_expiration = 600){
+        parent::__construct($cache_expiration);
     }
     /**
      * Parse post body

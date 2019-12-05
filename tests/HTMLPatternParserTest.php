@@ -1,15 +1,12 @@
 <?php
 use NewsParserPlugin\Parser\HTMLPatternParser;
-use Sunra\PhpSimple\HtmlDomParser;
+
 
 
 class HTMLPatternParserGetRewrite extends HTMLPatternParser {
-    public function __construct($dom_parser)
-    {
-        parent::__construct($dom_parser);
-    }
+  
     public function setDOM($htmlData){
-        $this->dom=$this->parser::str_get_html($htmlData);
+        $this->dom=$this->createDOM($htmlData);
     }
     public function get($page_html,$option=array())
     {
@@ -27,8 +24,8 @@ class HTMLPatternParserTest extends \WP_UnitTestCase{
     protected $parser;
     public function setUp()
     {
-        $dom_parser=new HtmlDomParser();
-        $this->parser=new HTMLPatternParserGetRewrite($dom_parser);
+
+        $this->parser=new HTMLPatternParserGetRewrite();
     }
     /**
      * @covers NewsParserPlugin\Parser\HTMLPatternParser::postBody
