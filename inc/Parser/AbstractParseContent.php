@@ -10,13 +10,13 @@ use NewsParserPlugin\Message\Errors;
  * Store in the cache
  * Provides data to parser
  *
- * PHP version 7.2.1
+ * PHP version 5.6
  *
  * @package  Parser
  * @author   Evgeniy S.Zalevskiy <2600@urk.net>
  * @license  MIT
  */
-abstract class ParseContent 
+abstract class AbstractParseContent 
 {
     
     protected $cache_expiration;
@@ -41,8 +41,8 @@ abstract class ParseContent
      * Get data from cache using wordpress get_transient()
      *
      *
-     * @param string $url
-     * @return string|bool
+     * @param string $url Url of the requested page, used as hash key.
+     * @return false|string Return data from cache or false.
      */
 
     protected function getFromCache($url)
@@ -53,11 +53,11 @@ abstract class ParseContent
 
     }
     /**
-     * Set cache using wordpress set_transient
+     * Set cache using wordpress set_transient.
      *
-     * @param string $url
-     * @param string $data
-     * @return bool
+     * @param string $url Url of the requested page, used as hash key.
+     * @param string $data Data that should be stored to the cache.
+     * @return bool Return true if data was set and false if data was not set.
      */
     protected function setCache($url, $data)
     {
@@ -65,15 +65,16 @@ abstract class ParseContent
         return set_transient($hash_id, $data, $this->cache_expiration);
     }
     /**
-     * Download page
+     * Download html of the page using wp_remote_get() function.
      *
      * @param string $url url of page. 
      * @throws MyException if data could not be downloaded.
-     * @return string HTML page data.
+     * @return string HTML data of the page.
      */
     protected function download($url)
     {   $request_args=array('user-agent'=>'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36');
         $data = wp_remote_get($url,$request_args);
+        if(is_wp_error($data)) throw new MyException(Errors::text('FILE_DOWNLOAD'));
         $response_code= wp_remote_retrieve_response_code($data);
         if ($response_code!=200) {
             throw new MyException(Errors::text('FILE_DOWNLOAD'));
@@ -82,11 +83,11 @@ abstract class ParseContent
         return $body;
     }
     /**
-     * Get data to transfer to parser
+     * Get html data from the cache or download it, pass them to the parser and cache if needed.
      *
-     * @param string $url
-     * @param array $options
-     * @return string
+     * @param string $url url of the page that should get.
+     * @param array $options Extra options that might be used by parser.
+     * @return array|stdClass|string Parsed data.  
      */
     public function get($url,$options=array())
     {
@@ -101,13 +102,21 @@ abstract class ParseContent
 
         return $response;
     }
-
     /**
-     * @param string $data
+     * Remove <script> tag with with inner text using preg_replace.
+     *  
+     * @param string $data html data.
+     * @return string 
      */
     public function removeScriptTags($data){
         return preg_replace('/<script(>|.)[\s\S]*?<\/script>/i','',$data);
     }
+    /**
+     * Remove <style> tag with with inner text using preg_replace.
+     * 
+     * @param string $data html data.
+     * @return string 
+     */
     public function removeStyleTags($data){
         return preg_replace('/<style(>|.)[\s\S]*?<\/style\>/i','',$data);
     }

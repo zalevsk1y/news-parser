@@ -102,7 +102,7 @@ class HTMLPatternParser extends HTMLParser{
                     default:
                         $el_data['content']=$this->removeTags(trim($el->innertext));
                 }
-                if($el_data!==false) $body[]=$el_data;
+                if($el_data['content']!==false) $body[]=$el_data;
             };
             return $body;
     }

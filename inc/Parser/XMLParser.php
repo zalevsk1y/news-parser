@@ -18,7 +18,7 @@ use NewsParserPlugin\Traits\ChainTrait;
  *
  */
 
-class XMLParser extends ParseContent 
+class XMLParser extends AbstractParseContent 
 {
     /**
      * Adds function with pipe factory.

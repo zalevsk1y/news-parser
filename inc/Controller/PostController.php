@@ -7,7 +7,7 @@ use NewsParserPlugin\Interfaces\FactoryInterface;
 use NewsParserPlugin\Message\Error;
 use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Models\PostModel;
-use NewsParserPlugin\Parser\ParseContent;
+use NewsParserPlugin\Parser\AbstractParseContent;
 use NewsParserPlugin\Utils\ResponseFormatter;
 
 
@@ -32,7 +32,7 @@ class PostController
     protected $postParser;
 
 
-    public function __construct(ParseContent $postParser, FactoryInterface $optionsFactory, ResponseFormatter $formatter, FactoryInterface $postFactory)
+    public function __construct(AbstractParseContent $postParser, FactoryInterface $optionsFactory, ResponseFormatter $formatter, FactoryInterface $postFactory)
     {
         $this->postParser = $postParser;
         $this->optionsFactory = $optionsFactory;

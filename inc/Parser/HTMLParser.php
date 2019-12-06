@@ -3,6 +3,7 @@ namespace NewsParserPlugin\Parser;
 
 use NewsParserPlugin\Traits\PipeTrait;
 use NewsParserPlugin\Traits\ChainTrait;
+use  Sunra\PhpSimple\HtmlDomParser;
 /**
  * HTML parser class
  * Parse data from html using Sunra\PhpSimple and regular expression
@@ -17,7 +18,7 @@ use NewsParserPlugin\Traits\ChainTrait;
  *
  */
 
-class HTMLParser extends ParseContent
+class HTMLParser extends AbstractParseContent
 {
     /**
      * instance of HtmlDomParser

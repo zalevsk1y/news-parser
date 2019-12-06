@@ -6,7 +6,7 @@ use NewsParserPlugin\Interfaces\ControllerInterface;
 use NewsParserPlugin\Interfaces\FactoryInterface;
 use NewsParserPlugin\Message\Error;
 use NewsParserPlugin\Message\Success;
-use NewsParserPlugin\Parser\ParseContent;
+use NewsParserPlugin\Parser\AbstractParseContent;
 use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Utils\Settings;
 
@@ -30,7 +30,7 @@ class ListController
     protected $listFactory;
     protected $formatResponse;
     
-    public function __construct(ParseContent $listParser, ResponseFormatter $formatter, FactoryInterface $listFactory)
+    public function __construct(AbstractParseContent $listParser, ResponseFormatter $formatter, FactoryInterface $listFactory)
     {
         $this->listParser = $listParser;
         $this->formatResponse = $formatter;

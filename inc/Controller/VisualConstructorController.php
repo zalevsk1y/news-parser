@@ -2,7 +2,7 @@
 namespace NewsParserPlugin\Controller;
 
 use NewsParserPlugin\Exception\MyException;
-use NewsParserPlugin\Parser\ParseContent;
+use NewsParserPlugin\Parser\AbstractParseContent;
 use NewsParserPlugin\Message\Error;
 use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Interfaces\ControllerInterface;
@@ -26,7 +26,7 @@ class VisualConstructorController {
      * @param ParseContent $parser
      * @param ResponseFormatter $formatter
      */
-    public function __construct(ParseContent $parser, ResponseFormatter $formatter){
+    public function __construct(AbstractParseContent $parser, ResponseFormatter $formatter){
         $this->parser=$parser;
         $this->formatResponse=$formatter;
     }
