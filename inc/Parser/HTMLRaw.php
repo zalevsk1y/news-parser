@@ -3,8 +3,7 @@ namespace NewsParserPlugin\Parser;
 
 
 /**
- * HTML parser class
- * Parse data from html using Sunra\PhpSimple and regular expression
+ * Get not parsed HTML data
  *
  * PHP version 7.2.1
  *

@@ -17,13 +17,13 @@ class VisualConstructorController {
     /**
      * Parser 
      *
-     * @var ParseContent
+     * @var AbstractParseContent
      */
     protected $parser;
     /**
      * Init function.
      *
-     * @param ParseContent $parser
+     * @param AbstractParseContent $parser
      * @param ResponseFormatter $formatter
      */
     public function __construct(AbstractParseContent $parser, ResponseFormatter $formatter){
