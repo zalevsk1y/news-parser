@@ -37,7 +37,7 @@ class HTMLParserTest extends \WP_UnitTestCase{
     public function testPostTitle($html,$expectedTitle){
         $this->parser->setDOM($html);
         $title=$this->parser->postTitle();
-        $this->assertEquals($title,$expectedTitle);
+        $this->assertEquals($expectedTitle,$title);
     }
      /**
      * @dataProvider HTMLDataImage
@@ -47,13 +47,13 @@ class HTMLParserTest extends \WP_UnitTestCase{
         $this->parser->setDOM($html);
         $this->parser->setTitle($title);
         $src=$this->parser->postImage();
-        $this->assertEquals($src,$expectedSrc);
+        $this->assertEquals($expectedSrc,$src);
     }
     public function testPostBody(){
         $this->getMocks();
         $this->parser->setDOM($this->openGraph);
         $body=$this->parser->postBody(array());
-        $this->assertEquals($body,'<p>Post Content.</p>');
+        $this->assertEquals('<p>Post Content.</p>',$body);
     }
     public function HTMLDataTitle(){
         ($this->openGraph||$this->noMarkup)||$this->getMocks();

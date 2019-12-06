@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <language>en-us</language>
+    <title>Motor1.com - News</title>
+    <link>https://www.motor1.com/news/</link>
+    <description>Get breaking news, in-depth articles and press releases covering News</description>
+    <lastBuildDate>Fri, 06 Dec 2019 14:15:24 +0000</lastBuildDate>
+    <image>
+      <url>https://www.motor1.com/favicon.ico</url>
+      <title>Motor1.com</title>
+      <link>https://www.motor1.com/</link>
+    </image>
+    <generator>Zend_Feed_Writer 2 (http://framework.zend.com)</generator>
+    <item>
+      <title>Ford Ranger Looks Bad To The Bone With Carbon Upgrades</title>
+      <description><![CDATA[But the price will probably surprise you.]]></description>
+      <pubDate>Fri, 06 Dec 2019 14:10:47 +0000</pubDate>
+      <link>https://www.motor1.com/news/386487/ford-ranger-motion-r-carbon/?utm_source=RSS&amp;utm_medium=referral&amp;utm_campaign=RSS-all-</link>
+      <guid>https://www.motor1.com/news/386487/ford-ranger-motion-r-carbon/?utm_source=RSS&amp;utm_medium=referral&amp;utm_campaign=RSS-all-</guid>
+      <enclosure type="image/jpeg" length="26526" url="https://cdn.motor1.com/images/mgl/LBYvQ/s6/ford-ranger-by-motion-r-design.jpg"/>
+    </item>
+      </channel>
+</rss>

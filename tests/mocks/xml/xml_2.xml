@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	>
+
+<channel>
+	<title>site</title>
+	<atom:link href="https://www.site.com/feed/" rel="self" type="application/rss+xml" />
+	<link>https://www.site.com</link>
+	<description>The Definitive Guide to Tech and Cars</description>
+	<lastBuildDate>Fri, 06 Dec 2019 13:54:22 -0600</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.3</generator>
+<site xmlns="com-wordpress:feed-additions:1">4555266</site>	<item>
+		<title>NASA is studying asteroid Bennu to figure out why it&#8217;s ejecting particles</title>
+		<link>https://www.site.com/nasa-is-studying-asteroid-bennu-to-figure-out-why-its-ejecting-particles-06602482/</link>
+				<comments>https://www.site.com/nasa-is-studying-asteroid-bennu-to-figure-out-why-its-ejecting-particles-06602482/#respond</comments>
+				<pubDate>Fri, 06 Dec 2019 14:29:55 +0000</pubDate>
+		<dc:creator><![CDATA[Shane McGlaun]]></dc:creator>
+				<category><![CDATA[Archive]]></category>
+		<category><![CDATA[NASA]]></category>
+		<category><![CDATA[Research]]></category>
+		<category><![CDATA[Space]]></category>
+
+		<guid isPermaLink="false">https://www.site.com/?p=602482</guid>
+				<description><![CDATA[<img width="680" height="383" src="https://scdn.site.com/wp-content/uploads/2019/12/bennu-680x383.jpg" class="webfeedsFeaturedVisual wp-post-image" alt="" style="display: block; margin: auto; margin-bottom: 5px;max-width: 100%;" link_thumbnail="" srcset="https://scdn.site.com/wp-content/uploads/2019/12/bennu-680x383.jpg 680w, https://scdn.site.com/wp-content/uploads/2019/12/bennu-768x432.jpg 768w, https://scdn.site.com/wp-content/uploads/2019/12/bennu.jpg 1280w" sizes="(max-width: 680px) 100vw, 680px" data-attachment-id="602484" data-permalink="https://www.site.com/nasa-is-studying-asteroid-bennu-to-figure-out-why-its-ejecting-particles-06602482/bennu-4/" data-orig-file="https://scdn.site.com/wp-content/uploads/2019/12/bennu.jpg" data-orig-size="1280,720" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="bennu" data-image-description="" data-medium-file="https://scdn.site.com/wp-content/uploads/2019/12/bennu-680x383.jpg" data-large-file="https://scdn.site.com/wp-content/uploads/2019/12/bennu.jpg" />Shortly after the NASA OSIRIS-REx spacecraft arrived at the asteroid known as Bennu, it discovered something mysterious. The asteroid is active and is continuously discharging particles into space. NASA wants to gather samples from the asteroid, but it also wants to figure out why Bennu is continuously discharging particles into space. The OSIRIS-REx team first observed the particle-ejection event in &#8230; <a href="https://www.site.com/nasa-is-studying-asteroid-bennu-to-figure-out-why-its-ejecting-particles-06602482/" class="continued">Continue reading</a>]]></description>
+						<wfw:commentRss>https://www.site.com/nasa-is-studying-asteroid-bennu-to-figure-out-why-its-ejecting-particles-06602482/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+						<post-id xmlns="com-wordpress:feed-additions:1">602482</post-id>	</item>
+
+                        	</channel>
+</rss>

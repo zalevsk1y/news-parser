@@ -10,7 +10,7 @@ use NewsParserPlugin\Traits\ChainTrait;
 /**
  * Class for parsing XML files (using libxml) from rss-feed to get list of posts.
  *
- * PHP version 7.2.1
+ * PHP version 5.6
  *
  * @package  Parser
  * @author   Evgeniy S.Zalevskiy <2600@urk.net>
@@ -68,11 +68,11 @@ class XMLParser extends AbstractParseContent
      * Parse xml string to the object using simplexml_load_string
      *
      * @param string $str string in xml format
-     *
+     * @throws NewsParserPlugin\Exception\MyException
      * @return \SimpleXMLElement
      */
 
-    protected function xmlParser(string $str)
+    protected function xmlParser($str)
     {
         libxml_use_internal_errors(true);
         $data = simplexml_load_string($str);
@@ -98,7 +98,7 @@ class XMLParser extends AbstractParseContent
      *
      * @param \SimpleXMLElement $data object created by simplexml_load_string() function;
      *
-     * @return array parsed data
+     * @return object parsed data
      */
     protected function formatData($data)
     {
@@ -123,8 +123,8 @@ class XMLParser extends AbstractParseContent
     /**
      * Parse description of the post and cut it to 24 symbols
      *
-     * @param $data
-     *
+     * @uses PipeTrait::pipe()
+     * @param string|object $data 
      * @return string
      */
 
@@ -148,6 +148,7 @@ class XMLParser extends AbstractParseContent
      * <media:content> http://www.rssboard.org/media-rss#media-content
      * <description> search image tag in description using regular expression
      *
+     * @uses ChainTrait::chain()
      * @param \SimpleXMLElement $xml Object created by simplexml_load_string() function
      * @param string $text
      * @return string image url or default image rl image if false
@@ -166,6 +167,7 @@ class XMLParser extends AbstractParseContent
     /**
      * Cutting text
      *
+     * @uses PipeTrait::pipe()
      * @param int $length length of string
      * @param string $text text to cut
      * @return string
@@ -257,13 +259,5 @@ class XMLParser extends AbstractParseContent
         $image = $this->regExp('src\=\"([^\"|\']*\.[jpg|png|tiff]..)', $text);
         return isset($image) ?$image: false;
     }
-    /**
-     * Function facade for Utils\ChainController;
-     *
-     * @return ChainController object
-     */
-    protected function chain()
-    {
-        return new ChainController($this);
-    }
+
 }

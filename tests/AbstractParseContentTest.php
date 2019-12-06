@@ -71,7 +71,7 @@ class AbstractParseContentTest extends \WP_UnitTestCase{
             $this->instance->get($url);
         }else{
             $result=$this->instance->get($url);
-            $this->assertEquals($result,$expected);
+            $this->assertEquals($expected,$result);
         }
     }
     /**
@@ -83,7 +83,7 @@ class AbstractParseContentTest extends \WP_UnitTestCase{
      */
     public function testRemoveScriptTags($tags,$expected){
         $result=$this->instance->removeScriptTags($tags);
-        $this->assertEquals($result,$expected);
+        $this->assertEquals($expected,$result);
     }
     /**
      * @dataProvider styleTagsData
@@ -94,7 +94,7 @@ class AbstractParseContentTest extends \WP_UnitTestCase{
      */
     public function testRemoveStyleTags($tags,$expected){
         $result=$this->instance->removeStyleTags($tags);
-        $this->assertEquals($result,$expected);
+        $this->assertEquals($expected,$result);
     }
     public function urlData(){
         return array(

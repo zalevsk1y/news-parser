@@ -40,7 +40,7 @@ class HTMLPatternParserTest extends \WP_UnitTestCase{
         $post_body=$this->parser->postBody($parsing_options);
         $post_body_snapshot=file_get_contents(__DIR__.'/mocks/parsedSnapshot.html');
         //phpUnit ver. 5.7 does not have assertIsString assertion 
-        $this->assertEquals(gettype($post_body),'string');
+        $this->assertEquals('string',gettype($post_body));
         $this->assertEquals($post_body_snapshot,$post_body);
     }
 }

@@ -5,7 +5,7 @@ namespace NewsParserPlugin\Parser;
 /**
  * Get not parsed HTML data
  *
- * PHP version 7.2.1
+ * PHP version 5.6
  *
  *
  * @package  Parser
@@ -29,7 +29,7 @@ class HTMLRaw extends AbstractParseContent{
      *
      * @param string $data Html raw data.
      * @param array $options Array of options ['remove_scripts']
-     * @return void
+     * @return string
      */
     protected function parse($data,$options){
         if(array_key_exists('remove_scripts',$options)&&$options['remove_scripts']){

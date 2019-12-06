@@ -18,7 +18,7 @@ class HTMLRawTest extends \WP_UnitTestCase{
     public function testParse(){
         $html='<script>alert("test");</script><div class="script-wrapper">test</div>';
         $result=$this->instance->parse($html,array('remove_scripts'=>true));
-        $this->assertEquals($result,'<div class="script-wrapper">test</div>');
+        $this->assertEquals('<div class="script-wrapper">test</div>',$result);
     }
 }
 
