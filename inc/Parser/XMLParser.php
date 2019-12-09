@@ -121,7 +121,7 @@ class XMLParser extends AbstractParseContent
         return $response;
     }
     /**
-     * Parse description of the post and cut it to 24 symbols
+     * Parse description of the post and cut it to 150 symbols
      *
      * @uses PipeTrait::pipe()
      * @param string|object $data 
@@ -136,7 +136,7 @@ class XMLParser extends AbstractParseContent
         $text = $this->pipe($data)
             ->func('trim', array("data"))
             ->removeTags()
-            ->cutText(24)
+            ->cutText(150)
             ->get();
 
         return $text;
@@ -158,7 +158,6 @@ class XMLParser extends AbstractParseContent
     {
         $image = $this->chain()
             ->parseImageEnclosure($xml)
-            ->parseImageMedia($xml)
             ->parseImageDescription($text)
             ->get();
         return $image ?: NEWS_PARSER_PLUGIN_NO_IMAGE_PATH;
@@ -176,9 +175,9 @@ class XMLParser extends AbstractParseContent
     public function cutText($length, $text)
     {
         $text = $this->pipe($text)
-            ->func('explode', array(" ", "data"))
+            ->func('str_split', array("data"))
             ->func('array_slice', array('data', 0, $length))
-            ->func('implode', array(" ", "data"))
+            ->func('implode', array("", "data"))
             ->get();
         return $text . '...';
     }
@@ -229,21 +228,7 @@ class XMLParser extends AbstractParseContent
         }
         return isset($image) ?$image: false;
     }
-    /**
-     * Parse image using
-     * <media:content> http://www.rssboard.org/media-rss#media-content
-     *
-     * @param \SimpleXMLElement $xml
-     * @return string|false image url or false
-     */
-    public function parseImageMedia($xml)
-    {
-        $media_node = $xml->children('media', true);
-        if (isset($media_node->thumbnail)) {
-            $image = (string) $media_node->thumbnail->attributes()->url;
-        }
-        return isset($image) ?$image: false;
-    }
+  
     /**
      * Parse image from description using regular expression
      *
