@@ -1,4 +1,6 @@
 <?php
+
+
 return  array(
     'menu' =>  array(
         'page_title' => 'News Parser Menu',
@@ -10,7 +12,7 @@ return  array(
         'subs' => array(
              array(
                 'page_title' => 'Parsing RSS',
-                'parent_slug' => NEWS_PARSER_PLUGIN_SLUG . '-main-menu',
+                //'parent_slug' => NEWS_PARSER_PLUGIN_SLUG . '-main-menu',
                 'menu_title' => __('Parsing RSS', 'news-parser'),
                 'capability' => 'manage_options',
                 'menu_slug' => NEWS_PARSER_PLUGIN_SLUG . '-main-menu',

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1575901801">
-  <project timestamp="1575901801">
+<coverage generated="1575902481">
+  <project timestamp="1575902481">
     <package name="NewsParserPlugin\Ajax">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Ajax/Ajax.php">
         <class name="Ajax" namespace="NewsParserPlugin\Ajax">
@@ -854,36 +854,36 @@
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Utils/MenuConfig.php">
         <class name="MenuConfig" namespace="NewsParserPlugin\Utils" fullPackage="Utils" package="Utils">
-          <metrics complexity="12" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="11" elements="27" coveredelements="11"/>
+          <metrics complexity="12" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="22" elements="27" coveredelements="23"/>
         </class>
-        <line num="17" type="method" name="__construct" visibility="public" complexity="2" crap="2.15" count="2"/>
-        <line num="18" type="stmt" count="2"/>
+        <line num="17" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="5"/>
+        <line num="18" type="stmt" count="5"/>
         <line num="19" type="stmt" count="1"/>
-        <line num="21" type="stmt" count="1"/>
-        <line num="22" type="stmt" count="1"/>
-        <line num="23" type="stmt" count="0"/>
-        <line num="24" type="stmt" count="0"/>
-        <line num="31" type="method" name="get" visibility="public" complexity="4" crap="20" count="0"/>
-        <line num="33" type="stmt" count="0"/>
-        <line num="34" type="stmt" count="0"/>
-        <line num="35" type="stmt" count="0"/>
-        <line num="36" type="stmt" count="0"/>
-        <line num="37" type="stmt" count="0"/>
-        <line num="38" type="stmt" count="0"/>
-        <line num="39" type="stmt" count="0"/>
-        <line num="40" type="stmt" count="0"/>
+        <line num="21" type="stmt" count="4"/>
+        <line num="22" type="stmt" count="4"/>
+        <line num="23" type="stmt" count="3"/>
+        <line num="24" type="stmt" count="3"/>
+        <line num="31" type="method" name="get" visibility="public" complexity="4" crap="4.02" count="3"/>
+        <line num="33" type="stmt" count="3"/>
+        <line num="34" type="stmt" count="3"/>
+        <line num="35" type="stmt" count="3"/>
+        <line num="36" type="stmt" count="1"/>
+        <line num="37" type="stmt" count="2"/>
+        <line num="38" type="stmt" count="1"/>
+        <line num="39" type="stmt" count="1"/>
+        <line num="40" type="stmt" count="1"/>
         <line num="42" type="stmt" count="0"/>
-        <line num="49" type="method" name="verifyFormat" visibility="protected" complexity="6" crap="6.40" count="1"/>
-        <line num="50" type="stmt" count="1"/>
-        <line num="51" type="stmt" count="1"/>
+        <line num="49" type="method" name="verifyFormat" visibility="protected" complexity="6" crap="6.05" count="4"/>
+        <line num="50" type="stmt" count="4"/>
+        <line num="51" type="stmt" count="4"/>
         <line num="52" type="stmt" count="0"/>
-        <line num="54" type="stmt" count="1"/>
-        <line num="55" type="stmt" count="1"/>
-        <line num="56" type="stmt" count="1"/>
-        <line num="57" type="stmt" count="1"/>
+        <line num="54" type="stmt" count="4"/>
+        <line num="55" type="stmt" count="4"/>
+        <line num="56" type="stmt" count="4"/>
+        <line num="57" type="stmt" count="4"/>
         <line num="58" type="stmt" count="1"/>
-        <line num="62" type="stmt" count="0"/>
-        <metrics loc="63" ncloc="44" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="11" elements="27" coveredelements="11"/>
+        <line num="62" type="stmt" count="3"/>
+        <metrics loc="63" ncloc="44" classes="1" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="22" elements="27" coveredelements="23"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Utils/PipeController.php">
         <class name="PipeController" namespace="NewsParserPlugin\Utils">
@@ -988,6 +988,6 @@
         <metrics loc="37" ncloc="25" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="12" coveredelements="0"/>
       </file>
     </package>
-    <metrics files="29" loc="2312" ncloc="1478" classes="29" methods="129" coveredmethods="31" conditionals="0" coveredconditionals="0" statements="664" coveredstatements="194" elements="793" coveredelements="225"/>
+    <metrics files="29" loc="2312" ncloc="1478" classes="29" methods="129" coveredmethods="32" conditionals="0" coveredconditionals="0" statements="664" coveredstatements="205" elements="793" coveredelements="237"/>
   </project>
 </coverage>
