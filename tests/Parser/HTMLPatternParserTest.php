@@ -34,11 +34,11 @@ class HTMLPatternParserTest extends \WP_UnitTestCase{
      */
     public function testPostBody()
     {   
-        $test_file=file_get_contents(__DIR__.'/mocks/testHTMLPatternParser.html');
-        $parsing_options=json_decode(file_get_contents(__DIR__.'/mocks/parsingOptions.json'),true);
+        $test_file=file_get_contents(PARSER_MOCK_DIR.'/testHTMLPatternParser.html');
+        $parsing_options=json_decode(file_get_contents(PARSER_MOCK_DIR.'/parsingOptions.json'),true);
         $this->parser->setDOM($test_file);
         $post_body=$this->parser->postBody($parsing_options);
-        $post_body_snapshot=file_get_contents(__DIR__.'/mocks/parsedSnapshot.html');
+        $post_body_snapshot=file_get_contents(PARSER_MOCK_DIR.'/parsedSnapshot.html');
         //phpUnit ver. 5.7 does not have assertIsString assertion 
         $this->assertEquals('string',gettype($post_body));
         $this->assertEquals($post_body_snapshot,$post_body);

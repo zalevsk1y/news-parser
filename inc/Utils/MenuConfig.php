@@ -48,14 +48,14 @@ class MenuConfig
      */
     protected function verifyFormat($config){
         $check_main_menu=array_diff_key($this->main_menu_keys,$config);
-        if(count($check_main_menu)>0){
-            throw new \Exception('Wrong main menu config file format.No needed keys in config file '.implode(',',$check_main_menu));
+        if(!empty($check_main_menu)){
+            throw new \Exception('Wrong main menu config file format.No needed keys in config file "'.implode(',',array_keys($check_main_menu)).'"');
         }
         if(array_key_exists('subs',$config)&&is_array($config['subs'])){
             foreach($config['subs'] as $sub_menu){
                 $check_sub_menu=array_diff_key($this->sub_menu_keys,$sub_menu);
                 if(count($check_sub_menu)>0){
-                    throw new \Exception('Wrong sub menu config file format.No needed keys in config file '.implode(',',$check_sub_menu));
+                    throw new \Exception('Wrong sub menu config file format.No needed keys in config file "'.implode(',',array_keys($check_sub_menu)).'"');
                 }
             }
         }

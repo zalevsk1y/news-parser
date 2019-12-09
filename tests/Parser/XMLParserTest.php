@@ -19,7 +19,7 @@ class XMLParserTest extends \WP_UnitTestCase{
     protected $instance;
     public function setUp(){
         $this->instance=new DummyXMLParser(10);
-        $this->xml=file_get_contents(__DIR__.'/mocks/testXML.xml');
+        $this->xml=file_get_contents(PARSER_MOCK_DIR.'/testXML.xml');
     }
     public function testXmlParser(){
         $not_valid_xml=false;
@@ -58,10 +58,10 @@ class XMLParserTest extends \WP_UnitTestCase{
     }
     public function xmlData(){
         return array(
-            array(\file_get_contents(__DIR__.'/mocks/xml/xml_1.xml'),
-                \file_get_contents(__DIR__.'/mocks/xml/expected_1.json')),
-                array(\file_get_contents(__DIR__.'/mocks/xml/xml_2.xml'),
-                \file_get_contents(__DIR__.'/mocks/xml/expected_2.json'))
+            array(\file_get_contents(PARSER_MOCK_DIR.'/xml/xml_1.xml'),
+                \file_get_contents(PARSER_MOCK_DIR.'/xml/expected_1.json')),
+                array(\file_get_contents(PARSER_MOCK_DIR.'/xml/xml_2.xml'),
+                \file_get_contents(PARSER_MOCK_DIR.'/xml/expected_2.json'))
         );
 
 

@@ -27,8 +27,8 @@ class HTMLParserTest extends \WP_UnitTestCase{
      
     }
     public function getMocks(){
-        $this->openGraph=file_get_contents(__DIR__.'/mocks/testHTMLParserOpenGraph.html');
-        $this->noMarkup=file_get_contents(__DIR__.'/mocks/testHTMLParserNoMarkup.html');
+        $this->openGraph=file_get_contents(PARSER_MOCK_DIR.'/testHTMLParserOpenGraph.html');
+        $this->noMarkup=file_get_contents(PARSER_MOCK_DIR.'/testHTMLParserNoMarkup.html');
     }
     /**
      * @dataProvider HTMLDataTitle
