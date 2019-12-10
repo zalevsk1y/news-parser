@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1575986509">
-  <project timestamp="1575986509">
+<coverage generated="1575990049">
+  <project timestamp="1575990049">
     <package name="NewsParserPlugin\Ajax">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Ajax/Ajax.php">
         <class name="Ajax" namespace="NewsParserPlugin\Ajax">
@@ -807,39 +807,39 @@
         <metrics loc="91" ncloc="56" classes="1" methods="4" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="28" elements="40" coveredelements="30"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Traits/ValidateDataTrait.php">
-        <class name="ValidateDataTrait" namespace="NewsParserPlugin\Traits">
-          <metrics complexity="14" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="0" elements="29" coveredelements="0"/>
+        <class name="ValidateDataTrait" namespace="NewsParserPlugin\Traits" fullPackage="Parser" package="Parser">
+          <metrics complexity="14" methods="6" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="18" elements="29" coveredelements="20"/>
         </class>
-        <line num="11" type="method" name="validateUrl" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="12" type="stmt" count="0"/>
-        <line num="20" type="method" name="validateImageUrl" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="19" type="method" name="validateUrl" visibility="public" complexity="1" crap="2" count="0"/>
         <line num="21" type="stmt" count="0"/>
-        <line num="22" type="stmt" count="0"/>
-        <line num="23" type="stmt" count="0"/>
-        <line num="24" type="stmt" count="0"/>
-        <line num="26" type="stmt" count="0"/>
-        <line num="28" type="method" name="validateOptionsArray" visibility="public" complexity="3" crap="12" count="0"/>
-        <line num="29" type="stmt" count="0"/>
-        <line num="30" type="stmt" count="0"/>
-        <line num="31" type="stmt" count="0"/>
-        <line num="33" type="method" name="validateExtraOptions" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="35" type="stmt" count="0"/>
-        <line num="40" type="stmt" count="0"/>
-        <line num="42" type="method" name="validateTemplate" visibility="public" complexity="5" crap="30" count="0"/>
-        <line num="44" type="stmt" count="0"/>
-        <line num="49" type="stmt" count="0"/>
-        <line num="50" type="stmt" count="0"/>
-        <line num="51" type="stmt" count="0"/>
-        <line num="52" type="stmt" count="0"/>
-        <line num="53" type="stmt" count="0"/>
-        <line num="54" type="stmt" count="0"/>
-        <line num="56" type="stmt" count="0"/>
-        <line num="58" type="method" name="checkArrayKeys" visibility="protected" complexity="2" crap="6" count="0"/>
-        <line num="59" type="stmt" count="0"/>
-        <line num="60" type="stmt" count="0"/>
+        <line num="29" type="method" name="validateImageUrl" visibility="public" complexity="2" crap="2.03" count="1"/>
+        <line num="31" type="stmt" count="1"/>
+        <line num="32" type="stmt" count="1"/>
+        <line num="33" type="stmt" count="1"/>
+        <line num="34" type="stmt" count="1"/>
+        <line num="36" type="stmt" count="0"/>
+        <line num="45" type="method" name="validateMediaOptionsArray" visibility="public" complexity="3" crap="3" count="1"/>
+        <line num="47" type="stmt" count="1"/>
+        <line num="48" type="stmt" count="1"/>
+        <line num="49" type="stmt" count="1"/>
+        <line num="58" type="method" name="validateExtraOptions" visibility="public" complexity="1" crap="2" count="0"/>
         <line num="61" type="stmt" count="0"/>
-        <line num="62" type="stmt" count="0"/>
-        <metrics loc="64" ncloc="52" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="0" elements="29" coveredelements="0"/>
+        <line num="66" type="stmt" count="0"/>
+        <line num="75" type="method" name="validateTemplate" visibility="public" complexity="5" crap="5" count="1"/>
+        <line num="78" type="stmt" count="1"/>
+        <line num="83" type="stmt" count="1"/>
+        <line num="84" type="stmt" count="1"/>
+        <line num="85" type="stmt" count="1"/>
+        <line num="86" type="stmt" count="1"/>
+        <line num="87" type="stmt" count="1"/>
+        <line num="88" type="stmt" count="1"/>
+        <line num="90" type="stmt" count="1"/>
+        <line num="100" type="method" name="checkArrayKeys" visibility="protected" complexity="2" crap="2.06" count="1"/>
+        <line num="102" type="stmt" count="1"/>
+        <line num="103" type="stmt" count="1"/>
+        <line num="104" type="stmt" count="1"/>
+        <line num="105" type="stmt" count="0"/>
+        <metrics loc="107" ncloc="57" classes="1" methods="6" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="18" elements="29" coveredelements="20"/>
       </file>
     </package>
     <package name="NewsParserPlugin\Utils">
@@ -995,6 +995,6 @@
         <metrics loc="37" ncloc="25" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="12" coveredelements="0"/>
       </file>
     </package>
-    <metrics files="29" loc="2453" ncloc="1503" classes="29" methods="129" coveredmethods="46" conditionals="0" coveredconditionals="0" statements="671" coveredstatements="296" elements="800" coveredelements="342"/>
+    <metrics files="29" loc="2496" ncloc="1508" classes="29" methods="129" coveredmethods="48" conditionals="0" coveredconditionals="0" statements="671" coveredstatements="314" elements="800" coveredelements="362"/>
   </project>
 </coverage>

@@ -86,7 +86,7 @@ class AjaxController extends Ajax
                 'options'=>array(
                     'description'=>esc_html__('Post body',NEWS_PARSER_PLUGIN_SLUG),
                     'type'=>'array',
-                    'validate_callback'=>array($this,'validateOptionsArray'),
+                    'validate_callback'=>array($this,'validateMediaOptionsArray'),
                     'sanitize_callback'=>array($this,'sanitizeMediaOptionsArray')
                 )
         ));

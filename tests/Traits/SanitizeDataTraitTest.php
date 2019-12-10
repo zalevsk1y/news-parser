@@ -53,7 +53,6 @@ class SanitizeDataTraitTest extends WP_UnitTestCase
             'children'=>array(
                 array(
                     'tagName'=>'p',
-                    'className'=>false,
                     'searchTemplate'=>'p',
                     'position'=>'all' 
                 )
@@ -67,7 +66,6 @@ class SanitizeDataTraitTest extends WP_UnitTestCase
             'children'=>array(
                 array(
                     'tagName'=>'p',
-                    'className'=>false,
                     'searchTemplate'=>'p',
                     'position'=>'all' 
                 )
