@@ -55,10 +55,10 @@ class MenuPage implements MenuPageInterface
      * Method factory for TemplateRender
      *
      * @param string $path_to_template
-     * @return NewsParserPlugin\View\TemplateRender
+     * @return TemplateRender
      */
     protected function getTemplateRender($path_to_template)
     {
-        return new TemplateRender($sub->template);
+        return new TemplateRender($path_to_template);
     }
 }

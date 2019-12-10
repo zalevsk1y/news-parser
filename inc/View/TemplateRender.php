@@ -22,7 +22,7 @@ class TemplateRender
     /**
      * Array of arguments for template.
      *
-     * @var string
+     * @var array
      */
     protected $args;
     /**
@@ -43,7 +43,7 @@ class TemplateRender
      * Render template.
      *
      * @param bool Echo output if true.
-     * @return void
+     * @return null|string
      */
     public function render($echo=true)
     {
