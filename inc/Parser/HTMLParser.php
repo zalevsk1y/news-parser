@@ -1,9 +1,9 @@
 <?php
 namespace NewsParserPlugin\Parser;
 
-use NewsParserPlugin\Traits\PipeTrait;
 use NewsParserPlugin\Traits\ChainTrait;
-use  Sunra\PhpSimple\HtmlDomParser;
+use NewsParserPlugin\Traits\PipeTrait;
+use Sunra\PhpSimple\HtmlDomParser;
 /**
  * HTML parser class
  * Parse data from html using Sunra\PhpSimple and regular expression
@@ -231,7 +231,7 @@ class HTMLParser extends AbstractParseContent
      * Create instance of simplehtmldom_1_5\simple_html_dom  https://github.com/sunra/php-simple-html-dom-parser.
      *
      * @param string $html
-     * @return object simplehtmldom_1_5\simple_html_dom
+     * @return \simplehtmldom_1_5\simple_html_dom simplehtmldom_1_5\simple_html_dom
      */
     protected  function createDOM($html)
     {

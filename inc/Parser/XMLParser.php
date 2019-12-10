@@ -4,8 +4,8 @@ namespace NewsParserPlugin\Parser;
 
 use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Message\Errors;
-use NewsParserPlugin\Traits\PipeTrait;
 use NewsParserPlugin\Traits\ChainTrait;
+use NewsParserPlugin\Traits\PipeTrait;
 
 /**
  * Class for parsing XML files (using libxml) from rss-feed to get list of posts.
