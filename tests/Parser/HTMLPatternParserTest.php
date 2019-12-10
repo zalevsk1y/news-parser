@@ -3,9 +3,11 @@ use NewsParserPlugin\Parser\HTMLPatternParser;
 
 
 
-class HTMLPatternParserGetRewrite extends HTMLPatternParser {
+class HTMLPatternParserGetRewrite extends HTMLPatternParser 
+{
   
-    public function setDOM($htmlData){
+    public function setDOM($htmlData)
+    {
         $this->dom=$this->createDOM($htmlData);
     }
     public function get($page_html,$option=array())
@@ -19,12 +21,12 @@ class HTMLPatternParserGetRewrite extends HTMLPatternParser {
  * @uses Sunra\PhpSimple\HtmlDomParser
  * 
  */
-class HTMLPatternParserTest extends \WP_UnitTestCase{
+class HTMLPatternParserTest extends \WP_UnitTestCase
+{
     protected $testFile;
     protected $parser;
     public function setUp()
     {
-
         $this->parser=new HTMLPatternParserGetRewrite();
     }
     /**

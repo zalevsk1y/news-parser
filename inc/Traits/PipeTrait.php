@@ -1,7 +1,17 @@
 <?php
 namespace NewsParserPlugin\Traits;
 use NewsParserPlugin\Utils\PipeController;
-trait PipeTrait{
+/**
+ * Factory method for Utils\PipeController
+ * 
+ * PHP version 5.6
+ *
+ * @package  Parser
+ * @author   Evgeniy S.Zalevskiy <2600@urk.net>
+ * @license  MIT
+ */
+trait PipeTrait
+{
     /**
      * Function factory for Utils\PipeController
      *

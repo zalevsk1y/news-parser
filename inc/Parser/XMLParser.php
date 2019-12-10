@@ -37,7 +37,8 @@ class XMLParser extends AbstractParseContent
     *
     * @param integer $cache_expiration
     */
-    public function __construct($cache_expiration=60){
+    public function __construct($cache_expiration=60)
+    {
        parent::__construct($cache_expiration);
     }
     /**

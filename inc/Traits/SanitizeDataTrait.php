@@ -1,21 +1,45 @@
 <?php
 namespace NewsParserPlugin\Traits;
-
-trait SanitizeDataTrait{
-    public function sanitizeMediaOptionsArray($options){
+/**
+ * Methods to sanitize input data.
+ * 
+ * PHP version 5.6
+ *
+ * @package  Parser
+ * @author   Evgeniy S.Zalevskiy <2600@urk.net>
+ * @license  MIT
+ */
+trait SanitizeDataTrait
+{
+    /**
+     * Sanitize MediaOptions data.
+     *
+     * @param array $options ['postId','alt']
+     * @return array
+     */
+    public function sanitizeMediaOptionsArray($options)
+    {
         $new_array=array();
         $new_array['postId']=preg_replace('/[^0-9]/','',$options['postId']);
-        $new_array['alt']=sanitize_title($options['alt']);
+        $new_array['alt']=esc_attr($options['alt']);
         return $new_array;
     }
-    public function sanitizeExtraOptions($extra_options){
+    /**
+     * Sanitize extra options part of input options.
+     *
+     * @param array $extra_options ['addFeaturedMedia','saveParsingTemplate','addSource']
+     * @return array
+     */
+    public function sanitizeExtraOptions($extra_options)
+    {
         $clean_data=array();
         foreach ($extra_options as $key=>$option){
             switch($key){
                 case 'addFeaturedMedia':
                 case 'saveParsingTemplate':
                 case 'addSource':
-                    $clean_data[$key]=boolval($option);
+                //use json_decode to prevent "false" string converted to boolean true
+                    $clean_data[$key]=boolval(json_decode($option));
                     break;
                 case 'url':
                     $clean_data[$key]=esc_url_raw($option);
@@ -24,7 +48,14 @@ trait SanitizeDataTrait{
         }
         return $clean_data;
     }
-    public function sanitizeTemplate($template){
+    /**
+     * Sanitize template pattern array.
+     *
+     * @param array $template ['tagName','className','searchTemplate','children']
+     * @return array
+     */
+    public function sanitizeTemplate($template)
+    {
        $clean_data=$this->sanitizeTemplateElement($template);
        $clean_data['children']=array();
         foreach ($template['children'] as $child){
@@ -32,7 +63,14 @@ trait SanitizeDataTrait{
         }
         return $clean_data;
     }
-    protected function sanitizeTemplateElement($el){
+    /**
+     * Sanitize child template element
+     *
+     * @param array $el  ['tagName','className','searchTemplate','position']
+     * @return void
+     */
+    protected function sanitizeTemplateElement($el)
+    {
         $clean_data=array();
         foreach($el as $key=>$param){
             switch($key){
@@ -43,7 +81,7 @@ trait SanitizeDataTrait{
                     $clean_data[$key]=preg_replace('/[^a-zA-Z0-9\_\-]/i','',$param);
                     break;
                 case 'searchTemplate':
-                    $clean_data[$key]=preg_replace('/[^a-zA-Z0-9\=\[\]\_\-\.\s\S]/i','',$param);
+                    $clean_data[$key]=preg_replace('/[^a-zA-Z0-9\=\_\-\.\]\[]/i','',$param);
                     break;
                 case 'position':
                     $clean_data[$key]=preg_replace('/[^a-z0-9]/i','',$param);

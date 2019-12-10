@@ -233,7 +233,8 @@ class HTMLParser extends AbstractParseContent
      * @param string $html
      * @return object simplehtmldom_1_5\simple_html_dom
      */
-    protected  function createDOM($html){
+    protected  function createDOM($html)
+    {
         return HtmlDomParser::str_get_html($html);
     }
 }

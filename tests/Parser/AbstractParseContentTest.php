@@ -1,7 +1,8 @@
 <?php
 
 
-namespace NewsParserPlugin\Parser {
+namespace NewsParserPlugin\Parser 
+{
 /**
  * Mock WP function wp_remote_get to avoid real downloading process.
  *
@@ -9,7 +10,8 @@ namespace NewsParserPlugin\Parser {
  * @param array $request_args
  * @return array|\WP_Error
  */
-    function wp_remote_get($url,$request_args){
+    function wp_remote_get($url,$request_args)
+    {
         switch($url){
             case 'www.right-site.com':
                 return array('response'=>array(
@@ -25,32 +27,40 @@ namespace NewsParserPlugin\Parser {
         return new \WP_Error('test_error','Test error');
     }
 }
-namespace NewsParserPlugin\Tests{
+namespace NewsParserPlugin\Tests
+{
     use NewsParserPlugin\Parser\AbstractParseContent;
 
 /**
  * Dump class to get access to protected method of abstract class.
  * 
  */
-class ParseContent extends AbstractParseContent{
-    protected function parse($data,$options){
+class ParseContent extends AbstractParseContent
+{
+    protected function parse($data,$options)
+    {
         return $data;
     }
-    public function getFromCache($url){
+    public function getFromCache($url)
+    {
         return parent::getFromCache($url);
     }
-    public function setCache($url, $data){
+    public function setCache($url, $data)
+    {
         return parent::setCache($url, $data);
     }
     
 }
 
-class AbstractParseContentTest extends \WP_UnitTestCase{
+class AbstractParseContentTest extends \WP_UnitTestCase
+{
     protected $instance;
-    public function setUp(){
+    public function setUp()
+    {
         $this->instance=new ParseContent(10);
     }
-    public function testSetAndGetCache(){
+    public function testSetAndGetCache()
+    {
         $url='test-url.com';
         $data='test data';
         $result_of_set_cache=$this->instance->setCache($url,$data);
@@ -60,12 +70,9 @@ class AbstractParseContentTest extends \WP_UnitTestCase{
     }
     /**
      * @dataProvider urlData
-     *
-     * @param string $url
-     * @param string $expected
-     * @return void
      */
-    public function testGet($url,$expected){
+    public function testGet($url,$expected)
+    {
         if($expected==='NewsParserPlugin\Exception\MyException'){
             $this->expectException($expected);
             $this->instance->get($url);
@@ -76,40 +83,37 @@ class AbstractParseContentTest extends \WP_UnitTestCase{
     }
     /**
      * @dataProvider scriptTagsData
-     *
-     * @param string $tags
-     * @param string $expected
-     * @return void
      */
-    public function testRemoveScriptTags($tags,$expected){
+    public function testRemoveScriptTags($tags,$expected)
+    {
         $result=$this->instance->removeScriptTags($tags);
         $this->assertEquals($expected,$result);
     }
     /**
      * @dataProvider styleTagsData
-     *
-     * @param string $tags
-     * @param string $expected
-     * @return void
      */
-    public function testRemoveStyleTags($tags,$expected){
+    public function testRemoveStyleTags($tags,$expected)
+    {
         $result=$this->instance->removeStyleTags($tags);
         $this->assertEquals($expected,$result);
     }
-    public function urlData(){
+    public function urlData()
+    {
         return array(
             array('www.right-site.com','test html data'),
             array('www.wrong-site.com','NewsParserPlugin\Exception\MyException'),
             array('error-url','NewsParserPlugin\Exception\MyException')
         );
     }
-    public function scriptTagsData(){
+    public function scriptTagsData()
+    {
         return array(
             array('<script type="text/javascript" src="site.com/my-script"></script><h1>test title</h1>','<h1>test title</h1>'),
             array('<script type="text/javascript">alert("test");</script><h1>test title</h1>','<h1>test title</h1>'),
         );
     }
-    public function styleTagsData(){
+    public function styleTagsData()
+    {
         return array(
             array('<style>.class{display:none;}</style><h1>test title</h1>','<h1>test title</h1>'),
             array('<h1>test title</h1><style type="text/css">.class{display:none;}</style>','<h1>test title</h1>'),

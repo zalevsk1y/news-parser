@@ -14,13 +14,15 @@ namespace NewsParserPlugin\Parser;
  *
  */
 
-class HTMLRaw extends AbstractParseContent{
+class HTMLRaw extends AbstractParseContent
+{
     /**
      * Init function.
      * 
      * @param int $cache_expiration Cache expiration value in seconds.
      */
-    public function __construct($cache_expiration = 600){
+    public function __construct($cache_expiration = 600)
+    {
         parent::__construct($cache_expiration);
    
     }
@@ -31,7 +33,8 @@ class HTMLRaw extends AbstractParseContent{
      * @param array $options Array of options ['remove_scripts']
      * @return string
      */
-    protected function parse($data,$options){
+    protected function parse($data,$options)
+    {
         if(array_key_exists('remove_scripts',$options)&&$options['remove_scripts']){
             return $this->removeScriptTags($data);
         }

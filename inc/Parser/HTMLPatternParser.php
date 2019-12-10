@@ -14,8 +14,8 @@ use NewsParserPlugin\Traits\AdapterGutenbergTrait;
  * @license MIT
  */
 
-
-class HTMLPatternParser extends HTMLParser{
+class HTMLPatternParser extends HTMLParser
+{
 
     /**
      * Trait that provide methods that convert array body data to string for post model
@@ -70,7 +70,8 @@ class HTMLPatternParser extends HTMLParser{
      * @param array $elements array of HtmlDomParser elements objects
      * @return array ['tagName'=>string,'content'=>string|array]
      */
-    protected function parseContainer($elements){
+    protected function parseContainer($elements)
+    {
         $body=array();
         foreach($elements as $el){
             $el_tag=$el->tag;     

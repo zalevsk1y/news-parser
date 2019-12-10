@@ -1,9 +1,17 @@
 <?php
 namespace NewsParserPlugin\Traits;
 use NewsParserPlugin\Utils\ChainController;
-
-trait ChainTrait{
-  
+/**
+ * Factory method for Utils\ChainController
+ * 
+ * PHP version 5.6
+ *
+ * @package  Parser
+ * @author   Evgeniy S.Zalevskiy <2600@urk.net>
+ * @license  MIT
+ */
+trait ChainTrait
+{
     /**
      * Factory for chain building class. use NewsParserPlugin\::get() function at the end to get result.
      *

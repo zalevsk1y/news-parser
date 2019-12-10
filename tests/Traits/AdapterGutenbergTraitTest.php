@@ -2,16 +2,19 @@
 
 use NewsParserPlugin\Traits\AdapterGutenbergTrait;
 
-class DummyAdapterGutenberg{
+class DummyAdapterGutenberg
+{
     use AdapterGutenbergTrait;
     public function testGutenbergBlocks($data){
         return $this->createGutenbergBlocks($data);
     }
 }
 
-class AdapterGutenbergTraitTest extends \WP_UnitTestCase{
+class AdapterGutenbergTraitTest extends \WP_UnitTestCase
+{
     protected $instance;
-    public function setUp(){
+    public function setUp()
+    {
         $this->instance=new DummyAdapterGutenberg();
     }
     /**
@@ -24,11 +27,13 @@ class AdapterGutenbergTraitTest extends \WP_UnitTestCase{
      * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::image()
      * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::list()
      */
-    public function testCreateGutenbergBlocks($el,$expected){
+    public function testCreateGutenbergBlocks($el,$expected)
+    {
         $result=$this->instance->testGutenbergBlocks($el);
         $this->assertEquals($expected,$result);
     }
-    public function  dataBlocks(){
+    public function  dataBlocks()
+    {
         $blocks=json_decode(file_get_contents(TRAITS_MOCK_DIR.'/adapterGutenbergTraitMocks.json'),true);
         return $blocks;
     }
