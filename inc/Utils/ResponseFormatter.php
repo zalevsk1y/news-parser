@@ -88,7 +88,7 @@ class ResponseFormatter {
     /**
      * Format message section of the answer
      *
-     * @param string $status success|error|Info
+     * @param string $status success|error|info
      * @param string $text
      * @return ResponseFormatter return this for chain building
      */

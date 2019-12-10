@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1575902481">
-  <project timestamp="1575902481">
+<coverage generated="1575968847">
+  <project timestamp="1575968847">
     <package name="NewsParserPlugin\Ajax">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Ajax/Ajax.php">
         <class name="Ajax" namespace="NewsParserPlugin\Ajax">
@@ -919,53 +919,53 @@
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Utils/ResponseFormatter.php">
         <class name="ResponseFormatter" namespace="NewsParserPlugin\Utils">
-          <metrics complexity="12" methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="0" elements="44" coveredelements="0"/>
+          <metrics complexity="12" methods="8" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="32" elements="44" coveredelements="38"/>
         </class>
-        <line num="22" type="method" name="post" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="23" type="stmt" count="0"/>
-        <line num="24" type="stmt" count="0"/>
-        <line num="25" type="stmt" count="0"/>
-        <line num="26" type="stmt" count="0"/>
-        <line num="27" type="stmt" count="0"/>
-        <line num="29" type="stmt" count="0"/>
-        <line num="37" type="method" name="list" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="38" type="stmt" count="0"/>
-        <line num="39" type="stmt" count="0"/>
-        <line num="40" type="stmt" count="0"/>
-        <line num="49" type="method" name="dialog" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="50" type="stmt" count="0"/>
-        <line num="51" type="stmt" count="0"/>
-        <line num="52" type="stmt" count="0"/>
-        <line num="54" type="stmt" count="0"/>
-        <line num="62" type="method" name="rawHTML" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="63" type="stmt" count="0"/>
-        <line num="64" type="stmt" count="0"/>
-        <line num="72" type="method" name="media" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="73" type="stmt" count="0"/>
-        <line num="74" type="stmt" count="0"/>
-        <line num="76" type="stmt" count="0"/>
-        <line num="84" type="method" name="error" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="85" type="stmt" count="0"/>
-        <line num="86" type="stmt" count="0"/>
-        <line num="95" type="method" name="message" visibility="public" complexity="2" crap="6" count="0"/>
-        <line num="97" type="stmt" count="0"/>
+        <line num="22" type="method" name="post" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="23" type="stmt" count="1"/>
+        <line num="24" type="stmt" count="1"/>
+        <line num="25" type="stmt" count="1"/>
+        <line num="26" type="stmt" count="1"/>
+        <line num="27" type="stmt" count="1"/>
+        <line num="29" type="stmt" count="1"/>
+        <line num="37" type="method" name="list" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="38" type="stmt" count="1"/>
+        <line num="39" type="stmt" count="1"/>
+        <line num="40" type="stmt" count="1"/>
+        <line num="49" type="method" name="dialog" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="50" type="stmt" count="1"/>
+        <line num="51" type="stmt" count="1"/>
+        <line num="52" type="stmt" count="1"/>
+        <line num="54" type="stmt" count="1"/>
+        <line num="62" type="method" name="rawHTML" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="63" type="stmt" count="1"/>
+        <line num="64" type="stmt" count="1"/>
+        <line num="72" type="method" name="media" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="73" type="stmt" count="1"/>
+        <line num="74" type="stmt" count="1"/>
+        <line num="76" type="stmt" count="1"/>
+        <line num="84" type="method" name="error" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="85" type="stmt" count="1"/>
+        <line num="86" type="stmt" count="1"/>
+        <line num="95" type="method" name="message" visibility="public" complexity="2" crap="2.01" count="1"/>
+        <line num="97" type="stmt" count="1"/>
         <line num="98" type="stmt" count="0"/>
-        <line num="100" type="stmt" count="0"/>
-        <line num="102" type="stmt" count="0"/>
-        <line num="103" type="stmt" count="0"/>
-        <line num="104" type="stmt" count="0"/>
-        <line num="108" type="stmt" count="0"/>
-        <line num="116" type="method" name="get" visibility="public" complexity="4" crap="20" count="0"/>
-        <line num="117" type="stmt" count="0"/>
-        <line num="118" type="stmt" count="0"/>
-        <line num="119" type="stmt" count="0"/>
+        <line num="100" type="stmt" count="1"/>
+        <line num="102" type="stmt" count="1"/>
+        <line num="103" type="stmt" count="1"/>
+        <line num="104" type="stmt" count="1"/>
+        <line num="108" type="stmt" count="1"/>
+        <line num="116" type="method" name="get" visibility="public" complexity="4" crap="4.59" count="7"/>
+        <line num="117" type="stmt" count="7"/>
+        <line num="118" type="stmt" count="7"/>
+        <line num="119" type="stmt" count="7"/>
         <line num="120" type="stmt" count="0"/>
-        <line num="121" type="stmt" count="0"/>
+        <line num="121" type="stmt" count="7"/>
         <line num="122" type="stmt" count="0"/>
-        <line num="123" type="stmt" count="0"/>
-        <line num="124" type="stmt" count="0"/>
+        <line num="123" type="stmt" count="7"/>
+        <line num="124" type="stmt" count="7"/>
         <line num="126" type="stmt" count="0"/>
-        <metrics loc="128" ncloc="70" classes="1" methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="0" elements="44" coveredelements="0"/>
+        <metrics loc="128" ncloc="70" classes="1" methods="8" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="32" elements="44" coveredelements="38"/>
       </file>
     </package>
     <package name="NewsParserPlugin\View">
@@ -988,6 +988,6 @@
         <metrics loc="37" ncloc="25" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="12" coveredelements="0"/>
       </file>
     </package>
-    <metrics files="29" loc="2312" ncloc="1478" classes="29" methods="129" coveredmethods="32" conditionals="0" coveredconditionals="0" statements="664" coveredstatements="205" elements="793" coveredelements="237"/>
+    <metrics files="29" loc="2312" ncloc="1478" classes="29" methods="129" coveredmethods="38" conditionals="0" coveredconditionals="0" statements="664" coveredstatements="237" elements="793" coveredelements="275"/>
   </project>
 </coverage>
