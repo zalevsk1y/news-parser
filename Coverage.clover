@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1575990049">
-  <project timestamp="1575990049">
+<coverage generated="1575993640">
+  <project timestamp="1575993640">
     <package name="NewsParserPlugin\Ajax">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Ajax/Ajax.php">
         <class name="Ajax" namespace="NewsParserPlugin\Ajax">
@@ -271,7 +271,7 @@
     <package name="NewsParserPlugin\Menu\Admin">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Menu/Admin/MenuPage.php">
         <class name="MenuPage" namespace="NewsParserPlugin\Menu\Admin">
-          <metrics complexity="4" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="0" elements="15" coveredelements="0"/>
+          <metrics complexity="5" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="17" coveredelements="0"/>
         </class>
         <line num="25" type="method" name="init" visibility="public" complexity="1" crap="2" count="0"/>
         <line num="26" type="stmt" count="0"/>
@@ -288,7 +288,9 @@
         <line num="50" type="stmt" count="0"/>
         <line num="51" type="stmt" count="0"/>
         <line num="53" type="stmt" count="0"/>
-        <metrics loc="56" ncloc="34" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="0" elements="15" coveredelements="0"/>
+        <line num="60" type="method" name="getTemplateRender" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="62" type="stmt" count="0"/>
+        <metrics loc="64" ncloc="36" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="17" coveredelements="0"/>
       </file>
     </package>
     <package name="NewsParserPlugin\Models">
@@ -978,23 +980,31 @@
     <package name="NewsParserPlugin\View">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/View/TemplateRender.php">
         <class name="TemplateRender" namespace="NewsParserPlugin\View">
-          <metrics complexity="5" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="12" coveredelements="0"/>
+          <metrics complexity="7" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="15" elements="20" coveredelements="16"/>
         </class>
-        <line num="15" type="method" name="__construct" visibility="public" complexity="2" crap="6" count="0"/>
-        <line num="16" type="stmt" count="0"/>
-        <line num="17" type="stmt" count="0"/>
-        <line num="19" type="stmt" count="0"/>
-        <line num="20" type="stmt" count="0"/>
-        <line num="21" type="stmt" count="0"/>
-        <line num="28" type="method" name="render" visibility="public" complexity="3" crap="12" count="0"/>
-        <line num="30" type="stmt" count="0"/>
-        <line num="31" type="stmt" count="0"/>
-        <line num="32" type="stmt" count="0"/>
-        <line num="35" type="stmt" count="0"/>
-        <line num="36" type="stmt" count="0"/>
-        <metrics loc="37" ncloc="25" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="12" coveredelements="0"/>
+        <line num="34" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="2"/>
+        <line num="36" type="stmt" count="2"/>
+        <line num="37" type="stmt" count="1"/>
+        <line num="39" type="stmt" count="1"/>
+        <line num="40" type="stmt" count="1"/>
+        <line num="41" type="stmt" count="1"/>
+        <line num="48" type="method" name="render" visibility="public" complexity="5" crap="5.31" count="1"/>
+        <line num="50" type="stmt" count="1"/>
+        <line num="51" type="stmt" count="1"/>
+        <line num="52" type="stmt" count="1"/>
+        <line num="55" type="stmt" count="1"/>
+        <line num="56" type="stmt" count="1"/>
+        <line num="57" type="stmt" count="1"/>
+        <line num="58" type="stmt" count="1"/>
+        <line num="59" type="stmt" count="0"/>
+        <line num="60" type="stmt" count="0"/>
+        <line num="61" type="stmt" count="1"/>
+        <line num="62" type="stmt" count="1"/>
+        <line num="63" type="stmt" count="1"/>
+        <line num="67" type="stmt" count="0"/>
+        <metrics loc="68" ncloc="37" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="15" elements="20" coveredelements="16"/>
       </file>
     </package>
-    <metrics files="29" loc="2496" ncloc="1508" classes="29" methods="129" coveredmethods="48" conditionals="0" coveredconditionals="0" statements="671" coveredstatements="314" elements="800" coveredelements="362"/>
+    <metrics files="29" loc="2535" ncloc="1522" classes="29" methods="130" coveredmethods="49" conditionals="0" coveredconditionals="0" statements="680" coveredstatements="329" elements="810" coveredelements="378"/>
   </project>
 </coverage>

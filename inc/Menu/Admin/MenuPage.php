@@ -47,10 +47,18 @@ class MenuPage implements MenuPageInterface
     {
         $subMenu = $this->config->menu->subs;
         foreach ($subMenu as $sub) {
-            $template=new TemplateRender($sub->template);
+            $template=$this->getTemplateRender($sub->template);
             \add_submenu_page($sub->parent_slug, $sub->page_title, $sub->menu_title, $sub->capability, $sub->menu_slug, array($template, 'render'));
         }
     }
-
-   
+    /**
+     * Method factory for TemplateRender
+     *
+     * @param string $path_to_template
+     * @return NewsParserPlugin\View\TemplateRender
+     */
+    protected function getTemplateRender($path_to_template)
+    {
+        return new TemplateRender($sub->template);
+    }
 }

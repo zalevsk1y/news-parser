@@ -23,9 +23,8 @@ class ValidateDataTraitTest extends WP_UnitTestCase
     public function testValidateMediaOptionsArray()
     {
         $input=array('postId'=>1,'alt'=>'test image');
-        $expected=true;
         $result=$this->instance->validateMediaOptionsArray($input);
-        $this->assertEquals($expected,$result);
+        $this->assertTrue($result);
     }
     /**
      * @covers NewsParserPlugin\Traits\ValidateDataTrait::checkArrayKeys()
@@ -37,9 +36,8 @@ class ValidateDataTraitTest extends WP_UnitTestCase
             'saveParsingTemplate'=>true,
             'addSource'=>'false'
         );
-        $expected=false;
         $result=$this->instance->validateMediaOptionsArray($input);
-        $this->assertEquals($expected,$result);
+        $this->assertFalse($result);
     }
     public function testValidateTemplate()
     {
@@ -56,8 +54,7 @@ class ValidateDataTraitTest extends WP_UnitTestCase
                 )
             )
         );
-        $expected=true;
         $result=$this->instance->validateTemplate($input);
-        $this->assertEquals($expected,$result);
+        $this->assertTrue($result);
     }
 }
