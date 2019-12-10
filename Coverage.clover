@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1575968847">
-  <project timestamp="1575968847">
+<coverage generated="1575979948">
+  <project timestamp="1575979948">
     <package name="NewsParserPlugin\Ajax">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Ajax/Ajax.php">
         <class name="Ajax" namespace="NewsParserPlugin\Ajax">
@@ -233,13 +233,13 @@
     <package name="NewsParserPlugin\Exception">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Exception/MyException.php">
         <class name="MyException" namespace="NewsParserPlugin\Exception" fullPackage="Exception" package="Exception">
-          <metrics complexity="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="4" coveredelements="4"/>
+          <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
         </class>
-        <line num="18" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="2"/>
-        <line num="20" type="stmt" count="2"/>
-        <line num="21" type="stmt" count="2"/>
-        <line num="22" type="stmt" count="2"/>
-        <metrics loc="23" ncloc="12" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="4" coveredelements="4"/>
+        <line num="18" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="20" type="stmt" count="0"/>
+        <line num="21" type="stmt" count="0"/>
+        <line num="22" type="stmt" count="0"/>
+        <metrics loc="23" ncloc="12" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
       </file>
     </package>
     <package name="NewsParserPlugin\Factory">
@@ -433,48 +433,48 @@
     <package name="NewsParserPlugin\Parser">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Parser/AbstractParseContent.php">
         <class name="AbstractParseContent" namespace="NewsParserPlugin\Parser" fullPackage="Parser" package="Parser">
-          <metrics complexity="11" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="24" elements="31" coveredelements="31"/>
+          <metrics complexity="11" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="0" elements="31" coveredelements="0"/>
         </class>
-        <line num="27" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="20"/>
-        <line num="30" type="stmt" count="20"/>
-        <line num="31" type="stmt" count="20"/>
-        <line num="48" type="method" name="getFromCache" visibility="protected" complexity="1" crap="1" count="4"/>
-        <line num="51" type="stmt" count="4"/>
-        <line num="52" type="stmt" count="4"/>
-        <line num="62" type="method" name="setCache" visibility="protected" complexity="1" crap="1" count="2"/>
-        <line num="64" type="stmt" count="2"/>
-        <line num="65" type="stmt" count="2"/>
-        <line num="74" type="method" name="download" visibility="protected" complexity="3" crap="3" count="3"/>
-        <line num="75" type="stmt" count="3"/>
-        <line num="76" type="stmt" count="3"/>
-        <line num="77" type="stmt" count="3"/>
-        <line num="78" type="stmt" count="2"/>
-        <line num="79" type="stmt" count="2"/>
-        <line num="80" type="stmt" count="1"/>
-        <line num="82" type="stmt" count="1"/>
-        <line num="83" type="stmt" count="1"/>
-        <line num="92" type="method" name="get" visibility="public" complexity="2" crap="2" count="4"/>
-        <line num="94" type="stmt" count="4"/>
-        <line num="95" type="stmt" count="4"/>
-        <line num="96" type="stmt" count="1"/>
-        <line num="97" type="stmt" count="1"/>
-        <line num="99" type="stmt" count="3"/>
-        <line num="100" type="stmt" count="1"/>
-        <line num="101" type="stmt" count="1"/>
-        <line num="103" type="stmt" count="1"/>
-        <line num="111" type="method" name="removeScriptTags" visibility="public" complexity="1" crap="1" count="3"/>
-        <line num="112" type="stmt" count="3"/>
-        <line num="120" type="method" name="removeStyleTags" visibility="public" complexity="1" crap="1" count="2"/>
-        <line num="121" type="stmt" count="2"/>
-        <metrics loc="123" ncloc="61" classes="1" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="24" elements="31" coveredelements="31"/>
+        <line num="27" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="30" type="stmt" count="0"/>
+        <line num="31" type="stmt" count="0"/>
+        <line num="48" type="method" name="getFromCache" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="51" type="stmt" count="0"/>
+        <line num="52" type="stmt" count="0"/>
+        <line num="62" type="method" name="setCache" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="64" type="stmt" count="0"/>
+        <line num="65" type="stmt" count="0"/>
+        <line num="74" type="method" name="download" visibility="protected" complexity="3" crap="12" count="0"/>
+        <line num="75" type="stmt" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="77" type="stmt" count="0"/>
+        <line num="78" type="stmt" count="0"/>
+        <line num="79" type="stmt" count="0"/>
+        <line num="80" type="stmt" count="0"/>
+        <line num="82" type="stmt" count="0"/>
+        <line num="83" type="stmt" count="0"/>
+        <line num="92" type="method" name="get" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="94" type="stmt" count="0"/>
+        <line num="95" type="stmt" count="0"/>
+        <line num="96" type="stmt" count="0"/>
+        <line num="97" type="stmt" count="0"/>
+        <line num="99" type="stmt" count="0"/>
+        <line num="100" type="stmt" count="0"/>
+        <line num="101" type="stmt" count="0"/>
+        <line num="103" type="stmt" count="0"/>
+        <line num="111" type="method" name="removeScriptTags" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="112" type="stmt" count="0"/>
+        <line num="120" type="method" name="removeStyleTags" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="121" type="stmt" count="0"/>
+        <metrics loc="123" ncloc="61" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="0" elements="31" coveredelements="0"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Parser/HTMLParser.php">
         <class name="HTMLParser" namespace="NewsParserPlugin\Parser">
-          <metrics complexity="23" methods="11" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="50" coveredstatements="37" elements="61" coveredelements="45"/>
+          <metrics complexity="23" methods="11" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="50" coveredstatements="0" elements="61" coveredelements="0"/>
         </class>
-        <line num="68" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="5"/>
-        <line num="70" type="stmt" count="5"/>
-        <line num="72" type="stmt" count="5"/>
+        <line num="68" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="70" type="stmt" count="0"/>
+        <line num="72" type="stmt" count="0"/>
         <line num="86" type="method" name="parse" visibility="public" complexity="2" crap="6" count="0"/>
         <line num="88" type="stmt" count="0"/>
         <line num="89" type="stmt" count="0"/>
@@ -487,271 +487,278 @@
         <line num="96" type="stmt" count="0"/>
         <line num="97" type="stmt" count="0"/>
         <line num="98" type="stmt" count="0"/>
-        <line num="107" type="method" name="postTitle" visibility="public" complexity="1" crap="1" count="2"/>
-        <line num="109" type="stmt" count="2"/>
-        <line num="111" type="stmt" count="2"/>
-        <line num="113" type="stmt" count="2"/>
-        <line num="114" type="stmt" count="2"/>
-        <line num="115" type="stmt" count="2"/>
-        <line num="124" type="method" name="postImage" visibility="public" complexity="2" crap="2.00" count="2"/>
-        <line num="125" type="stmt" count="2"/>
-        <line num="126" type="stmt" count="2"/>
-        <line num="127" type="stmt" count="2"/>
-        <line num="129" type="stmt" count="2"/>
-        <line num="131" type="stmt" count="2"/>
-        <line num="132" type="stmt" count="2"/>
-        <line num="133" type="stmt" count="2"/>
+        <line num="107" type="method" name="postTitle" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="109" type="stmt" count="0"/>
+        <line num="111" type="stmt" count="0"/>
+        <line num="113" type="stmt" count="0"/>
+        <line num="114" type="stmt" count="0"/>
+        <line num="115" type="stmt" count="0"/>
+        <line num="124" type="method" name="postImage" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="125" type="stmt" count="0"/>
+        <line num="126" type="stmt" count="0"/>
+        <line num="127" type="stmt" count="0"/>
+        <line num="129" type="stmt" count="0"/>
+        <line num="131" type="stmt" count="0"/>
+        <line num="132" type="stmt" count="0"/>
+        <line num="133" type="stmt" count="0"/>
         <line num="134" type="stmt" count="0"/>
-        <line num="136" type="stmt" count="2"/>
-        <line num="137" type="stmt" count="2"/>
-        <line num="138" type="stmt" count="2"/>
-        <line num="139" type="stmt" count="2"/>
-        <line num="140" type="stmt" count="2"/>
-        <line num="150" type="method" name="postBody" visibility="public" complexity="2" crap="2" count="1"/>
-        <line num="154" type="stmt" count="1"/>
-        <line num="155" type="stmt" count="1"/>
-        <line num="165" type="method" name="openGrapheTitleFind" visibility="public" complexity="4" crap="4" count="2"/>
-        <line num="167" type="stmt" count="2"/>
-        <line num="168" type="stmt" count="2"/>
-        <line num="169" type="stmt" count="1"/>
-        <line num="179" type="method" name="regExp" visibility="public" complexity="2" crap="2" count="1"/>
-        <line num="181" type="stmt" count="1"/>
-        <line num="182" type="stmt" count="1"/>
-        <line num="183" type="stmt" count="1"/>
-        <line num="194" type="method" name="parseBodyTagP" visibility="public" complexity="5" crap="5" count="1"/>
-        <line num="196" type="stmt" count="1"/>
-        <line num="197" type="stmt" count="1"/>
-        <line num="198" type="stmt" count="1"/>
-        <line num="199" type="stmt" count="1"/>
-        <line num="200" type="stmt" count="1"/>
-        <line num="202" type="stmt" count="1"/>
-        <line num="203" type="stmt" count="1"/>
-        <line num="213" type="method" name="find" visibility="public" complexity="2" crap="2" count="5"/>
-        <line num="215" type="stmt" count="5"/>
-        <line num="216" type="stmt" count="5"/>
+        <line num="136" type="stmt" count="0"/>
+        <line num="137" type="stmt" count="0"/>
+        <line num="138" type="stmt" count="0"/>
+        <line num="139" type="stmt" count="0"/>
+        <line num="140" type="stmt" count="0"/>
+        <line num="150" type="method" name="postBody" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="154" type="stmt" count="0"/>
+        <line num="155" type="stmt" count="0"/>
+        <line num="165" type="method" name="openGrapheTitleFind" visibility="public" complexity="4" crap="20" count="0"/>
+        <line num="167" type="stmt" count="0"/>
+        <line num="168" type="stmt" count="0"/>
+        <line num="169" type="stmt" count="0"/>
+        <line num="179" type="method" name="regExp" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="181" type="stmt" count="0"/>
+        <line num="182" type="stmt" count="0"/>
+        <line num="183" type="stmt" count="0"/>
+        <line num="194" type="method" name="parseBodyTagP" visibility="public" complexity="5" crap="30" count="0"/>
+        <line num="196" type="stmt" count="0"/>
+        <line num="197" type="stmt" count="0"/>
+        <line num="198" type="stmt" count="0"/>
+        <line num="199" type="stmt" count="0"/>
+        <line num="200" type="stmt" count="0"/>
+        <line num="202" type="stmt" count="0"/>
+        <line num="203" type="stmt" count="0"/>
+        <line num="213" type="method" name="find" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="215" type="stmt" count="0"/>
+        <line num="216" type="stmt" count="0"/>
         <line num="226" type="method" name="removeTags" visibility="protected" complexity="1" crap="2" count="0"/>
         <line num="228" type="stmt" count="0"/>
-        <line num="236" type="method" name="createDOM" visibility="protected" complexity="1" crap="1" count="5"/>
-        <line num="237" type="stmt" count="5"/>
-        <metrics loc="240" ncloc="109" classes="1" methods="11" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="50" coveredstatements="37" elements="61" coveredelements="45"/>
+        <line num="236" type="method" name="createDOM" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="237" type="stmt" count="0"/>
+        <metrics loc="240" ncloc="109" classes="1" methods="11" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="50" coveredstatements="0" elements="61" coveredelements="0"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Parser/HTMLPatternParser.php">
         <class name="HTMLPatternParser" namespace="NewsParserPlugin\Parser">
-          <metrics complexity="15" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="32" elements="38" coveredelements="33"/>
+          <metrics complexity="15" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="0" elements="38" coveredelements="0"/>
         </class>
         <line num="33" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
         <line num="34" type="stmt" count="0"/>
         <line num="35" type="stmt" count="0"/>
-        <line num="44" type="method" name="postBody" visibility="public" complexity="4" crap="4.01" count="1"/>
-        <line num="46" type="stmt" count="1"/>
-        <line num="47" type="stmt" count="1"/>
-        <line num="49" type="stmt" count="1"/>
-        <line num="52" type="stmt" count="1"/>
-        <line num="54" type="stmt" count="1"/>
-        <line num="55" type="stmt" count="1"/>
-        <line num="57" type="stmt" count="1"/>
+        <line num="44" type="method" name="postBody" visibility="public" complexity="4" crap="20" count="0"/>
+        <line num="46" type="stmt" count="0"/>
+        <line num="47" type="stmt" count="0"/>
+        <line num="49" type="stmt" count="0"/>
+        <line num="52" type="stmt" count="0"/>
+        <line num="54" type="stmt" count="0"/>
+        <line num="55" type="stmt" count="0"/>
+        <line num="57" type="stmt" count="0"/>
         <line num="58" type="stmt" count="0"/>
-        <line num="60" type="stmt" count="1"/>
-        <line num="61" type="stmt" count="1"/>
-        <line num="64" type="stmt" count="1"/>
-        <line num="73" type="method" name="parseContainer" visibility="protected" complexity="10" crap="10" count="1"/>
-        <line num="74" type="stmt" count="1"/>
-        <line num="75" type="stmt" count="1"/>
-        <line num="76" type="stmt" count="1"/>
-        <line num="78" type="stmt" count="1"/>
-        <line num="80" type="stmt" count="1"/>
-        <line num="81" type="stmt" count="1"/>
-        <line num="83" type="stmt" count="1"/>
-        <line num="84" type="stmt" count="1"/>
-        <line num="86" type="stmt" count="1"/>
-        <line num="88" type="stmt" count="1"/>
-        <line num="89" type="stmt" count="1"/>
-        <line num="91" type="stmt" count="1"/>
-        <line num="92" type="stmt" count="1"/>
-        <line num="93" type="stmt" count="1"/>
-        <line num="95" type="stmt" count="1"/>
-        <line num="96" type="stmt" count="1"/>
-        <line num="98" type="stmt" count="1"/>
-        <line num="100" type="stmt" count="1"/>
-        <line num="101" type="stmt" count="1"/>
-        <line num="103" type="stmt" count="1"/>
-        <line num="105" type="stmt" count="1"/>
-        <line num="107" type="stmt" count="1"/>
-        <metrics loc="109" ncloc="62" classes="1" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="32" elements="38" coveredelements="33"/>
+        <line num="60" type="stmt" count="0"/>
+        <line num="61" type="stmt" count="0"/>
+        <line num="64" type="stmt" count="0"/>
+        <line num="73" type="method" name="parseContainer" visibility="protected" complexity="10" crap="110" count="0"/>
+        <line num="74" type="stmt" count="0"/>
+        <line num="75" type="stmt" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="78" type="stmt" count="0"/>
+        <line num="80" type="stmt" count="0"/>
+        <line num="81" type="stmt" count="0"/>
+        <line num="83" type="stmt" count="0"/>
+        <line num="84" type="stmt" count="0"/>
+        <line num="86" type="stmt" count="0"/>
+        <line num="88" type="stmt" count="0"/>
+        <line num="89" type="stmt" count="0"/>
+        <line num="91" type="stmt" count="0"/>
+        <line num="92" type="stmt" count="0"/>
+        <line num="93" type="stmt" count="0"/>
+        <line num="95" type="stmt" count="0"/>
+        <line num="96" type="stmt" count="0"/>
+        <line num="98" type="stmt" count="0"/>
+        <line num="100" type="stmt" count="0"/>
+        <line num="101" type="stmt" count="0"/>
+        <line num="103" type="stmt" count="0"/>
+        <line num="105" type="stmt" count="0"/>
+        <line num="107" type="stmt" count="0"/>
+        <metrics loc="109" ncloc="62" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="0" elements="38" coveredelements="0"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Parser/HTMLRaw.php">
         <class name="HTMLRaw" namespace="NewsParserPlugin\Parser">
-          <metrics complexity="4" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="4" elements="7" coveredelements="5"/>
+          <metrics complexity="4" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="0" elements="7" coveredelements="0"/>
         </class>
-        <line num="23" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
-        <line num="24" type="stmt" count="1"/>
-        <line num="26" type="stmt" count="1"/>
-        <line num="34" type="method" name="parse" visibility="protected" complexity="3" crap="3.33" count="1"/>
-        <line num="35" type="stmt" count="1"/>
-        <line num="36" type="stmt" count="1"/>
+        <line num="23" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <line num="26" type="stmt" count="0"/>
+        <line num="34" type="method" name="parse" visibility="protected" complexity="3" crap="12" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <line num="36" type="stmt" count="0"/>
         <line num="38" type="stmt" count="0"/>
-        <metrics loc="40" ncloc="17" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="4" elements="7" coveredelements="5"/>
+        <metrics loc="40" ncloc="17" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="0" elements="7" coveredelements="0"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Parser/XMLParser.php">
         <class name="XMLParser" namespace="NewsParserPlugin\Parser">
-          <metrics complexity="20" methods="11" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="54" elements="71" coveredelements="62"/>
+          <metrics complexity="20" methods="11" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="0" elements="71" coveredelements="0"/>
         </class>
-        <line num="40" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="6"/>
-        <line num="41" type="stmt" count="6"/>
-        <line num="42" type="stmt" count="6"/>
+        <line num="40" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="41" type="stmt" count="0"/>
+        <line num="42" type="stmt" count="0"/>
         <line num="58" type="method" name="parse" visibility="protected" complexity="1" crap="2" count="0"/>
         <line num="61" type="stmt" count="0"/>
         <line num="62" type="stmt" count="0"/>
         <line num="63" type="stmt" count="0"/>
-        <line num="75" type="method" name="xmlParser" visibility="protected" complexity="2" crap="2.09" count="5"/>
-        <line num="77" type="stmt" count="5"/>
-        <line num="78" type="stmt" count="5"/>
-        <line num="79" type="stmt" count="5"/>
-        <line num="81" type="stmt" count="5"/>
+        <line num="75" type="method" name="xmlParser" visibility="protected" complexity="2" crap="6" count="0"/>
+        <line num="77" type="stmt" count="0"/>
+        <line num="78" type="stmt" count="0"/>
+        <line num="79" type="stmt" count="0"/>
+        <line num="81" type="stmt" count="0"/>
         <line num="82" type="stmt" count="0"/>
         <line num="83" type="stmt" count="0"/>
-        <line num="86" type="stmt" count="5"/>
-        <line num="103" type="method" name="formatData" visibility="protected" complexity="2" crap="2" count="2"/>
-        <line num="105" type="stmt" count="2"/>
-        <line num="106" type="stmt" count="2"/>
-        <line num="107" type="stmt" count="2"/>
-        <line num="108" type="stmt" count="2"/>
-        <line num="109" type="stmt" count="2"/>
-        <line num="110" type="stmt" count="2"/>
-        <line num="111" type="stmt" count="2"/>
-        <line num="112" type="stmt" count="2"/>
-        <line num="113" type="stmt" count="2"/>
-        <line num="114" type="stmt" count="2"/>
-        <line num="115" type="stmt" count="2"/>
-        <line num="116" type="stmt" count="2"/>
-        <line num="117" type="stmt" count="2"/>
-        <line num="118" type="stmt" count="2"/>
-        <line num="121" type="stmt" count="2"/>
-        <line num="131" type="method" name="parseDescription" visibility="protected" complexity="2" crap="2" count="2"/>
-        <line num="133" type="stmt" count="2"/>
-        <line num="134" type="stmt" count="2"/>
-        <line num="136" type="stmt" count="2"/>
-        <line num="137" type="stmt" count="2"/>
-        <line num="138" type="stmt" count="2"/>
-        <line num="139" type="stmt" count="2"/>
-        <line num="140" type="stmt" count="2"/>
-        <line num="142" type="stmt" count="2"/>
-        <line num="157" type="method" name="parseImage" visibility="protected" complexity="2" crap="2" count="2"/>
-        <line num="159" type="stmt" count="2"/>
-        <line num="160" type="stmt" count="2"/>
-        <line num="161" type="stmt" count="2"/>
-        <line num="162" type="stmt" count="2"/>
-        <line num="163" type="stmt" count="2"/>
-        <line num="175" type="method" name="cutText" visibility="public" complexity="1" crap="1" count="3"/>
-        <line num="177" type="stmt" count="3"/>
-        <line num="178" type="stmt" count="3"/>
-        <line num="179" type="stmt" count="3"/>
-        <line num="180" type="stmt" count="3"/>
-        <line num="181" type="stmt" count="3"/>
-        <line num="182" type="stmt" count="3"/>
-        <line num="193" type="method" name="removeTags" visibility="public" complexity="1" crap="1" count="2"/>
-        <line num="195" type="stmt" count="2"/>
-        <line num="205" type="method" name="regExp" visibility="public" complexity="2" crap="2.03" count="1"/>
-        <line num="207" type="stmt" count="1"/>
-        <line num="208" type="stmt" count="1"/>
-        <line num="209" type="stmt" count="1"/>
-        <line num="211" type="stmt" count="1"/>
+        <line num="86" type="stmt" count="0"/>
+        <line num="103" type="method" name="formatData" visibility="protected" complexity="2" crap="6" count="0"/>
+        <line num="105" type="stmt" count="0"/>
+        <line num="106" type="stmt" count="0"/>
+        <line num="107" type="stmt" count="0"/>
+        <line num="108" type="stmt" count="0"/>
+        <line num="109" type="stmt" count="0"/>
+        <line num="110" type="stmt" count="0"/>
+        <line num="111" type="stmt" count="0"/>
+        <line num="112" type="stmt" count="0"/>
+        <line num="113" type="stmt" count="0"/>
+        <line num="114" type="stmt" count="0"/>
+        <line num="115" type="stmt" count="0"/>
+        <line num="116" type="stmt" count="0"/>
+        <line num="117" type="stmt" count="0"/>
+        <line num="118" type="stmt" count="0"/>
+        <line num="121" type="stmt" count="0"/>
+        <line num="131" type="method" name="parseDescription" visibility="protected" complexity="2" crap="6" count="0"/>
+        <line num="133" type="stmt" count="0"/>
+        <line num="134" type="stmt" count="0"/>
+        <line num="136" type="stmt" count="0"/>
+        <line num="137" type="stmt" count="0"/>
+        <line num="138" type="stmt" count="0"/>
+        <line num="139" type="stmt" count="0"/>
+        <line num="140" type="stmt" count="0"/>
+        <line num="142" type="stmt" count="0"/>
+        <line num="157" type="method" name="parseImage" visibility="protected" complexity="2" crap="6" count="0"/>
+        <line num="159" type="stmt" count="0"/>
+        <line num="160" type="stmt" count="0"/>
+        <line num="161" type="stmt" count="0"/>
+        <line num="162" type="stmt" count="0"/>
+        <line num="163" type="stmt" count="0"/>
+        <line num="175" type="method" name="cutText" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="177" type="stmt" count="0"/>
+        <line num="178" type="stmt" count="0"/>
+        <line num="179" type="stmt" count="0"/>
+        <line num="180" type="stmt" count="0"/>
+        <line num="181" type="stmt" count="0"/>
+        <line num="182" type="stmt" count="0"/>
+        <line num="193" type="method" name="removeTags" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="195" type="stmt" count="0"/>
+        <line num="205" type="method" name="regExp" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="207" type="stmt" count="0"/>
+        <line num="208" type="stmt" count="0"/>
+        <line num="209" type="stmt" count="0"/>
+        <line num="211" type="stmt" count="0"/>
         <line num="214" type="stmt" count="0"/>
-        <line num="223" type="method" name="parseImageEnclosure" visibility="public" complexity="3" crap="3" count="4"/>
-        <line num="226" type="stmt" count="4"/>
-        <line num="227" type="stmt" count="2"/>
-        <line num="229" type="stmt" count="4"/>
-        <line num="238" type="method" name="parseImageDescription" visibility="public" complexity="3" crap="3" count="1"/>
-        <line num="240" type="stmt" count="1"/>
-        <line num="241" type="stmt" count="1"/>
-        <line num="243" type="stmt" count="1"/>
-        <line num="244" type="stmt" count="1"/>
-        <line num="245" type="stmt" count="1"/>
-        <metrics loc="248" ncloc="133" classes="1" methods="11" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="54" elements="71" coveredelements="62"/>
+        <line num="223" type="method" name="parseImageEnclosure" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="226" type="stmt" count="0"/>
+        <line num="227" type="stmt" count="0"/>
+        <line num="229" type="stmt" count="0"/>
+        <line num="238" type="method" name="parseImageDescription" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="240" type="stmt" count="0"/>
+        <line num="241" type="stmt" count="0"/>
+        <line num="243" type="stmt" count="0"/>
+        <line num="244" type="stmt" count="0"/>
+        <line num="245" type="stmt" count="0"/>
+        <metrics loc="248" ncloc="133" classes="1" methods="11" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="0" elements="71" coveredelements="0"/>
       </file>
     </package>
     <package name="NewsParserPlugin\Traits">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Traits/AdapterGutenbergTrait.php">
-        <class name="AdapterGutenbergTrait" namespace="NewsParserPlugin\Traits">
-          <metrics complexity="19" methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="51" coveredstatements="0" elements="59" coveredelements="0"/>
+        <class name="AdapterGutenbergTrait" namespace="NewsParserPlugin\Traits" fullPackage="Parser" package="Parser">
+          <metrics complexity="19" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="58" coveredstatements="58" elements="66" coveredelements="66"/>
         </class>
-        <line num="6" type="method" name="createGutenbergBlocks" visibility="protected" complexity="11" crap="132" count="0"/>
-        <line num="7" type="stmt" count="0"/>
-        <line num="8" type="stmt" count="0"/>
-        <line num="9" type="stmt" count="0"/>
-        <line num="10" type="stmt" count="0"/>
-        <line num="11" type="stmt" count="0"/>
-        <line num="12" type="stmt" count="0"/>
-        <line num="13" type="stmt" count="0"/>
-        <line num="14" type="stmt" count="0"/>
-        <line num="15" type="stmt" count="0"/>
-        <line num="16" type="stmt" count="0"/>
-        <line num="17" type="stmt" count="0"/>
-        <line num="18" type="stmt" count="0"/>
-        <line num="19" type="stmt" count="0"/>
-        <line num="20" type="stmt" count="0"/>
-        <line num="21" type="stmt" count="0"/>
-        <line num="22" type="stmt" count="0"/>
-        <line num="23" type="stmt" count="0"/>
-        <line num="24" type="stmt" count="0"/>
-        <line num="25" type="stmt" count="0"/>
-        <line num="26" type="stmt" count="0"/>
-        <line num="27" type="stmt" count="0"/>
-        <line num="28" type="stmt" count="0"/>
-        <line num="29" type="stmt" count="0"/>
-        <line num="30" type="stmt" count="0"/>
-        <line num="31" type="stmt" count="0"/>
-        <line num="34" type="stmt" count="0"/>
-        <line num="36" type="method" name="youtubeVideo" visibility="protected" complexity="1" crap="2" count="0"/>
-        <line num="37" type="stmt" count="0"/>
-        <line num="40" type="stmt" count="0"/>
-        <line num="41" type="stmt" count="0"/>
-        <line num="42" type="stmt" count="0"/>
-        <line num="43" type="stmt" count="0"/>
-        <line num="46" type="method" name="heading" visibility="protected" complexity="1" crap="2" count="0"/>
-        <line num="47" type="stmt" count="0"/>
-        <line num="48" type="stmt" count="0"/>
-        <line num="49" type="stmt" count="0"/>
-        <line num="50" type="stmt" count="0"/>
-        <line num="52" type="method" name="paragraph" visibility="protected" complexity="1" crap="2" count="0"/>
-        <line num="53" type="stmt" count="0"/>
-        <line num="54" type="stmt" count="0"/>
-        <line num="56" type="method" name="simpleText" visibility="protected" complexity="1" crap="2" count="0"/>
-        <line num="57" type="stmt" count="0"/>
-        <line num="58" type="stmt" count="0"/>
-        <line num="60" type="method" name="image" visibility="protected" complexity="1" crap="2" count="0"/>
-        <line num="61" type="stmt" count="0"/>
-        <line num="62" type="stmt" count="0"/>
-        <line num="63" type="stmt" count="0"/>
-        <line num="65" type="method" name="list" visibility="protected" complexity="2" crap="6" count="0"/>
-        <line num="66" type="stmt" count="0"/>
-        <line num="67" type="stmt" count="0"/>
-        <line num="68" type="stmt" count="0"/>
-        <line num="69" type="stmt" count="0"/>
-        <line num="70" type="stmt" count="0"/>
-        <line num="71" type="stmt" count="0"/>
-        <line num="72" type="stmt" count="0"/>
-        <line num="75" type="stmt" count="0"/>
-        <line num="77" type="method" name="getDigitsOnly" visibility="protected" complexity="1" crap="2" count="0"/>
-        <line num="78" type="stmt" count="0"/>
-        <metrics loc="80" ncloc="80" classes="1" methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="51" coveredstatements="0" elements="59" coveredelements="0"/>
+        <line num="25" type="method" name="createGutenbergBlocks" visibility="protected" complexity="11" crap="11" count="6"/>
+        <line num="26" type="stmt" count="6"/>
+        <line num="27" type="stmt" count="6"/>
+        <line num="28" type="stmt" count="6"/>
+        <line num="29" type="stmt" count="6"/>
+        <line num="30" type="stmt" count="6"/>
+        <line num="31" type="stmt" count="5"/>
+        <line num="32" type="stmt" count="5"/>
+        <line num="33" type="stmt" count="5"/>
+        <line num="34" type="stmt" count="1"/>
+        <line num="35" type="stmt" count="1"/>
+        <line num="36" type="stmt" count="5"/>
+        <line num="37" type="stmt" count="1"/>
+        <line num="38" type="stmt" count="1"/>
+        <line num="39" type="stmt" count="4"/>
+        <line num="40" type="stmt" count="1"/>
+        <line num="41" type="stmt" count="1"/>
+        <line num="42" type="stmt" count="3"/>
+        <line num="43" type="stmt" count="1"/>
+        <line num="44" type="stmt" count="1"/>
+        <line num="45" type="stmt" count="2"/>
+        <line num="46" type="stmt" count="1"/>
+        <line num="47" type="stmt" count="1"/>
+        <line num="48" type="stmt" count="1"/>
+        <line num="49" type="stmt" count="1"/>
+        <line num="50" type="stmt" count="1"/>
+        <line num="53" type="stmt" count="6"/>
+        <line num="61" type="method" name="youtubeVideo" visibility="private" complexity="1" crap="1" count="1"/>
+        <line num="62" type="stmt" count="1"/>
+        <line num="65" type="stmt" count="1"/>
+        <line num="66" type="stmt" count="1"/>
+        <line num="67" type="stmt" count="1"/>
+        <line num="68" type="stmt" count="1"/>
+        <line num="77" type="method" name="heading" visibility="private" complexity="1" crap="1" count="1"/>
+        <line num="78" type="stmt" count="1"/>
+        <line num="79" type="stmt" count="1"/>
+        <line num="80" type="stmt" count="1"/>
+        <line num="81" type="stmt" count="1"/>
+        <line num="82" type="stmt" count="1"/>
+        <line num="83" type="stmt" count="1"/>
+        <line num="84" type="stmt" count="1"/>
+        <line num="85" type="stmt" count="1"/>
+        <line num="94" type="method" name="paragraph" visibility="private" complexity="1" crap="1" count="1"/>
+        <line num="95" type="stmt" count="1"/>
+        <line num="96" type="stmt" count="1"/>
+        <line num="104" type="method" name="simpleText" visibility="private" complexity="1" crap="1" count="1"/>
+        <line num="105" type="stmt" count="1"/>
+        <line num="106" type="stmt" count="1"/>
+        <line num="114" type="method" name="image" visibility="private" complexity="1" crap="1" count="1"/>
+        <line num="115" type="stmt" count="1"/>
+        <line num="116" type="stmt" count="1"/>
+        <line num="117" type="stmt" count="1"/>
+        <line num="118" type="stmt" count="1"/>
+        <line num="119" type="stmt" count="1"/>
+        <line num="120" type="stmt" count="1"/>
+        <line num="129" type="method" name="list" visibility="private" complexity="2" crap="2" count="1"/>
+        <line num="130" type="stmt" count="1"/>
+        <line num="131" type="stmt" count="1"/>
+        <line num="132" type="stmt" count="1"/>
+        <line num="133" type="stmt" count="1"/>
+        <line num="134" type="stmt" count="1"/>
+        <line num="135" type="stmt" count="1"/>
+        <line num="136" type="stmt" count="1"/>
+        <line num="139" type="stmt" count="1"/>
+        <line num="147" type="method" name="getDigitsOnly" visibility="private" complexity="1" crap="1" count="1"/>
+        <line num="148" type="stmt" count="1"/>
+        <metrics loc="150" ncloc="87" classes="1" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="58" coveredstatements="58" elements="66" coveredelements="66"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Traits/ChainTrait.php">
         <class name="ChainTrait" namespace="NewsParserPlugin\Traits">
-          <metrics complexity="2" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="3" coveredelements="3"/>
+          <metrics complexity="2" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
         </class>
-        <line num="14" type="method" name="chain" visibility="protected" complexity="2" crap="2" count="6"/>
-        <line num="16" type="stmt" count="6"/>
-        <line num="17" type="stmt" count="6"/>
-        <metrics loc="18" ncloc="11" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="3" coveredelements="3"/>
+        <line num="14" type="method" name="chain" visibility="protected" complexity="2" crap="6" count="0"/>
+        <line num="16" type="stmt" count="0"/>
+        <line num="17" type="stmt" count="0"/>
+        <metrics loc="18" ncloc="11" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Traits/PipeTrait.php">
         <class name="PipeTrait" namespace="NewsParserPlugin\Traits">
-          <metrics complexity="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
+          <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="2" coveredelements="0"/>
         </class>
-        <line num="11" type="method" name="pipe" visibility="protected" complexity="1" crap="1" count="3"/>
-        <line num="13" type="stmt" count="3"/>
-        <metrics loc="14" ncloc="8" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
+        <line num="11" type="method" name="pipe" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="13" type="stmt" count="0"/>
+        <metrics loc="14" ncloc="8" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="2" coveredelements="0"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Traits/SanitizeDataTrait.php">
         <class name="SanitizeDataTrait" namespace="NewsParserPlugin\Traits">
@@ -838,134 +845,134 @@
     <package name="NewsParserPlugin\Utils">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Utils/ChainController.php">
         <class name="ChainController" namespace="NewsParserPlugin\Utils" fullPackage="Message" package="Message">
-          <metrics complexity="6" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="7" elements="10" coveredelements="8"/>
+          <metrics complexity="6" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="0" elements="10" coveredelements="0"/>
         </class>
-        <line num="32" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="6"/>
-        <line num="34" type="stmt" count="6"/>
-        <line num="35" type="stmt" count="6"/>
-        <line num="37" type="method" name="__call" visibility="public" complexity="5" crap="5.12" count="6"/>
-        <line num="39" type="stmt" count="6"/>
-        <line num="40" type="stmt" count="6"/>
-        <line num="42" type="stmt" count="6"/>
-        <line num="43" type="stmt" count="6"/>
+        <line num="32" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <line num="37" type="method" name="__call" visibility="public" complexity="5" crap="30" count="0"/>
+        <line num="39" type="stmt" count="0"/>
+        <line num="40" type="stmt" count="0"/>
+        <line num="42" type="stmt" count="0"/>
+        <line num="43" type="stmt" count="0"/>
         <line num="46" type="stmt" count="0"/>
-        <line num="48" type="stmt" count="6"/>
-        <metrics loc="50" ncloc="26" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="7" elements="10" coveredelements="8"/>
+        <line num="48" type="stmt" count="0"/>
+        <metrics loc="50" ncloc="26" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="0" elements="10" coveredelements="0"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Utils/MenuConfig.php">
         <class name="MenuConfig" namespace="NewsParserPlugin\Utils" fullPackage="Utils" package="Utils">
-          <metrics complexity="12" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="22" elements="27" coveredelements="23"/>
+          <metrics complexity="12" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="0" elements="27" coveredelements="0"/>
         </class>
-        <line num="17" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="5"/>
-        <line num="18" type="stmt" count="5"/>
-        <line num="19" type="stmt" count="1"/>
-        <line num="21" type="stmt" count="4"/>
-        <line num="22" type="stmt" count="4"/>
-        <line num="23" type="stmt" count="3"/>
-        <line num="24" type="stmt" count="3"/>
-        <line num="31" type="method" name="get" visibility="public" complexity="4" crap="4.02" count="3"/>
-        <line num="33" type="stmt" count="3"/>
-        <line num="34" type="stmt" count="3"/>
-        <line num="35" type="stmt" count="3"/>
-        <line num="36" type="stmt" count="1"/>
-        <line num="37" type="stmt" count="2"/>
-        <line num="38" type="stmt" count="1"/>
-        <line num="39" type="stmt" count="1"/>
-        <line num="40" type="stmt" count="1"/>
+        <line num="17" type="method" name="__construct" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="18" type="stmt" count="0"/>
+        <line num="19" type="stmt" count="0"/>
+        <line num="21" type="stmt" count="0"/>
+        <line num="22" type="stmt" count="0"/>
+        <line num="23" type="stmt" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <line num="31" type="method" name="get" visibility="public" complexity="4" crap="20" count="0"/>
+        <line num="33" type="stmt" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <line num="36" type="stmt" count="0"/>
+        <line num="37" type="stmt" count="0"/>
+        <line num="38" type="stmt" count="0"/>
+        <line num="39" type="stmt" count="0"/>
+        <line num="40" type="stmt" count="0"/>
         <line num="42" type="stmt" count="0"/>
-        <line num="49" type="method" name="verifyFormat" visibility="protected" complexity="6" crap="6.05" count="4"/>
-        <line num="50" type="stmt" count="4"/>
-        <line num="51" type="stmt" count="4"/>
+        <line num="49" type="method" name="verifyFormat" visibility="protected" complexity="6" crap="42" count="0"/>
+        <line num="50" type="stmt" count="0"/>
+        <line num="51" type="stmt" count="0"/>
         <line num="52" type="stmt" count="0"/>
-        <line num="54" type="stmt" count="4"/>
-        <line num="55" type="stmt" count="4"/>
-        <line num="56" type="stmt" count="4"/>
-        <line num="57" type="stmt" count="4"/>
-        <line num="58" type="stmt" count="1"/>
-        <line num="62" type="stmt" count="3"/>
-        <metrics loc="63" ncloc="44" classes="1" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="22" elements="27" coveredelements="23"/>
+        <line num="54" type="stmt" count="0"/>
+        <line num="55" type="stmt" count="0"/>
+        <line num="56" type="stmt" count="0"/>
+        <line num="57" type="stmt" count="0"/>
+        <line num="58" type="stmt" count="0"/>
+        <line num="62" type="stmt" count="0"/>
+        <metrics loc="63" ncloc="44" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="0" elements="27" coveredelements="0"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Utils/PipeController.php">
         <class name="PipeController" namespace="NewsParserPlugin\Utils">
-          <metrics complexity="11" methods="4" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="22" coveredstatements="19" elements="26" coveredelements="21"/>
+          <metrics complexity="11" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="22" coveredstatements="0" elements="26" coveredelements="0"/>
         </class>
-        <line num="34" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="3"/>
-        <line num="36" type="stmt" count="3"/>
-        <line num="37" type="stmt" count="3"/>
-        <line num="38" type="stmt" count="3"/>
-        <line num="55" type="method" name="func" visibility="public" complexity="3" crap="3.03" count="3"/>
-        <line num="57" type="stmt" count="3"/>
-        <line num="58" type="stmt" count="3"/>
-        <line num="59" type="stmt" count="3"/>
-        <line num="60" type="stmt" count="3"/>
-        <line num="63" type="stmt" count="3"/>
+        <line num="34" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="36" type="stmt" count="0"/>
+        <line num="37" type="stmt" count="0"/>
+        <line num="38" type="stmt" count="0"/>
+        <line num="55" type="method" name="func" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="57" type="stmt" count="0"/>
+        <line num="58" type="stmt" count="0"/>
+        <line num="59" type="stmt" count="0"/>
+        <line num="60" type="stmt" count="0"/>
+        <line num="63" type="stmt" count="0"/>
         <line num="65" type="stmt" count="0"/>
-        <line num="67" type="stmt" count="3"/>
-        <line num="69" type="method" name="callFunc" visibility="protected" complexity="2" crap="2" count="3"/>
-        <line num="71" type="stmt" count="3"/>
-        <line num="72" type="stmt" count="3"/>
-        <line num="73" type="stmt" count="3"/>
-        <line num="84" type="method" name="__call" visibility="public" complexity="5" crap="5.27" count="3"/>
-        <line num="86" type="stmt" count="3"/>
+        <line num="67" type="stmt" count="0"/>
+        <line num="69" type="method" name="callFunc" visibility="protected" complexity="2" crap="6" count="0"/>
+        <line num="71" type="stmt" count="0"/>
+        <line num="72" type="stmt" count="0"/>
+        <line num="73" type="stmt" count="0"/>
+        <line num="84" type="method" name="__call" visibility="public" complexity="5" crap="30" count="0"/>
+        <line num="86" type="stmt" count="0"/>
         <line num="87" type="stmt" count="0"/>
-        <line num="89" type="stmt" count="3"/>
-        <line num="90" type="stmt" count="3"/>
-        <line num="92" type="stmt" count="2"/>
-        <line num="93" type="stmt" count="2"/>
-        <line num="94" type="stmt" count="2"/>
+        <line num="89" type="stmt" count="0"/>
+        <line num="90" type="stmt" count="0"/>
+        <line num="92" type="stmt" count="0"/>
+        <line num="93" type="stmt" count="0"/>
+        <line num="94" type="stmt" count="0"/>
         <line num="96" type="stmt" count="0"/>
-        <line num="98" type="stmt" count="2"/>
-        <metrics loc="101" ncloc="51" classes="1" methods="4" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="22" coveredstatements="19" elements="26" coveredelements="21"/>
+        <line num="98" type="stmt" count="0"/>
+        <metrics loc="101" ncloc="51" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="22" coveredstatements="0" elements="26" coveredelements="0"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Utils/ResponseFormatter.php">
         <class name="ResponseFormatter" namespace="NewsParserPlugin\Utils">
-          <metrics complexity="12" methods="8" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="32" elements="44" coveredelements="38"/>
+          <metrics complexity="12" methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="0" elements="44" coveredelements="0"/>
         </class>
-        <line num="22" type="method" name="post" visibility="public" complexity="1" crap="1" count="1"/>
-        <line num="23" type="stmt" count="1"/>
-        <line num="24" type="stmt" count="1"/>
-        <line num="25" type="stmt" count="1"/>
-        <line num="26" type="stmt" count="1"/>
-        <line num="27" type="stmt" count="1"/>
-        <line num="29" type="stmt" count="1"/>
-        <line num="37" type="method" name="list" visibility="public" complexity="1" crap="1" count="1"/>
-        <line num="38" type="stmt" count="1"/>
-        <line num="39" type="stmt" count="1"/>
-        <line num="40" type="stmt" count="1"/>
-        <line num="49" type="method" name="dialog" visibility="public" complexity="1" crap="1" count="1"/>
-        <line num="50" type="stmt" count="1"/>
-        <line num="51" type="stmt" count="1"/>
-        <line num="52" type="stmt" count="1"/>
-        <line num="54" type="stmt" count="1"/>
-        <line num="62" type="method" name="rawHTML" visibility="public" complexity="1" crap="1" count="1"/>
-        <line num="63" type="stmt" count="1"/>
-        <line num="64" type="stmt" count="1"/>
-        <line num="72" type="method" name="media" visibility="public" complexity="1" crap="1" count="1"/>
-        <line num="73" type="stmt" count="1"/>
-        <line num="74" type="stmt" count="1"/>
-        <line num="76" type="stmt" count="1"/>
-        <line num="84" type="method" name="error" visibility="public" complexity="1" crap="1" count="1"/>
-        <line num="85" type="stmt" count="1"/>
-        <line num="86" type="stmt" count="1"/>
-        <line num="95" type="method" name="message" visibility="public" complexity="2" crap="2.01" count="1"/>
-        <line num="97" type="stmt" count="1"/>
+        <line num="22" type="method" name="post" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="23" type="stmt" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <line num="25" type="stmt" count="0"/>
+        <line num="26" type="stmt" count="0"/>
+        <line num="27" type="stmt" count="0"/>
+        <line num="29" type="stmt" count="0"/>
+        <line num="37" type="method" name="list" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="38" type="stmt" count="0"/>
+        <line num="39" type="stmt" count="0"/>
+        <line num="40" type="stmt" count="0"/>
+        <line num="49" type="method" name="dialog" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="50" type="stmt" count="0"/>
+        <line num="51" type="stmt" count="0"/>
+        <line num="52" type="stmt" count="0"/>
+        <line num="54" type="stmt" count="0"/>
+        <line num="62" type="method" name="rawHTML" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="63" type="stmt" count="0"/>
+        <line num="64" type="stmt" count="0"/>
+        <line num="72" type="method" name="media" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="73" type="stmt" count="0"/>
+        <line num="74" type="stmt" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="84" type="method" name="error" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="85" type="stmt" count="0"/>
+        <line num="86" type="stmt" count="0"/>
+        <line num="95" type="method" name="message" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="97" type="stmt" count="0"/>
         <line num="98" type="stmt" count="0"/>
-        <line num="100" type="stmt" count="1"/>
-        <line num="102" type="stmt" count="1"/>
-        <line num="103" type="stmt" count="1"/>
-        <line num="104" type="stmt" count="1"/>
-        <line num="108" type="stmt" count="1"/>
-        <line num="116" type="method" name="get" visibility="public" complexity="4" crap="4.59" count="7"/>
-        <line num="117" type="stmt" count="7"/>
-        <line num="118" type="stmt" count="7"/>
-        <line num="119" type="stmt" count="7"/>
+        <line num="100" type="stmt" count="0"/>
+        <line num="102" type="stmt" count="0"/>
+        <line num="103" type="stmt" count="0"/>
+        <line num="104" type="stmt" count="0"/>
+        <line num="108" type="stmt" count="0"/>
+        <line num="116" type="method" name="get" visibility="public" complexity="4" crap="20" count="0"/>
+        <line num="117" type="stmt" count="0"/>
+        <line num="118" type="stmt" count="0"/>
+        <line num="119" type="stmt" count="0"/>
         <line num="120" type="stmt" count="0"/>
-        <line num="121" type="stmt" count="7"/>
+        <line num="121" type="stmt" count="0"/>
         <line num="122" type="stmt" count="0"/>
-        <line num="123" type="stmt" count="7"/>
-        <line num="124" type="stmt" count="7"/>
+        <line num="123" type="stmt" count="0"/>
+        <line num="124" type="stmt" count="0"/>
         <line num="126" type="stmt" count="0"/>
-        <metrics loc="128" ncloc="70" classes="1" methods="8" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="32" elements="44" coveredelements="38"/>
+        <metrics loc="128" ncloc="70" classes="1" methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="0" elements="44" coveredelements="0"/>
       </file>
     </package>
     <package name="NewsParserPlugin\View">
@@ -988,6 +995,6 @@
         <metrics loc="37" ncloc="25" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="12" coveredelements="0"/>
       </file>
     </package>
-    <metrics files="29" loc="2312" ncloc="1478" classes="29" methods="129" coveredmethods="38" conditionals="0" coveredconditionals="0" statements="664" coveredstatements="237" elements="793" coveredelements="275"/>
+    <metrics files="29" loc="2382" ncloc="1485" classes="29" methods="129" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="671" coveredstatements="58" elements="800" coveredelements="66"/>
   </project>
 </coverage>
