@@ -16,6 +16,13 @@ class AdapterGutenbergTraitTest extends \WP_UnitTestCase{
     }
     /**
      * @dataProvider dataBlocks
+     * 
+     * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::youtubeVideo()
+     * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::heading()
+     * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::paragraph()
+     * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::simpleText()
+     * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::image()
+     * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::list()
      */
     public function testCreateGutenbergBlocks($el,$expected){
         $result=$this->instance->testGutenbergBlocks($el);
