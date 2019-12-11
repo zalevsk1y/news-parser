@@ -8,32 +8,78 @@ use NewsParserPlugin\Message\Errors;
 /**
  * Class creates post model as facade to wordpress function
  *
- * PHP version 7.2.1
+ * PHP version 5.6
  *
- * @package  Parser
+ * @package  Models
  * @author   Evgeniy S.Zalevskiy <2600@urk.net>
  * @license  MIT
  */
 
 class PostModel implements ModelInterface
 {
+    /**
+     * Title of the post.
+     *
+     * @var string
+     */
     public $title;
+    /**
+     * Post content.
+     * 
+     * @var string
+     */
     public $body;
+    /**
+     * Featured image url.
+     *
+     * @var string
+     */
     public $image;
-    public $gallery = array();
+    /**
+     * Status of the post could be parsed|draft
+     *
+     * @var string
+     */
     public $status;
+    /**
+     * Url of source post.
+     *
+     * @var string
+     */
     public $sourceUrl;
+    /**
+     * Id of wordpress post.
+     *
+     * @var int
+     */
     public $postId;
+    /**
+     * Array of links.
+     * Structure: [previewLink,editLink,deleteLink]
+     * 
+     * @var array
+     */
     public $links = array();
+    /**
+     * Wordpress authoe id.
+     *
+     * @var string
+     */
     public $authorId;
-
+    /**
+     * Init function 
+     * 
+     * @throws MyException if post have no title
+     *
+     * @param array $data structure['title','body','image','sourceUrl','authorId']
+     */
     public function __construct($data)
     {
-        if (!$data['title']) {
+        if (!isset($data['title'])||empty($data['title'])) {
             throw new MyException(Errors::text('NO_TITLE'));
         }
         $this->title = $data['title'];
-        if (!$data['body']) {
+        if (!isset($data['body'])||empty($data['body'])) {
             throw new MyException(Errors::text('NO_BODY'));
         }
         $this->body = $data['body'];
@@ -65,25 +111,7 @@ class PostModel implements ModelInterface
     {
         $this->attachImageToPostWordpress($this->image, $this->postId, true);
     }
-    /**
-     * Download and attach to post additional images
-     *
-     * @param int $quantity maximum quantity of images that should be downloaded
-     * @return void
-     */
-    public function downloadGalleryPictures($quantity = null)
-    {
-        $img_ids_array = array();
-        if (!is_null($quantity)) {
-            $gallery = array_slice($this->gallery, 0, $quantity);
-        } else {
-            $gallery = $this->gallery;
-        }
-        foreach ($gallery as $image) {
-            $img_ids_array[] = $this->attachImageToPostWordpress($image, $this->postId);
-        }
-        $this->gallery['ids'] = $img_ids_array;
-    }
+
     /**
      * Add link to the source  of the page
      *
@@ -175,7 +203,7 @@ class PostModel implements ModelInterface
      * @param $data new data that will be add to the field
      * @return void
      */
-    protected function updatePostWordPress(string $update_item, $data)
+    protected function updatePostWordPress($update_item, $data)
     {
         $post_array = [
             'ID' => $this->postId,
