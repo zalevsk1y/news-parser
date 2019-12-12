@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1576072979">
-  <project timestamp="1576072979">
+<coverage generated="1576153062">
+  <project timestamp="1576153062">
     <package name="NewsParserPlugin\Ajax">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Ajax/Ajax.php">
         <class name="Ajax" namespace="NewsParserPlugin\Ajax">
@@ -235,10 +235,10 @@
         <class name="MyException" namespace="NewsParserPlugin\Exception" fullPackage="Exception" package="Exception">
           <metrics complexity="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="4" coveredelements="4"/>
         </class>
-        <line num="18" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="2"/>
-        <line num="20" type="stmt" count="2"/>
-        <line num="21" type="stmt" count="2"/>
-        <line num="22" type="stmt" count="2"/>
+        <line num="18" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="3"/>
+        <line num="20" type="stmt" count="3"/>
+        <line num="21" type="stmt" count="3"/>
+        <line num="22" type="stmt" count="3"/>
         <metrics loc="23" ncloc="12" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="4" coveredelements="4"/>
       </file>
     </package>
@@ -296,53 +296,54 @@
     <package name="NewsParserPlugin\Models">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Models/ListModel.php">
         <class name="ListModel" namespace="NewsParserPlugin\Models">
-          <metrics complexity="3" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="0" elements="7" coveredelements="0"/>
+          <metrics complexity="3" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="7" coveredelements="7"/>
         </class>
-        <line num="20" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="22" type="stmt" count="0"/>
-        <line num="23" type="stmt" count="0"/>
-        <line num="24" type="method" name="getAttributes" visibility="public" complexity="2" crap="6" count="0"/>
-        <line num="26" type="stmt" count="0"/>
-        <line num="27" type="stmt" count="0"/>
-        <line num="29" type="stmt" count="0"/>
-        <metrics loc="31" ncloc="22" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="0" elements="7" coveredelements="0"/>
+        <line num="36" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="3"/>
+        <line num="38" type="stmt" count="3"/>
+        <line num="39" type="stmt" count="3"/>
+        <line num="46" type="method" name="getAttributes" visibility="public" complexity="2" crap="2" count="3"/>
+        <line num="48" type="stmt" count="3"/>
+        <line num="49" type="stmt" count="1"/>
+        <line num="51" type="stmt" count="2"/>
+        <metrics loc="53" ncloc="21" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="7" coveredelements="7"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Models/OptionsModel.php">
         <class name="OptionsModel" namespace="NewsParserPlugin\Models">
-          <metrics complexity="11" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="0" elements="31" coveredelements="0"/>
+          <metrics complexity="15" methods="7" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="13" elements="32" coveredelements="19"/>
         </class>
-        <line num="13" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="14" type="stmt" count="0"/>
-        <line num="15" type="stmt" count="0"/>
-        <line num="17" type="stmt" count="0"/>
-        <line num="18" type="method" name="save" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="20" type="stmt" count="0"/>
-        <line num="21" type="stmt" count="0"/>
-        <line num="23" type="stmt" count="0"/>
-        <line num="25" type="method" name="delete" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="26" type="stmt" count="0"/>
-        <line num="28" type="method" name="get" visibility="protected" complexity="1" crap="2" count="0"/>
-        <line num="29" type="stmt" count="0"/>
-        <line num="31" type="method" name="getTemplate" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="32" type="stmt" count="0"/>
-        <line num="34" type="method" name="getExtraOptions" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="35" type="stmt" count="0"/>
-        <line num="37" type="method" name="getAttributes" visibility="public" complexity="5" crap="30" count="0"/>
-        <line num="38" type="stmt" count="0"/>
-        <line num="39" type="stmt" count="0"/>
-        <line num="41" type="stmt" count="0"/>
-        <line num="42" type="stmt" count="0"/>
-        <line num="44" type="stmt" count="0"/>
-        <line num="45" type="stmt" count="0"/>
-        <line num="46" type="stmt" count="0"/>
-        <line num="47" type="stmt" count="0"/>
-        <line num="48" type="stmt" count="0"/>
-        <line num="49" type="stmt" count="0"/>
-        <line num="50" type="stmt" count="0"/>
-        <line num="51" type="stmt" count="0"/>
-        <line num="52" type="stmt" count="0"/>
-        <line num="54" type="stmt" count="0"/>
-        <metrics loc="54" ncloc="54" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="0" elements="31" coveredelements="0"/>
+        <line num="59" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="5"/>
+        <line num="61" type="stmt" count="5"/>
+        <line num="62" type="stmt" count="5"/>
+        <line num="63" type="stmt" count="5"/>
+        <line num="71" type="method" name="save" visibility="public" complexity="3" crap="3" count="2"/>
+        <line num="73" type="stmt" count="2"/>
+        <line num="75" type="stmt" count="1"/>
+        <line num="76" type="stmt" count="1"/>
+        <line num="78" type="stmt" count="1"/>
+        <line num="85" type="method" name="delete" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="87" type="stmt" count="1"/>
+        <line num="94" type="method" name="get" visibility="protected" complexity="1" crap="1" count="1"/>
+        <line num="96" type="stmt" count="1"/>
+        <line num="103" type="method" name="getTemplate" visibility="public" complexity="2" crap="2" count="1"/>
+        <line num="105" type="stmt" count="1"/>
+        <line num="112" type="method" name="getExtraOptions" visibility="public" complexity="2" crap="2" count="1"/>
+        <line num="114" type="stmt" count="1"/>
+        <line num="123" type="method" name="getAttributes" visibility="public" complexity="5" crap="20.74" count="1"/>
+        <line num="124" type="stmt" count="1"/>
+        <line num="125" type="stmt" count="1"/>
+        <line num="127" type="stmt" count="0"/>
+        <line num="128" type="stmt" count="0"/>
+        <line num="130" type="stmt" count="0"/>
+        <line num="131" type="stmt" count="0"/>
+        <line num="132" type="stmt" count="0"/>
+        <line num="133" type="stmt" count="0"/>
+        <line num="134" type="stmt" count="0"/>
+        <line num="135" type="stmt" count="0"/>
+        <line num="136" type="stmt" count="0"/>
+        <line num="137" type="stmt" count="0"/>
+        <line num="138" type="stmt" count="0"/>
+        <line num="140" type="stmt" count="0"/>
+        <metrics loc="140" ncloc="62" classes="1" methods="7" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="13" elements="32" coveredelements="19"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Models/PostModel.php">
         <class name="PostModel" namespace="NewsParserPlugin\Models">
@@ -996,6 +997,6 @@
         <metrics loc="68" ncloc="37" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="15" elements="20" coveredelements="16"/>
       </file>
     </package>
-    <metrics files="29" loc="2563" ncloc="1508" classes="29" methods="129" coveredmethods="51" conditionals="0" coveredconditionals="0" statements="672" coveredstatements="372" elements="801" coveredelements="423"/>
+    <metrics files="29" loc="2671" ncloc="1515" classes="29" methods="129" coveredmethods="59" conditionals="0" coveredconditionals="0" statements="673" coveredstatements="390" elements="802" coveredelements="449"/>
   </project>
 </coverage>

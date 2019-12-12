@@ -6,7 +6,7 @@ use NewsParserPlugin\Interfaces\ModelInterface;
 use NewsParserPlugin\Message\Errors;
 
 /**
- * Class creates post model as facade to wordpress function
+ * Class creates post model as facade to wordpress functions.
  *
  * PHP version 5.6
  *

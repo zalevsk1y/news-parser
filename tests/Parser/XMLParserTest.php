@@ -40,7 +40,7 @@ class XMLParserTest extends \WP_UnitTestCase
     {
         $xml_data=$this->instance->xmlParser($xml);
         $result=$this->instance->formatData($xml_data);
-        $this->assertEquals($expected,json_encode($result));
+        $this->assertJsonStringEqualsJsonFile($expected,json_encode($result));
     }
     public function testCutText()
     {
@@ -71,9 +71,9 @@ class XMLParserTest extends \WP_UnitTestCase
     {
         return array(
             array(\file_get_contents(PARSER_MOCK_DIR.'/xml/xml_1.xml'),
-                \file_get_contents(PARSER_MOCK_DIR.'/xml/expected_1.json')),
+                PARSER_MOCK_DIR.'/xml/expected_1.json'),
                 array(\file_get_contents(PARSER_MOCK_DIR.'/xml/xml_2.xml'),
-                \file_get_contents(PARSER_MOCK_DIR.'/xml/expected_2.json'))
+                PARSER_MOCK_DIR.'/xml/expected_2.json')
         );
     }
 }
