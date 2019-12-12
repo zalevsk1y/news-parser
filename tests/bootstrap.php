@@ -10,6 +10,7 @@ define('PARSER_MOCK_DIR',__DIR__.'/mocks/Parser');
 define('UTILS_MOCK_DIR',__DIR__.'/mocks/Utils');
 define('TRAITS_MOCK_DIR',__DIR__.'/mocks/Traits');
 define('VIEW_MOCK_DIR',__DIR__.'/mocks/View');
+define('CONTROLLER_MOCK_DIR',__DIR__.'/mocks/Controller');
 
 
 if ( ! $_tests_dir ) {

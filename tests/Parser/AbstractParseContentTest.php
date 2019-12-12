@@ -1,7 +1,7 @@
 <?php
 
 
-namespace NewsParserPlugin\Parser 
+namespace NewsParserPlugin\Parser\Abstracts 
 {
 /**
  * Mock WP function wp_remote_get to avoid real downloading process.
@@ -29,7 +29,7 @@ namespace NewsParserPlugin\Parser
 }
 namespace NewsParserPlugin\Tests
 {
-    use NewsParserPlugin\Parser\AbstractParseContent;
+    use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 
 /**
  * Dump class to get access to protected method of abstract class.

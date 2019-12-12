@@ -14,7 +14,7 @@ namespace NewsParserPlugin\Parser;
  *
  */
 
-class HTMLRaw extends AbstractParseContent
+class HTMLRaw extends Abstracts\AbstractParseContent
 {
     /**
      * Init function.

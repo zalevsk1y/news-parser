@@ -4,6 +4,8 @@ namespace NewsParserPlugin\Utils;
  * Class format response in proper way.You can build a chain of 
  * method e.g. ->post($args)->message($args)->get() to get response at the end of chain add ::get() 
  *
+ * PHP version 5.6
+ * 
  * @package  Message
  * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
  * @license  MIT

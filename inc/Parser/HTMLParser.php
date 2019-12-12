@@ -18,7 +18,7 @@ use Sunra\PhpSimple\HtmlDomParser;
  *
  */
 
-class HTMLParser extends AbstractParseContent
+class HTMLParser extends Abstracts\AbstractParseContent
 {
     /**
      * instance of HtmlDomParser

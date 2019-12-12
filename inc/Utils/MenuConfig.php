@@ -5,6 +5,8 @@ namespace NewsParserPlugin\Utils;
 /**
  * Class load menu config file.
  * 
+ * PHP version 5.6
+ * 
  * @package Utils
  * @author  Evgeniy S.Zalevskiy <2600@ukr.net>
  * @license MIT https://opensource.org/licenses/MIT

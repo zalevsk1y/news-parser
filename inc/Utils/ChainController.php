@@ -14,7 +14,7 @@ namespace NewsParserPlugin\Utils;
  *             ->get()
  *
  *
- *
+ * PHP version 5.6
  *
  * @package  Message
  * @author   Evgeniy S.Zalevskiy <2600@ukr.net>

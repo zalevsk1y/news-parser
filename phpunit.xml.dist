@@ -14,7 +14,7 @@
 				<directory suffix=".php">inc/Core</directory>
 				<directory suffix=".php">inc/Message</directory>
 				<directory suffix=".php">inc/Interfaces</directory>
-				<directory suffix=".php">inc/Factories</directory>
+				<directory suffix=".php">inc/Factory</directory>
 			</exclude>
 		</whitelist>
 	</filter>

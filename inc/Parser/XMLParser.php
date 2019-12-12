@@ -18,7 +18,7 @@ use NewsParserPlugin\Traits\PipeTrait;
  *
  */
 
-class XMLParser extends AbstractParseContent 
+class XMLParser extends Abstracts\AbstractParseContent 
 {
     /**
      * Adds function with pipe factory.

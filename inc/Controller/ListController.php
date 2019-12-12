@@ -4,16 +4,14 @@ namespace NewsParserPlugin\Controller;
 use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Interfaces\ControllerInterface;
 use NewsParserPlugin\Interfaces\FactoryInterface;
-use NewsParserPlugin\Message\Error;
 use NewsParserPlugin\Message\Success;
-use NewsParserPlugin\Parser\AbstractParseContent;
+use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Utils\ResponseFormatter;
-use NewsParserPlugin\Utils\Settings;
 
 /**
- *Class creates and formats list from RSS feed
+ * Class creates and formats list from RSS feed
  *
- * PHP version 7.2.1
+ * PHP version 5.6
  *
  *
  * @package  Controller
@@ -24,18 +22,43 @@ use NewsParserPlugin\Utils\Settings;
 
 class ListController 
 {
+    /**
+     * Instance of list parser.
+     *
+     * @var AbstractParseContent
+     */
     protected $listParser;
-    protected $settings;
-    protected $formatter;
+    /**
+     * Factory for creating ListModel
+     *
+     * @var FactoryInterface
+     */
     protected $listFactory;
+    /**
+     * Instance of response formatter class.
+     *
+     * @var ResponseFormatter
+     */
     protected $formatResponse;
-    
+    /**
+     * Init function.
+     *
+     * @param AbstractParseContent $listParser
+     * @param ResponseFormatter $formatter
+     * @param FactoryInterface $listFactory
+     */
     public function __construct(AbstractParseContent $listParser, ResponseFormatter $formatter, FactoryInterface $listFactory)
     {
         $this->listParser = $listParser;
         $this->formatResponse = $formatter;
         $this->listFactory = $listFactory;
     }
+    /**
+     * Get formated list of posts.
+     * 
+     * @param string $url Url of the RSS source.
+     * @return string
+     */
     public function get(string $url)
     {
         try {

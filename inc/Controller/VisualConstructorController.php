@@ -2,7 +2,7 @@
 namespace NewsParserPlugin\Controller;
 
 use NewsParserPlugin\Exception\MyException;
-use NewsParserPlugin\Parser\AbstractParseContent;
+use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Message\Error;
 use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Interfaces\ControllerInterface;

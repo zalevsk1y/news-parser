@@ -1,5 +1,5 @@
 <?php
-namespace NewsParserPlugin\Parser;
+namespace NewsParserPlugin\Parser\Abstracts;
 
 use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Message\Errors;
@@ -12,7 +12,7 @@ use NewsParserPlugin\Message\Errors;
  *
  * PHP version 5.6
  *
- * @package  Parser
+ * @package  Parser\Abstracts
  * @author   Evgeniy S.Zalevskiy <2600@urk.net>
  * @license  MIT
  */

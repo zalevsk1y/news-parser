@@ -7,7 +7,7 @@ use NewsParserPlugin\Interfaces\FactoryInterface;
 use NewsParserPlugin\Message\Error;
 use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Models\PostModel;
-use NewsParserPlugin\Parser\AbstractParseContent;
+use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Utils\ResponseFormatter;
 
 
