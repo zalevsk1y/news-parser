@@ -25,7 +25,7 @@ class AdapterGutenbergTraitTest extends \WP_UnitTestCase
      * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::paragraph()
      * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::simpleText()
      * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::image()
-     * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::list()
+     * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::listBlock()
      */
     public function testCreateGutenbergBlocks($el,$expected)
     {

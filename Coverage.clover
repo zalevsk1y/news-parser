@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1576153062">
-  <project timestamp="1576153062">
+<coverage generated="1576153691">
+  <project timestamp="1576153691">
     <package name="NewsParserPlugin\Ajax">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Ajax/Ajax.php">
         <class name="Ajax" namespace="NewsParserPlugin\Ajax">
@@ -724,7 +724,7 @@
         <line num="125" type="stmt" count="1"/>
         <line num="126" type="stmt" count="1"/>
         <line num="127" type="stmt" count="1"/>
-        <line num="136" type="method" name="list" visibility="private" complexity="2" crap="2" count="1"/>
+        <line num="136" type="method" name="listBlock" visibility="private" complexity="2" crap="2" count="1"/>
         <line num="138" type="stmt" count="1"/>
         <line num="139" type="stmt" count="1"/>
         <line num="140" type="stmt" count="1"/>

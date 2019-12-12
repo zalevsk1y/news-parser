@@ -45,7 +45,7 @@ trait AdapterGutenbergTrait
                     $post_content.=$this->paragraph($el);
                     break;
                 case 'ul':
-                    $post_content.=$this->list($el);
+                    $post_content.=$this->listBlock($el);
                     break;
                 case 'iframe':
                     $post_content.=$this->youtubeVideo($el);
@@ -133,7 +133,7 @@ trait AdapterGutenbergTrait
      * @param array $el ['tagName'=>string,'content'=>[...[inner list text]]]
      * @return string
      */
-    private function list($el)
+    private function listBlock($el)
     {
         $list_begin='<!-- wp:list --><ul>';
         $list='';
