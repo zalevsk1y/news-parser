@@ -34,7 +34,7 @@ class ResponseFormatter {
      * @param array $data array of list objects
      * @return ResponseFormatter return this for chain building
      */
-    public function list($data){
+    public function rss($data){
         $this->action='list';
         $this->data['data']=$data;
         return $this;

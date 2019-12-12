@@ -41,7 +41,7 @@ class ListController
         try {
             $listData = $this->listParser->get($url);
             $list = $this->listFactory->get($listData);
-            $response = $this->formatResponse->list($list->getAttributes())->message('success', Success::text('RSS_LIST_PARSED'))->get('json');
+            $response = $this->formatResponse->rss($list->getAttributes())->message('success', Success::text('RSS_LIST_PARSED'))->get('json');
         } catch (MyException $e) {
             $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');
         }

@@ -25,10 +25,10 @@ class ResponseFormatterTest extends WP_UnitTestCase{
         $result=$this->instance->post($post_data)->get('array');
         $this->assertEquals($expected,$result);
     }
-    public function testList(){
+    public function testRss(){
         $list_data=array('item1'=>1);
         $expected=array_merge($this->data,array('data'=>$list_data));
-        $result=$this->instance->list($list_data)->get('array');
+        $result=$this->instance->rss($list_data)->get('array');
         $this->assertEquals($expected,$result);
     }
     public function testDialog(){
