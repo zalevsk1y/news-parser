@@ -8,7 +8,7 @@ use NewsParserPlugin\Utils\MenuConfig;
 /**
  * Main class.Initialize the plugin. Load settings.
  *
- * @package NewsParser
+ * @package Core
  * @author  Evgeny S.Zalevskiy <2600@ukr.net>
  * @license MIT <https://opensource.org/licenses/MIT>
  */

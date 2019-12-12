@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1576154032">
-  <project timestamp="1576154032">
+<coverage generated="1576157778">
+  <project timestamp="1576157778">
     <package name="NewsParserPlugin\Ajax">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Ajax/Ajax.php">
         <class name="Ajax" namespace="NewsParserPlugin\Ajax">
@@ -271,26 +271,26 @@
     <package name="NewsParserPlugin\Menu\Admin">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Menu/Admin/MenuPage.php">
         <class name="MenuPage" namespace="NewsParserPlugin\Menu\Admin">
-          <metrics complexity="5" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="17" coveredelements="0"/>
+          <metrics complexity="5" methods="4" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="6" elements="17" coveredelements="8"/>
         </class>
-        <line num="25" type="method" name="init" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="26" type="stmt" count="0"/>
-        <line num="27" type="stmt" count="0"/>
+        <line num="27" type="method" name="init" visibility="public" complexity="1" crap="2" count="0"/>
         <line num="28" type="stmt" count="0"/>
-        <line num="34" type="method" name="_addMainMenu" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="37" type="stmt" count="0"/>
+        <line num="29" type="stmt" count="0"/>
+        <line num="30" type="stmt" count="0"/>
+        <line num="36" type="method" name="addMainMenu" visibility="public" complexity="1" crap="2" count="0"/>
         <line num="38" type="stmt" count="0"/>
         <line num="39" type="stmt" count="0"/>
         <line num="40" type="stmt" count="0"/>
-        <line num="46" type="method" name="addSubMenus" visibility="protected" complexity="2" crap="6" count="0"/>
-        <line num="48" type="stmt" count="0"/>
-        <line num="49" type="stmt" count="0"/>
-        <line num="50" type="stmt" count="0"/>
-        <line num="51" type="stmt" count="0"/>
-        <line num="53" type="stmt" count="0"/>
-        <line num="60" type="method" name="getTemplateRender" visibility="protected" complexity="1" crap="2" count="0"/>
-        <line num="62" type="stmt" count="0"/>
-        <metrics loc="64" ncloc="36" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="17" coveredelements="0"/>
+        <line num="41" type="stmt" count="0"/>
+        <line num="47" type="method" name="addSubMenus" visibility="protected" complexity="2" crap="2" count="1"/>
+        <line num="49" type="stmt" count="1"/>
+        <line num="50" type="stmt" count="1"/>
+        <line num="51" type="stmt" count="1"/>
+        <line num="52" type="stmt" count="1"/>
+        <line num="54" type="stmt" count="1"/>
+        <line num="61" type="method" name="getTemplateRender" visibility="protected" complexity="1" crap="1" count="1"/>
+        <line num="63" type="stmt" count="1"/>
+        <metrics loc="65" ncloc="35" classes="1" methods="4" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="6" elements="17" coveredelements="8"/>
       </file>
     </package>
     <package name="NewsParserPlugin\Models">
@@ -997,6 +997,6 @@
         <metrics loc="68" ncloc="37" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="15" elements="20" coveredelements="16"/>
       </file>
     </package>
-    <metrics files="29" loc="2671" ncloc="1515" classes="29" methods="129" coveredmethods="59" conditionals="0" coveredconditionals="0" statements="673" coveredstatements="390" elements="802" coveredelements="449"/>
+    <metrics files="29" loc="2672" ncloc="1514" classes="29" methods="129" coveredmethods="61" conditionals="0" coveredconditionals="0" statements="673" coveredstatements="396" elements="802" coveredelements="457"/>
   </project>
 </coverage>
