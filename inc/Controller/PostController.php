@@ -32,7 +32,6 @@ class PostController extends BaseController
      * Init function
      *
      * @param AbstractParseContent $postParser
-     * @param string $formatter
      */
     public function __construct(AbstractParseContent $postParser)
     {

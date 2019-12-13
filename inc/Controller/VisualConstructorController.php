@@ -20,7 +20,6 @@ class VisualConstructorController extends BaseController
      * Init function.
      * 
      * @param AbstractParseContent $parser
-     * @param string $formatter
      */
     public function __construct(AbstractParseContent $parser)
     {

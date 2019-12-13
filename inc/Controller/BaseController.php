@@ -15,13 +15,12 @@ class BaseController
     /**
      * Factory class
      *
-     * @var modelFactory
+     * @var ModelsFactory
      */
     protected $modelsFactory;
     /**
      * Init function.
      *
-     * @param string|object $formatter
      */
     public function __construct()
     {

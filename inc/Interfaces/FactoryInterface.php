@@ -16,7 +16,6 @@ interface FactoryInterface{
     /**
      * Get instance of object
      *
-     * @param array $data
      * @return object
      */
     public static function getInstance();
