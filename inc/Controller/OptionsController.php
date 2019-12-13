@@ -34,15 +34,17 @@ class OptionsController
      */
     protected $formatResponse;
     /**
-     * Init function
+     * Init function.
      *
      * @param FactoryInterface $optionsFactory
-     * @param ResponseFormatter $formatter
+     * @param string $formatter
      */
-    public function __construct(FactoryInterface $optionsFactory,ResponseFormatter $formatter)
+    public function __construct(FactoryInterface $optionsFactory,$formatter=ResponseFormatter::class)
     {
         $this->optionsFactory=$optionsFactory;
-        $this->formatResponse=$formatter;
+        $interfaces=class_implements($formatter);
+        if(false===$interfaces||!in_array('NewsParserPlugin\Interfaces\ResponseFormatterInterface',$interfaces)) throw new \Exception('Wrong ResponseFormatter class was provide.Should implies ResponseFormatterInterface.');
+        $this->formatResponse=$formatter::format();
     }
     /**
      * Save received options.

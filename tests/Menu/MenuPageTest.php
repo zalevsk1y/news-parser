@@ -16,8 +16,6 @@ class MenuPageTest extends \WP_UnitTestCase
     /**
      * @covers NewsParserPlugin\Menu\Admin\MenuPage::addSubMenus()
      * @covers NewsParserPlugin\Menu\Admin\MenuPage::getTemplateRender()
-     *
-     * @return void
      */
     public function testAddMainMenu()
     {

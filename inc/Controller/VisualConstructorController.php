@@ -24,11 +24,13 @@ class VisualConstructorController {
      * Init function.
      *
      * @param AbstractParseContent $parser
-     * @param ResponseFormatter $formatter
+     * @param string $formatter
      */
-    public function __construct(AbstractParseContent $parser, ResponseFormatter $formatter){
+    public function __construct(AbstractParseContent $parser, $formatter=ResponseFormatter::class){
         $this->parser=$parser;
-        $this->formatResponse=$formatter;
+        $interfaces=class_implements($formatter);
+        if(false===$interfaces||!in_array('NewsParserPlugin\Interfaces\ResponseFormatterInterface',$interfaces)) throw new \Exception('Wrong ResponseFormatter class was provide.Should implies ResponseFormatterInterface.');
+        $this->formatResponse=$formatter::format();
     }
     /**
      * Parse raw html data of the page.

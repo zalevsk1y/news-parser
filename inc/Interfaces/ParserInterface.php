@@ -1,6 +1,7 @@
 <?php
 namespace NewsParserPlugin\Interfaces;
 
-interface ParserInterface{
+interface ParserInterface
+{
     public function get($data);
 }

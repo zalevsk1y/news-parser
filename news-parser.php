@@ -45,15 +45,15 @@ $modules['html_pattern_parser'] = new Parser\HTMLPatternParser( 3600);
 //---Controllers
 //--deps
 
-$modules['response_formatter'] = new Utils\ResponseFormatter();
+
 $modules['list_factory'] = new Factory\ListFactory();
 $modules['post_factory'] = new Factory\PostFactory();
 $modules['options_factory'] = new Factory\OptionsFactory();
 //--controllers
-$modules['list_controller'] = new Controller\ListController($modules['XML_parser'], $modules['response_formatter'], $modules['list_factory']);
-$modules['post_controller'] = new Controller\PostController($modules['html_pattern_parser'], $modules['options_factory'], $modules['response_formatter'], $modules['post_factory']);
-$module['option_controller']=new Controller\OptionsController($modules['options_factory'],$modules['response_formatter']);
-$modules['visual_constructor_controller']=new Controller\VisualConstructorController($modules['html_raw'],$modules['response_formatter']);
+$modules['list_controller'] = new Controller\ListController($modules['XML_parser'], $modules['list_factory']);
+$modules['post_controller'] = new Controller\PostController($modules['html_pattern_parser'], $modules['options_factory'],  $modules['post_factory']);
+$module['option_controller']=new Controller\OptionsController($modules['options_factory']);
+$modules['visual_constructor_controller']=new Controller\VisualConstructorController($modules['html_raw']);
 //---Ajax
 $modules['ajax_controller'] =  Ajax\AjaxController::getInstance($modules['list_controller'], $modules['visual_constructor_controller'],$modules['post_controller'],$module['option_controller']);
 \register_uninstall_hook(__FILE__, 'Utils\Settings::deleteSettings');

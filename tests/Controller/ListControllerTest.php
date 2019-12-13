@@ -50,7 +50,7 @@ namespace NewsParserPlugin\Tests
          */
         public function testGet($url,$expected)
         {
-            $list_controller=new ListController(new DummyListParser(10),new ResponseFormatter(),new ListFactory());
+            $list_controller=new ListController(new DummyListParser(10),new ListFactory());
             $result=$list_controller->get($url);
             $this->assertJsonStringEqualsJsonFile($expected,$result);
         }

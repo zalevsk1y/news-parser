@@ -1,5 +1,6 @@
 <?php
 namespace NewsParserPlugin\Utils;
+use NewsParserPlugin\Interfaces\ResponseFormatterInterface; 
 /**
  * Class format response in proper way.You can build a chain of 
  * method e.g. ->post($args)->message($args)->get() to get response at the end of chain add ::get() 
@@ -11,18 +12,29 @@ namespace NewsParserPlugin\Utils;
  * @license  MIT
  */
 
-class ResponseFormatter {
- 
+class ResponseFormatter implements ResponseFormatterInterface
+{
+    /**
+     * Base response format.
+     *
+     * @var array
+     */
     protected $data=array('err'=>0,'msg'=>false);
-    protected $action;
-/**
- * Format answer after post draw was created
- *
- * @param array $data should contain post_id,status,link
- * @return ResponseFormatter return this for chain building
- */
+    /**
+     * Return new instance of ResponseFormatter 
+     * 
+     * @return ResponseFormatter
+     */
+    public static function format(){
+        return new static();
+    }
+    /**
+     * Format answer after post draw was created
+     *
+     * @param array $data should contain post_id,status,link
+     * @return ResponseFormatter return this for chain building
+     */
     public function post($data){
-        $this->action='post';
         $this->data['data']=array(
             'post_id'=>$data['post_id'],
             'status'=>$data['status'],
@@ -37,7 +49,6 @@ class ResponseFormatter {
      * @return ResponseFormatter return this for chain building
      */
     public function rss($data){
-        $this->action='list';
         $this->data['data']=$data;
         return $this;
     }

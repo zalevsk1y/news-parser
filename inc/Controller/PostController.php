@@ -14,7 +14,7 @@ use NewsParserPlugin\Utils\ResponseFormatter;
 /**
  * Class controller for post
  *
- * PHP version 7.2.1
+ * PHP version 5.6
  *
  *
  * @package  Controller
@@ -32,12 +32,14 @@ class PostController
     protected $postParser;
 
 
-    public function __construct(AbstractParseContent $postParser, FactoryInterface $optionsFactory, ResponseFormatter $formatter, FactoryInterface $postFactory)
+    public function __construct(AbstractParseContent $postParser, FactoryInterface $optionsFactory, FactoryInterface $postFactory, $formatter=ResponseFormatter::class)
     {
         $this->postParser = $postParser;
         $this->optionsFactory = $optionsFactory;
-        $this->formatResponse = $formatter;
         $this->postFactory = $postFactory;
+        $interfaces=class_implements($formatter);
+        if(false===$interfaces||!in_array('NewsParserPlugin\Interfaces\ResponseFormatterInterface',$interfaces)) throw new \Exception('Wrong ResponseFormatter class was provide.Should implies ResponseFormatterInterface.');
+        $this->formatResponse=$formatter::format();
         
     }
     /**

@@ -44,14 +44,16 @@ class ListController
      * Init function.
      *
      * @param AbstractParseContent $listParser
-     * @param ResponseFormatter $formatter
      * @param FactoryInterface $listFactory
+     * @param string $formatter
      */
-    public function __construct(AbstractParseContent $listParser, ResponseFormatter $formatter, FactoryInterface $listFactory)
+    public function __construct(AbstractParseContent $listParser, FactoryInterface $listFactory,$formatter=ResponseFormatter::class)
     {
         $this->listParser = $listParser;
-        $this->formatResponse = $formatter;
         $this->listFactory = $listFactory;
+        $interfaces=class_implements($formatter);
+        if(false===$interfaces||!in_array('NewsParserPlugin\Interfaces\ResponseFormatterInterface',$interfaces)) throw new \Exception('Wrong ResponseFormatter class was provide.Should implies ResponseFormatterInterface.');
+        $this->formatResponse = $formatter::format();
     }
     /**
      * Get formated list of posts.
