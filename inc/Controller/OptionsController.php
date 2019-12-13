@@ -45,7 +45,6 @@ class OptionsController extends BaseController
         parent::__construct($formatter);
         $this->optionsFactory=$optionsFactory;
         $interfaces=class_implements($formatter);
-        $this->formatResponse = $this->initFormatter($formatter);
     }
     /**
      * Save received options.

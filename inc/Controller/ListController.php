@@ -46,7 +46,6 @@ class ListController extends BaseController
         parent::__construct($formatter);
         $this->listParser = $listParser;
         $this->listFactory = $listFactory;        
-        $this->formatResponse = $this->initFormatter($formatter);
     }
     /**
      * Get formated list of posts.

@@ -8,7 +8,7 @@ class BaseController
     /**
      * Instance of response formatter class.
      *
-     * @var ResponseFormatter
+     * @var ResponseFormatterInterface
      */
     protected $formatResponse;
     /**
@@ -32,11 +32,6 @@ class BaseController
         $interfaces=class_implements($formatterClass);
         if(false===$interfaces||!in_array('NewsParserPlugin\Interfaces\ResponseFormatterInterface',$interfaces)) throw new \Exception('Wrong ResponseFormatter class was provide.Should implies ResponseFormatterInterface.');
         $type=gettype($formatterClass);
-        switch($type){
-            case 'string':
-                return $formatterClass::format();
-            case 'object':
-                return $formatterClass;
-        }
+        return gettype($formatterClass)==='object'?$format:$formatterClass::format();
     }
 }

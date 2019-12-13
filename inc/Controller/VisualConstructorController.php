@@ -32,7 +32,6 @@ class VisualConstructorController extends BaseController
     {
         parent::__construct($formatter);
         $this->parser=$parser;
-        $this->formatResponse = $this->initFormatter($formatter);
     }
     /**
      * Parse raw html data of the page.
