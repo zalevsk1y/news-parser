@@ -20,7 +20,7 @@ use NewsParserPlugin\Utils\ResponseFormatter;
  *
  */
 
-class ListController 
+class ListController extends BaseController
 {
     /**
      * Instance of list parser.
@@ -35,12 +35,6 @@ class ListController
      */
     protected $listFactory;
     /**
-     * Instance of response formatter class.
-     *
-     * @var ResponseFormatter
-     */
-    protected $formatResponse;
-    /**
      * Init function.
      *
      * @param AbstractParseContent $listParser
@@ -49,15 +43,15 @@ class ListController
      */
     public function __construct(AbstractParseContent $listParser, FactoryInterface $listFactory,$formatter=ResponseFormatter::class)
     {
+        parent::__construct($formatter);
         $this->listParser = $listParser;
-        $this->listFactory = $listFactory;
-        $interfaces=class_implements($formatter);
-        if(false===$interfaces||!in_array('NewsParserPlugin\Interfaces\ResponseFormatterInterface',$interfaces)) throw new \Exception('Wrong ResponseFormatter class was provide.Should implies ResponseFormatterInterface.');
-        $this->formatResponse = $formatter::format();
+        $this->listFactory = $listFactory;        
+        $this->formatResponse = $this->initFormatter($formatter);
     }
     /**
      * Get formated list of posts.
      * 
+     * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @uses NewsParserPlugin\Interfaces\FactoryInterface::get()
      * @uses NewsParserPlugin\Utils\ResponseFormatter::message()
      * @uses NewsParserPlugin\Utils\ResponseFormatter::rss()

@@ -22,30 +22,35 @@ use NewsParserPlugin\Utils\ResponseFormatter;
  * @license  MIT
  *
  */
-class PostController 
+class PostController extends BaseController
 {
     protected $postFactory;
     protected $postData;
     protected $optionsFactory;
     protected $options;
-    protected $formatResponse;
     protected $postParser;
 
-
+    /**
+     * Undocumented function
+     *
+     * @uses InitFormatterTrait::InitFormatter()
+     * @param AbstractParseContent $postParser
+     * @param FactoryInterface $optionsFactory
+     * @param FactoryInterface $postFactory
+     * @param [type] $formatter
+     */
     public function __construct(AbstractParseContent $postParser, FactoryInterface $optionsFactory, FactoryInterface $postFactory, $formatter=ResponseFormatter::class)
     {
+        parent::__construct($formatter);
         $this->postParser = $postParser;
         $this->optionsFactory = $optionsFactory;
         $this->postFactory = $postFactory;
-        $interfaces=class_implements($formatter);
-        if(false===$interfaces||!in_array('NewsParserPlugin\Interfaces\ResponseFormatterInterface',$interfaces)) throw new \Exception('Wrong ResponseFormatter class was provide.Should implies ResponseFormatterInterface.');
-        $this->formatResponse=$formatter::format();
-        
     }
     /**
      * Create post draft and return response in proper format
      * All facade of PostModel class methods created for convenience of using in pipe
      *
+     * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @param string $url of post that should be parsed and saved as draft
      * @return void
      */

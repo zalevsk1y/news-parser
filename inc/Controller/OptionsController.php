@@ -7,6 +7,7 @@ use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Message\Success;
 
+
 /**
  * Class saves received options.
  *
@@ -19,7 +20,7 @@ use NewsParserPlugin\Message\Success;
  *
  */
 
-class OptionsController
+class OptionsController extends BaseController
 {
     /**
      * Factory for creating OptionsModel.
@@ -41,14 +42,15 @@ class OptionsController
      */
     public function __construct(FactoryInterface $optionsFactory,$formatter=ResponseFormatter::class)
     {
+        parent::__construct($formatter);
         $this->optionsFactory=$optionsFactory;
         $interfaces=class_implements($formatter);
-        if(false===$interfaces||!in_array('NewsParserPlugin\Interfaces\ResponseFormatterInterface',$interfaces)) throw new \Exception('Wrong ResponseFormatter class was provide.Should implies ResponseFormatterInterface.');
-        $this->formatResponse=$formatter::format();
+        $this->formatResponse = $this->initFormatter($formatter);
     }
     /**
      * Save received options.
      *
+     * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @uses NewsParserPlugin\Interfaces\FactoryInterface::get()
      * @uses NewsParserPlugin\Utils\ResponseFormatter::message()
      * @uses NewsParserPlugin\Utils\ResponseFormatter::error()

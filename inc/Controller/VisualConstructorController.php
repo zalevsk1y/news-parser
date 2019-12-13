@@ -7,7 +7,9 @@ use NewsParserPlugin\Message\Error;
 use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Interfaces\ControllerInterface;
 
-class VisualConstructorController {
+
+class VisualConstructorController extends BaseController
+{
     /**
      * Response formatter.
      *
@@ -22,19 +24,20 @@ class VisualConstructorController {
     protected $parser;
     /**
      * Init function.
-     *
+     * 
      * @param AbstractParseContent $parser
      * @param string $formatter
      */
-    public function __construct(AbstractParseContent $parser, $formatter=ResponseFormatter::class){
+    public function __construct(AbstractParseContent $parser, $formatter=ResponseFormatter::class)
+    {
+        parent::__construct($formatter);
         $this->parser=$parser;
-        $interfaces=class_implements($formatter);
-        if(false===$interfaces||!in_array('NewsParserPlugin\Interfaces\ResponseFormatterInterface',$interfaces)) throw new \Exception('Wrong ResponseFormatter class was provide.Should implies ResponseFormatterInterface.');
-        $this->formatResponse=$formatter::format();
+        $this->formatResponse = $this->initFormatter($formatter);
     }
     /**
      * Parse raw html data of the page.
      *
+     * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @param string $url Url of the page.
      * @param array $options Array of options.
      * @return string
@@ -51,6 +54,7 @@ class VisualConstructorController {
     /**
      * Saves attached media.
      *
+     * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @param string $url Url of image that should be download.
      * @param string $postId Post id.
      * @param string $alt Description of image.
