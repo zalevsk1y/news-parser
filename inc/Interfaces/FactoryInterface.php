@@ -19,5 +19,8 @@ interface FactoryInterface{
      * @param array $data
      * @return object
      */
-    public function get($data);
+    public static function getInstance();
+    public function listModel($data);
+    public function optionsModel($url);
+    public function postModel($data);
 }

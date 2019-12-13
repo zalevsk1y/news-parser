@@ -24,31 +24,24 @@ use NewsParserPlugin\Utils\ResponseFormatter;
  */
 class PostController extends BaseController
 {
-    protected $postFactory;
     protected $postData;
-    protected $optionsFactory;
     protected $options;
     protected $postParser;
 
     /**
-     * Undocumented function
+     * Init function
      *
-     * @uses InitFormatterTrait::InitFormatter()
      * @param AbstractParseContent $postParser
-     * @param FactoryInterface $optionsFactory
-     * @param FactoryInterface $postFactory
-     * @param [type] $formatter
+     * @param string $formatter
      */
-    public function __construct(AbstractParseContent $postParser, FactoryInterface $optionsFactory, FactoryInterface $postFactory, $formatter=ResponseFormatter::class)
+    public function __construct(AbstractParseContent $postParser)
     {
-        parent::__construct($formatter);
+        parent::__construct();
         $this->postParser = $postParser;
-        $this->optionsFactory = $optionsFactory;
-        $this->postFactory = $postFactory;
+
     }
     /**
      * Create post draft and return response in proper format
-     * All facade of PostModel class methods created for convenience of using in pipe
      *
      * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @param string $url of post that should be parsed and saved as draft
@@ -59,7 +52,7 @@ class PostController extends BaseController
         try {
             $parsed_url=parse_url($url);
             if(!is_array($parsed_url)) throw new MyException (Errors::text('WRONG_OPTIONS_URL'));
-            $parsing_options=$this->optionsFactory->get($parsed_url);
+            $parsing_options=$this->modelsFactory->optionsModel($parsed_url);
             $parsed_data =$this->postParser->get($url,$parsing_options->getAttributes('array'));
            
             $parsed_data['authorId'] = \get_current_user_id();
@@ -68,7 +61,7 @@ class PostController extends BaseController
 
             $parsed_data['sourceUrl'] = $url;
          
-            $post = $this->postFactory->get($parsed_data);
+            $post = $this->modelsFactory->postModel($parsed_data);
  
             //Stages of post draw creating
             $this->createDraft($post)->addSource($post)->addPostThumbnail($post);

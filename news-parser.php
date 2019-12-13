@@ -42,17 +42,10 @@ $modules['html_raw']=new Parser\HTMLRaw(600);
 //--vendor HTML parser
 $modules['html_parser'] = new Parser\HTMLParser( 3600);
 $modules['html_pattern_parser'] = new Parser\HTMLPatternParser( 3600);
-//---Controllers
-//--deps
-
-
-$modules['list_factory'] = new Factory\ListFactory();
-$modules['post_factory'] = new Factory\PostFactory();
-$modules['options_factory'] = new Factory\OptionsFactory();
 //--controllers
-$modules['list_controller'] = new Controller\ListController($modules['XML_parser'], $modules['list_factory']);
-$modules['post_controller'] = new Controller\PostController($modules['html_pattern_parser'], $modules['options_factory'],  $modules['post_factory']);
-$module['option_controller']=new Controller\OptionsController($modules['options_factory']);
+$modules['list_controller'] = new Controller\ListController($modules['XML_parser']);
+$modules['post_controller'] = new Controller\PostController($modules['html_pattern_parser']);
+$module['option_controller']=new Controller\OptionsController();
 $modules['visual_constructor_controller']=new Controller\VisualConstructorController($modules['html_raw']);
 //---Ajax
 $modules['ajax_controller'] =  Ajax\AjaxController::getInstance($modules['list_controller'], $modules['visual_constructor_controller'],$modules['post_controller'],$module['option_controller']);

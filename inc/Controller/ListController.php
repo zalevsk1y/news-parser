@@ -29,28 +29,20 @@ class ListController extends BaseController
      */
     protected $listParser;
     /**
-     * Factory for creating ListModel
-     *
-     * @var FactoryInterface
-     */
-    protected $listFactory;
-    /**
      * Init function.
      *
      * @param AbstractParseContent $listParser
-     * @param FactoryInterface $listFactory
-     * @param string $formatter
      */
-    public function __construct(AbstractParseContent $listParser, FactoryInterface $listFactory,$formatter=ResponseFormatter::class)
+    public function __construct(AbstractParseContent $listParser)
     {
-        parent::__construct($formatter);
-        $this->listParser = $listParser;
-        $this->listFactory = $listFactory;        
+        parent::__construct();
+        $this->listParser = $listParser;      
     }
     /**
      * Get formated list of posts.
      * 
      * @uses NewsParserPlugin\Controller\BaseController::formatResponse
+     * @uses NewsParserPlugin\Controller\BaseController::modelsFactory
      * @uses NewsParserPlugin\Interfaces\FactoryInterface::get()
      * @uses NewsParserPlugin\Utils\ResponseFormatter::message()
      * @uses NewsParserPlugin\Utils\ResponseFormatter::rss()
@@ -65,7 +57,7 @@ class ListController extends BaseController
     {
         try {
             $listData = $this->listParser->get($url);
-            $list = $this->listFactory->get($listData);
+            $list = $this->modelsFactory->listModel($listData);
             $response = $this->formatResponse->rss($list->getAttributes())->message('success', Success::text('RSS_LIST_PARSED'))->get('json');
         } catch (MyException $e) {
             $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');

@@ -1,6 +1,6 @@
 <?php
 namespace NewsParserPlugin\Utils;
-use NewsParserPlugin\Interfaces\ResponseFormatterInterface; 
+
 /**
  * Class format response in proper way.You can build a chain of 
  * method e.g. ->post($args)->message($args)->get() to get response at the end of chain add ::get() 
@@ -12,7 +12,7 @@ use NewsParserPlugin\Interfaces\ResponseFormatterInterface;
  * @license  MIT
  */
 
-class ResponseFormatter implements ResponseFormatterInterface
+class ResponseFormatter 
 {
     /**
      * Base response format.
@@ -25,7 +25,7 @@ class ResponseFormatter implements ResponseFormatterInterface
      * 
      * @return ResponseFormatter
      */
-    public static function format(){
+    public static function getInstance(){
         return new static();
     }
     /**

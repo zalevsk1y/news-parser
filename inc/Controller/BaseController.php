@@ -1,24 +1,32 @@
 <?php
 
 namespace NewsParserPlugin\Controller;
-
+use NewsParserPlugin\Utils\ResponseFormatter;
+use NewsParserPlugin\Factory\ModelsFactory;
 
 class BaseController
 {
     /**
      * Instance of response formatter class.
      *
-     * @var ResponseFormatterInterface
+     * @var ResponseFormatter
      */
     protected $formatResponse;
+    /**
+     * Factory class
+     *
+     * @var modelFactory
+     */
+    protected $modelsFactory;
     /**
      * Init function.
      *
      * @param string|object $formatter
      */
-    public function __construct($formatter)
+    public function __construct()
     {
-        $this->formatResponse=$this->initFormatter($formatter);
+        $this->formatResponse=ResponseFormatter::getInstance();
+        $this->modelsFactory=ModelsFactory::getInstance();
     }
     /**
     * Check Formatter class and return object of it.

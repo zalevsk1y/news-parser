@@ -11,12 +11,6 @@ use NewsParserPlugin\Interfaces\ControllerInterface;
 class VisualConstructorController extends BaseController
 {
     /**
-     * Response formatter.
-     *
-     * @var ResponseFormatter
-     */
-    protected $formatResponse;
-    /**
      * Parser 
      *
      * @var AbstractParseContent
@@ -28,9 +22,9 @@ class VisualConstructorController extends BaseController
      * @param AbstractParseContent $parser
      * @param string $formatter
      */
-    public function __construct(AbstractParseContent $parser, $formatter=ResponseFormatter::class)
+    public function __construct(AbstractParseContent $parser)
     {
-        parent::__construct($formatter);
+        parent::__construct();
         $this->parser=$parser;
     }
     /**
