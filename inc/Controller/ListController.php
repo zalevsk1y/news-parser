@@ -56,10 +56,17 @@ class ListController
     /**
      * Get formated list of posts.
      * 
+     * @uses NewsParserPlugin\Interfaces\FactoryInterface::get()
+     * @uses NewsParserPlugin\Utils\ResponseFormatter::message()
+     * @uses NewsParserPlugin\Utils\ResponseFormatter::rss()
+     * @uses NewsParserPlugin\Utils\ResponseFormatter::error()
+     * @uses NewsParserPlugin\Utils\ResponseFormatter::get()
+     * @uses NewsParserPlugin\Parser\Abstracts\AbstractParseContent::get()
+     * @uses NewsParserPlugin\Interfaces\ModelInterface::getAttribute()
      * @param string $url Url of the RSS source.
      * @return string
      */
-    public function get(string $url)
+    public function get($url)
     {
         try {
             $listData = $this->listParser->get($url);

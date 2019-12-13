@@ -37,6 +37,9 @@ class Errors
                 return \__('No Body', NEWS_PARSER_PLUGIN_SLUG);
             case 'SETTINGS_CANNOT_BE_SAVED':
                 return \__('Sorry temporary settings cannot be saved', NEWS_PARSER_PLUGIN_SLUG);
+                case 'OPTIONS_WRONG_FORMAT':
+                return \__('Options could not be saved.Wrong options format.', NEWS_PARSER_PLUGIN_SLUG);
+                
         }
 
     }

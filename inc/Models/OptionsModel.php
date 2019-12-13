@@ -64,13 +64,13 @@ class OptionsModel implements ModelInterface
     /**
      * Save options using wp function update_option.
      *
-     * @throws \Exception if options have wrong format.
+     * @throws MyException if options have wrong format.
      * @param array $options
      * @return boolean
      */
     public function save($options)
     {
-        if(!isset($options['extraOptions'])||!isset($options['template'])) throw new \Exception('Options could not be saved.Wrong options format.');
+        if(!isset($options['extraOptions'])||!isset($options['template'])) throw new MyException(Errors::text('OPTIONS_WRONG_FORMAT'));
         $data=array(
             'extraOptions'=>$options['extraOptions'],
             'template'=>$options['template']
@@ -116,13 +116,13 @@ class OptionsModel implements ModelInterface
     /**
      * Get all options in needed format.
      *
-     * @throws myException if there is no options for that url.
+     * @throws MyException if there is no options for that url.
      * @param string $format accept array|object|json.
      * @return array|object|string
      */
     public function getAttributes($format){
         $options=$this->get();
-        if(!$options) throw new myException(Errors::text('NO_TEMPLATE'));
+        if(!$options) throw new MyException(Errors::text('NO_TEMPLATE'));
         $data=array(
             'extraOptions'=>$options['extraOptions'],
             'template'=>$options['template']
