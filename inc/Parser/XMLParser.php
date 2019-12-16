@@ -4,8 +4,7 @@ namespace NewsParserPlugin\Parser;
 
 use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Message\Errors;
-use NewsParserPlugin\Traits\ChainTrait;
-use NewsParserPlugin\Traits\PipeTrait;
+
 
 /**
  * Class for parsing XML files (using libxml) from rss-feed to get list of posts.
@@ -20,18 +19,6 @@ use NewsParserPlugin\Traits\PipeTrait;
 
 class XMLParser extends Abstracts\AbstractParseContent 
 {
-    /**
-     * Adds function with pipe factory.
-     * 
-     * @method protected pipe() Function factory for Utils\PipeController creation.
-     */
-    use PipeTrait;
-    /**
-     * Adds function with chain factory.
-     * 
-     * @method protected chain() Function factory for Utils\PipeController creation.
-     */
-    use ChainTrait;
     /**
     * Init function
     *
@@ -124,7 +111,7 @@ class XMLParser extends Abstracts\AbstractParseContent
     /**
      * Parse description of the post and cut it to 150 symbols
      *
-     * @uses PipeTrait::pipe()
+     * @uses AbstractParseContent::pipe()
      * @param string|object $data 
      * @return string
      */
@@ -149,7 +136,7 @@ class XMLParser extends Abstracts\AbstractParseContent
      * <media:content> http://www.rssboard.org/media-rss#media-content
      * <description> search image tag in description using regular expression
      *
-     * @uses ChainTrait::chain()
+     * @uses AbstractParseContent::chain()
      * @param \SimpleXMLElement $xml Object created by simplexml_load_string() function
      * @param string $text
      * @return string image url or default image rl image if false
@@ -167,7 +154,7 @@ class XMLParser extends Abstracts\AbstractParseContent
     /**
      * Cutting text
      *
-     * @uses PipeTrait::pipe()
+     * @uses AbstractParseContent::pipe()
      * @param int $length length of string
      * @param string $text text to cut
      * @return string

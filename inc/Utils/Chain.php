@@ -20,7 +20,7 @@ namespace NewsParserPlugin\Utils;
  * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
  * @license  MIT
  */
-class ChainController
+class Chain
 {
     protected $obj;
     protected $result;

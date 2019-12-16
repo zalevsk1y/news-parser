@@ -3,7 +3,8 @@ namespace NewsParserPlugin\Parser\Abstracts;
 
 use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Message\Errors;
-
+use NewsParserPlugin\Utils\Pipe;
+use NewsParserPlugin\Utils\Chain;
 /**
  * Base abstract class for parser.
  * Download data
@@ -119,5 +120,27 @@ abstract class AbstractParseContent
      */
     public function removeStyleTags($data){
         return preg_replace('/<style(>|.)[\s\S]*?<\/style\>/i','',$data);
+    }
+     /**
+     * Factory for chain building class. use  get() function at the end to get result.
+     *
+     * @param object|null object which methods will be called in chain.
+     * 
+     * @return ChainController ChainController
+     */
+    protected function chain($object=null)
+    {
+        $object=is_null($object)?$this:$object;
+        return new Chain($object);
+    }
+     /**
+     * Function factory for Utils\Pipe
+     *
+     * @param $input_data data that would be transferred thru the pipe
+     * @return Pipe
+     */
+    protected function pipe($input_data)
+    {
+        return new Pipe($this,$input_data);
     }
 }

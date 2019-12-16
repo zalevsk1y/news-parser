@@ -21,7 +21,7 @@ namespace NewsParserPlugin\Utils;
  * @license  MIT
  */
 
-class PipeController
+class Pipe
 {
     protected $result;
     protected $obj;

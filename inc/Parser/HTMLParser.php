@@ -1,8 +1,7 @@
 <?php
 namespace NewsParserPlugin\Parser;
 
-use NewsParserPlugin\Traits\ChainTrait;
-use NewsParserPlugin\Traits\PipeTrait;
+
 use Sunra\PhpSimple\HtmlDomParser;
 /**
  * HTML parser class
@@ -48,18 +47,6 @@ class HTMLParser extends Abstracts\AbstractParseContent
      * @var [type]
      */
     protected $options;
-    /**
-     * Adds function with pipe factory.
-     * 
-     * @method protected pipe() Function factory for Utils\PipeController creation.
-     */
-    use PipeTrait;
-    /**
-     * Adds function with chain factory.
-     * 
-     * @method protected chain() Function factory for Utils\PipeController creation.
-     */
-    use ChainTrait;
 
     /**
      * Init function.
@@ -77,7 +64,7 @@ class HTMLParser extends Abstracts\AbstractParseContent
      * [image] - post main image url @string
      * [body] - post content @string|@array
      * 
-     * @uses PipeTrait::pipe()
+     * @uses AbstractParseContent::pipe()
      * @param string $data HTML data.
      * @param array $options template options for parsing post content. 
      * @return array
@@ -100,7 +87,7 @@ class HTMLParser extends Abstracts\AbstractParseContent
     /**
      * Parse post title based on both OpenGraph marks and inside h1 tag.
      * 
-     * @uses ChainTrait::chain()
+     * @usesAbstractParseContent::chain()
      * @return false|string
      */
 
@@ -117,7 +104,7 @@ class HTMLParser extends Abstracts\AbstractParseContent
     /**
      * Parse main image of the post based on Open Graphe protocol and simple image tag search .
      *
-     * @uses ChainTrait::chain()
+     * @uses AbstractParseContent::chain()
      * @return false|string Image url
      */
 
