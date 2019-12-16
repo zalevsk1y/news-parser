@@ -41,7 +41,7 @@ class ControllersFactory implements FactoryInterface
      * @param ResponseFormatter $formatter
      * @param FactoryInterface $parserFactory
      */
-    function __construct(ResponseFormatter $formatter,FactoryInterface $parserFactory)
+    public function __construct(ResponseFormatter $formatter,FactoryInterface $parserFactory)
     {
         $this->formatter=$formatter;
         $this->parser=$parserFactory;
@@ -57,7 +57,7 @@ class ControllersFactory implements FactoryInterface
     {
         switch($class){
             case 'list':
-                return $this->list();
+                return $this->rssList();
             case 'post':
                 return $this->options();
             case 'options':
@@ -72,7 +72,7 @@ class ControllersFactory implements FactoryInterface
      *
      * @return ListController
      */
-    protected function list()
+    protected function rssList()
     {
         return new ListController($this->parser->getInstance('xml'),$this->formatter);
     }

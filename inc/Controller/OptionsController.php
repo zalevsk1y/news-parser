@@ -2,7 +2,6 @@
 namespace NewsParserPlugin\Controller;
 
 use NewsParserPlugin\Exception\MyException;
-use NewsParserPlugin\Interfaces\FactoryInterface;
 use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Message\Success;
@@ -36,7 +35,6 @@ class OptionsController extends BaseController
      *
      * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @uses NewsParserPlugin\Controller\BaseController::modelsFactory
-     * @uses NewsParserPlugin\Interfaces\FactoryInterface::get()
      * @uses NewsParserPlugin\Utils\ResponseFormatter::message()
      * @uses NewsParserPlugin\Utils\ResponseFormatter::error()
      * @uses NewsParserPlugin\Utils\ResponseFormatter::get()
@@ -67,7 +65,7 @@ class OptionsController extends BaseController
     * [host] - host name 
     * [path] - path to resource
     * [fragment] - path fragment
-    * @return NewsParserPlugin\Models\OptionsModel
+    * @return OptionsModel
     */
     public function modelsFactory($url){
         return new OptionsModel($url['host']);

@@ -2,8 +2,6 @@
 namespace NewsParserPlugin\Controller;
 
 use NewsParserPlugin\Exception\MyException;
-use NewsParserPlugin\Interfaces\ControllerInterface;
-use NewsParserPlugin\Interfaces\FactoryInterface;
 use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Utils\ResponseFormatter;
@@ -50,7 +48,6 @@ class ListController extends BaseController
      * 
      * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @uses NewsParserPlugin\Controller\BaseController::modelsFactory
-     * @uses NewsParserPlugin\Interfaces\FactoryInterface::get()
      * @uses NewsParserPlugin\Utils\ResponseFormatter::message()
      * @uses NewsParserPlugin\Utils\ResponseFormatter::rss()
      * @uses NewsParserPlugin\Utils\ResponseFormatter::error()
@@ -74,14 +71,14 @@ class ListController extends BaseController
     /**
     * Get instance of ListModel class.
     *
-    * @param array $data  Structure:
+    * @param array $listData  Structure:
     * [title] - title of post
     * [pubDate] -date of post publication
     * [description] -post brief description
     * [link] - link to the original post
     * [image] - main post image url
     * [status] - status of post parsed - if post was not saved as draft and draft -when post saved as draft
-    * @return NewsParserPlugin\Models\ListModel
+    * @return ListModel
     */
     protected function modelFactory($listData){
         return new ListModel($listData);

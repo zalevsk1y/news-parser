@@ -2,16 +2,14 @@
 namespace NewsParserPlugin\Controller;
 
 use NewsParserPlugin\Exception\MyException;
-use NewsParserPlugin\Interfaces\ControllerInterface;
-use NewsParserPlugin\Interfaces\FactoryInterface;
-use NewsParserPlugin\Message\Error;
+use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Models\PostModel;
 use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Utils\ResponseFormatter;
 
 /**
- * Class controller for post
+ * Class controller for post parsing.
  *
  * PHP version 5.6
  *
@@ -23,7 +21,8 @@ use NewsParserPlugin\Utils\ResponseFormatter;
  */
 class PostController extends BaseController
 {
-    protected $postData;
+
+    
     protected $options;
     protected $postParser;
 
@@ -119,7 +118,7 @@ class PostController extends BaseController
     * [body] - post content @string|@array
     * [sourceUrl]-url of source page @string
     * [authorId]- id of wp-post author
-    * @return NewsParserPlugin\Models\PostModel
+    * @return PostModel
     */
     public function postModelsFactory($data){
         return new PostModel($data);
@@ -132,7 +131,7 @@ class PostController extends BaseController
     * [host] - host name 
     * [path] - path to resource
     * [fragment] - path fragment
-    * @return NewsParserPlugin\Models\OptionsModel
+    * @return OptionsModel
     */
     public function optionsModelsFactory($url){
         return new OptionsModel($url['host']);
