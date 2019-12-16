@@ -65,7 +65,7 @@ class HTMLParser extends Abstracts\AbstractParseContent
      * Init function.
      *
      */
-    public function __construct($cache_expiration = 600)
+    public function __construct($cache_expiration = 3600)
     {
         parent::__construct($cache_expiration);
        

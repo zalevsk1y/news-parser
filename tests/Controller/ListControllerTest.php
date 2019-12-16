@@ -17,6 +17,7 @@ namespace NewsParserPlugin\Tests
     use NewsParserPlugin\Controller\ListController;
     use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
     use NewsParserPlugin\Exception\MyException;
+    use NewsParserPlugin\Utils\ResponseFormatter;
 
     class DummyListParser extends AbstractParseContent
     {
@@ -48,7 +49,7 @@ namespace NewsParserPlugin\Tests
          */
         public function testGet($url,$expected)
         {
-            $list_controller=new ListController(new DummyListParser(10));
+            $list_controller=new ListController(new DummyListParser(10),new ResponseFormatter);
             $result=$list_controller->get($url);
             $this->assertJsonStringEqualsJsonFile($expected,$result);
         }

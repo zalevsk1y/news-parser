@@ -30,7 +30,7 @@ class HTMLPatternParser extends HTMLParser
      *
      * @param integer $cache_expiration cache expiration time.
      */
-    public function __construct( $cache_expiration = 600){
+    public function __construct( $cache_expiration = 3600){
         parent::__construct($cache_expiration);
     }
     /**

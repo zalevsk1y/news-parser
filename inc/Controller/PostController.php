@@ -10,7 +10,6 @@ use NewsParserPlugin\Models\PostModel;
 use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Utils\ResponseFormatter;
 
-
 /**
  * Class controller for post
  *
@@ -33,9 +32,9 @@ class PostController extends BaseController
      *
      * @param AbstractParseContent $postParser
      */
-    public function __construct(AbstractParseContent $postParser)
+    public function __construct(AbstractParseContent $postParser,ResponseFormatter $formatter)
     {
-        parent::__construct();
+        parent::__construct($formatter);
         $this->postParser = $postParser;
 
     }
@@ -51,7 +50,7 @@ class PostController extends BaseController
         try {
             $parsed_url=parse_url($url);
             if(!is_array($parsed_url)) throw new MyException (Errors::text('WRONG_OPTIONS_URL'));
-            $parsing_options=$this->modelsFactory->optionsModel($parsed_url);
+            $parsing_options=$this->optionsModelsFactory($parsed_url);
             $parsed_data =$this->postParser->get($url,$parsing_options->getAttributes('array'));
            
             $parsed_data['authorId'] = \get_current_user_id();
@@ -60,7 +59,7 @@ class PostController extends BaseController
 
             $parsed_data['sourceUrl'] = $url;
          
-            $post = $this->modelsFactory->postModel($parsed_data);
+            $post = $this->postModelsFactory($parsed_data);
  
             //Stages of post draw creating
             $this->createDraft($post)->addSource($post)->addPostThumbnail($post);
@@ -111,6 +110,32 @@ class PostController extends BaseController
         }
         return $this;
     }
-   
+   /**
+    * Get instance of PostModel class.
+    *
+    * @param array $data Structure: 
+    * [title] - post title @string
+    * [image] - post main image url @string
+    * [body] - post content @string|@array
+    * [sourceUrl]-url of source page @string
+    * [authorId]- id of wp-post author
+    * @return NewsParserPlugin\Models\PostModel
+    */
+    public function postModelsFactory($data){
+        return new PostModel($data);
+    }
+    /**
+    * Get instance of OptionsModel class.
+    *
+    * @param array $url Structure:
+    * [scheme] - protocol
+    * [host] - host name 
+    * [path] - path to resource
+    * [fragment] - path fragment
+    * @return NewsParserPlugin\Models\OptionsModel
+    */
+    public function optionsModelsFactory($url){
+        return new OptionsModel($url['host']);
+    }
 
 }

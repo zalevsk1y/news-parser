@@ -36,17 +36,11 @@ $modules['menu_config']=new Utils\MenuConfig(NEWS_PARSER_PLUGIN_DIR.'menu-config
 //---Admin menu modules
 $modules['menu_page'] = new Menu\Admin\MenuPage();
 $modules['main'] = new Core\Main($modules['menu_page'],$modules['menu_config']);
-//---Parser modules
-$modules['XML_parser'] = new Parser\XMLParser();
-$modules['html_raw']=new Parser\HTMLRaw(600);
-//--vendor HTML parser
-$modules['html_parser'] = new Parser\HTMLParser( 3600);
-$modules['html_pattern_parser'] = new Parser\HTMLPatternParser( 3600);
-//--controllers
-$modules['list_controller'] = new Controller\ListController($modules['XML_parser']);
-$modules['post_controller'] = new Controller\PostController($modules['html_pattern_parser']);
-$module['option_controller']=new Controller\OptionsController();
-$modules['visual_constructor_controller']=new Controller\VisualConstructorController($modules['html_raw']);
-//---Ajax
-$modules['ajax_controller'] =  Ajax\AjaxController::getInstance($modules['list_controller'], $modules['visual_constructor_controller'],$modules['post_controller'],$module['option_controller']);
+//Response formatter
+$modules['response_formatter'] = new Utils\ResponseFormatter();
+//Factories
+$modules['parser_factory']=new Factory\ParserFactory();
+$modules['controllers_factory']=new Factory\ControllersFactory($modules['response_formatter'],$modules['parser_factory']);
+//---Ajax Singleton
+$modules['ajax_controller'] =  Ajax\AjaxController::getInstance($modules['controllers_factory']);
 \register_uninstall_hook(__FILE__, 'Utils\Settings::deleteSettings');

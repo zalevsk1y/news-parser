@@ -6,7 +6,7 @@ use NewsParserPlugin\Interfaces\FactoryInterface;
 use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Message\Success;
-
+use NewsParserPlugin\Models\OptionsModel;
 
 /**
  * Class saves received options.
@@ -27,9 +27,9 @@ class OptionsController extends BaseController
      * Init function.
      *
      */
-    public function __construct()
+    public function __construct(ResponseFormatter $formatter)
     {
-        parent::__construct();
+        parent::__construct($formatter);
     }
     /**
      * Save received options.
@@ -50,7 +50,7 @@ class OptionsController extends BaseController
         $parsed_url=parse_url($url);
         try{
             if(!is_array($parsed_url)) throw new MyException (Errors::text('WRONG_OPTIONS_URL'));
-            $optionsModel=$this->modelsFactory->optionsModel($parsed_url);
+            $optionsModel=$this->modelsFactory($parsed_url);
             $optionsModel->save($options);
             $response=$this->formatResponse->message('success',Success::text('TEMPLATE_SAVED'))->get('json');
             
@@ -59,5 +59,18 @@ class OptionsController extends BaseController
         }    
         return $response;
     }
-    
+     /**
+    * Get instance of OptionsModel class.
+    *
+    * @param array $url Structure:
+    * [scheme] - protocol
+    * [host] - host name 
+    * [path] - path to resource
+    * [fragment] - path fragment
+    * @return NewsParserPlugin\Models\OptionsModel
+    */
+    public function modelsFactory($url){
+        return new OptionsModel($url['host']);
+    }
+
 }

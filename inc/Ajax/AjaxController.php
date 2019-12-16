@@ -8,6 +8,8 @@ use NewsParserPlugin\Controller\OptionsController;
 use NewsParserPlugin\Traits\ValidateDataTrait;
 use NewsParserPlugin\Traits\SanitizeDataTrait;
 use NewsParserPlugin\Ajax\Ajax;
+use NewsParserPlugin\Factory\ControllersFactory;
+use NewsParserPlugin\Interfaces\FactoryInterface;
 
 
 /**
@@ -29,20 +31,20 @@ class AjaxController extends Ajax
     use ValidateDataTrait;
     use SanitizeDataTrait;
 
-    protected function __construct(ListController $listController,VisualConstructorController $visual,PostController $post, OptionsController $options)
+    protected function __construct(FactoryInterface $controllersFactory)
     {
-        $this->list = $listController;
-        $this->visual  = $visual;
-        $this->post=$post;
-        $this->options=$options;
+        $this->list = $controllersFactory->getInstance('list');
+        $this->visual  = $controllersFactory->getInstance('visual');
+        $this->post=$controllersFactory->getInstance('post');
+        $this->options=$controllersFactory->getInstance('options');
         $this->init();
     }
-    public static function getInstance(ListController $listController,VisualConstructorController $visual,PostController $post,OptionsController $options)
+    public static function getInstance(FactoryInterface $controllersFactory)
     {
         if (self::$instance) {
             return self::$instance;
         } else {
-            self::$instance = new self($listController, $visual,$post,$options);
+            self::$instance = new self($controllersFactory);
             return self::$instance;
         }
     }

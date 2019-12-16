@@ -15,6 +15,7 @@ namespace NewsParserPlugin\Utils
 namespace NewsParserPlugin\Tests
 {
     use NewsParserPlugin\Controller\OptionsController;
+    use NewsParserPlugin\Utils\ResponseFormatter;
 
     class OptionsControllerTest extends \WP_UnitTestCase
     {
@@ -22,7 +23,7 @@ namespace NewsParserPlugin\Tests
          * @dataProvider saveDataProvider
          */
         public function testSave($options,$expected){
-            $options_controller=new OptionsController();
+            $options_controller=new OptionsController(new ResponseFormatter());
             $url='http://www.site.com/feed/rss';
             $result=$options_controller->save($url,$options);
             $this->assertJsonStringEqualsJsonFile($expected,$result);

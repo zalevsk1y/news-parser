@@ -7,6 +7,7 @@ use NewsParserPlugin\Interfaces\FactoryInterface;
 use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Utils\ResponseFormatter;
+use NewsParserPlugin\Models\ListModel;
 
 /**
  * Class creates and formats list from RSS feed
@@ -29,14 +30,20 @@ class ListController extends BaseController
      */
     protected $listParser;
     /**
+     * Factory class
+     *
+     * @var ModelsFactory
+     */
+    protected $modelsFactory;
+    /**
      * Init function.
      *
      * @param AbstractParseContent $listParser
      */
-    public function __construct(AbstractParseContent $listParser)
+    public function __construct(AbstractParseContent $listParser,ResponseFormatter $formatter)
     {
-        parent::__construct();
-        $this->listParser = $listParser;      
+        parent::__construct($formatter);
+        $this->listParser = $listParser;    
     }
     /**
      * Get formated list of posts.
@@ -57,12 +64,27 @@ class ListController extends BaseController
     {
         try {
             $listData = $this->listParser->get($url);
-            $list = $this->modelsFactory->listModel($listData);
+            $list = $this->modelFactory($listData);
             $response = $this->formatResponse->rss($list->getAttributes())->message('success', Success::text('RSS_LIST_PARSED'))->get('json');
         } catch (MyException $e) {
             $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');
         }
         return $response;
+    }
+    /**
+    * Get instance of ListModel class.
+    *
+    * @param array $data  Structure:
+    * [title] - title of post
+    * [pubDate] -date of post publication
+    * [description] -post brief description
+    * [link] - link to the original post
+    * [image] - main post image url
+    * [status] - status of post parsed - if post was not saved as draft and draft -when post saved as draft
+    * @return NewsParserPlugin\Models\ListModel
+    */
+    protected function modelFactory($listData){
+        return new ListModel($listData);
     }
 
 }

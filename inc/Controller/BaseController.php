@@ -17,27 +17,9 @@ class BaseController
      *
      * @var ModelsFactory
      */
-    protected $modelsFactory;
-    /**
-     * Init function.
-     *
-     */
-    public function __construct()
+    public function __construct(ResponseFormatter $formatter)
     {
-        $this->formatResponse=ResponseFormatter::getInstance();
-        $this->modelsFactory=ModelsFactory::getInstance();
+        $this->formatResponse=$formatter;
     }
-    /**
-    * Check Formatter class and return object of it.
-    *
-    * @throws \Exception if class does not implements interface NewsParserPlugin\Interfaces\ResponseFormatterInterface.
-    * @param string|object $formatterClass
-    * @return ResponseFormatterInterface
-    */
-    protected function initFormatter($formatterClass)
-    {
-        $interfaces=class_implements($formatterClass);
-        if(false===$interfaces||!in_array('NewsParserPlugin\Interfaces\ResponseFormatterInterface',$interfaces)) throw new \Exception('Wrong ResponseFormatter class was provide.Should implies ResponseFormatterInterface.');
-        return gettype($formatterClass)==='object'?$formatterClass:$formatterClass::format();
-    }
+   
 }

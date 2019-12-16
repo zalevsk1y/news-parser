@@ -16,10 +16,9 @@ interface FactoryInterface{
     /**
      * Get instance of object
      *
+     * @param string $class class short name.
      * @return object
      */
-    public static function getInstance();
-    public function listModel($data);
-    public function optionsModel($url);
-    public function postModel($data);
+    public function getInstance($class);
+    
 }

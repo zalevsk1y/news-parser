@@ -21,9 +21,9 @@ class VisualConstructorController extends BaseController
      * 
      * @param AbstractParseContent $parser
      */
-    public function __construct(AbstractParseContent $parser)
+    public function __construct(AbstractParseContent $parser,ResponseFormatter $formatter)
     {
-        parent::__construct();
+        parent::__construct($formatter);
         $this->parser=$parser;
     }
     /**
