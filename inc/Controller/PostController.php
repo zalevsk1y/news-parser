@@ -62,7 +62,8 @@ class PostController extends BaseController
             $parsed_data =$this->postParser->get($url,$parsing_options->getAttributes('array'));
            
             $parsed_data['authorId'] = \get_current_user_id();
-            $this->options=$parsing_options->getExtraOptions();
+            if(!$options=$parsing_options->getExtraOptions())throw new MyException(Errors::text('NO_EXTRA_OPTIONS'));
+            $this->options=$options;
             //unescaped url
 
             $parsed_data['sourceUrl'] = $url;

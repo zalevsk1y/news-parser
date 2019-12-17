@@ -21,6 +21,8 @@ class Errors
                 return \__('Template could not be saved right now.', NEWS_PARSER_PLUGIN_SLUG);
             case 'NO_TEMPLATE':
                 return \__('Post could not be parsed, because there is no template for that kind of posts.',NEWS_PARSER_PLUGIN_SLUG);
+            case 'NO_EXTRA_OPTIONS':
+                return \__('Post could not be parsed, because there is no parsing options for that kind of posts.',NEWS_PARSER_PLUGIN_SLUG);
             case 'FILE_DOWNLOAD':
                 return \__('Sorry file cannot be downloaded', NEWS_PARSER_PLUGIN_SLUG);
             case 'XML_PARSING':

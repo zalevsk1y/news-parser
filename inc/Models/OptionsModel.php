@@ -60,6 +60,10 @@ class OptionsModel implements ModelInterface
     {
         $this->resourceUrl=$url;
         $this->hash=sha1($this->resourceUrl);
+        if($options=$this->get()){
+            $this->assignOptions($options);
+        };
+
     }
     /**
      * Save options using wp function update_option.
@@ -75,7 +79,9 @@ class OptionsModel implements ModelInterface
             'extraOptions'=>$options['extraOptions'],
             'template'=>$options['template']
         );
-        return update_option($this->hash,$data,'','no');
+        $result=update_option($this->hash,$data,'','no');
+        if($result)$this->assignOptions($data);
+        return $result;
     }
     /**
      * Delete function using wp delete_option.
@@ -112,6 +118,15 @@ class OptionsModel implements ModelInterface
     public function getExtraOptions()
     {
         return isset($this->extraOptions)?$this->extraOptions:false;
+    }/**
+     * Assign options to object properties.
+     *
+     * @param array $options
+     * @return void
+     */
+    protected function assignOptions($options){
+        $this->parseTemplate=$options['template'];
+        $this->extraOptions=$options['extraOptions'];
     }
     /**
      * Get all options in needed format.
@@ -121,14 +136,11 @@ class OptionsModel implements ModelInterface
      * @return array|object|string
      */
     public function getAttributes($format){
-        $options=$this->get();
-        if(!$options) throw new MyException(Errors::text('NO_TEMPLATE'));
+        if(!isset($this->extraOptions)||!isset($this->parseTemplate)) throw new MyException(Errors::text('NO_TEMPLATE'));
         $data=array(
-            'extraOptions'=>$options['extraOptions'],
-            'template'=>$options['template']
+            'extraOptions'=>$this->extraOptions,
+            'template'=>$this->parseTemplate
         );
-        $this->parseTemplate=$options['template'];
-        $this->extraOptions=$options['extraOptions'];
         switch($format){
             case 'array':
                 return $data;
