@@ -71,6 +71,6 @@ class VisualConstructorController extends BaseController
     * @return false|PostModel
     */
     protected function postModelsFactory($post_id){
-        return PostModel::getPostById($postId);
+        return PostModel::getPostById($post_id);
     }
 }

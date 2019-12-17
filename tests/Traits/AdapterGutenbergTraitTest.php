@@ -20,6 +20,7 @@ class AdapterGutenbergTraitTest extends \WP_UnitTestCase
     /**
      * @dataProvider dataBlocks
      * 
+     * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::createGutenbergBlocks()
      * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::youtubeVideo()
      * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::heading()
      * @covers NewsParserPlugin\Traits\AdapterGutenbergTrait::paragraph()
