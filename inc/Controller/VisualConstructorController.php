@@ -49,7 +49,7 @@ class VisualConstructorController extends BaseController
      *
      * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @param string $url Url of image that should be download.
-     * @param string $postId Post id.
+     * @param string $post_id Post id.
      * @param string $alt Description of image.
      * @return string 
      */
@@ -70,7 +70,7 @@ class VisualConstructorController extends BaseController
     * @param string $post_id 
     * @return false|PostModel
     */
-    protected function postModelsFactory($postId){
+    protected function postModelsFactory($post_id){
         return PostModel::getPostById($postId);
     }
 }

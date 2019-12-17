@@ -104,7 +104,7 @@ class PostModel implements ModelInterface
             'image'=>get_the_post_thumbnail_url($wp_post,'full')
         );
         $post= new static($post_data);
-        $post->postId=$id;
+        $post->postId=absint($id);
         return $post;
     }
     /**
@@ -122,8 +122,10 @@ class PostModel implements ModelInterface
         $this->status = 'draft';
     }
     /**
-     * Attach main image to wordpres post
+     * Attach main image to wordpress post
      *
+     * @param null|string $image_url
+     * @param string $alt 
      * @return string|int Id of saved post featured media.
      */
     public function addPostThumbnail($image_url=null,$alt='')
@@ -135,7 +137,7 @@ class PostModel implements ModelInterface
     /**
      * Add link to the source  of the page
      * 
-     * @param string $sourceUrl
+     * @param string $source_url
      * @return void
      */
     public function addSource($source_url=null)
