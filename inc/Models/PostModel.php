@@ -89,6 +89,25 @@ class PostModel implements ModelInterface
         $this->status = 'parsed';
     }
     /**
+     * Create post instance from existed post data.
+     *
+     * @param string $id
+     * @return false|PostModel
+     */
+    static public function getPostById($id){
+        if(is_null($wp_post=get_post($id)))return false;
+        $post_data=array(
+            'title'=>$wp_post->post_title,
+            'body'=>$wp_post->post_content,
+            'sourceUrl'=>false,
+            'authorId'=>$wp_post->post_author,
+            'image'=>get_the_post_thumbnail_url($wp_post,'full')
+        );
+        $post= new static($post_data);
+        $post->postId=$id;
+        return $post;
+    }
+    /**
      * Create wordpress draft gets WP post ID and change postModel status to draft
      *
      * @return void
@@ -105,22 +124,25 @@ class PostModel implements ModelInterface
     /**
      * Attach main image to wordpres post
      *
-     * @return void
+     * @return string|int Id of saved post featured media.
      */
-    public function addPostThumbnail()
+    public function addPostThumbnail($image_url=null,$alt='')
     {
-        $this->attachImageToPostWordpress($this->image, $this->postId, true);
+        $url=is_null($image_url)?$this->image:$image_url;
+        return $this->attachImageToPostWordpress($url, $this->postId, true,$alt);
     }
 
     /**
      * Add link to the source  of the page
-     *
+     * 
+     * @param string $sourceUrl
      * @return void
      */
-    public function addSource()
+    public function addSource($source_url=null)
     {
+        $source=is_null($source_url)?$this->sourceUrl:$source_url;
         $this->body .= sprintf('<br> <a href="%s">%s</a>',
-            \esc_url_raw($this->sourceUrl),
+            \esc_url_raw($source),
             \__('Source ', NEWS_PARSER_PLUGIN_SLUG)
         );
         $this->updatePostWordPress('post_content', $this->body);
@@ -148,6 +170,18 @@ class PostModel implements ModelInterface
             default:
                 return $data_array;
         }
+    }
+    /**
+     * Facade function for WP media_sideload_image
+     *
+     * @param string $file
+     * @param integer|string $post_id
+     * @param string $desc
+     * @param string $return
+     * @return string|\WP_Error
+     */
+    public function mediaSideloadImage($file, $post_id = 0, $desc = null, $return = 'html'){
+        return media_sideload_image($file, $post_id, $desc, $return);
     }
     /**
      * Create wordpress post
@@ -180,14 +214,14 @@ class PostModel implements ModelInterface
      * @param boolean $post_thumb if image will use NewsParserPlugin\as main image of the post
      * @return int image ID
      */
-    protected function attachImageToPostWordpress($image, $id, $post_thumb = false)
+    protected function attachImageToPostWordpress($image, $id, $post_thumb = false,$alt='')
     {
         $url = $image;
         $post_id = $id;
-        $desc = "image";
-        $img_id = \media_sideload_image($url, $post_id, $desc, 'id');
+        $desc = $alt?:"image";
+        $img_id = $this->mediaSideloadImage($url, $post_id, $desc, 'id');
         if (\is_wp_error($img_id)) {
-            throw new MyException($img_id->get_error_message());
+            throw new MyException($img_id->get_error_message().' Image url:'.esc_url_raw($url));
         } else {
             if ($post_thumb) {
                 \set_post_thumbnail($post_id, $img_id);
@@ -224,4 +258,5 @@ class PostModel implements ModelInterface
         $this->links['deleteLink'] = \get_delete_post_link($post_id);
 
     }
+   
 }

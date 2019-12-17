@@ -11,7 +11,7 @@ define('UTILS_MOCK_DIR',__DIR__.'/mocks/Utils');
 define('TRAITS_MOCK_DIR',__DIR__.'/mocks/Traits');
 define('VIEW_MOCK_DIR',__DIR__.'/mocks/View');
 define('CONTROLLER_MOCK_DIR',__DIR__.'/mocks/Controller');
-
+define('MODEL_MOCK_DIR',__DIR__.'/mocks/Model');
 
 if ( ! $_tests_dir ) {
 	$_tests_dir = rtrim( sys_get_temp_dir(), '/\\' ) . '/wordpress-tests-lib';

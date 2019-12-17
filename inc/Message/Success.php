@@ -18,7 +18,9 @@ class Success{
             case 'POST_SAVED_AS_DRAFT':
                 return \__('Post "%s" was successfully parsed and saved as "draft"','news-parser');
             case 'TEMPLATE_SAVED':
-                return \__('Options was saved successful.','news-parser');    
+                return \__('Options was saved successful.','news-parser'); 
+            case 'FEATURED_IMAGE_SAVED':
+                return \__('Featured image was saved and attach to the post.','news-parser'); 
         }
     }
 

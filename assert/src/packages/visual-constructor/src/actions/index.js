@@ -82,7 +82,7 @@ export function createPostDraft(postId,postUrl,postData,options,dispatch){
                         media.nonceAuth(getAjaxNonce()).create(post.featuredMedia,post.title,post.id)
                             .then(mediaData=>{
                                 if(mediaData.err==0&&mediaData.data.mediaId){
-                                    post.updatePost({'featured_media':mediaData.data.mediaId})
+                                    //post.updatePost({'featured_media':mediaData.data.mediaId})
                                 }else{
                                     if(mediaData.hasOwnProperty('msg')){
                                         dispatch(createMessage(mediaData.msg.type,mediaData.msg.text));

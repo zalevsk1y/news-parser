@@ -4,8 +4,9 @@ namespace NewsParserPlugin\Controller;
 use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Message\Error;
+use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Utils\ResponseFormatter;
-use NewsParserPlugin\Interfaces\ControllerInterface;
+use NewsParserPlugin\Models\PostModel;
 
 
 class VisualConstructorController extends BaseController
@@ -52,13 +53,24 @@ class VisualConstructorController extends BaseController
      * @param string $alt Description of image.
      * @return string 
      */
-    public function saveMedia($url,$postId,$alt=''){
-        $img_id = \media_sideload_image($url, $postId, $alt, 'id');
-        if (\is_wp_error($img_id)) {
-            $response = $this->formatResponse->error(1)->message('error', $img_id->get_error_message())->get('json');
-        } else{
-            $response=$this->formatResponse->media($img_id)->get('json');
+    public function saveMedia($url,$post_id,$alt=''){
+        try{
+            $post=$this->postModelsFactory($post_id);
+            if(!$post) throw new MyException(Error::text('WRONG_POST_ID'));
+            $media_id=$post->addPostThumbnail($url,$alt);
+            $response=$this->formatResponse->media($media_id)->message('success',Success::text('FEATURED_IMAGE_SAVED'))->get('json');
+        }catch(MyException $e){
+            $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');
         }
         return $response;
+    }
+    /**
+    * Get instance of PostModel class.
+    *
+    * @param string $post_id 
+    * @return false|PostModel
+    */
+    protected function postModelsFactory($postId){
+        return PostModel::getPostById($postId);
     }
 }

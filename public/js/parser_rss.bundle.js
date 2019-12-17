@@ -40078,10 +40078,7 @@ function createPostDraft(postId, postUrl, postData, options, dispatch) {
       if (options.addFeaturedMedia) {
         var media = new _news_parser_helpers_classes_MediaModel__WEBPACK_IMPORTED_MODULE_4__["MediaModel"](Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getApiEndpoint"])('media'));
         media.nonceAuth(Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getAjaxNonce"])()).create(post.featuredMedia, post.title, post.id).then(function (mediaData) {
-          if (mediaData.err == 0 && mediaData.data.mediaId) {
-            post.updatePost({
-              'featured_media': mediaData.data.mediaId
-            });
+          if (mediaData.err == 0 && mediaData.data.mediaId) {//post.updatePost({'featured_media':mediaData.data.mediaId})
           } else {
             if (mediaData.hasOwnProperty('msg')) {
               dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["createMessage"])(mediaData.msg.type, mediaData.msg.text));
