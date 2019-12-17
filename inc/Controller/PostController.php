@@ -5,6 +5,7 @@ use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Models\PostModel;
+use NewsParserPlugin\Models\OptionsModel;
 use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Utils\ResponseFormatter;
 
@@ -21,9 +22,17 @@ use NewsParserPlugin\Utils\ResponseFormatter;
  */
 class PostController extends BaseController
 {
-
-    
+    /**
+     * Parsing extra options
+     *
+     * @var array
+     */
     protected $options;
+    /**
+     * Parser object
+     *
+     * @var AbstractParseContent
+     */
     protected $postParser;
 
     /**
@@ -78,7 +87,7 @@ class PostController extends BaseController
      * @param PostModel $post
      * @return PostController
      */
-    public function createDraft(PostModel $post)
+    protected function createDraft(PostModel $post)
     {
         $post->createDraft();
         return $this;
@@ -89,7 +98,7 @@ class PostController extends BaseController
      * @param PostModel $post
      * @return PostController
      */
-    public function addPostThumbnail(PostModel $post)
+    protected function addPostThumbnail(PostModel $post)
     {
         if ($this->options['addFeaturedMedia']) {
             $post->addPostThumbnail();
@@ -102,7 +111,7 @@ class PostController extends BaseController
      * @param PostModel $post
      * @return PostController
      */
-    public function addSource(PostModel $post)
+    protected function addSource(PostModel $post)
     {
         if ($this->options['addSource']) {
             $post->addSource();
@@ -120,7 +129,7 @@ class PostController extends BaseController
     * [authorId]- id of wp-post author
     * @return PostModel
     */
-    public function postModelsFactory($data){
+    protected function postModelsFactory($data){
         return new PostModel($data);
     }
     /**
@@ -133,7 +142,7 @@ class PostController extends BaseController
     * [fragment] - path fragment
     * @return OptionsModel
     */
-    public function optionsModelsFactory($url){
+    protected function optionsModelsFactory($url){
         return new OptionsModel($url['host']);
     }
 

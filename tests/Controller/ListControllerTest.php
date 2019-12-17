@@ -13,17 +13,17 @@ namespace NewsParserPlugin\Utils
     }
 }
 namespace NewsParserPlugin\Tests
-{
-    use NewsParserPlugin\Controller\ListController;
+{   
     use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
+    use NewsParserPlugin\Controller\ListController;
     use NewsParserPlugin\Exception\MyException;
     use NewsParserPlugin\Utils\ResponseFormatter;
 
     class DummyListParser extends AbstractParseContent
     {
-        public function __construct($exp)
+        public function __construct()
         {
-            parent::__construct($exp);
+            parent::__construct(10);
         }
         protected function parse ($data,$options){}
         public function get($url,$options=array())
@@ -38,7 +38,6 @@ namespace NewsParserPlugin\Tests
                 case 'www.wrong-site.com':
                     throw new MyException('XML file could not be downloaded');
             }
-        
         }
     }
 
