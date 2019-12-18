@@ -48,7 +48,7 @@ class DummyPostParser extends AbstractParseContent
 class PostControllerTest extends \WP_UnitTestCase
 {
     /**
-     * @dataProvider getData
+     * @dataProvider dataGet
      *
      * @return void
      */
@@ -60,7 +60,7 @@ class PostControllerTest extends \WP_UnitTestCase
         $result=$post_controller->get($url);
         $this->assertJsonStringEqualsJsonFile($expected,$result);
     }
-    public function getData(){
+    public function dataGet(){
         return array(
             array('http://www.right-site.com/post.html',CONTROLLER_MOCK_DIR.'/noErrorRespondPost.json'),
             array('http://www.wrong-site.com/post.html',CONTROLLER_MOCK_DIR.'/errorRespondPost.json')

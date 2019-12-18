@@ -26,7 +26,7 @@ class ListController extends BaseController
      *
      * @var AbstractParseContent
      */
-    protected $listParser;
+    protected $parser;
     /**
      * Factory class
      *
@@ -36,12 +36,12 @@ class ListController extends BaseController
     /**
      * Init function.
      *
-     * @param AbstractParseContent $listParser
+     * @param AbstractParseContent $parser
      */
-    public function __construct(AbstractParseContent $listParser,ResponseFormatter $formatter)
+    public function __construct(AbstractParseContent $parser,ResponseFormatter $formatter)
     {
         parent::__construct($formatter);
-        $this->listParser = $listParser;    
+        $this->parser = $parser;    
     }
     /**
      * Get formated list of posts.
@@ -60,7 +60,7 @@ class ListController extends BaseController
     public function get($url)
     {
         try {
-            $listData = $this->listParser->get($url);
+            $listData = $this->parser->get($url);
             $list = $this->modelFactory($listData);
             $response = $this->formatResponse->rss($list->getAttributes())->message('success', Success::text('RSS_LIST_PARSED'))->get('json');
         } catch (MyException $e) {

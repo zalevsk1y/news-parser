@@ -33,17 +33,17 @@ class PostController extends BaseController
      *
      * @var AbstractParseContent
      */
-    protected $postParser;
+    protected $parser;
 
     /**
      * Init function
      *
-     * @param AbstractParseContent $postParser
+     * @param AbstractParseContent $parser
      */
-    public function __construct(AbstractParseContent $postParser,ResponseFormatter $formatter)
+    public function __construct(AbstractParseContent $parser,ResponseFormatter $formatter)
     {
         parent::__construct($formatter);
-        $this->postParser = $postParser;
+        $this->parser = $parser;
 
     }
     /**
@@ -59,7 +59,7 @@ class PostController extends BaseController
             $parsed_url=parse_url($url);
             if(!is_array($parsed_url)) throw new MyException (Errors::text('WRONG_OPTIONS_URL'));
             $parsing_options=$this->optionsModelsFactory($parsed_url);
-            $parsed_data =$this->postParser->get($url,$parsing_options->getAttributes('array'));
+            $parsed_data =$this->parser->get($url,$parsing_options->getAttributes('array'));
            
             $parsed_data['authorId'] = \get_current_user_id();
             if(!$options=$parsing_options->getExtraOptions())throw new MyException(Errors::text('NO_EXTRA_OPTIONS'));

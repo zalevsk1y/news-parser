@@ -3,11 +3,22 @@ namespace NewsParserPlugin\Controller;
 
 use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
-use NewsParserPlugin\Message\Error;
+use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Models\PostModel;
 
+/**
+ * Class controller for visual constructor.
+ *
+ * PHP version 5.6
+ *
+ *
+ * @package  Controller
+ * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
+ * @license  MIT
+ *
+ */
 
 class VisualConstructorController extends BaseController
 {
@@ -20,7 +31,8 @@ class VisualConstructorController extends BaseController
     /**
      * Init function.
      * 
-     * @param AbstractParseContent $parser
+     * @param AbstractParseContent $parser 
+     * @param ResponseFormatter $formatter
      */
     public function __construct(AbstractParseContent $parser,ResponseFormatter $formatter)
     {
@@ -56,7 +68,7 @@ class VisualConstructorController extends BaseController
     public function saveMedia($url,$post_id,$alt=''){
         try{
             $post=$this->postModelsFactory($post_id);
-            if(!$post) throw new MyException(Error::text('WRONG_POST_ID'));
+            if(!$post) throw new MyException(Errors::text('WRONG_POST_ID'));
             $media_id=$post->addPostThumbnail($url,$alt);
             $response=$this->formatResponse->media($media_id)->message('success',Success::text('FEATURED_IMAGE_SAVED'))->get('json');
         }catch(MyException $e){

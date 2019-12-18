@@ -14,6 +14,8 @@ class MenuPageTest extends \WP_UnitTestCase
         ]));
     }
     /**
+     * @covers NewsParserPlugin\Menu\Admin\MenuPage::init()
+     * @covers NewsParserPlugin\Menu\Admin\MenuPage::addMainMenu()
      * @covers NewsParserPlugin\Menu\Admin\MenuPage::addSubMenus()
      * @covers NewsParserPlugin\Menu\Admin\MenuPage::getTemplateRender()
      */
