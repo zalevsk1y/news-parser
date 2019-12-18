@@ -1,9 +1,10 @@
 <?php
+namespace NewsParserPlugin\Tests\Parser;
 use NewsParserPlugin\Parser\HTMLPatternParser;
 
 
 
-class HTMLPatternParserGetRewrite extends HTMLPatternParser 
+class MockHTMLPatternParser extends HTMLPatternParser 
 {
   
     public function setDOM($htmlData)
@@ -27,7 +28,7 @@ class HTMLPatternParserTest extends \WP_UnitTestCase
     protected $parser;
     public function setUp()
     {
-        $this->parser=new HTMLPatternParserGetRewrite();
+        $this->parser=new MockHTMLPatternParser();
     }
     /**
      * @covers NewsParserPlugin\Parser\HTMLPatternParser::postBody

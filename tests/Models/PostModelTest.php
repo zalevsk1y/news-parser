@@ -1,8 +1,8 @@
 <?php
-
+namespace NewsParserPlugin\Tests\Models;
     use NewsParserPlugin\Models\PostModel;
     use NewsParserPlugin\Exception\MyException;
-    class DummyPostModel extends PostModel
+    class MockPostModel extends PostModel
     {
         public $result;
         public $fakeAttachmentId;
@@ -54,7 +54,7 @@
                 'post_title'=>'Test title',
                 'post_content'=>'Post content'
             ));
-            $post=DummyPostModel::getPostById($post_id);
+            $post=MockPostModel::getPostById($post_id);
             $expected=array(
                 'file'=>'http://www.site.com/image.jpeg',
                 'post_id'=>$post_id,

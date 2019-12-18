@@ -1,11 +1,11 @@
 <?php
-namespace NewsParserPlugin\Tests;
+namespace NewsParserPlugin\Tests\Controller;
 use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Controller\PostController;
 use NewsParserPlugin\Exception\MyException;
 
-class DummyOptionsModel 
+class MockOptionsModel 
 {
     public function getExtraOptions()
     {
@@ -19,13 +19,13 @@ class DummyOptionsModel
         return array();
     }
 }
-class DummyPostController extends PostController{
+class MockPostController extends PostController{
     protected function optionsModelsFactory($url){
-        return new DummyOptionsModel();
+        return new MockOptionsModel();
     }
 }
 
-class DummyPostParser extends AbstractParseContent
+class MockPostParser extends AbstractParseContent
 {
     public function __construct()
     {
@@ -56,7 +56,7 @@ class PostControllerTest extends \WP_UnitTestCase
         wp_set_current_user($this->factory->user->create([
             'role' => 'administrator',
         ]));
-        $post_controller=new DummyPostController(new DummyPostParser(),new ResponseFormatter());
+        $post_controller=new MockPostController(new MockPostParser(),new ResponseFormatter());
         $result=$post_controller->get($url);
         $this->assertJsonStringEqualsJsonFile($expected,$result);
     }

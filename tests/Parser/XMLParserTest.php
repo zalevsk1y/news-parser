@@ -1,6 +1,5 @@
 <?php
-namespace NewsParserPlugin\Tests;
-
+namespace NewsParserPlugin\Tests\Parser;
 use NewsParserPlugin\Parser\XMLParser;
 
 class DummyXMLParser extends XMLParser

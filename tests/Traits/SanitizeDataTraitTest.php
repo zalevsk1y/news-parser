@@ -1,16 +1,17 @@
 <?php
+namespace NewsParserPlugin\Tests\Traits;
 use NewsParserPlugin\Traits\SanitizeDataTrait;
 
-class DummySanitizeDataTrait {
+class MockSanitizeDataTrait {
     use SanitizeDataTrait;
 }
 
-class SanitizeDataTraitTest extends WP_UnitTestCase
+class SanitizeDataTraitTest extends \WP_UnitTestCase
 {
     protected $instance;
     public function setUp()
     {
-        $this->instance=new DummySanitizeDataTrait();
+        $this->instance=new MockSanitizeDataTrait();
     }
     public function testSanitizeMediaOptionsArray()
     {

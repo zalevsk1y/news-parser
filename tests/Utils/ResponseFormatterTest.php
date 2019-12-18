@@ -1,7 +1,8 @@
 <?php
+namespace NewsParserPlugin\Tests\Utils;
 use NewsParserPlugin\Utils\ResponseFormatter;
 
-class ResponseFormatterTest extends WP_UnitTestCase{
+class ResponseFormatterTest extends \WP_UnitTestCase{
     protected $instance;
     protected $data=array('err'=>0,'msg'=>false);
     

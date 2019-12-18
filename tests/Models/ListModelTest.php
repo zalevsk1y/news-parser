@@ -1,7 +1,8 @@
 <?php
+namespace NewsParserPlugin\Tests\Models;
 use NewsParserPlugin\Models\ListModel;
 
-class ListModelTest extends WP_UnitTestCase
+class ListModelTest extends \WP_UnitTestCase
 {
     /**
      * @dataProvider dataTypes

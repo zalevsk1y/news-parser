@@ -1,8 +1,8 @@
 <?php
-
+namespace NewsParserPlugin\Tests\Parser;
 use NewsParserPlugin\Parser\HTMLRaw;
 
-class DummyHTMLRaw extends HTMLRaw
+class MockHTMLRaw extends HTMLRaw
 {
     public function __construct($expiration_time)
     {
@@ -18,7 +18,7 @@ class HTMLRawTest extends \WP_UnitTestCase
     protected $instance;
     public function setUp()
     {
-        $this->instance=new DummyHTMLRaw(10);
+        $this->instance=new MockHTMLRaw(10);
     }
     public function testParse()
     {

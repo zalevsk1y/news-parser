@@ -1,4 +1,5 @@
 <?php
+namespace NewsParserPlugin\Tests\Utils;
 use NewsParserPlugin\Utils\MenuConfig;
 
 class MenuConfigTest extends \WP_UnitTestCase

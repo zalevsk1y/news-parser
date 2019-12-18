@@ -1,4 +1,5 @@
 <?php
+namespace NewsParserPlugin\Tests\View;
 use NewsParserPlugin\View\TemplateRender;
 
 class TemplateRenderTest extends \WP_UnitTestCase

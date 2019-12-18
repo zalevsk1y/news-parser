@@ -1,5 +1,5 @@
 <?php
-
+namespace NewsParserPlugin\Tests\Traits;
 use NewsParserPlugin\Traits\AdapterGutenbergTrait;
 
 class DummyAdapterGutenberg

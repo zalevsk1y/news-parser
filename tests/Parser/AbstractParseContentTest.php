@@ -27,7 +27,7 @@ namespace NewsParserPlugin\Parser\Abstracts
         return new \WP_Error('test_error','Test error');
     }
 }
-namespace NewsParserPlugin\Tests
+namespace NewsParserPlugin\Tests\Parser
 {
     use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 

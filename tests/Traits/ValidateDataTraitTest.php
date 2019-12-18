@@ -1,4 +1,5 @@
 <?php
+namespace NewsParserPlugin\Tests\Traits;
 use NewsParserPlugin\Traits\ValidateDataTrait;
 
 class DummyValidateDataTrait 
@@ -6,7 +7,7 @@ class DummyValidateDataTrait
     use ValidateDataTrait;
 }
 
-class ValidateDataTraitTest extends WP_UnitTestCase
+class ValidateDataTraitTest extends \WP_UnitTestCase
 {
     protected $instance;
     public function setUp()

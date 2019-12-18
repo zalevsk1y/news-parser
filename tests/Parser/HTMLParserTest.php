@@ -1,8 +1,9 @@
 <?php
+namespace NewsParserPlugin\Tests\Parser;
 use NewsParserPlugin\Parser\HTMLParser;
 
 
-class HTMLParserGetRewrite extends HTMLParser
+class MockHTMLParser extends HTMLParser
 {
    
     public function setTitle($title)
@@ -27,7 +28,7 @@ class HTMLParserTest extends \WP_UnitTestCase
     protected $noMarkup;
     public function setUp()
     {
-        $this->parser=new HTMLParserGetRewrite();
+        $this->parser=new MockHTMLParser();
     }
     public function getMocks()
     {

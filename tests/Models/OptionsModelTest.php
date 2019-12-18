@@ -1,8 +1,9 @@
 <?php 
+namespace NewsParserPlugin\Tests\Models;
 use NewsParserPlugin\Models\OptionsModel;
 use NewsParserPlugin\Exception\MyException;
 
-class OptionsModelTest extends WP_UnitTestCase
+class OptionsModelTest extends \WP_UnitTestCase
 {
     protected $instance;
     protected $options=array(

@@ -1,17 +1,22 @@
 <?php
+namespace 
+{
 /**
  * PHPUnit bootstrap file
  *
- * @package My_Gallery
+ * @package NewsParserPlugin
  */
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
-define('PARSER_MOCK_DIR',__DIR__.'/mocks/Parser');
-define('UTILS_MOCK_DIR',__DIR__.'/mocks/Utils');
-define('TRAITS_MOCK_DIR',__DIR__.'/mocks/Traits');
-define('VIEW_MOCK_DIR',__DIR__.'/mocks/View');
-define('CONTROLLER_MOCK_DIR',__DIR__.'/mocks/Controller');
-define('MODEL_MOCK_DIR',__DIR__.'/mocks/Model');
+define('PARSER_MOCK_DIR',__DIR__.'/dataMocks/Parser');
+define('UTILS_MOCK_DIR',__DIR__.'/dataMocks/Utils');
+define('TRAITS_MOCK_DIR',__DIR__.'/dataMocks/Traits');
+define('VIEW_MOCK_DIR',__DIR__.'/dataMocks/View');
+define('CONTROLLER_MOCK_DIR',__DIR__.'/dataMocks/Controller');
+define('MODEL_MOCK_DIR',__DIR__.'/dataMocks/Model');
+
+
+
 
 if ( ! $_tests_dir ) {
 	$_tests_dir = rtrim( sys_get_temp_dir(), '/\\' ) . '/wordpress-tests-lib';
@@ -37,3 +42,17 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';
+}
+namespace NewsParserPlugin\Utils
+{
+    /**
+     * Stub to avoid using timestamp.
+     *
+     * @return void
+     */
+    if (!function_exists('NewsParserPlugin\Utils\time')){
+        function time(){
+            return 123456789;
+        }
+    }
+}

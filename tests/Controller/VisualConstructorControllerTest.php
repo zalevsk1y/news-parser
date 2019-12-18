@@ -1,5 +1,5 @@
 <?php
-namespace NewsParserPlugin\HTMLRaw\Tests;
+namespace NewsParserPlugin\Tests\Controller;
 
 use NewsParserPlugin\Controller\VisualConstructorController;
 use NewsParserPlugin\Utils\ResponseFormatter;

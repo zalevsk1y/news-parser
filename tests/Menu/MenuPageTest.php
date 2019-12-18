@@ -1,4 +1,5 @@
 <?php
+namespace NewsParserPlugin\Tests\Menu;
 use NewsParserPlugin\Menu\Admin\MenuPage;
 use NewsParserPlugin\Utils\MenuConfig;
 
