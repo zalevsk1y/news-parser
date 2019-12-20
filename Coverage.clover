@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1576851337">
-  <project timestamp="1576851337">
+<coverage generated="1576852158">
+  <project timestamp="1576852158">
     <package name="NewsParserPlugin\Ajax">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Ajax/Ajax.php">
         <class name="Ajax" namespace="NewsParserPlugin\Ajax" fullPackage="Ajax" package="Ajax">
@@ -109,29 +109,28 @@
         <line num="183" type="stmt" count="0"/>
         <line num="189" type="method" name="parsingApi" visibility="public" complexity="9" crap="90" count="0"/>
         <line num="191" type="stmt" count="0"/>
-        <line num="193" type="stmt" count="0"/>
         <line num="194" type="stmt" count="0"/>
-        <line num="196" type="stmt" count="0"/>
-        <line num="198" type="stmt" count="0"/>
+        <line num="195" type="stmt" count="0"/>
+        <line num="197" type="stmt" count="0"/>
         <line num="199" type="stmt" count="0"/>
-        <line num="200" type="method" name="anonymousFunction:200#835" complexity="1" crap="2" count="0"/>
-        <line num="201" type="stmt" count="0"/>
+        <line num="200" type="stmt" count="0"/>
+        <line num="201" type="method" name="anonymousFunction:201#837" complexity="1" crap="2" count="0"/>
         <line num="202" type="stmt" count="0"/>
-        <line num="203" type="method" name="anonymousFunction:203#854" complexity="1" crap="2" count="0"/>
-        <line num="204" type="stmt" count="0"/>
+        <line num="203" type="stmt" count="0"/>
+        <line num="204" type="method" name="anonymousFunction:204#856" complexity="1" crap="2" count="0"/>
         <line num="205" type="stmt" count="0"/>
-        <line num="208" type="stmt" count="0"/>
+        <line num="206" type="stmt" count="0"/>
         <line num="209" type="stmt" count="0"/>
-        <line num="210" type="method" name="anonymousFunction:210#895" complexity="4" crap="20" count="0"/>
-        <line num="211" type="stmt" count="0"/>
+        <line num="210" type="stmt" count="0"/>
+        <line num="211" type="method" name="anonymousFunction:211#897" complexity="4" crap="20" count="0"/>
         <line num="212" type="stmt" count="0"/>
         <line num="213" type="stmt" count="0"/>
         <line num="214" type="stmt" count="0"/>
         <line num="215" type="stmt" count="0"/>
-        <line num="216" type="method" name="anonymousFunction:216#962" complexity="1" crap="2" count="0"/>
-        <line num="217" type="stmt" count="0"/>
+        <line num="216" type="stmt" count="0"/>
+        <line num="217" type="method" name="anonymousFunction:217#964" complexity="1" crap="2" count="0"/>
         <line num="218" type="stmt" count="0"/>
-        <line num="222" type="stmt" count="0"/>
+        <line num="219" type="stmt" count="0"/>
         <line num="223" type="stmt" count="0"/>
         <line num="224" type="stmt" count="0"/>
         <line num="225" type="stmt" count="0"/>
@@ -143,20 +142,21 @@
         <line num="231" type="stmt" count="0"/>
         <line num="232" type="stmt" count="0"/>
         <line num="233" type="stmt" count="0"/>
-        <line num="235" type="stmt" count="0"/>
+        <line num="234" type="stmt" count="0"/>
         <line num="236" type="stmt" count="0"/>
-        <line num="238" type="stmt" count="0"/>
+        <line num="237" type="stmt" count="0"/>
         <line num="239" type="stmt" count="0"/>
         <line num="240" type="stmt" count="0"/>
-        <line num="246" type="method" name="listController" visibility="protected" complexity="1" crap="2" count="0"/>
-        <line num="248" type="stmt" count="0"/>
-        <line num="255" type="method" name="postController" visibility="protected" complexity="1" crap="2" count="0"/>
-        <line num="257" type="stmt" count="0"/>
-        <line num="264" type="method" name="optionsController" visibility="protected" complexity="1" crap="2" count="0"/>
-        <line num="266" type="stmt" count="0"/>
-        <line num="273" type="method" name="visualConstructorController" visibility="protected" complexity="1" crap="2" count="0"/>
-        <line num="275" type="stmt" count="0"/>
-        <metrics loc="278" ncloc="175" classes="1" methods="18" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="94" coveredstatements="0" elements="112" coveredelements="0"/>
+        <line num="241" type="stmt" count="0"/>
+        <line num="247" type="method" name="listController" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="249" type="stmt" count="0"/>
+        <line num="256" type="method" name="postController" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="258" type="stmt" count="0"/>
+        <line num="265" type="method" name="optionsController" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="267" type="stmt" count="0"/>
+        <line num="274" type="method" name="visualConstructorController" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="276" type="stmt" count="0"/>
+        <metrics loc="278" ncloc="173" classes="1" methods="18" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="94" coveredstatements="0" elements="112" coveredelements="0"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Controller/BaseController.php">
         <class name="BaseController" namespace="NewsParserPlugin\Controller">
@@ -1021,6 +1021,6 @@
         <metrics loc="68" ncloc="37" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="15" elements="20" coveredelements="16"/>
       </file>
     </package>
-    <metrics files="25" loc="2886" ncloc="1527" classes="25" methods="140" coveredmethods="80" conditionals="0" coveredconditionals="0" statements="710" coveredstatements="509" elements="850" coveredelements="589"/>
+    <metrics files="25" loc="2886" ncloc="1525" classes="25" methods="140" coveredmethods="80" conditionals="0" coveredconditionals="0" statements="710" coveredstatements="509" elements="850" coveredelements="589"/>
   </project>
 </coverage>
