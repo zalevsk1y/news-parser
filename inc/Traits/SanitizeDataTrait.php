@@ -17,7 +17,7 @@ trait SanitizeDataTrait
      * @param array $options ['postId','alt']
      * @return array
      */
-    public function sanitizeMediaOptionsArray($options)
+    public function sanitizeMediaOptions($options)
     {
         $new_array=array();
         $new_array['postId']=preg_replace('/[^0-9]/','',$options['postId']);
@@ -81,7 +81,7 @@ trait SanitizeDataTrait
                     $clean_data[$key]=preg_replace('/[^a-zA-Z0-9\_\-]/i','',$param);
                     break;
                 case 'searchTemplate':
-                    $clean_data[$key]=preg_replace('/[^a-zA-Z0-9\=\_\-\.\]\[]/i','',$param);
+                    $clean_data[$key]=preg_replace('/[^a-zA-Z0-9\=\s\_\-\.\]\[]/i','',$param);
                     break;
                 case 'position':
                     $clean_data[$key]=preg_replace('/[^a-z0-9]/i','',$param);

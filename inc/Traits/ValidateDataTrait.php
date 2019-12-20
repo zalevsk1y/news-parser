@@ -5,7 +5,7 @@ namespace NewsParserPlugin\Traits;
  * 
  * PHP version 5.6
  *
- * @package  Parser
+ * @package  Traits
  * @author   Evgeniy S.Zalevskiy <2600@urk.net>
  * @license  MIT
  */
@@ -24,28 +24,28 @@ trait ValidateDataTrait{
      * Validate is input url is link to the image.
      *
      * @param string $input_url Image Url.
-     * @return false|string
+     * @return true|\WP_Error
      */
     public function validateImageUrl($input_url)
     {
         $filetype=wp_check_filetype($input_url);
         $mime_type=$filetype['type'];
         if(false!==strpos($mime_type,'image')){
-            return $input_url;
+            return true;
         }
-        return false;
+        return new \WP_Error('not_valid_url','Given url is not a valid image url.URL:'.esc_url_raw($input_url));
     }
     /**
      * Validate structure of input media options.
      * Structure:[postId,alt]
      *
      * @param array $options 
-     * @return bool
+     * @return true|\WP_Error
      */
-    public function validateMediaOptionsArray($options)
+    public function validateMediaOptions($options)
     {
-        if(!array_key_exists('postId',$options)) return false;
-        if(!array_key_exists('alt',$options)) return false;
+        if(!array_key_exists('postId',$options)) return new \WP_Error('no_needed_array_key','Media no needed key.Missing key:postId');
+        if(!array_key_exists('alt',$options)) return \WP_Error('no_needed_array_key','Media no needed key.Missing key:alt');
         return true;
     }
     /**
@@ -53,16 +53,16 @@ trait ValidateDataTrait{
      * Structure:['addSource','addFeaturedMedia','saveParsingTemplate','url']
      *
      * @param array $extra_options
-     * @return bool
+     * @return true|\WP_Error
      */
     public function validateExtraOptions($extra_options)
     {
         $extra_option_should_have_keys=array(
             'addSource',
             'addFeaturedMedia',
-            'saveParsingTemplate',
-            'url'
+            'saveParsingTemplate'
         );
+    
         return $this->checkArrayKeys($extra_option_should_have_keys,$extra_options);
     }
     /**
@@ -70,7 +70,7 @@ trait ValidateDataTrait{
      * Structure:[ 'tagName','searchTemplate','className','children']
      *
      * @param array $template
-     * @return bool
+     * @return true|/WP_Error
      */
     public function validateTemplate($template)
     {
@@ -85,7 +85,7 @@ trait ValidateDataTrait{
         if(!$this->checkArrayKeys($container_should_have_keys,$template)) return false;
         if(!is_array($template['children'])) return false;
         foreach ($template['children'] as $child){
-            if(!$this->checkArrayKeys($child_should_have_keys,$child)) return false;
+            if(is_wp_error($result=$this->checkArrayKeys($child_should_have_keys,$child))) return $result;
         }   
         return true;
     }
@@ -95,13 +95,13 @@ trait ValidateDataTrait{
      *
      * @param array $must_have_keys
      * @param array $array
-     * @return boolean
+     * @return true|\WP_Error
      */
     protected function checkArrayKeys($must_have_keys,$array)
     {
         $given_keys=array_keys($array);
         $has_difference=array_diff($must_have_keys,$given_keys);
         if(empty($has_difference)) return true;
-        return false;
+        return new \WP_Error('no_needed_array_key','No needed parameters in extraOptions parsing options array.Missing keys:'.implode(',',$has_difference));
     }
 }

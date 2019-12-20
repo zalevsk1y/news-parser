@@ -1,4 +1,5 @@
 {
+    "url":"http://www.site.com/page.html",
     "extraOptions":{
         "addFeaturedMedia":true,
         "addSource":false,

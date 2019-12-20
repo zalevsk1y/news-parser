@@ -42,5 +42,5 @@ $modules['response_formatter'] = new Utils\ResponseFormatter();
 $modules['parser_factory']=new Factory\ParserFactory();
 $modules['controllers_factory']=new Factory\ControllersFactory($modules['response_formatter'],$modules['parser_factory']);
 //---Ajax Singleton
-$modules['ajax_controller'] =  Ajax\AjaxController::getInstance($modules['controllers_factory']);
+$modules['ajax_controller'] =  Controller\AjaxController::getInstance($modules['controllers_factory']);
 \register_uninstall_hook(__FILE__, 'Utils\Settings::deleteSettings');

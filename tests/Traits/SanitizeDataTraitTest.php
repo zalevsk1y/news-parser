@@ -13,7 +13,7 @@ class SanitizeDataTraitTest extends \WP_UnitTestCase
     {
         $this->instance=new MockSanitizeDataTrait();
     }
-    public function testSanitizeMediaOptionsArray()
+    public function testSanitizeMediaOptions()
     {
         $input=array(
             'postId'=>'1abs',
@@ -23,7 +23,7 @@ class SanitizeDataTraitTest extends \WP_UnitTestCase
             'postId'=>1,
             'alt'=>'Test image.'
         );
-        $result=$this->instance->sanitizeMediaOptionsArray($input);
+        $result=$this->instance->sanitizeMediaOptions($input);
         $this->assertEquals($expected,$result);
     }
     public function testSanitizeExtraOptions()

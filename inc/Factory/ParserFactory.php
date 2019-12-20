@@ -4,8 +4,7 @@ namespace NewsParserPlugin\Factory;
 use NewsParserPlugin\Parser\HTMLPatternParser;
 use NewsParserPlugin\Parser\XMLParser;
 use NewsParserPlugin\Parser\HTMLRaw;
-use NewsParserPlugin\Interfaces\FactoryInterface;
-use NewsParserPlugin\Parser\AbstractParseContent;
+use NewsParserPlugin\Interfaces\ParserFactoryInterface;
 /**
  * Class factory fo creating parsers.
  *
@@ -17,33 +16,15 @@ use NewsParserPlugin\Parser\AbstractParseContent;
  * @license  MIT
  *
  */
-class ParserFactory implements FactoryInterface
+class ParserFactory implements ParserFactoryInterface
 {
-    /**
-     * Get instance of parser class.
-     *
-     * @throws Exception
-     * @param string $class short class name.
-     * @return AbstractParseContent
-     */
-    public function getInstance($class)
-    {
-        switch($class){
-            case 'html':
-                return $this->html();
-            case 'xml':
-                return $this->xml();
-            case 'rawHTML':
-                return $this->rawHTML();
-        }
-        throw new Exception('Wrong ParserFactory::class method name '.$class.'.');
-    }
+   
     /**
      * Get HTML parser.
      *
      * @return HTMLPatternParser
      */
-    protected function html()
+    public function html()
     {
         return new HTMLPatternParser();
     }
@@ -52,7 +33,7 @@ class ParserFactory implements FactoryInterface
      *
      * @return vXMLParser
      */
-    protected function xml()
+    public function xml()
     {
         return new XMLParser();
     }
@@ -61,7 +42,7 @@ class ParserFactory implements FactoryInterface
      *
      * @return HTMLRaw
      */
-    protected function rawHTML()
+    public function rawHTML()
     {
         return new HTMLRaw();
     }

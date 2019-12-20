@@ -5,9 +5,9 @@ use NewsParserPlugin\Controller\ListController;
 use NewsParserPlugin\Controller\PostController;
 use NewsParserPlugin\Controller\VisualConstructorController;
 use NewsParserPlugin\Controller\OptionsController;
-use NewsParserPlugin\Controller\BaseController;
 use NewsParserPlugin\Utils\ResponseFormatter;
-use NewsParserPlugin\Interfaces\FactoryInterface;
+use NewsParserPlugin\Interfaces\ControllersFactoryInterface;
+use NewsParserPlugin\Interfaces\ParserFactoryInterface;
 
 /**
  * Class factory fo creating controllers.
@@ -21,7 +21,7 @@ use NewsParserPlugin\Interfaces\FactoryInterface;
  *
  */
 
-class ControllersFactory implements FactoryInterface
+class ControllersFactory implements ControllersFactoryInterface
 {
     /**
      * Response formatter
@@ -41,47 +41,26 @@ class ControllersFactory implements FactoryInterface
      * @param ResponseFormatter $formatter
      * @param FactoryInterface $parserFactory
      */
-    public function __construct(ResponseFormatter $formatter,FactoryInterface $parserFactory)
+    public function __construct(ResponseFormatter $formatter,ParserFactoryInterface $parserFactory)
     {
         $this->formatter=$formatter;
         $this->parser=$parserFactory;
-    }
-    /**
-     * Get instance of class.
-     *
-     * @param string $class short class name
-     * @return BaseController
-
-     */
-    public function getInstance($class)
-    {
-        switch($class){
-            case 'list':
-                return $this->rssList();
-            case 'post':
-                return $this->options();
-            case 'options':
-                return $this->options();
-            case 'visual':
-                return $this->visualConstructor();
-        }
-        throw new \Exception('Wrong ControllersFactory::class method name '.$class.'.');
     }
     /**
      * Get list controller.
      *
      * @return ListController
      */
-    protected function rssList()
+    public function rssList()
     {
-        return new ListController($this->parser->getInstance('xml'),$this->formatter);
+        return new ListController($this->parser->xml(),$this->formatter);
     }
     /**
      * Get options controller.
      *
      * @return OptionsController
      */
-    protected function options()
+    public function option()
     {
         return new OptionsController($this->formatter);
     }
@@ -90,17 +69,17 @@ class ControllersFactory implements FactoryInterface
      *
      * @return PostController
      */
-    protected function post()
+    public function post()
     {
-        return new PostController($this->parser->getInstance('html'),$this->formatter);
+        return new PostController($this->parser->html(),$this->formatter);
     }
     /**
      * Get visual constructor controller.
      *
      * @return VisualConstructorController
      */
-    protected function visualConstructor()
+    public function visual()
     {
-        return new VisualConstructorController($this->parser->getInstance('rawHTML'),$this->formatter);
+        return new VisualConstructorController($this->parser->rawHTML(),$this->formatter);
     }
 }

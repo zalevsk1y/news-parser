@@ -2,7 +2,7 @@
 namespace NewsParserPlugin\Tests\Traits;
 use NewsParserPlugin\Traits\ValidateDataTrait;
 
-class DummyValidateDataTrait 
+class MockValidateDataTrait 
 {
     use ValidateDataTrait;
 }
@@ -12,19 +12,18 @@ class ValidateDataTraitTest extends \WP_UnitTestCase
     protected $instance;
     public function setUp()
     {
-        $this->instance=new DummyValidateDataTrait();
+        $this->instance=new MockValidateDataTrait();
     }
     public function testValidateImageUrl()
     {
         $input='test-image.jpg';
-        $expected='test-image.jpg';
         $result=$this->instance->validateImageUrl($input);
-        $this->assertEquals($expected,$result);
+        $this->assertTrue($result);
     }
     public function testValidateMediaOptionsArray()
     {
         $input=array('postId'=>1,'alt'=>'test image');
-        $result=$this->instance->validateMediaOptionsArray($input);
+        $result=$this->instance->validateMediaOptions($input);
         $this->assertTrue($result);
     }
     /**
@@ -37,8 +36,8 @@ class ValidateDataTraitTest extends \WP_UnitTestCase
             'saveParsingTemplate'=>true,
             'addSource'=>'false'
         );
-        $result=$this->instance->validateMediaOptionsArray($input);
-        $this->assertFalse($result);
+        $result=$this->instance->validateMediaOptions($input);
+        $this->assertTrue(is_wp_error($result));
     }
     public function testValidateTemplate()
     {
