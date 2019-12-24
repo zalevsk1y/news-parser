@@ -83,9 +83,15 @@ class PostModel implements ModelInterface
             throw new MyException(Errors::text('NO_BODY'));
         }
         $this->body = $data['body'];
-        $this->image = $data['image'];
-        $this->sourceUrl = $data['sourceUrl'];
+        if (!isset($data['authorId'])||empty($data['authorId'])) {
+            throw new MyException(Errors::text('NO_AUTHOR'));
+        }
         $this->authorId = $data['authorId'];
+
+   
+        $this->image = isset($data['image'])?$data['image']:false;
+        $this->sourceUrl = isset($data['sourceUrl'])?$data['sourceUrl']:false;
+
         $this->status = 'parsed';
     }
     /**

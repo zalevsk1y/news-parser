@@ -31,6 +31,8 @@ class Errors
                 return \__('Sorry some internal error.Try again later', NEWS_PARSER_PLUGIN_SLUG);
             case 'POST_WAS_NOT_CREATED':
                 return \__('Sorry, post was not created for some reasons.', NEWS_PARSER_PLUGIN_SLUG);
+            case 'WRONG_POST_ID':
+                return \__('Wrong post ID.', NEWS_PARSER_PLUGIN_SLUG);
             case 'PROGRAM_ERROR':
                 return \__('Some program error has occurred', NEWS_PARSER_PLUGIN_SLUG);
             case 'NO_TITLE':

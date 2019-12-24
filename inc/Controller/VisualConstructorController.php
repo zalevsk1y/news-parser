@@ -47,7 +47,7 @@ class VisualConstructorController extends BaseController
      * @param array $options Array of options.
      * @return string
      */
-    public function getRawHTML($url,$options=array()){
+    public function get($url,$options=array()){
         try{
             $html_data=$this->parser->get($url,$options);
             $response=$html_data;
@@ -57,32 +57,13 @@ class VisualConstructorController extends BaseController
         return $response;
     }
     /**
-     * Saves attached media.
+     * Magic method to call instance as class.
      *
-     * @uses NewsParserPlugin\Controller\BaseController::formatResponse
-     * @param string $url Url of image that should be download.
-     * @param string $post_id Post id.
-     * @param string $alt Description of image.
-     * @return string 
+     * @param string $url Url of the page.
+     * @param array $options Array of options.
+     * @return string
      */
-    public function saveMedia($url,$post_id,$alt=''){
-        try{
-            $post=$this->postModelsFactory($post_id);
-            if(!$post) throw new MyException(Errors::text('WRONG_POST_ID'));
-            $media_id=$post->addPostThumbnail($url,$alt);
-            $response=$this->formatResponse->media($media_id)->message('success',Success::text('FEATURED_IMAGE_SAVED'))->get('json');
-        }catch(MyException $e){
-            $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');
-        }
-        return $response;
-    }
-    /**
-    * Get instance of PostModel class.
-    *
-    * @param string $post_id 
-    * @return false|PostModel
-    */
-    protected function postModelsFactory($post_id){
-        return PostModel::getPostById($post_id);
-    }
+   public function __invoke($url,$options){
+       return $this->get($url,$options);
+   }
 }

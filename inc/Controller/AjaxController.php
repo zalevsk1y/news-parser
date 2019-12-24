@@ -4,7 +4,7 @@ namespace NewsParserPlugin\Controller;
 use NewsParserPlugin\Traits\ValidateDataTrait;
 use NewsParserPlugin\Traits\SanitizeDataTrait;
 use NewsParserPlugin\Ajax\Ajax;
-use NewsParserPlugin\Interfaces\ControllersFactoryInterface;
+use NewsParserPlugin\Interfaces\EventControllerInterface;
 
 
 /**
@@ -18,11 +18,11 @@ use NewsParserPlugin\Interfaces\ControllersFactoryInterface;
 class AjaxController extends Ajax
 {
     /**
-     * Factory instance for controllers.
+     * Event controller.
      *
-     * @var ControllersFactoryInterface
+     * @var EventController
      */
-    protected $controllersFactory;
+    protected $event;
     /**
      * Instance of this class
      *
@@ -52,30 +52,31 @@ class AjaxController extends Ajax
      * Init method
      *
      * @param ControllersFactoryInterface $controllersFactory Controller factory instance.
-     * @return void
      */
-    protected function __construct(ControllersFactoryInterface $controllersFactory)
+    protected function __construct(EventControllerInterface $event)
     {
-        $this->controllersFactory=$controllersFactory;
+        $this->event=$event;
         $this->init();
+        $this->setEvents();
     }
     /**
      * Singleton static method to get instance of class.
      *
-     * @param ControllersFactoryInterface $controllersFactory Controller factory instance.
+     * @param EventControllerInterface $controllersFactory Controller factory instance.
      * @return AjaxController
      */
-    public static function getInstance(ControllersFactoryInterface $controllersFactory)
+    public static function create(EventControllerInterface $event)
     {
        
         if (static::$instance) {
             var_dump(get_class(static::$instance));
             return static::$instance;
         } else {
-            static::$instance = new static($controllersFactory);
+            static::$instance = new static($event);
             return static::$instance;
         }
     }
+
     /**
      * Add WP actions to use wp_ajax
      *
@@ -86,7 +87,19 @@ class AjaxController extends Ajax
         \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API, array($this, 'parsingApi'));
         \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_MEDIA_API, array($this, 'mediaApi'));
         \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_OPTIONS_API, array($this, 'optionsApi'));
-
+    }
+    /**
+     * Set events for event controller.
+     * @uses EventController::on()
+     * @return void
+     */
+    protected function setEvents()
+    {
+        $event->on('media:create',array('Controllers\MediaController','create'));
+        $event->on('options:create',array('Controllers\OptionsController','create'));
+        $event->on('list:get',array('Controllers\ListController','get'));
+        $event->on('html:get',array('Controllers\VisualConstructorController','get'));
+        $event->on('post:create',array('Controllers\PostController','create'));
     }
     /**
      * Check if user have relevant rights  and check nonce.
@@ -108,6 +121,7 @@ class AjaxController extends Ajax
      * @uses ValidateDataTrait::validateMediaOptions()
      * @uses SanitizeDataTrait::sanitizeMediaOptions()
      * @uses Ajax::getJsonFromInput()
+     * @uses EventController::trigger()
      * @return void
      */
     public function mediaApi()
@@ -131,7 +145,7 @@ class AjaxController extends Ajax
                     'sanitize_callback'=>array($this,'sanitizeMediaOptions')
                 )
         ));
-       $response=$this->visualConstructorController()->saveMedia($request['url'],$request['options']['postId'],$request['options']['alt']);
+       $response=$this->event->trigger('media:save',array($request['url'],$request['options']['postId'],$request['options']['alt']));
        echo $response;
         \wp_die();
     }
@@ -142,6 +156,7 @@ class AjaxController extends Ajax
      * @uses ValidateDataTrait::validateTemplate()
      * @uses SanitizeDataTrait::sanitizeExtraOptions()
      * @uses SanitizeDataTrait::sanitizeTemplate()
+     * @uses EventController::trigger()
      * @return void
      */
     public function optionsApi()
@@ -153,10 +168,12 @@ class AjaxController extends Ajax
             'url'=>array(
                 'description'=>'Url of post that was taken as example of template',
                 'type'=>'string',
-                'validate_callback'=>function($url){
+                'validate_callback'=>function($url)
+                {
                     return wp_http_validate_url($url);
                 },
-                'sanitize_callback'=>function($input_url){
+                'sanitize_callback'=>function($input_url)
+                {
                     return esc_url_raw($input_url);
                 }
             ),
@@ -177,13 +194,14 @@ class AjaxController extends Ajax
             'extraOptions'=>$request['extraOptions'],
             'template'=>$request['template']
         );
-        $respond=$this->optionsController()->save($request['url'],$options);
+        $respond=$this->event->trigger('options:save',array($request['url'],$options));
         echo $respond;
         wp_die();
     }
     /**
      * Callback that handles parsing api requests.
      *
+     * @uses EventController::trigger()
      * @return void
      */
     public function parsingApi()
@@ -196,25 +214,29 @@ class AjaxController extends Ajax
         );
         $request=$this->prepareArgs($request_args,array(
             'url'=>array(
-                'description'=>esc_html__('Page url ',NEWS_PARSER_PLUGIN_SLUG),
+                'description'=>'Parsing page url',
                 'type'=>'string',
-                'validate_callback'=>function($url){
+                'validate_callback'=>function($url)
+                {
                     return wp_http_validate_url($url);
                 },
-                'sanitize_callback'=>function($input_url){
+                'sanitize_callback'=>function($input_url)
+                {
                     return esc_url_raw($input_url);
                 }
             ),
             'status'=>array(
-                'description'=>esc_html__('Action status that should be applied.',NEWS_PARSER_PLUGIN_SLUG),
+                'description'=>'Action status that should be applied.',
                 'type'=>'string',
-                'validate_callback'=>function($status){
-                    if(strpos('list',$status)!==false) return 'list';
-                    if(strpos('single',$status)!==false) return 'single';
-                    if(strpos('multi',$status)!==false) return 'multi';
-                    return false;
+                'validate_callback'=>function($status)
+                {
+                    if(in_array($status,array('list','single','multi'))===false) return new \WP_Error(
+                        'wrong_parsing_status',
+                        'Parsing status should be: list,single,multi.But '.esc_html($status).' was set.');
+                    return true;
                 },
-                'sanitize_callback'=>function($status){
+                'sanitize_callback'=>function($status)
+                {
                     return sanitize_text_field($status);
                 }
             )
@@ -224,13 +246,13 @@ class AjaxController extends Ajax
             $url = $request['url'];
         switch ($status) {
             case 'list':
-                $response = $this->listController()->get($url);
+                $response = $this->event->trigger('list:get',array($url));
                 break;
             case 'single':
-                $response = $this->visualConstructorController()->getRawHTML($url);
+                $response = $this->event->trigger('html:get',array($url));
                 break;
             case 'multi':
-                $response=$this->postController()->get($url);
+                $response=$this->event->trigger('post:save',array($url));
                 break;
             default:
                 $response='';
@@ -238,41 +260,5 @@ class AjaxController extends Ajax
         }
         echo $response;
         \wp_die();
-    }
-    /**
-     * List controller
-     *
-     * @return ListController
-     */
-    protected function listController()
-    {
-        return $this->controllersFactory->rssList();
-    }
-    /**
-     * Post controller.
-     *
-     * @return PostController
-     */
-    protected function postController()
-    {
-       return $this->controllersFactory->post();
-    }
-    /**
-     * Options controller
-     *
-     * @return OptionsController
-     */
-    protected function optionsController()
-    {
-       return $this->controllersFactory->option();
-    }
-    /**
-     * Visual constructor controller
-     *
-     * @return VisualConstructorController
-     */
-    protected function visualConstructorController()
-    {
-        return $this->controllersFactory->visual();
     }
 }

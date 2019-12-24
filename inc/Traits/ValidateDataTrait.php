@@ -45,7 +45,7 @@ trait ValidateDataTrait{
     public function validateMediaOptions($options)
     {
         if(!array_key_exists('postId',$options)) return new \WP_Error('no_needed_array_key','Media no needed key.Missing key:postId');
-        if(!array_key_exists('alt',$options)) return \WP_Error('no_needed_array_key','Media no needed key.Missing key:alt');
+        if(!array_key_exists('alt',$options)) return new \WP_Error('no_needed_array_key','Media no needed key.Missing key:alt');
         return true;
     }
     /**
@@ -83,7 +83,7 @@ trait ValidateDataTrait{
         $child_should_have_keys=array_slice($container_should_have_keys,0,-2);
         array_push($child_should_have_keys,'position');
         if(!$this->checkArrayKeys($container_should_have_keys,$template)) return false;
-        if(!is_array($template['children'])) return false;
+        if(!is_array($template['children'])) return new \WP_Error('wrong_template_format','Template patterns array should have children section.');
         foreach ($template['children'] as $child){
             if(is_wp_error($result=$this->checkArrayKeys($child_should_have_keys,$child))) return $result;
         }   

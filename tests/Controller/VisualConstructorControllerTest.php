@@ -64,14 +64,14 @@ class VisualConstructorControllerTest extends \WP_UnitTestCase
             new ResponseFormatter()
         );
     }
-    public function testGetRawHTMLNoError(){
+    public function testGetNoError(){
         $expected='<html></html>';
-        $result=$this->instance->getRawHTML('http://www.right-site.com/post.html');
+        $result=$this->instance->get('http://www.right-site.com/post.html');
         $this->assertEquals($expected,$result);
     }
-    public function testGetRawHTMLError(){
+    public function testGetError(){
         $expected=CONTROLLER_MOCK_DIR.'/errorRespondVisualConstructor.json';
-        $result=$this->instance->getRawHTML('http://www.wrong-site.com/post.html');
+        $result=$this->instance->get('http://www.wrong-site.com/post.html');
         $this->assertJsonStringEqualsJsonFile($expected,$result);
     }
     /**

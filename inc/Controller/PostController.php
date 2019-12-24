@@ -53,7 +53,7 @@ class PostController extends BaseController
      * @param string $url of post that should be parsed and saved as draft
      * @return void
      */
-    public function get($url)
+    public function create($url)
     {
         try {
             $parsed_url=parse_url($url);

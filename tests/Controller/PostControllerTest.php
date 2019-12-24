@@ -52,15 +52,15 @@ class PostControllerTest extends \WP_UnitTestCase
      *
      * @return void
      */
-    public function testGet($url,$expected){
+    public function testCreate($url,$expected){
         wp_set_current_user($this->factory->user->create([
             'role' => 'administrator',
         ]));
         $post_controller=new MockPostController(new MockPostParser(),new ResponseFormatter());
-        $result=$post_controller->get($url);
+        $result=$post_controller->create($url);
         $this->assertJsonStringEqualsJsonFile($expected,$result);
     }
-    public function dataGet(){
+    public function dataCreate(){
         return array(
             array('http://www.right-site.com/post.html',CONTROLLER_MOCK_DIR.'/noErrorRespondPost.json'),
             array('http://www.wrong-site.com/post.html',CONTROLLER_MOCK_DIR.'/errorRespondPost.json')

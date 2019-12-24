@@ -12,7 +12,7 @@ Text Domain: news-parser
 ?>
 <?php
 namespace NewsParserPlugin;
-
+use DI\ContainerBuilder;
 
 define('NEWS_PARSER_PLUGIN_VERSION', '0.8.0');
 define("NEWS_PARSER_PLUGIN_SLUG", 'news-parser');
@@ -28,19 +28,15 @@ define("NEWS_PARSER_PLUGIN_AJAX_OPTIONS_API", 'news_parser_options_api');
 
 
 require 'autoload.php';
-if(\file_exists('vendor/autoload.php')) require 'vendor/autoload.php';
+if(\file_exists(NEWS_PARSER_PLUGIN_DIR.'vendor/autoload.php')) require NEWS_PARSER_PLUGIN_DIR.'vendor/autoload.php';
 
-$modules = [];
-//---Menu config file loader module
-$modules['menu_config']=new Utils\MenuConfig(NEWS_PARSER_PLUGIN_DIR.'menu-config.php');
-//---Admin menu modules
-$modules['menu_page'] = new Menu\Admin\MenuPage();
-$modules['main'] = new Core\Main($modules['menu_page'],$modules['menu_config']);
-//Response formatter
-$modules['response_formatter'] = new Utils\ResponseFormatter();
-//Factories
-$modules['parser_factory']=new Factory\ParserFactory();
-$modules['controllers_factory']=new Factory\ControllersFactory($modules['response_formatter'],$modules['parser_factory']);
-//---Ajax Singleton
-$modules['ajax_controller'] =  Controller\AjaxController::getInstance($modules['controllers_factory']);
+$container_builder=new ContainerBuilder();
+$container_builder->addDefinitions(NEWS_PARSER_PLUGIN_DIR.'di-config.php');
+$container=$container_builder->build();
+$event_controller=$container->get('Controllers\EventController');
+
+Controller\AjaxController::create($event_controller);
+
+Core\Main::start();
+
 \register_uninstall_hook(__FILE__, 'Utils\Settings::deleteSettings');

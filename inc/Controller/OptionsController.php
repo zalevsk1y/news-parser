@@ -43,7 +43,7 @@ class OptionsController extends BaseController
      * @param array $options
      * @return string
      */
-    public function save($url,$options)
+    public function create($url,$options)
     {
         $parsed_url=parse_url($url);
         try{
@@ -67,8 +67,7 @@ class OptionsController extends BaseController
     * [fragment] - path fragment
     * @return OptionsModel
     */
-    public function modelsFactory($url){
+    protected function modelsFactory($url){
         return new OptionsModel($url['host']);
     }
-
 }
