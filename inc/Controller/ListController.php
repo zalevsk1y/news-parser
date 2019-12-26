@@ -61,7 +61,7 @@ class ListController extends BaseController
     {
         try {
             $listData = $this->parser->get($url);
-            $list = $this->modelFactory($listData);
+            $list = $this->listModelFactory($listData);
             $response = $this->formatResponse->rss($list->getAttributes())->message('success', Success::text('RSS_LIST_PARSED'))->get('json');
         } catch (MyException $e) {
             $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');
@@ -80,7 +80,7 @@ class ListController extends BaseController
     * [status] - status of post parsed - if post was not saved as draft and draft -when post saved as draft
     * @return ListModel
     */
-    protected function modelFactory($listData){
+    protected function listModelFactory($listData){
         return new ListModel($listData);
     }
 

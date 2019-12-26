@@ -1,8 +1,9 @@
 <?php
 namespace NewsParserPlugin\Models;
 
+use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Interfaces\ModelInterface;
-
+use NewsParserPlugin\Message\Errors;
 /**
  * Class list of posts parsed from xml RSS feed model.
  *
@@ -35,6 +36,7 @@ class ListModel implements ModelInterface
      */
     public function __construct($data)
     {
+        if(empty($data)||'array'!==gettype($data)) throw new MyException(Errors::text('WRONG_LIST_FORMAT'));
         $this->data = $data;
     }
     /**

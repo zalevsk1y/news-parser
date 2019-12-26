@@ -25,6 +25,8 @@ class Errors
                 return \__('Post could not be parsed, because there is no parsing options for that kind of posts.',NEWS_PARSER_PLUGIN_SLUG);
             case 'FILE_DOWNLOAD':
                 return \__('Sorry file cannot be downloaded', NEWS_PARSER_PLUGIN_SLUG);
+            case 'WRONG_LIST_FORMAT':
+                return \__('Sorry list of parsed post could not be created.', NEWS_PARSER_PLUGIN_SLUG);    
             case 'XML_PARSING':
                 return \__('Sorry XML file has wrong format', NEWS_PARSER_PLUGIN_SLUG);
             case 'TRY_AGAIN':

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1577356973">
-  <project timestamp="1577356973">
+<coverage generated="1577362118">
+  <project timestamp="1577362118">
     <package name="NewsParserPlugin\Ajax">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Ajax/Ajax.php">
         <class name="Ajax" namespace="NewsParserPlugin\Ajax" fullPackage="Ajax" package="Ajax">
@@ -175,13 +175,13 @@
         <line num="45" type="stmt" count="2"/>
         <line num="60" type="method" name="get" visibility="public" complexity="2" crap="2" count="2"/>
         <line num="63" type="stmt" count="2"/>
-        <line num="64" type="stmt" count="1"/>
+        <line num="64" type="stmt" count="2"/>
         <line num="65" type="stmt" count="1"/>
         <line num="66" type="stmt" count="1"/>
         <line num="67" type="stmt" count="1"/>
         <line num="69" type="stmt" count="2"/>
-        <line num="83" type="method" name="modelFactory" visibility="protected" complexity="1" crap="1" count="1"/>
-        <line num="84" type="stmt" count="1"/>
+        <line num="83" type="method" name="listModelFactory" visibility="protected" complexity="1" crap="1" count="2"/>
+        <line num="84" type="stmt" count="2"/>
         <metrics loc="87" ncloc="35" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="10" elements="13" coveredelements="13"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Controller/MediaController.php">
@@ -324,16 +324,17 @@
     <package name="NewsParserPlugin\Models">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Models/ListModel.php">
         <class name="ListModel" namespace="NewsParserPlugin\Models">
-          <metrics complexity="3" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="7" coveredelements="7"/>
+          <metrics complexity="5" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="8" coveredelements="8"/>
         </class>
-        <line num="36" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="4"/>
-        <line num="38" type="stmt" count="4"/>
-        <line num="39" type="stmt" count="4"/>
-        <line num="46" type="method" name="getAttributes" visibility="public" complexity="2" crap="2" count="4"/>
-        <line num="48" type="stmt" count="4"/>
-        <line num="49" type="stmt" count="1"/>
-        <line num="51" type="stmt" count="3"/>
-        <metrics loc="53" ncloc="21" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="7" coveredelements="7"/>
+        <line num="37" type="method" name="__construct" visibility="public" complexity="3" crap="3" count="5"/>
+        <line num="39" type="stmt" count="5"/>
+        <line num="40" type="stmt" count="4"/>
+        <line num="41" type="stmt" count="4"/>
+        <line num="48" type="method" name="getAttributes" visibility="public" complexity="2" crap="2" count="4"/>
+        <line num="50" type="stmt" count="4"/>
+        <line num="51" type="stmt" count="1"/>
+        <line num="53" type="stmt" count="3"/>
+        <metrics loc="55" ncloc="23" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="8" coveredelements="8"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Models/OptionsModel.php">
         <class name="OptionsModel" namespace="NewsParserPlugin\Models">
@@ -476,9 +477,9 @@
         <class name="AbstractParseContent" namespace="NewsParserPlugin\Parser\Abstracts" fullPackage="Parser" package="Parser">
           <metrics complexity="14" methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="27" coveredstatements="27" elements="36" coveredelements="36"/>
         </class>
-        <line num="28" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="24"/>
-        <line num="31" type="stmt" count="24"/>
-        <line num="32" type="stmt" count="24"/>
+        <line num="28" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="22"/>
+        <line num="31" type="stmt" count="22"/>
+        <line num="32" type="stmt" count="22"/>
         <line num="49" type="method" name="getFromCache" visibility="protected" complexity="1" crap="1" count="4"/>
         <line num="52" type="stmt" count="4"/>
         <line num="53" type="stmt" count="4"/>
@@ -1034,6 +1035,6 @@
         <metrics loc="68" ncloc="37" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="15" elements="20" coveredelements="16"/>
       </file>
     </package>
-    <metrics files="27" loc="2936" ncloc="1571" classes="27" methods="144" coveredmethods="95" conditionals="0" coveredconditionals="0" statements="707" coveredstatements="607" elements="851" coveredelements="702"/>
+    <metrics files="27" loc="2938" ncloc="1573" classes="27" methods="144" coveredmethods="95" conditionals="0" coveredconditionals="0" statements="708" coveredstatements="608" elements="852" coveredelements="703"/>
   </project>
 </coverage>

@@ -37,9 +37,9 @@ class PostControllerTest extends \WP_UnitTestCase
     }
     public function tearDown()
     {
-
         isset($this->user)&&wp_delete_user($this->user->ID);
         isset($this->post)&&wp_delete_post($this->post->ID);
+        parent::tearDown();
     }
     /**
      * @dataProvider dataCreate
