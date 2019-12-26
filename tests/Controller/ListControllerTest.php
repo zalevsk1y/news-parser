@@ -11,15 +11,13 @@ namespace NewsParserPlugin\Tests\Controller;
     class ListControllerTest extends \WP_UnitTestCase
     {
         public function setUp(){
+            parent::setUp();
             $this->mockParser=$this->getMockBuilder(\NewsParserPlugin\Parser\Abstracts\AbstractParseContent::class)
                 ->disableOriginalConstructor()
                 ->setMethods(array('parse','get'))
                 ->getMock();
             
         }
-        public function parserGetCallback(){
-
-        }  
         /**
          * @dataProvider dataGet
          */

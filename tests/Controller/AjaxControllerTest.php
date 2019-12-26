@@ -13,7 +13,7 @@ namespace NewsParserPlugin\Tests\Controller{
     
 
     }
-    class AjaxControllerTest extends \WP_Ajax_UnitTestCase
+    class AjaxControllerTest extends \WP_UnitTestCase
     {
         protected $instance;
         protected $event;

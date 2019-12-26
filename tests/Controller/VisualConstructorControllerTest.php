@@ -7,27 +7,7 @@ use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Models\PostModel;
 
-class MockPostModel extends PostModel
-{
-    public function __construct()
-    {
-        parent::__construct(array('title'=>'title',
-            'body'=>'body',
-            'image'=>false,
-            'sourceUrl'=>false,
-            'authorId'=>1
-        ));
-    }
-    public function addPostThumbnail($image_url = NULL, $alt = '')
-    {
-        switch ($image_url) {
-            case 'http://www.right-site.com/image.jpeg':
-                return 1;
-            case 'http://www.wrong-site.com/image.jpeg':
-                throw new MyException('Test error message');
-            }
-    }
-}
+
 class MockVisualConstructorController extends VisualConstructorController
 {
     public function __construct($parser,$formatter){
@@ -56,22 +36,39 @@ class MockHTMLRawParser extends AbstractParseContent
 }
 class VisualConstructorControllerTest extends \WP_UnitTestCase
 {
-    protected $instance;
-    public function setUp(){
+    protected $mockParser;
+    public function setUp()
+    {
         parent::setUp();
-        $this->instance=new MockVisualConstructorController(
-            new MockHTMLRawParser(),
-            new ResponseFormatter()
+        $this->mockParser=$this->getMockBuilder(\NewsParserPlugin\Parser\Abstracts\AbstractParseContent::class)
+            ->disableOriginalConstructor()
+            ->setMethods(array('get','parse'))
+            ->getMock();
+    }
+    public function init($mockParser)
+    {
+        return new VisualConstructorController(
+            $this->mockParser,
+            new ResponseFormatter
         );
     }
-    public function testGetNoError(){
+    public function testGetNoError()
+    {
         $expected='<html></html>';
-        $result=$this->instance->get('http://www.right-site.com/post.html');
+        $input_data='<html></html>';
+        $this->mockParser->method('get')
+            ->willReturn($input_data);
+        $visual_controller=$this->init($this->mockParser);
+        $result=$visual_controller->get('http://www.right-site.com/post.html');
         $this->assertEquals($expected,$result);
     }
-    public function testGetError(){
+    public function testGetError()
+    {
         $expected=CONTROLLER_MOCK_DIR.'/errorRespondVisualConstructor.json';
-        $result=$this->instance->get('http://www.wrong-site.com/post.html');
+        $this->mockParser->method('get')
+            ->will($this->throwException(new MyException('Test error message')));
+        $visual_controller=$this->init($this->mockParser);
+        $result=$visual_controller->get('http://www.wrong-site.com/post.html');
         $this->assertJsonStringEqualsJsonFile($expected,$result);
     }
    

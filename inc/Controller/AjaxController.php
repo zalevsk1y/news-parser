@@ -5,6 +5,7 @@ use NewsParserPlugin\Traits\ValidateDataTrait;
 use NewsParserPlugin\Traits\SanitizeDataTrait;
 use NewsParserPlugin\Ajax\Ajax;
 use NewsParserPlugin\Interfaces\EventControllerInterface;
+use NewsParserPlugin\Message\Errors;
 
 
 /**
