@@ -41,7 +41,7 @@ namespace NewsParserPlugin\Tests\Models;
         public function testCreateDraft()
         {    
             $this->post->createDraft();
-            $this->assertGreaterThan(0,$this->post->postId);
+            $this->assertGreaterThan(0,$this->post->ID);
             $this->assertEquals('draft',$this->post->status);
         }
         /**
@@ -52,7 +52,8 @@ namespace NewsParserPlugin\Tests\Models;
         {
             $post_id=$this->factory->post->create(array(
                 'post_title'=>'Test title',
-                'post_content'=>'Post content'
+                'post_content'=>'Post content',
+                'post_author'=>10
             ));
             $post=MockPostModel::getPostById($post_id);
             $expected=array(

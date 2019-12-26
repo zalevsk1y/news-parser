@@ -74,17 +74,5 @@ class VisualConstructorControllerTest extends \WP_UnitTestCase
         $result=$this->instance->get('http://www.wrong-site.com/post.html');
         $this->assertJsonStringEqualsJsonFile($expected,$result);
     }
-    /**
-     * @dataProvider dataSaveMedia
-     */
-    public function testSaveMedia($url,$expected){
-        $result=$this->instance->saveMedia($url,2);
-        $this->assertJsonStringEqualsJsonFile($expected,$result);
-    }
-    public function dataSaveMedia(){
-        return array(
-            array('http://www.right-site.com/image.jpeg',CONTROLLER_MOCK_DIR.'/noErrorRespondVisuaConstructorMedia.json'),
-            array('http://www.wrong-site.com/image.jpeg',CONTROLLER_MOCK_DIR.'/errorRespondVisuaConstructorMedia.json')
-        );
-    }
+   
 }

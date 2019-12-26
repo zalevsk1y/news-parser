@@ -60,3 +60,14 @@ namespace NewsParserPlugin\Utils
         }
     }
 }
+namespace NewsParserPlugin\Controller
+{
+    /**
+     * Stub to avoid throw WPAjaxDieStopException exception
+     */
+    if (!function_exists('NewsParserPlugin\Controller\wp_die')){
+        function wp_die(){
+            
+        }
+    }
+}

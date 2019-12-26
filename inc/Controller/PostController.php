@@ -23,6 +23,12 @@ use NewsParserPlugin\Utils\ResponseFormatter;
 class PostController extends BaseController
 {
     /**
+     * Post model
+     *
+     * @var PostModel
+     */
+    public $post;
+    /**
      * Parsing extra options
      *
      * @var array
@@ -39,6 +45,7 @@ class PostController extends BaseController
      * Init function
      *
      * @param AbstractParseContent $parser
+     * @param ResponseFormatter $formatter
      */
     public function __construct(AbstractParseContent $parser,ResponseFormatter $formatter)
     {
@@ -68,7 +75,7 @@ class PostController extends BaseController
 
             $parsed_data['sourceUrl'] = $url;
          
-            $post = $this->postModelsFactory($parsed_data);
+            $this->post=$post= $this->postModelsFactory($parsed_data);
  
             //Stages of post draw creating
             $this->createDraft($post)->addSource($post)->addPostThumbnail($post);

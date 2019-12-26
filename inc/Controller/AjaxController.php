@@ -57,7 +57,6 @@ class AjaxController extends Ajax
     {
         $this->event=$event;
         $this->init();
-        $this->setEvents();
     }
     /**
      * Singleton static method to get instance of class.
@@ -88,19 +87,7 @@ class AjaxController extends Ajax
         \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_MEDIA_API, array($this, 'mediaApi'));
         \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_OPTIONS_API, array($this, 'optionsApi'));
     }
-    /**
-     * Set events for event controller.
-     * @uses EventController::on()
-     * @return void
-     */
-    protected function setEvents()
-    {
-        $event->on('media:create',array('Controllers\MediaController','create'));
-        $event->on('options:create',array('Controllers\OptionsController','create'));
-        $event->on('list:get',array('Controllers\ListController','get'));
-        $event->on('html:get',array('Controllers\VisualConstructorController','get'));
-        $event->on('post:create',array('Controllers\PostController','create'));
-    }
+  
     /**
      * Check if user have relevant rights  and check nonce.
      *
@@ -147,7 +134,7 @@ class AjaxController extends Ajax
         ));
        $response=$this->event->trigger('media:save',array($request['url'],$request['options']['postId'],$request['options']['alt']));
        echo $response;
-        \wp_die();
+       wp_die();
     }
     /**
      * Callback that handles options api requests.
@@ -259,6 +246,6 @@ class AjaxController extends Ajax
                 break;
         }
         echo $response;
-        \wp_die();
+        wp_die();
     }
 }

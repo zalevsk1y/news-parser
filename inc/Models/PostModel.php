@@ -52,7 +52,7 @@ class PostModel implements ModelInterface
      *
      * @var int
      */
-    public $postId;
+    public $ID;
     /**
      * Array of links.
      * Structure: [previewLink,editLink,deleteLink]
@@ -110,7 +110,7 @@ class PostModel implements ModelInterface
             'image'=>get_the_post_thumbnail_url($wp_post,'full')
         );
         $post= new static($post_data);
-        $post->postId=absint($id);
+        $post->ID=absint($id);
         return $post;
     }
     /**
@@ -120,8 +120,8 @@ class PostModel implements ModelInterface
      */
     public function createDraft()
     {
-        $this->postId = $this->createPostWordPress();
-        if ($this->postId === 0) {
+        $this->ID = $this->createPostWordPress();
+        if ($this->ID === 0) {
             throw new MyException(Errors::text('POST_WAS_NOT_CREATED'));
         }
         $this->getPostLinksWordpress();
@@ -137,7 +137,7 @@ class PostModel implements ModelInterface
     public function addPostThumbnail($image_url=null,$alt='')
     {
         $url=is_null($image_url)?$this->image:$image_url;
-        return $this->attachImageToPostWordpress($url, $this->postId, true,$alt);
+        return $this->attachImageToPostWordpress($url, $this->ID, true,$alt);
     }
 
     /**
@@ -167,7 +167,7 @@ class PostModel implements ModelInterface
             'title' => $this->title,
             'links' => $this->links,
             'status' => $this->status,
-            'post_id' => $this->postId,
+            'post_id' => $this->ID,
         );
         $data_json = json_encode($data_array);
         switch ($format) {
@@ -248,7 +248,7 @@ class PostModel implements ModelInterface
     protected function updatePostWordPress($update_item, $data)
     {
         $post_array = [
-            'ID' => $this->postId,
+            'ID' => $this->ID,
             $update_item => $data,
         ];
         \wp_update_post($post_array);
@@ -260,7 +260,7 @@ class PostModel implements ModelInterface
      */
     protected function getPostLinksWordpress()
     {
-        $post_id = $this->postId;
+        $post_id = $this->ID;
         $this->links['previewLink'] = \get_post_permalink($post_id);
         $this->links['editLink'] = \get_edit_post_link($post_id, '');
         $this->links['deleteLink'] = \get_delete_post_link($post_id);

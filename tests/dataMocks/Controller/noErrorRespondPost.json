@@ -1,1 +1,1 @@
-{"err":0,"msg":{"type":"success","text":"Post &quot;Test title&quot; was successfully parsed and saved as &quot;draft&quot;","timestamp":123456789},"data":{"post_id":19,"status":"draft","link":"http:\/\/example.org\/wp-admin\/post.php?post=19&action=edit"}}
+{"err":0,"msg":{"type":"success","text":"Post &quot;Test title&quot; was successfully parsed and saved as &quot;draft&quot;","timestamp":123456789},"data":{"post_id":30,"status":"draft","link":"http:\/\/example.org\/wp-admin\/post.php?post=30&action=edit"}}

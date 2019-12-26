@@ -35,6 +35,12 @@ $container_builder->addDefinitions(NEWS_PARSER_PLUGIN_DIR.'di-config.php');
 $container=$container_builder->build();
 $event_controller=$container->get('Controllers\EventController');
 
+$event_controller->on('media:create',array('Controllers\MediaController','create'));
+$event_controller->on('options:create',array('Controllers\OptionsController','create'));
+$event_controller->on('list:get',array('Controllers\ListController','get'));
+$event_controller->on('html:get',array('Controllers\VisualConstructorController','get'));
+$event_controller->on('post:create',array('Controllers\PostController','create'));
+
 Controller\AjaxController::create($event_controller);
 
 Core\Main::start();
