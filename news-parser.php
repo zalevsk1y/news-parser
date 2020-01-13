@@ -12,7 +12,7 @@ Text Domain: news-parser
 ?>
 <?php
 namespace NewsParserPlugin;
-use DI\ContainerBuilder;
+
 
 define('NEWS_PARSER_PLUGIN_VERSION', '0.8.0');
 define("NEWS_PARSER_PLUGIN_SLUG", 'news-parser');
@@ -30,19 +30,19 @@ define("NEWS_PARSER_PLUGIN_AJAX_OPTIONS_API", 'news_parser_options_api');
 require 'autoload.php';
 if(\file_exists(NEWS_PARSER_PLUGIN_DIR.'vendor/autoload.php')) require NEWS_PARSER_PLUGIN_DIR.'vendor/autoload.php';
 
-$container_builder=new ContainerBuilder();
+$container_builder=new \DI\ContainerBuilder();
 $container_builder->addDefinitions(NEWS_PARSER_PLUGIN_DIR.'di-config.php');
 $container=$container_builder->build();
-$event_controller=$container->get('Controllers\EventController');
+$event_controller=$container->make(Controller\EventController::class,array($container));
 
-$event_controller->on('media:create',array('Controllers\MediaController','create'));
-$event_controller->on('options:create',array('Controllers\OptionsController','create'));
-$event_controller->on('list:get',array('Controllers\ListController','get'));
-$event_controller->on('html:get',array('Controllers\VisualConstructorController','get'));
-$event_controller->on('post:create',array('Controllers\PostController','create'));
+$event_controller->on('media:create',array(Controller\MediaController::class,'create'));
+$event_controller->on('options:create',array(Controller\OptionsController::class,'create'));
+$event_controller->on('list:get',array(Controller\ListController::class,'get'));
+$event_controller->on('html:get',array(Controller\VisualConstructorController::class,'get'));
+$event_controller->on('post:create',array(Controller\PostController::class,'create'));
 
 Controller\AjaxController::create($event_controller);
 
-Core\Main::start();
+Core\Main::start($container->get(Menu\Admin\MenuPage::class),$container->get(Utils\MenuConfig::class));
 
 \register_uninstall_hook(__FILE__, 'Utils\Settings::deleteSettings');

@@ -52,7 +52,7 @@ class AjaxController extends Ajax
     /**
      * Init method
      *
-     * @param ControllersFactoryInterface $event Controller factory instance.
+     * @param EventControllerInterface $event Controller factory instance.
      */
     protected function __construct(EventControllerInterface $event)
     {
@@ -133,7 +133,7 @@ class AjaxController extends Ajax
                     'sanitize_callback'=>array($this,'sanitizeMediaOptions')
                 )
         ));
-       $response=$this->event->trigger('media:save',array($request['url'],$request['options']['postId'],$request['options']['alt']));
+       $response=$this->event->trigger('media:create',array($request['url'],$request['options']['postId'],$request['options']['alt']));
        echo $response;
        wp_die();
     }
@@ -182,7 +182,7 @@ class AjaxController extends Ajax
             'extraOptions'=>$request['extraOptions'],
             'template'=>$request['template']
         );
-        $respond=$this->event->trigger('options:save',array($request['url'],$options));
+        $respond=$this->event->trigger('options:create',array($request['url'],$options));
         echo $respond;
         wp_die();
     }
@@ -240,7 +240,7 @@ class AjaxController extends Ajax
                 $response = $this->event->trigger('html:get',array($url));
                 break;
             case 'multi':
-                $response=$this->event->trigger('post:save',array($url));
+                $response=$this->event->trigger('post:create',array($url));
                 break;
             default:
                 $response='';

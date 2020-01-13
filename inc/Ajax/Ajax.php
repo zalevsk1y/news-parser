@@ -81,6 +81,6 @@ class Ajax
      * @return array
      */
     protected function getJsonFromInput(){
-        json_decode(file_get_contents('php://input'),TRUE);
+        return json_decode(file_get_contents('php://input'),TRUE);
     }
 }

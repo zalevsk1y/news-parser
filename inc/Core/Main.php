@@ -17,18 +17,23 @@ class Main
 {
     protected $menuPage;
     protected $config;
+    protected static $instance;
     /**
      * Initialize the plugin
      */
 
-    public function __construct(MenuPageInterface $menu_page,MenuConfig $config)
+    protected function __construct(MenuPageInterface $menu_page,MenuConfig $config)
     {
         $this->config = $config->get();
-        $this->menuPage = $menu_page;
         $this->init();
         $menu_page->init($config);
     }
-
+    public static function start(MenuPageInterface $menu_page,MenuConfig $config)
+    {
+        if(!isset(self::$instance)){
+            self::$instance=new self($menu_page,$config);
+        }
+    }
     /**
      * Initialize plugin when it was activated.
      *

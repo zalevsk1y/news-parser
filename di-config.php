@@ -1,10 +1,12 @@
 <?php
 namespace NewsParserPlugin;
-use function DI\create;
+use function DI\object;
+use function DI\get;
 
 return array(
-    Utils\MenuConfig::class=>new Utils\MenuConfig(NEWS_PARSER_PLUGIN_DIR.'menu-config.php'),
-    Controller\PostController::class=>new Controller\PostController(create(Parser\HTMLPatternParser::class),create(Utils\ResponseFormatter::class)),
-    Controller\ListController::class=>new Controller\ListController(create(Parser\XMLParser::class),create(Utils\ResponseFormatter::class)),
-    Controller\VisualConstructorController::class=>new Controller\VisualConstructorController(create(Parser\HTMLRaw::class),create(Utils\ResponseFormatter::class))
+    Utils\MenuConfig::class=>object(Utils\MenuConfig::class)->constructor(NEWS_PARSER_PLUGIN_DIR.'menu-config.php'),
+    Menu\Admin\MenuPage::class=>object(Menu\Admin\MenuPage::class)->constructor(object(Utils\MenuConfig::class)),
+    Controller\PostController::class=>object(Controller\PostController::class)->constructor(get(Parser\HTMLPatternParser::class),get(Utils\ResponseFormatter::class)),
+    Controller\ListController::class=>object(Controller\ListController::class)->constructor(get(Parser\XMLParser::class),get(Utils\ResponseFormatter::class)),
+    Controller\VisualConstructorController::class=>object(Controller\VisualConstructorController::class)->constructor(get(Parser\HTMLRaw::class),get(Utils\ResponseFormatter::class)),
 );

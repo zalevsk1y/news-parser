@@ -1,6 +1,7 @@
 <?php 
 namespace NewsParserPlugin\Controller;
-use Psr\Container;
+use Psr\Container\ContainerInterface;
+use NewsParserPlugin\Interfaces\EventControllerInterface;
 /**
  * Class event observer. Calls controller on event trigger.
  * 
@@ -8,7 +9,7 @@ use Psr\Container;
  * @author  Evgeny S.Zalevskiy <2600@ukr.net>
  * @license MIT <https://opensource.org/licenses/MIT>
  */
-class EventController 
+class EventController  implements  EventControllerInterface
 {
     /**
      * Collection of events with controllers.
@@ -76,6 +77,6 @@ class EventController
     {
         if(!array_key_exists($action,$this->eventCollection)) throw new \Exception('EventController does not set event:'.$action.'.');
         if(!is_array($args)) throw new Exception('EventController::trigger() second argument should be an array, but '.gettype($args).' given.');
-        return $di->call($this->eventCollection,$args);
+        return $this->di->call($this->eventCollection[$action],$args);
     }
 }
