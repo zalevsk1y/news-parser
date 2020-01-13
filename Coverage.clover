@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1578915046">
-  <project timestamp="1578915046">
+<coverage generated="1578921024">
+  <project timestamp="1578921024">
     <package name="NewsParserPlugin\Ajax">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Ajax/Ajax.php">
         <class name="Ajax" namespace="NewsParserPlugin\Ajax" fullPackage="Ajax" package="Ajax">
@@ -143,27 +143,27 @@
         <metrics loc="24" ncloc="14" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="3" coveredelements="3"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Controller/EventController.php">
-        <class name="EventController" namespace="NewsParserPlugin\Controller">
+        <class name="EventController" namespace="NewsParserPlugin\Controller" fullPackage="Controller" package="Controller">
           <metrics complexity="9" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="0" elements="17" coveredelements="0"/>
         </class>
-        <line num="8" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="10" type="stmt" count="0"/>
-        <line num="11" type="stmt" count="0"/>
-        <line num="12" type="method" name="on" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="13" type="stmt" count="0"/>
-        <line num="14" type="stmt" count="0"/>
-        <line num="15" type="method" name="has" visibility="public" complexity="2" crap="6" count="0"/>
-        <line num="16" type="stmt" count="0"/>
-        <line num="17" type="stmt" count="0"/>
-        <line num="19" type="method" name="off" visibility="public" complexity="2" crap="6" count="0"/>
-        <line num="20" type="stmt" count="0"/>
-        <line num="21" type="stmt" count="0"/>
-        <line num="22" type="stmt" count="0"/>
-        <line num="23" type="method" name="trigger" visibility="public" complexity="3" crap="12" count="0"/>
-        <line num="25" type="stmt" count="0"/>
-        <line num="26" type="stmt" count="0"/>
-        <line num="27" type="stmt" count="0"/>
-        <metrics loc="28" ncloc="28" classes="1" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="0" elements="17" coveredelements="0"/>
+        <line num="31" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="33" type="stmt" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="42" type="method" name="on" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="44" type="stmt" count="0"/>
+        <line num="45" type="stmt" count="0"/>
+        <line num="52" type="method" name="has" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="54" type="stmt" count="0"/>
+        <line num="55" type="stmt" count="0"/>
+        <line num="63" type="method" name="off" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="65" type="stmt" count="0"/>
+        <line num="66" type="stmt" count="0"/>
+        <line num="67" type="stmt" count="0"/>
+        <line num="75" type="method" name="trigger" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="77" type="stmt" count="0"/>
+        <line num="78" type="stmt" count="0"/>
+        <line num="79" type="stmt" count="0"/>
+        <metrics loc="80" ncloc="32" classes="1" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="0" elements="17" coveredelements="0"/>
       </file>
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Controller/ListController.php">
         <class name="ListController" namespace="NewsParserPlugin\Controller">
@@ -1041,6 +1041,6 @@
         <metrics loc="68" ncloc="37" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="15" elements="20" coveredelements="16"/>
       </file>
     </package>
-    <metrics files="27" loc="2960" ncloc="1581" classes="27" methods="146" coveredmethods="95" conditionals="0" coveredconditionals="0" statements="712" coveredstatements="611" elements="858" coveredelements="706"/>
+    <metrics files="27" loc="3012" ncloc="1585" classes="27" methods="146" coveredmethods="95" conditionals="0" coveredconditionals="0" statements="712" coveredstatements="611" elements="858" coveredelements="706"/>
   </project>
 </coverage>
