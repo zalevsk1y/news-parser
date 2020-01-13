@@ -30,12 +30,11 @@ class HTMLRaw extends Abstracts\AbstractParseContent
      * Get page raw html data.
      *
      * @param string $data Html raw data.
-     * @param array $options Array of options ['remove_scripts']
      * @return string
      */
-    protected function parse($data,$options)
+    protected function parse($data)
     {
-        if(array_key_exists('remove_scripts',$options)&&$options['remove_scripts']){
+        if(is_array($this->options)&&array_key_exists('remove_scripts',$this->options)&&$this->options['remove_scripts']){
             return $this->removeScriptTags($data);
         }
         return $data;

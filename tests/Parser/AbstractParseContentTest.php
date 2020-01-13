@@ -1,92 +1,49 @@
 <?php
 
 
-namespace NewsParserPlugin\Parser\Abstracts 
-{
-/**
- * Mock WP function wp_remote_get to avoid real downloading process.
- *
- * @param string $url
- * @param array $request_args
- * @return array|\WP_Error
- */
-    function wp_remote_get($url,$request_args)
-    {
-        switch($url){
-            case 'www.right-site.com':
-                return array('response'=>array(
-                    'code'=>200
-                ),
-                'body'=>'test html data'
-            );
-            case 'www.wrong-site.com':
-                return array('response'=>array(
-                    'code'=>404
-                ));
-        }
-        return new \WP_Error('test_error','Test error');
-    }
-}
-namespace NewsParserPlugin\Tests\Parser
-{
-    use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
+namespace NewsParserPlugin\Tests\Parser;
 
-/**
- * Dump class to get access to protected method of abstract class.
- * 
- */
-class ParseContent extends AbstractParseContent
-{
-    protected function parse($data,$options)
-    {
-        return $data;
-    }
-    public function getFromCache($url)
-    {
-        return parent::getFromCache($url);
-    }
-    public function setCache($url, $data)
-    {
-        return parent::setCache($url, $data);
-    }
-    
-}
+use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
+
 
 class AbstractParseContentTest extends \WP_UnitTestCase
 {
     protected $instance;
     public function setUp()
     {
-        $this->instance=new ParseContent(10);
+        parent::setUp();
+        $this->mockParserContent=$this->getMockBuilder(\NewsParserPlugin\Parser\Abstracts\AbstractParseContent::class)
+            ->setConstructorArgs(array(10))
+            ->setMethods(array('wpRemoteGet','parse'))
+            ->getMock();
+        $this->mockParserContent->method('parse')
+            ->will($this->returnArgument(0));
+        
     }
-    public function testSetAndGetCache()
-    {
-        $url='test-url.com';
-        $data='test data';
-        $result_of_set_cache=$this->instance->setCache($url,$data);
-        $result_of_get_cache=$this->instance->get($url);
-        $this->assertEquals($result_of_set_cache,true);
-        $this->assertEquals($result_of_get_cache,$data);
-    }
+
     /**
-     * @dataProvider urlData
+     * @dataProvider dataGet
+     * 
+     * @covers NewsParserPlugin\Parser\Abstracts\AbstractParseContent::setCache()
+     * @covers NewsParserPlugin\Parser\Abstracts\AbstractParseContent::download()
+     * @covers NewsParserPlugin\Parser\Abstracts\AbstractParseContent::wpRemoteGet()
      */
-    public function testGet($url,$expected)
+    public function testGet($url,$response,$expected)
     {
-        if($expected==='NewsParserPlugin\Exception\MyException'){
-            $this->expectException($expected);
-            $this->instance->get($url);
-        }else{
-            $result=$this->instance->get($url);
-            $this->assertEquals($expected,$result);
-        }
+        $this->mockParserContent->method('wpRemoteGet')
+            ->willReturn($response);
+        is_wp_error($response)&&$this->expectException($expected);
+        $result=$this->mockParserContent->get($url);
+        $this->assertEquals($expected,$result);
+        $cached_data=get_transient(sha1($url));
+        $this->assertEquals($expected,$cached_data);
     }
     /**
      * @dataProvider scriptTagsData
      */
     public function testRemoveScriptTags($tags,$expected)
     {
-        $result=$this->instance->removeScriptTags($tags);
+        $result=$this->mockParserContent->removeScriptTags($tags);
         $this->assertEquals($expected,$result);
     }
     /**
@@ -94,15 +51,27 @@ class AbstractParseContentTest extends \WP_UnitTestCase
      */
     public function testRemoveStyleTags($tags,$expected)
     {
-        $result=$this->instance->removeStyleTags($tags);
+        $result=$this->mockParserContent->removeStyleTags($tags);
         $this->assertEquals($expected,$result);
     }
-    public function urlData()
+    public function dataGet()
     {
         return array(
-            array('www.right-site.com','test html data'),
-            array('www.wrong-site.com','NewsParserPlugin\Exception\MyException'),
-            array('error-url','NewsParserPlugin\Exception\MyException')
+            array(
+                'www.right-site.com',
+                array('response'=>array(
+                        'code'=>200
+                    ),
+                    'body'=>'test html data'
+                ),
+                'test html data'
+            ),
+            array(
+                'www.wrong-site.com',
+                new \WP_Error('wrong_url',"Wrong test url"),
+                'NewsParserPlugin\Exception\MyException'
+            ),
+           
         );
     }
     public function scriptTagsData()
@@ -119,5 +88,4 @@ class AbstractParseContentTest extends \WP_UnitTestCase
             array('<h1>test title</h1><style type="text/css">.class{display:none;}</style>','<h1>test title</h1>'),
         );
     }
-}
 }

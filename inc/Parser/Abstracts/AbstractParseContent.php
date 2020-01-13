@@ -19,8 +19,18 @@ use NewsParserPlugin\Utils\Chain;
  */
 abstract class AbstractParseContent 
 {
-    
+    /**
+     * Time expiration of cache data.
+     *
+     * @var int
+     */
     protected $cache_expiration;
+    /**
+     * Parsing options
+     * 
+     * @var array
+     */
+    protected $options;
 
     /**
      * @param integer $cache_expiration
@@ -37,7 +47,7 @@ abstract class AbstractParseContent
      * @param array $options Array with additional options.
      * @return array|stdClass|string
      */
-    abstract protected function parse($data,$options);
+    abstract protected function parse($data);
     /**
      * Get data from cache using wordpress get_transient()
      *
@@ -74,7 +84,7 @@ abstract class AbstractParseContent
      */
     protected function download($url)
     {   $request_args=array('user-agent'=>'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36');
-        $data = wp_remote_get($url,$request_args);
+        $data = $this->wpRemoteGet($url,$request_args);
         if(is_wp_error($data)) throw new MyException(Errors::text('FILE_DOWNLOAD'));
         $response_code= wp_remote_retrieve_response_code($data);
         if ($response_code!=200) {
@@ -92,14 +102,15 @@ abstract class AbstractParseContent
      */
     public function get($url,$options=array())
     {
+        if (!empty($options))$this->options=$options;
         $data = $this->getFromCache($url);
         if (gettype($data)==='string') {
-            $response = $this->parse($data,$options);
+            $response = $this->parse($data);
             return $response;
         }
         $data = $this->download($url);
         $this->setCache($url, $data);
-        $response = $this->parse($data,$options);
+        $response = $this->parse($data);
 
         return $response;
     }
@@ -120,6 +131,18 @@ abstract class AbstractParseContent
      */
     public function removeStyleTags($data){
         return preg_replace('/<style(>|.)[\s\S]*?<\/style\>/i','',$data);
+    }
+    /**
+     * Facade for wp_remote_get function.
+     * Performs an HTTP request using the GET method and returns its response.
+     *
+     * @param string $url
+     * @param array $request_args
+     * @return \WP_Error|array
+     */
+    protected function wpRemoteGet($url,$request_args)
+    {
+        return wp_remote_get($url,$request_args);
     }
      /**
      * Factory for chain building class. use  get() function at the end to get result.

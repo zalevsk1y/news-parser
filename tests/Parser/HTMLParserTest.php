@@ -6,34 +6,35 @@ use NewsParserPlugin\Parser\HTMLParser;
 class MockHTMLParser extends HTMLParser
 {
    
-    public function setTitle($title)
+    public function parse($data)
     {
-        $this->post['title']=$title;
+        return parent::parse($data);
     }
-    public function setDOM($htmlData)
-    {
-        $this->rawHTML=$htmlData;
-        $this->dom=$this->createDOM($htmlData);
-    }
-    public function get($page_html,$option=array())
-    {
-        return $this->parse($page_html,$option);
-    }
+
 }
 
 class HTMLParserTest extends \WP_UnitTestCase
 {
    
-    protected $openGraph;
-    protected $noMarkup;
+    protected $mocks;
+   
+
+    public function getMocks()
+    {   
+        if(isset($this->mocks))
+        {
+            return $this->mocks;
+        }else{
+            return array(
+                'openGraph'=>file_get_contents(PARSER_MOCK_DIR.'/testHTMLParserOpenGraph.html'),
+                'noMarkup'=>file_get_contents(PARSER_MOCK_DIR.'/testHTMLParserNoMarkup.html')
+            );
+        }
+    }
     public function setUp()
     {
-        $this->parser=new MockHTMLParser();
-    }
-    public function getMocks()
-    {
-        $this->openGraph=file_get_contents(PARSER_MOCK_DIR.'/testHTMLParserOpenGraph.html');
-        $this->noMarkup=file_get_contents(PARSER_MOCK_DIR.'/testHTMLParserNoMarkup.html');
+        parent::setUp();
+        $this->parser=new MockHTMLParser(10);
     }
     /**
      * @dataProvider HTMLDataTitle
@@ -41,42 +42,38 @@ class HTMLParserTest extends \WP_UnitTestCase
      */
     public function testPostTitle($html,$expectedTitle)
     {
-        $this->parser->setDOM($html);
-        $title=$this->parser->postTitle();
-        $this->assertEquals($expectedTitle,$title);
+       
+        $data=$this->parser->parse($html);
+        $this->assertEquals($expectedTitle,$data['title']);
     }
      /**
      * @dataProvider HTMLDataImage
      *
      */
-    public function testPostImage($html,$title,$expectedSrc)
+    public function testPostImage($html,$expectedSrc)
     {
-        $this->parser->setDOM($html);
-        $this->parser->setTitle($title);
-        $src=$this->parser->postImage();
-        $this->assertEquals($expectedSrc,$src);
+        $data=$this->parser->parse($html);
+        $this->assertEquals($expectedSrc,$data['image']);
     }
     public function testPostBody()
     {
-        $this->getMocks();
-        $this->parser->setDOM($this->openGraph);
-        $body=$this->parser->postBody(array());
-        $this->assertEquals('<p>Post Content.</p>',$body);
+        $mocks=$this->getMocks();
+        $data=$this->parser->parse($mocks['openGraph']);
+        $this->assertEquals('<p>Post Content.</p>',$data['body']);
     }
     public function HTMLDataTitle()
-    {
-        ($this->openGraph||$this->noMarkup)||$this->getMocks();
+    {   $mocks=$this->getMocks();
         return array(
-            array($this->openGraph,'Test title'),
-            array($this->noMarkup,'Test title')
+            array($mocks['openGraph'],'Test title'),
+            array($mocks['noMarkup'],'Test title')
         );
     }
     public function HTMLDataImage()
-    {
-        ($this->openGraph||$this->noMarkup)||$this->getMocks();
+    {   
+        $mocks=$this->getMocks();
         return array(
-            array($this->openGraph,'No title','https://www.test-site.com/test-image.jpg'),
-            array($this->noMarkup,'Test title','https://www.test-site.com/main-image.jpg')
+            array($mocks['openGraph'],'https://www.test-site.com/test-image.jpg'),
+            array($mocks['noMarkup'],'https://www.test-site.com/main-image.jpg')
         );
     }
 }

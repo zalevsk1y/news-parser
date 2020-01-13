@@ -39,17 +39,15 @@ class XMLParser extends Abstracts\AbstractParseContent
      * [status] - status of post parsed - if post was not saved as draft and draft -when post saved as draft
      *
      * @param string $xml
-     * @param array $options
      * @return array of StdClass
      *
      */
-    protected function parse($xml,$options)
+    protected function parse($xml)
     {
 
         $data = $this->xmlParser($xml);
-        $structuredData = $this->formatData($data);
-        return $structuredData;
-
+        $structured_data = $this->formatData($data);
+        return $structured_data;
     }
 
     /**

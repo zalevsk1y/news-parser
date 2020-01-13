@@ -52,7 +52,7 @@ class AjaxController extends Ajax
     /**
      * Init method
      *
-     * @param ControllersFactoryInterface $controllersFactory Controller factory instance.
+     * @param ControllersFactoryInterface $event Controller factory instance.
      */
     protected function __construct(EventControllerInterface $event)
     {
@@ -62,7 +62,7 @@ class AjaxController extends Ajax
     /**
      * Singleton static method to get instance of class.
      *
-     * @param EventControllerInterface $controllersFactory Controller factory instance.
+     * @param EventControllerInterface $event Controller factory instance.
      * @return AjaxController
      */
     public static function create(EventControllerInterface $event)

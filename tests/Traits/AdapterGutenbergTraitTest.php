@@ -2,7 +2,7 @@
 namespace NewsParserPlugin\Tests\Traits;
 use NewsParserPlugin\Traits\AdapterGutenbergTrait;
 
-class DummyAdapterGutenberg
+class MockAdapterGutenberg
 {
     use AdapterGutenbergTrait;
     public function testGutenbergBlocks($data){
@@ -15,7 +15,8 @@ class AdapterGutenbergTraitTest extends \WP_UnitTestCase
     protected $instance;
     public function setUp()
     {
-        $this->instance=new DummyAdapterGutenberg();
+        parent::setUp();
+        $this->instance=new MockAdapterGutenberg();
     }
     /**
      * @dataProvider dataBlocks

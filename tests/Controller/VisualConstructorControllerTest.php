@@ -5,35 +5,9 @@ use NewsParserPlugin\Controller\VisualConstructorController;
 use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Exception\MyException;
-use NewsParserPlugin\Models\PostModel;
 
 
-class MockVisualConstructorController extends VisualConstructorController
-{
-    public function __construct($parser,$formatter){
-        parent::__construct($parser,$formatter);
-    }
-    protected function postModelsFactory($post_id)
-    {
-        return new MockPostModel();
-    }
-}
-class MockHTMLRawParser extends AbstractParseContent
-{
-    public function __construct()
-    {
-        parent::__construct(10);
-    }
-    protected function parse ($data,$options){}
-    public function get($url,$options=array()){
-        switch ($url) {
-        case 'http://www.right-site.com/post.html':
-            return '<html></html>';
-        case 'http://www.wrong-site.com/post.html':
-            throw new MyException('Test error message');
-        }
-    }
-}
+
 class VisualConstructorControllerTest extends \WP_UnitTestCase
 {
     protected $mockParser;

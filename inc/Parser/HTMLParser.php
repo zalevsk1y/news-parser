@@ -41,12 +41,7 @@ class HTMLParser extends Abstracts\AbstractParseContent
      * @var array
      */
     protected $post=array();
-    /**
-     * Parsing options
-     * 
-     * @var [type]
-     */
-    protected $options;
+
 
     /**
      * Init function.
@@ -58,6 +53,21 @@ class HTMLParser extends Abstracts\AbstractParseContent
        
     }
     /**
+     * Init and set data for parser.
+     *
+     * @param string $data
+     * @return void
+     */
+    public function initParser($data)
+    {
+        $clean_html=$this->pipe($data)
+            ->removeScriptTags()
+            ->removeStyleTags()
+            ->get();
+        $this->dom = $this->createDOM($clean_html);
+        $this->rawHTML = $clean_html;
+    }
+    /**
      * Create array from parsed data.
      * Structure :
      * [title] - post title @string
@@ -66,22 +76,15 @@ class HTMLParser extends Abstracts\AbstractParseContent
      * 
      * @uses AbstractParseContent::pipe()
      * @param string $data HTML data.
-     * @param array $options template options for parsing post content. 
      * @return array
      */
 
-    public function parse($data,$options)
+    protected function parse($data)
     {
-        if (!empty($options))$this->options=$options;
-        $clean_html=$this->pipe($data)
-            ->removeScriptTags()
-            ->removeStyleTags()
-            ->get();
-        $this->dom = $this->createDOM($clean_html);
-        $this->rawHTML = $clean_html;
+        $this->initParser($data);
         $this->post['title'] = esc_html($this->postTitle());
         $this->post['image'] = esc_url_raw($this->postImage());
-        $this->post['body'] = $this->postBody($options);
+        $this->post['body'] = $this->postBody();
         return $this->post;
     }
     /**
@@ -91,7 +94,7 @@ class HTMLParser extends Abstracts\AbstractParseContent
      * @return false|string
      */
 
-    public function postTitle()
+    protected function postTitle()
     {
         $title = $this->chain()
         // Parse title based on OpenGraph marks
@@ -108,8 +111,9 @@ class HTMLParser extends Abstracts\AbstractParseContent
      * @return false|string Image url
      */
 
-    public function postImage()
-    {   $alt=$this->post['title'];
+    protected function postImage()
+    {   
+        $alt=isset($this->post['title'])?$this->post['title']:'';
         $searchPattern='img[alt='.$alt.']';
         $images = $this->chain()
         // Parse gallery images based on Schema.org marks
@@ -130,17 +134,14 @@ class HTMLParser extends Abstracts\AbstractParseContent
     /**
      * Parse post body
      *
-     * @param array $options parse template patterns for   
      * @return string
      */
 
-    public function postBody($options)
+    protected function postBody()
     {
-       
         //Parse body inside <p> tag
         $body = $this->parseBodyTagP();
         return $body ?: '';
-
     }
     
     /**
@@ -205,7 +206,7 @@ class HTMLParser extends Abstracts\AbstractParseContent
     /**
      * Remove HTML tags from the text.
      *
-     * @param string $data    text with tags
+     * @param string $data text with tags
      * @param string $pattern regexp pattern for tags default '@(<[^>]*>)@')
      *
      * @return string

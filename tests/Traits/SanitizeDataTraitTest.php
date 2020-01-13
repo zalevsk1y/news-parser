@@ -11,6 +11,7 @@ class SanitizeDataTraitTest extends \WP_UnitTestCase
     protected $instance;
     public function setUp()
     {
+        parent::setUp();
         $this->instance=new MockSanitizeDataTrait();
     }
     public function testSanitizeMediaOptions()

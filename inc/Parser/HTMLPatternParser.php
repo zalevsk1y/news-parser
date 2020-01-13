@@ -37,14 +37,14 @@ class HTMLPatternParser extends HTMLParser
      * Parse post body
      *
      * @uses AdapterGutenbergTrait::createGutenbergBlocks convert array of elements into string.
-     * @param array $options  parsing template pattern['extraOptions','template'].
      * @return string data that would be saved as post content.
      */
 
-    public function postBody($options)
+    public function postBody()
     {   
         $search_template='';
-        $template=$options['template'];
+        if(!isset($this->options['template'])) throw new \Exception('Parsing template patterns should be set.');
+        $template=$this->options['template'];
         
         foreach($template['children'] as $child_element){
             //Create search template for Sunra\HtmlDomParser::find method

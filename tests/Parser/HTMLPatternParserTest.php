@@ -7,14 +7,12 @@ use NewsParserPlugin\Parser\HTMLPatternParser;
 class MockHTMLPatternParser extends HTMLPatternParser 
 {
   
-    public function setDOM($htmlData)
+    public $options;
+    public function parse($data)
     {
-        $this->dom=$this->createDOM($htmlData);
+        return parent::parse($data);
     }
-    public function get($page_html,$option=array())
-    {
-        return $this->parse($page_html,$option);
-    }
+    
 }
 /**
  * Test parser class.
@@ -24,7 +22,7 @@ class MockHTMLPatternParser extends HTMLPatternParser
  */
 class HTMLPatternParserTest extends \WP_UnitTestCase
 {
-    protected $testFile;
+   
     protected $parser;
     public function setUp()
     {
@@ -39,11 +37,12 @@ class HTMLPatternParserTest extends \WP_UnitTestCase
     {   
         $test_file=file_get_contents(PARSER_MOCK_DIR.'/testHTMLPatternParser.html');
         $parsing_options=json_decode(file_get_contents(PARSER_MOCK_DIR.'/parsingOptions.json'),true);
-        $this->parser->setDOM($test_file);
-        $post_body=$this->parser->postBody($parsing_options);
+        $this->parser->options=$parsing_options;
+
+        $data=$this->parser->parse($test_file);
         $post_body_snapshot=file_get_contents(PARSER_MOCK_DIR.'/parsedSnapshot.html');
         //phpUnit ver. 5.7 does not have assertIsString assertion 
-        $this->assertEquals('string',gettype($post_body));
-        $this->assertEquals($post_body_snapshot,$post_body);
+        $this->assertEquals('string',gettype($data['body']));
+        $this->assertEquals($post_body_snapshot,$data['body']);
     }
 }

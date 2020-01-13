@@ -2,37 +2,34 @@
 namespace NewsParserPlugin\Tests\Models;
     use NewsParserPlugin\Models\PostModel;
     use NewsParserPlugin\Exception\MyException;
-    class MockPostModel extends PostModel
-    {
-        public $result;
-        public $fakeAttachmentId;
-
-        public function mediaSideloadImage($file, $post_id = 0, $desc = null, $return = 'html'){
-            $this->result=array(
-                'file'=>$file,
-                'post_id'=>$post_id,
-                'desc'=>$desc,
-                'return'=>$return
-            );
-            return $this->fakeAttachmentId;
-        }
-    }
+ 
     class PostModelTest extends \WP_UnitTestCase
     {
+        protected $user;
         protected $postData;
         protected $post;
         public function setUp()
         {
             parent::setUp();
-            $user=$this->factory->user->create();
+            $this->user=$this->factory->user->create_and_get();
             $this->postData=array(
                 'title'=>'test post title.',
                 'body'=>'test body.',
                 'image'=>'www.test-site.com/image.jpg',
                 'sourceUrl'=>'http://www.test-site.com/news/page1',
-                'authorId'=>$user
+                'authorId'=>$this->user->ID
             );
-            $this->post=new PostModel($this->postData);
+
+            $this->post=$this->getMockBuilder(\NewsParserPlugin\Models\PostModel::class)
+                ->setConstructorArgs(array($this->postData))
+                ->setMethods(array('mediaSideloadImage'))
+                ->getMock();
+        }
+        public function tearDown()
+        {
+            isset($this->user->ID)&&wp_delete_user($this->user->ID);
+            isset($this->post->ID)&&wp_delete_post($this->post->ID);
+            parent::tearDown();
         }
         /**
          * @covers NewsParserPlugin\Models\PostModel::createPostWordPress()
@@ -45,27 +42,26 @@ namespace NewsParserPlugin\Tests\Models;
             $this->assertEquals('draft',$this->post->status);
         }
         /**
+         * @dataProvider dataAddPostThumbnail
          * @covers NewsParserPlugin\Models\PostModel::attachImageToPostWordpress()
          * @covers NewsParserPlugin\Models\PostModel::mediaSideloadImage()
          */
-        public function testAddPostThumbnail()
+        public function testAddPostThumbnail($media_id,$expected)
         {
-            $post_id=$this->factory->post->create(array(
-                'post_title'=>'Test title',
-                'post_content'=>'Post content',
-                'post_author'=>10
-            ));
-            $post=MockPostModel::getPostById($post_id);
-            $expected=array(
-                'file'=>'http://www.site.com/image.jpeg',
-                'post_id'=>$post_id,
-                'desc'=>'Test image description',
-                'return'=>'id'
-            );
-            $media_id=$this->factory->attachment->create();
-            $post->fakeAttachmentId=$media_id;
-            $post->addPostThumbnail($expected['file'],$expected['desc']);
-            $result=$post->result;
+       
+            $this->post::getPostById($this->post->ID);
+
+            $this->post->expects($this->once())
+                ->method('mediaSideloadImage')
+                ->with(
+                    $this->equalTo('http://www.site.com/image.jpeg'),
+                    $this->equalTo($this->post->ID),
+                    $this->equalTo('Test image.'),
+                    $this->equalTo('id')
+                )
+                ->willReturn($media_id);
+            is_wp_error($media_id)&&$this->expectException($expected);
+            $result=$this->post->addPostThumbnail('http://www.site.com/image.jpeg','Test image.');
             $this->assertSame($expected,$result);
         }
         /**
@@ -82,5 +78,12 @@ namespace NewsParserPlugin\Tests\Models;
             $this->assertInternalType('array',$result);
             $this->assertSame(array('title','links','status','post_id'),array_keys($result));
             $this->assertInternalType('object',$this->post->getAttributes('object'));
+        }
+        public function dataAddPostThumbnail()
+        {
+            return array(
+                array(1,1),
+                array(new \WP_Error('Test error message.'),'NewsParserPlugin\Exception\MyException')
+            );
         }
     }

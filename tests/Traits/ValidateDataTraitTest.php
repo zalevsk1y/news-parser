@@ -12,6 +12,7 @@ class ValidateDataTraitTest extends \WP_UnitTestCase
     protected $instance;
     public function setUp()
     {
+        parent::setUp();
         $this->instance=new MockValidateDataTrait();
     }
     public function testValidateImageUrl()
