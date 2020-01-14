@@ -29,25 +29,25 @@ export class Message extends React.Component{
     render(){
   
         return (
-            <div
-            className={"message container row "+(this.state.open?"":"closed")} 
-            >
-   
-            <div className="message-content">
-                <div className="message-icon">
-                    <div className="fo fo-info" style={this.props.type==="info"?{display: 'block'}:{display: 'none'}}></div>
-                    <div className="fo fo-success" style={this.props.type==="success"?{display: 'block'}:{display: 'none'}}></div>
-                    <div className="fo fo-error" style={this.props.type==="error"?{display: 'block'}:{display: 'none'}}></div>
+            <div className="message-wrapper">
+                <div className={"message container "+(this.state.open?"":"closed")} >
+    
+                <div className="message-content">
+                    <div className="message-icon">
+                        <div className="fo fo-info" style={this.props.type==="info"?{display: 'block'}:{display: 'none'}}></div>
+                        <div className="fo fo-success" style={this.props.type==="success"?{display: 'block'}:{display: 'none'}}></div>
+                        <div className="fo fo-error" style={this.props.type==="error"?{display: 'block'}:{display: 'none'}}></div>
+                    </div>
+                    <div className="message-text">
+                        {this.props.text}
+                        
+                    </div>
                 </div>
-                <div className="message-text">
-                    {this.props.text}
-                    
+                <div className="message-close" onClick={this.close}>
+                    <div className="fo fo-close"></div>
+                </div>
                 </div>
             </div>
-            <div className="message-close" onClick={this.close}>
-                <div className="fo fo-close"></div>
-            </div>
-        </div>
         )
     }
 }

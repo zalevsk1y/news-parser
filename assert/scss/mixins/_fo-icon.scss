@@ -1,0 +1,10 @@
+// Creates icon 
+@mixin fo-icon ($icon-map){
+    @each $icon-name, $map in $icon-map{
+        .fo-#{$icon-name}{
+            &:before{
+                content: map-get($map,content)
+            }
+        }    
+    }
+}

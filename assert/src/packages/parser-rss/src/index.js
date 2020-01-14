@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import './my-style.css';
+
 import Main from './containers/Main';
 
 import { Provider } from 'react-redux';
@@ -11,7 +11,8 @@ import {uriToJson} from '@news-parser/helpers';
 import {setRoute} from './actions';
 import thunkMiddleware from 'redux-thunk';
 import ErrorBoundary from "@news-parser/error-handler"
-//import App from './App';
+
+import '@news-parser/styles/parser-rss.scss';
 
 const store=createStore(
         parse,
