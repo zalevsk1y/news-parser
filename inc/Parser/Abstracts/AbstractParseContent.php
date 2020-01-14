@@ -44,7 +44,6 @@ abstract class AbstractParseContent
      * Parsed data and create object or array with parsed data.
      *
      * @param string $data Data string that would be parsed.
-     * @param array $options Array with additional options.
      * @return array|stdClass|string
      */
     abstract protected function parse($data);

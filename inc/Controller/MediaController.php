@@ -52,6 +52,6 @@ class MediaController extends BaseController
      */
     public function __invoke($url,$post_id,$alt='')
     {
-       return $this->save($url,$post_id,$alt);
+       return $this->create($url,$post_id,$alt);
     }
 }

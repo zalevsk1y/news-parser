@@ -15,7 +15,7 @@ interface EventControllerInterface{
     /**
      * Bind event to controller
      *
-     * @param string $class event name.
+     * @param string $event event name.
      * @param string|array $controller function or method that would be called.
      * @return void
      */
@@ -32,7 +32,7 @@ interface EventControllerInterface{
      *
      * @param string $event event name
      * @param array $args 
-     * @return void
+     * @return mixed
      */
     public function trigger($event,$args);
 }
