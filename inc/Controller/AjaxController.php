@@ -21,7 +21,7 @@ class AjaxController extends Ajax
     /**
      * Event controller.
      *
-     * @var EventController
+     * @var EventControllerInterface
      */
     protected $event;
     /**
