@@ -1,16 +1,17 @@
 <?php
-namespace  NewsParserPlugin\Traits;
+namespace  NewsParserPlugin\Utils;
+use NewsParserPlugin\Interfaces\AdapterInterface;
 /**
  * Transform parsed post content array into gutenberg blocks mark up. 
  * 
  * 
  * PHP version 5.6
  *
- * @package  Parser
+ * @package  Utils
  * @author   Evgeniy S.Zalevskiy <2600@urk.net>
  * @license  MIT
  */
-trait AdapterGutenbergTrait
+class AdapterGutenberg implements AdapterInterface
 {
     /**
      * Create gutenberg editors blocks mark up from array.
@@ -23,7 +24,7 @@ trait AdapterGutenbergTrait
      * @param array $body
      * @return string
      */
-    protected function createGutenbergBlocks($body)
+    public function convert($body)
     {
         $post_content='';
         $content_array=$body;
@@ -60,7 +61,7 @@ trait AdapterGutenbergTrait
      * @param array $element structure ['tagName'=>string,'content'=>youtube id]
      * @return string
      */
-    private function youtubeVideo($element)
+    protected function youtubeVideo($element)
     {
         $hash=$element['content'];
         $video='<!-- wp:core-embed/youtube {"url":"https://youtu.be/%1$s","type":"video","providerNameSlug":"youtube","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->'.
@@ -77,7 +78,7 @@ trait AdapterGutenbergTrait
      * @param array $element ['tagName'=>string,'content'=>inner header text]
      * @return string
      */
-    private function heading($element)
+    protected function heading($element)
     {
         $level=$this->getDigitsOnly($element['tagName']);
         $clean_content=\esc_html($element['content']);
@@ -95,7 +96,7 @@ trait AdapterGutenbergTrait
      * @param array $element ['tagName'=>string,'content'=>inner paragraph text]
      * @return string
      */
-    private function paragraph($element)
+    protected function paragraph($element)
     {
         $clean_content=\esc_html($element['content']);
         return '<!-- wp:paragraph --><p>'.$clean_content.'</p><!-- /wp:paragraph -->';
@@ -106,7 +107,7 @@ trait AdapterGutenbergTrait
      * @param array $element
      * @return string
      */
-    private function  simpleText($element)
+    protected function  simpleText($element)
     {
         $clean_content=\esc_html($element['content']);
         return $clean_content;
@@ -117,7 +118,7 @@ trait AdapterGutenbergTrait
      * @param array $element ['tagName'=>string,'content'=>[src,alt]]
      * @return string
      */
-    private function image($element)
+    protected function image($element)
     {
         $clean_src=\esc_url_raw($element['content']['src']);
         $clean_alt=esc_html($element['content']['alt']);
@@ -133,7 +134,7 @@ trait AdapterGutenbergTrait
      * @param array $el ['tagName'=>string,'content'=>[...[inner list text]]]
      * @return string
      */
-    private function listBlock($el)
+    protected function listBlock($el)
     {
         $list_begin='<!-- wp:list --><ul>';
         $list='';
@@ -152,7 +153,7 @@ trait AdapterGutenbergTrait
      * @param string $str
      * @return string
      */
-    private function getDigitsOnly($str)
+    protected function getDigitsOnly($str)
     {
         return preg_replace('/[^0-9]/i','',$str);
     }

@@ -23,7 +23,7 @@ namespace NewsParserPlugin\Tests\Controller{
             parent::setUp();
             $this->event=$this->getMockBuilder(\NewsParserPlugin\Interfaces\EventControllerInterface::class)
                 ->disableOriginalConstructor()
-                ->setMethods(array('trigger'))
+                ->setMethods(array('trigger','on','off'))
                 ->getMock();
             $admin=$this->factory->user->create_and_get();
             wp_set_current_user($admin->ID);
@@ -35,7 +35,7 @@ namespace NewsParserPlugin\Tests\Controller{
         }
         public function testMediaApi()
         {
-            $event='media:save';
+            $event='media:create';
             $input=json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/mediaApiRequest.json'),true);
             $expected=json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/mediaApiExpected.json'),true);
             $mock_ajax_controller=$this->setUpMockController($event,$input,$expected);
@@ -43,7 +43,7 @@ namespace NewsParserPlugin\Tests\Controller{
         }
         public function testOptionsApi()
         {
-            $event='options:save';
+            $event='options:create';
             $input= json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/optionsApiRequest.json'),true);
             $expected=json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/optionsApiExpected.json'),true);
             $mock_ajax_controller=$this->setUpMockController($event,$input,$expected);
@@ -87,7 +87,7 @@ namespace NewsParserPlugin\Tests\Controller{
                     json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/htmlApiExpected.json'),true)
                 ),
                 array(
-                    'post:save',
+                    'post:create',
                     json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/postApiRequest.json'),true),
                     json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/postApiExpected.json'),true)
                 )    

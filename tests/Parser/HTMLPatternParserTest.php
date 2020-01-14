@@ -1,6 +1,7 @@
 <?php
 namespace NewsParserPlugin\Tests\Parser;
 use NewsParserPlugin\Parser\HTMLPatternParser;
+use NewsParserPlugin\Utils\AdapterGutenberg;
 
 
 
@@ -26,7 +27,8 @@ class HTMLPatternParserTest extends \WP_UnitTestCase
     protected $parser;
     public function setUp()
     {
-        $this->parser=new MockHTMLPatternParser();
+        parent::setUp();
+        $this->parser=new MockHTMLPatternParser(new AdapterGutenberg());
     }
     /**
      * @covers NewsParserPlugin\Parser\HTMLPatternParser::postBody

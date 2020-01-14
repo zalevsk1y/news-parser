@@ -2,7 +2,7 @@
 namespace NewsParserPlugin\Parser;
 
 use NewsParserPlugin\Parser\HTMLParser;
-use NewsParserPlugin\Traits\AdapterGutenbergTrait;
+use NewsParserPlugin\interfaces\AdapterInterface;
 
 /**
  * Parse html using pre saved template pattern.
@@ -18,25 +18,27 @@ class HTMLPatternParser extends HTMLParser
 {
 
     /**
-     * Trait that provide methods that convert array body data to string for post model
+     * Class that provide methods that convert array body data to string for post model
      * using gutenberg editor blocks markup.
      * 
-     * @method createGutenbergBlocks convert array of body elements data.
+     * @var AdapterInterface
+     * @method convert array of body elements data.
      */
-    use AdapterGutenbergTrait;
+    protected $adapter;
 
     /**
      * Init function.
      *
      * @param integer $cache_expiration cache expiration time.
      */
-    public function __construct( $cache_expiration = 3600){
+    public function __construct(AdapterInterface $adapter,$cache_expiration = 3600){
         parent::__construct($cache_expiration);
+        $this->adapter=$adapter;
     }
     /**
      * Parse post body
      *
-     * @uses AdapterGutenbergTrait::createGutenbergBlocks convert array of elements into string.
+     * @uses AdapterInterface::convert() convert array of elements into string.
      * @return string data that would be saved as post content.
      */
 
@@ -61,7 +63,7 @@ class HTMLPatternParser extends HTMLParser
         $body=$this->parseContainer($elements);
         
        
-        return $body ? $this->createGutenbergBlocks($body):'';
+        return $body ? $this->adapter->convert($body):'';
 
     }
     /**
