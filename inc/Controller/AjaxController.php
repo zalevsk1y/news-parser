@@ -69,7 +69,6 @@ class AjaxController extends Ajax
     {
        
         if (static::$instance) {
-            var_dump(get_class(static::$instance));
             return static::$instance;
         } else {
             static::$instance = new static($event);

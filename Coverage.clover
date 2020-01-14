@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1578989840">
-  <project timestamp="1578989840">
+<coverage generated="1578991799">
+  <project timestamp="1578991799">
     <package name="NewsParserPlugin\Ajax">
       <file name="/var/www/html/wpblog1/wp-content/plugins/news-parser/inc/Ajax/Ajax.php">
         <class name="Ajax" namespace="NewsParserPlugin\Ajax" fullPackage="Ajax" package="Ajax">
@@ -479,43 +479,43 @@
         <line num="38" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="16"/>
         <line num="41" type="stmt" count="16"/>
         <line num="42" type="stmt" count="16"/>
-        <line num="59" type="method" name="getFromCache" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="58" type="method" name="getFromCache" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="61" type="stmt" count="0"/>
         <line num="62" type="stmt" count="0"/>
-        <line num="63" type="stmt" count="0"/>
-        <line num="73" type="method" name="setCache" visibility="protected" complexity="1" crap="1" count="1"/>
+        <line num="72" type="method" name="setCache" visibility="protected" complexity="1" crap="1" count="1"/>
+        <line num="74" type="stmt" count="1"/>
         <line num="75" type="stmt" count="1"/>
-        <line num="76" type="stmt" count="1"/>
-        <line num="85" type="method" name="download" visibility="protected" complexity="3" crap="3.02" count="2"/>
+        <line num="84" type="method" name="download" visibility="protected" complexity="3" crap="3.02" count="2"/>
+        <line num="85" type="stmt" count="2"/>
         <line num="86" type="stmt" count="2"/>
         <line num="87" type="stmt" count="2"/>
-        <line num="88" type="stmt" count="2"/>
+        <line num="88" type="stmt" count="1"/>
         <line num="89" type="stmt" count="1"/>
-        <line num="90" type="stmt" count="1"/>
-        <line num="91" type="stmt" count="0"/>
+        <line num="90" type="stmt" count="0"/>
+        <line num="92" type="stmt" count="1"/>
         <line num="93" type="stmt" count="1"/>
-        <line num="94" type="stmt" count="1"/>
-        <line num="103" type="method" name="get" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="102" type="method" name="get" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="104" type="stmt" count="0"/>
         <line num="105" type="stmt" count="0"/>
         <line num="106" type="stmt" count="0"/>
         <line num="107" type="stmt" count="0"/>
         <line num="108" type="stmt" count="0"/>
-        <line num="109" type="stmt" count="0"/>
+        <line num="110" type="stmt" count="0"/>
         <line num="111" type="stmt" count="0"/>
         <line num="112" type="stmt" count="0"/>
-        <line num="113" type="stmt" count="0"/>
-        <line num="115" type="stmt" count="0"/>
-        <line num="123" type="method" name="removeScriptTags" visibility="public" complexity="1" crap="1" count="8"/>
-        <line num="124" type="stmt" count="8"/>
-        <line num="132" type="method" name="removeStyleTags" visibility="public" complexity="1" crap="1" count="7"/>
-        <line num="133" type="stmt" count="7"/>
-        <line num="143" type="method" name="wpRemoteGet" visibility="protected" complexity="1" crap="2" count="0"/>
-        <line num="145" type="stmt" count="0"/>
-        <line num="154" type="method" name="chain" visibility="protected" complexity="2" crap="2" count="7"/>
+        <line num="114" type="stmt" count="0"/>
+        <line num="122" type="method" name="removeScriptTags" visibility="public" complexity="1" crap="1" count="8"/>
+        <line num="123" type="stmt" count="8"/>
+        <line num="131" type="method" name="removeStyleTags" visibility="public" complexity="1" crap="1" count="7"/>
+        <line num="132" type="stmt" count="7"/>
+        <line num="142" type="method" name="wpRemoteGet" visibility="protected" complexity="1" crap="2" count="0"/>
+        <line num="144" type="stmt" count="0"/>
+        <line num="153" type="method" name="chain" visibility="protected" complexity="2" crap="2" count="7"/>
+        <line num="155" type="stmt" count="7"/>
         <line num="156" type="stmt" count="7"/>
-        <line num="157" type="stmt" count="7"/>
-        <line num="165" type="method" name="pipe" visibility="protected" complexity="1" crap="1" count="8"/>
-        <line num="167" type="stmt" count="8"/>
-        <metrics loc="169" ncloc="76" classes="1" methods="10" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="16" elements="39" coveredelements="22"/>
+        <line num="164" type="method" name="pipe" visibility="protected" complexity="1" crap="1" count="8"/>
+        <line num="166" type="stmt" count="8"/>
+        <metrics loc="168" ncloc="76" classes="1" methods="10" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="16" elements="39" coveredelements="22"/>
       </file>
     </package>
     <package name="NewsParserPlugin\Parser">
@@ -1041,6 +1041,6 @@
         <metrics loc="68" ncloc="37" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="15" elements="20" coveredelements="16"/>
       </file>
     </package>
-    <metrics files="27" loc="3016" ncloc="1588" classes="27" methods="146" coveredmethods="95" conditionals="0" coveredconditionals="0" statements="712" coveredstatements="611" elements="858" coveredelements="706"/>
+    <metrics files="27" loc="3015" ncloc="1588" classes="27" methods="146" coveredmethods="95" conditionals="0" coveredconditionals="0" statements="712" coveredstatements="611" elements="858" coveredelements="706"/>
   </project>
 </coverage>
