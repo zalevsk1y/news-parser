@@ -9,10 +9,7 @@ export function uriToJson(uri){
     }
     return {};
 }
-export function logErrorToService(error, info){
-    const parameters=config.emulateJSON?oldServerData({error,info}):newServerData({error,info});
-    fetch(config.errorLogApi.report,parameters)
-}
+
 export function getLanguage(){
     const className=config.lang.class;
     return document.querySelector('.'+className).dataset['lang'].substring(0,2);
@@ -46,11 +43,11 @@ export function getNonce(params){
     return nonce;
 }
 export function getRestNonce(){
-    let nonce=newsParserSettings.restApiNonce;
+    let nonce=config.nonce.rest;
     return nonce;
 }
 export function getAjaxNonce(){
-    let nonce=newsParserSettings.ajaxApiNonce;
+    let nonce=config.nonce.ajax;
     return nonce;
 }
 export function getPostEditLink(id){

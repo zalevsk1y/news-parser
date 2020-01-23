@@ -2,7 +2,7 @@
 namespace NewsParserPlugin\Parser;
 
 use NewsParserPlugin\Parser\HTMLParser;
-use NewsParserPlugin\interfaces\AdapterInterface;
+use NewsParserPlugin\Interfaces\AdapterInterface;
 
 /**
  * Parse html using pre saved template pattern.

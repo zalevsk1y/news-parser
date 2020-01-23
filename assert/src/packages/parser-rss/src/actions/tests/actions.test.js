@@ -121,7 +121,7 @@ describe('actions', () => {
             ];
         const store = mockStore({posts: []});
         store
-            .dispatch(parseRSSList({dispatch:store.dispatch,nonce, url}))
+            .dispatch(parseRSSList(store.dispatch,nonce, url))
             .then(() => {
                 expect(store.getActions()).toEqual(expectedActions)
             })

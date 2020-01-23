@@ -19,13 +19,13 @@ function mapDispatchToProps(dispatch){
             dispatch(closeDialog());
         },
         getFrameData:function (url){
-            dispatch(getPageHTML(url,dispatch))
+            dispatch(getPageHTML(dispatch,url))
         },
         createPostDraft:function(id,url,postData,options){
             if(options.saveParsingTemplate){
-                dispatch(saveParsingTemplate({url,postData,dispatch,options}))
+                dispatch(saveParsingTemplate(dispatch,url,postData,options))
             }else{
-                dispatch(createPostDraft(id,url,postData,options,dispatch));
+                dispatch(createPostDraft(dispatch,id,url,postData,options));
             }
         }
     }

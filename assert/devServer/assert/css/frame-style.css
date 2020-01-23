@@ -1,8 +1,0 @@
-.mouse-over{
-    outline: 2px dotted rgb(107, 214, 204);
-    background-color: rgba(107, 214, 204,0.5);
-}
-.parser-select{
-    outline: 3px solid rgb(107, 214, 204);
-    background-color: rgba(107, 214, 204,0.8);
-}

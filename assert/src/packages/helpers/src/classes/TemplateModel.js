@@ -1,32 +1,33 @@
-
-
-export class TemplateModel{
-    constructor({postData,options,url,ajaxEndPoint}){
-        this.endPoint=ajaxEndPoint;
-        this.url=url;
-        this.options=options;
-        this.postData=postData;
-        this.headers={
-            'Content-Type': 'application/json',
-            'accept': 'application/json',
-        }
+import {Ajax} from './Ajax';
+/**
+ * Create parsing template for automated parsing.
+ * 
+ * @since 1.0.0
+ */
+export class TemplateModel extends Ajax{
+    constructor(ajaxEndPoint){
+        super(ajaxEndPoint);
     }  
-    nonceAuth(nonce){
-        this.nonce=nonce;
-        this.endPoint+='&_wpnonce='+this.nonce;
-        return this;
-    }
-    create(){
-        const $this=this,
-            arrayOfElements=Object.keys(this.postData.body).map(propName=>{
-                return $this.postData.body[propName]
-            }),
-            cleanedData=this.removeDuplicate(arrayOfElements),
-            sortedData=this.sortByDOMPosition(cleanedData),
-            container=this.createContainer(sortedData);
+    /**
+     * Create parsing template from selected in visual constructor blocks.
+     * 
+     * @param {object} postData 
+     * @param {object} options 
+     * @param {string} url 
+     * @returns {object} template object.
+     */
+    create(postData,options,url){
+        let argsError=this.checkArgs({postData,options,url});
+        if(argsError instanceof Error) throw argsError;
+        const arrayOfElements=Object.keys(postData.body).map(propName=>{
+                return postData.body[propName]
+                }),
+             cleanedData=this.removeDuplicate(arrayOfElements),
+             sortedData=this.sortByDOMPosition(cleanedData),
+             container=this.createContainer(sortedData);
         let template={
-                url:this.url,
-                extraOptions:this.options,
+                url:url,
+                extraOptions:options,
                 template:container
             };
         sortedData.forEach(item=>{
@@ -40,8 +41,13 @@ export class TemplateModel{
         })
         return template;
     }
-    createContainer(arrayOfItems){
-        
+    /**
+     * Find common parent of HTML blocks.
+     * 
+     * @param {array} arrayOfItems 
+     * @returns {object}
+     */
+    createContainer(arrayOfItems){ 
         let arrayOfParents=arrayOfItems[0].parent,
             $this=this;
         for(var key in arrayOfParents){
@@ -63,6 +69,13 @@ export class TemplateModel{
             }
         }
     }
+    /**
+     * Check if HTML block has parent.
+     * 
+     * @param {object} item 
+     * @param {object} parentItem
+     * @returns {boolean} 
+     */
     hasParent(item,parentItem){
         for(var key in item.parent){
             let parent=item.parent[key];
@@ -73,6 +86,13 @@ export class TemplateModel{
         }
         return false;
     }
+    /**
+     * Create search string for php-simple-html-dom-parser (https://simplehtmldom.sourceforge.io/) 
+     * 
+     * @param {object} item 
+     * @param {object} containerClassName 
+     * @return {string}
+     */
     createSearchTemplate(item,containerClassName){
         let parentTagName=item.parent[0].tagName.toLowerCase(),
             parentClassName=item.parent[0].className.trim(),
@@ -80,6 +100,13 @@ export class TemplateModel{
             className=this.getClassName(item.className);
         return className?tagName+'.'+className:parentClassName!==containerClassName?parentTagName+'.'+this.getClassName(parentClassName)+' '+tagName:tagName;
     }
+    /**
+     * Get class name (with no digit) of HTML block. 
+     * 
+     * @param {string} className 
+     * @param {number} index Position in className string.
+     * @returns {string} 
+     */
     getClassName(className,index=0){
         let classNameArray=className.trim().split(' '),
         noDigitsClassNames=classNameArray.filter(partName=>{
@@ -89,6 +116,12 @@ export class TemplateModel{
         });
         return noDigitsClassNames.length?noDigitsClassNames[index]:classNameArray[0];
     }
+    /**
+     * Removes duplicated HTML blocks.
+     * 
+     * @param {array} arrayOfItems 
+     * @returns {array}
+     */
     removeDuplicate(arrayOfItems){
         let tempArray=[...arrayOfItems];
         const newArray=[],
@@ -107,6 +140,13 @@ export class TemplateModel{
         }
         return newArray;
     }
+    /**
+     * Check HTML blocks have the same attributes. 
+     * 
+     * @param {object} itemObject1 
+     * @param {object} itemObject2
+     * @return {boolean} 
+     */
     theSame(itemObject1,itemObject2){
             let result=true;
             if(itemObject1.tagName!==itemObject2.tagName){
@@ -120,6 +160,12 @@ export class TemplateModel{
             }
         return result;
     }
+    /**
+     * Sorting HTML blocks by number of parents.
+     * 
+     * @param {array} arrayOfElements 
+     * @returns {array}
+     */
     sortByDOMPosition(arrayOfElements){
         const newArray=[...arrayOfElements];
         newArray.sort((item1,item2)=>{
@@ -127,13 +173,23 @@ export class TemplateModel{
         })
         return newArray;
     }
-    save(){
-        let template=this.create();
-        return fetch(this.endPoint,{
+    /**
+     * Save created template to server.
+     * 
+     * @returns {Promise}
+     */
+    save(postData,options,url){
+        let argsError=this.checkArgs({postData,options,url});
+        if(argsError instanceof Error) throw argsError;
+        let template=this.create(postData,options,url),
+        ajaxUrl=this.endPoint;
+        if(this.nonce)ajaxUrl+='&_wpnonce='+this.nonce;
+        return fetch(ajaxUrl,{
             method:'POST',
             headers:this.headers,
             body:JSON.stringify(template)
         })
         .then(response=>response.json())
     }
+   
 }

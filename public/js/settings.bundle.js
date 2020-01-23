@@ -36738,7 +36738,7 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "message container " + (this.state.open ? "" : "closed")
+        className: "message container   " + (this.state.open ? "" : "closed")
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-content"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

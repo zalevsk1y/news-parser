@@ -5,7 +5,11 @@ import {getUrlWithParams} from '@news-parser/helpers';
 import PropTypes from 'prop-types';
 import Translate from './Translate';
 
-
+/**
+ * Input element with submit buttons.
+ * 
+ * @since 0.8.0
+ */
 export class InputForm extends React.Component{
     constructor(props){
         super(props);
@@ -16,11 +20,19 @@ export class InputForm extends React.Component{
         this.handleParseSelected=this.handleParseSelected.bind(this);
         this.renderButtons=this.renderButtons.bind(this);
     }
+    /**
+     * Change state of component on input.
+     * 
+     * @param {object} event Change event object.
+     */
     inputChange(event){
-        
         this.setState({inputValue:event.target.value})
     }
-
+    /**
+     * Handles parse single page submit.
+     * 
+     * @param {object} event Click event object. 
+     */
     handleParsePageSubmit(event){
         event.preventDefault();
         if(this.props.isFetching)return; 
@@ -29,22 +41,34 @@ export class InputForm extends React.Component{
             type:'visualConstructor'
         }})
     }
+    /**
+     * Handles parse RSS posts list submit. 
+     * 
+     * @param {object} event Click event object.  
+     */
     handleParseListSubmit(event){
+        event.preventDefault();
         const params={action:'list',url:this.state.inputValue};
         const url=getUrlWithParams(params)
         window.history.pushState(null,null,url)
         window.location.reload();
     }
-    handleParseSelected(){
+    /**
+     * Handles parse multiple selected from RSS list posts submit. 
+     * 
+     * @param {object} event Click event object. 
+     */
+    handleParseSelected(event){
+        event.preventDefault();
         if (!this.props.posts){
-            this.props.createMessage('info','Please select RSS feed first.');
+            this.props.message('info','Please select RSS feed first.');
             return;
         }
         const selectedPosts=this.props.posts.filter(post=>{
             return post.status==='selected';
         });
         if (selectedPosts.length===0){
-            this.props.createMessage('info','Please select posts.');
+            this.props.message('info','Please select posts.');
             return;
         }
         this.props.parseSelected(selectedPosts)
@@ -97,19 +121,19 @@ function mapStateToProps(state){
 }
 function mapDispatchToProps(dispatch){
     return {
-        parseList:(nonce,url)=>{
-            dispatch(parseRSSList({dispatch,nonce,url}))
+        parseList:(url)=>{
+            dispatch(parseRSSList(dispatch,url))
         },
-        parsePage:(nonce,url)=>{
-            dispatch(parsePage({dispatch,nonce,url}));
+        parsePage:(url)=>{
+            dispatch(parsePage(dispatch,url));
         },
         openVisualConstructor:(url,dialogData)=>{
             dispatch(openDialog(url,dialogData))
         },
         parseSelected:(posts)=>{
-            dispatch(parseSelected(posts,dispatch))
+            dispatch(parseSelected(dispatch,posts))
         },
-        createMessage:(type,text)=>{
+        message:(type,text)=>{
             dispatch(createMessage(type,text))
         }
     }
@@ -118,8 +142,54 @@ function mapDispatchToProps(dispatch){
 
 export default connect (mapStateToProps,mapDispatchToProps)(InputForm);
 
-InputForm.propTypes={
+InputForm. propTypes={
+    /**
+     * Action handles parsing RSS list
+     * 
+     * @param {string} url Url of RSS file.
+     */
     parseList:PropTypes.func.isRequired,
+    /**
+     * Action handles parse single page.
+     * 
+     * @param {string} url Url of the page.
+     * @param {string} innerPostIndex Index of the post in array(optional).
+     */
     parsePage:PropTypes.func.isRequired,
-    value:PropTypes.string
+    /**
+     * Open visual constructor modal window to select content manually 
+     * or create p[arsing template rules. 
+     * 
+     * @param {string} url url of the page.
+     */
+    openVisualConstructor:PropTypes.func.isRequired,
+    /**
+     * Parse selected post from RSS list and create drafts.
+     * 
+     * @param {array} posts Array of selected posts.
+     */
+    parseSelected:PropTypes.func.isRequired,
+    /**
+     * Show message.
+     * 
+     * @param {string} type Type of the massage [info|error|success]
+     * @param {string} text Text of the message.
+     */
+    message:PropTypes.func.isRequired,
+    /**
+     * Input element value. 
+     */
+    value:PropTypes.string,
+    /**
+     * Menu page.
+     */
+    page:PropTypes.string,
+    /**
+     * Fetching state.
+     */
+    isFetching:PropTypes.bool,
+    /**
+     * Selected from RSS list posts.
+     */
+    posts:PropTypes.array
 }

@@ -61,14 +61,17 @@ class Main
                 'pluginUrl'=>esc_url_raw(NEWS_PARSER_PLUGIN_URL),
                 'restApiNonce'=>wp_create_nonce('wp_rest'),
                 'ajaxApiNonce'=>wp_create_nonce('parsing_news_api'),
-                'editPostLink'=>esc_url_raw(admin_url( 'post.php?post=${postId}&action=edit' ))
+                'editPostLink'=>esc_url_raw(admin_url('post.php?post=${postId}&action=edit' ))
             );
             wp_localize_script('main-parser-bundle-main','newsParserSettings',$nonce);
             $rest_api_endpoints=array(
                 'root'=>esc_url_raw(rest_url()),
-                'visualConstructor'=>esc_url_raw((rest_url('news-parser/v1/visual-constructor/'))),
+                'rssPageName'=>$this->config->menu->subs[0]->menu_slug,
+                'singlePageName'=>$this->config->menu->subs[1]->menu_slug,
                 'media'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_MEDIA_API)),
-                'parsing'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API)),
+                'list'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API.'&status=list&url=')),
+                'single'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API.'&status=single&url=')),
+                'multi'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API.'&status=multi&url=')),
                 'options'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_OPTIONS_API)),
                 'rootRestApi'=>esc_url_raw(rest_url()),
                 'rootAjaxApi'=>esc_url_raw(admin_url('admin-ajax.php'))

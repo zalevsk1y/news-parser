@@ -4,14 +4,22 @@ import {Parser} from '@news-parser/helpers/classes/Parser'
 import {selectTitle,selectFeaturedMedia,selectContent,removeContent} from '../actions/frame';
 import {connect} from 'react-redux';
 import DOMPurify from 'dompurify';
+import PropTypes from 'prop-types';
 
-
+/**
+ * Frame element of visual constructor modal window. Allow choose parsing content manually.
+ * 
+ * @since 1.0.0
+ */
 export class Frame extends React.Component{
     constructor(props){
         super(props);
         this.frameRef=React.createRef();
         this.clickHandler=this.clickHandler.bind(this);
     }
+    /**
+     * Write sanitized page html into iframe.
+     */
     componentDidMount(){
         let DOMData=this.replaceYouTubeFrames(this.props.data),
             doc=this.frameRef.current.contentWindow.document,
@@ -33,10 +41,14 @@ export class Frame extends React.Component{
         this.imageLazyLoad(imgArray);
         this.parser=new Parser(this.frameRef);
     }
+    /**
+     * Check if img tags have lazy load data-src attributes and set them to src.
+     * 
+     * @param {object} imgElements  HTMLCollection of img elements.
+     */
     imageLazyLoad(imgElements){
         [...imgElements].forEach(imgTag=>{
             var imageScr=imgTag.dataset.hasOwnProperty('src')?imgTag.dataset.src:null;
-          
             if (imageScr===null) return;
             var lazyLoadImgTag=new Image();
             lazyLoadImgTag.src=imageScr;
@@ -46,6 +58,11 @@ export class Frame extends React.Component{
 
         })
     }
+    /**
+     * Find and replace YouTube frames? replacing with video tag that contains data-hash attr with youtube hash data.
+     * 
+     * @param {string} dom 
+     */
     replaceYouTubeFrames(dom){
         let hashPattern=/\<iframe.*?src\=[\"\'].*?youtube\.com\/embed\/(.*?)[?\"\'].*?<\/iframe>/g,
             replacement='<video class="news-parser-youtube" poster='+getPluginDirUrl()+"/public/images/youtube-video.jpeg"+' data-hash="$1">',
@@ -53,6 +70,9 @@ export class Frame extends React.Component{
             return newDom;
 
     }
+    /**
+     * Get post title using Open Graph protocol.
+     */
     getTitle(){
         const pattern=/\<meta property\=\"og\:title\" content\=\"(.*?)\"/i;
         let title=this.props.data.match(pattern);
@@ -62,6 +82,9 @@ export class Frame extends React.Component{
         }
        
     }
+    /**
+     * Get post featured media using Open Graph protocol.
+     */
     getFeaturedMedia(){
         const pattern=/\<meta property\=\"og\:image\" content\=\"(.*?)\"/i;
         let image=this.props.data.match(pattern);
@@ -72,25 +95,49 @@ export class Frame extends React.Component{
         }
         
     }
+    /**
+     * Event listener callback to highlight html elements when mouse is over them.
+     * 
+     * @param {object} event 
+     */
     mouseOver(event){
         const className=event.target.className;
         event.target.className=className+' mouse-over';
     }
+    /**
+     * Event listener callback to stop highlight html elements when mouse is left them.
+     * 
+     * @param {object} event 
+     */
     mouseOut(event){
         const className=event.target.className;
                 event.target.className=className.replace(' mouse-over','');
     }
+    /**
+     * Parse data from HTML element.
+     * 
+     * @param {object} element HTMLElement.
+     */
     parseElementData(element){
         let {elementHash,parsedData}=this.parser.parseElementData(element)
         element.id=elementHash;
         this.props.selectContent(elementHash,parsedData)
     }
+    /**
+     * Remove parsed element data. 
+     * 
+     * @param {object} element HTMLElement. 
+     */
     removeSelectedElement(element){
         const hash=element.id;
         hash&&this.props.removeContent(hash)
     }
+    /**
+     * Select element on click.
+     * 
+     * @param {object} event Event object
+     */
     clickHandler(event){
-    
         event.preventDefault();
         const className=event.target.className,
               element=event.target;
@@ -136,3 +183,35 @@ function mapDispatchToProps(dispatch){
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Frame)
+
+Frame.propTypes={
+    /**
+     * HTML data that should be write to the iFrame.
+     */
+    data:PropTypes.string.isRequired,
+    /**
+     * Select title action.Set post title.
+     * 
+     * @param {string} title Post title.
+     */
+    selectTitle:PropTypes.func.isRequired,
+    /**
+     * Select post featured image action.
+     * 
+     * @param {string} url Image url.
+     */
+    selectFeaturedMedia:PropTypes.func.isRequired,
+    /**
+     * Select post content action.
+     * 
+     * @param {string} hash Element hash used as key in data storage.
+     * @param {string} content Element content.
+     */
+    selectContent:PropTypes.func.isRequired,
+    /**
+     * Remove selected content action.
+     * 
+     * @param {string} hash Content key.
+     */
+    removeContent:PropTypes.func.isRequired
+}

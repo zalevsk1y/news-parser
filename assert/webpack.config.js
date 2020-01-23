@@ -10,8 +10,7 @@ const sass=require("node-sass");
 module.exports={
     devtool: 'source-map',
     entry:{
-        parser_rss:'./src/packages/parser-rss/src/index.js',
-        settings:'./src/packages/settings/src/index.js'
+        parser_rss:'./src/packages/parser-rss/src/index.js'
     },
     output:{
 				path:path.resolve(__dirname,'../public/js/'),

@@ -37601,38 +37601,32 @@ if(false) {}
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var globals__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! globals */ "globals");
+/* harmony import */ var globals__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(globals__WEBPACK_IMPORTED_MODULE_0__);
+
 var config = {
-  mode: 'production',
-  root: '?page=news-parser-main-menu',
-  emulateJSON: true,
-  settingsApi: {
-    getSettings: 'admin-ajax.php?action=news_parser_settings_api&status=get',
-    getDefaultSettings: 'admin-ajax.php?action=news_parser_settings_api&status=default',
-    saveSettings: 'admin-ajax.php?action=news_parser_settings_api&status=save'
-  },
+  mode: 'development',
+  root: '?page=' + globals__WEBPACK_IMPORTED_MODULE_0__["newsParserApiEndpoints"].rssPageName,
+  restRoot: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserSettings"].root,
+  emulateJSON: false,
   parsingApi: {
-    list: 'admin-ajax.php?action=news_parser_parsing_api&status=list&url=',
-    single: 'admin-ajax.php?action=news_parser_parsing_api&status=single&url=',
-    multi: 'admin-ajax.php?action=news_parser_parsing_api&status=multi&url='
+    list: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserApiEndpoints"].list,
+    single: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserApiEndpoints"].single,
+    multi: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserApiEndpoints"].multi
+  },
+  optionsApi: {
+    create: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserApiEndpoints"].options
+  },
+  mediaApi: {
+    create: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserApiEndpoints"].media
   },
   errorReport: {
     url: 'https://github.com/zalevsk1y/news-parser/issues/new'
   },
   defaultImage: '/images/Grey-Gradient.png',
   nonce: {
-    id: {
-      parse: 'parsing-app',
-      settings: 'settings-app'
-    },
-    dataset: {
-      parse: {
-        get: 'nonce'
-      },
-      settings: {
-        get: 'nonceSettingsGet',
-        save: 'nonceSettingsSave'
-      }
-    }
+    rest: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserSettings"].restApiNonce,
+    ajax: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserSettings"].ajaxApiNonce
   },
   amedia: {
     phone: 782
@@ -37765,6 +37759,11 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+/**
+ * Base Ajax class.
+ * 
+ * @since 1.0.0
+ */
 var Ajax =
 /*#__PURE__*/
 function () {
@@ -37782,8 +37781,21 @@ function () {
   _createClass(Ajax, [{
     key: "nonceAuth",
     value: function nonceAuth(nonce) {
+      var argsError = this.argsCheck({
+        nonce: nonce
+      });
+      if (argsError instanceof Error) throw argsError;
       this.nonce = nonce;
       return this;
+    }
+  }, {
+    key: "argsCheck",
+    value: function argsCheck(args) {
+      var argNames = Object.keys(args);
+      argNames.forEach(function (name) {
+        if (args[name] === undefined) return new Error('Argument ${name} is undefined.');
+      });
+      return true;
     }
   }]);
 
@@ -37822,6 +37834,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
+/**
+ * Download and save image to wordpress media library. 
+ * 
+ * @since 1.0.0
+ */
+
 var MediaModel =
 /*#__PURE__*/
 function (_Ajax) {
@@ -37832,10 +37850,25 @@ function (_Ajax) {
 
     return _possibleConstructorReturn(this, _getPrototypeOf(MediaModel).call(this, endPoint));
   }
+  /**
+   * Send request to server. 
+   * 
+   * @param {string} url 
+   * @param {string} alt 
+   * @param {number} postId 
+   * @returns {Promise}
+   */
+
 
   _createClass(MediaModel, [{
     key: "create",
     value: function create(url, alt, postId) {
+      var argsError = this.argsCheck({
+        url: url,
+        alt: alt,
+        postId: postId
+      });
+      if (argsError instanceof Error) throw argsError;
       var ajaxUrl = this.endPoint,
           body = {
         url: url,
@@ -37880,6 +37913,12 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 
+/**
+ * Get HTML element data.
+ * 
+ * @since 1.0.0
+ */
+
 var Parser =
 /*#__PURE__*/
 function () {
@@ -37888,6 +37927,13 @@ function () {
 
     this.document = frameElement.current.contentWindow.document;
   }
+  /**
+   * Get HTMLElements data.
+   * 
+   * @param {object} el HTMLElement.
+   * @return {object}
+   */
+
 
   _createClass(Parser, [{
     key: "parseElementData",
@@ -37916,7 +37962,6 @@ function () {
           parsedData.content = element.innerText;
       }
 
-      console.log(parsedData.tagName);
       parsedData.offsetTop = this.getOffsetTop(element);
       parsedData.parent = this.getParentsArray(element);
       var elementHash = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["hash"])(Math.random().toString());
@@ -37925,12 +37970,26 @@ function () {
         parsedData: parsedData
       };
     }
+    /**
+     * Get offset top of element.
+     * 
+     * @param {object} element HTMLElement
+     * @returns {number}
+     */
+
   }, {
     key: "getOffsetTop",
     value: function getOffsetTop(element) {
       var bodyScrollTop = this.document.body.scrollTop;
       return element.getBoundingClientRect().top + bodyScrollTop;
     }
+    /**
+     * Get <img> tag data.
+     * 
+     * @param {object} el HTMLElement.
+     * @returns {object}
+     */
+
   }, {
     key: "parseImageContent",
     value: function parseImageContent(el) {
@@ -37940,6 +37999,12 @@ function () {
         alt: element.alt
       };
     }
+    /**
+     * Get <ul> tag data.
+     * 
+     * @param {object} el HTMLElement
+     */
+
   }, {
     key: "parseListContent",
     value: function parseListContent(el) {
@@ -37949,6 +38014,13 @@ function () {
         return item.innerText;
       });
     }
+    /**
+     * Get array of element parents.
+     * 
+     * @param {object} el HTMLElement
+     * @returns {array} 
+     */
+
   }, {
     key: "getParentsArray",
     value: function getParentsArray(el) {
@@ -38016,42 +38088,53 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+/**
+ * Format data to create wordpress post draft using REST API.
+ * 
+ * @since 1.0.0
+ */
+
 var PostModel =
 /*#__PURE__*/
 function (_Rest) {
   _inherits(PostModel, _Rest);
 
-  function PostModel(_ref) {
+  function PostModel(restApiRoot) {
     var _this;
-
-    var postData = _ref.postData,
-        restApiRoot = _ref.restApiRoot,
-        options = _ref.options,
-        url = _ref.url;
 
     _classCallCheck(this, PostModel);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PostModel).call(this, restApiRoot));
-    _this.content = _this.formatParsedData(postData);
-    _this.title = postData.title;
-    _this.featuredMedia = postData.image;
-    _this.url = url;
-    _this.options = options;
-    _this.endPoint = 'wp/v2/posts';
+    _this.suffix = 'wp/v2/posts';
     return _this;
   }
+  /**
+   * Format and send request to create post draft.
+   * 
+   * @param {object} postData 
+   * @param {object} options 
+   * @param {string} url 
+   * @returns {Promise}
+   */
+
 
   _createClass(PostModel, [{
     key: "createPostDraft",
-    value: function createPostDraft() {
-      var url = this.rootApi + this.endPoint,
+    value: function createPostDraft(postData, options, url) {
+      var argsError = this.checkArgs({
+        postData: postData,
+        options: options,
+        url: url
+      });
+      if (argsError instanceof Error) throw argsError;
+      var requestUrl = this.endPoint + this.suffix,
           body = {
         status: 'draft',
-        title: this.title,
-        content: this.content
+        title: postData.title,
+        content: this.formatParsedData(postData)
       },
           $this = this;
-      return fetch(url, {
+      return fetch(requestUrl, {
         method: 'POST',
         headers: this.headers,
         body: JSON.stringify(body)
@@ -38062,10 +38145,16 @@ function (_Rest) {
         return postData;
       });
     }
+    /**
+     * Update exist post data.
+     * 
+     * @param {object} params 
+     */
+
   }, {
     key: "updatePost",
     value: function updatePost(params) {
-      if (!this.id) throw new Error('No post ID was set. Post could not be updated');
+      if (this.id === undefined) throw new Error('No post ID was set. Post could not be updated');
       var url = this.rootApi + this.endPoint + '/' + this.id;
       return fetch(url, {
         method: 'POST',
@@ -38075,6 +38164,13 @@ function (_Rest) {
         return response.json();
       });
     }
+    /**
+     * Format parsed data.
+     * 
+     * @param {object} content 
+     * @return {string}
+     */
+
   }, {
     key: "formatParsedData",
     value: function formatParsedData(content) {
@@ -38114,12 +38210,25 @@ function (_Rest) {
       });
       return postBody;
     }
+    /**
+     * Format text content.
+     * 
+     * @param {string} text 
+     */
+
   }, {
     key: "simpleText",
     value: function simpleText(text) {
       var cleanContent = this.sanitize(text);
       return cleanContent;
     }
+    /**
+     * Format youtube video as gutenberg video block.
+     * 
+     * @param {string} hash Youtube video hash
+     * @returns {string}
+     */
+
   }, {
     key: "youtubeVideo",
     value: function youtubeVideo(hash) {
@@ -38127,12 +38236,27 @@ function (_Rest) {
           cleanHash = hash.replace(/[^0-9a-zA-Z\_]/g, '');
       return Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["sprintf"])(video, cleanHash);
     }
+    /**
+     * Format paragraph tag data to gutenberg paragraph block data.
+     * 
+     * @param {string} text 
+     * @return {string}
+     */
+
   }, {
     key: "paragraph",
     value: function paragraph(text) {
       var paragraph = '<!-- wp:paragraph --><p>%s</p><!-- /wp:paragraph -->';
       return Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["sprintf"])(paragraph, this.sanitize(text));
     }
+    /**
+     * Format heading tag data to gutenberg heading block.
+     * 
+     * @param {string} text 
+     * @param {string} type 
+     * @return {string}
+     */
+
   }, {
     key: "heading",
     value: function heading(text, type) {
@@ -38141,6 +38265,14 @@ function (_Rest) {
           heading = '<!-- wp:heading {"level":%1$s} --><%2$s>%3$s</%2$s><!-- /wp:heading -->';
       return Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["sprintf"])(heading, level, this.sanitize(type), cleanContent);
     }
+    /**
+     * Format image tag data to gutenberg image block. 
+     * 
+     * @param {string} url 
+     * @param {string} alt 
+     * @returns {string}
+     */
+
   }, {
     key: "image",
     value: function image(url, alt) {
@@ -38149,6 +38281,13 @@ function (_Rest) {
           image = '<!-- wp:image --><figure class="wp-block-image"><img src="%s" alt="%s"/></figure><!-- /wp:image -->';
       return Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["sprintf"])(image, cleanUrl, cleanAlt);
     }
+    /**
+     * Format list tag data to gutenberg list block. 
+     * 
+     * @param {array} listArray 
+     * @return {string}
+     */
+
   }, {
     key: "list",
     value: function list(listArray) {
@@ -38162,6 +38301,13 @@ function (_Rest) {
       });
       return listBegin + list + listEnd;
     }
+    /**
+     * Format quote tag data to gutenberg quote block.
+     * 
+     * @param {string} text
+     * @returns {string}  
+     */
+
   }, {
     key: "quote",
     value: function quote(text) {
@@ -38169,6 +38315,13 @@ function (_Rest) {
           quote = '<!-- wp:quote --><blockquote class="wp-block-quote"><p>%s</p><p></p></blockquote><!-- /wp:quote -->';
       return Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["sprintf"])(quote, cleanContent);
     }
+    /**
+     * Sort elements data by offset of the top of page.
+     * 
+     * @param {object} objectOfContent 
+     * @returns {array}
+     */
+
   }, {
     key: "sortByOffset",
     value: function sortByOffset(objectOfContent) {
@@ -38195,6 +38348,13 @@ function (_Rest) {
 
       return sortedContent;
     }
+    /**
+     * Sanitize data.
+     * 
+     * @param {string} content 
+     * @returns {string}
+     */
+
   }, {
     key: "sanitize",
     value: function sanitize(content) {
@@ -38223,6 +38383,11 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+/**
+ * Base Rest class
+ * 
+ * @since 1.0.0
+ */
 var Rest =
 /*#__PURE__*/
 function () {
@@ -38240,8 +38405,21 @@ function () {
   _createClass(Rest, [{
     key: "nonceAuth",
     value: function nonceAuth(nonce) {
+      var argsError = this.argsCheck({
+        nonce: nonce
+      });
+      if (argsError instanceof Error) throw argsError;
       this.headers['X-WP-Nonce'] = nonce;
       return this;
+    }
+  }, {
+    key: "argsCheck",
+    value: function argsCheck(args) {
+      var argNames = Object.keys(args);
+      argNames.forEach(function (name) {
+        if (args[name] === undefined) return new Error('Argument ${name} is undefined.');
+      });
+      return true;
     }
   }]);
 
@@ -38260,6 +38438,7 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TemplateModel", function() { return TemplateModel; });
+/* harmony import */ var _Ajax__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Ajax */ "./src/packages/helpers/src/classes/Ajax.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -38276,49 +38455,63 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+/**
+ * Create parsing template for automated parsing.
+ * 
+ * @since 1.0.0
+ */
+
 var TemplateModel =
 /*#__PURE__*/
-function () {
-  function TemplateModel(_ref) {
-    var postData = _ref.postData,
-        options = _ref.options,
-        url = _ref.url,
-        ajaxEndPoint = _ref.ajaxEndPoint;
+function (_Ajax) {
+  _inherits(TemplateModel, _Ajax);
 
+  function TemplateModel(ajaxEndPoint) {
     _classCallCheck(this, TemplateModel);
 
-    this.endPoint = ajaxEndPoint;
-    this.url = url;
-    this.options = options;
-    this.postData = postData;
-    this.headers = {
-      'Content-Type': 'application/json',
-      'accept': 'application/json'
-    };
+    return _possibleConstructorReturn(this, _getPrototypeOf(TemplateModel).call(this, ajaxEndPoint));
   }
+  /**
+   * Create parsing template from selected in visual constructor blocks.
+   * 
+   * @param {object} postData 
+   * @param {object} options 
+   * @param {string} url 
+   * @returns {object} template object.
+   */
+
 
   _createClass(TemplateModel, [{
-    key: "nonceAuth",
-    value: function nonceAuth(nonce) {
-      this.nonce = nonce;
-      this.endPoint += '&_wpnonce=' + this.nonce;
-      return this;
-    }
-  }, {
     key: "create",
-    value: function create() {
+    value: function create(postData, options, url) {
       var _this = this;
 
-      var $this = this,
-          arrayOfElements = Object.keys(this.postData.body).map(function (propName) {
-        return $this.postData.body[propName];
+      var argsError = this.checkArgs({
+        postData: postData,
+        options: options,
+        url: url
+      });
+      if (argsError instanceof Error) throw argsError;
+      var arrayOfElements = Object.keys(postData.body).map(function (propName) {
+        return postData.body[propName];
       }),
           cleanedData = this.removeDuplicate(arrayOfElements),
           sortedData = this.sortByDOMPosition(cleanedData),
           container = this.createContainer(sortedData);
       var template = {
-        url: this.url,
-        extraOptions: this.options,
+        url: url,
+        extraOptions: options,
         template: container
       };
       sortedData.forEach(function (item) {
@@ -38333,6 +38526,13 @@ function () {
       });
       return template;
     }
+    /**
+     * Find common parent of HTML blocks.
+     * 
+     * @param {array} arrayOfItems 
+     * @returns {object}
+     */
+
   }, {
     key: "createContainer",
     value: function createContainer(arrayOfItems) {
@@ -38366,6 +38566,14 @@ function () {
         if (_typeof(_ret) === "object") return _ret.v;
       }
     }
+    /**
+     * Check if HTML block has parent.
+     * 
+     * @param {object} item 
+     * @param {object} parentItem
+     * @returns {boolean} 
+     */
+
   }, {
     key: "hasParent",
     value: function hasParent(item, parentItem) {
@@ -38379,6 +38587,14 @@ function () {
 
       return false;
     }
+    /**
+     * Create search string for php-simple-html-dom-parser (https://simplehtmldom.sourceforge.io/) 
+     * 
+     * @param {object} item 
+     * @param {object} containerClassName 
+     * @return {string}
+     */
+
   }, {
     key: "createSearchTemplate",
     value: function createSearchTemplate(item, containerClassName) {
@@ -38388,6 +38604,14 @@ function () {
           className = this.getClassName(item.className);
       return className ? tagName + '.' + className : parentClassName !== containerClassName ? parentTagName + '.' + this.getClassName(parentClassName) + ' ' + tagName : tagName;
     }
+    /**
+     * Get class name (with no digit) of HTML block. 
+     * 
+     * @param {string} className 
+     * @param {number} index Position in className string.
+     * @returns {string} 
+     */
+
   }, {
     key: "getClassName",
     value: function getClassName(className) {
@@ -38400,6 +38624,13 @@ function () {
       });
       return noDigitsClassNames.length ? noDigitsClassNames[index] : classNameArray[0];
     }
+    /**
+     * Removes duplicated HTML blocks.
+     * 
+     * @param {array} arrayOfItems 
+     * @returns {array}
+     */
+
   }, {
     key: "removeDuplicate",
     value: function removeDuplicate(arrayOfItems) {
@@ -38429,6 +38660,14 @@ function () {
 
       return newArray;
     }
+    /**
+     * Check HTML blocks have the same attributes. 
+     * 
+     * @param {object} itemObject1 
+     * @param {object} itemObject2
+     * @return {boolean} 
+     */
+
   }, {
     key: "theSame",
     value: function theSame(itemObject1, itemObject2) {
@@ -38448,6 +38687,13 @@ function () {
 
       return result;
     }
+    /**
+     * Sorting HTML blocks by number of parents.
+     * 
+     * @param {array} arrayOfElements 
+     * @returns {array}
+     */
+
   }, {
     key: "sortByDOMPosition",
     value: function sortByDOMPosition(arrayOfElements) {
@@ -38458,11 +38704,25 @@ function () {
       });
       return newArray;
     }
+    /**
+     * Save created template to server.
+     * 
+     * @returns {Promise}
+     */
+
   }, {
     key: "save",
-    value: function save() {
-      var template = this.create();
-      return fetch(this.endPoint, {
+    value: function save(postData, options, url) {
+      var argsError = this.checkArgs({
+        postData: postData,
+        options: options,
+        url: url
+      });
+      if (argsError instanceof Error) throw argsError;
+      var template = this.create(postData, options, url),
+          ajaxUrl = this.endPoint;
+      if (this.nonce) ajaxUrl += '&_wpnonce=' + this.nonce;
+      return fetch(ajaxUrl, {
         method: 'POST',
         headers: this.headers,
         body: JSON.stringify(template)
@@ -38473,7 +38733,7 @@ function () {
   }]);
 
   return TemplateModel;
-}();
+}(_Ajax__WEBPACK_IMPORTED_MODULE_0__["Ajax"]);
 
 /***/ }),
 
@@ -38481,13 +38741,12 @@ function () {
 /*!*******************************************!*\
   !*** ./src/packages/helpers/src/index.js ***!
   \*******************************************/
-/*! exports provided: uriToJson, logErrorToService, getLanguage, getYOffset, getXOffset, scrollTo, hash, getNonce, getRestNonce, getAjaxNonce, getPostEditLink, sendApiRequest, getApiEndpoint, getUrlWithParams, decodeHTMLEntities, sprintf, escHTML, decodeQuotes, getPluginDirUrl, combineSubReducers, oldServerData, newServerData */
+/*! exports provided: uriToJson, getLanguage, getYOffset, getXOffset, scrollTo, hash, getNonce, getRestNonce, getAjaxNonce, getPostEditLink, sendApiRequest, getApiEndpoint, getUrlWithParams, decodeHTMLEntities, sprintf, escHTML, decodeQuotes, getPluginDirUrl, combineSubReducers, oldServerData, newServerData */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uriToJson", function() { return uriToJson; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logErrorToService", function() { return logErrorToService; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLanguage", function() { return getLanguage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getYOffset", function() { return getYOffset; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getXOffset", function() { return getXOffset; });
@@ -38519,16 +38778,6 @@ function uriToJson(uri) {
   }
 
   return {};
-}
-function logErrorToService(error, info) {
-  var parameters = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].emulateJSON ? oldServerData({
-    error: error,
-    info: info
-  }) : newServerData({
-    error: error,
-    info: info
-  });
-  fetch(_news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].errorLogApi.report, parameters);
 }
 function getLanguage() {
   var className = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].lang.class;
@@ -38563,11 +38812,11 @@ function getNonce(params) {
   return nonce;
 }
 function getRestNonce() {
-  var nonce = newsParserSettings.restApiNonce;
+  var nonce = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].nonce.rest;
   return nonce;
 }
 function getAjaxNonce() {
-  var nonce = newsParserSettings.ajaxApiNonce;
+  var nonce = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].nonce.ajax;
   return nonce;
 }
 function getPostEditLink(id) {
@@ -38719,6 +38968,12 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+/**
+ * Message window element.
+ * 
+ * @since 0.8.0
+ */
+
 var Message =
 /*#__PURE__*/
 function (_React$Component) {
@@ -38737,6 +38992,10 @@ function (_React$Component) {
     _this.close = _this.close.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
+  /**
+   * Close message window.
+   */
+
 
   _createClass(Message, [{
     key: "close",
@@ -38745,6 +39004,13 @@ function (_React$Component) {
         open: false
       });
     }
+    /**
+     * If get mew message close current message and open new one in 400ms.
+     * 
+     * @param {object} prevProps 
+     * @param {object} prevState 
+     */
+
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState) {
@@ -38771,7 +39037,7 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "message container " + (this.state.open ? "" : "closed")
+        className: "message container   " + (this.state.open ? "" : "closed")
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-content"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -38811,10 +39077,25 @@ function (_React$Component) {
   return Message;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 Message.propTypes = {
+  /**
+   * Message window status.
+   */
   open: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool.isRequired,
+
+  /**
+   * Message type [error,info,success]
+   */
   type: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+
+  /**
+   * Message text.
+   */
   text: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  time: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+
+  /**
+   * Timestamp of the message.
+   */
+  time: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
 };
 /* harmony default export */ __webpack_exports__["default"] = (Message);
 
@@ -38838,60 +39119,11 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/packages/parser-rss/src/actions/galleryDialog.js":
-/*!**************************************************************!*\
-  !*** ./src/packages/parser-rss/src/actions/galleryDialog.js ***!
-  \**************************************************************/
-/*! exports provided: types, focusPicture, selectPicture, deselectPicture, updatePictureInfo */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "types", function() { return types; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "focusPicture", function() { return focusPicture; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectPicture", function() { return selectPicture; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deselectPicture", function() { return deselectPicture; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePictureInfo", function() { return updatePictureInfo; });
-var types = {
-  FOCUS_PICTURE: 'FOCUS_PICTURE',
-  SELECT_PICTURE: 'SELECT_PICTURE',
-  BLUR_PICTURE: 'BLUR_PICTURE',
-  DESELECT_PICTURE: 'DESELECT_PICTURE',
-  UPDATE_PICTURE_INFO: 'UPDATE_PICTURE_INFO'
-};
-function focusPicture(id) {
-  return {
-    type: types.FOCUS_PICTURE,
-    id: id
-  };
-}
-function selectPicture(id) {
-  return {
-    type: types.SELECT_PICTURE,
-    id: id
-  };
-}
-function deselectPicture(id) {
-  return {
-    type: types.DESELECT_PICTURE,
-    id: id
-  };
-}
-function updatePictureInfo(id, info) {
-  return {
-    type: types.UPDATE_PICTURE_INFO,
-    id: id,
-    info: info
-  };
-}
-
-/***/ }),
-
 /***/ "./src/packages/parser-rss/src/actions/index.js":
 /*!******************************************************!*\
   !*** ./src/packages/parser-rss/src/actions/index.js ***!
   \******************************************************/
-/*! exports provided: types, requestPostsList, setRoute, requestPost, receivePostsList, receiveError, receivePost, selectPost, createMessage, openDialog, openVisualConstructor, closeVisualConstructor, closeDialog, fetchError, parseRSSList, parseSelected, parsePage */
+/*! exports provided: types, requestPostsList, setRoute, requestPost, receivePostsList, receiveError, receivePost, selectPost, createMessage, openDialog, closeDialog, fetchError, parseRSSList, parseSelected, parsePage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38906,8 +39138,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectPost", function() { return selectPost; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMessage", function() { return createMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "openDialog", function() { return openDialog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "openVisualConstructor", function() { return openVisualConstructor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "closeVisualConstructor", function() { return closeVisualConstructor; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "closeDialog", function() { return closeDialog; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchError", function() { return fetchError; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseRSSList", function() { return parseRSSList; });
@@ -38995,24 +39225,6 @@ function openDialog(url, dialogData) {
   var dialog = dialogData.dialog;
 
   switch (dialog.type) {
-    case 'gallery':
-      dialog.data = dialog.data ? dialog.data.map(function (item, key) {
-        return {
-          id: key,
-          url: item,
-          select: false,
-          focus: false,
-          info: {
-            info: {
-              name: "unknown",
-              width: 'unknown',
-              height: 'unknown'
-            }
-          }
-        };
-      }) : [];
-      break;
-
     case 'visualConstructor':
       var additionalData = {
         url: url,
@@ -39029,16 +39241,6 @@ function openDialog(url, dialogData) {
     type: types.OPEN_DIALOG,
     url: url,
     data: dialogData
-  };
-}
-function openVisualConstructor() {
-  return {
-    type: types.OPEN_VISUAL_CONSTRUCTOR
-  };
-}
-function closeVisualConstructor() {
-  return {
-    type: types.CLOSE_VISUAL_CONSTRUCTOR
   };
 }
 function closeDialog() {
@@ -39059,17 +39261,24 @@ function fetchError(error) {
     }
   };
 }
-function parseRSSList(params) {
-  params.dispatch(requestPostsList(params.url));
+/**
+ * Send parse RSS request to the server.And dispatch resieced data. 
+ * 
+ * @param {function} dispatch
+ * @param {string} url
+ */
+
+function parseRSSList(dispatch, url) {
+  dispatch(requestPostsList(url));
   var nonce = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["getAjaxNonce"])();
-  var requestUrl = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].parsingApi.list + encodeURIComponent(params.url) + '&_wpnonce=' + nonce;
-  var parameters = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].emulateJSON ? Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["oldServerData"])(params.options) : Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["newServerData"])(params.options);
+  var requestUrl = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].parsingApi.list + encodeURIComponent(url) + '&_wpnonce=' + nonce;
+  var parameters = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].emulateJSON ? Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["oldServerData"])() : Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["newServerData"])();
   return function (dispatch) {
     return fetch(requestUrl, parameters).then(function (response) {
       return response.json();
     }).then(function (json) {
       if (!json.err) {
-        dispatch(receivePostsList(params.url, json));
+        dispatch(receivePostsList(url, json));
       } else {
         dispatch(receiveError(json));
       }
@@ -39078,29 +39287,38 @@ function parseRSSList(params) {
     });
   };
 }
-function parseSelected(selectedPosts, dispatch) {
+/**
+ * Send parse request to server for posts array.
+ * 
+ * @param {function} dispatch 
+ * @param {array} selectedPosts 
+ */
+
+function parseSelected(dispatch, selectedPosts) {
   return function (dispatch) {
     var promise = new Promise(function (resolve) {
       resolve();
     });
     selectedPosts.forEach(function (post) {
       promise.then(function () {
-        return dispatch(parsePage({
-          url: post.link,
-          id: post._id,
-          dispatch: dispatch
-        }));
+        return dispatch(parsePage(dispatch, post.link, post._id));
       });
     });
     return promise;
   };
 }
-function parsePage(params) {
-  var dispatch = params.dispatch,
-      nonce = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["getAjaxNonce"])(),
-      requestUrl = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].parsingApi.multi + encodeURIComponent(params.url) + '&_wpnonce=' + nonce,
-      parameters = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].emulateJSON ? Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["oldServerData"])(params.options) : Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["newServerData"])(params.options);
-  dispatch(requestPost(params.url, params.id));
+/**
+ * 
+ * @param {function} dispatch 
+ * @param {string} url Page url.
+ * @param {string} postInnerIndex Index in posts array.
+ */
+
+function parsePage(dispatch, url, postInnerIndex) {
+  var nonce = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["getAjaxNonce"])(),
+      requestUrl = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].parsingApi.multi + encodeURIComponent(url) + '&_wpnonce=' + nonce,
+      parameters = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].emulateJSON ? Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["oldServerData"])() : Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["newServerData"])();
+  dispatch(requestPost(url, postInnerIndex));
   return function (dispatch) {
     return fetch(requestUrl, parameters).then(function (response) {
       return response.json();
@@ -39108,8 +39326,8 @@ function parsePage(params) {
       if (json) {
         switch (true) {
           case json.data !== undefined:
-            json.data._id = params.id;
-            dispatch(receivePost(params.url, json));
+            json.data._id = postInnerIndex;
+            dispatch(receivePost(url, json));
             break;
 
           case json.err == 1:
@@ -39137,6 +39355,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Icons; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/**
+ * Creates icon and set click handler callback.
+ * 
+ * @since 0.8.0
+ * @param {string} className Icon class name.
+ * @param {string} title Icon title.
+ * @param {function} onClick Function click handler.  
+ */
 
 function Icons(_ref) {
   var className = _ref.className,
@@ -39148,6 +39378,24 @@ function Icons(_ref) {
     onClick: onClick
   });
 }
+Icons.propTypes = {
+  /**
+   * Icon class name.
+   */
+  className: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+
+  /**
+   * Icon title.
+   */
+  title: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+
+  /**
+   * Click handler.
+   * 
+   * @param {object} event Event object.
+   */
+  onClick: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
+};
 
 /***/ }),
 
@@ -39184,6 +39432,11 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+/**
+ * Image component with lazy load.
+ * 
+ * @since 0.8.0
+ */
 
 var Image =
 /*#__PURE__*/
@@ -39199,6 +39452,12 @@ function (_React$Component) {
     _this.onLoad = _this.onLoad.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
+  /**
+   * Lazy loading
+   * 
+   * @param {object} item  
+   */
+
 
   _createClass(Image, [{
     key: "onLoad",
@@ -39228,7 +39487,14 @@ function (_React$Component) {
 
 /* harmony default export */ __webpack_exports__["default"] = (Image);
 Image.propTypes = {
+  /**
+   * Image source path.
+   */
   src: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+
+  /**
+   * Image tag class name.
+   */
   className: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
 
@@ -39249,6 +39515,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var globals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! globals */ "globals");
 /* harmony import */ var globals__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(globals__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _containers_VisualConstructor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../containers/VisualConstructor */ "./src/packages/parser-rss/src/containers/VisualConstructor.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39270,6 +39538,13 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+
+/**
+ * Modal window controller.
+ * 
+ * @since 1.0.0
+ */
+
 var ModalWindow =
 /*#__PURE__*/
 function (_React$Component) {
@@ -39284,6 +39559,12 @@ function (_React$Component) {
     _this.scroll = _this.scroll.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
+  /**
+   * Prevent scrolling when modal window is open.
+   * 
+   * @param {bool} state 
+   */
+
 
   _createClass(ModalWindow, [{
     key: "scroll",
@@ -39317,6 +39598,12 @@ function (_React$Component) {
 
   return ModalWindow;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+ModalWindow.propTypes = {
+  /**
+   * Modal window type [visualConstructor]. 
+   */
+  type: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.string.isRequired
+};
 
 /***/ }),
 
@@ -39358,6 +39645,13 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+/**
+ * Indicator stripe.Loading process indicator.
+ * 
+ * @since 0.8.0
+ * 
+ */
+
 var Indicator =
 /*#__PURE__*/
 function (_React$Component) {
@@ -39378,6 +39672,10 @@ function (_React$Component) {
     _this.handleScroll = _this.handleScroll.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
+  /**
+   * Calculates new position of indicator for the next tick. 
+   */
+
 
   _createClass(Indicator, [{
     key: "tick",
@@ -39387,6 +39685,10 @@ function (_React$Component) {
         position: oldPosition > 100 ? -90 : oldPosition + this.props.step
       };
     }
+    /**
+     * Change state of indicator. 
+     */
+
   }, {
     key: "animation",
     value: function animation() {
@@ -39397,9 +39699,11 @@ function (_React$Component) {
           position: -90
         });
       }
-
-      ;
     }
+    /**
+     * Handling Wordpress fixed header menu in mobile version. 
+     */
+
   }, {
     key: "handleScroll",
     value: function handleScroll() {
@@ -39417,9 +39721,15 @@ function (_React$Component) {
         top: 46 - yOffset > 0 ? 46 - yOffset : 0
       });
     }
+    /**
+     * Get a new tick after state of indicator was update.
+     * 
+     * @param {object} props 
+     */
+
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate(props) {
+    value: function componentDidUpdate() {
       requestAnimationFrame(this.animation);
     }
   }, {
@@ -39460,6 +39770,9 @@ function mapStateToProps(state) {
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(Indicator));
 Indicator.propTypes = {
+  /**
+   * Indicator animation status.
+   */
   isAnimate: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool.isRequired
 };
 
@@ -39507,6 +39820,12 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+/**
+ * Input element with submit buttons.
+ * 
+ * @since 0.8.0
+ */
+
 var InputForm =
 /*#__PURE__*/
 function (_React$Component) {
@@ -39528,6 +39847,12 @@ function (_React$Component) {
     _this.renderButtons = _this.renderButtons.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
+  /**
+   * Change state of component on input.
+   * 
+   * @param {object} event Change event object.
+   */
+
 
   _createClass(InputForm, [{
     key: "inputChange",
@@ -39536,6 +39861,12 @@ function (_React$Component) {
         inputValue: event.target.value
       });
     }
+    /**
+     * Handles parse single page submit.
+     * 
+     * @param {object} event Click event object. 
+     */
+
   }, {
     key: "handleParsePageSubmit",
     value: function handleParsePageSubmit(event) {
@@ -39548,9 +39879,16 @@ function (_React$Component) {
         }
       });
     }
+    /**
+     * Handles parse RSS posts list submit. 
+     * 
+     * @param {object} event Click event object.  
+     */
+
   }, {
     key: "handleParseListSubmit",
     value: function handleParseListSubmit(event) {
+      event.preventDefault();
       var params = {
         action: 'list',
         url: this.state.inputValue
@@ -39559,11 +39897,19 @@ function (_React$Component) {
       window.history.pushState(null, null, url);
       window.location.reload();
     }
+    /**
+     * Handles parse multiple selected from RSS list posts submit. 
+     * 
+     * @param {object} event Click event object. 
+     */
+
   }, {
     key: "handleParseSelected",
-    value: function handleParseSelected() {
+    value: function handleParseSelected(event) {
+      event.preventDefault();
+
       if (!this.props.posts) {
-        this.props.createMessage('info', 'Please select RSS feed first.');
+        this.props.message('info', 'Please select RSS feed first.');
         return;
       }
 
@@ -39572,7 +39918,7 @@ function (_React$Component) {
       });
 
       if (selectedPosts.length === 0) {
-        this.props.createMessage('info', 'Please select posts.');
+        this.props.message('info', 'Please select posts.');
         return;
       }
 
@@ -39640,27 +39986,19 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    parseList: function parseList(nonce, url) {
-      dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["parseRSSList"])({
-        dispatch: dispatch,
-        nonce: nonce,
-        url: url
-      }));
+    parseList: function parseList(url) {
+      dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["parseRSSList"])(dispatch, url));
     },
-    parsePage: function parsePage(nonce, url) {
-      dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["parsePage"])({
-        dispatch: dispatch,
-        nonce: nonce,
-        url: url
-      }));
+    parsePage: function parsePage(url) {
+      dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["parsePage"])(dispatch, url));
     },
     openVisualConstructor: function openVisualConstructor(url, dialogData) {
       dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["openDialog"])(url, dialogData));
     },
     parseSelected: function parseSelected(posts) {
-      dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["parseSelected"])(posts, dispatch));
+      dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["parseSelected"])(dispatch, posts));
     },
-    createMessage: function createMessage(type, text) {
+    message: function message(type, text) {
       dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["createMessage"])(type, text));
     }
   };
@@ -39668,9 +40006,63 @@ function mapDispatchToProps(dispatch) {
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(InputForm));
 InputForm.propTypes = {
+  /**
+   * Action handles parsing RSS list
+   * 
+   * @param {string} url Url of RSS file.
+   */
   parseList: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func.isRequired,
+
+  /**
+   * Action handles parse single page.
+   * 
+   * @param {string} url Url of the page.
+   * @param {string} innerPostIndex Index of the post in array(optional).
+   */
   parsePage: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func.isRequired,
-  value: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.string
+
+  /**
+   * Open visual constructor modal window to select content manually 
+   * or create p[arsing template rules. 
+   * 
+   * @param {string} url url of the page.
+   */
+  openVisualConstructor: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func.isRequired,
+
+  /**
+   * Parse selected post from RSS list and create drafts.
+   * 
+   * @param {array} posts Array of selected posts.
+   */
+  parseSelected: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func.isRequired,
+
+  /**
+   * Show message.
+   * 
+   * @param {string} type Type of the massage [info|error|success]
+   * @param {string} text Text of the message.
+   */
+  message: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func.isRequired,
+
+  /**
+   * Input element value. 
+   */
+  value: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.string,
+
+  /**
+   * Menu page.
+   */
+  page: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.string,
+
+  /**
+   * Fetching state.
+   */
+  isFetching: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.bool,
+
+  /**
+   * Selected from RSS list posts.
+   */
+  posts: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.array
 };
 
 /***/ }),
@@ -39724,6 +40116,11 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+/**
+ * Main application element.
+ * 
+ * @since 0.8.0
+ */
 
 var Main =
 /*#__PURE__*/
@@ -39741,6 +40138,10 @@ function (_React$Component) {
 
     return _this;
   }
+  /**
+   * Check current application route and get data from server.
+   */
+
 
   _createClass(Main, [{
     key: "init",
@@ -39759,9 +40160,7 @@ function (_React$Component) {
         className: "parsing-title"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Translate__WEBPACK_IMPORTED_MODULE_9__["default"], null, "News-Parser"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Indicator__WEBPACK_IMPORTED_MODULE_4__["default"], {
         step: 0.5
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_InputForm__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Posts__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        row: "3"
-      }));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_InputForm__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Posts__WEBPACK_IMPORTED_MODULE_3__["default"], null));
     }
   }]);
 
@@ -39781,10 +40180,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getDataFromServer: function getDataFromServer(action, url) {
       if (action == 'list') {
-        dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_6__["parseRSSList"])({
-          dispatch: dispatch,
-          url: url
-        }));
+        dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_6__["parseRSSList"])(dispatch, url));
       }
     }
   };
@@ -39792,8 +40188,27 @@ function mapDispatchToProps(dispatch) {
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["connect"])(mapStateToProps, mapDispatchToProps)(Main));
 Main.propTypes = {
-  action: prop_types__WEBPACK_IMPORTED_MODULE_8___default.a.string,
+  /**
+   * Current route action [list|single|multi]
+   */
+  routeAction: prop_types__WEBPACK_IMPORTED_MODULE_8___default.a.string,
+
+  /**
+   * Current application action [dialog]
+   */
+  parseAction: prop_types__WEBPACK_IMPORTED_MODULE_8___default.a.string,
+
+  /**
+   * RSS data url.
+   */
   url: prop_types__WEBPACK_IMPORTED_MODULE_8___default.a.string,
+
+  /**
+   * If route action is list get parsed RSS data from the server.
+   * 
+   * @param {string} action Route action.
+   * @param {string} url RSS data url.
+   */
   getDataFromServer: prop_types__WEBPACK_IMPORTED_MODULE_8___default.a.func.isRequired
 };
 
@@ -39847,7 +40262,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Icons */ "./src/packages/parser-rss/src/components/Icons.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39873,6 +40287,11 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+/**
+ * Post box component.
+ * 
+ * @since 0.8.0
+ */
 
 var Post =
 /*#__PURE__*/
@@ -39890,6 +40309,12 @@ function (_React$Component) {
     _this2.selectPost = _this2.selectPost.bind(_assertThisInitialized(_assertThisInitialized(_this2)));
     return _this2;
   }
+  /**
+   * Footer of post box.
+   * 
+   * @param {object} props 
+   */
+
 
   _createClass(Post, [{
     key: "footer",
@@ -39937,11 +40362,19 @@ function (_React$Component) {
         }, icon);
       }));
     }
+    /**
+     * Post select handler.
+     */
+
   }, {
     key: "selectPost",
     value: function selectPost() {
       this.props.selectPost(this.props._id);
     }
+    /**
+     * Open visual constructor modal window. 
+     */
+
   }, {
     key: "openVisualConstructor",
     value: function openVisualConstructor() {
@@ -40000,16 +40433,7 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch) {
   return {
     parsePage: function parsePage(url, id) {
-      var nonce = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_6__["getNonce"])({
-        page: 'parse',
-        action: 'get'
-      });
-      dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_3__["parsePage"])({
-        dispatch: dispatch,
-        nonce: nonce,
-        url: url,
-        id: id
-      }));
+      dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_3__["parsePage"])(dispatch, url, id));
     },
     message: function message(type, text) {
       dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_3__["createMessage"])(type, text));
@@ -40025,12 +40449,76 @@ function mapDispatchToProps(dispatch) {
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(Post));
 Post.propTypes = {
+  /**
+   * Fetching state.
+   */
+  isFetching: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.bool,
+
+  /**
+   *  Post status. 
+   */
   status: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.oneOf(['draft', 'parsed', 'selected']).isRequired,
+
+  /**
+   * Post title.
+   */
   title: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.string.isRequired,
+
+  /**
+   * Post image.
+   */
   image: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.string.isRequired,
+
+  /**
+   * Post description.
+   */
   description: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.string.isRequired,
+
+  /**
+   * Link to the source.
+   */
   link: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.string.isRequired,
-  pubDate: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.string.isRequired
+
+  /**
+   * Date pf post publication.
+   */
+  pubDate: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.string.isRequired,
+
+  /**
+   * Link to the wordpress post editor.
+   */
+  editLink: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.string,
+
+  /**
+   * Action handles parse single page.
+   * 
+   * @param {string} url Url of the page.
+   * @param {string} innerPostIndex Index of the post in array(optional).
+   */
+  parsePage: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.func.isRequired,
+
+  /**
+   * Show message.
+   * 
+   * @param {string} type Type of the massage [info|error|success]
+   * @param {string} text Text of the message.
+   */
+  message: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.func.isRequired,
+
+  /**
+   * Open visual constructor modal window to select content manually 
+   * or create p[arsing template rules. 
+   * 
+   * @param {string} url url of the page.
+   */
+  openVisualConstructor: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.func.isRequired,
+
+  /**
+   * Select post action.
+   * 
+   * @param {string} _id inner array index (not wordpress post_id)
+   */
+  selectPost: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.func.isRequired
 };
 
 /***/ }),
@@ -40063,17 +40551,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
 
 
+/**
+ * Renders posts from post array.
+ * 
+ * @since 0.8.0
+ */
 
 var Posts =
 /*#__PURE__*/
@@ -40081,44 +40575,23 @@ function (_React$Component) {
   _inherits(Posts, _React$Component);
 
   function Posts(props) {
-    var _this;
-
     _classCallCheck(this, Posts);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Posts).call(this, props));
-    _this.renderPostsFromArray = _this.renderPostsFromArray.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Posts).call(this, props));
   }
 
   _createClass(Posts, [{
-    key: "renderPostsFromArray",
-    value: function renderPostsFromArray(props) {
-      return props.postsArray.map(function (post) {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "posts-wrapper"
+      }, this.props.posts.map(function (post) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Post__WEBPACK_IMPORTED_MODULE_1__["default"], _extends({
           key: post._id.toString()
         }, post, {
           postId: post._id,
           status: post.status
         }));
-      });
-    }
-  }, {
-    key: "rowWrapper",
-    value: function rowWrapper(posts, key) {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        key: "row" + key.toString(),
-        className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(this.renderPostsFromArray, {
-        postsArray: posts
-      }));
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        class: "posts-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(this.renderPostsFromArray, {
-        postsArray: this.props.posts
       }));
     }
   }]);
@@ -40135,6 +40608,9 @@ function mapStateToProps(state) {
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps)(Posts));
 Posts.propTypes = {
+  /**
+   * Array of posts.
+   */
   posts: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.array.isRequired
 };
 
@@ -40206,18 +40682,13 @@ function mapDispatchToProps(dispatch) {
       dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_1__["closeDialog"])());
     },
     getFrameData: function getFrameData(url) {
-      dispatch(Object(_news_parser_visual_constructor_actions__WEBPACK_IMPORTED_MODULE_2__["getPageHTML"])(url, dispatch));
+      dispatch(Object(_news_parser_visual_constructor_actions__WEBPACK_IMPORTED_MODULE_2__["getPageHTML"])(dispatch, url));
     },
     createPostDraft: function createPostDraft(id, url, postData, options) {
       if (options.saveParsingTemplate) {
-        dispatch(Object(_news_parser_visual_constructor_actions__WEBPACK_IMPORTED_MODULE_2__["saveParsingTemplate"])({
-          url: url,
-          postData: postData,
-          dispatch: dispatch,
-          options: options
-        }));
+        dispatch(Object(_news_parser_visual_constructor_actions__WEBPACK_IMPORTED_MODULE_2__["saveParsingTemplate"])(dispatch, url, postData, options));
       } else {
-        dispatch(Object(_news_parser_visual_constructor_actions__WEBPACK_IMPORTED_MODULE_2__["createPostDraft"])(id, url, postData, options, dispatch));
+        dispatch(Object(_news_parser_visual_constructor_actions__WEBPACK_IMPORTED_MODULE_2__["createPostDraft"])(dispatch, id, url, postData, options));
       }
     }
   };
@@ -40260,8 +40731,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ //SetUp for Redux DevExtension.
 
-var store = Object(redux__WEBPACK_IMPORTED_MODULE_4__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_5__["default"], Object(redux__WEBPACK_IMPORTED_MODULE_4__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_8__["default"])),
+var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+var store = Object(redux__WEBPACK_IMPORTED_MODULE_4__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_5__["default"], composeEnhancers(Object(redux__WEBPACK_IMPORTED_MODULE_4__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_8__["default"]))),
     currentUri = window.location.search,
     uriParams = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_6__["uriToJson"])(currentUri);
 store.dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_7__["setRoute"])(uriParams));
@@ -40294,96 +40767,26 @@ module.exports = {"Parse RSS Feed":{"en":"Parse RSS Feed","ru":"Парсить R
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return dialog; });
-/* harmony import */ var _galleryDialog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./galleryDialog */ "./src/packages/parser-rss/src/reducers/galleryDialog.js");
-/* harmony import */ var _news_parser_visual_constructor_reducers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @news-parser/visual-constructor/reducers */ "./src/packages/visual-constructor/src/reducers/index.js");
+/* harmony import */ var _news_parser_visual_constructor_reducers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/visual-constructor/reducers */ "./src/packages/visual-constructor/src/reducers/index.js");
 
+/**
+ * Combine dialog sub reducers to create flat dialog data structure.
+ * 
+ * @param {object} state 
+ * @param {object} action 
+ */
 
 function dialog() {
   var _this = this;
 
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  var subReducers = [_galleryDialog__WEBPACK_IMPORTED_MODULE_0__["galleryDialog"], _news_parser_visual_constructor_reducers__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  var subReducers = [_news_parser_visual_constructor_reducers__WEBPACK_IMPORTED_MODULE_0__["default"]],
       newState = state;
   subReducers.forEach(function (reducer) {
     newState = reducer.call(_this, newState, action);
   });
   return newState;
-}
-
-/***/ }),
-
-/***/ "./src/packages/parser-rss/src/reducers/galleryDialog.js":
-/*!***************************************************************!*\
-  !*** ./src/packages/parser-rss/src/reducers/galleryDialog.js ***!
-  \***************************************************************/
-/*! exports provided: galleryDialog */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "galleryDialog", function() { return galleryDialog; });
-/* harmony import */ var _actions_galleryDialog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/galleryDialog */ "./src/packages/parser-rss/src/actions/galleryDialog.js");
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-function galleryDialog() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var action = arguments.length > 1 ? arguments[1] : undefined;
-
-  switch (action.type) {
-    case _actions_galleryDialog__WEBPACK_IMPORTED_MODULE_0__["types"].SELECT_PICTURE:
-      var data = state.data.map(function (item) {
-        if (item.id === action.id) {
-          item.select = true;
-        }
-
-        return item;
-      });
-      return _objectSpread({}, state, {
-        data: data
-      });
-
-    case _actions_galleryDialog__WEBPACK_IMPORTED_MODULE_0__["types"].DESELECT_PICTURE:
-      var data = state.data.map(function (item) {
-        if (item.id === action.id) {
-          item.select = false;
-        }
-
-        ;
-        return item;
-      });
-      return _objectSpread({}, state, {
-        data: data
-      });
-
-    case _actions_galleryDialog__WEBPACK_IMPORTED_MODULE_0__["types"].FOCUS_PICTURE:
-      var data = state.data.map(function (item) {
-        item.focus = item.id === action.id;
-        return item;
-      });
-      return _objectSpread({}, state, {
-        data: data
-      });
-
-    case _actions_galleryDialog__WEBPACK_IMPORTED_MODULE_0__["types"].UPDATE_PICTURE_INFO:
-      var data = state.data.map(function (item) {
-        if (item.id === action.id) {
-          item['info'] = action.info;
-        }
-
-        ;
-        return item;
-      });
-      return _objectSpread({}, state, {
-        data: data
-      });
-
-    default:
-      return _objectSpread({}, state);
-  }
 }
 
 /***/ }),
@@ -40687,10 +41090,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPostDraft", function() { return createPostDraft; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveParsingTemplate", function() { return saveParsingTemplate; });
 /* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
-/* harmony import */ var _news_parser_helpers_classes_PostModel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @news-parser/helpers/classes/PostModel */ "./src/packages/helpers/src/classes/PostModel.js");
-/* harmony import */ var _news_parser_helpers_classes_TemplateModel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @news-parser/helpers/classes/TemplateModel */ "./src/packages/helpers/src/classes/TemplateModel.js");
-/* harmony import */ var _news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @news-parser/parser-rss/actions/index */ "./src/packages/parser-rss/src/actions/index.js");
-/* harmony import */ var _news_parser_helpers_classes_MediaModel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @news-parser/helpers/classes/MediaModel */ "./src/packages/helpers/src/classes/MediaModel.js");
+/* harmony import */ var _news_parser_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @news-parser/config */ "./src/packages/config/src/index.js");
+/* harmony import */ var _news_parser_helpers_classes_PostModel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @news-parser/helpers/classes/PostModel */ "./src/packages/helpers/src/classes/PostModel.js");
+/* harmony import */ var _news_parser_helpers_classes_TemplateModel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @news-parser/helpers/classes/TemplateModel */ "./src/packages/helpers/src/classes/TemplateModel.js");
+/* harmony import */ var _news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @news-parser/parser-rss/actions/index */ "./src/packages/parser-rss/src/actions/index.js");
+/* harmony import */ var _news_parser_helpers_classes_MediaModel__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @news-parser/helpers/classes/MediaModel */ "./src/packages/helpers/src/classes/MediaModel.js");
+
 
 
 
@@ -40718,9 +41123,16 @@ function getPostHTML(htmlData) {
     rawHTML: receivedObject
   };
 }
-function getPageHTML(pageUrl, dispatch) {
+/**
+ * Get HTML data of the page from server.
+ * 
+ * @param {function} dispatch Redux dispatch function.
+ * @param {string} pageUrl Url of the page. 
+ */
+
+function getPageHTML(dispatch, pageUrl) {
   var nonce = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getAjaxNonce"])(),
-      url = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getApiEndpoint"])('parsing') + '&url=' + encodeURIComponent(pageUrl) + '&_wpnonce=' + nonce + '&status=single';
+      url = _news_parser_config__WEBPACK_IMPORTED_MODULE_1__["default"].parsingApi.single + encodeURIComponent(pageUrl) + '&_wpnonce=' + nonce + '&status=single';
   dispatch(sendRequestToServer());
   return function (dispatch) {
     return Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["sendApiRequest"])({
@@ -40739,26 +41151,34 @@ function getPageHTML(pageUrl, dispatch) {
       }
 
       if (receivedData.hasOwnProperty('err') && receivedData.err == 1) {
-        dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["receiveError"])(receivedData));
+        dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_4__["receiveError"])(receivedData));
       }
 
       dispatch(getPostHTML(receivedData));
     });
   };
 }
-function createPostDraft(postId, postUrl, postData, options, dispatch) {
+/**
+ * Creates Post draft using wordpress REST API.
+ * 
+ * @param {function} dispatch Redux dispatch function.
+ * @param {string} postId Inner array post index.
+ * @param {string} postUrl url of the post data source. 
+ * @param {object} postData parsed post data.
+ * @param {object} options parsing options.
+ * 
+ * @requires helpers/src/classes/PostModel.js|PostModel
+ * @requires helpers/src/classes/MediaModel.js|MediaModel
+ */
+
+function createPostDraft(dispatch, postId, postUrl, postData, options) {
   var nonce = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getRestNonce"])(),
-      post = new _news_parser_helpers_classes_PostModel__WEBPACK_IMPORTED_MODULE_1__["PostModel"]({
-    url: postUrl,
-    postData: postData,
-    restApiRoot: Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getApiEndpoint"])('root'),
-    options: options
-  });
+      post = new _news_parser_helpers_classes_PostModel__WEBPACK_IMPORTED_MODULE_2__["PostModel"](_news_parser_config__WEBPACK_IMPORTED_MODULE_1__["default"].restRoot);
   dispatch(sendRequestToServer());
   return function (dispatch) {
-    return post.nonceAuth(nonce).createPostDraft().then(function (postData) {
+    return post.nonceAuth(nonce).createPostDraft(postData, options, postUrl).then(function (postData) {
       dispatch(receiveRequestFromServer());
-      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["closeDialog"])());
+      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_4__["closeDialog"])());
       var receive = {};
       receive.msg = {
         type: "success",
@@ -40773,43 +41193,45 @@ function createPostDraft(postId, postUrl, postData, options, dispatch) {
       };
 
       if (options.addFeaturedMedia) {
-        var media = new _news_parser_helpers_classes_MediaModel__WEBPACK_IMPORTED_MODULE_4__["MediaModel"](Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getApiEndpoint"])('media'));
+        var media = new _news_parser_helpers_classes_MediaModel__WEBPACK_IMPORTED_MODULE_5__["MediaModel"](_news_parser_config__WEBPACK_IMPORTED_MODULE_1__["default"].mediaApi.create);
         media.nonceAuth(Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getAjaxNonce"])()).create(post.featuredMedia, post.title, post.id).then(function (mediaData) {
           if (mediaData.err == 0 && mediaData.data.mediaId) {//post.updatePost({'featured_media':mediaData.data.mediaId})
           } else {
             if (mediaData.hasOwnProperty('msg')) {
-              dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["createMessage"])(mediaData.msg.type, mediaData.msg.text));
+              dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_4__["createMessage"])(mediaData.msg.type, mediaData.msg.text));
             }
           }
         });
       }
 
-      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["receivePost"])(postUrl, receive));
+      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_4__["receivePost"])(postUrl, receive));
     }).catch(function (error) {
-      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["fetchError"])(error));
+      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_4__["fetchError"])(error));
     });
   };
 }
-function saveParsingTemplate(_ref) {
-  var url = _ref.url,
-      postData = _ref.postData,
-      dispatch = _ref.dispatch,
-      options = _ref.options;
+/**
+ * Save parsing template to server.
+ * 
+ * @param {function} dispatch Redux dispatch function.
+ * @param {string} url url of the post data source. 
+ * @param {object} postTemplateData Parsing template.
+ * @param {object} options Parsing options.
+ * 
+ * @requires helpers/src/classes/TemplateModel.js|TemplateModel
+ */
+
+function saveParsingTemplate(dispatch, url, postTemplateData, options) {
   options.url = url;
   var nonce = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getAjaxNonce"])(),
-      template = new _news_parser_helpers_classes_TemplateModel__WEBPACK_IMPORTED_MODULE_2__["TemplateModel"]({
-    url: url,
-    postData: postData,
-    ajaxEndPoint: Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__["getApiEndpoint"])('options'),
-    options: options
-  });
+      template = new _news_parser_helpers_classes_TemplateModel__WEBPACK_IMPORTED_MODULE_3__["TemplateModel"](_news_parser_config__WEBPACK_IMPORTED_MODULE_1__["default"].optionsApi.create);
   return function (dispatch) {
-    return template.nonceAuth(nonce).save().then(function (data) {
-      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["closeDialog"])());
-      if (data.err == 1) dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["receiveError"])(receivedData));
-      if (data.hasOwnProperty('msg')) dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["createMessage"])(data.msg.type, data.msg.text));
+    return template.nonceAuth(nonce).save(postTemplateData, options, url).then(function (data) {
+      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_4__["closeDialog"])());
+      if (data.err == 1) dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_4__["receiveError"])(receivedData));
+      if (data.hasOwnProperty('msg')) dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_4__["createMessage"])(data.msg.type, data.msg.text));
     }).catch(function (error) {
-      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_3__["fetchError"])(error));
+      dispatch(Object(_news_parser_parser_rss_actions_index__WEBPACK_IMPORTED_MODULE_4__["fetchError"])(error));
     });
   };
 }
@@ -40870,6 +41292,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! dompurify */ "./node_modules/dompurify/dist/purify.js");
 /* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(dompurify__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_6__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -40902,6 +41326,13 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+
+/**
+ * Frame element of visual constructor modal window. Allow choose parsing content manually.
+ * 
+ * @since 1.0.0
+ */
+
 var Frame =
 /*#__PURE__*/
 function (_React$Component) {
@@ -40917,6 +41348,10 @@ function (_React$Component) {
     _this.clickHandler = _this.clickHandler.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
+  /**
+   * Write sanitized page html into iframe.
+   */
+
 
   _createClass(Frame, [{
     key: "componentDidMount",
@@ -40944,6 +41379,12 @@ function (_React$Component) {
       this.imageLazyLoad(imgArray);
       this.parser = new _news_parser_helpers_classes_Parser__WEBPACK_IMPORTED_MODULE_2__["Parser"](this.frameRef);
     }
+    /**
+     * Check if img tags have lazy load data-src attributes and set them to src.
+     * 
+     * @param {object} imgElements  HTMLCollection of img elements.
+     */
+
   }, {
     key: "imageLazyLoad",
     value: function imageLazyLoad(imgElements) {
@@ -40958,6 +41399,12 @@ function (_React$Component) {
         };
       });
     }
+    /**
+     * Find and replace YouTube frames? replacing with video tag that contains data-hash attr with youtube hash data.
+     * 
+     * @param {string} dom 
+     */
+
   }, {
     key: "replaceYouTubeFrames",
     value: function replaceYouTubeFrames(dom) {
@@ -40966,6 +41413,10 @@ function (_React$Component) {
           newDom = dom.replace(hashPattern, replacement);
       return newDom;
     }
+    /**
+     * Get post title using Open Graph protocol.
+     */
+
   }, {
     key: "getTitle",
     value: function getTitle() {
@@ -40977,6 +41428,10 @@ function (_React$Component) {
         this.props.selectTitle(fixQuotes);
       }
     }
+    /**
+     * Get post featured media using Open Graph protocol.
+     */
+
   }, {
     key: "getFeaturedMedia",
     value: function getFeaturedMedia() {
@@ -40987,18 +41442,36 @@ function (_React$Component) {
         this.props.selectFeaturedMedia(image[1]);
       }
     }
+    /**
+     * Event listener callback to highlight html elements when mouse is over them.
+     * 
+     * @param {object} event 
+     */
+
   }, {
     key: "mouseOver",
     value: function mouseOver(event) {
       var className = event.target.className;
       event.target.className = className + ' mouse-over';
     }
+    /**
+     * Event listener callback to stop highlight html elements when mouse is left them.
+     * 
+     * @param {object} event 
+     */
+
   }, {
     key: "mouseOut",
     value: function mouseOut(event) {
       var className = event.target.className;
       event.target.className = className.replace(' mouse-over', '');
     }
+    /**
+     * Parse data from HTML element.
+     * 
+     * @param {object} element HTMLElement.
+     */
+
   }, {
     key: "parseElementData",
     value: function parseElementData(element) {
@@ -41009,12 +41482,24 @@ function (_React$Component) {
       element.id = elementHash;
       this.props.selectContent(elementHash, parsedData);
     }
+    /**
+     * Remove parsed element data. 
+     * 
+     * @param {object} element HTMLElement. 
+     */
+
   }, {
     key: "removeSelectedElement",
     value: function removeSelectedElement(element) {
       var hash = element.id;
       hash && this.props.removeContent(hash);
     }
+    /**
+     * Select element on click.
+     * 
+     * @param {object} event Event object
+     */
+
   }, {
     key: "clickHandler",
     value: function clickHandler(event) {
@@ -41071,6 +41556,41 @@ function mapDispatchToProps(dispatch) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["connect"])(mapStateToProps, mapDispatchToProps)(Frame));
+Frame.propTypes = {
+  /**
+   * HTML data that should be write to the iFrame.
+   */
+  data: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string.isRequired,
+
+  /**
+   * Select title action.Set post title.
+   * 
+   * @param {string} title Post title.
+   */
+  selectTitle: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func.isRequired,
+
+  /**
+   * Select post featured image action.
+   * 
+   * @param {string} url Image url.
+   */
+  selectFeaturedMedia: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func.isRequired,
+
+  /**
+   * Select post content action.
+   * 
+   * @param {string} hash Element hash used as key in data storage.
+   * @param {string} content Element content.
+   */
+  selectContent: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func.isRequired,
+
+  /**
+   * Remove selected content action.
+   * 
+   * @param {string} hash Content key.
+   */
+  removeContent: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func.isRequired
+};
 
 /***/ }),
 
@@ -41092,6 +41612,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_option__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../actions/option */ "./src/packages/visual-constructor/src/actions/option.js");
 /* harmony import */ var _actions_frame__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../actions/frame */ "./src/packages/visual-constructor/src/actions/frame.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_7__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41117,6 +41639,13 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+
+/**
+ * Right side bar of visual constructor modal window.
+ * 
+ * @since 1.0.0
+ */
+
 var SidebarRight =
 /*#__PURE__*/
 function (_React$Component) {
@@ -41134,6 +41663,10 @@ function (_React$Component) {
     _this.selectFeaturedMedia = _this.selectFeaturedMedia.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
+  /**
+   * Select post title.
+   */
+
 
   _createClass(SidebarRight, [{
     key: "selectTitle",
@@ -41141,6 +41674,12 @@ function (_React$Component) {
       if (!this.state.title) return;
       this.props.selectTitle(this.state.title);
     }
+    /**
+     * Handles title input change
+     * 
+     * @param {string} value 
+     */
+
   }, {
     key: "changeStateInputTitle",
     value: function changeStateInputTitle(value) {
@@ -41149,6 +41688,10 @@ function (_React$Component) {
         title: value
       });
     }
+    /**
+     * Change selected featured image. Take first selected image from parsed data.
+     */
+
   }, {
     key: "selectFeaturedMedia",
     value: function selectFeaturedMedia() {
@@ -41189,31 +41732,31 @@ function (_React$Component) {
         className: "howto inline-bl"
       }, "No featured image."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoFooter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
-        class: "button button-primary button-large",
+        className: "button button-primary button-large",
         onClick: this.selectFeaturedMedia
       }, "Change image"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoBox"], {
         title: "Post title"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoBody"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.props.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        class: "hide-if-no-js"
+        className: "hide-if-no-js"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_elements_Input__WEBPACK_IMPORTED_MODULE_3__["default"], {
         onChange: this.changeStateInputTitle
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        class: "howto"
+        className: "howto"
       }, "If you want to change title, type the new title and press \"Change title\" button."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoFooter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
-        class: "button button-primary button-large",
+        className: "button button-primary button-large",
         onClick: this.selectTitle
       }, "Change title"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoBox"], {
         title: "Extra options"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoBody"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        class: "info-box-container"
+        className: "info-box-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_elements_Checkbox__WEBPACK_IMPORTED_MODULE_2__["Checkbox"], {
-        value: options.sourceLink,
-        onClick: this.props.toggleSourceLink
+        value: options.addSource,
+        onClick: this.props.toggleAddSource
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "howto inline-bl"
       }, "Add source link to the post.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        class: "info-box-container"
+        className: "info-box-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_elements_Checkbox__WEBPACK_IMPORTED_MODULE_2__["Checkbox"], {
         value: options.saveParsingTemplate,
         onClick: this.props.toggleSaveParsingTemplate
@@ -41252,11 +41795,67 @@ function mapDispatchToProps(dispatch) {
     },
     toggleSaveParsingTemplate: function toggleSaveParsingTemplate() {
       dispatch(Object(_actions_option__WEBPACK_IMPORTED_MODULE_5__["toggleSaveParsingTemplate"])());
+    },
+    toggleAddSource: function toggleAddSource() {
+      dispatch(Object(_actions_option__WEBPACK_IMPORTED_MODULE_5__["toggleAddSource"])());
     }
   };
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["connect"])(mapStateToProps, mapDispatchToProps)(SidebarRight));
+SidebarRight.propTypes = {
+  /**
+   * Post title.
+   */
+  title: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string,
+
+  /**
+   * Post featured image.
+   */
+  image: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string,
+
+  /**
+   * Post content associative array{hash:elementData}
+   */
+  body: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.object,
+
+  /**
+  * Parsing options, structure: {addFeaturedMedia,addSource,saveParsingTemplate}
+  * 
+  * @see {@link visual-constructor/src/reducers/options.js|defaultOptionsState}
+   */
+  options: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.object.isRequired,
+
+  /**
+   * Toggle featured image checkbox.
+   *  
+   */
+  toggleAddFeaturedMedia: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
+
+  /**
+   * Toggle save parsing template checkbox.
+   */
+  toggleSaveParsingTemplate: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
+
+  /**
+   * Select custom post title.
+   * 
+   * @param {string} title New post title.
+   */
+  selectTitle: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
+
+  /**
+   * Select new post image.
+   * 
+   * @param {string} url New Post image url.
+   */
+  selectFeaturedMedia: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
+
+  /**
+   * Toggle add source checkbox.
+   */
+  toggleAddSource: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired
+};
 
 /***/ }),
 
@@ -41298,16 +41897,17 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+/**
+ * Main visual constructor window element.
+ * 
+ * @since 1.0.0
+ */
+
 var VisualConstructor =
 /*#__PURE__*/
 function (_React$Component) {
   _inherits(VisualConstructor, _React$Component);
 
-  /**
-   * Init function.
-   * 
-   * @param {object} props 
-   */
   function VisualConstructor(props) {
     var _this;
 
@@ -41318,6 +41918,10 @@ function (_React$Component) {
     _this.createPostDraft = _this.createPostDraft.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
+  /**
+   * Close model window.
+   */
+
 
   _createClass(VisualConstructor, [{
     key: "close",
@@ -41325,12 +41929,20 @@ function (_React$Component) {
       this.props.onStateChange(false);
       this.props.close();
     }
+    /**
+     * Get data from sever when window is opened.
+     */
+
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.onStateChange(true);
       this.props.getFrameData(this.props.url);
     }
+    /**
+     * Create post draft from parsed data.
+     */
+
   }, {
     key: "createPostDraft",
     value: function createPostDraft() {
@@ -41373,6 +41985,62 @@ function (_React$Component) {
 
   return VisualConstructor;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+VisualConstructor.propTypes = {
+  /**
+   * Post page url.
+   */
+  url: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].string.isRequired,
+
+  /**
+   * Inner posts array index.
+   */
+  postId: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].number.isRequired,
+
+  /**
+   * Parsed post data.
+   */
+  parsedData: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].object.isRequired,
+
+  /**
+   * HTML.
+   */
+  rawHTML: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].string, prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].bool]).isRequired,
+
+  /**
+   * Parsing options, structure: {addFeaturedMedia,addSource,saveParsingTemplate}
+   * 
+   * @see {@link visual-constructor/src/reducers/options.js|defaultOptionsState}
+   */
+  options: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].object.isRequired,
+
+  /**
+   * Close visual constructor modal window.
+   * 
+   * @see {@link parser-rss/src/actions/index.js|closeDialog}
+   */
+  close: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].func.isRequired,
+
+  /**
+   * Get page html from the server.
+   * 
+   * @param {string} url Page url.
+   * @see {@link parser-rss/src/actions/index.js|getPageHTML}
+   */
+  getFrameData: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].func.isRequired,
+
+  /**
+   * Creates post draft using worpress REST API.
+   * 
+   * @param {function} dispatch Redux dispatch.
+   * @param {string} id Inner posts array index.
+   * @param {string} url Post url.
+   * @param {object} parsedData Parsed post data.
+   * @param {object} options Parsing options.
+   * 
+   * @see {@link visual-constructor/src/actions/index.js|createPostDraft}
+   */
+  createPostDraft: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].func.isRequired
+};
 
 /***/ }),
 
@@ -41390,6 +42058,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InfoFooter", function() { return InfoFooter; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/**
+ * Info box element.
+ * 
+ * @param {object} props  
+ */
 
 function InfoBox(_ref) {
   var title = _ref.title,
@@ -41402,20 +42079,43 @@ function InfoBox(_ref) {
     className: "handlediv",
     "aria-expanded": "true"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    class: "screen-reader-text"
+    className: "screen-reader-text"
   }, 'Toggle panel:' + title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    class: "toggle-indicator",
+    className: "toggle-indicator",
     "aria-hidden": "true"
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-    class: "hndle ui-sortable-handle infobox-header"
+    className: "hndle ui-sortable-handle infobox-header"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, title)), children);
 }
+InfoBox.propTypes = {
+  /**
+   * Title of infobox.
+   */
+  title: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+
+  /**
+   * Content of infobox.
+   */
+  children: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired
+  /**
+   * Body of infobox element.
+   * 
+   * @param {object} props  
+   */
+
+};
 function InfoBody(_ref2) {
   var children = _ref2.children;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    class: "inside"
+    className: "inside"
   }, children);
 }
+/**
+ * Footer of infobox element.
+ * 
+ * @param {children} props 
+ */
+
 function InfoFooter(_ref3) {
   var children = _ref3.children;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -41437,6 +42137,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Checkbox", function() { return Checkbox; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/**
+ * Check box element
+ * 
+ * @since 1.0.0
+ * @param {object} props 
+ */
 
 function Checkbox(_ref) {
   var value = _ref.value,
@@ -41447,6 +42157,19 @@ function Checkbox(_ref) {
     onClick: onClick
   });
 }
+Checkbox.propTypes = {
+  /**
+   * Check box init state.
+   */
+  value: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool.isRequired,
+
+  /**
+   * Button click handler.
+   * 
+   * @param {object} event Click event object.
+   */
+  onClick: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
+};
 
 /***/ }),
 
@@ -41483,6 +42206,11 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+/**
+ * Input text area element.
+ * 
+ * @since 1.0.0
+ */
 
 var Input =
 /*#__PURE__*/
@@ -41501,6 +42229,12 @@ function (_React$Component) {
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
+  /**
+   * Handle change of input state.
+   * 
+   * @param {object} event Event object. 
+   */
+
 
   _createClass(Input, [{
     key: "handleChange",
@@ -41536,8 +42270,17 @@ function (_React$Component) {
 
 /* harmony default export */ __webpack_exports__["default"] = (Input);
 Input.propTypes = {
+  /**
+   * Init input value.
+   */
   value: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  onChange: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func
+
+  /**
+   * Input change handler.
+   * 
+   * @param {string} value Current input value.
+   */
+  onChange: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
 };
 
 /***/ }),

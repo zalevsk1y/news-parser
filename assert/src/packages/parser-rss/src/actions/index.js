@@ -80,23 +80,6 @@ export function createMessage(type,text){
 export function openDialog(url,dialogData){
     let dialog=dialogData.dialog;
     switch(dialog.type){
-        case 'gallery':
-                dialog.data=dialog.data?dialog.data.map((item,key)=>{
-                return {
-                    id:key,
-                    url:item,
-                    select:false,
-                    focus:false,
-                    info:{
-                        info:{ name:"unknown",
-                        width:'unknown',
-                        height:'unknown'
-                         }
-                    }
-                    }     
-                }):[];
-
-            break;
         case 'visualConstructor':
                 let additionalData={
                     url,
@@ -107,7 +90,6 @@ export function openDialog(url,dialogData){
                 dialog=Object.assign(dialog,additionalData)
             break;
     }
-   
     dialogData.dialog=dialog;
     return {
         type:types.OPEN_DIALOG,
@@ -115,21 +97,12 @@ export function openDialog(url,dialogData){
         data: dialogData
     }
 }
-export function openVisualConstructor(){
-    return {
-        type:types.OPEN_VISUAL_CONSTRUCTOR
-    }
-}
-export function closeVisualConstructor(){
-    return {
-        type:types.CLOSE_VISUAL_CONSTRUCTOR
-    }
-}
 export function closeDialog(){
     return {
         type:types.CLOSE_DIALOG
     }
 }
+
 export function fetchError(error){
     return {
         type:types.FETCH_ERROR,
@@ -143,17 +116,23 @@ export function fetchError(error){
         }
     }
 }
-export function parseRSSList(params) {
-    params.dispatch(requestPostsList(params.url));
+/**
+ * Send parse RSS request to the server.And dispatch resieced data. 
+ * 
+ * @param {function} dispatch
+ * @param {string} url
+ */
+export function parseRSSList(dispatch,url) {
+    dispatch(requestPostsList(url));
     const nonce=getAjaxNonce();
-    const requestUrl=config.parsingApi.list + encodeURIComponent(params.url)+'&_wpnonce='+nonce;
-    const parameters=config.emulateJSON?oldServerData(params.options):newServerData(params.options);
+    const requestUrl=config.parsingApi.list + encodeURIComponent(url)+'&_wpnonce='+nonce;
+    const parameters=config.emulateJSON?oldServerData():newServerData();
     return dispatch => {
         return fetch(requestUrl,parameters)
             .then(response => response.json())
             .then((json) => {
                 if (!json.err) {
-                    dispatch(receivePostsList(params.url, json))
+                    dispatch(receivePostsList(url, json))
                 } else {
                     dispatch(receiveError( json));
                 }
@@ -163,25 +142,36 @@ export function parseRSSList(params) {
             })
     }
 }
-export function parseSelected(selectedPosts,dispatch){
+/**
+ * Send parse request to server for posts array.
+ * 
+ * @param {function} dispatch 
+ * @param {array} selectedPosts 
+ */
+export function parseSelected(dispatch,selectedPosts){
     return dispatch=>{
         const promise=new Promise(resolve=>{
             resolve();
         });
         selectedPosts.forEach(post=>{
             promise.then(()=>{
-                return dispatch(parsePage({url:post.link,id:post._id,dispatch}))
+                return dispatch(parsePage (dispatch,post.link,post._id))
             })
         })
         return promise;
     }
 }
-export function parsePage (params) {
-    const dispatch=params.dispatch,
-        nonce=getAjaxNonce(),
-        requestUrl=config.parsingApi.multi + encodeURIComponent(params.url)+'&_wpnonce='+nonce,
-        parameters=config.emulateJSON?oldServerData(params.options):newServerData(params.options);
-    dispatch(requestPost(params.url,params.id));
+/**
+ * 
+ * @param {function} dispatch 
+ * @param {string} url Page url.
+ * @param {string} postInnerIndex Index in posts array.
+ */
+export function parsePage (dispatch,url,postInnerIndex) {
+    const nonce=getAjaxNonce(),
+          requestUrl=config.parsingApi.multi + encodeURIComponent(url)+'&_wpnonce='+nonce,
+          parameters=config.emulateJSON?oldServerData():newServerData();
+    dispatch(requestPost(url,postInnerIndex));
     return dispatch => {
         return fetch(requestUrl,parameters)
             .then(response => response.json())
@@ -189,8 +179,8 @@ export function parsePage (params) {
                 if(json){  
                     switch(true){
                         case (json.data!==undefined):
-                            json.data._id = params.id;
-                            dispatch(receivePost(params.url, json));
+                            json.data._id = postInnerIndex;
+                            dispatch(receivePost(url, json));
                             break;
                         case (json.err==1):
                             dispatch(receiveError( json));

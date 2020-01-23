@@ -2,7 +2,12 @@ import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import config from '@news-parser/config';
- 
+ /**
+  * Indicator stripe.Loading process indicator.
+  * 
+  * @since 0.8.0
+  * 
+  */
 export class Indicator extends React.Component{
     constructor(props){
         super(props);
@@ -11,19 +16,27 @@ export class Indicator extends React.Component{
         this.animation=this.animation.bind(this)
         this.handleScroll=this.handleScroll.bind(this);
     }
+    /**
+     * Calculates new position of indicator for the next tick. 
+     */
     tick(){
         const oldPosition=this.state.position;
         return {position:oldPosition>100?-90:oldPosition+this.props.step};
         
     }
+    /**
+     * Change state of indicator. 
+     */
     animation(){
         if(this.props.isAnimate){
             this.setState(this.tick())
         }else if(!this.props.isAnimate){
             this.setState({position:-90});
         }
-        ;
     }
+    /**
+     * Handling Wordpress fixed header menu in mobile version. 
+     */
     handleScroll(){
         const windowWidth=parseInt(window.innerWidth),
               yOffset=window.pageYOffset;
@@ -33,7 +46,12 @@ export class Indicator extends React.Component{
         }
         this.setState({top:(46-yOffset)>0?(46-yOffset):0});
     }
-    componentDidUpdate(props){
+    /**
+     * Get a new tick after state of indicator was update.
+     * 
+     * @param {object} props 
+     */
+    componentDidUpdate(){
             requestAnimationFrame(this.animation);
     }
     componentDidMount(){
@@ -43,7 +61,6 @@ export class Indicator extends React.Component{
         window.removeEventListener('scroll',this.handleScroll);
     }
     render(){
-     
         const opacity=this.props.isAnimate?1:0,
               left=this.state.position+'%',
               top=this.state.top;
@@ -61,5 +78,8 @@ function mapStateToProps(state){
 export default connect(mapStateToProps)(Indicator);
 
 Indicator.propTypes={
+    /**
+     * Indicator animation status.
+     */
     isAnimate:PropTypes.bool.isRequired
 }

@@ -8,13 +8,20 @@ import {parseRSSList} from '../actions';
 import {ModalWindow} from '../components/ModalWindow';
 import PropTypes from 'prop-types';
 import Translate from './Translate';
-
+/**
+ * Main application element.
+ * 
+ * @since 0.8.0
+ */
 
 class Main extends React.Component {
     constructor(props){
         super(props);
         this.init();
     }
+    /**
+     * Check current application route and get data from server.
+     */
     init(){
         if(!this.props.routeAction&&!this.props.url)return;
         this.props.getDataFromServer(this.props.routeAction,this.props.url);
@@ -29,7 +36,7 @@ class Main extends React.Component {
                 <Indicator step={0.5}/>
                 <Message />
                 <InputForm />
-                <Posts row='3'/>
+                <Posts />
             </div>
         )
     }
@@ -46,7 +53,7 @@ function mapDispatchToProps(dispatch){
     return{
         getDataFromServer:(action,url)=>{
             if(action=='list'){
-                dispatch(parseRSSList({dispatch,url}));
+                dispatch(parseRSSList(dispatch,url));
             }
         }
     }
@@ -56,8 +63,24 @@ export default connect(mapStateToProps,mapDispatchToProps)(Main);
 
 
 Main.propTypes={
-    action:PropTypes.string,
+    /**
+     * Current route action [list|single|multi]
+     */
+    routeAction:PropTypes.string,
+    /**
+     * Current application action [dialog]
+     */
+    parseAction:PropTypes.string,
+    /**
+     * RSS data url.
+     */
     url:PropTypes.string,
+    /**
+     * If route action is list get parsed RSS data from the server.
+     * 
+     * @param {string} action Route action.
+     * @param {string} url RSS data url.
+     */
     getDataFromServer:PropTypes.func.isRequired,
   
 }

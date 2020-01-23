@@ -1,8 +1,19 @@
 import {hash} from '@news-parser/helpers';
+/**
+ * Get HTML element data.
+ * 
+ * @since 1.0.0
+ */
 export class Parser{
     constructor(frameElement){
         this.document=frameElement.current.contentWindow.document;
     }
+    /**
+     * Get HTMLElements data.
+     * 
+     * @param {object} el HTMLElement.
+     * @return {object}
+     */
     parseElementData(el){
         const element=el,
             parsedData={};
@@ -23,7 +34,6 @@ export class Parser{
             default:
                 parsedData.content=element.innerText;
         }
-        console.log(parsedData.tagName);
         parsedData.offsetTop=this.getOffsetTop(element);
         parsedData.parent=this.getParentsArray(element);
         let elementHash=hash(Math.random().toString());
@@ -32,10 +42,22 @@ export class Parser{
             parsedData
         }
     }
+    /**
+     * Get offset top of element.
+     * 
+     * @param {object} element HTMLElement
+     * @returns {number}
+     */
     getOffsetTop(element){
         let bodyScrollTop=this.document.body.scrollTop;
         return element.getBoundingClientRect().top+bodyScrollTop;
     }
+    /**
+     * Get <img> tag data.
+     * 
+     * @param {object} el HTMLElement.
+     * @returns {object}
+     */
     parseImageContent(el){
         const element=el;
         return {
@@ -43,6 +65,11 @@ export class Parser{
             alt:element.alt
         }
     }
+    /**
+     * Get <ul> tag data.
+     * 
+     * @param {object} el HTMLElement
+     */
     parseListContent(el){
         const liCollection=el.children;
         if(!liCollection.length) return [];
@@ -50,6 +77,12 @@ export class Parser{
             return item.innerText;
         })
     }
+    /**
+     * Get array of element parents.
+     * 
+     * @param {object} el HTMLElement
+     * @returns {array} 
+     */
     getParentsArray(el){
         const element=el;
         let parentElement=element.parentElement,

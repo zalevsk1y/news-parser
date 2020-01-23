@@ -1,4 +1,5 @@
-import {getRestNonce,getAjaxNonce,getApiEndpoint,sendApiRequest,decodeHTMLEntities,getPostEditLink} from '@news-parser/helpers';
+import {getRestNonce,getAjaxNonce,decodeHTMLEntities,getPostEditLink,sendApiRequest} from '@news-parser/helpers';
+import config from '@news-parser/config';
 import {PostModel} from '@news-parser/helpers/classes/PostModel';
 import {TemplateModel} from '@news-parser/helpers/classes/TemplateModel'
 import {fetchError,receiveError, closeDialog,receivePost,createMessage} from '@news-parser/parser-rss/actions/index'
@@ -28,10 +29,15 @@ export function getPostHTML(htmlData){
         rawHTML:receivedObject
     }
 }
-
-export function getPageHTML(pageUrl,dispatch){
+/**
+ * Get HTML data of the page from server.
+ * 
+ * @param {function} dispatch Redux dispatch function.
+ * @param {string} pageUrl Url of the page. 
+ */
+export function getPageHTML(dispatch,pageUrl){
     let nonce=getAjaxNonce(),
-        url=getApiEndpoint('parsing')+'&url='+encodeURIComponent(pageUrl)+'&_wpnonce='+nonce+'&status=single';
+        url=config.parsingApi.single+encodeURIComponent(pageUrl)+'&_wpnonce='+nonce+'&status=single';
     dispatch(sendRequestToServer());
     return dispatch=>{
         return sendApiRequest({nonce,url,method:'GET'})
@@ -53,15 +59,27 @@ export function getPageHTML(pageUrl,dispatch){
                 })
         }
 }
-export function createPostDraft(postId,postUrl,postData,options,dispatch){
+/**
+ * Creates Post draft using wordpress REST API.
+ * 
+ * @param {function} dispatch Redux dispatch function.
+ * @param {string} postId Inner array post index.
+ * @param {string} postUrl url of the post data source. 
+ * @param {object} postData parsed post data.
+ * @param {object} options parsing options.
+ * 
+ * @requires helpers/src/classes/PostModel.js|PostModel
+ * @requires helpers/src/classes/MediaModel.js|MediaModel
+ */
+export function createPostDraft(dispatch,postId,postUrl,postData,options){
     const nonce=getRestNonce(),
-        post=new PostModel({url:postUrl,postData,restApiRoot:getApiEndpoint('root'),options});
+        post=new PostModel(config.restRoot);
   
     dispatch(sendRequestToServer());
     return dispatch=>{
         return post
             .nonceAuth(nonce)
-            .createPostDraft()
+            .createPostDraft(postData,options,postUrl)
             .then(postData=>{
                 dispatch(receiveRequestFromServer());
                 dispatch(closeDialog());
@@ -78,7 +96,7 @@ export function createPostDraft(postId,postUrl,postData,options,dispatch){
                             postData
                         };
                     if(options.addFeaturedMedia){
-                        let media= new MediaModel(getApiEndpoint('media'));
+                        let media= new MediaModel(config.mediaApi.create);
                         media.nonceAuth(getAjaxNonce()).create(post.featuredMedia,post.title,post.id)
                             .then(mediaData=>{
                                 if(mediaData.err==0&&mediaData.data.mediaId){
@@ -98,14 +116,24 @@ export function createPostDraft(postId,postUrl,postData,options,dispatch){
             });    
     }
 }
-export function saveParsingTemplate({url,postData,dispatch,options}){
+/**
+ * Save parsing template to server.
+ * 
+ * @param {function} dispatch Redux dispatch function.
+ * @param {string} url url of the post data source. 
+ * @param {object} postTemplateData Parsing template.
+ * @param {object} options Parsing options.
+ * 
+ * @requires helpers/src/classes/TemplateModel.js|TemplateModel
+ */
+export function saveParsingTemplate(dispatch,url,postTemplateData,options){
     options.url=url;
     const nonce=getAjaxNonce(),
-        template=new TemplateModel({url,postData,ajaxEndPoint:getApiEndpoint('options'),options});
+        template=new TemplateModel(config.optionsApi.create);
     return dispatch=>{
         return template
             .nonceAuth(nonce)
-            .save()
+            .save(postTemplateData,options,url)
             .then(data=>{
                 dispatch(closeDialog());
                 if(data.err==1) dispatch(receiveError(receivedData));

@@ -14,11 +14,14 @@ import ErrorBoundary from "@news-parser/error-handler"
 
 import '@news-parser/styles/parser-rss.scss';
 
+//SetUp for Redux DevExtension.
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store=createStore(
         parse,
+        composeEnhancers(
         applyMiddleware(
             thunkMiddleware
-        )),
+        ))),
       currentUri=window.location.search,
       uriParams=uriToJson(currentUri);
 

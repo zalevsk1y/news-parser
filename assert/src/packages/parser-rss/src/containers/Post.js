@@ -4,10 +4,14 @@ import Image from '../components/Image';
 import {connect} from 'react-redux';
 import {parsePage,createMessage,openDialog,selectPost} from '../actions';
 import Icons from '../components/Icons';
-
 import PropTypes from 'prop-types';
-import {getNonce} from '@news-parser/helpers'
 
+
+/**
+ * Post box component.
+ * 
+ * @since 0.8.0
+ */
 export class Post extends React.Component {
     constructor(props){
         super(props);
@@ -15,6 +19,11 @@ export class Post extends React.Component {
         this.openVisualConstructor=this.openVisualConstructor.bind(this);
         this.selectPost=this.selectPost.bind(this);
     }
+    /**
+     * Footer of post box.
+     * 
+     * @param {object} props 
+     */
     footer(props){
         var footer=[],_this=this;
         switch (props.status){
@@ -40,9 +49,15 @@ export class Post extends React.Component {
             </div>
         )
     }
+    /**
+     * Post select handler.
+     */
     selectPost(){
         this.props.selectPost(this.props._id)
     }
+    /**
+     * Open visual constructor modal window. 
+     */
     openVisualConstructor(){
         this.props.openVisualConstructor(this.props.link,{dialog:{
             postId:this.props.postId,
@@ -103,8 +118,7 @@ function mapStateToProps(state,props){
 function mapDispatchToProps(dispatch){
     return {
         parsePage:(url,id)=>{
-            const nonce=getNonce({page:'parse',action:'get'})
-            dispatch(parsePage({dispatch,nonce,url,id}))
+            dispatch(parsePage(dispatch,url,id))
         },
         message:(type,text)=>{
             dispatch(createMessage(type,text))
@@ -120,10 +134,63 @@ function mapDispatchToProps(dispatch){
 export default connect(mapStateToProps,mapDispatchToProps)(Post);
 
 Post.propTypes={
+    /**
+     * Fetching state.
+     */
+    isFetching:PropTypes.bool,
+    /**
+     *  Post status. 
+     */
     status:PropTypes.oneOf(['draft','parsed','selected']).isRequired,
+    /**
+     * Post title.
+     */
     title:PropTypes.string.isRequired,
+    /**
+     * Post image.
+     */
     image:PropTypes.string.isRequired,
+    /**
+     * Post description.
+     */
     description:PropTypes.string.isRequired,
+    /**
+     * Link to the source.
+     */
     link:PropTypes.string.isRequired,
-    pubDate:PropTypes.string.isRequired
+    /**
+     * Date pf post publication.
+     */
+    pubDate:PropTypes.string.isRequired,
+    /**
+     * Link to the wordpress post editor.
+     */
+    editLink:PropTypes.string,
+    /**
+     * Action handles parse single page.
+     * 
+     * @param {string} url Url of the page.
+     * @param {string} innerPostIndex Index of the post in array(optional).
+     */
+    parsePage:PropTypes.func.isRequired,
+    /**
+     * Show message.
+     * 
+     * @param {string} type Type of the massage [info|error|success]
+     * @param {string} text Text of the message.
+     */
+    message:PropTypes.func.isRequired,
+    /**
+     * Open visual constructor modal window to select content manually 
+     * or create p[arsing template rules. 
+     * 
+     * @param {string} url url of the page.
+     */
+    openVisualConstructor:PropTypes.func.isRequired,
+    /**
+     * Select post action.
+     * 
+     * @param {string} _id inner array index (not wordpress post_id)
+     */
+    selectPost:PropTypes.func.isRequired
 }

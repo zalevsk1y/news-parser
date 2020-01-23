@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+/**
+ * Message window element.
+ * 
+ * @since 0.8.0
+ */
 export class Message extends React.Component{
     constructor(props){
         super(props);
@@ -8,10 +12,18 @@ export class Message extends React.Component{
         this.close=this.close.bind(this);
        
     }
+    /**
+     * Close message window.
+     */
     close(){
         this.setState({open:false})
     }
-    
+    /**
+     * If get mew message close current message and open new one in 400ms.
+     * 
+     * @param {object} prevProps 
+     * @param {object} prevState 
+     */
     componentDidUpdate(prevProps, prevState){
         if(this.props!==prevProps){
             if(this.state.open&&this.props.open){
@@ -30,7 +42,7 @@ export class Message extends React.Component{
   
         return (
             <div className="message-wrapper">
-                <div className={"message container "+(this.state.open?"":"closed")} >
+                <div className={"message container   "+(this.state.open?"":"closed")} >
     
                 <div className="message-content">
                     <div className="message-icon">
@@ -56,10 +68,22 @@ export class Message extends React.Component{
 
 
 Message.propTypes={
+    /**
+     * Message window status.
+     */
     open:PropTypes.bool.isRequired,
+    /**
+     * Message type [error,info,success]
+     */
     type:PropTypes.string,
+    /**
+     * Message text.
+     */
     text:PropTypes.string,
-    time:PropTypes.string
+    /**
+     * Timestamp of the message.
+     */
+    time:PropTypes.number
 }
 
 export default Message;

@@ -3,9 +3,15 @@ import {InfoBox,InfoBody,InfoFooter} from '../containers/InfoBox';
 import {Checkbox} from '../containers/elements/Checkbox'
 import Input from '../containers/elements/Input'
 import {connect} from 'react-redux';
-import { toggleAddFeaturedMedia,toggleSaveParsingTemplate } from '../actions/option';
+import { toggleAddFeaturedMedia,toggleSaveParsingTemplate,toggleAddSource } from '../actions/option';
 import {selectTitle,selectFeaturedMedia} from '../actions/frame';
+import PropTypes from 'prop-types';
 
+/**
+ * Right side bar of visual constructor modal window.
+ * 
+ * @since 1.0.0
+ */
 export class  SidebarRight extends React.Component{
     constructor(props){
         super(props);
@@ -14,14 +20,25 @@ export class  SidebarRight extends React.Component{
         this.selectTitle=this.selectTitle.bind(this);
         this.selectFeaturedMedia=this.selectFeaturedMedia.bind(this)
     }
+    /**
+     * Select post title.
+     */
     selectTitle(){
         if(!this.state.title)return;
         this.props.selectTitle(this.state.title)
     }
+    /**
+     * Handles title input change
+     * 
+     * @param {string} value 
+     */
     changeStateInputTitle(value){
         if(!value||value===this.state.title)return;
         this.setState({title:value})
     }
+    /**
+     * Change selected featured image. Take first selected image from parsed data.
+     */
     selectFeaturedMedia(){
         const options=this.props.options||{},
                 body=this.props.body||{};
@@ -54,32 +71,32 @@ export class  SidebarRight extends React.Component{
                         </p>
                     </InfoBody>
                     <InfoFooter>
-                        <button type="button" class="button button-primary button-large" onClick={this.selectFeaturedMedia}>Change image</button>
+                        <button type="button" className="button button-primary button-large" onClick={this.selectFeaturedMedia}>Change image</button>
                     </InfoFooter>
                 </InfoBox>
                 <InfoBox title="Post title">
                     <InfoBody>
                         <span>{this.props.title}</span>
-                        <p class="hide-if-no-js">
+                        <p className="hide-if-no-js">
                             <Input  onChange={this.changeStateInputTitle}/>
-                            <p class="howto">
+                            <p className="howto">
                                 If you want to change title, type the new title and press "Change title" button.
                             </p>
                         </p>
                     </InfoBody>
                     <InfoFooter>
-                        <button type="button" class="button button-primary button-large" onClick={this.selectTitle}>Change title</button>
+                        <button type="button" className="button button-primary button-large" onClick={this.selectTitle}>Change title</button>
                     </InfoFooter>
                 </InfoBox>
                 <InfoBox title="Extra options">
                     <InfoBody>
-                        <div class="info-box-container">
-                            <Checkbox value={options.sourceLink} onClick={this.props.toggleSourceLink} />
+                        <div className="info-box-container">
+                            <Checkbox value={options.addSource} onClick={this.props.toggleAddSource} />
                             <p className="howto inline-bl">
                                 Add source link to the post.                            
                             </p>
                         </div>
-                        <div class="info-box-container">
+                        <div className="info-box-container">
                             <Checkbox value={options.saveParsingTemplate} onClick={this.props.toggleSaveParsingTemplate} />
                             <p className="howto inline-bl">
                                 Save parsing template that you can use in automatic parsing from this source.                            
@@ -121,9 +138,59 @@ export class  SidebarRight extends React.Component{
             },
             toggleSaveParsingTemplate:function(){
                 dispatch(toggleSaveParsingTemplate());
+            },
+            toggleAddSource:function(){
+                dispatch(toggleAddSource());
             }
         }
     }
 
 
     export default connect(mapStateToProps,mapDispatchToProps)(SidebarRight);
+
+    SidebarRight.propTypes={
+        /**
+         * Post title.
+         */
+        title:PropTypes.string,
+        /**
+         * Post featured image.
+         */
+        image:PropTypes.string,
+        /**
+         * Post content associative array{hash:elementData}
+         */
+        body:PropTypes.object,
+        /**
+        * Parsing options, structure: {addFeaturedMedia,addSource,saveParsingTemplate}
+        * 
+        * @see {@link visual-constructor/src/reducers/options.js|defaultOptionsState}
+         */
+        options:PropTypes.object.isRequired,
+        /**
+         * Toggle featured image checkbox.
+         *  
+         */
+        toggleAddFeaturedMedia:PropTypes.func.isRequired,
+        /**
+         * Toggle save parsing template checkbox.
+         */
+        toggleSaveParsingTemplate:PropTypes.func.isRequired,
+        /**
+         * Select custom post title.
+         * 
+         * @param {string} title New post title.
+         */
+        selectTitle:PropTypes.func.isRequired,
+        /**
+         * Select new post image.
+         * 
+         * @param {string} url New Post image url.
+         */
+        selectFeaturedMedia:PropTypes.func.isRequired,
+        /**
+         * Toggle add source checkbox.
+         */
+        toggleAddSource:PropTypes.func.isRequired
+
+    }

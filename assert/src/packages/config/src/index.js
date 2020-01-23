@@ -1,35 +1,29 @@
+import {newsParserSettings as settings,newsParserApiEndpoints as endpoints} from 'globals';
+
 const config={
-    mode:'production',
-    root:'?page=news-parser-main-menu',
-    emulateJSON:true,
-    settingsApi:{
-        getSettings:'admin-ajax.php?action=news_parser_settings_api&status=get',
-        getDefaultSettings:'admin-ajax.php?action=news_parser_settings_api&status=default',
-        saveSettings:'admin-ajax.php?action=news_parser_settings_api&status=save'
-    },
+    mode:'development',
+    root:'?page='+endpoints.rssPageName,
+    restRoot:settings.root,
+    emulateJSON:false,
+
     parsingApi:{
-        list:'admin-ajax.php?action=news_parser_parsing_api&status=list&url=',
-        single:'admin-ajax.php?action=news_parser_parsing_api&status=single&url=',
-        multi:'admin-ajax.php?action=news_parser_parsing_api&status=multi&url='
+        list:endpoints.list,
+        single:endpoints.single,
+        multi:endpoints.multi
+    },
+    optionsApi:{
+        create:endpoints.options
+    },
+    mediaApi:{
+        create:endpoints.media
     },
     errorReport:{
         url:'https://github.com/zalevsk1y/news-parser/issues/new'
     },
     defaultImage:'/images/Grey-Gradient.png',
     nonce:{
-        id:{
-            parse:'parsing-app',
-            settings:'settings-app'
-            },
-        dataset:{
-            parse:{
-                get:'nonce'
-            },
-            settings:{
-                get:'nonceSettingsGet',
-                save:'nonceSettingsSave'
-            }
-        }
+        rest:settings.restApiNonce,
+        ajax:settings.ajaxApiNonce
     },
     amedia:{
         phone:782
