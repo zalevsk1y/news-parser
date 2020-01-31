@@ -1,4 +1,4 @@
-import {types} from '../actions/option';
+import {types} from '../actions/option.actions';
 
 export const defaultOptionsState={
     addFeaturedMedia:true,

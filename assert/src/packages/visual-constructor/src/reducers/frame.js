@@ -1,4 +1,4 @@
-import {types} from '../actions/frame';
+import {types} from '../actions/frame.actions';
 
 
 export function frame (state={},action){

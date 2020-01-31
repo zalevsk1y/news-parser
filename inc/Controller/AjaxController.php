@@ -197,7 +197,7 @@ class AjaxController extends Ajax
         //ToDo:Make redirect to main page when parameter is missing.
         $request_args=array(
             'url'=>isset($_GET['url'])?$_GET['url']:\wp_die(),
-            'status'=>isset($_GET['status'])?$_GET['status']:\wp_die()
+            'entity'=>isset($_GET['entity'])?$_GET['entity']:\wp_die()
         );
         $request=$this->prepareArgs($request_args,array(
             'url'=>array(
@@ -212,26 +212,26 @@ class AjaxController extends Ajax
                     return esc_url_raw($input_url);
                 }
             ),
-            'status'=>array(
-                'description'=>'Action status that should be applied.',
+            'entity'=>array(
+                'description'=>'Entity that should be applied.',
                 'type'=>'string',
-                'validate_callback'=>function($status)
+                'validate_callback'=>function($entity)
                 {
-                    if(in_array($status,array('list','single','multi'))===false) return new \WP_Error(
+                    if(in_array($entity,array('list','single','multi'))===false) return new \WP_Error(
                         'wrong_parsing_status',
-                        'Parsing status should be: list,single,multi.But '.esc_html($status).' was set.');
+                        'Parsing status should be: list,single,multi.But '.esc_html($entity).' was set.');
                     return true;
                 },
-                'sanitize_callback'=>function($status)
+                'sanitize_callback'=>function($entity)
                 {
-                    return sanitize_text_field($status);
+                    return sanitize_text_field($entity);
                 }
             )
         ));
         
-            $status = $request['status'];
+            $entity = $request['entity'];
             $url = $request['url'];
-        switch ($status) {
+        switch ($entity) {
             case 'list':
                 $response = $this->event->trigger('list:get',array($url));
                 break;

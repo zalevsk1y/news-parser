@@ -2,7 +2,7 @@ import React from 'react';
 import {Fragment} from 'react';
 import Image from '../components/Image';
 import {connect} from 'react-redux';
-import {parsePage,createMessage,openDialog,selectPost} from '../actions';
+import {parsePage,showMessage,openDialog,selectPost} from '../actions';
 import Icons from '../components/Icons';
 import PropTypes from 'prop-types';
 
@@ -121,7 +121,7 @@ function mapDispatchToProps(dispatch){
             dispatch(parsePage(dispatch,url,id))
         },
         message:(type,text)=>{
-            dispatch(createMessage(type,text))
+            dispatch(showMessage(type,text))
         },
         openVisualConstructor:(url,dialogData)=>{
             dispatch(openDialog(url,dialogData))

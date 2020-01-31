@@ -1,30 +1,64 @@
 import {newsParserSettings as settings,newsParserApiEndpoints as endpoints} from 'globals';
-
+import {GET,POST,AJAX,REST} from '@news-parser/parser-rss/constants/';
 const config={
     mode:'development',
-    root:'?page='+endpoints.rssPageName,
-    restRoot:settings.root,
     emulateJSON:false,
+    api:{
+        list:{
+            parse:{
+                method:GET,
+                type:AJAX,
+                nonce:settings.ajaxApiNonce,
+                url:endpoints.list
+            }
+        },
+        html:{
+            parse:{
+                method:GET,
+                type:AJAX,
+                nonce:settings.ajaxApiNonce,
+                url:endpoints.html
+            }
+        },
+        multi:{
+            parse:{
+                method:GET,
+                type:AJAX,
+                nonce:settings.ajaxApiNonce,
+                url:endpoints.multi
+            }
+        },
+        media:{
+            create:{
+                method:POST,
+                type:AJAX,
+                nonce:settings.ajaxApiNonce,
+                url:endpoints.media
+            }
+        },
+        options:{
+            create:{
+                method:POST,
+                type:AJAX,
+                nonce:settings.ajaxApiNonce,
+                url:endpoints.options
+            }
+        },
+        post:{
+            create:{
+                method:POST,
+                type:REST,
+                nonce:settings.restApiNonce,
+                url:settings.root+'wp/v2/posts'
+            }
+        }
 
-    parsingApi:{
-        list:endpoints.list,
-        single:endpoints.single,
-        multi:endpoints.multi
-    },
-    optionsApi:{
-        create:endpoints.options
-    },
-    mediaApi:{
-        create:endpoints.media
     },
     errorReport:{
         url:'https://github.com/zalevsk1y/news-parser/issues/new'
     },
     defaultImage:'/images/Grey-Gradient.png',
-    nonce:{
-        rest:settings.restApiNonce,
-        ajax:settings.ajaxApiNonce
-    },
+
     amedia:{
         phone:782
     },

@@ -2,29 +2,48 @@ import {combineReducers} from 'redux';
 import {types} from '../actions';
 import {initialStateParse,initialStateRoute} from './initState';
 import {combineSubReducers,decodeQuotes} from '@news-parser/helpers';
+import {LIST} from '../constants/index';
+import {START_FETCHING,STOP_FETCHING} from '../actions/api.actions';
+import {FETCH_LIST,SET_LIST} from '../actions/list.actions';
+
 import dialog from './dialog'
 
 export function parse (state=initialStateParse,action){
 
     switch(action.type){
-        case types.REQUEST_POSTS_LIST:
-            return {...state,isFetching:true,url:action.url,action:'list'};
+        case START_FETCHING:
+            return {...state,
+                isFetching:true,
+                fetchingData:{
+                    ...action.payload
+                }
+            }
+        case STOP_FETCHING:
+            return {
+                ...state,
+                isFetching:false
+            };
+        case FETCH_LIST:
+            return {...state,
+                url:action.payload.url,
+                action:LIST
+            };
+        case SET_LIST:
+            debugger
+            return {
+                ... state,
+                items:{...state.items,data:[...action.payload.posts]}
+            }
         case types.REQUEST_SINGLE_POST:
             const actionParams=action.id?{postID:action.id}:false;
             return {...state,isFetching:true,url:action.url,action:'post',actionParams};
-        case types.RECEIVE_POSTS_LIST:
+        case types.SET_LIST:
+            const {url,data}=action.payload;
             return {...state,
-                isFetching:false,
-                url:action.url,
-                error:action.posts.err,
-                message:action.posts.msg,
-                action:'list',
-                items:{
-                    data:action.posts.data.map((item,index)=>{
-                        item._id=parseInt(index);
-                        return item;
-                    }),
-                }
+                url,
+                message:data.msg,
+                action:LIST,
+                items:[...data.posts]
             };
         case types.RECEIVE_SINGLE_POST:
             if(action.post.data._id!==undefined){

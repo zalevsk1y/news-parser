@@ -3,8 +3,8 @@ import {InfoBox,InfoBody,InfoFooter} from '../containers/InfoBox';
 import {Checkbox} from '../containers/elements/Checkbox'
 import Input from '../containers/elements/Input'
 import {connect} from 'react-redux';
-import { toggleAddFeaturedMedia,toggleSaveParsingTemplate,toggleAddSource } from '../actions/option';
-import {selectTitle,selectFeaturedMedia} from '../actions/frame';
+import {toggleAddFeaturedMedia,toggleSaveParsingTemplate,toggleAddSource } from '../actions/option.actions';
+import {selectTitle,selectFeaturedMedia} from '../actions/frame.actions';
 import PropTypes from 'prop-types';
 
 /**

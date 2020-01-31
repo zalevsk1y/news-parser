@@ -38701,7 +38701,7 @@ function updatePictureInfo(id, info) {
 /*!**************************************************!*\
   !*** ./src/packages/parser/src/actions/index.js ***!
   \**************************************************/
-/*! exports provided: types, requestPostsList, setRoute, requestPost, receivePostsList, receiveError, receivePost, createMessage, openDialog, openVisualConstructor, closeVisualConstructor, closeDialog, fetchError, parseRSSList, parsePage */
+/*! exports provided: types, requestPostsList, setRoute, requestPost, receivePostsList, receiveError, receivePost, showMessage, openDialog, openVisualConstructor, closeVisualConstructor, closeDialog, fetchError, parseRSSList, parsePage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38713,7 +38713,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receivePostsList", function() { return receivePostsList; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveError", function() { return receiveError; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receivePost", function() { return receivePost; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMessage", function() { return createMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showMessage", function() { return showMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "openDialog", function() { return openDialog; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "openVisualConstructor", function() { return openVisualConstructor; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "closeVisualConstructor", function() { return closeVisualConstructor; });
@@ -38781,7 +38781,7 @@ function receivePost(url, post) {
     date: false
   };
 }
-function createMessage(type, text) {
+function showMessage(type, text) {
   return {
     type: types.CREATE_MESSAGE,
     msg: {
@@ -39788,7 +39788,7 @@ function mapDispatchToProps(dispatch) {
       }));
     },
     message: function message(type, text) {
-      dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_3__["createMessage"])(type, text));
+      dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_3__["showMessage"])(type, text));
     },
     openVisualConstructor: function openVisualConstructor(url, dialogData) {
       dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_3__["openDialog"])(url, dialogData));
@@ -40518,7 +40518,7 @@ function createPostDraft(postId, postUrl, postData, options, dispatch) {
             });
           } else {
             if (mediaData.hasOwnProperty('msg')) {
-              dispatch(Object(_parser_src_actions_index__WEBPACK_IMPORTED_MODULE_2__["createMessage"])(mediaData.msg.type, mediaData.msg.text));
+              dispatch(Object(_parser_src_actions_index__WEBPACK_IMPORTED_MODULE_2__["showMessage"])(mediaData.msg.type, mediaData.msg.text));
             }
           }
         });

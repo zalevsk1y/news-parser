@@ -2,7 +2,7 @@ import {getRestNonce,getAjaxNonce,decodeHTMLEntities,getPostEditLink,sendApiRequ
 import config from '@news-parser/config';
 import {PostModel} from '@news-parser/helpers/classes/PostModel';
 import {TemplateModel} from '@news-parser/helpers/classes/TemplateModel'
-import {fetchError,receiveError, closeDialog,receivePost,createMessage} from '@news-parser/parser-rss/actions/index'
+import {fetchError,receiveError, closeDialog,receivePost,showMessage} from '@news-parser/parser-rss/actions/index'
 import { MediaModel } from '@news-parser/helpers/classes/MediaModel';
 export const types = {
     GET_PAGE_HTML: 'GET_PAGE_HTML',
@@ -37,7 +37,7 @@ export function getPostHTML(htmlData){
  */
 export function getPageHTML(dispatch,pageUrl){
     let nonce=getAjaxNonce(),
-        url=config.parsingApi.single+encodeURIComponent(pageUrl)+'&_wpnonce='+nonce+'&status=single';
+        url=config.parsingApi.html+encodeURIComponent(pageUrl)+'&_wpnonce='+nonce+'&status=single';
     dispatch(sendRequestToServer());
     return dispatch=>{
         return sendApiRequest({nonce,url,method:'GET'})
@@ -103,7 +103,7 @@ export function createPostDraft(dispatch,postId,postUrl,postData,options){
                                     //post.updatePost({'featured_media':mediaData.data.mediaId})
                                 }else{
                                     if(mediaData.hasOwnProperty('msg')){
-                                        dispatch(createMessage(mediaData.msg.type,mediaData.msg.text));
+                                        dispatch(showMessage(mediaData.msg.type,mediaData.msg.text));
                                     }
                                 }
                             })
@@ -137,7 +137,7 @@ export function saveParsingTemplate(dispatch,url,postTemplateData,options){
             .then(data=>{
                 dispatch(closeDialog());
                 if(data.err==1) dispatch(receiveError(receivedData));
-                if(data.hasOwnProperty('msg'))dispatch(createMessage(data.msg.type,data.msg.text));
+                if(data.hasOwnProperty('msg'))dispatch(showMessage(data.msg.type,data.msg.text));
             })
             .catch(error=>{
                 dispatch(fetchError(error))

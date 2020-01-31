@@ -2,6 +2,8 @@ import config from "@news-parser/config";
 import {oldServerData,newServerData,getAjaxNonce} from '@news-parser/helpers'
 
 export const types = {
+    API_REQUEST: 'API_REQUEST',
+    API_SUCCESS:'API_SUCCESS',
     REQUEST_POSTS_LIST: 'REQUEST_POSTS_LIST',
     REQUEST_SINGLE_POST: 'REQUEST_SINGLE_POST',
     RECEIVE_POSTS_LIST: 'RECEIVE_POSTS_LIST',
@@ -67,7 +69,7 @@ export function selectPost(_id){
         _id
     }
 }
-export function createMessage(type,text){
+export function showMessage(type,text){
     return {
         type:types.CREATE_MESSAGE,
         msg:{

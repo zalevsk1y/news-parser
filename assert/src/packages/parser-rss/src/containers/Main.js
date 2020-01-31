@@ -4,7 +4,7 @@ import InputForm from './InputForm';
 import Posts from './Posts';
 import Indicator from './Indicator';
 import {connect} from 'react-redux';
-import {parseRSSList} from '../actions';
+import {fetchList} from '../actions/list.actions';
 import {ModalWindow} from '../components/ModalWindow';
 import PropTypes from 'prop-types';
 import Translate from './Translate';
@@ -53,7 +53,7 @@ function mapDispatchToProps(dispatch){
     return{
         getDataFromServer:(action,url)=>{
             if(action=='list'){
-                dispatch(parseRSSList(dispatch,url));
+                dispatch(fetchList(url));
             }
         }
     }

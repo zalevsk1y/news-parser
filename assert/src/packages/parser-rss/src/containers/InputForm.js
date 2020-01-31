@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {parsePage,parseRSSList,openDialog,parseSelected,createMessage} from '../actions'; 
+import {parsePage,parseRSSList,openDialog,parseSelected,showMessage} from '../actions'; 
+import {fetchList} from '../actions/list.actions';
 import {getUrlWithParams} from '@news-parser/helpers';
 import PropTypes from 'prop-types';
 import Translate from './Translate';
@@ -122,7 +123,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
     return {
         parseList:(url)=>{
-            dispatch(parseRSSList(dispatch,url))
+            dispatch(fetchList(url))
         },
         parsePage:(url)=>{
             dispatch(parsePage(dispatch,url));
@@ -134,7 +135,7 @@ function mapDispatchToProps(dispatch){
             dispatch(parseSelected(dispatch,posts))
         },
         message:(type,text)=>{
-            dispatch(createMessage(type,text))
+            dispatch(showMessage(type,text))
         }
     }
 

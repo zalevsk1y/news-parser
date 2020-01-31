@@ -71,7 +71,7 @@ export function getApiEndpoint(api){
 }
 
 export function getUrlWithParams(params){
-    const url=window.location.pathname+config.root;
+    const url=window.location.pathname+window.location.search;
     let search='';
     Object.keys(params).forEach(key => {
         search+='&'+key+'='+encodeURIComponent(params[key]);

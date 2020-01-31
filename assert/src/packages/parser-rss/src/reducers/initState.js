@@ -2,11 +2,9 @@
 export const initialStateParse={
             isFetching:false,
             url:false,
-            action:'main',
-            actionParams:false,
+            appState:'main',
             message:false,
             dialog:false,
-            error:0,
             items:{}
 }
 
