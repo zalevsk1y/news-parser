@@ -1,5 +1,6 @@
 import React from 'react';
 import Post from './Post';
+import {table} from '@news-parser/helpers/classes/Table'
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 /**
@@ -26,8 +27,8 @@ export class Posts extends React.Component{
 }
 
 function mapStateToProps (state){
- 
-    const posts=state.parse.items.hasOwnProperty('data')?state.parse.items.data:[];
+    const {data,select,draft}=state.parse.items,
+        posts=data?table(data).join({select,draft}):[];
     return{
         posts
     }

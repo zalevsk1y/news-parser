@@ -49,7 +49,7 @@ export class InputForm extends React.Component{
      */
     handleParseListSubmit(event){
         event.preventDefault();
-        const params={action:'list',url:this.state.inputValue};
+        const params={entity:'list',url:this.state.inputValue};
         const url=getUrlWithParams(params)
         window.history.pushState(null,null,url)
         window.location.reload();
@@ -114,7 +114,7 @@ export class InputForm extends React.Component{
 function mapStateToProps(state){
     const posts=state.parse.items.hasOwnProperty('data')?state.parse.items.data:[];
     return {
-        value:state.route.url||'',
+        value:state.parse.appState.data.url||'',
         page:state.route.page,
         isFetching:state.parse.isFetching,
         posts

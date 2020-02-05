@@ -2,10 +2,20 @@
 export const initialStateParse={
             isFetching:false,
             url:false,
-            appState:'main',
+            appState:{
+                entity:'main',
+                event:false,
+                data:{
+                    url:''
+                }
+            },
             message:false,
             dialog:false,
-            items:{}
+            items:{
+                data:[],
+                select:{},
+                draft:{}
+            }
 }
 
 export const initialStateRoute={

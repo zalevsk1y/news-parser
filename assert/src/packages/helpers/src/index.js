@@ -1,7 +1,7 @@
 import config from "@news-parser/config";
 
 
-export function uriToJson(uri){
+export function urlSearchParams(uri){
     if (!uri) return {};
     const jsonParams='{\"'+uri.replace(/&/g,'","').replace(/=/g,'":"').replace(/\?/g,"")+'\"}';
     if(jsonParams){

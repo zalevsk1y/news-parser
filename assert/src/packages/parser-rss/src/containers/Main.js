@@ -42,10 +42,11 @@ class Main extends React.Component {
     }
 }
 function mapStateToProps(state){
+    const {entity,event,data}=state.parse.appState;
     return{
-        routeAction:state.route.action,
-        parseAction:state.parse.action,
-        url:state.route.url,
+        entity,
+        event,
+        url:data.url,
         dialog:state.parse.dialog,
     }
 }
@@ -64,17 +65,24 @@ export default connect(mapStateToProps,mapDispatchToProps)(Main);
 
 Main.propTypes={
     /**
-     * Current route action [list|single|multi]
+     * Current app parsing entity [list|single|multi]
      */
-    routeAction:PropTypes.string,
+    entity:PropTypes.string,
     /**
-     * Current application action [dialog]
+     * Current event, that apply on current app entity [dialog]
      */
-    parseAction:PropTypes.string,
+    event:PropTypes.string,
     /**
      * RSS data url.
      */
     url:PropTypes.string,
+    /**
+     * Dialog window state.
+     */
+    dialog:PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.bool
+    ]),
     /**
      * If route action is list get parsed RSS data from the server.
      * 

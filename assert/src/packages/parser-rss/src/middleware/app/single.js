@@ -1,5 +1,5 @@
-import {SINGLE,CREATE,ADD} from '../../../constants';
-import {POST_CREATE,apiRequest} from '../../../actions/api.actions';
+import {SINGLE,CREATE,ADD} from '../../constants/index';
+import {apiRequest} from '../../../actions/api.actions';
 import {showMessage} from '../../../actions/';
 import {postDraft} from '../../../actions/post.actions';
 
@@ -7,7 +7,7 @@ export const singleMiddleware = (store)=>next=>action=>{
     next (action);
     const {dispatch,getState}=store;
     switch(action.type){
-        case POST_CREATE:
+        case `[${SINGLE}:${CREATE}]${POST_ITEM}`:
             const {data}=action.payload;
             dispatch(apiRequest(SINGLE,CREATE,data));
             break;
@@ -16,7 +16,7 @@ export const singleMiddleware = (store)=>next=>action=>{
                 {data}=action.payload,
                 post_id=data.id;
             options.addFeaturedImage&&dispatch(createFeaturedImage(image,title,post_id));
-            dispatch(postDraft(ADD,_id,post_id));
+            dispatch(setPostMeta(DRAFT,ADD,_id,{post_id,editLink}));
             dispatch(showMessage('success',data.msg.text));
     }
 }

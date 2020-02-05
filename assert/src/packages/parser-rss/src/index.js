@@ -6,11 +6,15 @@ import Main from './containers/Main';
 import { Provider } from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import parse from './reducers';
-import {uriToJson} from '@news-parser/helpers';
+
+
+
 
 import {apiMiddleware} from './middleware/core/api';
 import {listMiddleware} from './middleware/app/list';
-import {setRoute} from './actions';
+import {postMiddleware} from './middleware/app/post';
+import {mainMiddleware} from './middleware/core/main'
+import {startApp} from './actions/app.actions';
 import thunkMiddleware from 'redux-thunk';
 import ErrorBoundary from "@news-parser/error-handler"
 
@@ -24,14 +28,13 @@ const store=createStore(
         composeEnhancers(
         applyMiddleware(
             apiMiddleware,
+            mainMiddleware,
             listMiddleware,
+            postMiddleware,
             thunkMiddleware
             
-        ))),
-      currentUri=window.location.search,
-      uriParams=uriToJson(currentUri);
-
-store.dispatch(setRoute(uriParams))
+        )));
+store.dispatch(startApp())
 window.addEventListener('load',()=>{
     ReactDOM.render(
        

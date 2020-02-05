@@ -97,6 +97,7 @@
 .footer-post .fo {
     margin-left: 15px;
     cursor: pointer;
+    padding:1px;
 }
 
 .footer-post .fo:hover {
@@ -106,6 +107,11 @@
 .post-image {
     height: auto;
     width: 100%;
+}
+.icon-selected{
+    border: solid 1px;
+    color: #0073aa;
+    margin-left:13px !important;
 }
 
 .post-image-wrapper {

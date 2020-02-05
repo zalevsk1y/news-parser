@@ -2,7 +2,8 @@ import React from 'react';
 import {Fragment} from 'react';
 import Image from '../components/Image';
 import {connect} from 'react-redux';
-import {parsePage,showMessage,openDialog,selectPost} from '../actions';
+import {parsePage,showMessage,openDialog} from '../actions';
+import {togglePostSelect} from '../actions/post.actions';
 import Icons from '../components/Icons';
 import PropTypes from 'prop-types';
 
@@ -24,24 +25,18 @@ export class Post extends React.Component {
      * 
      * @param {object} props 
      */
-    footer(props){
-        var footer=[],_this=this;
-        switch (props.status){
-            case 'draft':
-                let onClickEditPost=(event)=>{
-                        event.preventDefault();
-                        const newWindow=window.open(props.editLink,'_blank');
-                        newWindow.focus();
-                    }
-                footer.push(<Icons className='fo fo-edit' title="Edit post" onClick={onClickEditPost}/>)
-                break;
-            case 'selected':
-            case 'parsed':
-                footer.push(<Icons className={'fo fo-select'+(props.status==='selected'?' icon-selected':'')} title={props.status==='selected'?'Unselect post':'Select post'} onClick={this.selectPost}/>,
+    footer({select,draft}){
+        const footer=[]
+        if(draft){
+            const onClickEditPost=(event)=>{
+                    event.preventDefault();
+                    const newWindow=window.open(props.editLink,'_blank');
+                    newWindow.focus();
+                };
+            footer.push(<Icons className='fo fo-edit' title="Edit post" onClick={onClickEditPost}/>)
+        }else{
+                footer.push(<Icons className={'fo fo-select'+(select===true?' icon-selected':'')} title={select===true?'Unselect post':'Select post'} onClick={this.selectPost}/>,
                         <Icons className='fo fo-visual-constructor' title='Visual constructor' onClick={this.openVisualConstructor} />);
-                break;
-            default:
-                console.error('Wrong post type: '+props.status)
         }
         return (
             <div className="footer-post">
@@ -53,7 +48,7 @@ export class Post extends React.Component {
      * Post select handler.
      */
     selectPost(){
-        this.props.selectPost(this.props._id)
+        this.props.selectPost(this.props._id);
     }
     /**
      * Open visual constructor modal window. 
@@ -100,7 +95,7 @@ export class Post extends React.Component {
                         <span>{this.props.description}</span>
                     </div>
                 </div>
-                <this.footer {...this.props}/>
+                <this.footer select={this.props.select} draft={this.props.draft}/>
                 {
                     //<!-- post-content -->
                 }
@@ -111,8 +106,6 @@ export class Post extends React.Component {
 function mapStateToProps(state,props){
     return {
         isFetching:state.parse.isFetching,
-        status:state.parse.items.data[props._id].status,
-        editLink:state.parse.items.data[props._id].editLink
     }
 }
 function mapDispatchToProps(dispatch){
@@ -127,7 +120,7 @@ function mapDispatchToProps(dispatch){
             dispatch(openDialog(url,dialogData))
         },
         selectPost:(_id)=>{
-            dispatch(selectPost(_id))
+            dispatch(togglePostSelect(_id))
         }
     }
 }
