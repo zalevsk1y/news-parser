@@ -4,20 +4,20 @@ class Api{
     request(url,params){
         this.argsCheck({url,params});
         debugger;
-        const {nonce,type,method,body}=params,
+        const {nonce,type,method}=params,
             fetchParams={
                 method,
                 headers:this.getHeaders(url,type,method,nonce)
             };
-        if(type===AJAX&&method===GET){
+        let {body}=params;
+        if(method===GET){
             url+='&_wpnonce='+nonce;
             if(body!==undefined&& typeof body==='object'){
                 url+=Object.keys(body).map(paramName=>`&${encodeURIComponent(paramName)}=${encodeURIComponent(body[paramName])}`).join('');
             }
-        }else if(method===POST){
-            if (body!==undefined){
-                fetchParams.body=JSON.stringify(body);
-            }
+        }else if(type===AJAX&&method===POST){
+            body=body!==undefined?{...body,_wpnonce:nonce}:{_wpnonce:nonce};
+            fetchParams.body=JSON.stringify(body);
         }
         return fetch(url,fetchParams);
     }

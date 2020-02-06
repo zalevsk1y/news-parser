@@ -9,19 +9,17 @@ export const listMiddleware = ({dispatch})=>next=>action=>{
     switch(action.type){
         case FETCH_LIST:
             const {url}=action.payload;
+            dispatch(setAppState(LIST,PARSE,{url}));
             dispatch(apiRequest(LIST,PARSE,{url,entity:LIST}));
             break;
         case `[${LIST}:${PARSE}]${API_SUCCESS}`:
-            debugger;
             const posts=action.payload.data.map((post,index)=>{
                 post._id=parseInt(index);
                 return post;
             }),
             {msg}=action.payload.data;
             dispatch(setList(posts));
-            dispatch(setAppState(LIST,PARSE,{url}));
             msg&&dispatch(showMessage(msg.type,msg.text));
-            
             break;
     }
 }

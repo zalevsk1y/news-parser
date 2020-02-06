@@ -26,16 +26,16 @@ export class Post extends React.Component {
      * @param {object} props 
      */
     footer({select,draft}){
-        const footer=[]
+        const footer=[];
         if(draft){
             const onClickEditPost=(event)=>{
                     event.preventDefault();
-                    const newWindow=window.open(props.editLink,'_blank');
+                    const newWindow=window.open(draft.editLink,'_blank');
                     newWindow.focus();
                 };
             footer.push(<Icons className='fo fo-edit' title="Edit post" onClick={onClickEditPost}/>)
         }else{
-                footer.push(<Icons className={'fo fo-select'+(select===true?' icon-selected':'')} title={select===true?'Unselect post':'Select post'} onClick={this.selectPost}/>,
+            footer.push(<Icons className={'fo fo-select'+(select===true?' icon-selected':'')} title={select===true?'Unselect post':'Select post'} onClick={this.selectPost}/>,
                         <Icons className='fo fo-visual-constructor' title='Visual constructor' onClick={this.openVisualConstructor} />);
         }
         return (

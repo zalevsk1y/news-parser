@@ -83,7 +83,9 @@ class AjaxController extends Ajax
      */
     protected function init()
     {
-        \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API, array($this, 'parsingApi'));
+        \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API.'_list', array($this, 'parsingListApi'));
+        \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API.'_html', array($this, 'parsingHTMLApi'));
+        \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API.'_page', array($this, 'parsingPageApi'));
         \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_MEDIA_API, array($this, 'mediaApi'));
         \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_OPTIONS_API, array($this, 'optionsApi'));
     }
@@ -91,12 +93,14 @@ class AjaxController extends Ajax
     /**
      * Check if user have relevant rights  and check nonce.
      *
-     * @param string $nonce Nonce slug that was used.
+     * @param string $action Should give context to what is taking place and be the same when nonce was created.
+     * @param string $requestArgs Request arguments should contain _wpnonce field, 
      * @return true|\WP_Error
      */
-    protected function checkPermission($nonce)
+    protected function checkPermission($action,$request_args)
     {
-        if (!\check_ajax_referer($nonce)||!\is_admin()) {
+        if(!array_key_exists('_wpnonce',$request_args)) return new \WP_Error('ajax_forbidden', Errors::text('NO_RIGHTS_TO_PUBLISH'));
+        if (!\wp_verify_nonce($request_args['_wpnonce'],$action)||!\is_admin()) {
             return new \WP_Error('ajax_forbidden', Errors::text('NO_RIGHTS_TO_PUBLISH'));
         }
         return true;
@@ -113,9 +117,9 @@ class AjaxController extends Ajax
      */
     public function mediaApi()
     {  
-        $this->checkPermission('parsing_news_api');
         //Get application\json encode data
         $json_post = $this->getJsonFromInput();
+        $this->checkPermission('parsing_news_api',$json_post);
         $request=$this->prepareArgs($json_post,array(
                 'url'=>array(
                     'description'=>'Featured image url.',
@@ -148,9 +152,10 @@ class AjaxController extends Ajax
      */
     public function optionsApi()
     {
-        $this->checkPermission('parsing_news_api');
         //Get application\json encode data
         $json_post = $this->getJsonFromInput();
+        $this->checkPermission('parsing_news_api',$json_post);
+
         $request=$this->prepareArgs($json_post,array(
             'url'=>array(
                 'description'=>'Url of post that was taken as example of template',
@@ -186,20 +191,91 @@ class AjaxController extends Ajax
         wp_die();
     }
     /**
-     * Callback that handles parsing api requests.
+     * Callback that handles parsing list of posts from RSS api requests.
      *
      * @uses EventController::trigger()
      * @return void
      */
-    public function parsingApi()
+    public function parsingListApi()
     {
-        $this->checkPermission('parsing_news_api');
+        //Get application\json encode data
+        $json_post = $this->getJsonFromInput();
+        $this->checkPermission('parsing_news_api',$json_post);
         //ToDo:Make redirect to main page when parameter is missing.
-        $request_args=array(
-            'url'=>isset($_GET['url'])?$_GET['url']:\wp_die(),
-            'entity'=>isset($_GET['entity'])?$_GET['entity']:\wp_die()
-        );
-        $request=$this->prepareArgs($request_args,array(
+     
+        $request=$this->prepareArgs($json_post,array(
+            'url'=>array(
+                'description'=>'Parsing RSS XML list url',
+                'type'=>'string',
+                'validate_callback'=>function($url)
+                {
+                    return wp_http_validate_url($url);
+                },
+                'sanitize_callback'=>function($input_url)
+                {
+                    return esc_url_raw($input_url);
+                }
+            )
+        ));
+        
+ 
+        $url = $request['url'];
+
+        $response = $this->event->trigger('list:get',array($url));
+    
+        echo $response;
+        wp_die();
+    }
+     /**
+     * Callback that handles parsing single page api requests and returns HTML of the page.
+     *
+     * @uses EventController::trigger()
+     * @return void
+     */
+    public function parsingHTMLApi()
+    {
+        //Get application\json encode data
+        $json_post = $this->getJsonFromInput();
+        $this->checkPermission('parsing_news_api',$json_post);
+        //ToDo:Make redirect to main page when parameter is missing.
+     
+        $request=$this->prepareArgs($json_post,array(
+            'url'=>array(
+                'description'=>'Parsing page url',
+                'type'=>'string',
+                'validate_callback'=>function($url)
+                {
+                    return wp_http_validate_url($url);
+                },
+                'sanitize_callback'=>function($input_url)
+                {
+                    return esc_url_raw($input_url);
+                }
+            )
+        ));
+        
+         
+        $url = $request['url'];
+        $response = $this->event->trigger('html:get',array($url));
+        
+        echo $response;
+        wp_die();
+    }
+     /**
+     * Callback that handles parsing single page api requests and create WP post draft using saved parsing templates.
+     * If there is no template for that domain name returns error.
+     *
+     * @uses EventController::trigger()
+     * @return void
+     */
+    public function parsingPageApi()
+    {
+        //Get application\json encode data
+        $json_post = $this->getJsonFromInput();
+        $this->checkPermission('parsing_news_api',$json_post);
+        //ToDo:Make redirect to main page when parameter is missing.
+     
+        $request=$this->prepareArgs($json_post,array(
             'url'=>array(
                 'description'=>'Parsing page url',
                 'type'=>'string',
@@ -212,39 +288,26 @@ class AjaxController extends Ajax
                     return esc_url_raw($input_url);
                 }
             ),
-            'entity'=>array(
-                'description'=>'Entity that should be applied.',
-                'type'=>'string',
-                'validate_callback'=>function($entity)
+            '_id'=>array(
+                'description'=>'Front end requested page index',
+                'type'=>'integer',
+                'validate_callback'=>function($_id)
                 {
-                    if(in_array($entity,array('list','single','multi'))===false) return new \WP_Error(
-                        'wrong_parsing_status',
-                        'Parsing status should be: list,single,multi.But '.esc_html($entity).' was set.');
-                    return true;
+                    preg_match('/[^0-9]/i',$_id,$matches);
+                    if(empty($matches)){
+                        return true;
+                    }else{
+                        return false;
+                    }
                 },
-                'sanitize_callback'=>function($entity)
+                'sanitize_callback'=>function($_id)
                 {
-                    return sanitize_text_field($entity);
+                    return preg_replace('/[^0-9]/i','',$_id);
                 }
             )
         ));
-        
-            $entity = $request['entity'];
-            $url = $request['url'];
-        switch ($entity) {
-            case 'list':
-                $response = $this->event->trigger('list:get',array($url));
-                break;
-            case 'single':
-                $response = $this->event->trigger('html:get',array($url));
-                break;
-            case 'multi':
-                $response=$this->event->trigger('post:create',array($url));
-                break;
-            default:
-                $response='';
-                break;
-        }
+
+        $response=$this->event->trigger('post:create',$request);       
         echo $response;
         wp_die();
     }

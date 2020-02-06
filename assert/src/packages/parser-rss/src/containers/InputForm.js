@@ -1,10 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {parsePage,parseRSSList,openDialog,parseSelected,showMessage} from '../actions'; 
+import {parsePage,parseRSSList,openDialog,showMessage} from '../actions'; 
 import {fetchList} from '../actions/list.actions';
 import {getUrlWithParams} from '@news-parser/helpers';
 import PropTypes from 'prop-types';
 import Translate from './Translate';
+import {parseSelected} from '../actions/page.actions'
 
 /**
  * Input element with submit buttons.
@@ -65,14 +66,8 @@ export class InputForm extends React.Component{
             this.props.message('info','Please select RSS feed first.');
             return;
         }
-        const selectedPosts=this.props.posts.filter(post=>{
-            return post.status==='selected';
-        });
-        if (selectedPosts.length===0){
-            this.props.message('info','Please select posts.');
-            return;
-        }
-        this.props.parseSelected(selectedPosts)
+
+        this.props.parseSelected()
     }
     renderButtons(){
         switch(this.props.page){
@@ -112,7 +107,7 @@ export class InputForm extends React.Component{
 }
 
 function mapStateToProps(state){
-    const posts=state.parse.items.hasOwnProperty('data')?state.parse.items.data:[];
+    const posts=state.parse.items.data;
     return {
         value:state.parse.appState.data.url||'',
         page:state.route.page,
@@ -131,8 +126,8 @@ function mapDispatchToProps(dispatch){
         openVisualConstructor:(url,dialogData)=>{
             dispatch(openDialog(url,dialogData))
         },
-        parseSelected:(posts)=>{
-            dispatch(parseSelected(dispatch,posts))
+        parseSelected:()=>{
+            dispatch(parseSelected())
         },
         message:(type,text)=>{
             dispatch(showMessage(type,text))

@@ -1,6 +1,6 @@
 export const LIST='list';
 export const MEDIA='media';
-export const MULTI='multi';
+export const PAGE='page';
 export const SINGLE='post';
 export const HTML='http';
 export const TEMPLATE='template';

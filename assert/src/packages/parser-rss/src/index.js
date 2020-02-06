@@ -13,7 +13,8 @@ import parse from './reducers';
 import {apiMiddleware} from './middleware/core/api';
 import {listMiddleware} from './middleware/app/list';
 import {postMiddleware} from './middleware/app/post';
-import {mainMiddleware} from './middleware/core/main'
+import {mainMiddleware} from './middleware/core/main';
+import {pageMiddleware} from './middleware/app/page';
 import {startApp} from './actions/app.actions';
 import thunkMiddleware from 'redux-thunk';
 import ErrorBoundary from "@news-parser/error-handler"
@@ -31,6 +32,7 @@ const store=createStore(
             mainMiddleware,
             listMiddleware,
             postMiddleware,
+            pageMiddleware,
             thunkMiddleware
             
         )));

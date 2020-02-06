@@ -6,7 +6,7 @@ const config={
     api:{
         list:{
             parse:{
-                method:GET,
+                method:POST,
                 type:AJAX,
                 nonce:settings.ajaxApiNonce,
                 url:endpoints.list
@@ -14,18 +14,18 @@ const config={
         },
         html:{
             parse:{
-                method:GET,
+                method:POST,
                 type:AJAX,
                 nonce:settings.ajaxApiNonce,
                 url:endpoints.html
             }
         },
-        multi:{
+        page:{
             parse:{
-                method:GET,
+                method:POST,
                 type:AJAX,
                 nonce:settings.ajaxApiNonce,
-                url:endpoints.multi
+                url:endpoints.page
             }
         },
         media:{

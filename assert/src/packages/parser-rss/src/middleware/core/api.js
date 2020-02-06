@@ -11,17 +11,17 @@ export const apiMiddleware=({dispatch})=>next=>action=>{
             nonce=config.api[entity][event].nonce,
             url=config.api[entity][event].url;
         dispatch(startFetching(entity,method,data))
-        api.request(url,{
-            type,
-            method,
-            nonce,
-            body:data
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            dispatch(apiSuccess(entity,event,data));
-            dispatch(stopFetching());
-        })
+        return api.request(url,{
+                type,
+                method,
+                nonce,
+                body:data
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                dispatch(apiSuccess(entity,event,data));
+                dispatch(stopFetching());
+            })
         //.catch(error=>dispatch(apiError(entity,event,error)))
     }
 }

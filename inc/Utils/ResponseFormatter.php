@@ -38,7 +38,7 @@ class ResponseFormatter
         $this->data['data']=array(
             'post_id'=>$data['post_id'],
             'status'=>$data['status'],
-            'link'=>$data['links']['editLink']
+            'editLink'=>$data['links']['editLink']
         );
         return $this;
     }
@@ -120,6 +120,21 @@ class ResponseFormatter
         }
         return $this; 
     }
+    /**
+     * Add custom data params to response.
+     *
+     * @param string $field_name
+     * @param string $value
+     * @return ResponseFormatter return this for chain building
+     */
+    public function addCustomData($field_name,$value)
+    {
+        $escaped_field_name=esc_html($field_name);
+        $escaped_value=esc_html($value);
+        $this->data['data'][$escaped_field_name]=$escaped_value;
+        return $this;
+    }
+
     /**
      * Return answer data in array|object|json format
      *

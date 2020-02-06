@@ -3,15 +3,15 @@ import {apiRequest} from '../../../actions/api.actions';
 import {showMessage} from '../../../actions/';
 import {postDraft} from '../../../actions/post.actions';
 
-export const singleMiddleware = (store)=>next=>action=>{
+export const multiMiddleware = (store)=>next=>action=>{
     next (action);
     const {dispatch,getState}=store;
     switch(action.type){
-        case `[${SINGLE}:${CREATE}]${POST_ITEM}`:
+        case `[${MULTI}:${PARSE}]${POST_ITEM}`:
             const {data}=action.payload;
-            dispatch(apiRequest(SINGLE,CREATE,data));
+            dispatch(apiRequest(MULTI,PARSE,data));
             break;
-        case `[${SINGLE}:${CREATE}]${API_SUCCESS}`:
+        case `[${MULTI}:${PARSE}]${API_SUCCESS}`:
             const {_id,title,image,options}=getState().fetchData.data,
                 {data}=action.payload,
                 post_id=data.id;

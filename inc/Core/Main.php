@@ -69,9 +69,9 @@ class Main
                 'rssPageName'=>$this->config->menu->subs[0]->menu_slug,
                 'singlePageName'=>$this->config->menu->subs[1]->menu_slug,
                 'media'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_MEDIA_API)),
-                'list'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API)),
-                'html'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API)),
-                'multi'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API)),
+                'list'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API.'_list')),
+                'html'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API.'_html')),
+                'page'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API.'_page')),
                 'options'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_OPTIONS_API)),
                 'rootRestApi'=>esc_url_raw(rest_url()),
                 'rootAjaxApi'=>esc_url_raw(admin_url('admin-ajax.php'))

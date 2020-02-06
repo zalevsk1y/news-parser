@@ -58,9 +58,10 @@ class PostController extends BaseController
      *
      * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @param string $url of post that should be parsed and saved as draft
+     * @param string $_id front end index of post that should be parsed and saved as draft
      * @return void
      */
-    public function create($url)
+    public function create($url,$_id)
     {
         try {
             $parsed_url=parse_url($url);
@@ -81,10 +82,10 @@ class PostController extends BaseController
             $this->createDraft($post)->addSource($post)->addPostThumbnail($post);
                
 
-            $response = $this->formatResponse->post($post->getAttributes())->message('success', sprintf(Success::text('POST_SAVED_AS_DRAFT'),$post->title))->get('json');
+            $response = $this->formatResponse->post($post->getAttributes())->addCustomData('_id',$_id)->message('success', sprintf(Success::text('POST_SAVED_AS_DRAFT'),$post->title))->get('json');
 
         } catch (MyException $e) {
-            $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');
+            $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->addCustomData('_id',$_id)->get('json');
         }
         return $response;
     }
