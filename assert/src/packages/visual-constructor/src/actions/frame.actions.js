@@ -1,32 +1,33 @@
-export const types={
-    SELECT_TITLE:'SELECT_TITLE',
-    SELECT_FEATURED_MEDIA:'SELECT_FEATURED_MEDIA',
-    SELECT_CONTENT:'SELECT_CONTENT',
-    REMOVE_CONTENT:'REMOVE_CONTENT',
-}
+
+import { FRAME,SELECT,REMOVE } from '../constants/'
+export const SELECT_TITLE=`[${FRAME}:${SELECT}]TITLE`,
+        SELECT_FEATURED_MEDIA=`[${FRAME}:${SELECT}]FEATURED_MEDIA`,
+        SELECT_CONTENT=`[${FRAME}:${SELECT}]CONTENT`,
+        REMOVE_CONTENT=`[${FRAME}:${REMOVE}]CONTENT`;
+
 
 export function selectTitle(title){
     return {
-        type:types.SELECT_TITLE,
+        type:SELECT_TITLE,
         title
     }
 }
 export function selectFeaturedMedia(url){
     return {
-        type:types.SELECT_FEATURED_MEDIA,
+        type:SELECT_FEATURED_MEDIA,
         url
     }
 }
 export function selectContent(hash,content){
     return {
-        type:types.SELECT_CONTENT,
+        type:SELECT_CONTENT,
         hash,
         content
     }
 }
 export function removeContent(hash){
     return {
-        type:types.REMOVE_CONTENT,
+        type:REMOVE_CONTENT,
         hash
     }
 }

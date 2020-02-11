@@ -11,10 +11,15 @@ import parse from './reducers';
 
 
 import {apiMiddleware} from './middleware/core/api';
-import {listMiddleware} from './middleware/app/list';
+import {listMiddleware} from './middleware/api/list';
 import {postMiddleware} from './middleware/app/post';
 import {mainMiddleware} from './middleware/core/main';
-import {pageMiddleware} from './middleware/app/page';
+import {pageMiddleware} from './middleware/api/page';
+import {fetchingMiddleware} from './middleware/app/fetching';
+
+import {dialogMiddleware} from '@news-parser/visual-constructor/middleware/app/dialog';
+import {htmlMiddleware} from '@news-parser/visual-constructor/middleware/api/html';
+
 import {startApp} from './actions/app.actions';
 import thunkMiddleware from 'redux-thunk';
 import ErrorBoundary from "@news-parser/error-handler"
@@ -33,7 +38,9 @@ const store=createStore(
             listMiddleware,
             postMiddleware,
             pageMiddleware,
-            thunkMiddleware
+            dialogMiddleware,
+            htmlMiddleware,
+            fetchingMiddleware
             
         )));
 store.dispatch(startApp())

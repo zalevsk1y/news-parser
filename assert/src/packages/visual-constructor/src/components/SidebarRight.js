@@ -3,7 +3,7 @@ import {InfoBox,InfoBody,InfoFooter} from '../containers/InfoBox';
 import {Checkbox} from '../containers/elements/Checkbox'
 import Input from '../containers/elements/Input'
 import {connect} from 'react-redux';
-import {toggleAddFeaturedMedia,toggleSaveParsingTemplate,toggleAddSource } from '../actions/option.actions';
+import {toggleAddFeaturedMedia,toggleSaveParsingTemplate,toggleAddSource } from '../actions/options.actions';
 import {selectTitle,selectFeaturedMedia} from '../actions/frame.actions';
 import PropTypes from 'prop-types';
 
@@ -113,10 +113,10 @@ export class  SidebarRight extends React.Component{
 
     function mapStateToProps(state){
   
-        const title=state.parse.dialog.hasOwnProperty('parsedData')?state.parse.dialog.parsedData.title:undefined,
-              image=state.parse.dialog.hasOwnProperty('parsedData')?state.parse.dialog.parsedData.image:undefined,
-              options=state.parse.dialog.hasOwnProperty('parsedData')?state.parse.dialog.options:undefined,
-              body=state.parse.dialog.hasOwnProperty('parsedData')?state.parse.dialog.parsedData.body:undefined;
+        const title=state.parse.dialog.visualConstructor.parsedData.title,
+              image=state.parse.dialog.visualConstructor.parsedData.image,
+              body=state.parse.dialog.visualConstructor.parsedData.body,
+              options=state.parse.dialog.visualConstructor.options;
 
         return {
             title,

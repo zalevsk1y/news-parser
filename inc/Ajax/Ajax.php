@@ -56,7 +56,7 @@ class Ajax
                     $this->sendError($e->get_error_message());
                 }
                 //sanitize arguments.
-                if($clean_arg=call_user_func($arg['sanitize_callback'],$dirty_arg)){
+                if(($clean_arg=call_user_func($arg['sanitize_callback'],$dirty_arg))!==false){
                     $clean_request[$key]=$clean_arg;
                 }
             }

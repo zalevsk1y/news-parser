@@ -1,11 +1,11 @@
 import React from 'react';
-import Message from './Message';
+import Message from '@news-parser/message/';
 import InputForm from './InputForm';
 import Posts from './Posts';
 import Indicator from './Indicator';
 import {connect} from 'react-redux';
 import {fetchList} from '../actions/list.actions';
-import {ModalWindow} from '../components/ModalWindow';
+import VisualConstructor from '@news-parser/visual-constructor/';
 import PropTypes from 'prop-types';
 import Translate from './Translate';
 /**
@@ -17,19 +17,13 @@ import Translate from './Translate';
 class Main extends React.Component {
     constructor(props){
         super(props);
-        this.init();
+   
     }
-    /**
-     * Check current application route and get data from server.
-     */
-    init(){
-        if(!this.props.routeAction&&!this.props.url)return;
-        this.props.getDataFromServer(this.props.routeAction,this.props.url);
-    }
+  
     render() {
         return (
             <div className={"wrap wrap-parsing"} >
-                {(this.props.parseAction==='dialog'&&<ModalWindow type={this.props.dialog.type} />)}
+                <VisualConstructor />
                 <div className="parsing-title">
                     <h1><Translate>News-Parser</Translate></h1>
                 </div>
@@ -41,26 +35,10 @@ class Main extends React.Component {
         )
     }
 }
-function mapStateToProps(state){
-    const {entity,event,data}=state.parse.appState;
-    return{
-        entity,
-        event,
-        url:data.url,
-        dialog:state.parse.dialog,
-    }
-}
-function mapDispatchToProps(dispatch){
-    return{
-        getDataFromServer:(action,url)=>{
-            if(action=='list'){
-                dispatch(fetchList(url));
-            }
-        }
-    }
-}
 
-export default connect(mapStateToProps,mapDispatchToProps)(Main);
+
+
+export default connect()(Main);
 
 
 Main.propTypes={
@@ -83,12 +61,6 @@ Main.propTypes={
         PropTypes.object,
         PropTypes.bool
     ]),
-    /**
-     * If route action is list get parsed RSS data from the server.
-     * 
-     * @param {string} action Route action.
-     * @param {string} url RSS data url.
-     */
-    getDataFromServer:PropTypes.func.isRequired,
+
   
 }

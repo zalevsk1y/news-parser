@@ -19,7 +19,7 @@ export function apiSuccess(entity,event,data){
     return {
         type:`[${entity}:${event}]${API_SUCCESS}`,
         payload:{
-            ...data
+            response:data
         }
     }
 }

@@ -1,8 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {parsePage,parseRSSList,openDialog,showMessage} from '../actions'; 
+import {parsePage,parseRSSList,openDialog} from '../actions'; 
+import {showMessage} from '../actions/app.actions'; 
 import {fetchList} from '../actions/list.actions';
 import {getUrlWithParams} from '@news-parser/helpers';
+import {LIST} from '../constants/'
 import PropTypes from 'prop-types';
 import Translate from './Translate';
 import {parseSelected} from '../actions/page.actions'
@@ -50,7 +52,7 @@ export class InputForm extends React.Component{
      */
     handleParseListSubmit(event){
         event.preventDefault();
-        const params={entity:'list',url:this.state.inputValue};
+        const params={entity:LIST,url:this.state.inputValue};
         const url=getUrlWithParams(params)
         window.history.pushState(null,null,url)
         window.location.reload();
@@ -63,7 +65,7 @@ export class InputForm extends React.Component{
     handleParseSelected(event){
         event.preventDefault();
         if (!this.props.posts){
-            this.props.message('info','Please select RSS feed first.');
+            
             return;
         }
 

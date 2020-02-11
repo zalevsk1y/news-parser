@@ -1,8 +1,7 @@
 
 export const initialStateParse={
-            isFetching:false,
-            url:false,
             appState:{
+                isFetching:false,
                 entity:'main',
                 event:false,
                 data:{

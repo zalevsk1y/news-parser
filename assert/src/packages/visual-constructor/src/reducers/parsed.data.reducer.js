@@ -1,24 +1,25 @@
-import {types} from '../actions/frame.actions';
+import {SELECT_TITLE,SELECT_FEATURED_MEDIA,SELECT_CONTENT,REMOVE_CONTENT} from '../actions/frame.actions';
+import {defaultState} from './index';
 
 
-export function frame (state={},action){
+export function parsedData (state=defaultState.parsedData,action){
 
     switch (action.type){
-        case types.SELECT_TITLE:
+        case SELECT_TITLE:
             return {...state,
                     title:action.title
             }
-        case types.SELECT_FEATURED_MEDIA: 
+        case SELECT_FEATURED_MEDIA: 
             return {...state,
                     image:action.url
             }
-        case types.SELECT_CONTENT:
+        case SELECT_CONTENT:
             return {...state,
                     body:{...state.body,
                         [action.hash]:action.content
                     }
             }
-        case types.REMOVE_CONTENT:
+        case REMOVE_CONTENT:
             if (state.body.hasOwnProperty(action.hash)){
                 delete state.body[action.hash]
             }

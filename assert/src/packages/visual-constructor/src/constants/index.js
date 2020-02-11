@@ -1,0 +1,10 @@
+export const DIALOG='dialog',
+        VISUAL_CONSTRUCTOR='visual-constructor',
+        HTML=`${VISUAL_CONSTRUCTOR}.html`,
+        PAGE=`${VISUAL_CONSTRUCTOR}.page`,
+        TEMPLATE=`${VISUAL_CONSTRUCTOR}.template`,
+        OPTIONS=`${VISUAL_CONSTRUCTOR}.options`,
+        FRAME=`${VISUAL_CONSTRUCTOR}.frame`,
+        TOGGLE='toggle',
+        SELECT='select',
+        REMOVE='remove'

@@ -13,23 +13,7 @@ export class ModalWindow extends React.Component{
         super(props);
         this.scroll=this.scroll.bind(this);
     }
-    /**
-     * Prevent scrolling when modal window is open.
-     * 
-     * @param {bool} state 
-     */
-    scroll(state){
-        switch(state){
-            case (true):
-                document.documentElement.style.overflowY='auto';
-                document.body.style.overflowY='auto';
-                break;
-            case(false):
-                document.documentElement.style.overflowY='hidden';
-                document.body.style.overflowY='scroll';
-                break;
-        }
-    }
+
     render(){
         switch(this.props.type){
             case 'visualConstructor':

@@ -1,22 +1,18 @@
-import {types} from '../actions/option.actions';
+import {TOGGLE_ADD_FEATURED_MEDIA,TOGGLE_SAVE_PARSING_TEMPLATE,TOGGLE_ADD_SOURCE} from '../actions/options.actions';
+import {defaultState} from './index';
 
-export const defaultOptionsState={
-    addFeaturedMedia:true,
-    addSource:false,
-    saveParsingTemplate:false
-}
 
-export function options(state=defaultOptionsState,action){
+export function options(state=defaultState.options,action){
     switch (action.type){
-        case types.TOGGLE_ADD_FEATURED_MEDIA:
+        case TOGGLE_ADD_FEATURED_MEDIA:
             return {...state,
                 addFeaturedMedia:!state.addFeaturedMedia
             }
-        case types.TOGGLE_SAVE_PARSING_TEMPLATE:
+        case TOGGLE_SAVE_PARSING_TEMPLATE:
             return {...state,
                 saveParsingTemplate:!state.saveParsingTemplate
             }
-        case types.ADD_SOURCE:{
+        case TOGGLE_ADD_SOURCE:{
             return {...state,
                 addSource:!state.addSource
             }

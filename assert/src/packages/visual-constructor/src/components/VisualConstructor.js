@@ -1,7 +1,13 @@
 import React from 'react';
 import SidebarRight from './SidebarRight';
 import Frame from './Frame';
-import {PropTypes} from 'prop-types'
+import {Fragment} from 'react';
+import {PropTypes} from 'prop-types';
+import {document} from 'globals';
+import {connect} from 'react-redux';
+
+import {closeDialog} from '../actions/app.actions';
+
 /**
  * Main visual constructor window element.
  * 
@@ -12,21 +18,31 @@ export class VisualConstructor extends React.Component{
     constructor(props){
         super(props);
         this.close=this.close.bind(this);
-        this.createPostDraft=this.createPostDraft.bind(this)
+        this.createPostDraft=this.createPostDraft.bind(this);
+        this.modalWindow=this.modalWindow.bind(this);
     }
     /**
      * Close model window.
      */
     close(){
-        this.props.onStateChange(false);
         this.props.close();
     }
-    /**
-     * Get data from sever when window is opened.
+        /**
+     * Prevent scrolling when modal window is open.
+     * 
+     * @param {bool} state 
      */
-    componentDidMount(){
-        this.props.onStateChange(true);
-        this.props.getFrameData(this.props.url);
+    scroll(state){
+        switch(state){
+            case (true):
+                document.documentElement.style.overflowY='auto';
+                document.body.style.overflowY='auto';
+                break;
+            case(false):
+                document.documentElement.style.overflowY='hidden';
+                document.body.style.overflowY='scroll';
+                break;
+        }
     }
     /**
      * Create post draft from parsed data.
@@ -34,7 +50,7 @@ export class VisualConstructor extends React.Component{
     createPostDraft(){
         this.props.createPostDraft(this.props.postId,this.props.url,this.props.parsedData,this.props.options)
     }
-    render(){
+    modalWindow(){
         return (
             <div className="media-modal-wrapper">
                 <div className="modal-container">
@@ -63,7 +79,47 @@ export class VisualConstructor extends React.Component{
             </div>
         )
     }
+
+    render(){
+  
+        return (
+          
+            <Fragment>
+                {(this.props.open&&<this.modalWindow />)}
+            </Fragment>
+        )
+    }
+        
 }
+
+
+function mapStateToProps(state){
+    const data=state.parse.dialog.visualConstructor.dialogData;
+    console.log('visual-constructor',data);
+    return {
+        ...data  
+    };
+}
+function mapDispatchToProps(dispatch){
+    return {
+        close:function (){
+            dispatch(closeDialog());
+        },
+        createPostDraft:function(id,url,postData,options){
+            if(options.saveParsingTemplate){
+               // dispatch(saveParsingTemplate(dispatch,url,postData,options))
+            }else{
+                //dispatch(createPostDraft(dispatch,id,url,postData,options));
+            }
+        }
+    }
+}
+
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(VisualConstructor); 
+
+
 
 VisualConstructor.propTypes={
     /**

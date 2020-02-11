@@ -136,8 +136,10 @@ class AjaxController extends Ajax
                     'sanitize_callback'=>array($this,'sanitizeMediaOptions')
                 )
         ));
-       $response=$this->event->trigger('media:create',array($request['url'],$request['options']['postId'],$request['options']['alt']));
-       echo $response;
+       
+        $response=$this->event->trigger('media:create',array($request['url'],$request['options']['postId'],$request['options']['alt']));
+        header('Content-Type:application/json');
+        echo $response;
        wp_die();
     }
     /**
@@ -187,6 +189,7 @@ class AjaxController extends Ajax
             'template'=>$request['template']
         );
         $respond=$this->event->trigger('options:create',array($request['url'],$options));
+        header('Content-Type:application/json');
         echo $respond;
         wp_die();
     }
@@ -222,7 +225,7 @@ class AjaxController extends Ajax
         $url = $request['url'];
 
         $response = $this->event->trigger('list:get',array($url));
-    
+        header('Content-Type:application/json');
         echo $response;
         wp_die();
     }
@@ -308,6 +311,7 @@ class AjaxController extends Ajax
         ));
 
         $response=$this->event->trigger('post:create',$request);       
+        header('Content-Type:application/json');
         echo $response;
         wp_die();
     }

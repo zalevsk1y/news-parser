@@ -162,7 +162,7 @@ export class Frame extends React.Component{
 function mapStateToProps(state){
 
     return {
-        data:state.parse.dialog.rawHTML
+        data:state.parse.dialog.visualConstructor.dialogData.rawHTML
     }
 }
 

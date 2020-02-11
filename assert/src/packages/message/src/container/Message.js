@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+
 /**
  * Message window element.
  * 
@@ -8,9 +10,8 @@ import PropTypes from 'prop-types';
 export class Message extends React.Component{
     constructor(props){
         super(props);
-        this.state={open:props.open,top:false};
+        this.state={open:false};
         this.close=this.close.bind(this);
-       
     }
     /**
      * Close message window.
@@ -22,20 +23,18 @@ export class Message extends React.Component{
      * If get mew message close current message and open new one in 400ms.
      * 
      * @param {object} prevProps 
-     * @param {object} prevState 
      */
-    componentDidUpdate(prevProps, prevState){
-        if(this.props!==prevProps){
-            if(this.state.open&&this.props.open){
-                this.close();
-                window.setTimeout(()=>{
-                    this.setState({open:this.props.open})
-                },400)
+    componentDidUpdate(prevProps){
+        if(this.props.timestamp!==prevProps.timestamp){
+            if(this.state.open){
+                    this.close();
+                    window.setTimeout(()=>{
+                        this.setState({open:true})
+                    },400)
             }else{
-                this.setState({open:this.props.open})
+                this.setState({open:true})
             }
         }
-
     }
 
     render(){
@@ -67,6 +66,25 @@ export class Message extends React.Component{
 
 
 
+
+
+function mapStateToProps(state){
+
+    const type=state.parse.message?state.parse.message.type:undefined,
+          text=state.parse.message?state.parse.message.text:undefined,
+          timestamp=state.parse.message?state.parse.message.timestamp:undefined;
+       
+    return {
+        type,
+        text,
+        timestamp
+    }
+}
+;
+
+
+
+
 Message.propTypes={
     /**
      * Message window status.
@@ -86,4 +104,4 @@ Message.propTypes={
     time:PropTypes.number
 }
 
-export default Message;
+export default connect(mapStateToProps)(Message)

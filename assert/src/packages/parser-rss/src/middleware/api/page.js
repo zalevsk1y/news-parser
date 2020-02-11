@@ -1,15 +1,14 @@
 import {PAGE,PARSE,SELECT,DELETE,DRAFT,INSERT} from '../../constants';
-import {apiRequest,API_SUCCESS} from '../../actions/api.actions';
-import {POST_ITEM} from '../../actions/page.actions';
+import {apiRequest,API_SUCCESS, API_REQUEST} from '../../actions/api.actions';
 import {setPostMeta} from '../../actions/post.actions';
 import {table} from '@news-parser/helpers/classes/Table'
-import { showMessage } from '../../actions';
+import { showMessage } from '@news-parser/message/actions/';
 
 export const pageMiddleware = (store)=>next=>action=>{
     next (action);
     const {dispatch,getState}=store;
     switch(action.type){
-        case `[${PAGE}:${PARSE}]${POST_ITEM}`:
+        case `[${PAGE}:${PARSE}]${API_REQUEST}`:
             const {data,select}=getState().parse.items,
                     selected=Object.keys(select);
                 if(selected.length===0){

@@ -71,7 +71,7 @@ export class Indicator extends React.Component{
 }
 function mapStateToProps(state){
     return {
-        isAnimate:state.parse.isFetching
+        isAnimate:state.parse.appState.isFetching
     }
 }
 

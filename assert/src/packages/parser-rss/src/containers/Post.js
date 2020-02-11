@@ -2,10 +2,13 @@ import React from 'react';
 import {Fragment} from 'react';
 import Image from '../components/Image';
 import {connect} from 'react-redux';
-import {parsePage,showMessage,openDialog} from '../actions';
+import {parsePage} from '../actions';
+import {showMessage} from '../actions/app.actions' 
+import {openDialog} from '../actions/app.actions';
 import {togglePostSelect} from '../actions/post.actions';
 import Icons from '../components/Icons';
 import PropTypes from 'prop-types';
+import { VISUAL_CONSTRUCTOR } from '@news-parser/visual-constructor/constants';
 
 
 /**
@@ -54,10 +57,7 @@ export class Post extends React.Component {
      * Open visual constructor modal window. 
      */
     openVisualConstructor(){
-        this.props.openVisualConstructor(this.props.link,{dialog:{
-            postId:this.props.postId,
-            type:'visualConstructor'
-        }})
+        this.props.openVisualConstructor(this.props._id,this.props.link)
     }
     render(){
     return (
@@ -116,8 +116,8 @@ function mapDispatchToProps(dispatch){
         message:(type,text)=>{
             dispatch(showMessage(type,text))
         },
-        openVisualConstructor:(url,dialogData)=>{
-            dispatch(openDialog(url,dialogData))
+        openVisualConstructor:(_id,url)=>{
+            dispatch(openDialog(_id,url,VISUAL_CONSTRUCTOR))
         },
         selectPost:(_id)=>{
             dispatch(togglePostSelect(_id))

@@ -1,8 +1,8 @@
 import {PAGE,PARSE} from '../constants'
-export const POST_ITEM='POST_ITEM';
+import { API_REQUEST } from './api.actions';
 
 export const parseSelected=()=>{
     return {
-        type:`[${PAGE}:${PARSE}]${POST_ITEM}`
+        type:`[${PAGE}:${PARSE}]${API_REQUEST}`
     }
 }

@@ -1,5 +1,6 @@
 import config from "@news-parser/config";
 import {oldServerData,newServerData,getAjaxNonce} from '@news-parser/helpers'
+import {showMessage} from '@news-parser/message/actions';
 
 export const types = {
     API_REQUEST: 'API_REQUEST',
@@ -18,6 +19,8 @@ export const types = {
     OPEN_VISUAL_CONSTRUCTOR:'OPEN_VISUAL_CONSTRUCTOR',
     CLOSE_VISUAL_CONSTRUCTOR:'CLOSE_VISUAL_CONSTRUCTOR'
 }
+
+
 
 export function requestPostsList(url) {
     return {
@@ -69,16 +72,7 @@ export function selectPost(_id){
         _id
     }
 }
-export function showMessage(type,text){
-    return {
-        type:types.CREATE_MESSAGE,
-        msg:{
-            type,
-            text,
-            timestamp:Date.now()
-        }
-    }
-}
+
 export function openDialog(url,dialogData){
     let dialog=dialogData.dialog;
     switch(dialog.type){

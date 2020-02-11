@@ -1,9 +1,8 @@
-export const LIST='list';
-export const MEDIA='media';
-export const PAGE='page';
-export const SINGLE='post';
-export const HTML='http';
-export const TEMPLATE='template';
+export const PARSER_RSS='parser-rss'
+export const LIST=`${PARSER_RSS}.list`;
+export const MEDIA=`${PARSER_RSS}.media`;
+export const PAGE=`${PARSER_RSS}.page`;
+
 
 export const ADD='add';
 export const CREATE='create';

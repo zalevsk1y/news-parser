@@ -2,13 +2,15 @@ import {getRestNonce,getAjaxNonce,decodeHTMLEntities,getPostEditLink,sendApiRequ
 import config from '@news-parser/config';
 import {PostModel} from '@news-parser/helpers/classes/PostModel';
 import {TemplateModel} from '@news-parser/helpers/classes/TemplateModel'
-import {fetchError,receiveError, closeDialog,receivePost,showMessage} from '@news-parser/parser-rss/actions/index'
+import {fetchError,receiveError, closeDialog,receivePost,showMessage} from '../actions/'
 import { MediaModel } from '@news-parser/helpers/classes/MediaModel';
 export const types = {
     GET_PAGE_HTML: 'GET_PAGE_HTML',
     DIALOG_START_FETCHING: 'DIALOG_START_FETCHING',
     DIALOG_STOP_FETCHING: 'DIALOG_STOP_FETCHING',
 }
+
+
 
 export function sendRequestToServer(){
     return {
