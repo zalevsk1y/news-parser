@@ -6,16 +6,16 @@ export const TOGGLE_SAVE_PARSING_TEMPLATE=`[${OPTIONS}:${TOGGLE}]PARSING_TEMPLAT
 
 export function toggleAddFeaturedMedia(){
     return {
-        type:types.TOGGLE_ADD_FEATURED_MEDIA
+        type:TOGGLE_ADD_FEATURED_MEDIA
     }
 }
 export function toggleAddSource(){
     return {
-        type:types.ADD_SOURCE
+        type:TOGGLE_ADD_SOURCE
     }
 }
 export function toggleSaveParsingTemplate(){
     return {
-        type:types.TOGGLE_SAVE_PARSING_TEMPLATE
+        type:TOGGLE_SAVE_PARSING_TEMPLATE
     }
 }

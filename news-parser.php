@@ -24,7 +24,7 @@ define("NEWS_PARSER_PLUGIN_DIR_NAME", basename(dirname(__FILE__)));
 define("NEWS_PARSER_PLUGIN_NO_IMAGE_PATH", plugins_url('', __FILE__) . '/images/no-image.svg');
 define("NEWS_PARSER_PLUGIN_AJAX_PARSING_API", 'news_parser_parsing_api');
 define("NEWS_PARSER_PLUGIN_AJAX_MEDIA_API", 'news_parser_media_api');
-define("NEWS_PARSER_PLUGIN_AJAX_OPTIONS_API", 'news_parser_options_api');
+define("NEWS_PARSER_PLUGIN_AJAX_TEMPLATE_API", 'news_parser_template_api');
 define ("NEWS_PARSER_PLUGIN_VISUAL_CONSTRUCTOR","visual-constructor");
 define ("NEWS_PARSER_PLUGIN_PARSER_RSS","parser-rss");
 
@@ -38,7 +38,7 @@ $container=$container_builder->build();
 $event_controller=$container->make(Controller\EventController::class,array($container));
 
 $event_controller->on('media:create',array(Controller\MediaController::class,'create'));
-$event_controller->on('options:create',array(Controller\OptionsController::class,'create'));
+$event_controller->on('template:create',array(Controller\OptionsController::class,'create'));
 $event_controller->on('list:get',array(Controller\ListController::class,'get'));
 $event_controller->on('html:get',array(Controller\VisualConstructorController::class,'get'));
 $event_controller->on('post:create',array(Controller\PostController::class,'create'));

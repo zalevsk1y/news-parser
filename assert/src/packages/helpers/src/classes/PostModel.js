@@ -1,18 +1,16 @@
-import {sprintf,escHTML} from '@news-parser/helpers';
-import {Rest} from './Rest';
+import {escHTML,escURLRaw} from '@news-parser/helpers';
+import {BaseClass} from './BaseClass'
 /**
- * Format data to create wordpress post draft using REST API.
+ * Format data for request to create wordpress post draft.
  * 
  * @since 1.0.0
  */
-export class PostModel extends Rest{
-    
-    constructor(restApiRoot){
-        super(restApiRoot);
-        this.suffix='wp/v2/posts';
+export class PostModel extends BaseClass{
+    constructor(){
+        super();
     }
     /**
-     * Format and send request to create post draft.
+     * Format request to create post draft.
      * 
      * @param {object} postData 
      * @param {object} options 
@@ -20,40 +18,16 @@ export class PostModel extends Rest{
      * @returns {Promise}
      */
     createPostDraft(postData,options,url){
-        let argsError=this.checkArgs({postData,options,url});
+        const argsError=this.argsCheck({postData,options,url});
         if(argsError instanceof Error) throw argsError;
-        let requestUrl=this.endPoint+this.suffix,
-            body={
-                status:'draft',
+        this.url=url;
+        this.options=options;
+        return {
                 title:postData.title,
                 content:this.formatParsedData(postData)
-            },
-            $this=this;
-        return fetch(requestUrl,{
-                method:'POST',
-                headers:this.headers,
-                body:JSON.stringify(body)
-             }).then(response=>response.json())
-             .then(postData=>{
-                $this.id=postData.id;
-                return postData;
-             })
+            }
     }
-    /**
-     * Update exist post data.
-     * 
-     * @param {object} params 
-     */
-    updatePost(params){
-        if(this.id===undefined)throw new Error('No post ID was set. Post could not be updated');
-        let url=this.rootApi+this.endPoint+'/'+this.id;
-        return fetch(url,{
-            method:'POST',
-            headers:this.headers,
-            body:JSON.stringify(params)
-        })
-        .then(response=>response.json())
-    }
+
     /**
      * Format parsed data.
      * 
@@ -88,7 +62,19 @@ export class PostModel extends Rest{
                     break;
             }
         })
+        if(this.options.addSource){
+            postBody+=this.addSourceLink(this.url);
+        }
         return postBody;
+    }
+    /**
+     * Add link to the source page.
+     *  
+     * @param {string} link 
+     * @returns {string}
+     */
+    addSourceLink(link){
+        return `<a link="${this.sanitizeUrl(link)}">Source</a>`
     }
     /**
      * Format text content.
@@ -106,34 +92,29 @@ export class PostModel extends Rest{
      * @returns {string}
      */
     youtubeVideo(hash){
-        let video='<!-- wp:core-embed/youtube {"url":"https://youtu.be/%1$s","type":"video","providerNameSlug":"youtube","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->'+
-            '<figure class="wp-block-embed-youtube wp-block-embed is-type-video is-provider-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">'+
-            'https://youtu.be/%1$s</div></figure><!-- /wp:core-embed/youtube -->',
-            cleanHash=hash.replace(/[^0-9a-zA-Z\_]/g,'');
-        return sprintf(video,cleanHash)
+        const cleanHash=hash.replace(/[^0-9a-zA-Z\_]/g,'');
+        return `<!-- wp:core-embed/youtube {"url":"https://youtu.be/${cleanHash}","type":"video","providerNameSlug":"youtube","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->`+
+            `<figure class="wp-block-embed-youtube wp-block-embed is-type-video is-provider-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">`+
+            `https://youtu.be/${cleanHash}</div></figure><!-- /wp:core-embed/youtube -->`;
     }
     /**
      * Format paragraph tag data to gutenberg paragraph block data.
      * 
      * @param {string} text 
-     * @return {string}
+     * @returns {string}
      */
     paragraph(text){
-        let paragraph='<!-- wp:paragraph --><p>%s</p><!-- /wp:paragraph -->';
-        return sprintf(paragraph,this.sanitize(text));
+        return `<!-- wp:paragraph --><p>${this.sanitize(text)}</p><!-- /wp:paragraph -->`;
     }
     /**
      * Format heading tag data to gutenberg heading block.
      * 
      * @param {string} text 
      * @param {string} type 
-     * @return {string}
+     * @returns {string}
      */
     heading(text,type){
-        let cleanContent=this.sanitize(text),
-            level=type.replace('h',''),
-            heading='<!-- wp:heading {"level":%1$s} --><%2$s>%3$s</%2$s><!-- /wp:heading -->';
-        return sprintf(heading,level,this.sanitize(type),cleanContent);
+        return `<!-- wp:heading {"level":${type.replace('h','')}} --><${this.sanitize(type)}>${this.sanitize(text)}</${this.sanitize(type)}><!-- /wp:heading -->`;
     }
     /**
      * Format image tag data to gutenberg image block. 
@@ -143,16 +124,15 @@ export class PostModel extends Rest{
      * @returns {string}
      */
     image(url,alt){
-        let cleanUrl=this.sanitize(url),
-            cleanAlt=this.sanitize(alt),
-            image='<!-- wp:image --><figure class="wp-block-image"><img src="%s" alt="%s"/></figure><!-- /wp:image -->'
-        return sprintf(image,cleanUrl,cleanAlt);
+        const cleanUrl=this.sanitize(url),
+            cleanAlt=this.sanitize(alt);
+        return `<!-- wp:image --><figure class="wp-block-image"><img src="${cleanUrl}" alt="${cleanAlt}"/></figure><!-- /wp:image -->`;
     }
     /**
      * Format list tag data to gutenberg list block. 
      * 
      * @param {array} listArray 
-     * @return {string}
+     * @returns {string}
      */
     list(listArray){
         let listBegin='<!-- wp:list --><ul>',
@@ -210,7 +190,26 @@ export class PostModel extends Rest{
     sanitize(content){
         return escHTML(content);
     }
+    /**
+     * Sanitize url to insert into the link or src attributes.
+     * 
+     * @param {string} url 
+     * @returns {string}
+     */
+    sanitizeUrl(url){
+        return escURLRaw(url);
+    }
    
 
 
 }
+/**
+ * Facade function for PostModel class.
+ * 
+ * @param {object} postData 
+ * @param {object} options 
+ * @param {string} url
+ * @returns {string} 
+ */
+
+export const formatCreatePostDraftRequest=(postData,options,url)=>(new PostModel()).createPostDraft(postData,options,url);

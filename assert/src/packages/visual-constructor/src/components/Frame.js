@@ -2,9 +2,11 @@ import React from 'react';
 import {getPluginDirUrl} from '@news-parser/helpers';
 import {Parser} from '@news-parser/helpers/classes/Parser'
 import {selectTitle,selectFeaturedMedia,selectContent,removeContent} from '../actions/frame.actions';
+import {frameIsReady} from '../actions/app.actions';
 import {connect} from 'react-redux';
 import DOMPurify from 'dompurify';
 import PropTypes from 'prop-types';
+import {document} from 'globals';
 
 /**
  * Frame element of visual constructor modal window. Allow choose parsing content manually.
@@ -17,11 +19,20 @@ export class Frame extends React.Component{
         this.frameRef=React.createRef();
         this.clickHandler=this.clickHandler.bind(this);
     }
+    componentDidUpdate(prevProps){
+        debugger;
+        if (prevProps.data!==this.props.data&&this.props.data){
+            this.initFrame();
+        }
+    }
+    componentDidMount(){
+        this.props.data&&this.initFrame();
+    }
     /**
      * Write sanitized page html into iframe.
      */
-    componentDidMount(){
-        let DOMData=this.replaceYouTubeFrames(this.props.data),
+    initFrame(){
+        const DOMData=this.replaceYouTubeFrames(this.props.data),
             doc=this.frameRef.current.contentWindow.document,
             sanitizedDOM=DOMPurify.sanitize(DOMData,{ADD_TAGS:['link'],WHOLE_DOCUMENT:true}),
             cssLink=document.createElement('link');
@@ -40,6 +51,7 @@ export class Frame extends React.Component{
         var imgArray=doc.getElementsByTagName('img');
         this.imageLazyLoad(imgArray);
         this.parser=new Parser(this.frameRef);
+        this.props.frameIsReady()
     }
     /**
      * Check if img tags have lazy load data-src attributes and set them to src.
@@ -152,17 +164,18 @@ export class Frame extends React.Component{
       
     }
     render(){
-       
+       const frameClassName=this.props.isReady?'news-parser-frame':'transparent';
         return (
-            <iframe id='visual-constructor'  frameBorder="0" ref={this.frameRef}  onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} onClick={this.clickHandler}></iframe>
+            <iframe id='visual-constructor' className={frameClassName}  frameBorder="0" ref={this.frameRef}  onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} onClick={this.clickHandler}></iframe>
         );
     }
 }
 
 function mapStateToProps(state){
-
+    const {rawHTML,frameIsReady}=state.parse.dialog.visualConstructor.dialogData;
     return {
-        data:state.parse.dialog.visualConstructor.dialogData.rawHTML
+        data:rawHTML,
+        isReady:frameIsReady
     }
 }
 
@@ -179,6 +192,9 @@ function mapDispatchToProps(dispatch){
         },
         removeContent:function(hash){
             dispatch(removeContent(hash))
+        },
+        frameIsReady:function(){
+            dispatch(frameIsReady());
         }
     }
 }

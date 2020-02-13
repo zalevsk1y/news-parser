@@ -4,6 +4,7 @@ export const SELECT_TITLE=`[${FRAME}:${SELECT}]TITLE`,
         SELECT_FEATURED_MEDIA=`[${FRAME}:${SELECT}]FEATURED_MEDIA`,
         SELECT_CONTENT=`[${FRAME}:${SELECT}]CONTENT`,
         REMOVE_CONTENT=`[${FRAME}:${REMOVE}]CONTENT`;
+        
 
 
 export function selectTitle(title){

@@ -44,7 +44,7 @@ trait ValidateDataTrait{
      */
     public function validateMediaOptions($options)
     {
-        if(!array_key_exists('postId',$options)) return new \WP_Error('no_needed_array_key','Media no needed key.Missing key:postId');
+        if(!array_key_exists('post_id',$options)) return new \WP_Error('no_needed_array_key','Media no needed key.Missing key:post_id');
         if(!array_key_exists('alt',$options)) return new \WP_Error('no_needed_array_key','Media no needed key.Missing key:alt');
         return true;
     }

@@ -19,6 +19,7 @@ export const apiMiddleware=({dispatch})=>next=>action=>{
             })
             .then(res=>{
                 switch(res.headers.get('Content-Type')){
+                    case 'application/json; charset=UTF-8':
                     case 'application/json':
                         return res.json();
                     default:

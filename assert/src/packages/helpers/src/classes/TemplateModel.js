@@ -1,13 +1,10 @@
-import {Ajax} from './Ajax';
+import {BaseClass} from './BaseClass';
 /**
  * Create parsing template for automated parsing.
  * 
  * @since 1.0.0
  */
-export class TemplateModel extends Ajax{
-    constructor(ajaxEndPoint){
-        super(ajaxEndPoint);
-    }  
+export class TemplateModel extends BaseClass{
     /**
      * Create parsing template from selected in visual constructor blocks.
      * 
@@ -17,7 +14,7 @@ export class TemplateModel extends Ajax{
      * @returns {object} template object.
      */
     create(postData,options,url){
-        let argsError=this.checkArgs({postData,options,url});
+        const argsError=this.argsCheck({postData,options,url});
         if(argsError instanceof Error) throw argsError;
         const arrayOfElements=Object.keys(postData.body).map(propName=>{
                 return postData.body[propName]
@@ -25,13 +22,13 @@ export class TemplateModel extends Ajax{
              cleanedData=this.removeDuplicate(arrayOfElements),
              sortedData=this.sortByDOMPosition(cleanedData),
              container=this.createContainer(sortedData);
-        let template={
+        const template={
                 url:url,
                 extraOptions:options,
                 template:container
             };
         sortedData.forEach(item=>{
-            let tagName=item.tagName.toLowerCase(),
+            const tagName=item.tagName.toLowerCase(),
                 searchTemplate=this.createSearchTemplate(item,container.className);
             container.children.push({
                 tagName,
@@ -48,7 +45,7 @@ export class TemplateModel extends Ajax{
      * @returns {object}
      */
     createContainer(arrayOfItems){ 
-        let arrayOfParents=arrayOfItems[0].parent,
+        const arrayOfParents=arrayOfItems[0].parent,
             $this=this;
         for(var key in arrayOfParents){
             let hasParent=true,
@@ -77,7 +74,7 @@ export class TemplateModel extends Ajax{
      * @returns {boolean} 
      */
     hasParent(item,parentItem){
-        for(var key in item.parent){
+        for(let key in item.parent){
             let parent=item.parent[key];
             
             if(parent.tagName==parentItem.tagName&&parent.className==parentItem.className){
@@ -94,7 +91,7 @@ export class TemplateModel extends Ajax{
      * @return {string}
      */
     createSearchTemplate(item,containerClassName){
-        let parentTagName=item.parent[0].tagName.toLowerCase(),
+        const parentTagName=item.parent[0].tagName.toLowerCase(),
             parentClassName=item.parent[0].className.trim(),
             tagName=item.tagName.toLowerCase(),
             className=this.getClassName(item.className);
@@ -108,7 +105,7 @@ export class TemplateModel extends Ajax{
      * @returns {string} 
      */
     getClassName(className,index=0){
-        let classNameArray=className.trim().split(' '),
+        const classNameArray=className.trim().split(' '),
         noDigitsClassNames=classNameArray.filter(partName=>{
             if(partName.search(/([0-9])/g)===-1){
                 return partName.trim();
@@ -148,7 +145,6 @@ export class TemplateModel extends Ajax{
      * @return {boolean} 
      */
     theSame(itemObject1,itemObject2){
-            let result=true;
             if(itemObject1.tagName!==itemObject2.tagName){
                 return false;
             }
@@ -158,7 +154,7 @@ export class TemplateModel extends Ajax{
             if(itemObject1.parent.length!==itemObject2.parent.length){
                 return false;
             }
-        return result;
+        return true;
     }
     /**
      * Sorting HTML blocks by number of parents.
@@ -173,23 +169,16 @@ export class TemplateModel extends Ajax{
         })
         return newArray;
     }
-    /**
-     * Save created template to server.
-     * 
-     * @returns {Promise}
-     */
-    save(postData,options,url){
-        let argsError=this.checkArgs({postData,options,url});
-        if(argsError instanceof Error) throw argsError;
-        let template=this.create(postData,options,url),
-        ajaxUrl=this.endPoint;
-        if(this.nonce)ajaxUrl+='&_wpnonce='+this.nonce;
-        return fetch(ajaxUrl,{
-            method:'POST',
-            headers:this.headers,
-            body:JSON.stringify(template)
-        })
-        .then(response=>response.json())
-    }
+
    
 }
+
+/** 
+ * Create parsing template from selected in visual constructor blocks.
+ * 
+ * @param {object} postData 
+ * @param {object} options 
+ * @param {string} url 
+ * @returns {object} template object.
+ */
+export const formatCreateTemplateRequest=(postData,options,url)=>(new TemplateModel()).create(postData,options,url);

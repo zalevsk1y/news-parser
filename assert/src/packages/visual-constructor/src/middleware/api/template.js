@@ -1,17 +1,22 @@
-import {TEMPLATE,CREATE} from '@news-parser/parser-rss/constants';
-import {API_SUCCESS,API_SUCCESS,apiRequest} from '@news-parser/parser-rss/actions/api.actions';
 
-import {showMessage} from '@news-parser/parser-rss/actions/';
-import {TEMPLATE_CREATE} from '../../actions';
+import {API_SUCCESS,apiRequest} from '@news-parser/parser-rss/actions/api.actions';
 
-export const templateMiddleware = ({dispatch})=>next=>action=>{
+import {showMessage} from '@news-parser/message/';
+import {CREATE_PARSING_TEMPLATE} from '../../actions/template.actions';
+import {formatCreateTemplateRequest} from '@news-parser/helpers/classes/TemplateModel';
+import { VISUAL_CONSTRUCTOR,TEMPLATE,CREATE } from '../../constants/';
+
+export const templateMiddleware = (store)=>next=>action=>{
     next (action);
+    const {getState,dispatch}=store;
     switch(action.type){
-        case TEMPLATE_CREATE:
-            const {data}=action.payload;
-            dispatch(apiRequest(TEMPLATE,CREATE,data));
+        case CREATE_PARSING_TEMPLATE:
+            const {options,dialogData,parsedData}=getState().parse.dialog.visualConstructor,
+                requestData=formatCreateTemplateRequest(parsedData,options,dialogData.url)
+            dispatch(apiRequest(TEMPLATE,CREATE,requestData));
             break;
         case `[${TEMPLATE}:${CREATE}]${API_SUCCESS}`:
-            dispatch(showMessage('success',data.msg.text));
+            const {msg}=action.payload.response;
+            dispatch(showMessage(msg.text,msg.text));
     }
 }

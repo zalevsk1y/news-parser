@@ -20,7 +20,7 @@ trait SanitizeDataTrait
     public function sanitizeMediaOptions($options)
     {
         $new_array=array();
-        $new_array['postId']=preg_replace('/[^0-9]/','',$options['postId']);
+        $new_array['post_id']=preg_replace('/[^0-9]/','',$options['post_id']);
         $new_array['alt']=esc_attr($options['alt']);
         return $new_array;
     }

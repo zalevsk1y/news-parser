@@ -1,10 +1,21 @@
-export const DIALOG_FETCHING='DIALOG_FETCHING';
 
-export const dialogFetching=(status)=>{
+import {VISUAL_CONSTRUCTOR} from '../constants/';
+
+export const START_FETCHING=`[${VISUAL_CONSTRUCTOR}]START_FETCHING`;
+export const STOP_FETCHING=`[${VISUAL_CONSTRUCTOR}]STOP_FETCHING`;
+
+export const startFetching=(entity,event,data)=>{
     return {
-        type:DIALOG_FETCHING,
+        type:START_FETCHING,
         payload:{
-            status
+            entity,
+            event,
+            data
         }
-    } 
+    }
+}
+export const stopFetching=()=>{
+    return {
+        type:STOP_FETCHING
+    }
 }

@@ -1,8 +1,13 @@
-import {PAGE,PARSE} from '../constants'
+import {PAGE,PARSE,SELECTED} from '../constants'
 import { API_REQUEST } from './api.actions';
 
 export const parseSelected=()=>{
     return {
-        type:`[${PAGE}:${PARSE}]${API_REQUEST}`
+        type:`[${PAGE}:${PARSE}]${SELECTED}`,
+        payload:{
+            entity:PAGE,
+            event:PARSE,
+            data:null
+        }
     }
 }

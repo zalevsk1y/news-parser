@@ -7,9 +7,6 @@ import { Provider } from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import parse from './reducers';
 
-
-
-
 import {apiMiddleware} from './middleware/core/api';
 import {listMiddleware} from './middleware/api/list';
 import {postMiddleware} from './middleware/app/post';
@@ -17,8 +14,14 @@ import {mainMiddleware} from './middleware/core/main';
 import {pageMiddleware} from './middleware/api/page';
 import {fetchingMiddleware} from './middleware/app/fetching';
 
+
 import {dialogMiddleware} from '@news-parser/visual-constructor/middleware/app/dialog';
+
 import {htmlMiddleware} from '@news-parser/visual-constructor/middleware/api/html';
+import {draftMiddleware} from '@news-parser/visual-constructor/middleware/api/draft';
+import {mediaMiddleware} from '@news-parser/visual-constructor/middleware/api/media';
+import {templateMiddleware} from '@news-parser/visual-constructor/middleware/api/template';
+import {fetchingMiddleware as dialogFetchingMiddleware} from '@news-parser/visual-constructor/middleware/app/fetching';
 
 import {startApp} from './actions/app.actions';
 import thunkMiddleware from 'redux-thunk';
@@ -40,7 +43,11 @@ const store=createStore(
             pageMiddleware,
             dialogMiddleware,
             htmlMiddleware,
-            fetchingMiddleware
+            draftMiddleware,
+            mediaMiddleware,
+            templateMiddleware,
+            fetchingMiddleware,
+            dialogFetchingMiddleware
             
         )));
 store.dispatch(startApp())

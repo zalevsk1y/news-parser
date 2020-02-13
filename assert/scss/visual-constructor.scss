@@ -22,16 +22,30 @@ frame{
 .modal-header{
     background-color: #fff;
     border-bottom: solid 1px #ddd;
-
+}
+.loading-spinner{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: white;
+    opacity: 0.9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+        width: auto;
+        height: 16em;
+    }
 }
 .modal-header {
+    z-index:2;
     h1{
-        margin-top:0px;
+        margin: 0.5em 0 0.5em 0.5em !important;
         float: left;
         width:80%;
-        font-size:2em;
-        margin-left:2%;
-        padding: 4px 0px 4px 0px;
+        font-size:2em !important;
+        
     }
     .media-modal-close
     {
@@ -43,7 +57,10 @@ frame{
         margin: 0px 1% 0px 1%;
     }
 }
-
+.media-modal-close:focus{
+    border: none;
+    box-shadow: none; 
+}
 .modal-main{
     display: flex;
     flex-direction: row;
@@ -95,7 +112,7 @@ frame{
 }
 .news-parser-youtube{
     width: 100%;
-    height: auto;
+    height: 100%;
 }
 
 /* 

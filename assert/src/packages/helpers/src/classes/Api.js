@@ -1,9 +1,14 @@
 import {AJAX,REST,GET,POST} from '@news-parser/parser-rss/constants/index';
+import {BaseClass} from './BaseClass';
+import config from '@news-parser/config';
 
-class Api{
+class Api extends BaseClass{
+    constructor(rootUrl){
+        super();
+        this.rootUrl=rootUrl;
+    }
     request(url,params){
         this.argsCheck({url,params});
-        debugger;
         const {nonce,type,method}=params,
             fetchParams={
                 method,
@@ -18,6 +23,8 @@ class Api{
         }else if(type===AJAX&&method===POST){
             body=body!==undefined?{...body,_wpnonce:nonce}:{_wpnonce:nonce};
             fetchParams.body=JSON.stringify(body);
+        }else if(type===REST){
+            fetchParams.body=JSON.stringify(body);
         }
         return fetch(url,fetchParams);
     }
@@ -26,6 +33,7 @@ class Api{
         const headers={};
         if(type===REST){
             headers['X-WP-Nonce']=nonce;
+            headers['Access-Control-Allow-Origin']=this.rootUrl!==undefined?this.rootUrl:'*';
         }
         if(method===POST){
             headers['Content-Type']='application/json';
@@ -33,13 +41,6 @@ class Api{
         }
         return headers;
     }
-    argsCheck(args){
-        let argNames=Object.keys(args);
-        argNames.forEach(name=>{
-            if (args[name]===undefined) return new Error (`Argument ${name} is undefined.`)
-        })
-        return true;
-    }
 }
 
-export const api=new Api();
+export const api=new Api(config.rootUrl);

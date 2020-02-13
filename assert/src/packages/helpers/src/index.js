@@ -1,6 +1,10 @@
 import config from "@news-parser/config";
 
 
+export const escURLRaw=(url)=>{
+    return url.replace(/[^-A-Za-z0-9+&@#/%?=~_|!.]/g,encodeURIComponent("$&"))
+}
+
 export function urlSearchParams(uri){
     if (!uri) return {};
     const jsonParams='{\"'+uri.replace(/&/g,'","').replace(/=/g,'":"').replace(/\?/g,"")+'\"}';

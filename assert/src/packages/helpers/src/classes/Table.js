@@ -1,3 +1,9 @@
+/**
+ * Class join state objects like DB tables.
+ * 
+ * @since 1.0.0 
+ *  
+ */
 class Table{
     /**
      * Init function.

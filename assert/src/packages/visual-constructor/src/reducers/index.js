@@ -11,6 +11,7 @@ export const defaultState={
         open:false,
         url:false,
         _id:false,
+        frameIsReady:false,
         rawHTML:false
     },
     parsedData:{

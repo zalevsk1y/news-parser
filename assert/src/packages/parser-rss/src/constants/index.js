@@ -17,3 +17,4 @@ export const POST='POST';
 
 export const SELECT='select';
 export const DRAFT='draft';
+export const SELECTED='SELECTED'

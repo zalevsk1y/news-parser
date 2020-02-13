@@ -68,11 +68,11 @@ class Main
                 'root'=>esc_url_raw(rest_url()),
                 'rssPageName'=>$this->config->menu->subs[0]->menu_slug,
                 'singlePageName'=>$this->config->menu->subs[1]->menu_slug,
-                NEWS_PARSER_PLUGIN_PARSER_RSS.'.media'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_MEDIA_API)),
+                NEWS_PARSER_PLUGIN_VISUAL_CONSTRUCTOR.'.media'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_MEDIA_API)),
                 NEWS_PARSER_PLUGIN_PARSER_RSS.'.list'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API.'_list')),
                 NEWS_PARSER_PLUGIN_VISUAL_CONSTRUCTOR.'.html'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API.'_html')),
                 NEWS_PARSER_PLUGIN_PARSER_RSS.'.page'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API.'_page')),
-                NEWS_PARSER_PLUGIN_VISUAL_CONSTRUCTOR.'.options'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_OPTIONS_API)),
+                NEWS_PARSER_PLUGIN_VISUAL_CONSTRUCTOR.'.template'=>esc_url_raw(admin_url('admin-ajax.php?action=' . NEWS_PARSER_PLUGIN_AJAX_TEMPLATE_API)),
                 'rootRestApi'=>esc_url_raw(rest_url()),
                 'rootAjaxApi'=>esc_url_raw(admin_url('admin-ajax.php'))
             );

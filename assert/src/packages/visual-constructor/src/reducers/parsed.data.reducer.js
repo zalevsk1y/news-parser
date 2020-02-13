@@ -1,4 +1,5 @@
 import {SELECT_TITLE,SELECT_FEATURED_MEDIA,SELECT_CONTENT,REMOVE_CONTENT} from '../actions/frame.actions';
+import {CLOSE_DIALOG} from '../actions/app.actions'
 import {defaultState} from './index';
 
 
@@ -25,6 +26,10 @@ export function parsedData (state=defaultState.parsedData,action){
             }
             return {...state,
                     body:{...state.body}
+                }
+        case CLOSE_DIALOG:
+                return {
+                    ...defaultState.parsedData
                 }
         default:
             return {...state}

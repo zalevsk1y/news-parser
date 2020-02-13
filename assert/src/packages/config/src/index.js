@@ -1,10 +1,10 @@
 import {newsParserSettings as settings,newsParserApiEndpoints as endpoints} from 'globals';
 import {POST,AJAX,REST,PARSE,CREATE} from '@news-parser/parser-rss/constants/';
-import {HTML,OPTIONS,PAGE as VC_PAGE} from '@news-parser/visual-constructor/constants/';
-import {LIST,PAGE,MEDIA} from '@news-parser/parser-rss/constants/'
+import {HTML,TEMPLATE,POST_DRAFT,MEDIA} from '@news-parser/visual-constructor/constants/';
+import {LIST,PAGE} from '@news-parser/parser-rss/constants/'
 const config={
     mode:'development',
-    emulateJSON:false,
+    rootUrl:settings.root,
     api:{
         [LIST]:{
             [PARSE]:{
@@ -39,17 +39,17 @@ const config={
                 url:endpoints[MEDIA]
             }
         },
-        //visual-constructor.options
-        [OPTIONS]:{
+        //visual-constructor.template
+        [TEMPLATE]:{
             [CREATE]:{
                 method:POST,
                 type:AJAX,
                 nonce:settings.ajaxApiNonce,
-                url:endpoints[OPTIONS]
+                url:endpoints[TEMPLATE]
             }
         },
-        //visual-constructor.page
-        [VC_PAGE]:{
+        //visual-constructor.post-draft
+        [POST_DRAFT]:{
             [CREATE]:{
                 method:POST,
                 type:REST,

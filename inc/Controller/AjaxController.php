@@ -87,7 +87,7 @@ class AjaxController extends Ajax
         \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API.'_html', array($this, 'parsingHTMLApi'));
         \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API.'_page', array($this, 'parsingPageApi'));
         \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_MEDIA_API, array($this, 'mediaApi'));
-        \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_OPTIONS_API, array($this, 'optionsApi'));
+        \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_TEMPLATE_API, array($this, 'templateApi'));
     }
   
     /**
@@ -137,7 +137,7 @@ class AjaxController extends Ajax
                 )
         ));
        
-        $response=$this->event->trigger('media:create',array($request['url'],$request['options']['postId'],$request['options']['alt']));
+        $response=$this->event->trigger('media:create',array($request['url'],$request['options']['post_id'],$request['options']['alt']));
         header('Content-Type:application/json');
         echo $response;
        wp_die();
@@ -152,7 +152,7 @@ class AjaxController extends Ajax
      * @uses EventController::trigger()
      * @return void
      */
-    public function optionsApi()
+    public function templateApi()
     {
         //Get application\json encode data
         $json_post = $this->getJsonFromInput();
@@ -188,7 +188,7 @@ class AjaxController extends Ajax
             'extraOptions'=>$request['extraOptions'],
             'template'=>$request['template']
         );
-        $respond=$this->event->trigger('options:create',array($request['url'],$options));
+        $respond=$this->event->trigger('template:create',array($request['url'],$options));
         header('Content-Type:application/json');
         echo $respond;
         wp_die();

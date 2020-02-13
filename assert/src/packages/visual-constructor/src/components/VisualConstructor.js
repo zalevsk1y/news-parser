@@ -7,6 +7,8 @@ import {document} from 'globals';
 import {connect} from 'react-redux';
 
 import {closeDialog} from '../actions/app.actions';
+import {createPostDraft} from '../actions/draft.actions';
+import {createParsingTemplate} from '../actions/template.actions';
 
 /**
  * Main visual constructor window element.
@@ -18,7 +20,7 @@ export class VisualConstructor extends React.Component{
     constructor(props){
         super(props);
         this.close=this.close.bind(this);
-        this.createPostDraft=this.createPostDraft.bind(this);
+        this.buttonClickHandler=this.buttonClickHandler.bind(this);
         this.modalWindow=this.modalWindow.bind(this);
     }
     /**
@@ -47,8 +49,20 @@ export class VisualConstructor extends React.Component{
     /**
      * Create post draft from parsed data.
      */
-    createPostDraft(){
-        this.props.createPostDraft(this.props.postId,this.props.url,this.props.parsedData,this.props.options)
+    buttonClickHandler(){
+        if(!this.props.options.saveParsingTemplate){
+            this.props.createPostDraft()
+        }else{
+            this.props.saveTemplate()
+        }
+        this.close();
+    }
+    loadingSpinner(){
+        return (
+            <div className="loading-spinner">
+                <img src="../wp-content/plugins/news-parser/public/images/loading.gif"></img>
+            </div>
+        )
     }
     modalWindow(){
         return (
@@ -62,17 +76,17 @@ export class VisualConstructor extends React.Component{
                             </span>
                         </button>
                     </div>
+                    {(!this.props.frameIsReady&&<this.loadingSpinner />)}
                     <div className="modal-main">
                         <div className="parsed-data-container">
-                            {(this.props.rawHTML&&<Frame />)}
+                           <Frame />
                         </div>
                         <div className="modal-right-side-bar">
-                        {(this.props.rawHTML&&<SidebarRight />)}
+                            <SidebarRight />
                         </div>
-                        
                     </div>
                     <div className='modal-footer'>
-                        <div type="button" className="button button-large button-primary" onClick={this.createPostDraft}>Parse Page</div>
+                        <div type="button" className="button button-large button-primary" onClick={this.buttonClickHandler}>{this.props.options.saveParsingTemplate?"Save Template":"Create Post Draft"}</div>
                     </div>
                 </div>
                 <div className="media-modal-backdrop"></div>
@@ -81,36 +95,36 @@ export class VisualConstructor extends React.Component{
     }
 
     render(){
-  
-        return (
-          
+        this.props.open?this.scroll(true):this.scroll(false);
+        return (  
             <Fragment>
                 {(this.props.open&&<this.modalWindow />)}
             </Fragment>
         )
     }
-        
 }
 
 
 function mapStateToProps(state){
-    const data=state.parse.dialog.visualConstructor.dialogData;
-    console.log('visual-constructor',data);
+    const {options}=state.parse.dialog.visualConstructor,
+        {open,rawHTML,frameIsReady}=state.parse.dialog.visualConstructor.dialogData;
     return {
-        ...data  
+        frameIsReady,
+        options,
+        open,
+        rawHTML  
     };
 }
 function mapDispatchToProps(dispatch){
     return {
-        close:function (){
+        close:()=>{
             dispatch(closeDialog());
         },
-        createPostDraft:function(id,url,postData,options){
-            if(options.saveParsingTemplate){
-               // dispatch(saveParsingTemplate(dispatch,url,postData,options))
-            }else{
-                //dispatch(createPostDraft(dispatch,id,url,postData,options));
-            }
+        createPostDraft:()=>{
+               dispatch(createPostDraft());
+        },
+        saveTemplate:()=>{
+            dispatch(createParsingTemplate())
         }
     }
 }

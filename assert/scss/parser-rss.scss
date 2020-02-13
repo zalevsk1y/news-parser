@@ -40,10 +40,12 @@ body {
     display: none;
 }
 
-.wrap-parsing h1 {
+.wrap-parsing{
+     h1 {
     margin-top: 30px;
     font-size: 38px;
     font-weight: 400;
+     }
 }
 
 .wrap-parsing {
@@ -105,7 +107,9 @@ body {
 .visible {
     display: block;
 }
-
+.transparent{
+    opacity: 0;
+}
 .hidden {
     display: none;
 }
