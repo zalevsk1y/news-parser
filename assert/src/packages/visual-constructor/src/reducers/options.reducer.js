@@ -1,5 +1,5 @@
 import {TOGGLE_ADD_FEATURED_MEDIA,TOGGLE_SAVE_PARSING_TEMPLATE,TOGGLE_ADD_SOURCE} from '../actions/options.actions';
-import {CLOSE_DIALOG} from '../actions/app.actions'
+import {OPEN_DIALOG} from '../actions/app.actions'
 import {defaultState} from './index';
 
 
@@ -18,7 +18,7 @@ export function options(state=defaultState.options,action){
                 addSource:!state.addSource
             }
         }
-        case CLOSE_DIALOG:
+        case OPEN_DIALOG:
                 return {
                     ...defaultState.options
                 }

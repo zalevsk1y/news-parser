@@ -5,7 +5,7 @@ import {DRAFT,INSERT} from '@news-parser/parser-rss/constants';
 import {getPostEditLink} from "@news-parser/helpers";
 import {setPostMeta} from "@news-parser/parser-rss/actions/post.actions";
 import {showMessage} from "@news-parser/message/"
-import {formatCreatePostDraftRequest} from '@news-parser/helpers/classes/PostModel';
+import {formatCreatePostDraftRequest} from '@news-parser/helpers/response-formatters/PostModel';
 
 export const draftMiddleware=store=>next=>action=>{
     next(action);

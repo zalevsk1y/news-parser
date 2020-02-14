@@ -3,6 +3,7 @@ import {API_SUCCESS,apiRequest} from '../../actions/api.actions';
 import {showMessage} from '../../actions/app.actions'
 import {FETCH_LIST, setList} from '../../actions/list.actions';
 import {setAppState} from '../../actions/app.actions';
+import {decodeHTMLEntities} from '@news-parser/helpers/'
 
 export const listMiddleware = ({dispatch})=>next=>action=>{
     next (action);
@@ -16,6 +17,8 @@ export const listMiddleware = ({dispatch})=>next=>action=>{
             const {msg,data}=action.payload.response,
                 posts=data.map((post,index)=>{
                 post._id=parseInt(index);
+                post.description=decodeHTMLEntities(post.description);
+                post.title=decodeHTMLEntities(post.title);
                 return post;
             });
             dispatch(setList(posts));

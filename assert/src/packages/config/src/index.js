@@ -4,7 +4,9 @@ import {HTML,TEMPLATE,POST_DRAFT,MEDIA} from '@news-parser/visual-constructor/co
 import {LIST,PAGE} from '@news-parser/parser-rss/constants/'
 const config={
     mode:'development',
-    rootUrl:settings.root,
+    restRootUrl:settings.root,
+    pluginRoot:settings.pluginUrl,
+    editPostLink:settings.editPostLink,
     api:{
         [LIST]:{
             [PARSE]:{
@@ -54,7 +56,7 @@ const config={
                 method:POST,
                 type:REST,
                 nonce:settings.restApiNonce,
-                url:settings.root+'wp/v2/posts'
+                url:settings.restRoot+'wp/v2/posts'
             }
         }
 
@@ -62,8 +64,8 @@ const config={
     errorReport:{
         url:'https://github.com/zalevsk1y/news-parser/issues/new'
     },
-    defaultImage:'/images/Grey-Gradient.png',
-
+    defaultImage:settings.pluginUrl+'/public/images/Grey-Gradient.png',
+    spinnerImage:settings.pluginUrl+'/public/images/loading.gif',
     amedia:{
         phone:782
     },

@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
  */
 export function InfoBox({title,children}){
     return (
-        
                 <div id="postimagediv" className="postbox ">
                     <button type="button" className="handlediv" aria-expanded="true">
                         <span className="screen-reader-text">{'Toggle panel:'+title}</span>
@@ -28,7 +27,10 @@ InfoBox.propTypes={
     /**
      * Content of infobox.
      */
-    children:PropTypes.object.isRequired
+    children:PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array
+    ]).isRequired
 }
 /**
  * Body of infobox element.

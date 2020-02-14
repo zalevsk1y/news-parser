@@ -64,7 +64,8 @@ module.exports={
 				"@news-parser/parser-rss": path.resolve(__dirname,"src/packages/parser-rss/src/"),
 				"@news-parser/error-handler": path.resolve(__dirname,"src/packages/error-handler/src/index.js"),
 				"@news-parser/visual-constructor":path.resolve(__dirname,"src/packages/visual-constructor/src/"),
-				"@news-parser/styles":path.resolve(__dirname,"scss/")
+				"@news-parser/styles":path.resolve(__dirname,"scss/"),
+				"@news-parser/image":path.resolve(__dirname,"src/packages/image/src/")
 			}
 	},
 	devServer:{

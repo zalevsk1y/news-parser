@@ -1,6 +1,6 @@
 import React from 'react';
 import {getPluginDirUrl} from '@news-parser/helpers';
-import {Parser} from '@news-parser/helpers/classes/Parser'
+import {Parser} from '@news-parser/helpers/parser/Parser'
 import {selectTitle,selectFeaturedMedia,selectContent,removeContent} from '../actions/frame.actions';
 import {frameIsReady} from '../actions/app.actions';
 import {connect} from 'react-redux';
@@ -20,7 +20,6 @@ export class Frame extends React.Component{
         this.clickHandler=this.clickHandler.bind(this);
     }
     componentDidUpdate(prevProps){
-        debugger;
         if (prevProps.data!==this.props.data&&this.props.data){
             this.initFrame();
         }
@@ -164,18 +163,17 @@ export class Frame extends React.Component{
       
     }
     render(){
-       const frameClassName=this.props.isReady?'news-parser-frame':'transparent';
         return (
-            <iframe id='visual-constructor' className={frameClassName}  frameBorder="0" ref={this.frameRef}  onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} onClick={this.clickHandler}></iframe>
+            <iframe id='visual-constructor'  frameBorder="0" ref={this.frameRef}  onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} onClick={this.clickHandler}></iframe>
         );
     }
 }
 
 function mapStateToProps(state){
-    const {rawHTML,frameIsReady}=state.parse.dialog.visualConstructor.dialogData;
+    const {rawHTML}=state.parse.dialog.visualConstructor.dialogData;
     return {
-        data:rawHTML,
-        isReady:frameIsReady
+        data:rawHTML
+      
     }
 }
 
@@ -204,7 +202,10 @@ Frame.propTypes={
     /**
      * HTML data that should be write to the iFrame.
      */
-    data:PropTypes.string.isRequired,
+    data:PropTypes.oneOfType([
+        PropTypes.bool,
+        PropTypes.string
+    ]).isRequired,
     /**
      * Select title action.Set post title.
      * 
@@ -229,5 +230,9 @@ Frame.propTypes={
      * 
      * @param {string} hash Content key.
      */
-    removeContent:PropTypes.func.isRequired
+    removeContent:PropTypes.func.isRequired,
+    /**
+     * Set Frame status as ready.
+     */
+    frameIsReady:PropTypes.func.isRequired
 }

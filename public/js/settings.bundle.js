@@ -36448,7 +36448,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************************!*\
   !*** ./src/packages/helpers/src/index.js ***!
   \*******************************************/
-/*! exports provided: uriToJson, logErrorToService, getLanguage, getYOffset, getXOffset, scrollTo, hash, getNonce, getRestNonce, getAjaxNonce, getPostEditLink, sendApiRequest, getApiEndpoint, getUrlWithParams, decodeHTMLEntities, sprintf, escHTML, decodeQuotes, getPluginDirUrl, combineSubReducers, oldServerData, newServerData */
+/*! exports provided: uriToJson, logErrorToService, getLanguage, getYOffset, getXOffset, scrollTo, hash, getNonce, getRestNonce, getAjaxNonce, getPostEditLink, sendApiRequest, getApiEndpoint, encodeUrlWithParams, decodeHTMLEntities, sprintf, escHTML, decodeQuotes, getPluginDirUrl, combineSubReducers, oldServerData, newServerData */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -36466,7 +36466,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPostEditLink", function() { return getPostEditLink; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sendApiRequest", function() { return sendApiRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getApiEndpoint", function() { return getApiEndpoint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUrlWithParams", function() { return getUrlWithParams; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "encodeUrlWithParams", function() { return encodeUrlWithParams; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "decodeHTMLEntities", function() { return decodeHTMLEntities; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sprintf", function() { return sprintf; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "escHTML", function() { return escHTML; });
@@ -36560,7 +36560,7 @@ function getApiEndpoint(api) {
   var endpoint = newsParserApiEndpoints[api];
   return endpoint;
 }
-function getUrlWithParams(params) {
+function encodeUrlWithParams(params) {
   var url = window.location.pathname + _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].root;
   var search = '';
   Object.keys(params).forEach(function (key) {

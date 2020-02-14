@@ -1,4 +1,4 @@
-import {api} from '@news-parser/helpers/classes/Api';
+import {api} from '@news-parser/helpers/api/Api';
 import config from '@news-parser/config';
 import {API_REQUEST,apiSuccess,apiError} from '../../actions/api.actions';
 

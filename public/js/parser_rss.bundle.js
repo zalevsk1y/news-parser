@@ -220,7 +220,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n.fo {\n  font-family: 'fontello';\
 
 exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "frame {\n  width: 100%;\n  height: 100%; }\n\n.media-modal-wrapper {\n  position: relative; }\n\n.modal-container {\n  display: flex;\n  flex-direction: column; }\n\n.modal-container {\n  position: fixed;\n  margin: 2%;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  background-color: #fff;\n  z-index: 160000; }\n\n.modal-header {\n  background-color: #fff;\n  border-bottom: solid 1px #ddd; }\n\n.loading-spinner {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  z-index: 1;\n  background-color: white;\n  opacity: 0.9;\n  display: flex;\n  justify-content: center;\n  align-items: center; }\n  .loading-spinner img {\n    width: auto;\n    height: 16em; }\n\n.modal-header {\n  z-index: 2; }\n  .modal-header h1 {\n    margin: 0.5em 0 0.5em 0.5em !important;\n    float: left;\n    width: 80%;\n    font-size: 2em !important; }\n  .modal-header .media-modal-close {\n    top: 0px !important;\n    width: auto;\n    height: 100%;\n    position: relative;\n    float: right;\n    margin: 0px 1% 0px 1%; }\n\n.media-modal-close:focus {\n  border: none;\n  box-shadow: none; }\n\n.modal-main {\n  display: flex;\n  flex-direction: row;\n  height: 100%; }\n\n.parsed-data-container {\n  width: 80%;\n  height: 100%; }\n\n.modal-right-side-bar {\n  box-sizing: border-box;\n  border-left: solid 1px #ddd;\n  background-color: #f3f3f3;\n  height: 100%;\n  width: 20%;\n  min-width: 225px;\n  overflow-y: scroll; }\n\n.modal-footer {\n  overflow: auto;\n  height: auto;\n  min-height: 30px;\n  width: 100%;\n  padding: 1% 0 1% 0;\n  border-top: solid 1px #ddd;\n  background-color: #fff; }\n\n.modal-footer .button {\n  position: relative;\n  float: right;\n  right: 2%; }\n\n#visual-constructor {\n  width: 100%;\n  height: 100%; }\n\n/*\n    Frame block selection\n*/\n.mouse-over {\n  outline: 2px dotted #6bd6cc;\n  background-color: rgba(107, 214, 204, 0.5); }\n\n.parser-select {\n  box-sizing: border-box;\n  border: 3px solid #6bd6cc;\n  background-color: rgba(107, 214, 204, 0.8); }\n\n.news-parser-youtube {\n  width: 100%;\n  height: 100%; }\n\n/* \n    Visual constructor sidebar \n*/\n.inner-sidebar-container {\n  padding: 5%; }\n  .inner-sidebar-container .postbox {\n    min-width: 200px; }\n\n.infobox-header {\n  display: block;\n  margin: 0;\n  padding: 0.7em 0 0.7em 1em;\n  font-size: 14px; }\n\n.infobox-footer {\n  overflow: auto;\n  background: #f5f5f5;\n  border-top: 1px solid #ddd;\n  padding: 10px; }\n\n.infobox-footer button {\n  float: right; }\n\n.post-title-input {\n  width: 100%; }\n\n.inline-bl {\n  display: inline-block;\n  margin: 0 0 0 0.3em;\n  width: 80%; }\n\n.no-featured-image {\n  opacity: 0.3; }\n\n.info-box-container {\n  margin: 0.5em 0 0 0; }\n\n.info-box-container input {\n  top: 6px;\n  vertical-align: top;\n  position: relative; }\n\n@media screen and (max-width: 500px) {\n  .modal-main {\n    flex-direction: column; }\n    .modal-main .parsed-data-container {\n      height: 70%;\n      width: 100%; }\n    .modal-main .modal-right-side-bar {\n      height: 30%;\n      width: 100%; } }\n", ""]);
+exports.push([module.i, "frame {\n  width: 100%;\n  height: 100%; }\n\n.media-modal-wrapper {\n  position: relative; }\n\n.modal-container {\n  display: flex;\n  flex-direction: column; }\n\n.modal-container {\n  position: fixed;\n  margin: 2%;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  background-color: #fff;\n  z-index: 160000; }\n\n.modal-header {\n  background-color: #fff;\n  border-bottom: solid 1px #ddd; }\n\n.loading-spinner {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  z-index: 1;\n  background-color: white;\n  opacity: 0.9;\n  display: flex;\n  justify-content: center;\n  align-items: center; }\n  .loading-spinner img {\n    width: auto;\n    height: 16em; }\n\n.modal-header {\n  z-index: 2; }\n  .modal-header h1 {\n    margin: 0.5em 0 0.5em 0.5em !important;\n    float: left;\n    width: 80%;\n    font-size: 2em !important; }\n  .modal-header .media-modal-close {\n    top: 0px !important;\n    width: auto;\n    height: 100%;\n    position: relative;\n    float: right;\n    margin: 0px 1% 0px 1%; }\n\n.media-modal-close:focus {\n  border: none;\n  box-shadow: none; }\n\n.modal-main {\n  display: flex;\n  flex-direction: row;\n  height: 100%; }\n\n.parsed-data-container {\n  width: 80%;\n  height: 100%; }\n\n.modal-right-side-bar {\n  box-sizing: border-box;\n  border-left: solid 1px #ddd;\n  background-color: #f3f3f3;\n  height: 100%;\n  width: 20%;\n  min-width: 225px;\n  overflow-y: scroll; }\n\n.modal-footer {\n  overflow: auto;\n  height: auto;\n  min-height: 30px;\n  width: 100%;\n  padding: 1% 0 1% 0;\n  border-top: solid 1px #ddd;\n  background-color: #fff; }\n\n.modal-footer .button {\n  position: relative;\n  float: right;\n  right: 2%; }\n\n#visual-constructor {\n  width: 100%;\n  height: 100%; }\n\n/*\n    Frame block selection\n*/\n.mouse-over {\n  outline: 2px dotted #6bd6cc;\n  background-color: rgba(107, 214, 204, 0.5); }\n\n.parser-select {\n  box-sizing: border-box;\n  border: 3px solid #6bd6cc;\n  background-color: rgba(107, 214, 204, 0.8); }\n\n.news-parser-youtube {\n  width: 100%;\n  height: 100%; }\n\n/* \n    Visual constructor sidebar \n*/\n.inner-sidebar-container {\n  padding: 5%; }\n  .inner-sidebar-container .postbox {\n    min-width: 200px; }\n\n.infobox-header {\n  display: block;\n  margin: 0;\n  padding: 0.7em 0 0.7em 1em;\n  font-size: 14px; }\n\n.infobox-footer {\n  overflow: auto;\n  background: #f5f5f5;\n  border-top: 1px solid #ddd;\n  padding: 10px; }\n\n.infobox-footer button {\n  float: right; }\n\n.post-title-input {\n  width: 100%; }\n\n.inline-bl {\n  display: inline-block;\n  margin: 0 0 0 0.3em;\n  width: 80%; }\n\n.featured-image-thumbnail {\n  width: 266px;\n  height: 150px; }\n\n.no-featured-image {\n  opacity: 0.3; }\n\n.info-box-container {\n  margin: 0.5em 0 0 0; }\n\n.info-box-container input {\n  top: 6px;\n  vertical-align: top;\n  position: relative; }\n\n@media screen and (max-width: 500px) {\n  .modal-main {\n    flex-direction: column; }\n    .modal-main .parsed-data-container {\n      height: 70%;\n      width: 100%; }\n    .modal-main .modal-right-side-bar {\n      height: 30%;\n      width: 100%; } }\n", ""]);
 
 
 
@@ -37615,7 +37615,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var config = {
   mode: 'development',
-  rootUrl: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserSettings"].root,
+  restRootUrl: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserSettings"].root,
+  pluginRoot: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserSettings"].pluginUrl,
+  editPostLink: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserSettings"].editPostLink,
   api: (_api = {}, _defineProperty(_api, _news_parser_parser_rss_constants___WEBPACK_IMPORTED_MODULE_1__["LIST"], _defineProperty({}, _news_parser_parser_rss_constants___WEBPACK_IMPORTED_MODULE_1__["PARSE"], {
     method: _news_parser_parser_rss_constants___WEBPACK_IMPORTED_MODULE_1__["POST"],
     type: _news_parser_parser_rss_constants___WEBPACK_IMPORTED_MODULE_1__["AJAX"],
@@ -37645,12 +37647,13 @@ var config = {
     method: _news_parser_parser_rss_constants___WEBPACK_IMPORTED_MODULE_1__["POST"],
     type: _news_parser_parser_rss_constants___WEBPACK_IMPORTED_MODULE_1__["REST"],
     nonce: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserSettings"].restApiNonce,
-    url: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserSettings"].root + 'wp/v2/posts'
+    url: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserSettings"].restRoot + 'wp/v2/posts'
   })), _api),
   errorReport: {
     url: 'https://github.com/zalevsk1y/news-parser/issues/new'
   },
-  defaultImage: '/images/Grey-Gradient.png',
+  defaultImage: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserSettings"].pluginUrl + '/public/images/Grey-Gradient.png',
+  spinnerImage: globals__WEBPACK_IMPORTED_MODULE_0__["newsParserSettings"].pluginUrl + '/public/images/loading.gif',
   amedia: {
     phone: 782
   },
@@ -37766,10 +37769,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/packages/helpers/src/classes/Api.js":
-/*!*************************************************!*\
-  !*** ./src/packages/helpers/src/classes/Api.js ***!
-  \*************************************************/
+/***/ "./src/packages/helpers/src/api/Api.js":
+/*!*********************************************!*\
+  !*** ./src/packages/helpers/src/api/Api.js ***!
+  \*********************************************/
 /*! exports provided: api */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -37777,7 +37780,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "api", function() { return api; });
 /* harmony import */ var _news_parser_parser_rss_constants_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/parser-rss/constants/index */ "./src/packages/parser-rss/src/constants/index.js");
-/* harmony import */ var _BaseClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BaseClass */ "./src/packages/helpers/src/classes/BaseClass.js");
+/* harmony import */ var _classes_BaseClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../classes/BaseClass */ "./src/packages/helpers/src/classes/BaseClass.js");
 /* harmony import */ var _news_parser_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @news-parser/config */ "./src/packages/config/src/index.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
@@ -37883,7 +37886,7 @@ function (_BaseClass) {
   }]);
 
   return Api;
-}(_BaseClass__WEBPACK_IMPORTED_MODULE_1__["BaseClass"]);
+}(_classes_BaseClass__WEBPACK_IMPORTED_MODULE_1__["BaseClass"]);
 
 var api = new Api(_news_parser_config__WEBPACK_IMPORTED_MODULE_2__["default"].rootUrl);
 
@@ -37940,10 +37943,226 @@ function () {
 
 /***/ }),
 
-/***/ "./src/packages/helpers/src/classes/Parser.js":
-/*!****************************************************!*\
-  !*** ./src/packages/helpers/src/classes/Parser.js ***!
-  \****************************************************/
+/***/ "./src/packages/helpers/src/classes/Table.js":
+/*!***************************************************!*\
+  !*** ./src/packages/helpers/src/classes/Table.js ***!
+  \***************************************************/
+/*! exports provided: table */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "table", function() { return table; });
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/**
+ * Class join state objects like DB tables.
+ * 
+ * @since 1.0.0 
+ *  
+ */
+var Table =
+/*#__PURE__*/
+function () {
+  /**
+   * Init function.
+   * 
+   * @param {array} table 
+   */
+  function Table(table) {
+    _classCallCheck(this, Table);
+
+    this.table = _toConsumableArray(table);
+  }
+  /**
+   * Add to this.table array items properties from joinTables objects.
+   * joinTables - should have objects with index of this.table array as a property name.
+   * 
+   * @param {object} joinTables 
+   * @returns {array}
+   */
+
+
+  _createClass(Table, [{
+    key: "join",
+    value: function join(joinTables) {
+      var _this = this;
+
+      var newTable = this.table;
+      Object.keys(joinTables).forEach(function (name) {
+        return newTable = _this.joinOnce(newTable, joinTables[name], name);
+      });
+      return newTable;
+    }
+    /**
+     * Add properties of  joinTable object to the item of mainTable with index as joinTable
+     * property name.
+     * 
+     * @param {array} mainTable Array of items
+     * @param {object} joinTable Object with mainTable items index as property name.
+     * @param {string} propName Property name that will by add to mainTable. 
+     */
+
+  }, {
+    key: "joinOnce",
+    value: function joinOnce(mainTable, joinTable, propName) {
+      return mainTable.map(function (data, index) {
+        return _objectSpread({}, data, _defineProperty({}, propName, joinTable[index] !== undefined && joinTable[index]));
+      });
+    }
+  }]);
+
+  return Table;
+}();
+
+var table = function table(mainTable) {
+  return new Table(mainTable);
+};
+
+/***/ }),
+
+/***/ "./src/packages/helpers/src/index.js":
+/*!*******************************************!*\
+  !*** ./src/packages/helpers/src/index.js ***!
+  \*******************************************/
+/*! exports provided: escURLRaw, urlSearchParams, getLanguage, hash, getPostEditLink, encodeUrlWithParams, decodeHTMLEntities, escHTML, getPluginDirUrl */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "escURLRaw", function() { return escURLRaw; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "urlSearchParams", function() { return urlSearchParams; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLanguage", function() { return getLanguage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hash", function() { return hash; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPostEditLink", function() { return getPostEditLink; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "encodeUrlWithParams", function() { return encodeUrlWithParams; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "decodeHTMLEntities", function() { return decodeHTMLEntities; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "escHTML", function() { return escHTML; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPluginDirUrl", function() { return getPluginDirUrl; });
+/* harmony import */ var _news_parser_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/config */ "./src/packages/config/src/index.js");
+
+var escURLRaw = function escURLRaw(url) {
+  return url.replace(/[^-A-Za-z0-9+&@#/%?=~_|!.]/g, encodeURIComponent("$&"));
+};
+/**
+ * Get search params from url string.
+ * 
+ * @param {string} uri 
+ */
+
+var urlSearchParams = function urlSearchParams(uri) {
+  if (!uri) return {};
+  var jsonParams = '{\"' + uri.replace(/&/g, '","').replace(/=/g, '":"').replace(/\?/g, "") + '\"}';
+
+  if (jsonParams) {
+    return JSON.parse(jsonParams);
+  }
+
+  return {};
+};
+function getLanguage() {
+  var className = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].lang.class;
+  return document.querySelector('.' + className).dataset['lang'].substring(0, 2);
+}
+/**
+ * Get coded hash for string.
+ * 
+ * @param {string} str 
+ */
+
+function hash(str) {
+  var hash = 0,
+      char;
+  if (str.length == 0) return hash;
+
+  for (var i = 0, end = str.length; i < end; i++) {
+    char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+
+  return Math.abs(hash);
+}
+/**
+ * Get wordpress edit post link.
+ * 
+ * @param {string|int} id 
+ */
+
+function getPostEditLink(id) {
+  var linkTemplate = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].editPostLink;
+  return linkTemplate.replace('$postId', id);
+}
+/**
+ * Add search params to URL string.
+ * 
+ * @param {string} params 
+ */
+
+function encodeUrlWithParams(params) {
+  var url = window.location.pathname + window.location.search;
+  var search = '';
+  Object.keys(params).forEach(function (key) {
+    search += '&' + key + '=' + encodeURIComponent(params[key]);
+  });
+  return url + search;
+}
+/**
+ * Decode HTML entities.
+ * 
+ * @param {string} text 
+ */
+
+function decodeHTMLEntities(text) {
+  var entities = [['amp', '&'], ['apos', '\''], ['#x27', '\''], ['#x2F', '/'], ['#039', '\''], ['#047', '/'], ['lt', '<'], ['gt', '>'], ['nbsp', ' '], ['quot', '"']];
+
+  for (var i = 0, max = entities.length; i < max; ++i) {
+    text = text.replace(new RegExp('&' + entities[i][0] + ';', 'g'), entities[i][1]);
+  }
+
+  return text;
+}
+/**
+ * Escape HTML entities.
+ * 
+ * @param {string} html 
+ */
+
+function escHTML(html) {
+  var tempDiv = document.createElement('div');
+  tempDiv.textContent = html;
+  return tempDiv.innerText;
+}
+/**
+ * Get current pludin folder Url.
+ */
+
+function getPluginDirUrl() {
+  return _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].pluginRoot;
+}
+
+/***/ }),
+
+/***/ "./src/packages/helpers/src/parser/Parser.js":
+/*!***************************************************!*\
+  !*** ./src/packages/helpers/src/parser/Parser.js ***!
+  \***************************************************/
 /*! exports provided: Parser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -38097,10 +38316,10 @@ function () {
 
 /***/ }),
 
-/***/ "./src/packages/helpers/src/classes/PostModel.js":
-/*!*******************************************************!*\
-  !*** ./src/packages/helpers/src/classes/PostModel.js ***!
-  \*******************************************************/
+/***/ "./src/packages/helpers/src/response-formatters/PostModel.js":
+/*!*******************************************************************!*\
+  !*** ./src/packages/helpers/src/response-formatters/PostModel.js ***!
+  \*******************************************************************/
 /*! exports provided: PostModel, formatCreatePostDraftRequest */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -38109,7 +38328,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PostModel", function() { return PostModel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatCreatePostDraftRequest", function() { return formatCreatePostDraftRequest; });
 /* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
-/* harmony import */ var _BaseClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BaseClass */ "./src/packages/helpers/src/classes/BaseClass.js");
+/* harmony import */ var _classes_BaseClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../classes/BaseClass */ "./src/packages/helpers/src/classes/BaseClass.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
@@ -38398,7 +38617,7 @@ function (_BaseClass) {
   }]);
 
   return PostModel;
-}(_BaseClass__WEBPACK_IMPORTED_MODULE_1__["BaseClass"]);
+}(_classes_BaseClass__WEBPACK_IMPORTED_MODULE_1__["BaseClass"]);
 /**
  * Facade function for PostModel class.
  * 
@@ -38414,104 +38633,10 @@ var formatCreatePostDraftRequest = function formatCreatePostDraftRequest(postDat
 
 /***/ }),
 
-/***/ "./src/packages/helpers/src/classes/Table.js":
-/*!***************************************************!*\
-  !*** ./src/packages/helpers/src/classes/Table.js ***!
-  \***************************************************/
-/*! exports provided: table */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "table", function() { return table; });
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-/**
- * Class join state objects like DB tables.
- * 
- * @since 1.0.0 
- *  
- */
-var Table =
-/*#__PURE__*/
-function () {
-  /**
-   * Init function.
-   * 
-   * @param {array} table 
-   */
-  function Table(table) {
-    _classCallCheck(this, Table);
-
-    this.table = _toConsumableArray(table);
-  }
-  /**
-   * Add to this.table array items properties from joinTables objects.
-   * joinTables - should have objects with index of this.table array as a property name.
-   * 
-   * @param {object} joinTables 
-   * @returns {array}
-   */
-
-
-  _createClass(Table, [{
-    key: "join",
-    value: function join(joinTables) {
-      var _this = this;
-
-      var newTable = this.table;
-      Object.keys(joinTables).forEach(function (name) {
-        return newTable = _this.joinOnce(newTable, joinTables[name], name);
-      });
-      return newTable;
-    }
-    /**
-     * Add properties of  joinTable object to the item of mainTable with index as joinTable
-     * property name.
-     * 
-     * @param {array} mainTable Array of items
-     * @param {object} joinTable Object with mainTable items index as property name.
-     * @param {string} propName Property name that will by add to mainTable. 
-     */
-
-  }, {
-    key: "joinOnce",
-    value: function joinOnce(mainTable, joinTable, propName) {
-      return mainTable.map(function (data, index) {
-        return _objectSpread({}, data, _defineProperty({}, propName, joinTable[index] !== undefined && joinTable[index]));
-      });
-    }
-  }]);
-
-  return Table;
-}();
-
-var table = function table(mainTable) {
-  return new Table(mainTable);
-};
-
-/***/ }),
-
-/***/ "./src/packages/helpers/src/classes/TemplateModel.js":
-/*!***********************************************************!*\
-  !*** ./src/packages/helpers/src/classes/TemplateModel.js ***!
-  \***********************************************************/
+/***/ "./src/packages/helpers/src/response-formatters/TemplateModel.js":
+/*!***********************************************************************!*\
+  !*** ./src/packages/helpers/src/response-formatters/TemplateModel.js ***!
+  \***********************************************************************/
 /*! exports provided: TemplateModel, formatCreateTemplateRequest */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -38519,7 +38644,7 @@ var table = function table(mainTable) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TemplateModel", function() { return TemplateModel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatCreateTemplateRequest", function() { return formatCreateTemplateRequest; });
-/* harmony import */ var _BaseClass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BaseClass */ "./src/packages/helpers/src/classes/BaseClass.js");
+/* harmony import */ var _classes_BaseClass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../classes/BaseClass */ "./src/packages/helpers/src/classes/BaseClass.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -38786,7 +38911,7 @@ function (_BaseClass) {
   }]);
 
   return TemplateModel;
-}(_BaseClass__WEBPACK_IMPORTED_MODULE_0__["BaseClass"]);
+}(_classes_BaseClass__WEBPACK_IMPORTED_MODULE_0__["BaseClass"]);
 /** 
  * Create parsing template from selected in visual constructor blocks.
  * 
@@ -38802,10 +38927,10 @@ var formatCreateTemplateRequest = function formatCreateTemplateRequest(postData,
 
 /***/ }),
 
-/***/ "./src/packages/helpers/src/classes/formatCreateMediaData.js":
-/*!*******************************************************************!*\
-  !*** ./src/packages/helpers/src/classes/formatCreateMediaData.js ***!
-  \*******************************************************************/
+/***/ "./src/packages/helpers/src/response-formatters/formatCreateMediaData.js":
+/*!*******************************************************************************!*\
+  !*** ./src/packages/helpers/src/response-formatters/formatCreateMediaData.js ***!
+  \*******************************************************************************/
 /*! exports provided: formatCreateMediaData */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -38834,204 +38959,143 @@ var formatCreateMediaData = function formatCreateMediaData(url, alt, post_id) {
 
 /***/ }),
 
-/***/ "./src/packages/helpers/src/index.js":
-/*!*******************************************!*\
-  !*** ./src/packages/helpers/src/index.js ***!
-  \*******************************************/
-/*! exports provided: escURLRaw, urlSearchParams, getLanguage, getYOffset, getXOffset, scrollTo, hash, getNonce, getRestNonce, getAjaxNonce, getPostEditLink, sendApiRequest, getApiEndpoint, getUrlWithParams, decodeHTMLEntities, sprintf, escHTML, decodeQuotes, getPluginDirUrl, combineSubReducers, oldServerData, newServerData */
+/***/ "./src/packages/image/src/components/Image.js":
+/*!****************************************************!*\
+  !*** ./src/packages/image/src/components/Image.js ***!
+  \****************************************************/
+/*! exports provided: Image */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "escURLRaw", function() { return escURLRaw; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "urlSearchParams", function() { return urlSearchParams; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLanguage", function() { return getLanguage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getYOffset", function() { return getYOffset; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getXOffset", function() { return getXOffset; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scrollTo", function() { return scrollTo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hash", function() { return hash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getNonce", function() { return getNonce; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRestNonce", function() { return getRestNonce; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAjaxNonce", function() { return getAjaxNonce; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPostEditLink", function() { return getPostEditLink; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sendApiRequest", function() { return sendApiRequest; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getApiEndpoint", function() { return getApiEndpoint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUrlWithParams", function() { return getUrlWithParams; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "decodeHTMLEntities", function() { return decodeHTMLEntities; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sprintf", function() { return sprintf; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "escHTML", function() { return escHTML; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "decodeQuotes", function() { return decodeQuotes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPluginDirUrl", function() { return getPluginDirUrl; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "combineSubReducers", function() { return combineSubReducers; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "oldServerData", function() { return oldServerData; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "newServerData", function() { return newServerData; });
-/* harmony import */ var _news_parser_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/config */ "./src/packages/config/src/index.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Image", function() { return Image; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _news_parser_config___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @news-parser/config/ */ "./src/packages/config/src/index.js");
+/* harmony import */ var globals__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! globals */ "globals");
+/* harmony import */ var globals__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(globals__WEBPACK_IMPORTED_MODULE_3__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-var escURLRaw = function escURLRaw(url) {
-  return url.replace(/[^-A-Za-z0-9+&@#/%?=~_|!.]/g, encodeURIComponent("$&"));
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+
+
+
+
+/**
+ * Image component with lazy load.
+ * 
+ * @since 0.8.0
+ */
+
+var Image =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Image, _React$Component);
+
+  function Image(props) {
+    var _this;
+
+    _classCallCheck(this, Image);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Image).call(this, props));
+    _this.lazyLoad = _this.lazyLoad.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.imageRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    return _this;
+  }
+
+  _createClass(Image, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.lazyLoad();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.src !== this.props.src) {
+        this.lazyLoad();
+      }
+    }
+    /**
+     * Lazy loading
+     * 
+     * @param {object} item  
+     */
+
+  }, {
+    key: "lazyLoad",
+    value: function lazyLoad() {
+      var _this2 = this;
+
+      if (!this.props.src) return;
+      var src = this.props.src,
+          $this = this,
+          image = globals__WEBPACK_IMPORTED_MODULE_3__["document"].createElement('img');
+      image.src = src;
+
+      image.onload = function () {
+        console.log(_this2);
+        $this.imageRef.current.src = src;
+      };
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var src = this.props.defaultImage || _news_parser_config___WEBPACK_IMPORTED_MODULE_2__["default"].defaultImage;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: this.props.className || 'image-news-parser',
+        src: src,
+        alt: this.props.alt || '',
+        ref: this.imageRef
+      });
+    }
+  }]);
+
+  return Image;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+Image.propTypes = {
+  /**
+   * Image source path.
+   */
+  src: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool]).isRequired,
+
+  /**
+   * Image tag class name.
+   */
+  className: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
-function urlSearchParams(uri) {
-  if (!uri) return {};
-  var jsonParams = '{\"' + uri.replace(/&/g, '","').replace(/=/g, '":"').replace(/\?/g, "") + '\"}';
 
-  if (jsonParams) {
-    return JSON.parse(jsonParams);
-  }
+/***/ }),
 
-  return {};
-}
-function getLanguage() {
-  var className = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].lang.class;
-  return document.querySelector('.' + className).dataset['lang'].substring(0, 2);
-}
-function getYOffset() {
-  return window.pageYOffset;
-}
-function getXOffset() {
-  return window.pageXOffset;
-}
-function scrollTo(x, y) {
-  window.scrollTo(parseInt(x), parseInt(y));
-}
-function hash(str) {
-  var hash = 0,
-      char;
-  if (str.length == 0) return hash;
+/***/ "./src/packages/image/src/index.js":
+/*!*****************************************!*\
+  !*** ./src/packages/image/src/index.js ***!
+  \*****************************************/
+/*! exports provided: Image */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-  for (var i = 0, end = str.length; i < end; i++) {
-    char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash; // Convert to 32bit integer
-  }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_Image__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Image */ "./src/packages/image/src/components/Image.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Image", function() { return _components_Image__WEBPACK_IMPORTED_MODULE_0__["Image"]; });
 
-  return Math.abs(hash);
-}
-function getNonce(params) {
-  var id = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].nonce.id[params.page],
-      dataset = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].nonce.dataset[params.page][params.action];
-  var nonce = document.getElementById(id).dataset[dataset];
-  return nonce;
-}
-function getRestNonce() {
-  var nonce = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].nonce.rest;
-  return nonce;
-}
-function getAjaxNonce() {
-  var nonce = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].nonce.ajax;
-  return nonce;
-}
-function getPostEditLink(id) {
-  var linkTemplate = newsParserSettings.editPostLink;
-  return linkTemplate.replace('$postId', id);
-}
-function sendApiRequest(_ref) {
-  var url = _ref.url,
-      nonce = _ref.nonce,
-      method = _ref.method,
-      data = _ref.data;
-  var options = {
-    method: method,
-    headers: {
-      'X-WP-Nonce': nonce,
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  };
-  data && (options.body = data);
-  return fetch(url, options);
-}
-function getApiEndpoint(api) {
-  var endpoint = newsParserApiEndpoints[api];
-  return endpoint;
-}
-function getUrlWithParams(params) {
-  var url = window.location.pathname + window.location.search;
-  var search = '';
-  Object.keys(params).forEach(function (key) {
-    search += '&' + key + '=' + encodeURIComponent(params[key]);
-  });
-  return url + search;
-}
-function decodeHTMLEntities(text) {
-  var entities = [['amp', '&'], ['apos', '\''], ['#x27', '\''], ['#x2F', '/'], ['#39', '\''], ['#47', '/'], ['lt', '<'], ['gt', '>'], ['nbsp', ' '], ['quot', '"']];
 
-  for (var i = 0, max = entities.length; i < max; ++i) {
-    text = text.replace(new RegExp('&' + entities[i][0] + ';', 'g'), entities[i][1]);
-  }
-
-  return text;
-}
-function sprintf(text) {
-  var args = [].slice.call(arguments, 1),
-      i = 0;
-  return text.replace(/%s/g, function () {
-    return args[i++];
-  }).replace(/\%(\d)\$s/g, function (match, p) {
-    return args[p - 1];
-  });
-}
-function escHTML(html) {
-  var tempDiv = document.createElement('div'),
-      escapedString;
-  tempDiv.textContent = html;
-  return tempDiv.innerText;
-}
-function decodeQuotes(text) {
-  return text.replace(/&quot;/g, '"');
-}
-function getPluginDirUrl() {
-  return newsParserSettings.pluginUrl;
-}
-function combineSubReducers(parentReducer) {
-  var _this = this;
-
-  var childReducers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  return function (state, action) {
-    var newState = parentReducer(state, action);
-
-    for (var reducerName in childReducers) {
-      newState[reducerName] = childReducers[reducerName].call(_this, newState[reducerName], action);
-    }
-
-    return newState;
-  };
-}
-function oldServerData(data) {
-  var options = {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/x-www-form-urlencoded',
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  };
-
-  if (data) {
-    var paramName = Object.keys(data);
-    var body = '';
-    paramName.forEach(function (item) {
-      body = +body ? '&' + encodeURIComponent(item) + '=' + objectToUrlEncoded(data[item]) : encodeURIComponent(item) + '=' + objectToUrlEncoded(data[item]);
-    });
-    options.body = body;
-  }
-
-  return options;
-}
-function newServerData(body) {
-  var options = {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-  };
-  if (body) options.body = JSON.stringify(body);
-  return options;
-}
-
-function objectToUrlEncoded(obj) {
-  return encodeURIComponent(JSON.stringify(obj));
-}
-
-var nonceSettingsPage = null;
 
 /***/ }),
 
@@ -39074,6 +39138,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _news_parser_helpers___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @news-parser/helpers/ */ "./src/packages/helpers/src/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39091,6 +39156,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 
 
 
@@ -39203,23 +39269,19 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 function mapStateToProps(state) {
-  var type = state.parse.message ? state.parse.message.type : undefined,
-      text = state.parse.message ? state.parse.message.text : undefined,
-      timestamp = state.parse.message ? state.parse.message.timestamp : undefined;
+  var _state$parse$message = state.parse.message,
+      type = _state$parse$message.type,
+      text = _state$parse$message.text,
+      timestamp = _state$parse$message.timestamp;
   return {
     type: type,
-    text: text,
+    text: text ? Object(_news_parser_helpers___WEBPACK_IMPORTED_MODULE_3__["decodeHTMLEntities"])(text) : '',
     timestamp: timestamp
   };
 }
 
 ;
 Message.propTypes = {
-  /**
-   * Message window status.
-   */
-  open: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool.isRequired,
-
   /**
    * Message type [error,info,success]
    */
@@ -39233,7 +39295,7 @@ Message.propTypes = {
   /**
    * Timestamp of the message.
    */
-  time: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+  timestamp: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
 };
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps)(Message));
 
@@ -39406,223 +39468,6 @@ var openDialog = function openDialog(_id, url, type) {
     }
   };
 };
-
-/***/ }),
-
-/***/ "./src/packages/parser-rss/src/actions/index.js":
-/*!******************************************************!*\
-  !*** ./src/packages/parser-rss/src/actions/index.js ***!
-  \******************************************************/
-/*! exports provided: types, requestPostsList, setRoute, requestPost, receivePostsList, receiveError, receivePost, selectPost, openDialog, closeDialog, fetchError, parseRSSList, parseSelected, parsePage */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "types", function() { return types; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestPostsList", function() { return requestPostsList; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setRoute", function() { return setRoute; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestPost", function() { return requestPost; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receivePostsList", function() { return receivePostsList; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveError", function() { return receiveError; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receivePost", function() { return receivePost; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectPost", function() { return selectPost; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "openDialog", function() { return openDialog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "closeDialog", function() { return closeDialog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchError", function() { return fetchError; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseRSSList", function() { return parseRSSList; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseSelected", function() { return parseSelected; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parsePage", function() { return parsePage; });
-/* harmony import */ var _news_parser_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/config */ "./src/packages/config/src/index.js");
-/* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
-/* harmony import */ var _news_parser_message_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @news-parser/message/actions */ "./src/packages/message/src/actions/index.js");
-
-
-
-var types = {
-  API_REQUEST: 'API_REQUEST',
-  API_SUCCESS: 'API_SUCCESS',
-  REQUEST_POSTS_LIST: 'REQUEST_POSTS_LIST',
-  REQUEST_SINGLE_POST: 'REQUEST_SINGLE_POST',
-  RECEIVE_POSTS_LIST: 'RECEIVE_POSTS_LIST',
-  RECEIVE_SINGLE_POST: 'RECEIVE_SINGLE_POST',
-  SELECT_POST: 'SELECT_POST',
-  RECEIVE_ERROR: 'RECEIVE_ERROR',
-  SET_ROUTE: 'SET_ROUTE',
-  OPEN_DIALOG: 'OPEN_DIALOG',
-  CLOSE_DIALOG: 'CLOSE_DIALOG',
-  CREATE_MESSAGE: 'CREATE_MESSAGE',
-  FETCH_ERROR: 'FETCH_ERROR',
-  OPEN_VISUAL_CONSTRUCTOR: 'OPEN_VISUAL_CONSTRUCTOR',
-  CLOSE_VISUAL_CONSTRUCTOR: 'CLOSE_VISUAL_CONSTRUCTOR'
-};
-function requestPostsList(url) {
-  return {
-    type: types.REQUEST_POSTS_LIST,
-    url: url
-  };
-}
-function setRoute(params) {
-  return {
-    type: types.SET_ROUTE,
-    page: params.page,
-    action: params.action || false,
-    url: params.url ? decodeURIComponent(params.url) : false
-  };
-}
-function requestPost(url, id) {
-  return {
-    type: types.REQUEST_SINGLE_POST,
-    url: url,
-    id: id
-  };
-}
-function receivePostsList(url, posts) {
-  return {
-    type: types.RECEIVE_POSTS_LIST,
-    url: url,
-    posts: posts,
-    date: false
-  };
-}
-function receiveError(data) {
-  return {
-    type: types.RECEIVE_ERROR,
-    data: data
-  };
-}
-function receivePost(url, post) {
-  return {
-    type: types.RECEIVE_SINGLE_POST,
-    url: url,
-    post: post,
-    date: false
-  };
-}
-function selectPost(_id) {
-  return {
-    type: types.SELECT_POST,
-    _id: _id
-  };
-}
-function openDialog(url, dialogData) {
-  var dialog = dialogData.dialog;
-
-  switch (dialog.type) {
-    case 'visualConstructor':
-      var additionalData = {
-        url: url,
-        isFetching: false,
-        rawHTML: false,
-        parsedData: {}
-      };
-      dialog = Object.assign(dialog, additionalData);
-      break;
-  }
-
-  dialogData.dialog = dialog;
-  return {
-    type: types.OPEN_DIALOG,
-    url: url,
-    data: dialogData
-  };
-}
-function closeDialog() {
-  return {
-    type: types.CLOSE_DIALOG
-  };
-}
-function fetchError(error) {
-  return {
-    type: types.FETCH_ERROR,
-    data: {
-      error: 1,
-      msg: {
-        type: 'error',
-        text: 'Error connecting to the server.',
-        timestamp: Date.now()
-      }
-    }
-  };
-}
-/**
- * Send parse RSS request to the server.And dispatch resieced data. 
- * 
- * @param {function} dispatch
- * @param {string} url
- */
-
-function parseRSSList(dispatch, url) {
-  dispatch(requestPostsList(url));
-  var nonce = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["getAjaxNonce"])();
-  var requestUrl = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].parsingApi.list + encodeURIComponent(url) + '&_wpnonce=' + nonce;
-  var parameters = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].emulateJSON ? Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["oldServerData"])() : Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["newServerData"])();
-  return function (dispatch) {
-    return fetch(requestUrl, parameters).then(function (response) {
-      return response.json();
-    }).then(function (json) {
-      if (!json.err) {
-        dispatch(receivePostsList(url, json));
-      } else {
-        dispatch(receiveError(json));
-      }
-    }).catch(function (error) {
-      dispatch(fetchError(error));
-    });
-  };
-}
-/**
- * Send parse request to server for posts array.
- * 
- * @param {function} dispatch 
- * @param {array} selectedPosts 
- */
-
-function parseSelected(dispatch, selectedPosts) {
-  return function (dispatch) {
-    var promise = new Promise(function (resolve) {
-      resolve();
-    });
-    selectedPosts.forEach(function (post) {
-      promise.then(function () {
-        return dispatch(parsePage(dispatch, post.link, post._id));
-      });
-    });
-    return promise;
-  };
-}
-/**
- * 
- * @param {function} dispatch 
- * @param {string} url Page url.
- * @param {string} postInnerIndex Index in posts array.
- */
-
-function parsePage(dispatch, url, postInnerIndex) {
-  var nonce = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["getAjaxNonce"])(),
-      requestUrl = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].parsingApi.multi + encodeURIComponent(url) + '&_wpnonce=' + nonce,
-      parameters = _news_parser_config__WEBPACK_IMPORTED_MODULE_0__["default"].emulateJSON ? Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["oldServerData"])() : Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__["newServerData"])();
-  dispatch(requestPost(url, postInnerIndex));
-  return function (dispatch) {
-    return fetch(requestUrl, parameters).then(function (response) {
-      return response.json();
-    }).then(function (json) {
-      if (json) {
-        switch (true) {
-          case json.data !== undefined:
-            json.data._id = postInnerIndex;
-            dispatch(receivePost(url, json));
-            break;
-
-          case json.err == 1:
-            dispatch(receiveError(json));
-            break;
-        }
-      }
-    }).catch(function (error) {
-      dispatch(fetchError(error));
-    });
-  };
-}
 
 /***/ }),
 
@@ -39804,107 +39649,6 @@ Icons.propTypes = {
    * @param {object} event Event object.
    */
   onClick: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
-};
-
-/***/ }),
-
-/***/ "./src/packages/parser-rss/src/components/Image.js":
-/*!*********************************************************!*\
-  !*** ./src/packages/parser-rss/src/components/Image.js ***!
-  \*********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-
-
-/**
- * Image component with lazy load.
- * 
- * @since 0.8.0
- */
-
-var Image =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(Image, _React$Component);
-
-  function Image(props) {
-    var _this;
-
-    _classCallCheck(this, Image);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Image).call(this, props));
-    _this.onLoad = _this.onLoad.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    return _this;
-  }
-  /**
-   * Lazy loading
-   * 
-   * @param {object} item  
-   */
-
-
-  _createClass(Image, [{
-    key: "onLoad",
-    value: function onLoad(item) {
-      var src = this.props.src,
-          el = item.target,
-          image = new Image();
-      image.src = src;
-
-      image.onload = function () {
-        el.src = src;
-      };
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: this.props.className || 'image-news-parser',
-        src: this.props.src,
-        alt: ""
-      });
-    }
-  }]);
-
-  return Image;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-/* harmony default export */ __webpack_exports__["default"] = (Image);
-Image.propTypes = {
-  /**
-   * Image source path.
-   */
-  src: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-
-  /**
-   * Image tag class name.
-   */
-  className: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
 
 /***/ }),
@@ -40137,15 +39881,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions */ "./src/packages/parser-rss/src/actions/index.js");
-/* harmony import */ var _actions_app_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/app.actions */ "./src/packages/parser-rss/src/actions/app.actions.js");
-/* harmony import */ var _actions_list_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../actions/list.actions */ "./src/packages/parser-rss/src/actions/list.actions.js");
-/* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
-/* harmony import */ var _constants___WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../constants/ */ "./src/packages/parser-rss/src/constants/index.js");
+/* harmony import */ var _actions_app_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/app.actions */ "./src/packages/parser-rss/src/actions/app.actions.js");
+/* harmony import */ var _actions_list_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/list.actions */ "./src/packages/parser-rss/src/actions/list.actions.js");
+/* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
+/* harmony import */ var _constants___WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../constants/ */ "./src/packages/parser-rss/src/constants/index.js");
+/* harmony import */ var _news_parser_visual_constructor_constants___WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @news-parser/visual-constructor/constants/ */ "./src/packages/visual-constructor/src/constants/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Translate__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Translate */ "./src/packages/parser-rss/src/containers/Translate.js");
 /* harmony import */ var _actions_page_actions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../actions/page.actions */ "./src/packages/parser-rss/src/actions/page.actions.js");
+/* harmony import */ var _news_parser_message___WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @news-parser/message/ */ "./src/packages/message/src/index.js");
+/* harmony import */ var globals__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! globals */ "globals");
+/* harmony import */ var globals__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(globals__WEBPACK_IMPORTED_MODULE_11__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -40163,6 +39910,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+
 
 
 
@@ -40215,7 +39964,7 @@ function (_React$Component) {
         inputValue: event.target.value
       });
     }
-    /**
+    /**                                                                                                                                                                                                                                                                                                                                                                                                                                         
      * Handles parse single page submit.
      * 
      * @param {object} event Click event object. 
@@ -40224,14 +39973,12 @@ function (_React$Component) {
   }, {
     key: "handleParsePageSubmit",
     value: function handleParsePageSubmit(event) {
-      event.preventDefault();
-      if (this.props.isFetching) return;
-      this.props.openVisualConstructor(this.state.inputValue, {
-        dialog: {
-          postId: undefined,
-          type: 'visualConstructor'
-        }
-      });
+      if (!this.state.inputValue) {
+        this.props.showMessage('info', 'Please input page URL.');
+        return;
+      }
+
+      this.props.openVisualConstructor(this.state.inputValue);
     }
     /**
      * Handles parse RSS posts list submit. 
@@ -40242,14 +39989,12 @@ function (_React$Component) {
   }, {
     key: "handleParseListSubmit",
     value: function handleParseListSubmit(event) {
-      event.preventDefault();
       var params = {
-        entity: _constants___WEBPACK_IMPORTED_MODULE_6__["LIST"],
+        entity: _constants___WEBPACK_IMPORTED_MODULE_5__["LIST"],
         url: this.state.inputValue
-      };
-      var url = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_5__["getUrlWithParams"])(params);
-      window.history.pushState(null, null, url);
-      window.location.reload();
+      },
+          url = Object(_news_parser_helpers__WEBPACK_IMPORTED_MODULE_4__["encodeUrlWithParams"])(params);
+      globals__WEBPACK_IMPORTED_MODULE_11__["location"].assign(url);
     }
     /**
      * Handles parse multiple selected from RSS list posts submit. 
@@ -40260,9 +40005,8 @@ function (_React$Component) {
   }, {
     key: "handleParseSelected",
     value: function handleParseSelected(event) {
-      event.preventDefault();
-
-      if (!this.props.posts) {
+      if (this.props.isFetching) {
+        this.props.showMessage('info', 'Application in process of parsing.Please be patient.');
         return;
       }
 
@@ -40319,31 +40063,26 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 function mapStateToProps(state) {
-  var posts = state.parse.items.data;
   return {
-    value: state.parse.appState.data.url || '',
     page: state.route.page,
-    isFetching: state.parse.isFetching,
-    posts: posts
+    value: state.parse.appState.data.url || '',
+    isFetching: state.parse.isFetching
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     parseList: function parseList(url) {
-      dispatch(Object(_actions_list_actions__WEBPACK_IMPORTED_MODULE_4__["fetchList"])(url));
+      dispatch(Object(_actions_list_actions__WEBPACK_IMPORTED_MODULE_3__["fetchList"])(url));
     },
-    parsePage: function parsePage(url) {
-      dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["parsePage"])(dispatch, url));
-    },
-    openVisualConstructor: function openVisualConstructor(url, dialogData) {
-      dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["openDialog"])(url, dialogData));
+    openVisualConstructor: function openVisualConstructor(url) {
+      dispatch(Object(_actions_app_actions__WEBPACK_IMPORTED_MODULE_2__["openDialog"])(0, url, _news_parser_visual_constructor_constants___WEBPACK_IMPORTED_MODULE_6__["VISUAL_CONSTRUCTOR"]));
     },
     parseSelected: function parseSelected() {
       dispatch(Object(_actions_page_actions__WEBPACK_IMPORTED_MODULE_9__["parseSelected"])());
     },
-    message: function message(type, text) {
-      dispatch(Object(_actions_app_actions__WEBPACK_IMPORTED_MODULE_3__["showMessage"])(type, text));
+    showMessage: function showMessage(type, text) {
+      dispatch(Object(_news_parser_message___WEBPACK_IMPORTED_MODULE_10__["showMessage"])(type, text));
     }
   };
 }
@@ -40351,46 +40090,8 @@ function mapDispatchToProps(dispatch) {
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(InputForm));
 InputForm.propTypes = {
   /**
-   * Action handles parsing RSS list
-   * 
-   * @param {string} url Url of RSS file.
-   */
-  parseList: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
-
-  /**
-   * Action handles parse single page.
-   * 
-   * @param {string} url Url of the page.
-   * @param {string} innerPostIndex Index of the post in array(optional).
-   */
-  parsePage: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
-
-  /**
-   * Open visual constructor modal window to select content manually 
-   * or create p[arsing template rules. 
-   * 
-   * @param {string} url url of the page.
-   */
-  openVisualConstructor: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
-
-  /**
-   * Parse selected post from RSS list and create drafts.
-   * 
-   * @param {array} posts Array of selected posts.
-   */
-  parseSelected: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
-
-  /**
-   * Show message.
-   * 
-   * @param {string} type Type of the massage [info|error|success]
-   * @param {string} text Text of the message.
-   */
-  message: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
-
-  /**
-   * Input element value. 
-   */
+  * Input element value. 
+  */
   value: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string,
 
   /**
@@ -40404,9 +40105,33 @@ InputForm.propTypes = {
   isFetching: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.bool,
 
   /**
-   * Selected from RSS list posts.
+   * Action handles parsing RSS list
+   * 
+   * @param {string} url Url of RSS file.
    */
-  posts: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.array
+  parseList: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
+
+  /**
+   * Open visual constructor modal window to select content manually 
+   * or create p[arsing template rules. 
+   * 
+   * @param {string} url url of the page.
+   */
+  openVisualConstructor: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
+
+  /**
+   * Parse selected post from RSS list and create drafts.
+   * 
+   */
+  parseSelected: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
+
+  /**
+   * Show message.
+   * 
+   * @param {string} type Type of the massage [info|error|success]
+   * @param {string} text Text of the message.
+   */
+  showMessage: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired
 };
 
 /***/ }),
@@ -40530,15 +40255,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Post", function() { return Post; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_Image__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Image */ "./src/packages/parser-rss/src/components/Image.js");
+/* harmony import */ var _news_parser_image___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @news-parser/image/ */ "./src/packages/image/src/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions */ "./src/packages/parser-rss/src/actions/index.js");
-/* harmony import */ var _actions_app_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../actions/app.actions */ "./src/packages/parser-rss/src/actions/app.actions.js");
-/* harmony import */ var _actions_post_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../actions/post.actions */ "./src/packages/parser-rss/src/actions/post.actions.js");
-/* harmony import */ var _components_Icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/Icons */ "./src/packages/parser-rss/src/components/Icons.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _news_parser_visual_constructor_constants__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @news-parser/visual-constructor/constants */ "./src/packages/visual-constructor/src/constants/index.js");
+/* harmony import */ var _actions_app_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/app.actions */ "./src/packages/parser-rss/src/actions/app.actions.js");
+/* harmony import */ var _actions_post_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../actions/post.actions */ "./src/packages/parser-rss/src/actions/post.actions.js");
+/* harmony import */ var _components_Icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Icons */ "./src/packages/parser-rss/src/components/Icons.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _news_parser_visual_constructor_constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @news-parser/visual-constructor/constants */ "./src/packages/visual-constructor/src/constants/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -40556,7 +40280,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 
 
 
@@ -40611,17 +40334,17 @@ function (_React$Component) {
           newWindow.focus();
         };
 
-        footer.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Icons__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        footer.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Icons__WEBPACK_IMPORTED_MODULE_5__["default"], {
           className: "fo fo-edit",
           title: "Edit post",
           onClick: onClickEditPost
         }));
       } else {
-        footer.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Icons__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        footer.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Icons__WEBPACK_IMPORTED_MODULE_5__["default"], {
           className: 'fo fo-select' + (select === true ? ' icon-selected' : ''),
           title: select === true ? 'Unselect post' : 'Select post',
           onClick: this.selectPost
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Icons__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Icons__WEBPACK_IMPORTED_MODULE_5__["default"], {
           className: "fo fo-visual-constructor",
           title: "Visual constructor",
           onClick: this.openVisualConstructor
@@ -40670,7 +40393,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "img-post-link",
         href: this.props.link
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Image__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_news_parser_image___WEBPACK_IMPORTED_MODULE_1__["Image"], {
         className: "post-image",
         src: this.props.image
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -40702,17 +40425,14 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    parsePage: function parsePage(url, id) {
-      dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_3__["parsePage"])(dispatch, url, id));
-    },
     message: function message(type, text) {
-      dispatch(Object(_actions_app_actions__WEBPACK_IMPORTED_MODULE_4__["showMessage"])(type, text));
+      dispatch(Object(_actions_app_actions__WEBPACK_IMPORTED_MODULE_3__["showMessage"])(type, text));
     },
     openVisualConstructor: function openVisualConstructor(_id, url) {
-      dispatch(Object(_actions_app_actions__WEBPACK_IMPORTED_MODULE_4__["openDialog"])(_id, url, _news_parser_visual_constructor_constants__WEBPACK_IMPORTED_MODULE_8__["VISUAL_CONSTRUCTOR"]));
+      dispatch(Object(_actions_app_actions__WEBPACK_IMPORTED_MODULE_3__["openDialog"])(_id, url, _news_parser_visual_constructor_constants__WEBPACK_IMPORTED_MODULE_7__["VISUAL_CONSTRUCTOR"]));
     },
     selectPost: function selectPost(_id) {
-      dispatch(Object(_actions_post_actions__WEBPACK_IMPORTED_MODULE_5__["togglePostSelect"])(_id));
+      dispatch(Object(_actions_post_actions__WEBPACK_IMPORTED_MODULE_4__["togglePostSelect"])(_id));
     }
   };
 }
@@ -40722,50 +40442,42 @@ Post.propTypes = {
   /**
    * Fetching state.
    */
-  isFetching: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.bool,
+  isFetching: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.bool,
 
   /**
    *  Post status. 
    */
-  status: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOf(['draft', 'parsed', 'selected']).isRequired,
+  status: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOf(['draft', 'parsed', 'selected']).isRequired,
 
   /**
    * Post title.
    */
-  title: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string.isRequired,
+  title: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string.isRequired,
 
   /**
    * Post image.
    */
-  image: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string.isRequired,
+  image: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string.isRequired,
 
   /**
    * Post description.
    */
-  description: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string.isRequired,
+  description: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string.isRequired,
 
   /**
    * Link to the source.
    */
-  link: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string.isRequired,
+  link: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string.isRequired,
 
   /**
    * Date pf post publication.
    */
-  pubDate: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string.isRequired,
+  pubDate: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string.isRequired,
 
   /**
    * Link to the wordpress post editor.
    */
-  editLink: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string,
-
-  /**
-   * Action handles parse single page.
-   * 
-   * @param {string} url Url of the page.
-   * @param {string} innerPostIndex Index of the post in array(optional).
-   */
-  parsePage: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
+  editLink: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string,
 
   /**
    * Show message.
@@ -40773,7 +40485,7 @@ Post.propTypes = {
    * @param {string} type Type of the massage [info|error|success]
    * @param {string} text Text of the message.
    */
-  message: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
+  message: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func.isRequired,
 
   /**
    * Open visual constructor modal window to select content manually 
@@ -40781,14 +40493,14 @@ Post.propTypes = {
    * 
    * @param {string} url url of the page.
    */
-  openVisualConstructor: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
+  openVisualConstructor: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func.isRequired,
 
   /**
    * Select post action.
    * 
    * @param {string} _id inner array index (not wordpress post_id)
    */
-  selectPost: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired
+  selectPost: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func.isRequired
 };
 
 /***/ }),
@@ -41018,6 +40730,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_api_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/api.actions */ "./src/packages/parser-rss/src/actions/api.actions.js");
 /* harmony import */ var _actions_app_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/app.actions */ "./src/packages/parser-rss/src/actions/app.actions.js");
 /* harmony import */ var _actions_list_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/list.actions */ "./src/packages/parser-rss/src/actions/list.actions.js");
+/* harmony import */ var _news_parser_helpers___WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @news-parser/helpers/ */ "./src/packages/helpers/src/index.js");
+
 
 
 
@@ -41046,6 +40760,8 @@ var listMiddleware = function listMiddleware(_ref) {
               data = _action$payload$respo.data,
               posts = data.map(function (post, index) {
             post._id = parseInt(index);
+            post.description = Object(_news_parser_helpers___WEBPACK_IMPORTED_MODULE_4__["decodeHTMLEntities"])(post.description);
+            post.title = Object(_news_parser_helpers___WEBPACK_IMPORTED_MODULE_4__["decodeHTMLEntities"])(post.title);
             return post;
           });
           dispatch(Object(_actions_list_actions__WEBPACK_IMPORTED_MODULE_3__["setList"])(posts));
@@ -41208,10 +40924,12 @@ var postMiddleware = function postMiddleware(store) {
       switch (action.type) {
         case _actions_post_actions__WEBPACK_IMPORTED_MODULE_1__["TOGGLE_SELECT_POST"]:
           var _id = action.payload._id,
-              currentPostSelectState = store.getState().parse.items.select[_id],
+              dispatch = store.dispatch,
+              getState = store.getState,
+              currentPostSelectState = getState().parse.items.select[_id],
               event = currentPostSelectState ? _constants___WEBPACK_IMPORTED_MODULE_0__["DELETE"] : _constants___WEBPACK_IMPORTED_MODULE_0__["INSERT"];
 
-          store.dispatch(Object(_actions_post_actions__WEBPACK_IMPORTED_MODULE_1__["setPostMeta"])(_constants___WEBPACK_IMPORTED_MODULE_0__["SELECT"], event, _id));
+          dispatch(Object(_actions_post_actions__WEBPACK_IMPORTED_MODULE_1__["setPostMeta"])(_constants___WEBPACK_IMPORTED_MODULE_0__["SELECT"], event, _id));
           break;
       }
     };
@@ -41230,7 +40948,7 @@ var postMiddleware = function postMiddleware(store) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "apiMiddleware", function() { return apiMiddleware; });
-/* harmony import */ var _news_parser_helpers_classes_Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/helpers/classes/Api */ "./src/packages/helpers/src/classes/Api.js");
+/* harmony import */ var _news_parser_helpers_api_Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/helpers/api/Api */ "./src/packages/helpers/src/api/Api.js");
 /* harmony import */ var _news_parser_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @news-parser/config */ "./src/packages/config/src/index.js");
 /* harmony import */ var _actions_api_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/api.actions */ "./src/packages/parser-rss/src/actions/api.actions.js");
 
@@ -41251,7 +40969,7 @@ var apiMiddleware = function apiMiddleware(_ref) {
             type = _news_parser_config__WEBPACK_IMPORTED_MODULE_1__["default"].api[entity][event].type,
             nonce = _news_parser_config__WEBPACK_IMPORTED_MODULE_1__["default"].api[entity][event].nonce,
             url = _news_parser_config__WEBPACK_IMPORTED_MODULE_1__["default"].api[entity][event].url;
-        return _news_parser_helpers_classes_Api__WEBPACK_IMPORTED_MODULE_0__["api"].request(url, {
+        return _news_parser_helpers_api_Api__WEBPACK_IMPORTED_MODULE_0__["api"].request(url, {
           type: type,
           method: method,
           nonce: nonce,
@@ -41358,16 +41076,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "draftPostMeta", function() { return draftPostMeta; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "route", function() { return route; });
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions */ "./src/packages/parser-rss/src/actions/index.js");
-/* harmony import */ var _initState__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./initState */ "./src/packages/parser-rss/src/reducers/initState.js");
-/* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
-/* harmony import */ var _constants_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../constants/index */ "./src/packages/parser-rss/src/constants/index.js");
-/* harmony import */ var _news_parser_message_reducers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @news-parser/message/reducers */ "./src/packages/message/src/reducers/index.js");
-/* harmony import */ var _actions_api_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../actions/api.actions */ "./src/packages/parser-rss/src/actions/api.actions.js");
-/* harmony import */ var _actions_list_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../actions/list.actions */ "./src/packages/parser-rss/src/actions/list.actions.js");
-/* harmony import */ var _actions_app_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../actions/app.actions */ "./src/packages/parser-rss/src/actions/app.actions.js");
-/* harmony import */ var _actions_post_actions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../actions/post.actions */ "./src/packages/parser-rss/src/actions/post.actions.js");
-/* harmony import */ var _dialog__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./dialog */ "./src/packages/parser-rss/src/reducers/dialog.js");
+/* harmony import */ var _actions_route_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/route.actions */ "./src/packages/parser-rss/src/actions/route.actions.js");
+/* harmony import */ var _news_parser_message_reducers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @news-parser/message/reducers */ "./src/packages/message/src/reducers/index.js");
+/* harmony import */ var _actions_api_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/api.actions */ "./src/packages/parser-rss/src/actions/api.actions.js");
+/* harmony import */ var _actions_list_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../actions/list.actions */ "./src/packages/parser-rss/src/actions/list.actions.js");
+/* harmony import */ var _actions_app_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../actions/app.actions */ "./src/packages/parser-rss/src/actions/app.actions.js");
+/* harmony import */ var _actions_post_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../actions/post.actions */ "./src/packages/parser-rss/src/actions/post.actions.js");
+/* harmony import */ var _constants_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants/index */ "./src/packages/parser-rss/src/constants/index.js");
+/* harmony import */ var _dialog__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./dialog */ "./src/packages/parser-rss/src/reducers/dialog.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -41379,9 +41095,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
 
 
 
@@ -41414,18 +41127,18 @@ function parse() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case _actions_api_actions__WEBPACK_IMPORTED_MODULE_6__["START_FETCHING"]:
+    case _actions_api_actions__WEBPACK_IMPORTED_MODULE_3__["START_FETCHING"]:
       return _objectSpread({}, state, {
         isFetching: true,
         fetchingData: _objectSpread({}, action.payload)
       });
 
-    case _actions_api_actions__WEBPACK_IMPORTED_MODULE_6__["STOP_FETCHING"]:
+    case _actions_api_actions__WEBPACK_IMPORTED_MODULE_3__["STOP_FETCHING"]:
       return _objectSpread({}, state, {
         isFetching: false
       });
 
-    case _actions_app_actions__WEBPACK_IMPORTED_MODULE_8__["SET_APP_STATE"]:
+    case _actions_app_actions__WEBPACK_IMPORTED_MODULE_5__["SET_APP_STATE"]:
       return _objectSpread({}, state, {
         entity: action.payload.entity,
         event: action.payload.event,
@@ -41438,7 +41151,7 @@ function parse() {
 }
 var selectPostMeta = function selectPostMeta(state, action) {
   switch (action.type) {
-    case "[".concat(_constants_index__WEBPACK_IMPORTED_MODULE_4__["SELECT"], ":").concat(_constants_index__WEBPACK_IMPORTED_MODULE_4__["DELETE"], "]").concat(_actions_post_actions__WEBPACK_IMPORTED_MODULE_9__["POST_META"]):
+    case "[".concat(_constants_index__WEBPACK_IMPORTED_MODULE_7__["SELECT"], ":").concat(_constants_index__WEBPACK_IMPORTED_MODULE_7__["DELETE"], "]").concat(_actions_post_actions__WEBPACK_IMPORTED_MODULE_6__["POST_META"]):
       //ES9: const {[action.payload.postId],...newState}=state
       var newState = _objectSpread({}, state),
           _id = action.payload._id;
@@ -41446,7 +41159,7 @@ var selectPostMeta = function selectPostMeta(state, action) {
       delete newState[_id];
       return newState;
 
-    case "[".concat(_constants_index__WEBPACK_IMPORTED_MODULE_4__["SELECT"], ":").concat(_constants_index__WEBPACK_IMPORTED_MODULE_4__["INSERT"], "]").concat(_actions_post_actions__WEBPACK_IMPORTED_MODULE_9__["POST_META"]):
+    case "[".concat(_constants_index__WEBPACK_IMPORTED_MODULE_7__["SELECT"], ":").concat(_constants_index__WEBPACK_IMPORTED_MODULE_7__["INSERT"], "]").concat(_actions_post_actions__WEBPACK_IMPORTED_MODULE_6__["POST_META"]):
       console.log(action);
       return _objectSpread({}, state, _defineProperty({}, action.payload._id, true));
 
@@ -41456,7 +41169,7 @@ var selectPostMeta = function selectPostMeta(state, action) {
 };
 var draftPostMeta = function draftPostMeta(state, action) {
   switch (action.type) {
-    case "[".concat(_constants_index__WEBPACK_IMPORTED_MODULE_4__["DRAFT"], ":").concat(_constants_index__WEBPACK_IMPORTED_MODULE_4__["INSERT"], "]").concat(_actions_post_actions__WEBPACK_IMPORTED_MODULE_9__["POST_META"]):
+    case "[".concat(_constants_index__WEBPACK_IMPORTED_MODULE_7__["DRAFT"], ":").concat(_constants_index__WEBPACK_IMPORTED_MODULE_7__["INSERT"], "]").concat(_actions_post_actions__WEBPACK_IMPORTED_MODULE_6__["POST_META"]):
       var _action$payload = action.payload,
           _id = _action$payload._id,
           post_id = _action$payload.post_id,
@@ -41476,7 +41189,7 @@ var posts = function posts() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case _actions_list_actions__WEBPACK_IMPORTED_MODULE_7__["SET_LIST"]:
+    case _actions_list_actions__WEBPACK_IMPORTED_MODULE_4__["SET_LIST"]:
       return _toConsumableArray(action.payload.data);
 
     default:
@@ -41490,7 +41203,7 @@ function route() {
   };
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
-  if (action.type === _actions__WEBPACK_IMPORTED_MODULE_1__["types"].SET_ROUTE) {
+  if (action.type === _actions_route_actions__WEBPACK_IMPORTED_MODULE_1__["SET_ROUTE"]) {
     return _objectSpread({}, state, {
       page: action.payload.page
     });
@@ -41505,49 +41218,14 @@ var itemsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])
 }),
     parserReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   appState: parse,
-  dialog: _dialog__WEBPACK_IMPORTED_MODULE_10__["dialog"],
+  dialog: _dialog__WEBPACK_IMPORTED_MODULE_8__["dialog"],
   items: itemsReducer,
-  message: _news_parser_message_reducers__WEBPACK_IMPORTED_MODULE_5__["message"]
+  message: _news_parser_message_reducers__WEBPACK_IMPORTED_MODULE_2__["message"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   parse: parserReducer,
   route: route
 }));
-
-/***/ }),
-
-/***/ "./src/packages/parser-rss/src/reducers/initState.js":
-/*!***********************************************************!*\
-  !*** ./src/packages/parser-rss/src/reducers/initState.js ***!
-  \***********************************************************/
-/*! exports provided: initialStateParse, initialStateRoute */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialStateParse", function() { return initialStateParse; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialStateRoute", function() { return initialStateRoute; });
-var initialStateParse = {
-  appState: {
-    isFetching: false,
-    entity: 'main',
-    event: false,
-    data: {
-      url: ''
-    }
-  },
-  message: false,
-  dialog: false,
-  items: {
-    data: [],
-    select: {},
-    draft: {}
-  }
-};
-var initialStateRoute = {
-  action: false,
-  url: false
-};
 
 /***/ }),
 
@@ -41840,7 +41518,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
-/* harmony import */ var _news_parser_helpers_classes_Parser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @news-parser/helpers/classes/Parser */ "./src/packages/helpers/src/classes/Parser.js");
+/* harmony import */ var _news_parser_helpers_parser_Parser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @news-parser/helpers/parser/Parser */ "./src/packages/helpers/src/parser/Parser.js");
 /* harmony import */ var _actions_frame_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/frame.actions */ "./src/packages/visual-constructor/src/actions/frame.actions.js");
 /* harmony import */ var _actions_app_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../actions/app.actions */ "./src/packages/visual-constructor/src/actions/app.actions.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
@@ -41910,8 +41588,6 @@ function (_React$Component) {
   _createClass(Frame, [{
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      debugger;
-
       if (prevProps.data !== this.props.data && this.props.data) {
         this.initFrame();
       }
@@ -41949,7 +41625,7 @@ function (_React$Component) {
       doc.addEventListener('click', this.clickHandler);
       var imgArray = doc.getElementsByTagName('img');
       this.imageLazyLoad(imgArray);
-      this.parser = new _news_parser_helpers_classes_Parser__WEBPACK_IMPORTED_MODULE_2__["Parser"](this.frameRef);
+      this.parser = new _news_parser_helpers_parser_Parser__WEBPACK_IMPORTED_MODULE_2__["Parser"](this.frameRef);
       this.props.frameIsReady();
     }
     /**
@@ -42091,10 +41767,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var frameClassName = this.props.isReady ? 'news-parser-frame' : 'transparent';
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("iframe", {
         id: "visual-constructor",
-        className: frameClassName,
         frameBorder: "0",
         ref: this.frameRef,
         onMouseOver: this.mouseOver,
@@ -42108,12 +41782,9 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 function mapStateToProps(state) {
-  var _state$parse$dialog$v = state.parse.dialog.visualConstructor.dialogData,
-      rawHTML = _state$parse$dialog$v.rawHTML,
-      frameIsReady = _state$parse$dialog$v.frameIsReady;
+  var rawHTML = state.parse.dialog.visualConstructor.dialogData.rawHTML;
   return {
-    data: rawHTML,
-    isReady: frameIsReady
+    data: rawHTML
   };
 }
 
@@ -42142,7 +41813,7 @@ Frame.propTypes = {
   /**
    * HTML data that should be write to the iFrame.
    */
-  data: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string.isRequired,
+  data: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.bool, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string]).isRequired,
 
   /**
    * Select title action.Set post title.
@@ -42171,7 +41842,12 @@ Frame.propTypes = {
    * 
    * @param {string} hash Content key.
    */
-  removeContent: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired
+  removeContent: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
+
+  /**
+   * Set Frame status as ready.
+   */
+  frameIsReady: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired
 };
 
 /***/ }),
@@ -42191,11 +41867,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../containers/InfoBox */ "./src/packages/visual-constructor/src/containers/InfoBox.js");
 /* harmony import */ var _containers_elements_Checkbox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../containers/elements/Checkbox */ "./src/packages/visual-constructor/src/containers/elements/Checkbox.js");
 /* harmony import */ var _containers_elements_Input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../containers/elements/Input */ "./src/packages/visual-constructor/src/containers/elements/Input.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_options_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../actions/options.actions */ "./src/packages/visual-constructor/src/actions/options.actions.js");
-/* harmony import */ var _actions_frame_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../actions/frame.actions */ "./src/packages/visual-constructor/src/actions/frame.actions.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _news_parser_image___WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @news-parser/image/ */ "./src/packages/image/src/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_options_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../actions/options.actions */ "./src/packages/visual-constructor/src/actions/options.actions.js");
+/* harmony import */ var _actions_frame_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../actions/frame.actions */ "./src/packages/visual-constructor/src/actions/frame.actions.js");
+/* harmony import */ var _news_parser_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @news-parser/config */ "./src/packages/config/src/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_9__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42213,6 +41891,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+
 
 
 
@@ -42280,31 +41960,22 @@ function (_React$Component) {
       var options = this.props.options || {},
           body = this.props.body || {};
       if (options.noFeaturedMedia) return;
-
-      for (var item in body) {
-        if (body[item].tagName === 'IMG') {
-          body[item].content && this.props.selectFeaturedMedia(body[item].content.src);
-          break;
-        }
-      }
+      this.props.selectFeaturedMedia(body);
     }
   }, {
     key: "render",
     value: function render() {
-      var options = this.props.options || {};
-      var noImage = !options.addFeaturedMedia ? ' no-featured-image' : '';
+      var options = this.props.options || {},
+          featuredImageClassName = "featured-image-thumbnail" + (!options.addFeaturedMedia ? " no-featured-image" : "");
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "inner-sidebar-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoBox"], {
         title: "Featured Image"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoBody"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "hide-if-no-js"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        width: "266",
-        height: "150",
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoBody"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_news_parser_image___WEBPACK_IMPORTED_MODULE_4__["Image"], {
         src: this.props.image,
-        className: "featured-image-thumbnail" + noImage,
-        alt: "Featured image thumbnail"
+        className: featuredImageClassName,
+        alt: "Featured image thumbnail",
+        defaultImage: _news_parser_config__WEBPACK_IMPORTED_MODULE_8__["default"].defaultImage
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "howto"
       }, "If you want to change featured image, select image you would like to choose in the constructor and click \"Change image\" button."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_elements_Checkbox__WEBPACK_IMPORTED_MODULE_2__["Checkbox"], {
@@ -42312,19 +41983,17 @@ function (_React$Component) {
         onClick: this.props.toggleAddFeaturedMedia
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "howto inline-bl"
-      }, "No featured image."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoFooter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "No featured image.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoFooter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
         className: "button button-primary button-large",
         onClick: this.selectFeaturedMedia
       }, "Change image"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoBox"], {
         title: "Post title"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoBody"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.props.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "hide-if-no-js"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_elements_Input__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoBody"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.props.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_elements_Input__WEBPACK_IMPORTED_MODULE_3__["default"], {
         onChange: this.changeStateInputTitle
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "howto"
-      }, "If you want to change title, type the new title and press \"Change title\" button."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoFooter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "If you want to change title, type the new title and press \"Change title\" button.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_InfoBox__WEBPACK_IMPORTED_MODULE_1__["InfoFooter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
         className: "button button-primary button-large",
         onClick: this.selectTitle
@@ -42367,76 +42036,81 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     toggleAddFeaturedMedia: function toggleAddFeaturedMedia() {
-      dispatch(Object(_actions_options_actions__WEBPACK_IMPORTED_MODULE_5__["toggleAddFeaturedMedia"])());
+      dispatch(Object(_actions_options_actions__WEBPACK_IMPORTED_MODULE_6__["toggleAddFeaturedMedia"])());
     },
     selectTitle: function selectTitle(newTitle) {
-      dispatch(Object(_actions_frame_actions__WEBPACK_IMPORTED_MODULE_6__["selectTitle"])(newTitle));
+      dispatch(Object(_actions_frame_actions__WEBPACK_IMPORTED_MODULE_7__["selectTitle"])(newTitle));
     },
-    selectFeaturedMedia: function selectFeaturedMedia(url) {
-      dispatch(Object(_actions_frame_actions__WEBPACK_IMPORTED_MODULE_6__["selectFeaturedMedia"])(url));
+    selectFeaturedMedia: function selectFeaturedMedia(selectedElements) {
+      for (var item in selectedElements) {
+        if (selectedElements[item].tagName === 'IMG') {
+          selectedElements[item].content && dispatch(Object(_actions_frame_actions__WEBPACK_IMPORTED_MODULE_7__["selectFeaturedMedia"])(selectedElements[item].content.src));
+          break;
+        }
+      }
     },
     toggleSaveParsingTemplate: function toggleSaveParsingTemplate() {
-      dispatch(Object(_actions_options_actions__WEBPACK_IMPORTED_MODULE_5__["toggleSaveParsingTemplate"])());
+      dispatch(Object(_actions_options_actions__WEBPACK_IMPORTED_MODULE_6__["toggleSaveParsingTemplate"])());
     },
     toggleAddSource: function toggleAddSource() {
-      dispatch(Object(_actions_options_actions__WEBPACK_IMPORTED_MODULE_5__["toggleAddSource"])());
+      dispatch(Object(_actions_options_actions__WEBPACK_IMPORTED_MODULE_6__["toggleAddSource"])());
     }
   };
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["connect"])(mapStateToProps, mapDispatchToProps)(SidebarRight));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["connect"])(mapStateToProps, mapDispatchToProps)(SidebarRight));
 SidebarRight.propTypes = {
   /**
    * Post title.
    */
-  title: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string,
+  title: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.bool]),
 
   /**
    * Post featured image.
    */
-  image: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string,
+  image: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.bool]),
 
   /**
    * Post content associative array{hash:elementData}
    */
-  body: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.object,
+  body: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.bool, prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.object]),
 
   /**
   * Parsing options, structure: {addFeaturedMedia,addSource,saveParsingTemplate}
   * 
-  * @see {@link visual-constructor/src/reducers/options.js|defaultOptionsState}
+  * @see {@link visual-constructor/src/reducers/index.js|defaultState.options}
    */
-  options: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.object.isRequired,
+  options: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.object.isRequired,
 
   /**
    * Toggle featured image checkbox.
    *  
    */
-  toggleAddFeaturedMedia: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
+  toggleAddFeaturedMedia: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func.isRequired,
 
   /**
    * Toggle save parsing template checkbox.
    */
-  toggleSaveParsingTemplate: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
+  toggleSaveParsingTemplate: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func.isRequired,
 
   /**
    * Select custom post title.
    * 
    * @param {string} title New post title.
    */
-  selectTitle: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
+  selectTitle: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func.isRequired,
 
   /**
    * Select new post image.
    * 
-   * @param {string} url New Post image url.
+   * @param {string} selectedElements Post content associative array{hash:elementData}
    */
-  selectFeaturedMedia: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired,
+  selectFeaturedMedia: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func.isRequired,
 
   /**
    * Toggle add source checkbox.
    */
-  toggleAddSource: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired
+  toggleAddSource: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func.isRequired
 };
 
 /***/ }),
@@ -42460,9 +42134,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var globals__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! globals */ "globals");
 /* harmony import */ var globals__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(globals__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../actions/app.actions */ "./src/packages/visual-constructor/src/actions/app.actions.js");
-/* harmony import */ var _actions_draft_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../actions/draft.actions */ "./src/packages/visual-constructor/src/actions/draft.actions.js");
-/* harmony import */ var _actions_template_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../actions/template.actions */ "./src/packages/visual-constructor/src/actions/template.actions.js");
+/* harmony import */ var _news_parser_config___WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @news-parser/config/ */ "./src/packages/config/src/index.js");
+/* harmony import */ var _actions_app_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../actions/app.actions */ "./src/packages/visual-constructor/src/actions/app.actions.js");
+/* harmony import */ var _actions_draft_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../actions/draft.actions */ "./src/packages/visual-constructor/src/actions/draft.actions.js");
+/* harmony import */ var _actions_template_actions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../actions/template.actions */ "./src/packages/visual-constructor/src/actions/template.actions.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42480,6 +42155,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 
 
 
@@ -42551,7 +42227,7 @@ function (_React$Component) {
   }, {
     key: "buttonClickHandler",
     value: function buttonClickHandler() {
-      if (!this.props.options.saveParsingTemplate) {
+      if (!this.props.saveParsingTemplate) {
         this.props.createPostDraft();
       } else {
         this.props.saveTemplate();
@@ -42559,15 +42235,23 @@ function (_React$Component) {
 
       this.close();
     }
+    /**
+     * Loading spinner element.
+     */
+
   }, {
     key: "loadingSpinner",
     value: function loadingSpinner() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "loading-spinner"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "../wp-content/plugins/news-parser/public/images/loading.gif"
+        src: _news_parser_config___WEBPACK_IMPORTED_MODULE_6__["default"].spinnerImage
       }));
     }
+    /**
+     * Visual-Constructor modal window.
+     */
+
   }, {
     key: "modalWindow",
     value: function modalWindow() {
@@ -42597,7 +42281,7 @@ function (_React$Component) {
         type: "button",
         className: "button button-large button-primary",
         onClick: this.buttonClickHandler
-      }, this.props.options.saveParsingTemplate ? "Save Template" : "Create Post Draft"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.saveParsingTemplate ? "Save Template" : "Create Post Draft"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "media-modal-backdrop"
       }));
     }
@@ -42613,29 +42297,27 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 function mapStateToProps(state) {
-  var options = state.parse.dialog.visualConstructor.options,
+  var saveParsingTemplate = state.parse.dialog.visualConstructor.options.saveParsingTemplate,
       _state$parse$dialog$v = state.parse.dialog.visualConstructor.dialogData,
       open = _state$parse$dialog$v.open,
-      rawHTML = _state$parse$dialog$v.rawHTML,
       frameIsReady = _state$parse$dialog$v.frameIsReady;
   return {
     frameIsReady: frameIsReady,
-    options: options,
-    open: open,
-    rawHTML: rawHTML
+    saveParsingTemplate: saveParsingTemplate,
+    open: open
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     close: function close() {
-      dispatch(Object(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__["closeDialog"])());
+      dispatch(Object(_actions_app_actions__WEBPACK_IMPORTED_MODULE_7__["closeDialog"])());
     },
     createPostDraft: function createPostDraft() {
-      dispatch(Object(_actions_draft_actions__WEBPACK_IMPORTED_MODULE_7__["createPostDraft"])());
+      dispatch(Object(_actions_draft_actions__WEBPACK_IMPORTED_MODULE_8__["createPostDraft"])());
     },
     saveTemplate: function saveTemplate() {
-      dispatch(Object(_actions_template_actions__WEBPACK_IMPORTED_MODULE_8__["createParsingTemplate"])());
+      dispatch(Object(_actions_template_actions__WEBPACK_IMPORTED_MODULE_9__["createParsingTemplate"])());
     }
   };
 }
@@ -42643,31 +42325,25 @@ function mapDispatchToProps(dispatch) {
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["connect"])(mapStateToProps, mapDispatchToProps)(VisualConstructor));
 VisualConstructor.propTypes = {
   /**
-   * Post page url.
-   */
-  url: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].string.isRequired,
-
-  /**
-   * Inner posts array index.
-   */
-  postId: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].number.isRequired,
-
-  /**
-   * Parsed post data.
-   */
-  parsedData: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].object.isRequired,
-
-  /**
-   * HTML.
-   */
-  rawHTML: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].string, prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].bool]).isRequired,
-
-  /**
-   * Parsing options, structure: {addFeaturedMedia,addSource,saveParsingTemplate}
+   * Is Frame is loaded and ready to render. 
    * 
-   * @see {@link visual-constructor/src/reducers/options.js|defaultOptionsState}
+   * @see {@link visual-constructor/src/reducers/index.js|defaultState.dialogData}
    */
-  options: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].object.isRequired,
+  frameIsReady: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].bool.isRequired,
+
+  /**
+   * If true this page would not be parsed.Parsing template would be created and saved instead.
+   * 
+   * @see {@link visual-constructor/src/reducers/index.js|defaultState.options}
+   */
+  saveParsingTemplate: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].bool.isRequired,
+
+  /**
+   * If visual constructor is open.
+   * 
+   * @see {@link visual-constructor/src/reducers/index.js|defaultState.dialogData}
+   */
+  open: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].bool.isRequired,
 
   /**
    * Close visual constructor modal window.
@@ -42677,25 +42353,20 @@ VisualConstructor.propTypes = {
   close: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].func.isRequired,
 
   /**
-   * Get page html from the server.
-   * 
-   * @param {string} url Page url.
-   * @see {@link parser-rss/src/actions/index.js|getPageHTML}
-   */
-  getFrameData: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].func.isRequired,
-
-  /**
    * Creates post draft using worpress REST API.
    * 
-   * @param {function} dispatch Redux dispatch.
-   * @param {string} id Inner posts array index.
-   * @param {string} url Post url.
-   * @param {object} parsedData Parsed post data.
-   * @param {object} options Parsing options.
    * 
-   * @see {@link visual-constructor/src/actions/index.js|createPostDraft}
+   * @see {@link visual-constructor/src/actions/draft.actions.js|createPostDraft}
    */
-  createPostDraft: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].func.isRequired
+  createPostDraft: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].func.isRequired,
+
+  /**
+   * Save parsing rules for selected domain. .
+   * 
+   * 
+   * @see {@link visual-constructor/src/actions/template.actions.js|createParsingTemplate}
+   */
+  saveTemplate: prop_types__WEBPACK_IMPORTED_MODULE_3__["PropTypes"].func.isRequired
 };
 
 /***/ }),
@@ -42788,7 +42459,7 @@ InfoBox.propTypes = {
   /**
    * Content of infobox.
    */
-  children: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired
+  children: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array]).isRequired
   /**
    * Body of infobox element.
    * 
@@ -43012,7 +42683,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
 /* harmony import */ var _news_parser_parser_rss_actions_post_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @news-parser/parser-rss/actions/post.actions */ "./src/packages/parser-rss/src/actions/post.actions.js");
 /* harmony import */ var _news_parser_message___WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @news-parser/message/ */ "./src/packages/message/src/index.js");
-/* harmony import */ var _news_parser_helpers_classes_PostModel__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @news-parser/helpers/classes/PostModel */ "./src/packages/helpers/src/classes/PostModel.js");
+/* harmony import */ var _news_parser_helpers_response_formatters_PostModel__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @news-parser/helpers/response-formatters/PostModel */ "./src/packages/helpers/src/response-formatters/PostModel.js");
 
 
 
@@ -43034,7 +42705,7 @@ var draftMiddleware = function draftMiddleware(store) {
               parsedData = _getState$parse$dialo.parsedData,
               options = _getState$parse$dialo.options,
               dialogData = _getState$parse$dialo.dialogData,
-              preparedParsedData = Object(_news_parser_helpers_classes_PostModel__WEBPACK_IMPORTED_MODULE_7__["formatCreatePostDraftRequest"])(parsedData, options, dialogData.url);
+              preparedParsedData = Object(_news_parser_helpers_response_formatters_PostModel__WEBPACK_IMPORTED_MODULE_7__["formatCreatePostDraftRequest"])(parsedData, options, dialogData.url);
           dispatch(Object(_news_parser_parser_rss_actions_api_actions__WEBPACK_IMPORTED_MODULE_0__["apiRequest"])(_constants__WEBPACK_IMPORTED_MODULE_1__["POST_DRAFT"], _constants__WEBPACK_IMPORTED_MODULE_1__["CREATE"], preparedParsedData));
           break;
 
@@ -43074,11 +42745,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _news_parser_parser_rss_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/parser-rss/constants */ "./src/packages/parser-rss/src/constants/index.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./src/packages/visual-constructor/src/constants/index.js");
 /* harmony import */ var _news_parser_parser_rss_actions_api_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @news-parser/parser-rss/actions/api.actions */ "./src/packages/parser-rss/src/actions/api.actions.js");
-/* harmony import */ var _actions_api_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/api.actions */ "./src/packages/visual-constructor/src/actions/api.actions.js");
-/* harmony import */ var _actions_html_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/html.actions */ "./src/packages/visual-constructor/src/actions/html.actions.js");
-/* harmony import */ var _news_parser_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @news-parser/helpers */ "./src/packages/helpers/src/index.js");
-
-
+/* harmony import */ var _actions_html_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/html.actions */ "./src/packages/visual-constructor/src/actions/html.actions.js");
 
 
 
@@ -43090,13 +42757,13 @@ var htmlMiddleware = function htmlMiddleware(_ref) {
       next(action);
 
       switch (action.type) {
-        case _actions_html_actions__WEBPACK_IMPORTED_MODULE_4__["FETCH_HTML"]:
+        case _actions_html_actions__WEBPACK_IMPORTED_MODULE_3__["FETCH_HTML"]:
           var data = action.payload.data;
           dispatch(Object(_news_parser_parser_rss_actions_api_actions__WEBPACK_IMPORTED_MODULE_2__["apiRequest"])(_constants__WEBPACK_IMPORTED_MODULE_1__["HTML"], _news_parser_parser_rss_constants__WEBPACK_IMPORTED_MODULE_0__["PARSE"], data));
           break;
 
         case "[".concat(_constants__WEBPACK_IMPORTED_MODULE_1__["HTML"], ":").concat(_news_parser_parser_rss_constants__WEBPACK_IMPORTED_MODULE_0__["PARSE"], "]").concat(_news_parser_parser_rss_actions_api_actions__WEBPACK_IMPORTED_MODULE_2__["API_SUCCESS"]):
-          dispatch(Object(_actions_html_actions__WEBPACK_IMPORTED_MODULE_4__["setHTML"])(action.payload.response));
+          dispatch(Object(_actions_html_actions__WEBPACK_IMPORTED_MODULE_3__["setHTML"])(action.payload.response));
       }
     };
   };
@@ -43116,7 +42783,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mediaMiddleware", function() { return mediaMiddleware; });
 /* harmony import */ var _constants___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../constants/ */ "./src/packages/visual-constructor/src/constants/index.js");
 /* harmony import */ var _news_parser_parser_rss_actions_api_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @news-parser/parser-rss/actions/api.actions */ "./src/packages/parser-rss/src/actions/api.actions.js");
-/* harmony import */ var _news_parser_helpers_classes_formatCreateMediaData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @news-parser/helpers/classes/formatCreateMediaData */ "./src/packages/helpers/src/classes/formatCreateMediaData.js");
+/* harmony import */ var _news_parser_helpers_response_formatters_formatCreateMediaData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @news-parser/helpers/response-formatters/formatCreateMediaData */ "./src/packages/helpers/src/response-formatters/formatCreateMediaData.js");
 
 
 
@@ -43135,7 +42802,7 @@ var mediaMiddleware = function mediaMiddleware(store) {
               _action$payload$respo = action.payload.response,
               title = _action$payload$respo.title,
               id = _action$payload$respo.id,
-              requestMediaData = Object(_news_parser_helpers_classes_formatCreateMediaData__WEBPACK_IMPORTED_MODULE_2__["formatCreateMediaData"])(parsedData.image, title.raw, id);
+              requestMediaData = Object(_news_parser_helpers_response_formatters_formatCreateMediaData__WEBPACK_IMPORTED_MODULE_2__["formatCreateMediaData"])(parsedData.image, title.raw, id);
           if (options.addFeaturedMedia) dispatch(Object(_news_parser_parser_rss_actions_api_actions__WEBPACK_IMPORTED_MODULE_1__["apiRequest"])(_constants___WEBPACK_IMPORTED_MODULE_0__["MEDIA"], _constants___WEBPACK_IMPORTED_MODULE_0__["CREATE"], requestMediaData));
           break;
       }
@@ -43158,7 +42825,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _news_parser_parser_rss_actions_api_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @news-parser/parser-rss/actions/api.actions */ "./src/packages/parser-rss/src/actions/api.actions.js");
 /* harmony import */ var _news_parser_message___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @news-parser/message/ */ "./src/packages/message/src/index.js");
 /* harmony import */ var _actions_template_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/template.actions */ "./src/packages/visual-constructor/src/actions/template.actions.js");
-/* harmony import */ var _news_parser_helpers_classes_TemplateModel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @news-parser/helpers/classes/TemplateModel */ "./src/packages/helpers/src/classes/TemplateModel.js");
+/* harmony import */ var _news_parser_helpers_response_formatters_TemplateModel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @news-parser/helpers/response-formatters/TemplateModel */ "./src/packages/helpers/src/response-formatters/TemplateModel.js");
 /* harmony import */ var _constants___WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../constants/ */ "./src/packages/visual-constructor/src/constants/index.js");
 
 
@@ -43178,7 +42845,7 @@ var templateMiddleware = function templateMiddleware(store) {
               options = _getState$parse$dialo.options,
               dialogData = _getState$parse$dialo.dialogData,
               parsedData = _getState$parse$dialo.parsedData,
-              requestData = Object(_news_parser_helpers_classes_TemplateModel__WEBPACK_IMPORTED_MODULE_3__["formatCreateTemplateRequest"])(parsedData, options, dialogData.url);
+              requestData = Object(_news_parser_helpers_response_formatters_TemplateModel__WEBPACK_IMPORTED_MODULE_3__["formatCreateTemplateRequest"])(parsedData, options, dialogData.url);
           dispatch(Object(_news_parser_parser_rss_actions_api_actions__WEBPACK_IMPORTED_MODULE_0__["apiRequest"])(_constants___WEBPACK_IMPORTED_MODULE_4__["TEMPLATE"], _constants___WEBPACK_IMPORTED_MODULE_4__["CREATE"], requestData));
           break;
 
@@ -43426,7 +43093,7 @@ function options() {
         });
       }
 
-    case _actions_app_actions__WEBPACK_IMPORTED_MODULE_1__["CLOSE_DIALOG"]:
+    case _actions_app_actions__WEBPACK_IMPORTED_MODULE_1__["OPEN_DIALOG"]:
       return _objectSpread({}, _index__WEBPACK_IMPORTED_MODULE_2__["defaultState"].options);
 
     default:
@@ -43485,7 +43152,7 @@ function parsedData() {
         body: _objectSpread({}, state.body)
       });
 
-    case _actions_app_actions__WEBPACK_IMPORTED_MODULE_1__["CLOSE_DIALOG"]:
+    case _actions_app_actions__WEBPACK_IMPORTED_MODULE_1__["OPEN_DIALOG"]:
       return _objectSpread({}, _index__WEBPACK_IMPORTED_MODULE_2__["defaultState"].parsedData);
 
     default:

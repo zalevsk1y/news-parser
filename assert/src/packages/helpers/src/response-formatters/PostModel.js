@@ -1,5 +1,5 @@
 import {escHTML,escURLRaw} from '@news-parser/helpers';
-import {BaseClass} from './BaseClass'
+import {BaseClass} from '../classes/BaseClass'
 /**
  * Format data for request to create wordpress post draft.
  * 

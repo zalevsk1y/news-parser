@@ -5,7 +5,7 @@ import {Fragment} from 'react';
 import {PropTypes} from 'prop-types';
 import {document} from 'globals';
 import {connect} from 'react-redux';
-
+import config from '@news-parser/config/';
 import {closeDialog} from '../actions/app.actions';
 import {createPostDraft} from '../actions/draft.actions';
 import {createParsingTemplate} from '../actions/template.actions';
@@ -50,20 +50,26 @@ export class VisualConstructor extends React.Component{
      * Create post draft from parsed data.
      */
     buttonClickHandler(){
-        if(!this.props.options.saveParsingTemplate){
+        if(!this.props.saveParsingTemplate){
             this.props.createPostDraft()
         }else{
             this.props.saveTemplate()
         }
         this.close();
     }
+    /**
+     * Loading spinner element.
+     */
     loadingSpinner(){
         return (
             <div className="loading-spinner">
-                <img src="../wp-content/plugins/news-parser/public/images/loading.gif"></img>
+                <img src={config.spinnerImage}></img>
             </div>
         )
     }
+    /**
+     * Visual-Constructor modal window.
+     */
     modalWindow(){
         return (
             <div className="media-modal-wrapper">
@@ -86,7 +92,7 @@ export class VisualConstructor extends React.Component{
                         </div>
                     </div>
                     <div className='modal-footer'>
-                        <div type="button" className="button button-large button-primary" onClick={this.buttonClickHandler}>{this.props.options.saveParsingTemplate?"Save Template":"Create Post Draft"}</div>
+                        <div type="button" className="button button-large button-primary" onClick={this.buttonClickHandler}>{this.props.saveParsingTemplate?"Save Template":"Create Post Draft"}</div>
                     </div>
                 </div>
                 <div className="media-modal-backdrop"></div>
@@ -106,13 +112,12 @@ export class VisualConstructor extends React.Component{
 
 
 function mapStateToProps(state){
-    const {options}=state.parse.dialog.visualConstructor,
-        {open,rawHTML,frameIsReady}=state.parse.dialog.visualConstructor.dialogData;
+    const {saveParsingTemplate}=state.parse.dialog.visualConstructor.options,
+        {open,frameIsReady}=state.parse.dialog.visualConstructor.dialogData;
     return {
         frameIsReady,
-        options,
-        open,
-        rawHTML  
+        saveParsingTemplate,
+        open
     };
 }
 function mapDispatchToProps(dispatch){
@@ -137,30 +142,24 @@ export default connect(mapStateToProps,mapDispatchToProps)(VisualConstructor);
 
 VisualConstructor.propTypes={
     /**
-     * Post page url.
-     */
-    url:PropTypes.string.isRequired,
-    /**
-     * Inner posts array index.
-     */
-    postId:PropTypes.number.isRequired,
-    /**
-     * Parsed post data.
-     */
-    parsedData:PropTypes.object.isRequired,
-    /**
-     * HTML.
-     */
-    rawHTML:PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.bool
-    ]).isRequired,
-    /**
-     * Parsing options, structure: {addFeaturedMedia,addSource,saveParsingTemplate}
+     * Is Frame is loaded and ready to render. 
      * 
-     * @see {@link visual-constructor/src/reducers/options.js|defaultOptionsState}
+     * @see {@link visual-constructor/src/reducers/index.js|defaultState.dialogData}
      */
-    options:PropTypes.object.isRequired,
+    frameIsReady:PropTypes.bool.isRequired,
+    /**
+     * If true this page would not be parsed.Parsing template would be created and saved instead.
+     * 
+     * @see {@link visual-constructor/src/reducers/index.js|defaultState.options}
+     */
+    saveParsingTemplate:PropTypes.bool.isRequired,
+    /**
+     * If visual constructor is open.
+     * 
+     * @see {@link visual-constructor/src/reducers/index.js|defaultState.dialogData}
+     */
+    open:PropTypes.bool.isRequired,
+    
     /**
      * Close visual constructor modal window.
      * 
@@ -168,22 +167,17 @@ VisualConstructor.propTypes={
      */
     close:PropTypes.func.isRequired,
     /**
-     * Get page html from the server.
-     * 
-     * @param {string} url Page url.
-     * @see {@link parser-rss/src/actions/index.js|getPageHTML}
-     */
-    getFrameData:PropTypes.func.isRequired,
-    /**
      * Creates post draft using worpress REST API.
      * 
-     * @param {function} dispatch Redux dispatch.
-     * @param {string} id Inner posts array index.
-     * @param {string} url Post url.
-     * @param {object} parsedData Parsed post data.
-     * @param {object} options Parsing options.
      * 
-     * @see {@link visual-constructor/src/actions/index.js|createPostDraft}
+     * @see {@link visual-constructor/src/actions/draft.actions.js|createPostDraft}
      */
-    createPostDraft:PropTypes.func.isRequired
+    createPostDraft:PropTypes.func.isRequired,
+    /**
+     * Save parsing rules for selected domain. .
+     * 
+     * 
+     * @see {@link visual-constructor/src/actions/template.actions.js|createParsingTemplate}
+     */
+    saveTemplate:PropTypes.func.isRequired
 }

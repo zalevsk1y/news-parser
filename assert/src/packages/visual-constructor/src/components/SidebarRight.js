@@ -1,10 +1,13 @@
 import React from 'react';
 import {InfoBox,InfoBody,InfoFooter} from '../containers/InfoBox';
 import {Checkbox} from '../containers/elements/Checkbox'
-import Input from '../containers/elements/Input'
+import Input from '../containers/elements/Input';
+import {Image} from '@news-parser/image/';
 import {connect} from 'react-redux';
 import {toggleAddFeaturedMedia,toggleSaveParsingTemplate,toggleAddSource } from '../actions/options.actions';
 import {selectTitle,selectFeaturedMedia} from '../actions/frame.actions';
+import config from '@news-parser/config';
+
 import PropTypes from 'prop-types';
 
 /**
@@ -43,23 +46,18 @@ export class  SidebarRight extends React.Component{
         const options=this.props.options||{},
                 body=this.props.body||{};
         if(options.noFeaturedMedia) return;
-        for(var item in body){
-            if(body[item].tagName==='IMG'){
-                body[item].content&&this.props.selectFeaturedMedia(body[item].content.src);
-                break;
-            }
-        }
+        this.props.selectFeaturedMedia(body);
+        
     }
     render(){
-        const options=this.props.options||{};
-        const noImage=!options.addFeaturedMedia?' no-featured-image':'';
+        const options=this.props.options||{},
+            featuredImageClassName="featured-image-thumbnail"+(!options.addFeaturedMedia?" no-featured-image":"")
         return (
             
                 <div className="inner-sidebar-container" >
                 <InfoBox title="Featured Image">
                     <InfoBody>
-                        <p className="hide-if-no-js">
-                                <img width="266" height="150" src={this.props.image} className={"featured-image-thumbnail"+noImage} alt="Featured image thumbnail"  />
+                            <Image  src={this.props.image} className={featuredImageClassName} alt="Featured image thumbnail" defaultImage={config.defaultImage}  />
                             <p className="howto">
                                 If you want to change featured image, select image you would like to choose in the constructor and click "Change image" button.
                             </p>
@@ -67,8 +65,6 @@ export class  SidebarRight extends React.Component{
                             <p className="howto inline-bl">
                                 No featured image.                            
                             </p>
-
-                        </p>
                     </InfoBody>
                     <InfoFooter>
                         <button type="button" className="button button-primary button-large" onClick={this.selectFeaturedMedia}>Change image</button>
@@ -77,12 +73,10 @@ export class  SidebarRight extends React.Component{
                 <InfoBox title="Post title">
                     <InfoBody>
                         <span>{this.props.title}</span>
-                        <p className="hide-if-no-js">
                             <Input  onChange={this.changeStateInputTitle}/>
                             <p className="howto">
                                 If you want to change title, type the new title and press "Change title" button.
                             </p>
-                        </p>
                     </InfoBody>
                     <InfoFooter>
                         <button type="button" className="button button-primary button-large" onClick={this.selectTitle}>Change title</button>
@@ -103,7 +97,6 @@ export class  SidebarRight extends React.Component{
                             </p>
                         </div>
                     </InfoBody>
-                    
                 </InfoBox>
                 </div>
             
@@ -133,8 +126,13 @@ export class  SidebarRight extends React.Component{
             selectTitle:function(newTitle){
                 dispatch(selectTitle(newTitle))
             },
-            selectFeaturedMedia:function(url){
-                dispatch(selectFeaturedMedia(url))
+            selectFeaturedMedia:function(selectedElements){
+                for(let item in selectedElements){
+                    if(selectedElements[item].tagName==='IMG'){
+                        selectedElements[item].content&&dispatch(selectFeaturedMedia(selectedElements[item].content.src));
+                        break;
+                    }
+                }
             },
             toggleSaveParsingTemplate:function(){
                 dispatch(toggleSaveParsingTemplate());
@@ -152,19 +150,28 @@ export class  SidebarRight extends React.Component{
         /**
          * Post title.
          */
-        title:PropTypes.string,
+        title:PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.bool
+        ]),
         /**
          * Post featured image.
          */
-        image:PropTypes.string,
+        image:PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.bool
+        ]),
         /**
          * Post content associative array{hash:elementData}
          */
-        body:PropTypes.object,
+        body:PropTypes.oneOfType([
+            PropTypes.bool,
+            PropTypes.object
+        ]),
         /**
         * Parsing options, structure: {addFeaturedMedia,addSource,saveParsingTemplate}
         * 
-        * @see {@link visual-constructor/src/reducers/options.js|defaultOptionsState}
+        * @see {@link visual-constructor/src/reducers/index.js|defaultState.options}
          */
         options:PropTypes.object.isRequired,
         /**
@@ -185,7 +192,7 @@ export class  SidebarRight extends React.Component{
         /**
          * Select new post image.
          * 
-         * @param {string} url New Post image url.
+         * @param {string} selectedElements Post content associative array{hash:elementData}
          */
         selectFeaturedMedia:PropTypes.func.isRequired,
         /**

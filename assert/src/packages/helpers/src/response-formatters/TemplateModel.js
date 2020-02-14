@@ -1,4 +1,4 @@
-import {BaseClass} from './BaseClass';
+import {BaseClass} from '../classes/BaseClass';
 /**
  * Create parsing template for automated parsing.
  * 

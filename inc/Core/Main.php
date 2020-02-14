@@ -57,7 +57,7 @@ class Main
             \wp_enqueue_script('main-parser-bundle-main', NEWS_PARSER_PLUGIN_URL . '/public/js/parser_rss.bundle.js');
             wp_enqueue_script(array(NEWS_PARSER_PLUGIN_SLUG.'-rest-nonce',NEWS_PARSER_PLUGIN_SLUG.'-rest-api') );
             $nonce=array(
-                'root'=>esc_url_raw(rest_url()),
+                'restRoot'=>esc_url_raw(rest_url()),
                 'pluginUrl'=>esc_url_raw(NEWS_PARSER_PLUGIN_URL),
                 'restApiNonce'=>wp_create_nonce('wp_rest'),
                 'ajaxApiNonce'=>wp_create_nonce('parsing_news_api'),

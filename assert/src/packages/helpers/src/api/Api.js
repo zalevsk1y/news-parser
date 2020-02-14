@@ -1,5 +1,5 @@
 import {AJAX,REST,GET,POST} from '@news-parser/parser-rss/constants/index';
-import {BaseClass} from './BaseClass';
+import {BaseClass} from '../classes/BaseClass';
 import config from '@news-parser/config';
 
 class Api extends BaseClass{

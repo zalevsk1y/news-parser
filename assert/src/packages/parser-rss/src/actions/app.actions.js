@@ -26,7 +26,6 @@ export const openDialog=(_id,url,type)=>{
     return {
         type:`[${type}]OPEN_DIALOG`,
         payload:{
-           
                 _id,
                 url,
             }

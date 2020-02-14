@@ -1,9 +1,7 @@
 import {combineReducers} from 'redux';
-import {types} from '../actions';
-import {initialStateRoute} from './initState';
-import {combineSubReducers,decodeQuotes} from '@news-parser/helpers';
-import {LIST} from '../constants/index';
 
+
+import {SET_ROUTE} from '../actions/route.actions';
 import {message} from '@news-parser/message/reducers';
 import {START_FETCHING,STOP_FETCHING} from '../actions/api.actions';
 import {SET_LIST} from '../actions/list.actions';
@@ -104,7 +102,7 @@ const posts=(state=[],action)=>{
 
 export function route(state={page:false},action){
  
-    if(action.type===types.SET_ROUTE){
+    if(action.type===SET_ROUTE){
         return {...state,
             page:action.payload.page
         }

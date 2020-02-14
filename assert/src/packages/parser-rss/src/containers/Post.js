@@ -1,8 +1,7 @@
 import React from 'react';
 import {Fragment} from 'react';
-import Image from '../components/Image';
+import {Image} from '@news-parser/image/';
 import {connect} from 'react-redux';
-import {parsePage} from '../actions';
 import {showMessage} from '../actions/app.actions' 
 import {openDialog} from '../actions/app.actions';
 import {togglePostSelect} from '../actions/post.actions';
@@ -70,11 +69,7 @@ export class Post extends React.Component {
                 <a
                     className="img-post-link"
                     href={this.props.link}>
-                    <Image
-                        className="post-image"
-                      
-                        src={this.props.image}
-                        />
+                    <Image className="post-image" src={this.props.image} />
                 </a>
                 </div>
                 {
@@ -110,9 +105,6 @@ function mapStateToProps(state,props){
 }
 function mapDispatchToProps(dispatch){
     return {
-        parsePage:(url,id)=>{
-            dispatch(parsePage(dispatch,url,id))
-        },
         message:(type,text)=>{
             dispatch(showMessage(type,text))
         },
@@ -159,13 +151,6 @@ Post.propTypes={
      * Link to the wordpress post editor.
      */
     editLink:PropTypes.string,
-    /**
-     * Action handles parse single page.
-     * 
-     * @param {string} url Url of the page.
-     * @param {string} innerPostIndex Index of the post in array(optional).
-     */
-    parsePage:PropTypes.func.isRequired,
     /**
      * Show message.
      * 

@@ -1,13 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {parsePage,parseRSSList,openDialog} from '../actions'; 
-import {showMessage} from '../actions/app.actions'; 
+import {openDialog} from '../actions/app.actions'; 
 import {fetchList} from '../actions/list.actions';
-import {getUrlWithParams} from '@news-parser/helpers';
-import {LIST} from '../constants/'
+import {encodeUrlWithParams} from '@news-parser/helpers';
+import {LIST} from '../constants/';
+import {VISUAL_CONSTRUCTOR} from '@news-parser/visual-constructor/constants/'
 import PropTypes from 'prop-types';
 import Translate from './Translate';
-import {parseSelected} from '../actions/page.actions'
+import {parseSelected} from '../actions/page.actions';
+import {showMessage} from '@news-parser/message/'
+import {location} from 'globals';
 
 /**
  * Input element with submit buttons.
@@ -32,18 +34,17 @@ export class InputForm extends React.Component{
     inputChange(event){
         this.setState({inputValue:event.target.value})
     }
-    /**
+    /**                                                                                                                                                                                                                                                                                                                                                                                                                                         
      * Handles parse single page submit.
      * 
      * @param {object} event Click event object. 
      */
     handleParsePageSubmit(event){
-        event.preventDefault();
-        if(this.props.isFetching)return; 
-        this.props.openVisualConstructor(this.state.inputValue,{dialog:{
-            postId:undefined,
-            type:'visualConstructor'
-        }})
+        if(!this.state.inputValue){
+            this.props.showMessage('info','Please input page URL.');        
+            return;                                                                                                                                                                                                                                                                                                     
+        } 
+        this.props.openVisualConstructor(this.state.inputValue)
     }
     /**
      * Handles parse RSS posts list submit. 
@@ -51,11 +52,9 @@ export class InputForm extends React.Component{
      * @param {object} event Click event object.  
      */
     handleParseListSubmit(event){
-        event.preventDefault();
-        const params={entity:LIST,url:this.state.inputValue};
-        const url=getUrlWithParams(params)
-        window.history.pushState(null,null,url)
-        window.location.reload();
+        const params={entity:LIST,url:this.state.inputValue},                                                                                                                                                                           
+            url=encodeUrlWithParams(params)
+        location.assign(url);
     }
     /**
      * Handles parse multiple selected from RSS list posts submit. 
@@ -63,12 +62,10 @@ export class InputForm extends React.Component{
      * @param {object} event Click event object. 
      */
     handleParseSelected(event){
-        event.preventDefault();
-        if (!this.props.posts){
-            
+        if(this.props.isFetching){                                                                                                                                                                                                                                                                                                                                                                                                      
+            this.props.showMessage('info','Application in process of parsing.Please be patient.');
             return;
-        }
-
+        } 
         this.props.parseSelected()
     }
     renderButtons(){
@@ -109,12 +106,10 @@ export class InputForm extends React.Component{
 }
 
 function mapStateToProps(state){
-    const posts=state.parse.items.data;
     return {
-        value:state.parse.appState.data.url||'',
         page:state.route.page,
-        isFetching:state.parse.isFetching,
-        posts
+        value:state.parse.appState.data.url||'',
+        isFetching:state.parse.isFetching
     }
 }
 function mapDispatchToProps(dispatch){
@@ -122,16 +117,13 @@ function mapDispatchToProps(dispatch){
         parseList:(url)=>{
             dispatch(fetchList(url))
         },
-        parsePage:(url)=>{
-            dispatch(parsePage(dispatch,url));
-        },
-        openVisualConstructor:(url,dialogData)=>{
-            dispatch(openDialog(url,dialogData))
+        openVisualConstructor:(url)=>{
+            dispatch(openDialog(0,url,VISUAL_CONSTRUCTOR))
         },
         parseSelected:()=>{
             dispatch(parseSelected())
         },
-        message:(type,text)=>{
+        showMessage:(type,text)=>{
             dispatch(showMessage(type,text))
         }
     }
@@ -141,40 +133,7 @@ function mapDispatchToProps(dispatch){
 export default connect (mapStateToProps,mapDispatchToProps)(InputForm);
 
 InputForm. propTypes={
-    /**
-     * Action handles parsing RSS list
-     * 
-     * @param {string} url Url of RSS file.
-     */
-    parseList:PropTypes.func.isRequired,
-    /**
-     * Action handles parse single page.
-     * 
-     * @param {string} url Url of the page.
-     * @param {string} innerPostIndex Index of the post in array(optional).
-     */
-    parsePage:PropTypes.func.isRequired,
-    /**
-     * Open visual constructor modal window to select content manually 
-     * or create p[arsing template rules. 
-     * 
-     * @param {string} url url of the page.
-     */
-    openVisualConstructor:PropTypes.func.isRequired,
-    /**
-     * Parse selected post from RSS list and create drafts.
-     * 
-     * @param {array} posts Array of selected posts.
-     */
-    parseSelected:PropTypes.func.isRequired,
-    /**
-     * Show message.
-     * 
-     * @param {string} type Type of the massage [info|error|success]
-     * @param {string} text Text of the message.
-     */
-    message:PropTypes.func.isRequired,
-    /**
+        /**
      * Input element value. 
      */
     value:PropTypes.string,
@@ -187,7 +146,30 @@ InputForm. propTypes={
      */
     isFetching:PropTypes.bool,
     /**
-     * Selected from RSS list posts.
+     * Action handles parsing RSS list
+     * 
+     * @param {string} url Url of RSS file.
      */
-    posts:PropTypes.array
+    parseList:PropTypes.func.isRequired,
+    /**
+     * Open visual constructor modal window to select content manually 
+     * or create p[arsing template rules. 
+     * 
+     * @param {string} url url of the page.
+     */
+    openVisualConstructor:PropTypes.func.isRequired,
+    /**
+     * Parse selected post from RSS list and create drafts.
+     * 
+     */
+    parseSelected:PropTypes.func.isRequired,
+    /**
+     * Show message.
+     * 
+     * @param {string} type Type of the massage [info|error|success]
+     * @param {string} text Text of the message.
+     */
+    showMessage:PropTypes.func.isRequired
+
+
 }

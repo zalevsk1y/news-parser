@@ -1,5 +1,5 @@
 import {PAGE,PARSE,SELECT,DELETE,DRAFT,INSERT,SELECTED} from '../../constants';
-import {apiRequest,API_SUCCESS, API_REQUEST} from '../../actions/api.actions';
+import {apiRequest,API_SUCCESS} from '../../actions/api.actions';
 import {setPostMeta} from '../../actions/post.actions';
 import {table} from '@news-parser/helpers/classes/Table'
 import { showMessage } from '@news-parser/message/actions/';

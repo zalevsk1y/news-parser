@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-
+import {decodeHTMLEntities} from '@news-parser/helpers/'
 /**
  * Message window element.
  * 
@@ -70,13 +70,11 @@ export class Message extends React.Component{
 
 function mapStateToProps(state){
 
-    const type=state.parse.message?state.parse.message.type:undefined,
-          text=state.parse.message?state.parse.message.text:undefined,
-          timestamp=state.parse.message?state.parse.message.timestamp:undefined;
+    const {type,text,timestamp}=state.parse.message;
        
     return {
         type,
-        text,
+        text:text?decodeHTMLEntities(text):'',
         timestamp
     }
 }
@@ -86,10 +84,6 @@ function mapStateToProps(state){
 
 
 Message.propTypes={
-    /**
-     * Message window status.
-     */
-    open:PropTypes.bool.isRequired,
     /**
      * Message type [error,info,success]
      */
@@ -101,7 +95,7 @@ Message.propTypes={
     /**
      * Timestamp of the message.
      */
-    time:PropTypes.number
+    timestamp:PropTypes.number
 }
 
 export default connect(mapStateToProps)(Message)

@@ -4,8 +4,12 @@ import config from "@news-parser/config";
 export const escURLRaw=(url)=>{
     return url.replace(/[^-A-Za-z0-9+&@#/%?=~_|!.]/g,encodeURIComponent("$&"))
 }
-
-export function urlSearchParams(uri){
+/**
+ * Get search params from url string.
+ * 
+ * @param {string} uri 
+ */
+export const urlSearchParams=(uri)=>{
     if (!uri) return {};
     const jsonParams='{\"'+uri.replace(/&/g,'","').replace(/=/g,'":"').replace(/\?/g,"")+'\"}';
     if(jsonParams){
@@ -18,16 +22,13 @@ export function getLanguage(){
     const className=config.lang.class;
     return document.querySelector('.'+className).dataset['lang'].substring(0,2);
 }
-export function getYOffset(){
-    return window.pageYOffset;
-}
-export function getXOffset(){
-    return window.pageXOffset;
-}
-export function scrollTo(x,y){
-    window.scrollTo(parseInt(x),parseInt(y));
-}
 
+
+/**
+ * Get coded hash for string.
+ * 
+ * @param {string} str 
+ */
 export function hash(str){
     var hash = 0,
     char;
@@ -38,58 +39,42 @@ export function hash(str){
         hash = hash & hash; // Convert to 32bit integer
     }
     return Math.abs(hash);
-
 }
-export function getNonce(params){
-    const id=config.nonce.id[params.page],
-          dataset=config.nonce.dataset[params.page][params.action];
-    let nonce=document.getElementById(id).dataset[dataset];
-    return nonce;
-}
-export function getRestNonce(){
-    let nonce=config.nonce.rest;
-    return nonce;
-}
-export function getAjaxNonce(){
-    let nonce=config.nonce.ajax;
-    return nonce;
-}
+/**
+ * Get wordpress edit post link.
+ * 
+ * @param {string|int} id 
+ */
 export function getPostEditLink(id){
-    let linkTemplate=newsParserSettings.editPostLink;
+    let linkTemplate=config.editPostLink;
     return linkTemplate.replace('$postId',id);
 }
-export function sendApiRequest({url,nonce,method,data}){
-    let options={
-        method,
-        headers:{
-            'X-WP-Nonce':nonce,
-            'Content-Type': 'application/x-www-form-urlencoded',
-        }
-    }
-    data&&(options.body=data);
-    return fetch(url,options)
-}
-export function getApiEndpoint(api){
-    var endpoint=newsParserApiEndpoints[api];
-    return endpoint;
-}
-
-export function getUrlWithParams(params){
+/**
+ * Add search params to URL string.
+ * 
+ * @param {string} params 
+ */
+export function encodeUrlWithParams(params){
     const url=window.location.pathname+window.location.search;
     let search='';
     Object.keys(params).forEach(key => {
         search+='&'+key+'='+encodeURIComponent(params[key]);
     });
     return url+search;
-    }
+}
+/**
+ * Decode HTML entities.
+ * 
+ * @param {string} text 
+ */
 export function decodeHTMLEntities(text) {
     var entities = [
         ['amp', '&'],
         ['apos', '\''],
         ['#x27', '\''],
         ['#x2F', '/'],
-        ['#39', '\''],
-        ['#47', '/'],
+        ['#039', '\''],
+        ['#047', '/'],
         ['lt', '<'],
         ['gt', '>'],
         ['nbsp', ' '],
@@ -101,71 +86,24 @@ export function decodeHTMLEntities(text) {
 
     return text;
 }
-export function sprintf(text){
-    let args=[].slice.call(arguments,1),
-        i=0;
-    return text.replace(/%s/g,()=>args[i++]).replace(/\%(\d)\$s/g,(match,p)=>args[p-1])
-}
+/**
+ * Escape HTML entities.
+ * 
+ * @param {string} html 
+ */
 export function escHTML(html){
-    let tempDiv=document.createElement('div'),
-        escapedString;
+    const tempDiv=document.createElement('div');
     tempDiv.textContent=html;
     return tempDiv.innerText;
 }
-export function decodeQuotes(text){
-    return text.replace(/&quot;/g,'"');
-}
+/**
+ * Get current pludin folder Url.
+ */
 export function getPluginDirUrl(){
-    return newsParserSettings.pluginUrl;
-}
-export function combineSubReducers(parentReducer,childReducers={}){
-    return (state,action)=>{
-        let newState=parentReducer(state,action);
-        for (var reducerName in childReducers){
-        
-                newState[reducerName]=childReducers[reducerName].call(this,newState[reducerName],action)
-         
-        }
-        return newState;
-    }
-}
-export function oldServerData(data){
-    const options= {
-        method: 'POST',
-        headers: {
-        'Accept': 'application/x-www-form-urlencoded',
-        'Content-Type': 'application/x-www-form-urlencoded',
-        
-        }
-   }
-   if (data){
-        const paramName=Object.keys(data);
-        var body='';
-        paramName.forEach((item)=>{
-                body=+body?'&'+encodeURIComponent(item)+'='+objectToUrlEncoded(data[item]):encodeURIComponent(item)+'='+objectToUrlEncoded(data[item]);
-        });
-        options.body=body;
-    }
-   return options;
+    return config.pluginRoot;
 }
 
-export function newServerData(body){
-   const options= {
-       method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
 
-    },
-   
-   }
-   if(body) options.body=JSON.stringify(body);
-   return options;
-}
 
-function objectToUrlEncoded(obj){
-    return encodeURIComponent(JSON.stringify(obj))
-}
 
-let nonceSettingsPage=null;
 
