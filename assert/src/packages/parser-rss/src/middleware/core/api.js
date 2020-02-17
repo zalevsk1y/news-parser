@@ -27,10 +27,12 @@ export const apiMiddleware=({dispatch})=>next=>action=>{
                 };
             })
             .then(data=>{
-                dispatch(apiSuccess(entity,event,data));
-               
+                if(data.code&&data.code!==200){
+                    dispatch(apiError(entity,event,data));
+                }else{
+                    dispatch(apiSuccess(entity,event,data));
+                }
             })
-        //.catch(error=>dispatch(apiError(entity,event,error)))
     }
 }
 

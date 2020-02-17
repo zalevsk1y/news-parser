@@ -76,15 +76,15 @@ class PostModel implements ModelInterface
     public function __construct($data)
     {
         if (!isset($data['title'])||empty($data['title'])) {
-            throw new MyException(Errors::text('NO_TITLE'));
+            throw new MyException(Errors::text('NO_TITLE'),Errors::code('BAD_REQUEST'));
         }
         $this->title = $data['title'];
         if (!isset($data['body'])||empty($data['body'])) {
-            throw new MyException(Errors::text('NO_BODY'));
+            throw new MyException(Errors::text('NO_BODY'),Errors::code('BAD_REQUEST'));
         }
         $this->body = $data['body'];
         if (!isset($data['authorId'])||empty($data['authorId'])) {
-            throw new MyException(Errors::text('NO_AUTHOR'));
+            throw new MyException(Errors::text('NO_AUTHOR'),Errors::code('BAD_REQUEST'));
         }
         $this->authorId = $data['authorId'];
 
@@ -122,7 +122,7 @@ class PostModel implements ModelInterface
     {
         $this->ID = $this->createPostWordPress();
         if ($this->ID === 0) {
-            throw new MyException(Errors::text('POST_WAS_NOT_CREATED'));
+            throw new MyException(Errors::text('POST_WAS_NOT_CREATED'),Errors::code('BAD_REQUEST'));
         }
         $this->getPostLinksWordpress();
         $this->status = 'draft';
@@ -209,7 +209,7 @@ class PostModel implements ModelInterface
         );
         $postId = \wp_insert_post($post_data);
         if (\is_wp_error($postId)) {
-            throw new MyException($postId->get_error_message());
+            throw new MyException($postId->get_error_message(),Errors::code('BAD_REQUEST'));
         } else {
             return $postId;
         }
@@ -229,7 +229,7 @@ class PostModel implements ModelInterface
         $desc = $alt?:"image";
         $img_id = $this->mediaSideloadImage($url, $post_id, $desc, 'id');
         if (\is_wp_error($img_id)) {
-            throw new MyException($img_id->get_error_message().' Image url:'.esc_url_raw($url));
+            throw new MyException($img_id->get_error_message().' Image url:'.esc_url_raw($url),Errors::code('BAD_REQUEST'));
         } else {
             if ($post_thumb) {
                 \set_post_thumbnail($post_id, $img_id);

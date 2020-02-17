@@ -12,7 +12,6 @@ export const togglePostSelect=(_id)=>{
     }
 }
 export const setPostMeta=(metaData,event,_id,data)=>{
-    console.log(_id)
     return {
         type:`[${metaData}:${event}]${POST_META}`,
         payload:{

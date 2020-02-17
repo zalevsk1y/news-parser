@@ -38,7 +38,7 @@ $container=$container_builder->build();
 $event_controller=$container->make(Controller\EventController::class,array($container));
 
 $event_controller->on('media:create',array(Controller\MediaController::class,'create'));
-$event_controller->on('template:create',array(Controller\OptionsController::class,'create'));
+$event_controller->on('template:create',array(Controller\TemplateController::class,'create'));
 $event_controller->on('list:get',array(Controller\ListController::class,'get'));
 $event_controller->on('html:get',array(Controller\VisualConstructorController::class,'get'));
 $event_controller->on('post:create',array(Controller\PostController::class,'create'));

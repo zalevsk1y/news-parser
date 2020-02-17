@@ -33,7 +33,7 @@ trait ValidateDataTrait{
         if(false!==strpos($mime_type,'image')){
             return true;
         }
-        return new \WP_Error('not_valid_url','Given url is not a valid image url.URL:'.esc_url_raw($input_url));
+        return new \WP_Error(400,'Given url is not a valid image url.URL:'.esc_url_raw($input_url));
     }
     /**
      * Validate structure of input media options.
@@ -44,8 +44,8 @@ trait ValidateDataTrait{
      */
     public function validateMediaOptions($options)
     {
-        if(!array_key_exists('post_id',$options)) return new \WP_Error('no_needed_array_key','Media no needed key.Missing key:post_id');
-        if(!array_key_exists('alt',$options)) return new \WP_Error('no_needed_array_key','Media no needed key.Missing key:alt');
+        if(!array_key_exists('post_id',$options)) return new \WP_Error(400,'Media no needed key.Missing key:post_id');
+        if(!array_key_exists('alt',$options)) return new \WP_Error(400,'Media no needed key.Missing key:alt');
         return true;
     }
     /**
@@ -83,7 +83,7 @@ trait ValidateDataTrait{
         $child_should_have_keys=array_slice($container_should_have_keys,0,-2);
         array_push($child_should_have_keys,'position');
         if(!$this->checkArrayKeys($container_should_have_keys,$template)) return false;
-        if(!is_array($template['children'])) return new \WP_Error('wrong_template_format','Template patterns array should have children section.');
+        if(!is_array($template['children'])) return new \WP_Error(400,'Template patterns array should have children section.');
         foreach ($template['children'] as $child){
             if(is_wp_error($result=$this->checkArrayKeys($child_should_have_keys,$child))) return $result;
         }   
@@ -102,6 +102,6 @@ trait ValidateDataTrait{
         $given_keys=array_keys($array);
         $has_difference=array_diff($must_have_keys,$given_keys);
         if(empty($has_difference)) return true;
-        return new \WP_Error('no_needed_array_key','No needed parameters in extraOptions parsing options array.Missing keys:'.implode(',',$has_difference));
+        return new \WP_Error(400,'No needed parameters in extraOptions parsing options array.Missing keys:'.implode(',',$has_difference));
     }
 }

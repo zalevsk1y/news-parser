@@ -50,9 +50,9 @@ class VisualConstructorController extends BaseController
     public function get($url,$options=array()){
         try{
             $html_data=$this->parser->get($url,$options);
-            $response=$html_data;
+            $response=$this->formatResponse->rawHTML($html_data);
         }catch(MyException $e){
-            $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');
+            $response = $this->formatResponse->error($e->getCode())->message('error', $e->getMessage());
         }
         return $response;
     }

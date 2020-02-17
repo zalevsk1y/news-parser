@@ -84,7 +84,7 @@ abstract class AbstractParseContent
     protected function download($url)
     {   $request_args=array('user-agent'=>'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36');
         $data = $this->wpRemoteGet($url,$request_args);
-        if(is_wp_error($data)) throw new MyException(Errors::text('FILE_DOWNLOAD'));
+        if(is_wp_error($data)) throw new MyException(Errors::text('FILE_DOWNLOAD'),Errors::code('BAD_REQUEST'));
         $response_code= wp_remote_retrieve_response_code($data);
         if ($response_code!=200) {
             throw new MyException(Errors::text('FILE_DOWNLOAD'));

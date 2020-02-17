@@ -40,8 +40,11 @@ export function stopFetching(){
     }
 }
 
-export function apiError(){
+export function apiError(entity,event,data){
     return {
-        type: API_ERROR
+        type:`[${entity}:${event}]${API_ERROR}`,
+        payload:{
+            ...data
+        }
     }
 }

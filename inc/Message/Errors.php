@@ -49,4 +49,10 @@ class Errors
         }
 
     }
+    public static function code($slug){
+        switch($slug){
+            case 'BAD_REQUEST';
+                return '400 Bad Request';
+        }
+    }
 }

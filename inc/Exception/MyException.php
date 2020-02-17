@@ -15,9 +15,9 @@ namespace NewsParserPlugin\Exception;
 class MyException extends \Exception
 {
     protected $original;
-    public function __construct($msg, $e = null)
+    public function __construct($msg, $code, $e = null)
     {
         $this->original = $e;
-        parent::__construct($msg);
+        parent::__construct($msg,(int)$code);
     }
 }

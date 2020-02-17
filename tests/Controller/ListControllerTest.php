@@ -27,7 +27,7 @@ namespace NewsParserPlugin\Tests\Controller;
                 ->willReturn($data);
             $list_controller=new ListController($this->mockParser,new ResponseFormatter);
             $result=$list_controller->get($url);
-            $this->assertJsonStringEqualsJsonFile($expected,$result);
+            $this->assertJsonStringEqualsJsonFile($expected,$result->get('json'));
         }
         public function dataGet(){
             return array(

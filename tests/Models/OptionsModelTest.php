@@ -1,9 +1,9 @@
 <?php 
 namespace NewsParserPlugin\Tests\Models;
-use NewsParserPlugin\Models\OptionsModel;
+use NewsParserPlugin\Models\TemplateModel;
 use NewsParserPlugin\Exception\MyException;
 
-class OptionsModelTest extends \WP_UnitTestCase
+class TemplateModelTest extends \WP_UnitTestCase
 {
     protected $instance;
     protected $options=array(
@@ -12,7 +12,7 @@ class OptionsModelTest extends \WP_UnitTestCase
     );
     public function setUp()
     {
-        $this->instance=new OptionsModel('www.test-site.com');
+        $this->instance=new TemplateModel('www.test-site.com');
     }
     public function testSave()
     {
@@ -44,6 +44,6 @@ class OptionsModelTest extends \WP_UnitTestCase
         $this->instance->save($this->options);
         $this->assertInternalType('array',$this->instance->getAttributes('array'));
         $this->assertInternalType('string',$this->instance->getAttributes('json'));
-        $this->assertInstanceOf(OptionsModel::class,$this->instance->getAttributes('object'));
+        $this->assertInstanceOf(TemplateModel::class,$this->instance->getAttributes('object'));
     }
 }

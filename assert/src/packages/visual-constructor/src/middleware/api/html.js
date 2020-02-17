@@ -12,7 +12,6 @@ export const htmlMiddleware = ({dispatch})=>next=>action=>{
             dispatch(apiRequest(HTML,PARSE,data));
             break;
         case `[${HTML}:${PARSE}]${API_SUCCESS}`:
-        
             dispatch(setHTML(action.payload.response))
     }
 }

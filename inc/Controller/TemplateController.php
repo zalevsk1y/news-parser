@@ -5,7 +5,7 @@ use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Message\Success;
-use NewsParserPlugin\Models\OptionsModel;
+use NewsParserPlugin\Models\TemplateModel;
 
 /**
  * Class saves received options.
@@ -19,7 +19,7 @@ use NewsParserPlugin\Models\OptionsModel;
  *
  */
 
-class OptionsController extends BaseController
+class TemplateController extends BaseController
 {
 
     /**
@@ -38,7 +38,7 @@ class OptionsController extends BaseController
      * @uses NewsParserPlugin\Utils\ResponseFormatter::message()
      * @uses NewsParserPlugin\Utils\ResponseFormatter::error()
      * @uses NewsParserPlugin\Utils\ResponseFormatter::get()
-     * @uses NewsParserPlugin\Models\OptionsModel::save()
+     * @uses NewsParserPlugin\Models\TemplateModel::save()
      * @param string $url
      * @param array $options
      * @return string
@@ -48,26 +48,26 @@ class OptionsController extends BaseController
         $parsed_url=parse_url($url);
         try{
             if(!is_array($parsed_url)) throw new MyException (Errors::text('WRONG_OPTIONS_URL'));
-            $optionsModel=$this->modelsFactory($parsed_url);
-            $optionsModel->save($options);
-            $response=$this->formatResponse->message('success',Success::text('TEMPLATE_SAVED'))->get('json');
+            $TemplateModel=$this->modelsFactory($parsed_url);
+            $TemplateModel->save($options);
+            $response=$this->formatResponse->message('success',Success::text('TEMPLATE_SAVED'));
             
         }catch(MyException $e){
-            $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');
+            $response = $this->formatResponse->error($e->getCode())->message('error', $e->getMessage());
         }    
         return $response;
     }
      /**
-    * Get instance of OptionsModel class.
+    * Get instance of TemplateModel class.
     *
     * @param array $url Structure:
     * [scheme] - protocol
     * [host] - host name 
     * [path] - path to resource
     * [fragment] - path fragment
-    * @return OptionsModel
+    * @return TemplateModel
     */
     protected function modelsFactory($url){
-        return new OptionsModel($url['host']);
+        return new TemplateModel($url['host']);
     }
 }

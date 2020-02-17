@@ -25,11 +25,11 @@ class MediaController extends BaseController
     public function create($url,$post_id,$alt=''){
         try{
             $post=$this->postModelsFactory($post_id);
-            if(!$post) throw new MyException(Errors::text('WRONG_POST_ID'));
+            if(!$post) throw new MyException(Errors::text('WRONG_POST_ID'),Errors::code('BAD_REQUEST'));
             $media_id=$post->addPostThumbnail($url,$alt);
-            $response=$this->formatResponse->media($media_id)->message('success',Success::text('FEATURED_IMAGE_SAVED'))->get('json');
+            $response=$this->formatResponse->media($media_id)->message('success',Success::text('FEATURED_IMAGE_SAVED'));
         }catch(MyException $e){
-            $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');
+            $response = $this->formatResponse->error($e->getCode())->message('error', $e->getMessage());
         }
         return $response;
     }

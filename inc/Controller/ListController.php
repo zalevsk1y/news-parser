@@ -62,9 +62,9 @@ class ListController extends BaseController
         try {
             $listData = $this->parser->get($url);
             $list = $this->listModelFactory($listData);
-            $response = $this->formatResponse->rss($list->getAttributes())->message('success', Success::text('RSS_LIST_PARSED'))->get('json');
+            $response = $this->formatResponse->rss($list->getAttributes())->message('success', Success::text('RSS_LIST_PARSED'));
         } catch (MyException $e) {
-            $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');
+            $response = $this->formatResponse->error($e->getCode())->message('error', $e->getMessage());
         }
         return $response;
     }

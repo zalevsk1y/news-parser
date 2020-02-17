@@ -5,6 +5,8 @@ use NewsParserPlugin\Interfaces\EventControllerInterface;
 /**
  * Class event observer. Calls controller on event trigger.
  * 
+ * PHP version 5.6
+ * 
  * @package Controller
  * @author  Evgeny S.Zalevskiy <2600@ukr.net>
  * @license MIT <https://opensource.org/licenses/MIT>

@@ -1,1 +1,1 @@
-{"err":0,"msg":{"type":"success","text":"Options was saved successful.","timestamp":123456789}}
+{"code":200,"msg":{"type":"success","text":"Options was saved successful.","timestamp":123456789}}

@@ -66,7 +66,7 @@ class XMLParser extends Abstracts\AbstractParseContent
 
         if (!empty($errors)) {
             libxml_clear_errors();
-            throw new MyException(Errors::text('XML_PARSING'));
+            throw new MyException(Errors::text('XML_PARSING'),Errors::code('BAD_REQUEST'));
         }
 
         return $data;

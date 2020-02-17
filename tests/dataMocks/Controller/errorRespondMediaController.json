@@ -1,1 +1,1 @@
-{"err":"1","msg":{"type":"error","text":"Wrong post ID.","timestamp":123456789}}
+{"code":"400","msg":{"type":"error","text":"Wrong post ID.","timestamp":123456789}}

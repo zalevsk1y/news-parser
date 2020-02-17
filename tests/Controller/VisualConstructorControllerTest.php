@@ -5,6 +5,7 @@ use NewsParserPlugin\Controller\VisualConstructorController;
 use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Exception\MyException;
+use NewsParserPlugin\Message\Errors;
 
 
 
@@ -34,16 +35,16 @@ class VisualConstructorControllerTest extends \WP_UnitTestCase
             ->willReturn($input_data);
         $visual_controller=$this->init($this->mockParser);
         $result=$visual_controller->get('http://www.right-site.com/post.html');
-        $this->assertEquals($expected,$result);
+        $this->assertEquals($expected,$result->get('text'));
     }
     public function testGetError()
     {
         $expected=CONTROLLER_MOCK_DIR.'/errorRespondVisualConstructor.json';
         $this->mockParser->method('get')
-            ->will($this->throwException(new MyException('Test error message')));
+            ->will($this->throwException(new MyException('Test error message',Errors::code('BAD_REQUEST'))));
         $visual_controller=$this->init($this->mockParser);
         $result=$visual_controller->get('http://www.wrong-site.com/post.html');
-        $this->assertJsonStringEqualsJsonFile($expected,$result);
+        $this->assertJsonStringEqualsJsonFile($expected,$result->get('json'));
     }
    
 }

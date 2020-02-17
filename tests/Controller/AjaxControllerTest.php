@@ -48,7 +48,7 @@ namespace NewsParserPlugin\Tests\Controller{
                 ->with($this->equalTo($event),$this->equalTo($expected));
             $mock_ajax_controller=$this->getMockBuilder(MockAjaxController::class)
                 ->setConstructorArgs(array($event_controller))
-                ->setMethods(array('getJsonFromInput','sendHeader'))
+                ->setMethods(array('getJsonFromInput','sendResponse'))
                 ->getMock();
             $mock_ajax_controller->method('getJsonFromInput')
                 ->willReturn($input);

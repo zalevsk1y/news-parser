@@ -31,7 +31,7 @@ class MediaControllerTest extends \WP_UnitTestCase
         $mock_media_controller->method('postModelsFactory')
             ->willReturn($mock_post_model::getPostById($post_id));
         $result=$mock_media_controller->create($url,$post_id,$alt);
-        $this->assertJsonStringEqualsJsonFile($expected,$result);
+        $this->assertJsonStringEqualsJsonFile($expected,$result->get('json'));
     }
     public function dataCreate(){
   

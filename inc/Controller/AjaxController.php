@@ -138,9 +138,7 @@ class AjaxController extends Ajax
         ));
        
         $response=$this->event->trigger('media:create',array($request['url'],$request['options']['post_id'],$request['options']['alt']));
-        $this->sendHeader('Content-Type:application/json');
-        echo $response;
-       wp_die();
+        $this->sendResponse($response);
     }
     /**
      * Callback that handles options api requests.
@@ -188,10 +186,9 @@ class AjaxController extends Ajax
             'extraOptions'=>$request['extraOptions'],
             'template'=>$request['template']
         );
-        $respond=$this->event->trigger('template:create',array($request['url'],$options));
-        $this->sendHeader('Content-Type:application/json');
-        echo $respond;
-        wp_die();
+        $response=$this->event->trigger('template:create',array($request['url'],$options));
+        
+        $this->sendResponse($response);
     }
     /**
      * Callback that handles parsing list of posts from RSS api requests.
@@ -225,9 +222,8 @@ class AjaxController extends Ajax
         $url = $request['url'];
 
         $response = $this->event->trigger('list:get',array($url));
-        $this->sendHeader('Content-Type:application/json');
-        echo $response;
-        wp_die();
+        $this->sendResponse($response);
+
     }
      /**
      * Callback that handles parsing single page api requests and returns HTML of the page.
@@ -260,9 +256,7 @@ class AjaxController extends Ajax
          
         $url = $request['url'];
         $response = $this->event->trigger('html:get',array($url));
-        
-        echo $response;
-        wp_die();
+        $this->sendResponse($response);
     }
      /**
      * Callback that handles parsing single page api requests and create WP post draft using saved parsing templates.
@@ -311,8 +305,6 @@ class AjaxController extends Ajax
         ));
 
         $response=$this->event->trigger('post:create',$request);       
-        $this->sendHeader('Content-Type:application/json');
-        echo $response;
-        wp_die();
+        $this->sendResponse($response);
     }
 }

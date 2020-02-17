@@ -22,7 +22,7 @@ class Ajax
         $error_message='%s should be a %s but %s given.';
         $desc=$description?:'Argument';
         $arg_type=gettype($arg); 
-        if($arg_type!==$type)  return new \WP_Error('wrong_argument_type',
+        if($arg_type!==$type)  return new \WP_Error(400,
             esc_html(sprintf($error_message,
                 $desc,
                 $type,
@@ -49,11 +49,11 @@ class Ajax
             if(key_exists($key,$dirty_request)){
                 $dirty_arg=$dirty_request[$key];
                 if(is_wp_error($e=$this->checkArgType($dirty_arg,$arg['type'],$arg['description']))){
-                    $this->sendError($e->get_error_message());
+                    $this->sendError($e);
                 }
                 //validate arguments.
                 if(is_wp_error($e=call_user_func($arg['validate_callback'],$dirty_arg))){
-                    $this->sendError($e->get_error_message());
+                    $this->sendError($e);
                 }
                 //sanitize arguments.
                 if(($clean_arg=call_user_func($arg['sanitize_callback'],$dirty_arg))!==false){
@@ -66,25 +66,41 @@ class Ajax
     /**
      * Send json message on error.
      *
-     * @param string $message
+     * @param \WP_Error $error
      * @return void
      */
-    protected function sendError($message)
-    {
-        $clean_message=esc_html($message);
-        $response=array('error'=>$clean_message);
-        \wp_send_json($response);
+    protected function sendError($error)
+    {   
+        $response_message=array(
+            'msg'=>array(
+                'type'=>'error',
+                'text'=>esc_html($error->get_message())
+            ),
+            'code'=>esc_html($error->get_code())
+        );
+        wp_send_json($msg,$error->get_code());
     }
     /**
-     * Send headers.
+     * Send response.
      *
-     * @param string $headers
+     * @param NewsParserPlugin\Utils\ResponseFormatter $response
+     * @param string $response
      * @return void
      */
-    protected function sendHeader($headers)
+    protected function sendResponse($response)
     {
-        header($headers);
+        switch ($response->contentType){
+            case 'json':
+                wp_send_json($response->get('array'));
+                break;
+            case 'text':
+                echo $response->get('text');
+                wp_die();
+                break;
+        }
+        
     }
+
     /**
      * Get application/json encoded data using php://input
      *

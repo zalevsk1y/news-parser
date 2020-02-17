@@ -33,7 +33,6 @@ export class Image extends React.Component{
             image=document.createElement('img');
         image.src=src;
         image.onload=()=>{
-            console.log(this)
             $this.imageRef.current.src=src;
         }
    

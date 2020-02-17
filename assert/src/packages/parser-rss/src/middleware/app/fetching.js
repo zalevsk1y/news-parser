@@ -8,7 +8,6 @@ export const fetchingMiddleware=({dispatch})=>next=>action=>{
     next(action);
     const {type}=action;
     if(type.includes(PARSER_RSS)&&type.includes(API_REQUEST)){
-        console.log(action.payload)
         const {entity,event,data}=action.payload;
         dispatch(startFetching(entity,event,data));
     }

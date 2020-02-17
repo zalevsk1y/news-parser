@@ -66,7 +66,6 @@ export const selectPostMeta=(state,action)=>{
             delete newState[_id];
             return newState;
         case `[${SELECT}:${INSERT}]${POST_META}`:
-            console.log(action)
             return {
                 ...state,
                 ...{[action.payload._id]:true}

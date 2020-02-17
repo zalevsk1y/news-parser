@@ -12,6 +12,7 @@ import {listMiddleware} from './middleware/api/list';
 import {postMiddleware} from './middleware/app/post';
 import {mainMiddleware} from './middleware/core/main';
 import {pageMiddleware} from './middleware/api/page';
+import {errorMiddleware} from './middleware/api/error';
 import {fetchingMiddleware} from './middleware/app/fetching';
 
 
@@ -47,6 +48,7 @@ const store=createStore(
             mediaMiddleware,
             templateMiddleware,
             fetchingMiddleware,
+            errorMiddleware,
             dialogFetchingMiddleware
             
         )));

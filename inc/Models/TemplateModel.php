@@ -15,7 +15,7 @@ use NewsParserPlugin\Message\Errors;
  * @license  MIT
  */
 
-class OptionsModel implements ModelInterface
+class TemplateModel implements ModelInterface
 {
     /**
      * Url of resource that will be source of the posts feed. 
@@ -74,7 +74,7 @@ class OptionsModel implements ModelInterface
      */
     public function save($options)
     {
-        if(!isset($options['extraOptions'])||!isset($options['template'])) throw new MyException(Errors::text('OPTIONS_WRONG_FORMAT'));
+        if(!isset($options['extraOptions'])||!isset($options['template'])) throw new MyException(Errors::text('OPTIONS_WRONG_FORMAT'),Errors::code('BAD_REQUEST'));
         $data=array(
             'extraOptions'=>$options['extraOptions'],
             'template'=>$options['template']
@@ -136,7 +136,7 @@ class OptionsModel implements ModelInterface
      * @return array|object|string
      */
     public function getAttributes($format){
-        if(!isset($this->extraOptions)||!isset($this->parseTemplate)) throw new MyException(Errors::text('NO_TEMPLATE'));
+        if(!isset($this->extraOptions)||!isset($this->parseTemplate)) throw new MyException(Errors::text('NO_TEMPLATE'),Errors::code('BAD_REQUEST'));
         $data=array(
             'extraOptions'=>$this->extraOptions,
             'template'=>$this->parseTemplate

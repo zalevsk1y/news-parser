@@ -39041,8 +39041,6 @@ function (_React$Component) {
   }, {
     key: "lazyLoad",
     value: function lazyLoad() {
-      var _this2 = this;
-
       if (!this.props.src) return;
       var src = this.props.src,
           $this = this,
@@ -39050,7 +39048,6 @@ function (_React$Component) {
       image.src = src;
 
       image.onload = function () {
-        console.log(_this2);
         $this.imageRef.current.src = src;
       };
     }
@@ -39376,6 +39373,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "startFetching", function() { return startFetching; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stopFetching", function() { return stopFetching; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "apiError", function() { return apiError; });
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var API_REQUEST = 'API_REQUEST';
 var API_SUCCESS = 'API_SUCCESS';
 var API_ERROR = 'API_ERROR';
@@ -39414,9 +39415,10 @@ function stopFetching() {
     type: STOP_FETCHING
   };
 }
-function apiError() {
+function apiError(entity, event, data) {
   return {
-    type: API_ERROR
+    type: "[".concat(entity, ":").concat(event, "]").concat(API_ERROR),
+    payload: _objectSpread({}, data)
   };
 }
 
@@ -39563,7 +39565,6 @@ var togglePostSelect = function togglePostSelect(_id) {
   };
 };
 var setPostMeta = function setPostMeta(metaData, event, _id, data) {
-  console.log(_id);
   return {
     type: "[".concat(metaData, ":").concat(event, "]").concat(POST_META),
     payload: _objectSpread({
@@ -40659,18 +40660,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _middleware_app_post__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./middleware/app/post */ "./src/packages/parser-rss/src/middleware/app/post.js");
 /* harmony import */ var _middleware_core_main__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./middleware/core/main */ "./src/packages/parser-rss/src/middleware/core/main.js");
 /* harmony import */ var _middleware_api_page__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./middleware/api/page */ "./src/packages/parser-rss/src/middleware/api/page.js");
-/* harmony import */ var _middleware_app_fetching__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./middleware/app/fetching */ "./src/packages/parser-rss/src/middleware/app/fetching.js");
-/* harmony import */ var _news_parser_visual_constructor_middleware_app_dialog__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @news-parser/visual-constructor/middleware/app/dialog */ "./src/packages/visual-constructor/src/middleware/app/dialog.js");
-/* harmony import */ var _news_parser_visual_constructor_middleware_api_html__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @news-parser/visual-constructor/middleware/api/html */ "./src/packages/visual-constructor/src/middleware/api/html.js");
-/* harmony import */ var _news_parser_visual_constructor_middleware_api_draft__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @news-parser/visual-constructor/middleware/api/draft */ "./src/packages/visual-constructor/src/middleware/api/draft.js");
-/* harmony import */ var _news_parser_visual_constructor_middleware_api_media__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @news-parser/visual-constructor/middleware/api/media */ "./src/packages/visual-constructor/src/middleware/api/media.js");
-/* harmony import */ var _news_parser_visual_constructor_middleware_api_template__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @news-parser/visual-constructor/middleware/api/template */ "./src/packages/visual-constructor/src/middleware/api/template.js");
-/* harmony import */ var _news_parser_visual_constructor_middleware_app_fetching__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @news-parser/visual-constructor/middleware/app/fetching */ "./src/packages/visual-constructor/src/middleware/app/fetching.js");
-/* harmony import */ var _actions_app_actions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./actions/app.actions */ "./src/packages/parser-rss/src/actions/app.actions.js");
-/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
-/* harmony import */ var _news_parser_error_handler__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @news-parser/error-handler */ "./src/packages/error-handler/src/index.js");
-/* harmony import */ var _news_parser_styles_parser_rss_scss__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @news-parser/styles/parser-rss.scss */ "./scss/parser-rss.scss");
-/* harmony import */ var _news_parser_styles_parser_rss_scss__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_news_parser_styles_parser_rss_scss__WEBPACK_IMPORTED_MODULE_21__);
+/* harmony import */ var _middleware_api_error__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./middleware/api/error */ "./src/packages/parser-rss/src/middleware/api/error.js");
+/* harmony import */ var _middleware_app_fetching__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./middleware/app/fetching */ "./src/packages/parser-rss/src/middleware/app/fetching.js");
+/* harmony import */ var _news_parser_visual_constructor_middleware_app_dialog__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @news-parser/visual-constructor/middleware/app/dialog */ "./src/packages/visual-constructor/src/middleware/app/dialog.js");
+/* harmony import */ var _news_parser_visual_constructor_middleware_api_html__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @news-parser/visual-constructor/middleware/api/html */ "./src/packages/visual-constructor/src/middleware/api/html.js");
+/* harmony import */ var _news_parser_visual_constructor_middleware_api_draft__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @news-parser/visual-constructor/middleware/api/draft */ "./src/packages/visual-constructor/src/middleware/api/draft.js");
+/* harmony import */ var _news_parser_visual_constructor_middleware_api_media__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @news-parser/visual-constructor/middleware/api/media */ "./src/packages/visual-constructor/src/middleware/api/media.js");
+/* harmony import */ var _news_parser_visual_constructor_middleware_api_template__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @news-parser/visual-constructor/middleware/api/template */ "./src/packages/visual-constructor/src/middleware/api/template.js");
+/* harmony import */ var _news_parser_visual_constructor_middleware_app_fetching__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @news-parser/visual-constructor/middleware/app/fetching */ "./src/packages/visual-constructor/src/middleware/app/fetching.js");
+/* harmony import */ var _actions_app_actions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./actions/app.actions */ "./src/packages/parser-rss/src/actions/app.actions.js");
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
+/* harmony import */ var _news_parser_error_handler__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @news-parser/error-handler */ "./src/packages/error-handler/src/index.js");
+/* harmony import */ var _news_parser_styles_parser_rss_scss__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @news-parser/styles/parser-rss.scss */ "./scss/parser-rss.scss");
+/* harmony import */ var _news_parser_styles_parser_rss_scss__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_news_parser_styles_parser_rss_scss__WEBPACK_IMPORTED_MODULE_22__);
+
 
 
 
@@ -40695,12 +40698,12 @@ __webpack_require__.r(__webpack_exports__);
  //SetUp for Redux DevExtension.
 
 var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-var store = Object(redux__WEBPACK_IMPORTED_MODULE_4__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_5__["default"], composeEnhancers(Object(redux__WEBPACK_IMPORTED_MODULE_4__["applyMiddleware"])(_middleware_core_api__WEBPACK_IMPORTED_MODULE_6__["apiMiddleware"], _middleware_core_main__WEBPACK_IMPORTED_MODULE_9__["mainMiddleware"], _middleware_api_list__WEBPACK_IMPORTED_MODULE_7__["listMiddleware"], _middleware_app_post__WEBPACK_IMPORTED_MODULE_8__["postMiddleware"], _middleware_api_page__WEBPACK_IMPORTED_MODULE_10__["pageMiddleware"], _news_parser_visual_constructor_middleware_app_dialog__WEBPACK_IMPORTED_MODULE_12__["dialogMiddleware"], _news_parser_visual_constructor_middleware_api_html__WEBPACK_IMPORTED_MODULE_13__["htmlMiddleware"], _news_parser_visual_constructor_middleware_api_draft__WEBPACK_IMPORTED_MODULE_14__["draftMiddleware"], _news_parser_visual_constructor_middleware_api_media__WEBPACK_IMPORTED_MODULE_15__["mediaMiddleware"], _news_parser_visual_constructor_middleware_api_template__WEBPACK_IMPORTED_MODULE_16__["templateMiddleware"], _middleware_app_fetching__WEBPACK_IMPORTED_MODULE_11__["fetchingMiddleware"], _news_parser_visual_constructor_middleware_app_fetching__WEBPACK_IMPORTED_MODULE_17__["fetchingMiddleware"])));
-store.dispatch(Object(_actions_app_actions__WEBPACK_IMPORTED_MODULE_18__["startApp"])());
+var store = Object(redux__WEBPACK_IMPORTED_MODULE_4__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_5__["default"], composeEnhancers(Object(redux__WEBPACK_IMPORTED_MODULE_4__["applyMiddleware"])(_middleware_core_api__WEBPACK_IMPORTED_MODULE_6__["apiMiddleware"], _middleware_core_main__WEBPACK_IMPORTED_MODULE_9__["mainMiddleware"], _middleware_api_list__WEBPACK_IMPORTED_MODULE_7__["listMiddleware"], _middleware_app_post__WEBPACK_IMPORTED_MODULE_8__["postMiddleware"], _middleware_api_page__WEBPACK_IMPORTED_MODULE_10__["pageMiddleware"], _news_parser_visual_constructor_middleware_app_dialog__WEBPACK_IMPORTED_MODULE_13__["dialogMiddleware"], _news_parser_visual_constructor_middleware_api_html__WEBPACK_IMPORTED_MODULE_14__["htmlMiddleware"], _news_parser_visual_constructor_middleware_api_draft__WEBPACK_IMPORTED_MODULE_15__["draftMiddleware"], _news_parser_visual_constructor_middleware_api_media__WEBPACK_IMPORTED_MODULE_16__["mediaMiddleware"], _news_parser_visual_constructor_middleware_api_template__WEBPACK_IMPORTED_MODULE_17__["templateMiddleware"], _middleware_app_fetching__WEBPACK_IMPORTED_MODULE_12__["fetchingMiddleware"], _middleware_api_error__WEBPACK_IMPORTED_MODULE_11__["errorMiddleware"], _news_parser_visual_constructor_middleware_app_fetching__WEBPACK_IMPORTED_MODULE_18__["fetchingMiddleware"])));
+store.dispatch(Object(_actions_app_actions__WEBPACK_IMPORTED_MODULE_19__["startApp"])());
 window.addEventListener('load', function () {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_3__["Provider"], {
     store: store
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_news_parser_error_handler__WEBPACK_IMPORTED_MODULE_20__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_Main__WEBPACK_IMPORTED_MODULE_2__["default"], null))), document.getElementById('parsing-rss-app'));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_news_parser_error_handler__WEBPACK_IMPORTED_MODULE_21__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_Main__WEBPACK_IMPORTED_MODULE_2__["default"], null))), document.getElementById('parsing-rss-app'));
 });
 
 /***/ }),
@@ -40713,6 +40716,38 @@ window.addEventListener('load', function () {
 /***/ (function(module) {
 
 module.exports = {"Parse RSS Feed":{"en":"Parse RSS Feed","ru":"Парсить RSS ленту"},"Parse Page":{"en":"Parse Page","ru":"Парсить страницу"},"Parse News":{"en":"Parse News","ru":"Парсинг новостей"}};
+
+/***/ }),
+
+/***/ "./src/packages/parser-rss/src/middleware/api/error.js":
+/*!*************************************************************!*\
+  !*** ./src/packages/parser-rss/src/middleware/api/error.js ***!
+  \*************************************************************/
+/*! exports provided: errorMiddleware */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "errorMiddleware", function() { return errorMiddleware; });
+/* harmony import */ var _actions_api_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/api.actions */ "./src/packages/parser-rss/src/actions/api.actions.js");
+/* harmony import */ var _news_parser_message___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @news-parser/message/ */ "./src/packages/message/src/index.js");
+
+
+var errorMiddleware = function errorMiddleware(_ref) {
+  var dispatch = _ref.dispatch;
+  return function (next) {
+    return function (action) {
+      next(action);
+
+      if (action.type.includes(_actions_api_actions__WEBPACK_IMPORTED_MODULE_0__["API_ERROR"])) {
+        var _action$payload$msg = action.payload.msg,
+            type = _action$payload$msg.type,
+            text = _action$payload$msg.text;
+        dispatch(Object(_news_parser_message___WEBPACK_IMPORTED_MODULE_1__["showMessage"])(type, text));
+      }
+    };
+  };
+};
 
 /***/ }),
 
@@ -40847,7 +40882,6 @@ var pageMiddleware = function pageMiddleware(store) {
               _id = _action$payload$respo._id,
               editLink = _action$payload$respo.editLink,
               msg = action.payload.response.msg;
-          console.log(action);
           dispatch(Object(_actions_post_actions__WEBPACK_IMPORTED_MODULE_2__["setPostMeta"])(_constants__WEBPACK_IMPORTED_MODULE_0__["SELECT"], _constants__WEBPACK_IMPORTED_MODULE_0__["DELETE"], _id));
           dispatch(Object(_actions_post_actions__WEBPACK_IMPORTED_MODULE_2__["setPostMeta"])(_constants__WEBPACK_IMPORTED_MODULE_0__["DRAFT"], _constants__WEBPACK_IMPORTED_MODULE_0__["INSERT"], _id, {
             post_id: post_id,
@@ -40885,7 +40919,6 @@ var fetchingMiddleware = function fetchingMiddleware(_ref) {
       var type = action.type;
 
       if (type.includes(_constants___WEBPACK_IMPORTED_MODULE_1__["PARSER_RSS"]) && type.includes(_actions_api_actions__WEBPACK_IMPORTED_MODULE_0__["API_REQUEST"])) {
-        console.log(action.payload);
         var _action$payload = action.payload,
             entity = _action$payload.entity,
             event = _action$payload.event,
@@ -40986,8 +41019,12 @@ var apiMiddleware = function apiMiddleware(_ref) {
 
           ;
         }).then(function (data) {
-          dispatch(Object(_actions_api_actions__WEBPACK_IMPORTED_MODULE_2__["apiSuccess"])(entity, event, data));
-        }); //.catch(error=>dispatch(apiError(entity,event,error)))
+          if (data.code && data.code !== 200) {
+            dispatch(Object(_actions_api_actions__WEBPACK_IMPORTED_MODULE_2__["apiError"])(entity, event, data));
+          } else {
+            dispatch(Object(_actions_api_actions__WEBPACK_IMPORTED_MODULE_2__["apiSuccess"])(entity, event, data));
+          }
+        });
       }
     };
   };
@@ -41160,7 +41197,6 @@ var selectPostMeta = function selectPostMeta(state, action) {
       return newState;
 
     case "[".concat(_constants_index__WEBPACK_IMPORTED_MODULE_7__["SELECT"], ":").concat(_constants_index__WEBPACK_IMPORTED_MODULE_7__["INSERT"], "]").concat(_actions_post_actions__WEBPACK_IMPORTED_MODULE_6__["POST_META"]):
-      console.log(action);
       return _objectSpread({}, state, _defineProperty({}, action.payload._id, true));
 
     default:

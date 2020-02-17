@@ -14,18 +14,26 @@ namespace NewsParserPlugin\Utils;
 
 class ResponseFormatter 
 {
+
+    /**
+     * Response content type.
+     *
+     * @var array
+     */
+    public $contentType='json';
     /**
      * Base response format.
      *
      * @var array
      */
-    protected $data=array('err'=>0,'msg'=>false);
+    protected $data=array('code'=>200,'msg'=>false);
     /**
      * Return new instance of ResponseFormatter 
      * 
      * @return ResponseFormatter
      */
-    public static function getInstance(){
+    public static function getInstance()
+    {
         return new static();
     }
     /**
@@ -34,7 +42,8 @@ class ResponseFormatter
      * @param array $data should contain post_id,status,link
      * @return ResponseFormatter return this for chain building
      */
-    public function post($data){
+    public function post($data)
+    {
         $this->data['data']=array(
             'post_id'=>$data['post_id'],
             'status'=>$data['status'],
@@ -48,7 +57,8 @@ class ResponseFormatter
      * @param array $data array of list objects
      * @return ResponseFormatter return this for chain building
      */
-    public function rss($data){
+    public function rss($data)
+    {
         $this->data['data']=$data;
         return $this;
     }
@@ -73,7 +83,8 @@ class ResponseFormatter
      * @return ResponseFormatter return this for chain building
      */
     public function rawHTML($data){
-        $this->data['data']=esc_html($data);
+        $this->contentType='text';
+        $this->data['data']=$data;
         return $this;
     }
     /**
@@ -91,11 +102,11 @@ class ResponseFormatter
     /**
      * Return error message in case some errors
      *
-     * @param int $code code of error
+     * @param string $code code of error
      * @return ResponseFormatter return this for chain building
      */
     public function error($code){
-        $this->data['err']=esc_html($code);
+        $this->data['code']=(int)$code;
         return $this;
     }
     /**
@@ -134,7 +145,6 @@ class ResponseFormatter
         $this->data['data'][$escaped_field_name]=$escaped_value;
         return $this;
     }
-
     /**
      * Return answer data in array|object|json format
      *
@@ -150,8 +160,10 @@ class ResponseFormatter
                 return json_decode($json);
             case 'array':
                 return json_decode($json,true);
+            case 'text':
+                return $this->data['data'];
             default:
-            return $this->data;
+            return $this;
         }
     }
 }

@@ -9,7 +9,7 @@ class PostControllerTest extends \WP_UnitTestCase
 {
     protected $user;
     protected $post;
-    protected $mockOptionsModel;
+    protected $mockTemplateModel;
     protected $mockParser;
     
     public function setUp()
@@ -19,7 +19,7 @@ class PostControllerTest extends \WP_UnitTestCase
             'role' => 'administrator',
         ]);
         wp_set_current_user($this->user->ID);
-        $this->mockOptionsModel=$mock_options_model=$this->getMockBuilder(\NewsParserPlugin\Models\OptionsModel::class)
+        $this->mockTemplateModel=$mock_options_model=$this->getMockBuilder(\NewsParserPlugin\Models\TemplateModel::class)
             ->disableOriginalConstructor()
             ->setMethods(array('getExtraOptions','getAttributes'))
             ->getMock();
@@ -57,13 +57,13 @@ class PostControllerTest extends \WP_UnitTestCase
                     new ResponseFormatter()
                 )
             )
-            ->setMethods(array('optionsModelsFactory'))
+            ->setMethods(array('TemplateModelsFactory'))
             ->getMock();
-        $mock_post_controller->method('optionsModelsFactory')
-            ->willReturn($this->mockOptionsModel);    
+        $mock_post_controller->method('TemplateModelsFactory')
+            ->willReturn($this->mockTemplateModel);    
         $result=$mock_post_controller->create($url,1);
         $this->post=$mock_post_controller->post;
-        $this->assertJsonStringEqualsJsonFile($expected,$result);
+        $this->assertJsonStringEqualsJsonFile($expected,$result->get('json'));
     }
     public function dataCreate(){
         return array(

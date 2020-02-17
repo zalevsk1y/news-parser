@@ -36,7 +36,7 @@ class ListModel implements ModelInterface
      */
     public function __construct($data)
     {
-        if(empty($data)||'array'!==gettype($data)) throw new MyException(Errors::text('WRONG_LIST_FORMAT'));
+        if(empty($data)||'array'!==gettype($data)) throw new MyException(Errors::text('WRONG_LIST_FORMAT'),Errors::code('BAD_REQUEST'));
         $this->data = $data;
     }
     /**

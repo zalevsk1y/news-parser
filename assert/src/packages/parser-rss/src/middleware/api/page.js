@@ -28,7 +28,6 @@ export const pageMiddleware = (store)=>next=>action=>{
         case `[${PAGE}:${PARSE}]${API_SUCCESS}`:
             const {post_id,_id,editLink}=action.payload.response.data,
                 {msg}=action.payload.response;
-            console.log(action);
             dispatch(setPostMeta(SELECT,DELETE,_id));
             dispatch(setPostMeta(DRAFT,INSERT,_id,{post_id,editLink}));
             dispatch(showMessage(msg.type,msg.text));

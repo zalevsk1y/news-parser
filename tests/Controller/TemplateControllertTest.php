@@ -1,19 +1,19 @@
 <?php
 namespace NewsParserPlugin\Tests\Controller;
 
-    use NewsParserPlugin\Controller\OptionsController;
+    use NewsParserPlugin\Controller\TemplateController;
     use NewsParserPlugin\Utils\ResponseFormatter;
 
-    class OptionsControllerTest extends \WP_UnitTestCase
+    class TemplateControllerTest extends \WP_UnitTestCase
     {
         /**
          * @dataProvider dataCreate
          */
         public function testCreate($options,$expected){
-            $options_controller=new OptionsController(new ResponseFormatter());
+            $options_controller=new TemplateController(new ResponseFormatter());
             $url='http://www.site.com/feed/rss';
             $result=$options_controller->create($url,$options);
-            $this->assertJsonStringEqualsJsonFile($expected,$result);
+            $this->assertJsonStringEqualsJsonFile($expected,$result->get('json'));
         }
         public function dataCreate(){
             return array(
