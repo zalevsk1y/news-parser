@@ -70,7 +70,8 @@ class Ajax
      * @return void
      */
     protected function sendError($error)
-    {   
+    {  
+        if(!is_wp_error($error)) return; 
         $response_message=array(
             'msg'=>array(
                 'type'=>'error',
@@ -78,7 +79,7 @@ class Ajax
             ),
             'code'=>esc_html($error->get_code())
         );
-        wp_send_json($msg,$error->get_code());
+        wp_send_json($response_message,$error->get_code());
     }
     /**
      * Send response.

@@ -87,7 +87,7 @@ abstract class AbstractParseContent
         if(is_wp_error($data)) throw new MyException(Errors::text('FILE_DOWNLOAD'),Errors::code('BAD_REQUEST'));
         $response_code= wp_remote_retrieve_response_code($data);
         if ($response_code!=200) {
-            throw new MyException(Errors::text('FILE_DOWNLOAD'));
+            throw new MyException(Errors::text('FILE_DOWNLOAD'),Errors::code('BAD_REQUEST'));
         }
         $body=wp_remote_retrieve_body($data);
         return $body;

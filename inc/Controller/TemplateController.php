@@ -47,7 +47,7 @@ class TemplateController extends BaseController
     {
         $parsed_url=parse_url($url);
         try{
-            if(!is_array($parsed_url)) throw new MyException (Errors::text('WRONG_OPTIONS_URL'));
+            if(!is_array($parsed_url)) throw new MyException (Errors::text('WRONG_OPTIONS_URL'),Errors::code('BAD_REQUEST'));
             $TemplateModel=$this->modelsFactory($parsed_url);
             $TemplateModel->save($options);
             $response=$this->formatResponse->message('success',Success::text('TEMPLATE_SAVED'));

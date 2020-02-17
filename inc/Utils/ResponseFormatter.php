@@ -18,7 +18,7 @@ class ResponseFormatter
     /**
      * Response content type.
      *
-     * @var array
+     * @var string
      */
     public $contentType='json';
     /**

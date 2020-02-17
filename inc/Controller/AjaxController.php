@@ -94,7 +94,7 @@ class AjaxController extends Ajax
      * Check if user have relevant rights  and check nonce.
      *
      * @param string $action Should give context to what is taking place and be the same when nonce was created.
-     * @param string $requestArgs Request arguments should contain _wpnonce field, 
+     * @param string $request_args Request arguments should contain _wpnonce field, 
      * @return true|\WP_Error
      */
     protected function checkPermission($action,$request_args)
