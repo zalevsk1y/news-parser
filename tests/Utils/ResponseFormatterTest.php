@@ -4,7 +4,7 @@ use NewsParserPlugin\Utils\ResponseFormatter;
 
 class ResponseFormatterTest extends \WP_UnitTestCase{
     protected $instance;
-    protected $data=array('err'=>0,'msg'=>false);
+    protected $data=array('code'=>200,'msg'=>false);
     
     public function setUp(){
         $this->instance=new ResponseFormatter();
@@ -53,7 +53,7 @@ class ResponseFormatterTest extends \WP_UnitTestCase{
     }
     public function testError(){
         $error_code=1;
-        $expected=array_merge($this->data,array('err'=>$error_code));
+        $expected=array_merge($this->data,array('code'=>$error_code));
         $result=$this->instance->error($error_code)->get('array');
         $this->assertEquals($expected,$result);
     }
