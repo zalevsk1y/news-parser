@@ -61,7 +61,7 @@ class PostControllerTest extends \WP_UnitTestCase
             ->getMock();
         $mock_post_controller->method('optionsModelsFactory')
             ->willReturn($this->mockOptionsModel);    
-        $result=$mock_post_controller->create($url);
+        $result=$mock_post_controller->create($url,1);
         $this->post=$mock_post_controller->post;
         $this->assertJsonStringEqualsJsonFile($expected,$result);
     }

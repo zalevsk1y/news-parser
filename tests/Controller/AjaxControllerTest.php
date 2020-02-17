@@ -1,9 +1,7 @@
 <?php
 namespace NewsParserPlugin\Tests\Controller{
     use NewsParserPlugin\Controller\AjaxController;
-    use NewsParserPlugin\Factory\ControllersFactory;
-    use NewsParserPlugin\Controller\VisualConstructorController;
-
+    
     class MockAjaxController extends AjaxController
     {
         public function __construct($event)
@@ -33,33 +31,15 @@ namespace NewsParserPlugin\Tests\Controller{
             $_REQUEST=array();
             $_GET=array();
         }
-        public function testMediaApi()
-        {
-            $event='media:create';
-            $input=json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/mediaApiRequest.json'),true);
-            $expected=json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/mediaApiExpected.json'),true);
-            $mock_ajax_controller=$this->setUpMockController($event,$input,$expected);
-            $mock_ajax_controller->mediaApi();
-        }
-        public function testOptionsApi()
-        {
-            $event='options:create';
-            $input= json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/optionsApiRequest.json'),true);
-            $expected=json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/optionsApiExpected.json'),true);
-            $mock_ajax_controller=$this->setUpMockController($event,$input,$expected);
-            $mock_ajax_controller->optionsApi();
-        }
+      
         /**
          * @dataProvider dataParsingApi
          *
          */
-        public function testParsingApi($event,$input,$expected)
+        public function testParsingApi($event,$input,$expected,$method)
         {
-            $_GET['url']=$input['url'];
-            $_GET['status']=$input['status'];
             $mock_ajax_controller=$this->setUpMockController($event,$input,$expected);
-            $mock_ajax_controller->parsingApi();
-
+            call_user_func(array($mock_ajax_controller,$method));
         }
         public function setUpMockController($event,$input,$expected){
             $event_controller=clone $this->event;
@@ -68,7 +48,7 @@ namespace NewsParserPlugin\Tests\Controller{
                 ->with($this->equalTo($event),$this->equalTo($expected));
             $mock_ajax_controller=$this->getMockBuilder(MockAjaxController::class)
                 ->setConstructorArgs(array($event_controller))
-                ->setMethods(array('getJsonFromInput'))
+                ->setMethods(array('getJsonFromInput','sendHeader'))
                 ->getMock();
             $mock_ajax_controller->method('getJsonFromInput')
                 ->willReturn($input);
@@ -77,19 +57,34 @@ namespace NewsParserPlugin\Tests\Controller{
         public function dataParsingApi(){
             return array(
                 array(
+                    'media:create',
+                    json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/mediaApiRequest.json'),true),
+                    json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/mediaApiExpected.json'),true),
+                    'mediaApi'
+                ),
+                array(
+                    'template:create',
+                    json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/templateApiRequest.json'),true),
+                    json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/templateApiExpected.json'),true),
+                    'templateApi'
+                ),
+                array(
                     'list:get',
                     json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/listApiRequest.json'),true),
-                    json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/listApiExpected.json'),true)
+                    json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/listApiExpected.json'),true),
+                    'parsingListApi'
                 ),
                 array(
                     'html:get',
                     json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/htmlApiRequest.json'),true),
-                    json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/htmlApiExpected.json'),true)
+                    json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/htmlApiExpected.json'),true),
+                    'parsingHTMLApi'
                 ),
                 array(
                     'post:create',
                     json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/postApiRequest.json'),true),
-                    json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/postApiExpected.json'),true)
+                    json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/postApiExpected.json'),true),
+                    'parsingPageApi'
                 )    
             );
         }

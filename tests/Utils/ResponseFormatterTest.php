@@ -20,7 +20,7 @@ class ResponseFormatterTest extends \WP_UnitTestCase{
         $expected=array_merge($this->data,array('data'=>array(
                     'post_id'=>1,
                     'status'=>'parsed',
-                    'link'=>'www.my-site.com/edit.php'
+                    'editLink'=>'www.my-site.com/edit.php'
                 )
             ));
         $result=$this->instance->post($post_data)->get('array');

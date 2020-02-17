@@ -23,7 +23,7 @@ class ValidateDataTraitTest extends \WP_UnitTestCase
     }
     public function testValidateMediaOptionsArray()
     {
-        $input=array('postId'=>1,'alt'=>'test image');
+        $input=array('post_id'=>1,'alt'=>'test image');
         $result=$this->instance->validateMediaOptions($input);
         $this->assertTrue($result);
     }

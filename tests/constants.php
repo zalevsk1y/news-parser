@@ -10,4 +10,4 @@ define("NEWS_PARSER_PLUGIN_DIR_NAME", basename(dirname(__FILE__)));
 define("NEWS_PARSER_PLUGIN_NO_IMAGE_PATH", plugins_url('', __FILE__) . '/images/no-image.svg');
 define("NEWS_PARSER_PLUGIN_AJAX_PARSING_API", 'news_parser_parsing_api');
 define("NEWS_PARSER_PLUGIN_AJAX_MEDIA_API", 'news_parser_media_api');
-define("NEWS_PARSER_PLUGIN_AJAX_OPTIONS_API", 'news_parser_options_api');
+define("NEWS_PARSER_PLUGIN_AJAX_TEMPLATE_API", 'news_parser_template_api');

@@ -76,6 +76,16 @@ class Ajax
         \wp_send_json($response);
     }
     /**
+     * Send headers.
+     *
+     * @param string $headers
+     * @return void
+     */
+    protected function sendHeader($headers)
+    {
+        header($headers);
+    }
+    /**
      * Get application/json encoded data using php://input
      *
      * @return array

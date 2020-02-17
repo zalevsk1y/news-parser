@@ -1,7 +1,7 @@
 {
     "url":"http://www.test-site.com/image.jpg",
     "options":{
-        "postId":1,
+        "post_id":1,
         "alt":"Test image description."
     }
 }

@@ -138,7 +138,7 @@ class AjaxController extends Ajax
         ));
        
         $response=$this->event->trigger('media:create',array($request['url'],$request['options']['post_id'],$request['options']['alt']));
-        header('Content-Type:application/json');
+        $this->sendHeader('Content-Type:application/json');
         echo $response;
        wp_die();
     }
@@ -189,7 +189,7 @@ class AjaxController extends Ajax
             'template'=>$request['template']
         );
         $respond=$this->event->trigger('template:create',array($request['url'],$options));
-        header('Content-Type:application/json');
+        $this->sendHeader('Content-Type:application/json');
         echo $respond;
         wp_die();
     }
@@ -225,7 +225,7 @@ class AjaxController extends Ajax
         $url = $request['url'];
 
         $response = $this->event->trigger('list:get',array($url));
-        header('Content-Type:application/json');
+        $this->sendHeader('Content-Type:application/json');
         echo $response;
         wp_die();
     }
@@ -311,7 +311,7 @@ class AjaxController extends Ajax
         ));
 
         $response=$this->event->trigger('post:create',$request);       
-        header('Content-Type:application/json');
+        $this->sendHeader('Content-Type:application/json');
         echo $response;
         wp_die();
     }

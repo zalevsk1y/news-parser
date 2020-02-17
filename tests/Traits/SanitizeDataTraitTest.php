@@ -17,11 +17,11 @@ class SanitizeDataTraitTest extends \WP_UnitTestCase
     public function testSanitizeMediaOptions()
     {
         $input=array(
-            'postId'=>'1abs',
+            'post_id'=>'1abs',
             'alt'=>'Test image.'
         );
         $expected=array(
-            'postId'=>1,
+            'post_id'=>1,
             'alt'=>'Test image.'
         );
         $result=$this->instance->sanitizeMediaOptions($input);
