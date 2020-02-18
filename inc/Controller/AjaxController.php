@@ -199,7 +199,7 @@ class AjaxController extends Ajax
     public function parsingListApi()
     {
         //Get application\json encode data
-        $json_post = $this->getJsonFromInput();
+       $json_post = $this->getJsonFromInput();
         $this->checkPermission('parsing_news_api',$json_post);
         //ToDo:Make redirect to main page when parameter is missing.
      

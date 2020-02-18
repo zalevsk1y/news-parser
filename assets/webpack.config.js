@@ -6,6 +6,7 @@ const path = require("path");
 const bodyParser=require("body-parser");
 const devServer=require("./devServer/devServer.js");
 const sass=require("node-sass");
+const VERSION=(require("./package.json").version);
 
 module.exports={
     devtool: 'source-map',
@@ -15,7 +16,7 @@ module.exports={
     output:{
 				path:path.resolve(__dirname,'../public/js/'),
 				publicPath:path.resolve(__dirname,'../public/js/'),
-        filename:'[name].bundle.js'
+        		filename:`[name]-${VERSION}.bundle.js`
     },
     module:{
 		rules: [

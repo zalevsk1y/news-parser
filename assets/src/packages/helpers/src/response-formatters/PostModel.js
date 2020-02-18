@@ -74,7 +74,7 @@ export class PostModel extends BaseClass{
      * @returns {string}
      */
     addSourceLink(link){
-        return `<a link="${this.sanitizeUrl(link)}">Source</a>`
+        return `<a href="${this.sanitizeUrl(link)}">Source</a>`
     }
     /**
      * Format text content.

@@ -6,7 +6,6 @@ import {encodeUrlWithParams} from '@news-parser/helpers';
 import {LIST} from '../constants';
 import {VISUAL_CONSTRUCTOR} from '@news-parser/visual-constructor/constants/'
 import PropTypes from 'prop-types';
-import Translate from './Translate';
 import {parseSelected} from '../actions/page.actions';
 import {showMessage} from '@news-parser/message/'
 import {location} from 'globals';
@@ -73,14 +72,14 @@ export class InputForm extends React.Component{
             case 'news-parser-main-menu':
                 return (
                         <div className='row center mt-10'>
-                            <button className="main-button parse-rss-button" type="button" onClick={this.handleParseListSubmit}><Translate>Parse RSS Feed</Translate></button>
-                            <button className="main-button parse-selected-button" type="button" onClick={this.handleParseSelected}><Translate>Parse Selected</Translate></button>
+                            <button className="main-button parse-rss-button" type="button" onClick={this.handleParseListSubmit}>Parse RSS Feed</button>
+                            <button className="main-button parse-selected-button" type="button" onClick={this.handleParseSelected}>Parse Selected</button>
                         </div>
                 )
             case 'news-parser-menu-parse-page':
                 return (
                     <>
-                        <button className="main-button parse-page-button" type="button" onClick={this.handleParsePageSubmit}><Translate>Parse Page</Translate></button>
+                        <button className="main-button parse-page-button" type="button" onClick={this.handleParsePageSubmit}>Parse Page</button>
                     </>
                 )
             default:

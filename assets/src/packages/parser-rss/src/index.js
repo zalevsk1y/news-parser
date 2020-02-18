@@ -7,12 +7,14 @@ import { Provider } from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import parse from './reducers';
 
-import {apiMiddleware} from './middleware/core/api';
-import {listMiddleware} from './middleware/api/list';
-import {postMiddleware} from './middleware/app/post';
 import {mainMiddleware} from './middleware/core/main';
+import {errorMiddleware} from './middleware/core/error';
+import {apiMiddleware} from './middleware/core/api';
+
+import {listMiddleware} from './middleware/api/list';
 import {pageMiddleware} from './middleware/api/page';
-import {errorMiddleware} from './middleware/api/error';
+
+import {postMiddleware} from './middleware/app/post';
 import {fetchingMiddleware} from './middleware/app/fetching';
 
 

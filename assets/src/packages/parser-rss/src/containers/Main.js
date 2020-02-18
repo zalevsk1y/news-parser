@@ -4,10 +4,9 @@ import InputForm from './InputForm';
 import Posts from './Posts';
 import Indicator from './Indicator';
 import {connect} from 'react-redux';
-import {fetchList} from '../actions/list.actions';
 import VisualConstructor from '@news-parser/visual-constructor/';
 import PropTypes from 'prop-types';
-import Translate from './Translate';
+
 /**
  * Main application element.
  * 
@@ -25,7 +24,7 @@ class Main extends React.Component {
             <div className={"wrap wrap-parsing"} >
                 <VisualConstructor />
                 <div className="parsing-title">
-                    <h1><Translate>News-Parser</Translate></h1>
+                    <h1>News-Parser</h1>
                 </div>
                 <Indicator step={0.5}/>
                 <Message />

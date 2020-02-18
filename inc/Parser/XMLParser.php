@@ -145,6 +145,7 @@ class XMLParser extends Abstracts\AbstractParseContent
         $image = $this->chain()
             ->parseImageEnclosure($xml)
             ->parseImageDescription($text)
+            ->parseImageMediaTag($xml)
             ->get();
         return $image ?: NEWS_PARSER_PLUGIN_NO_IMAGE_PATH;
     }
@@ -227,7 +228,19 @@ class XMLParser extends Abstracts\AbstractParseContent
             $text = (string) $text;
         }
         $text = trim($text);
-        $image = $this->regExp('src\=\"([^\"|\']*\.[jpg|png|tiff]..)', $text);
+        $image = $this->regExp('src\=[\"\']([^\"\']*\.[jpg|png|tiff]..)', $text);
+        return isset($image) ?$image: false;
+    }
+    /**
+     * Parsing image from XML Media:Content element.
+     *
+     * @param \SimpleXMLElement $xml
+     * @return void
+     */
+    public function parseImageMediaTag($xml)
+    {
+        $media_group=$xml->children('media',true);
+        $image=$media_group->content->attributes()['url'];
         return isset($image) ?$image: false;
     }
 
