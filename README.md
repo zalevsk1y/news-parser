@@ -44,29 +44,29 @@ To parse several posts, select posts and press the Parse Selected button. Wait f
 
 ### Visual Constructor.
 
-To create a template or simply select the content you are interested in, use the visual constructor. You can open visual constructor by clicking icon.  
+To create a template or simply select the content you are interested in, use the visual constructor. You can open visual constructor by clicking icon at the bottom of post box.  
 To select content, click on the block that you need in the main window and it will be marked with a turquoise frame. When you hover over the content, the expected area will be painted in turquoise color.
 To cancel the selection, click on the block again. Try to separate different types of content (pictures, video, text) into separate blocks. The YouTube video will be replaced with a picture of the YouTube logo. You can extrude it and this video will be inserted into your post. Parsing videos from other sources is not yet supported. Pictures are inserted into your post as a link; the exception is a featured image which is saved in your media library.
 In the sidebar, you can change the featured image of your post. Just select the appropriate image on the left side of the designer and click the Change Image button. The last image you selected will be selected as featured image. You can also create a post without featured image. Just click on No featured image.
 You can change the name of the post in the next submenu 'Post title'. Write your version of the post title in textaria and click the Change Title button.
 To add a source link, check the box labeled 'Add source link' to the post. in the 'Extra Options' submenu.
+
+[![Alt text](http://img.youtube.com/vi/gGqbRBnGeNE/0.jpg)](https://www.youtube.com/watch?v=gGqbRBnGeNE)
+
+### Create Parsing Template
+
 To save the template, it is necessary to mark the content in the main window of the visual constructor, select the 'Save parsing template that you can use in automatic parsing from this source item.' and click the Save Tempalte button. It is important to understand that individual posts even from one source can be very different, therefore parsed pages may not contain the content you need.
 
-[![Alt text](http://img.youtube.com/vi/GgmNEgVQCoo/0.jpg)](https://www.youtube.com/watch?v=GgmNEgVQCoo)
-
+[![Alt text](http://img.youtube.com/vi/gWo2aRTGttM/0.jpg)](https://www.youtube.com/watch?v=gWo2aRTGttM)
 
 ### Parsing single page.
 
-You can also parse just pages with individual posts. Enter the Url page, click the "Parse Page" button and page will be saved in your posts as a draft. To edit or publish data, go to the menu item Posts-> All Posts in your admin panel, find the draft of the post that you spars. If everything suits you, you can simply publish this post or edit it at your discretion.
+
+To parse a single page, select News-Parsing-> Parse Page in the admin panel of your site. In the search bar, enter the site address URL and press Parse Page button. Visual constructor will open. In the visual constructor, select the content and click the Create Post Draft button. The draft will be automatically created and you can edit it in the Posts editor.If everything suits you, you can simply publish this post or edit it at your discretion.
 
 Watch this short video to learn HOW TO PARSE SINGLE PAGE with news-parser plugin:
 
-[![Alt text](http://img.youtube.com/vi/bLXMZ8M5za0/0.jpg)](https://www.youtube.com/watch?v=bLXMZ8M5za0)
-
-To parse a single page, select News-Parsing-> Parse Page in the admin panel of your site. In the search bar, enter the site address URL and press Parse Page button. Visual constructor will open. In the visual constructor, select the content and click the Create Post Draft button. The draft will be automatically created and you can edit it in the Posts editor.
-
-
-[![Alt text](http://img.youtube.com/vi/bLXMZ8M5za0/0.jpg)](https://www.youtube.com/watch?v=bLXMZ8M5za0)
+[![Alt text](http://img.youtube.com/vi/9x56djil-b0/0.jpg)](https://www.youtube.com/watch?v=9x56djil-b0)
 
 
 ## Dependencies
