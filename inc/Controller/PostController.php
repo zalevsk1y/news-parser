@@ -65,12 +65,12 @@ class PostController extends BaseController
     {
         try {
             $parsed_url=parse_url($url);
-            if(!is_array($parsed_url)) throw new MyException (Errors::text('WRONG_OPTIONS_URL'));
+            if(!is_array($parsed_url)) throw new MyException (Errors::text('WRONG_OPTIONS_URL'),Errors::code('BAD_REQUEST'));
             $parsing_options=$this->TemplateModelsFactory($parsed_url);
             $parsed_data =$this->parser->get($url,$parsing_options->getAttributes('array'));
            
             $parsed_data['authorId'] = \get_current_user_id();
-            if(!$options=$parsing_options->getExtraOptions())throw new MyException(Errors::text('NO_EXTRA_OPTIONS'));
+            if(!$options=$parsing_options->getExtraOptions())throw new MyException(Errors::text('NO_EXTRA_OPTIONS'),Errors::code('BAD_REQUEST'));
             $this->options=$options;
             //unescaped url
 
