@@ -7,9 +7,8 @@ import {setPostMeta} from "@news-parser/parser-rss/actions/post.actions";
 import {showMessage} from "@news-parser/message/"
 import {formatCreatePostDraftRequest} from '@news-parser/helpers/response-formatters/PostModel';
 
-export const draftMiddleware=store=>next=>action=>{
+export const draftMiddleware=({dispatch,getState})=>next=>action=>{
     next(action);
-    const {dispatch,getState}=store;
     switch (action.type){
         case CREATE_POST_DRAFT:
             const {parsedData,options,dialogData}=getState().parse.dialog.visualConstructor,

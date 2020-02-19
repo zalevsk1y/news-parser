@@ -1,15 +1,12 @@
 var webpack = require('webpack');
-const TerserJSPlugin = require("terser-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const path = require("path");
-const bodyParser=require("body-parser");
 const devServer=require("./devServer/devServer.js");
-const sass=require("node-sass");
 const VERSION=(require("./package.json").version);
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports={
-    devtool: 'source-map',
+	devtool: 'source-map',
+	mode:'production',
     entry:{
         parser_rss:'./src/packages/parser-rss/src/index.js'
     },
@@ -32,36 +29,29 @@ module.exports={
 			{
 				test: /\.s(a|c)ss$/,
 				use:[
-					'style-loader',
+					MiniCssExtractPlugin.loader,
+					//'style-loader',
 					// Translates CSS into CommonJS
 					'css-loader',
 					// Compiles Sass to CSS
 					'sass-loader',
 				]
-			},
-			{
-				test: /\.(gif|png|jpe?g|svg)$/i,
-				use: [
-				  {
-					loader: 'file-loader',
-					options: {
-					  name:"../images/[name].[ext]"
-					},
-				  },
-				],
-			  }
+			}
 		],
 	},
+	plugins:[
+		new MiniCssExtractPlugin({
+			filename: `../css/[name]-${VERSION}.css`
+		})
+    ],
 	externals:{
 		'globals':'window'
 	},
 	resolve: {
 		alias: {
 				"@news-parser/message": path.resolve(__dirname,"src/packages/message/src/"),
-				"@news-parser/gallery-dialog": path.resolve(__dirname,"src/packages/gallery-dialog/src/index.js"),
 				"@news-parser/helpers": path.resolve(__dirname,"src/packages/helpers/src/"),
 				"@news-parser/config": path.resolve(__dirname,"src/packages/config/src/index.js"),
-				"@news-parser/translate": path.resolve(__dirname,"src/packages/translate/src/index.js"),
 				"@news-parser/parser-rss": path.resolve(__dirname,"src/packages/parser-rss/src/"),
 				"@news-parser/error-handler": path.resolve(__dirname,"src/packages/error-handler/src/index.js"),
 				"@news-parser/visual-constructor":path.resolve(__dirname,"src/packages/visual-constructor/src/"),

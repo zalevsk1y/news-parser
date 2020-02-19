@@ -18,7 +18,7 @@ import {location} from 'globals';
 export class InputForm extends React.Component{
     constructor(props){
         super(props);
-        this.state={inputValue:props.value||'http://www.'};
+        this.state={inputValue:props.value||'https://www.'};
         this.inputChange=this.inputChange.bind(this);
         this.handleParsePageSubmit=this.handleParsePageSubmit.bind(this);
         this.handleParseListSubmit=this.handleParseListSubmit.bind(this);

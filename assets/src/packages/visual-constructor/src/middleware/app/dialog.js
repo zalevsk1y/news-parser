@@ -8,7 +8,7 @@ export const dialogMiddleware=({dispatch})=>next=>action=>{
             const {url}=action.payload;
             dispatch(fetchHTML(url));
             break;
-
+            
     }
 
 }

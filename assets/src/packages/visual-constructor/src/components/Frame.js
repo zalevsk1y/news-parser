@@ -1,5 +1,6 @@
 import React from 'react';
 import {getPluginDirUrl} from '@news-parser/helpers';
+import {imageParser} from '@news-parser/helpers/parser/ImageParser';
 import {Parser} from '@news-parser/helpers/parser/Parser'
 import {selectTitle,selectFeaturedMedia,selectContent,removeContent} from '../actions/frame.actions';
 import {frameIsReady} from '../actions/app.actions';
@@ -47,27 +48,17 @@ export class Frame extends React.Component{
         doc.addEventListener('mouseover',this.mouseOver);
         doc.addEventListener('mouseout',this.mouseOut);
         doc.addEventListener('click',this.clickHandler);
-        var imgArray=doc.getElementsByTagName('img');
-        this.imageLazyLoad(imgArray);
+        this.imagePrepare(doc);
         this.parser=new Parser(this.frameRef);
         this.props.frameIsReady()
     }
     /**
-     * Check if img tags have lazy load data-src attributes and set them to src.
+     * Find and replace src of img tags.
      * 
-     * @param {object} imgElements  HTMLCollection of img elements.
+     * @param {object} dom  html document object.
      */
-    imageLazyLoad(imgElements){
-        [...imgElements].forEach(imgTag=>{
-            var imageScr=imgTag.dataset.hasOwnProperty('src')?imgTag.dataset.src:null;
-            if (imageScr===null) return;
-            var lazyLoadImgTag=new Image();
-            lazyLoadImgTag.src=imageScr;
-            lazyLoadImgTag.onload=function(){
-                imgTag.src=this.src;   
-            };
-
-        })
+    imagePrepare(dom){
+        imageParser(dom).replaceImageSrc();
     }
     /**
      * Find and replace YouTube frames? replacing with video tag that contains data-hash attr with youtube hash data.

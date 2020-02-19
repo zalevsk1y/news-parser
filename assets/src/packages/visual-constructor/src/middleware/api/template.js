@@ -6,9 +6,8 @@ import {CREATE_PARSING_TEMPLATE} from '../../actions/template.actions';
 import {formatCreateTemplateRequest} from '@news-parser/helpers/response-formatters/TemplateModel';
 import { VISUAL_CONSTRUCTOR,TEMPLATE,CREATE } from '../../constants/';
 
-export const templateMiddleware = (store)=>next=>action=>{
+export const templateMiddleware = ({getState,dispatch})=>next=>action=>{
     next (action);
-    const {getState,dispatch}=store;
     switch(action.type){
         case CREATE_PARSING_TEMPLATE:
             const {options,dialogData,parsedData}=getState().parse.dialog.visualConstructor,
