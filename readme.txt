@@ -2,50 +2,79 @@
 Contributors: bikkel
 Donate link: 
 Author: Evgeniy Zalevskiy
-Tags: news-parser, wordpress news-parser plugin, News-Parser, wordpress  News-Parser plugin, rss parser, autopilot, news parser, News Parser, wordpress News Parser plugin
-Requires PHP: 7.0
+Tags: scraper,parser,news-parser,wordpress news-parser plugin,News-Parser,wordpress  News-Parser plugin,rss parser,autopilot,news parser, News Parser, wordpress News Parser plugin
+Requires PHP: 5.6
 Requires at least: 3.5.0
-Tested up to: 5.2.2
-Stable tag: 0.2.0
+Tested up to: 5.3.2
+Stable tag: 1.0.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
-=== News-parser WordPress Plugin===
+=== News-parser WordPress Plugin ===
 
 News-parser is a plugin for WordPress that allows you to easily receive the full text of the article, as well as images from the site using an RSS feed. Parsed information from the site is saved as a draft,which you can just publish or edit at your discretion. This makes it easy to create content for your site.
 
 
 ==  Features ==
 
-*   Paging data directly from the site
-*   Ability to parse not only text, but also pictures
-*   Flexible settings system
-*   Possibility to use shortcodes
-*   Translation into several languages
-*   Ability to parse e only from RSS but also from url
+*   Gutenberg editor support.
+*   Visual content extractor.
+*   Flexible template creation system to speed up parsing.
+*   Ability to parse not only from RSS XML source but also from url.
 
-==Future plans==
+== Future plans ==
 
 *   Add auto-pilot feature.
-*   Add visual content extractor.
+*   Parsing videos from other(than YouTube) sources.
+*   Saving images to the Media Library .
 *   Have an idea? – Please, feel free to let me know. Let’s make News-Parser even better!
 
-== Installing==
+== Installing ==
 
 1. You can clone the GitHub repository: `https://github.com/zalevsk1y/news-parser.git`
 2. Or download it directly as a ZIP file: `https://github.com/zalevsk1y/news-parser/archive/master.zip`
 
 This will download the latest developer copy of News-parser.
 
-== How to use NewsParserPlugin\this plugin?==
+== How to use NewsParserPlugin\this plugin? ==
 
-Just enter the address of the RSS source in the search bar and click "Parse RSS Feed" button, you will receive a list of articles from this source. In order to save the draft, simply click on the download check in the lower right corner of the block with the post interesting for you and it will be saved as a draft. Go to the menu item Posts-> All Posts in your admin panel to find the draft of the post you parsed. If everything suits you, you can simply publish this post or edit it at your discretion.
+= Parsing RSS =
 
-You can also parse just pages with individual posts. Enter the Url page, click the "Parse Page" button and page will be saved in your posts as a draft. To edit or publish data, go to the menu item Posts-> All Posts in your admin panel, find the draft of the post that you spars. If everything suits you, you can simply publish this post or edit it at your discretion.
+To parse RSS, go to the News-Parsing->Parsing RSS menu in the admin panel of your site. Enter the RSS feed address in the search bar. Click on the Parse RSS Feed button. When parsed data is fetched from the server,it will appear on your screen. You can open the visual extractor by clicking on the icon and create a template for parsing posts from this RSS source or simply select the content you are interested in and save it as a draft.
 
+Watch this short video to learn HOW TO PARSE FROM RSS with news-parser plugin:
+https://www.youtube.com/watch?v=xrZdkV0xA08
 
-In the setting you can set the ability to select pictures that will be attached to your post. And also automatically generate a shortcode for the gallery (for example [MyGallery](https://wordpress.org/plugins/mygallery/)).
+To parse several posts, select posts and press the Parse Selected button. Wait for the data to be saved,you`ll be notified by the message at the top of the screen. The icon at the bottom of the post allows you to go on to edit or publish a saved draft.Note that parsing selected post could be done only if you created parsing template!
 
+Watch this short video to learn HOW TO PARSE SEVERAL POSTS with news-parser plugin:
+https://www.youtube.com/watch?v=1LttLG9n4t4
+
+= Visual Constructor. =
+
+To create a template or simply select the content you are interested in, use the visual constructor. You can open visual constructor by clicking icon at the bottom of post box.  
+To select content, click on the block that you need in the main window and it will be marked with a turquoise frame. When you hover over the content, the expected area will be painted in turquoise color.
+To cancel the selection, click on the block again. Try to separate different types of content (pictures, video, text) into separate blocks. The YouTube video will be replaced with a picture of the YouTube logo. You can extrude it and this video will be inserted into your post. Parsing videos from other sources is not yet supported. Pictures are inserted into your post as a link; the exception is a featured image which is saved in your media library.
+In the sidebar, you can change the featured image of your post. Just select the appropriate image on the left side of the designer and click the Change Image button. The last image you selected will be selected as featured image. You can also create a post without featured image. Just click on No featured image.
+You can change the name of the post in the next submenu 'Post title'. Write your version of the post title in textaria and click the Change Title button.
+To add a source link, check the box labeled 'Add source link' to the post. in the 'Extra Options' submenu.
+
+Watch this short video to learn HOW TO USE VISUAL CONSTRUCTOR:
+https://www.youtube.com/watch?v=gGqbRBnGeNE
+
+= Create Parsing Template =
+
+To save the template, it is necessary to mark the content in the main window of the visual constructor, select the 'Save parsing template that you can use in automatic parsing from this source item.' and click the Save Tempalte button. It is important to understand that individual posts even from one source can be very different, therefore parsed pages may not contain the content you need.
+
+Watch this short video to learn HOW TO CREATE PARSING TEMPLATE:
+https://www.youtube.com/watch?v=gWo2aRTGttM
+
+= Parse single page. =
+
+To parse a single page, select News-Parsing-> Parse Page in the admin panel of your site. In the search bar, enter the site address URL and press Parse Page button. Visual constructor will open. In the visual constructor, select the content and click the Create Post Draft button. The draft will be automatically created and you can edit it in the Posts editor.If everything suits you, you can simply publish this post or edit it at your discretion.
+
+Watch this short video to learn HOW TO PARSE SINGLE PAGE with news-parser plugin:
+https://www.youtube.com/watch?v=9x56djil-b0
 
 == Dependencies ==
 
@@ -54,3 +83,12 @@ In the setting you can set the ability to select pictures that will be attached 
 == Bugs ==
 
 If you find an issue, let us know [here](https://github.com/zalevsk1y/news-parser/issues?state=open)!
+
+== Changelog ==
+
+= 1.0.0 - 2020-02-18 =
+
+* Added:  Parsing Template system.
+* Added:  Visual-constructor.
+* Added:  You-Tube videos parsing.
+* Fix:	some bugs

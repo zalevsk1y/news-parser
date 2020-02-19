@@ -40,6 +40,8 @@ Watch this short video to learn HOW TO PARSE FROM RSS with news-parser plugin:
 
 To parse several posts, select posts and press the Parse Selected button. Wait for the data to be saved,you`ll be notified by the message at the top of the screen. The icon at the bottom of the post allows you to go on to edit or publish a saved draft.Note that parsing selected post could be done only if you created parsing template!
 
+Watch this short video to learn HOW TO PARSE SEVERAL POSTS:
+
 [![Alt text](http://img.youtube.com/vi/1LttLG9n4t4/0.jpg)](https://www.youtube.com/watch?v=1LttLG9n4t4)
 
 ### Visual Constructor.
@@ -51,11 +53,15 @@ In the sidebar, you can change the featured image of your post. Just select the 
 You can change the name of the post in the next submenu 'Post title'. Write your version of the post title in textaria and click the Change Title button.
 To add a source link, check the box labeled 'Add source link' to the post. in the 'Extra Options' submenu.
 
+Watch this short video to learn HOW TO USE VISUAL CONSTRUCTOR:
+
 [![Alt text](http://img.youtube.com/vi/gGqbRBnGeNE/0.jpg)](https://www.youtube.com/watch?v=gGqbRBnGeNE)
 
 ### Create Parsing Template
 
 To save the template, it is necessary to mark the content in the main window of the visual constructor, select the 'Save parsing template that you can use in automatic parsing from this source item.' and click the Save Tempalte button. It is important to understand that individual posts even from one source can be very different, therefore parsed pages may not contain the content you need.
+
+Watch this short video to learn HOW TO CREATE PARSING TEMPLATE:
 
 [![Alt text](http://img.youtube.com/vi/gWo2aRTGttM/0.jpg)](https://www.youtube.com/watch?v=gWo2aRTGttM)
 
