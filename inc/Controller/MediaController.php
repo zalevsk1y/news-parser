@@ -21,7 +21,7 @@ class MediaController extends BaseController
      * @param string $url Url of image that should be download.
      * @param string $post_id Post id.
      * @param string $alt Description of image.
-     * @return string
+     * @return ResponseFormatter
      */
     public function create($url, $post_id, $alt = '')
     {

@@ -58,7 +58,7 @@ class PostController extends BaseController
      * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @param string $url of post that should be parsed and saved as draft
      * @param string $_id front end index of post that should be parsed and saved as draft
-     * @return void
+     * @return ResponseFormatter
      */
     public function create($url, $_id)
     {

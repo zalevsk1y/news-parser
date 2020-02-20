@@ -41,7 +41,7 @@ class TemplateController extends BaseController
      * @uses NewsParserPlugin\Models\TemplateModel::save()
      * @param string $url
      * @param array $options
-     * @return string
+     * @return ResponseFormatter
      */
     public function create($url, $options)
     {

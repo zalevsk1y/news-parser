@@ -45,7 +45,7 @@ class VisualConstructorController extends BaseController
      * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @param string $url Url of the page.
      * @param array $options Array of options.
-     * @return string
+     * @return ResponseFormatter
      */
     public function get($url, $options = array())
     {

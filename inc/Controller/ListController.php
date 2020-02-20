@@ -55,7 +55,7 @@ class ListController extends BaseController
      * @uses NewsParserPlugin\Parser\Abstracts\AbstractParseContent::get()
      * @uses NewsParserPlugin\Interfaces\ModelInterface::getAttribute()
      * @param string $url Url of the RSS source.
-     * @return string
+     * @return ResponseFormatter
      */
     public function get($url)
     {
