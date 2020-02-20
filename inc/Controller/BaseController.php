@@ -1,6 +1,7 @@
 <?php
 
 namespace NewsParserPlugin\Controller;
+
 use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Factory\ModelsFactory;
 
@@ -21,5 +22,4 @@ class BaseController
     {
         $this->formatResponse=$formatter;
     }
-   
 }

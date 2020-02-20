@@ -2,17 +2,17 @@
 namespace NewsParserPlugin\Utils;
 
 /**
- * Class format response in proper way.You can build a chain of 
- * method e.g. ->post($args)->message($args)->get() to get response at the end of chain add ::get() 
+ * Class format response in proper way.You can build a chain of
+ * method e.g. ->post($args)->message($args)->get() to get response at the end of chain add ::get()
  *
  * PHP version 5.6
- * 
+ *
  * @package  Message
  * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
  * @license  MIT
  */
 
-class ResponseFormatter 
+class ResponseFormatter
 {
 
     /**
@@ -28,8 +28,8 @@ class ResponseFormatter
      */
     protected $data=array('code'=>200,'msg'=>false);
     /**
-     * Return new instance of ResponseFormatter 
-     * 
+     * Return new instance of ResponseFormatter
+     *
      * @return ResponseFormatter
      */
     public static function getInstance()
@@ -63,13 +63,14 @@ class ResponseFormatter
         return $this;
     }
     /**
-     * Format answer for image selection dialog 
+     * Format answer for image selection dialog
      *
      * @param string $type type of dialog window current 'gallery' only
      * @param array $data array of image urls for dialog window
      * @return ResponseFormatter return this for chain building
      */
-    public function dialog($type,$data){
+    public function dialog($type, $data)
+    {
         $this->data['dialog']=array(
             'type'=>$type,
             'data'=>$data
@@ -82,7 +83,8 @@ class ResponseFormatter
      * @param string $data Raw HTML data .
      * @return ResponseFormatter return this for chain building
      */
-    public function rawHTML($data){
+    public function rawHTML($data)
+    {
         $this->contentType='text';
         $this->data['data']=$data;
         return $this;
@@ -93,7 +95,8 @@ class ResponseFormatter
      * @param string $id
      * @return ResponseFormatter return this for chain building
      */
-    public function media($id){
+    public function media($id)
+    {
         $this->data['data']=array(
             'mediaId'=>esc_html($id)
         );
@@ -105,7 +108,8 @@ class ResponseFormatter
      * @param string $code code of error
      * @return ResponseFormatter return this for chain building
      */
-    public function error($code){
+    public function error($code)
+    {
         $this->data['code']=(int)$code;
         return $this;
     }
@@ -116,11 +120,12 @@ class ResponseFormatter
      * @param string $text
      * @return ResponseFormatter return this for chain building
      */
-    public function message($status,$text=''){
+    public function message($status, $text = '')
+    {
         
-        if($status=='none'){
+        if ($status=='none') {
             $this->data['msg']=false;
-        }else{
+        } else {
             $this->data['msg']=array(
             
                     'type'=>esc_html($status),
@@ -129,7 +134,7 @@ class ResponseFormatter
                 
             );
         }
-        return $this; 
+        return $this;
     }
     /**
      * Add custom data params to response.
@@ -138,7 +143,7 @@ class ResponseFormatter
      * @param string $value
      * @return ResponseFormatter return this for chain building
      */
-    public function addCustomData($field_name,$value)
+    public function addCustomData($field_name, $value)
     {
         $escaped_field_name=esc_html($field_name);
         $escaped_value=esc_html($value);
@@ -151,19 +156,20 @@ class ResponseFormatter
      * @param string $format array|object|json
      * @return array|object|string
      */
-    public function get($format){
+    public function get($format)
+    {
         $json=json_encode($this->data);
-        switch($format){
+        switch ($format) {
             case 'json':
                 return $json;
             case 'object':
                 return json_decode($json);
             case 'array':
-                return json_decode($json,true);
+                return json_decode($json, true);
             case 'text':
                 return $this->data['data'];
             default:
-            return $this;
+                return $this;
         }
     }
 }

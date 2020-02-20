@@ -16,17 +16,17 @@ class Errors
     {
         switch ($slug) {
             case 'WRONG_OPTIONS_URL':
-                return \__('Wrong url data was send with options template parameters',NEWS_PARSER_PLUGIN_SLUG);
+                return \__('Wrong url data was send with options template parameters', NEWS_PARSER_PLUGIN_SLUG);
             case 'TEMPLATE_NOT_SAVED':
                 return \__('Template could not be saved right now.', NEWS_PARSER_PLUGIN_SLUG);
             case 'NO_TEMPLATE':
-                return \__('Post could not be parsed, because there is no template for that kind of posts.',NEWS_PARSER_PLUGIN_SLUG);
+                return \__('Post could not be parsed, because there is no template for that kind of posts.', NEWS_PARSER_PLUGIN_SLUG);
             case 'NO_EXTRA_OPTIONS':
-                return \__('Post could not be parsed, because there is no parsing options for that kind of posts.',NEWS_PARSER_PLUGIN_SLUG);
+                return \__('Post could not be parsed, because there is no parsing options for that kind of posts.', NEWS_PARSER_PLUGIN_SLUG);
             case 'FILE_DOWNLOAD':
                 return \__('Sorry file cannot be downloaded', NEWS_PARSER_PLUGIN_SLUG);
             case 'WRONG_LIST_FORMAT':
-                return \__('Sorry list of parsed post could not be created.', NEWS_PARSER_PLUGIN_SLUG);    
+                return \__('Sorry list of parsed post could not be created.', NEWS_PARSER_PLUGIN_SLUG);
             case 'XML_PARSING':
                 return \__('Sorry XML file has wrong format', NEWS_PARSER_PLUGIN_SLUG);
             case 'TRY_AGAIN':
@@ -43,15 +43,14 @@ class Errors
                 return \__('No Body', NEWS_PARSER_PLUGIN_SLUG);
             case 'SETTINGS_CANNOT_BE_SAVED':
                 return \__('Sorry temporary settings cannot be saved', NEWS_PARSER_PLUGIN_SLUG);
-                case 'OPTIONS_WRONG_FORMAT':
+            case 'OPTIONS_WRONG_FORMAT':
                 return \__('Options could not be saved.Wrong options format.', NEWS_PARSER_PLUGIN_SLUG);
-                
         }
-
     }
-    public static function code($slug){
-        switch($slug){
-            case 'BAD_REQUEST';
+    public static function code($slug)
+    {
+        switch ($slug) {
+            case 'BAD_REQUEST':
                 return '400 Bad Request';
         }
     }

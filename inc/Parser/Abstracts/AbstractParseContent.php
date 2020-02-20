@@ -5,6 +5,7 @@ use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Utils\Pipe;
 use NewsParserPlugin\Utils\Chain;
+
 /**
  * Base abstract class for parser.
  * Download data
@@ -17,7 +18,7 @@ use NewsParserPlugin\Utils\Chain;
  * @author   Evgeniy S.Zalevskiy <2600@urk.net>
  * @license  MIT
  */
-abstract class AbstractParseContent 
+abstract class AbstractParseContent
 {
     /**
      * Time expiration of cache data.
@@ -27,7 +28,7 @@ abstract class AbstractParseContent
     protected $cache_expiration;
     /**
      * Parsing options
-     * 
+     *
      * @var array
      */
     protected $options;
@@ -60,7 +61,6 @@ abstract class AbstractParseContent
 
         $hash_id = sha1($url);
         return get_transient($hash_id);
-
     }
     /**
      * Set cache using wordpress set_transient.
@@ -77,17 +77,20 @@ abstract class AbstractParseContent
     /**
      * Download html of the page using wp_remote_get() function.
      *
-     * @param string $url url of page. 
+     * @param string $url url of page.
      * @throws MyException if data could not be downloaded.
      * @return string HTML data of the page.
      */
     protected function download($url)
-    {   $request_args=array('user-agent'=>'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36');
-        $data = $this->wpRemoteGet($url,$request_args);
-        if(is_wp_error($data)) throw new MyException(Errors::text('FILE_DOWNLOAD'),Errors::code('BAD_REQUEST'));
+    {
+        $request_args=array('user-agent'=>'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36');
+        $data = $this->wpRemoteGet($url, $request_args);
+        if (is_wp_error($data)) {
+            throw new MyException(Errors::text('FILE_DOWNLOAD'), Errors::code('BAD_REQUEST'));
+        }
         $response_code= wp_remote_retrieve_response_code($data);
         if ($response_code!=200) {
-            throw new MyException(Errors::text('FILE_DOWNLOAD'),Errors::code('BAD_REQUEST'));
+            throw new MyException(Errors::text('FILE_DOWNLOAD'), Errors::code('BAD_REQUEST'));
         }
         $body=wp_remote_retrieve_body($data);
         return $body;
@@ -97,11 +100,13 @@ abstract class AbstractParseContent
      *
      * @param string $url url of the page that should get.
      * @param array $options Extra options that might be used by parser.
-     * @return array|stdClass|string Parsed data.  
+     * @return array|stdClass|string Parsed data.
      */
-    public function get($url,$options=array())
+    public function get($url, $options = array())
     {
-        if (!empty($options))$this->options=$options;
+        if (!empty($options)) {
+            $this->options=$options;
+        }
         $data = $this->getFromCache($url);
         if (gettype($data)==='string') {
             $response = $this->parse($data);
@@ -115,21 +120,23 @@ abstract class AbstractParseContent
     }
     /**
      * Remove <script> tag with with inner text using preg_replace.
-     *  
+     *
      * @param string $data html data.
-     * @return string 
+     * @return string
      */
-    public function removeScriptTags($data){
-        return preg_replace('/<script(>|.)[\s\S]*?<\/script>/i','',$data);
+    public function removeScriptTags($data)
+    {
+        return preg_replace('/<script(>|.)[\s\S]*?<\/script>/i', '', $data);
     }
     /**
      * Remove <style> tag with with inner text using preg_replace.
-     * 
+     *
      * @param string $data html data.
-     * @return string 
+     * @return string
      */
-    public function removeStyleTags($data){
-        return preg_replace('/<style(>|.)[\s\S]*?<\/style\>/i','',$data);
+    public function removeStyleTags($data)
+    {
+        return preg_replace('/<style(>|.)[\s\S]*?<\/style\>/i', '', $data);
     }
     /**
      * Facade for wp_remote_get function.
@@ -139,18 +146,18 @@ abstract class AbstractParseContent
      * @param array $request_args
      * @return \WP_Error|array
      */
-    protected function wpRemoteGet($url,$request_args)
+    protected function wpRemoteGet($url, $request_args)
     {
-        return wp_remote_get($url,$request_args);
+        return wp_remote_get($url, $request_args);
     }
      /**
      * Factory for chain building class. use  get() function at the end to get result.
      *
      * @param object|null object which methods will be called in chain.
-     * 
+     *
      * @return ChainController ChainController
      */
-    protected function chain($object=null)
+    protected function chain($object = null)
     {
         $object=is_null($object)?$this:$object;
         return new Chain($object);
@@ -163,6 +170,6 @@ abstract class AbstractParseContent
      */
     protected function pipe($input_data)
     {
-        return new Pipe($this,$input_data);
+        return new Pipe($this, $input_data);
     }
 }

@@ -1,15 +1,17 @@
 <?php
 namespace NewsParserPlugin\Traits;
+
 /**
  * Methods to validate input data.
- * 
+ *
  * PHP version 5.6
  *
  * @package  Traits
  * @author   Evgeniy S.Zalevskiy <2600@urk.net>
  * @license  MIT
  */
-trait ValidateDataTrait{
+trait ValidateDataTrait
+{
     /**
      * Validate is input data is url.
      *
@@ -30,22 +32,26 @@ trait ValidateDataTrait{
     {
         $filetype=wp_check_filetype($input_url);
         $mime_type=$filetype['type'];
-        if(false!==strpos($mime_type,'image')){
+        if (false!==strpos($mime_type, 'image')) {
             return true;
         }
-        return new \WP_Error(400,'Given url is not a valid image url.URL:'.esc_url_raw($input_url));
+        return new \WP_Error(400, 'Given url is not a valid image url.URL:'.esc_url_raw($input_url));
     }
     /**
      * Validate structure of input media options.
      * Structure:[postId,alt]
      *
-     * @param array $options 
+     * @param array $options
      * @return true|\WP_Error
      */
     public function validateMediaOptions($options)
     {
-        if(!array_key_exists('post_id',$options)) return new \WP_Error(400,'Media no needed key.Missing key:post_id');
-        if(!array_key_exists('alt',$options)) return new \WP_Error(400,'Media no needed key.Missing key:alt');
+        if (!array_key_exists('post_id', $options)) {
+            return new \WP_Error(400, 'Media no needed key.Missing key:post_id');
+        }
+        if (!array_key_exists('alt', $options)) {
+            return new \WP_Error(400, 'Media no needed key.Missing key:alt');
+        }
         return true;
     }
     /**
@@ -63,7 +69,7 @@ trait ValidateDataTrait{
             'saveParsingTemplate'
         );
     
-        return $this->checkArrayKeys($extra_option_should_have_keys,$extra_options);
+        return $this->checkArrayKeys($extra_option_should_have_keys, $extra_options);
     }
     /**
      * Validate structure of template patterns.
@@ -80,28 +86,36 @@ trait ValidateDataTrait{
             'className',
             'children'
         );
-        $child_should_have_keys=array_slice($container_should_have_keys,0,-2);
-        array_push($child_should_have_keys,'position');
-        if(!$this->checkArrayKeys($container_should_have_keys,$template)) return false;
-        if(!is_array($template['children'])) return new \WP_Error(400,'Template patterns array should have children section.');
-        foreach ($template['children'] as $child){
-            if(is_wp_error($result=$this->checkArrayKeys($child_should_have_keys,$child))) return $result;
-        }   
+        $child_should_have_keys=array_slice($container_should_have_keys, 0, -2);
+        array_push($child_should_have_keys, 'position');
+        if (!$this->checkArrayKeys($container_should_have_keys, $template)) {
+            return false;
+        }
+        if (!is_array($template['children'])) {
+            return new \WP_Error(400, 'Template patterns array should have children section.');
+        }
+        foreach ($template['children'] as $child) {
+            if (is_wp_error($result = $this->checkArrayKeys($child_should_have_keys, $child))) {
+                return $result;
+            }
+        }
         return true;
     }
     /**
-     * 
+     *
      * Checks if the given array includes all keys that are in the mask array
      *
      * @param array $must_have_keys
      * @param array $array
      * @return true|\WP_Error
      */
-    protected function checkArrayKeys($must_have_keys,$array)
+    protected function checkArrayKeys($must_have_keys, $array)
     {
         $given_keys=array_keys($array);
-        $has_difference=array_diff($must_have_keys,$given_keys);
-        if(empty($has_difference)) return true;
-        return new \WP_Error(400,'No needed parameters in extraOptions parsing options array.Missing keys:'.implode(',',$has_difference));
+        $has_difference=array_diff($must_have_keys, $given_keys);
+        if (empty($has_difference)) {
+            return true;
+        }
+        return new \WP_Error(400, 'No needed parameters in extraOptions parsing options array.Missing keys:'.implode(',', $has_difference));
     }
 }

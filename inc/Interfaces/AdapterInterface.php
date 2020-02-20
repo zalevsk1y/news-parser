@@ -1,5 +1,6 @@
 <?php
 namespace NewsParserPlugin\Interfaces;
+
 /**
  * Interface for event controller
  *
@@ -11,7 +12,7 @@ namespace NewsParserPlugin\Interfaces;
  *
  */
 
- interface AdapterInterface
- {
+interface AdapterInterface
+{
      
- }
+}

@@ -20,7 +20,7 @@ class HTMLPatternParser extends HTMLParser
     /**
      * Class that provide methods that convert array body data to string for post model
      * using gutenberg editor blocks markup.
-     * 
+     *
      * @var AdapterInterface
      * @method convert array of body elements data.
      */
@@ -31,7 +31,8 @@ class HTMLPatternParser extends HTMLParser
      *
      * @param integer $cache_expiration cache expiration time.
      */
-    public function __construct(AdapterInterface $adapter,$cache_expiration = 3600){
+    public function __construct(AdapterInterface $adapter, $cache_expiration = 3600)
+    {
         parent::__construct($cache_expiration);
         $this->adapter=$adapter;
     }
@@ -43,20 +44,22 @@ class HTMLPatternParser extends HTMLParser
      */
 
     public function postBody()
-    {   
+    {
         $search_template='';
-        if(!isset($this->options['template'])) throw new \Exception('Parsing template patterns should be set.');
+        if (!isset($this->options['template'])) {
+            throw new \Exception('Parsing template patterns should be set.');
+        }
         $template=$this->options['template'];
         
-        foreach($template['children'] as $child_element){
+        foreach ($template['children'] as $child_element) {
             //Create search template for Sunra\HtmlDomParser::find method
             //https://simplehtmldom.sourceforge.io/manual.htm How to find HTML elements? section.
             $search_template.=$child_element['searchTemplate'].',';
         }
-        $search_template=substr($search_template,0,-1);
+        $search_template=substr($search_template, 0, -1);
         $container=$this->find($template['searchTemplate']);
 
-        if(empty($container)){
+        if (empty($container)) {
             return '';
         }
         $elements=$container[0]->find($search_template);
@@ -64,50 +67,50 @@ class HTMLPatternParser extends HTMLParser
         
        
         return $body ? $this->adapter->convert($body):'';
-
     }
     /**
      * Iterate over array of HtmlDomParser elements and parse data.
-     * 
+     *
      * @param array $elements array of HtmlDomParser elements objects
      * @return array ['tagName'=>string,'content'=>string|array]
      */
     protected function parseContainer($elements)
     {
         $body=array();
-        foreach($elements as $el){
-            $el_tag=$el->tag;     
+        foreach ($elements as $el) {
+            $el_tag=$el->tag;
                 $el_data=array(
                     'tagName'=>$el_tag,
                 );
-                switch($el_tag){
+                switch ($el_tag) {
                     case 'img':
-                    //If element is image content element will be type of array. 
+                    //If element is image content element will be type of array.
                         $el_data['content']=array(
                             'alt'=>$el->alt,
-                            //if lazy load attribute data-src exists take that as source of image if none take src attribute. 
-                            'src'=>(is_array($el->attr)&&array_key_exists('data-src',$el->attr))?$el->attr['data-src']:$el->src
+                            //if lazy load attribute data-src exists take that as source of image if none take src attribute.
+                            'src'=>(is_array($el->attr)&&array_key_exists('data-src', $el->attr))?$el->attr['data-src']:$el->src
                         );
                         break;
                     case 'ul':
-                        //if element is list content element will be type of array. 
+                        //if element is list content element will be type of array.
                         $el_data['content']=array();
-                        foreach($el->find('li') as $li){
+                        foreach ($el->find('li') as $li) {
                             $el_data['content'][]=$this->removeTags($li->innertext);
                         }
                         break;
                     case 'iframe':
                         //find youtube video ID.
-                        preg_match('/youtube\.com\/embed\/([a-zA-Z0-9\_]*)/i',$el->src,$match);
+                        preg_match('/youtube\.com\/embed\/([a-zA-Z0-9\_]*)/i', $el->src, $match);
                         //remove any symbols except that is allowed.
-                        $el_data['content']=array_key_exists(1,$match)?$match[1]:false;
+                        $el_data['content']=array_key_exists(1, $match)?$match[1]:false;
                         break;
                     default:
                         $el_data['content']=$this->removeTags(trim($el->innertext));
                 }
-                if($el_data['content']!==false) $body[]=$el_data;
-            };
+                if ($el_data['content']!==false) {
+                    $body[]=$el_data;
+                }
+        };
             return $body;
     }
-
 }

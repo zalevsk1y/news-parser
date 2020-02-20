@@ -7,9 +7,9 @@ use NewsParserPlugin\View\TemplateRender;
 
 /**
  * Class renders menu page.
- * 
+ *
  * PHP version 5.6
- * 
+ *
  * @package Menu
  * @author  Evgeniy S.Zalevskiy <2600@ukr.net>
  * @license MIT
@@ -24,7 +24,8 @@ class MenuPage implements MenuPageInterface
      *
      * @return void
      */
-    public function init(MenuConfig $config){
+    public function init(MenuConfig $config)
+    {
         $this->config=$config->get();
         \add_action('admin_menu', array($this, 'addMainMenu'));
     }
@@ -40,7 +41,7 @@ class MenuPage implements MenuPageInterface
         $this->addSubMenus();
     }
     /**
-     * Renders submenu 
+     * Renders submenu
      *
      * @return void
      */

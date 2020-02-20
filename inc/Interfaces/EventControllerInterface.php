@@ -1,5 +1,6 @@
 <?php
 namespace NewsParserPlugin\Interfaces;
+
 /**
  * Interface for event controller
  *
@@ -11,7 +12,8 @@ namespace NewsParserPlugin\Interfaces;
  *
  */
 
-interface EventControllerInterface{
+interface EventControllerInterface
+{
     /**
      * Bind event to controller
      *
@@ -19,10 +21,10 @@ interface EventControllerInterface{
      * @param string|array $controller function or method that would be called.
      * @return void
      */
-    public function on($event,$controller);
+    public function on($event, $controller);
     /**
      * Remove event.
-     * 
+     *
      * @param string $event event name.
      * @return void
      */
@@ -31,8 +33,8 @@ interface EventControllerInterface{
      * Trigger event.
      *
      * @param string $event event name
-     * @param array $args 
+     * @param array $args
      * @return mixed
      */
-    public function trigger($event,$args);
+    public function trigger($event, $args);
 }

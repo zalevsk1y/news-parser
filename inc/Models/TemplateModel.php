@@ -18,7 +18,7 @@ use NewsParserPlugin\Message\Errors;
 class TemplateModel implements ModelInterface
 {
     /**
-     * Url of resource that will be source of the posts feed. 
+     * Url of resource that will be source of the posts feed.
      *
      * @var string
      */
@@ -27,7 +27,7 @@ class TemplateModel implements ModelInterface
      * Extra options
      * Structure:
      * [addFeaturedMedia]- bool- Add featured media to the post.
-     * [addSource] -bool - Add link to the source page to th end of the post. 
+     * [addSource] -bool - Add link to the source page to th end of the post.
      *
      * @var array
      */
@@ -52,18 +52,17 @@ class TemplateModel implements ModelInterface
      */
     protected $hash;
     /**
-     * init function 
+     * init function
      *
-     * @param string $url Url of resource that will be source of the posts feed. 
+     * @param string $url Url of resource that will be source of the posts feed.
      */
     public function __construct($url)
     {
         $this->resourceUrl=$url;
         $this->hash=sha1($this->resourceUrl);
-        if($options=$this->get()){
+        if ($options=$this->get()) {
             $this->assignOptions($options);
         };
-
     }
     /**
      * Save options using wp function update_option.
@@ -74,13 +73,17 @@ class TemplateModel implements ModelInterface
      */
     public function save($options)
     {
-        if(!isset($options['extraOptions'])||!isset($options['template'])) throw new MyException(Errors::text('OPTIONS_WRONG_FORMAT'),Errors::code('BAD_REQUEST'));
+        if (!isset($options['extraOptions'])||!isset($options['template'])) {
+            throw new MyException(Errors::text('OPTIONS_WRONG_FORMAT'), Errors::code('BAD_REQUEST'));
+        }
         $data=array(
             'extraOptions'=>$options['extraOptions'],
             'template'=>$options['template']
         );
-        $result=update_option($this->hash,$data,'','no');
-        if($result)$this->assignOptions($data);
+        $result=update_option($this->hash, $data, '', 'no');
+        if ($result) {
+            $this->assignOptions($data);
+        }
         return $result;
     }
     /**
@@ -124,7 +127,8 @@ class TemplateModel implements ModelInterface
      * @param array $options
      * @return void
      */
-    protected function assignOptions($options){
+    protected function assignOptions($options)
+    {
         $this->parseTemplate=$options['template'];
         $this->extraOptions=$options['extraOptions'];
     }
@@ -135,13 +139,16 @@ class TemplateModel implements ModelInterface
      * @param string $format accept array|object|json.
      * @return array|object|string
      */
-    public function getAttributes($format){
-        if(!isset($this->extraOptions)||!isset($this->parseTemplate)) throw new MyException(Errors::text('NO_TEMPLATE'),Errors::code('BAD_REQUEST'));
+    public function getAttributes($format)
+    {
+        if (!isset($this->extraOptions)||!isset($this->parseTemplate)) {
+            throw new MyException(Errors::text('NO_TEMPLATE'), Errors::code('BAD_REQUEST'));
+        }
         $data=array(
             'extraOptions'=>$this->extraOptions,
             'template'=>$this->parseTemplate
         );
-        switch($format){
+        switch ($format) {
             case 'array':
                 return $data;
             case 'object':

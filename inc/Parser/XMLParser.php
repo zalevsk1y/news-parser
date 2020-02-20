@@ -5,7 +5,6 @@ namespace NewsParserPlugin\Parser;
 use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Message\Errors;
 
-
 /**
  * Class for parsing XML files (using libxml) from rss-feed to get list of posts.
  *
@@ -17,16 +16,16 @@ use NewsParserPlugin\Message\Errors;
  *
  */
 
-class XMLParser extends Abstracts\AbstractParseContent 
+class XMLParser extends Abstracts\AbstractParseContent
 {
     /**
     * Init function
     *
     * @param integer $cache_expiration
     */
-    public function __construct($cache_expiration=60)
+    public function __construct($cache_expiration = 60)
     {
-       parent::__construct($cache_expiration);
+        parent::__construct($cache_expiration);
     }
     /**
      * Parse data from xml.Return array of objects with post data.
@@ -66,7 +65,7 @@ class XMLParser extends Abstracts\AbstractParseContent
 
         if (!empty($errors)) {
             libxml_clear_errors();
-            throw new MyException(Errors::text('XML_PARSING'),Errors::code('BAD_REQUEST'));
+            throw new MyException(Errors::text('XML_PARSING'), Errors::code('BAD_REQUEST'));
         }
 
         return $data;
@@ -110,7 +109,7 @@ class XMLParser extends Abstracts\AbstractParseContent
      * Parse description of the post and cut it to 150 symbols
      *
      * @uses AbstractParseContent::pipe()
-     * @param string|object $data 
+     * @param string|object $data
      * @return string
      */
 
@@ -194,7 +193,6 @@ class XMLParser extends Abstracts\AbstractParseContent
         $string = str_replace(PHP_EOL, '', $string);
         preg_match('/' . $pattern . '/i', $string, $match);
         if (count($match)) {
-            
             return $match[1];
         }
 
@@ -239,9 +237,8 @@ class XMLParser extends Abstracts\AbstractParseContent
      */
     public function parseImageMediaTag($xml)
     {
-        $media_group=$xml->children('media',true);
+        $media_group=$xml->children('media', true);
         $image=$media_group->content->attributes()['url'];
         return isset($image) ?$image: false;
     }
-
 }

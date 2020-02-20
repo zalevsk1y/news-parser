@@ -18,6 +18,6 @@ class MyException extends \Exception
     public function __construct($msg, $code, $e = null)
     {
         $this->original = $e;
-        parent::__construct($msg,(int)$code);
+        parent::__construct($msg, (int)$code);
     }
 }

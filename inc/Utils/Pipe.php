@@ -97,5 +97,4 @@ class Pipe
         }
         return $this;
     }
-
 }

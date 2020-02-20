@@ -5,7 +5,7 @@
 /.pnp
 vendor/*
 .pnp.js
-
+/bin
 
 
 

@@ -43,11 +43,13 @@ This will download the latest developer copy of News-parser.
 To parse RSS, go to the News-Parsing->Parsing RSS menu in the admin panel of your site. Enter the RSS feed address in the search bar. Click on the Parse RSS Feed button. When parsed data is fetched from the server,it will appear on your screen. You can open the visual extractor by clicking on the icon and create a template for parsing posts from this RSS source or simply select the content you are interested in and save it as a draft.
 
 Watch this short video to learn HOW TO PARSE FROM RSS with news-parser plugin:
+
 https://www.youtube.com/watch?v=xrZdkV0xA08
 
 To parse several posts, select posts and press the Parse Selected button. Wait for the data to be saved,you`ll be notified by the message at the top of the screen. The icon at the bottom of the post allows you to go on to edit or publish a saved draft.Note that parsing selected post could be done only if you created parsing template!
 
 Watch this short video to learn HOW TO PARSE SEVERAL POSTS with news-parser plugin:
+
 https://www.youtube.com/watch?v=1LttLG9n4t4
 
 = Visual Constructor. =
@@ -60,6 +62,7 @@ You can change the name of the post in the next submenu 'Post title'. Write your
 To add a source link, check the box labeled 'Add source link' to the post. in the 'Extra Options' submenu.
 
 Watch this short video to learn HOW TO USE VISUAL CONSTRUCTOR:
+
 https://www.youtube.com/watch?v=gGqbRBnGeNE
 
 = Create Parsing Template =
@@ -67,6 +70,7 @@ https://www.youtube.com/watch?v=gGqbRBnGeNE
 To save the template, it is necessary to mark the content in the main window of the visual constructor, select the 'Save parsing template that you can use in automatic parsing from this source item.' and click the Save Tempalte button. It is important to understand that individual posts even from one source can be very different, therefore parsed pages may not contain the content you need.
 
 Watch this short video to learn HOW TO CREATE PARSING TEMPLATE:
+
 https://www.youtube.com/watch?v=gWo2aRTGttM
 
 = Parse single page. =
@@ -74,6 +78,7 @@ https://www.youtube.com/watch?v=gWo2aRTGttM
 To parse a single page, select News-Parsing-> Parse Page in the admin panel of your site. In the search bar, enter the site address URL and press Parse Page button. Visual constructor will open. In the visual constructor, select the content and click the Create Post Draft button. The draft will be automatically created and you can edit it in the Posts editor.If everything suits you, you can simply publish this post or edit it at your discretion.
 
 Watch this short video to learn HOW TO PARSE SINGLE PAGE with news-parser plugin:
+
 https://www.youtube.com/watch?v=9x56djil-b0
 
 == Dependencies ==

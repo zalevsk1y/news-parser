@@ -38,14 +38,14 @@ class ListController extends BaseController
      *
      * @param AbstractParseContent $parser
      */
-    public function __construct(AbstractParseContent $parser,ResponseFormatter $formatter)
+    public function __construct(AbstractParseContent $parser, ResponseFormatter $formatter)
     {
         parent::__construct($formatter);
-        $this->parser = $parser;    
+        $this->parser = $parser;
     }
     /**
      * Get formated list of posts.
-     * 
+     *
      * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @uses NewsParserPlugin\Controller\BaseController::modelsFactory
      * @uses NewsParserPlugin\Utils\ResponseFormatter::message()
@@ -80,8 +80,8 @@ class ListController extends BaseController
     * [status] - status of post parsed - if post was not saved as draft and draft -when post saved as draft
     * @return ListModel
     */
-    protected function listModelFactory($listData){
+    protected function listModelFactory($listData)
+    {
         return new ListModel($listData);
     }
-
 }

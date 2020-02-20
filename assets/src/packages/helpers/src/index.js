@@ -2,7 +2,7 @@ import config from "@news-parser/config";
 
 
 export const escURLRaw=(url)=>{
-    return url.replace(/[^-A-Za-z0-9+&@#/%?=~_|!.]/g,encodeURIComponent("$&"))
+    return url.replace(/[^-A-Za-z0-9+&@#/%?=~_|!.:/]/g,encodeURIComponent("$&"))
 }
 /**
  * Get search params from url string.

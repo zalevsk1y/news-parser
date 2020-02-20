@@ -43,18 +43,19 @@ class TemplateController extends BaseController
      * @param array $options
      * @return string
      */
-    public function create($url,$options)
+    public function create($url, $options)
     {
         $parsed_url=parse_url($url);
-        try{
-            if(!is_array($parsed_url)) throw new MyException (Errors::text('WRONG_OPTIONS_URL'),Errors::code('BAD_REQUEST'));
+        try {
+            if (!is_array($parsed_url)) {
+                throw new MyException(Errors::text('WRONG_OPTIONS_URL'), Errors::code('BAD_REQUEST'));
+            }
             $TemplateModel=$this->modelsFactory($parsed_url);
             $TemplateModel->save($options);
-            $response=$this->formatResponse->message('success',Success::text('TEMPLATE_SAVED'));
-            
-        }catch(MyException $e){
+            $response=$this->formatResponse->message('success', Success::text('TEMPLATE_SAVED'));
+        } catch (MyException $e) {
             $response = $this->formatResponse->error($e->getCode())->message('error', $e->getMessage());
-        }    
+        }
         return $response;
     }
      /**
@@ -62,12 +63,13 @@ class TemplateController extends BaseController
     *
     * @param array $url Structure:
     * [scheme] - protocol
-    * [host] - host name 
+    * [host] - host name
     * [path] - path to resource
     * [fragment] - path fragment
     * @return TemplateModel
     */
-    protected function modelsFactory($url){
+    protected function modelsFactory($url)
+    {
         return new TemplateModel($url['host']);
     }
 }

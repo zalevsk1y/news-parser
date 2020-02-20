@@ -23,18 +23,18 @@ use NewsParserPlugin\Models\PostModel;
 class VisualConstructorController extends BaseController
 {
     /**
-     * Parser 
+     * Parser
      *
      * @var AbstractParseContent
      */
     protected $parser;
     /**
      * Init function.
-     * 
-     * @param AbstractParseContent $parser 
+     *
+     * @param AbstractParseContent $parser
      * @param ResponseFormatter $formatter
      */
-    public function __construct(AbstractParseContent $parser,ResponseFormatter $formatter)
+    public function __construct(AbstractParseContent $parser, ResponseFormatter $formatter)
     {
         parent::__construct($formatter);
         $this->parser=$parser;
@@ -47,11 +47,12 @@ class VisualConstructorController extends BaseController
      * @param array $options Array of options.
      * @return string
      */
-    public function get($url,$options=array()){
-        try{
-            $html_data=$this->parser->get($url,$options);
+    public function get($url, $options = array())
+    {
+        try {
+            $html_data=$this->parser->get($url, $options);
             $response=$this->formatResponse->rawHTML($html_data);
-        }catch(MyException $e){
+        } catch (MyException $e) {
             $response = $this->formatResponse->error($e->getCode())->message('error', $e->getMessage());
         }
         return $response;
@@ -63,7 +64,8 @@ class VisualConstructorController extends BaseController
      * @param array $options Array of options.
      * @return string
      */
-   public function __invoke($url,$options){
-       return $this->get($url,$options);
-   }
+    public function __invoke($url, $options)
+    {
+        return $this->get($url, $options);
+    }
 }

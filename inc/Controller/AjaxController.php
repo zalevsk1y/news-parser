@@ -7,7 +7,6 @@ use NewsParserPlugin\Ajax\Ajax;
 use NewsParserPlugin\Interfaces\EventControllerInterface;
 use NewsParserPlugin\Message\Errors;
 
-
 /**
  * Ajax singleton class provide API to the front end
  *
@@ -33,7 +32,7 @@ class AjaxController extends Ajax
 
     /**
      * Methods to validate input data.
-     * 
+     *
      * @method validateUrl()
      * @method validateImageUrl()
      * @method validateMediaOptions()
@@ -43,7 +42,7 @@ class AjaxController extends Ajax
     use ValidateDataTrait;
     /**
      * Methods to sanitize input data.
-     * 
+     *
      * @method sanitizeMediaOptionsArray()
      * @method sanitizeExtraOptions()
      * @method sanitizeTemplate()
@@ -94,20 +93,22 @@ class AjaxController extends Ajax
      * Check if user have relevant rights  and check nonce.
      *
      * @param string $action Should give context to what is taking place and be the same when nonce was created.
-     * @param array $request_args Request arguments should contain _wpnonce field, 
+     * @param array $request_args Request arguments should contain _wpnonce field,
      * @return true|\WP_Error
      */
-    protected function checkPermission($action,$request_args)
+    protected function checkPermission($action, $request_args)
     {
-        if(!array_key_exists('_wpnonce',$request_args)) return new \WP_Error('ajax_forbidden', Errors::text('NO_RIGHTS_TO_PUBLISH'));
-        if (!\wp_verify_nonce($request_args['_wpnonce'],$action)||!\is_admin()) {
+        if (!array_key_exists('_wpnonce', $request_args)) {
+            return new \WP_Error('ajax_forbidden', Errors::text('NO_RIGHTS_TO_PUBLISH'));
+        }
+        if (!\wp_verify_nonce($request_args['_wpnonce'], $action)||!\is_admin()) {
             return new \WP_Error('ajax_forbidden', Errors::text('NO_RIGHTS_TO_PUBLISH'));
         }
         return true;
     }
     /**
      * Callback that handles media api requests.
-     * 
+     *
      * @uses ValidateDataTrait::validateImageUrl()
      * @uses ValidateDataTrait::validateMediaOptions()
      * @uses SanitizeDataTrait::sanitizeMediaOptions()
@@ -116,16 +117,16 @@ class AjaxController extends Ajax
      * @return void
      */
     public function mediaApi()
-    {  
+    {
         //Get application\json encode data
         $json_post = $this->getJsonFromInput();
-        $this->checkPermission('parsing_news_api',$json_post);
-        $request=$this->prepareArgs($json_post,array(
+        $this->checkPermission('parsing_news_api', $json_post);
+        $request=$this->prepareArgs($json_post, array(
                 'url'=>array(
                     'description'=>'Featured image url.',
                     'type'=>'string',
                     'validate_callback'=>array($this,'validateImageUrl'),
-                    'sanitize_callback'=>function($input_url){
+                    'sanitize_callback'=>function ($input_url) {
                         return esc_url_raw($input_url);
                     }
                 ),
@@ -137,12 +138,12 @@ class AjaxController extends Ajax
                 )
         ));
        
-        $response=$this->event->trigger('media:create',array($request['url'],$request['options']['post_id'],$request['options']['alt']));
+        $response=$this->event->trigger('media:create', array($request['url'],$request['options']['post_id'],$request['options']['alt']));
         $this->sendResponse($response);
     }
     /**
      * Callback that handles options api requests.
-     * 
+     *
      * @uses ValidateDataTrait::validateExtraOptions()
      * @uses ValidateDataTrait::validateTemplate()
      * @uses SanitizeDataTrait::sanitizeExtraOptions()
@@ -154,18 +155,16 @@ class AjaxController extends Ajax
     {
         //Get application\json encode data
         $json_post = $this->getJsonFromInput();
-        $this->checkPermission('parsing_news_api',$json_post);
+        $this->checkPermission('parsing_news_api', $json_post);
 
-        $request=$this->prepareArgs($json_post,array(
+        $request=$this->prepareArgs($json_post, array(
             'url'=>array(
                 'description'=>'Url of post that was taken as example of template',
                 'type'=>'string',
-                'validate_callback'=>function($url)
-                {
+                'validate_callback'=>function ($url) {
                     return wp_http_validate_url($url);
                 },
-                'sanitize_callback'=>function($input_url)
-                {
+                'sanitize_callback'=>function ($input_url) {
                     return esc_url_raw($input_url);
                 }
             ),
@@ -186,7 +185,7 @@ class AjaxController extends Ajax
             'extraOptions'=>$request['extraOptions'],
             'template'=>$request['template']
         );
-        $response=$this->event->trigger('template:create',array($request['url'],$options));
+        $response=$this->event->trigger('template:create', array($request['url'],$options));
         
         $this->sendResponse($response);
     }
@@ -199,20 +198,18 @@ class AjaxController extends Ajax
     public function parsingListApi()
     {
         //Get application\json encode data
-       $json_post = $this->getJsonFromInput();
-        $this->checkPermission('parsing_news_api',$json_post);
+        $json_post = $this->getJsonFromInput();
+        $this->checkPermission('parsing_news_api', $json_post);
         //ToDo:Make redirect to main page when parameter is missing.
      
-        $request=$this->prepareArgs($json_post,array(
+        $request=$this->prepareArgs($json_post, array(
             'url'=>array(
                 'description'=>'Parsing RSS XML list url',
                 'type'=>'string',
-                'validate_callback'=>function($url)
-                {
+                'validate_callback'=>function ($url) {
                     return wp_http_validate_url($url);
                 },
-                'sanitize_callback'=>function($input_url)
-                {
+                'sanitize_callback'=>function ($input_url) {
                     return esc_url_raw($input_url);
                 }
             )
@@ -221,9 +218,8 @@ class AjaxController extends Ajax
  
         $url = $request['url'];
 
-        $response = $this->event->trigger('list:get',array($url));
+        $response = $this->event->trigger('list:get', array($url));
         $this->sendResponse($response);
-
     }
      /**
      * Callback that handles parsing single page api requests and returns HTML of the page.
@@ -235,19 +231,17 @@ class AjaxController extends Ajax
     {
         //Get application\json encode data
         $json_post = $this->getJsonFromInput();
-        $this->checkPermission('parsing_news_api',$json_post);
+        $this->checkPermission('parsing_news_api', $json_post);
         //ToDo:Make redirect to main page when parameter is missing.
      
-        $request=$this->prepareArgs($json_post,array(
+        $request=$this->prepareArgs($json_post, array(
             'url'=>array(
                 'description'=>'Parsing page url',
                 'type'=>'string',
-                'validate_callback'=>function($url)
-                {
+                'validate_callback'=>function ($url) {
                     return wp_http_validate_url($url);
                 },
-                'sanitize_callback'=>function($input_url)
-                {
+                'sanitize_callback'=>function ($input_url) {
                     return esc_url_raw($input_url);
                 }
             )
@@ -255,7 +249,7 @@ class AjaxController extends Ajax
         
          
         $url = $request['url'];
-        $response = $this->event->trigger('html:get',array($url));
+        $response = $this->event->trigger('html:get', array($url));
         $this->sendResponse($response);
     }
      /**
@@ -269,42 +263,38 @@ class AjaxController extends Ajax
     {
         //Get application\json encode data
         $json_post = $this->getJsonFromInput();
-        $this->checkPermission('parsing_news_api',$json_post);
+        $this->checkPermission('parsing_news_api', $json_post);
         //ToDo:Make redirect to main page when parameter is missing.
      
-        $request=$this->prepareArgs($json_post,array(
+        $request=$this->prepareArgs($json_post, array(
             'url'=>array(
                 'description'=>'Parsing page url',
                 'type'=>'string',
-                'validate_callback'=>function($url)
-                {
+                'validate_callback'=>function ($url) {
                     return wp_http_validate_url($url);
                 },
-                'sanitize_callback'=>function($input_url)
-                {
+                'sanitize_callback'=>function ($input_url) {
                     return esc_url_raw($input_url);
                 }
             ),
             '_id'=>array(
                 'description'=>'Front end requested page index',
                 'type'=>'integer',
-                'validate_callback'=>function($_id)
-                {
-                    preg_match('/[^0-9]/i',$_id,$matches);
-                    if(empty($matches)){
+                'validate_callback'=>function ($_id) {
+                    preg_match('/[^0-9]/i', $_id, $matches);
+                    if (empty($matches)) {
                         return true;
-                    }else{
+                    } else {
                         return false;
                     }
                 },
-                'sanitize_callback'=>function($_id)
-                {
-                    return preg_replace('/[^0-9]/i','',$_id);
+                'sanitize_callback'=>function ($_id) {
+                    return preg_replace('/[^0-9]/i', '', $_id);
                 }
             )
         ));
 
-        $response=$this->event->trigger('post:create',$request);       
+        $response=$this->event->trigger('post:create', $request);
         $this->sendResponse($response);
     }
 }

@@ -1,10 +1,12 @@
 <?php
 namespace  NewsParserPlugin\Utils;
+
 use NewsParserPlugin\Interfaces\AdapterInterface;
+
 /**
- * Transform parsed post content array into gutenberg blocks mark up. 
- * 
- * 
+ * Transform parsed post content array into gutenberg blocks mark up.
+ *
+ *
  * PHP version 5.6
  *
  * @package  Utils
@@ -19,7 +21,7 @@ class AdapterGutenberg implements AdapterInterface
      * array(
      * 'tagName'=>string,
      * 'content'=>string|array
-     * ) 
+     * )
      *
      * @param array $body
      * @return string
@@ -28,8 +30,8 @@ class AdapterGutenberg implements AdapterInterface
     {
         $post_content='';
         $content_array=$body;
-        foreach($content_array as $el){
-            switch ($el['tagName']){
+        foreach ($content_array as $el) {
+            switch ($el['tagName']) {
                 case 'h1':
                 case 'h2':
                 case 'h3':
@@ -84,7 +86,8 @@ class AdapterGutenberg implements AdapterInterface
         $clean_content=\esc_html($element['content']);
         $clean_tag_name=\esc_html($element['tagName']);
         $header_tag='<!-- wp:heading {"level":%1$d} --><%2$s>%3$s</%2$s><!-- /wp:heading -->';
-        return sprintf($header_tag,
+        return sprintf(
+            $header_tag,
             (int)$level,
             $clean_tag_name,
             $clean_content
@@ -107,7 +110,7 @@ class AdapterGutenberg implements AdapterInterface
      * @param array $element
      * @return string
      */
-    protected function  simpleText($element)
+    protected function simpleText($element)
     {
         $clean_content=\esc_html($element['content']);
         return $clean_content;
@@ -123,9 +126,10 @@ class AdapterGutenberg implements AdapterInterface
         $clean_src=\esc_url_raw($element['content']['src']);
         $clean_alt=esc_html($element['content']['alt']);
         $image_block_tag='<!-- wp:image --><figure class="wp-block-image"><img src="%s" alt="%s"/></figure><!-- /wp:image -->';
-        return sprintf($image_block_tag,
-                $clean_src,
-                $clean_alt
+        return sprintf(
+            $image_block_tag,
+            $clean_src,
+            $clean_alt
         );
     }
     /**
@@ -140,8 +144,9 @@ class AdapterGutenberg implements AdapterInterface
         $list='';
         $list_end='</ul><!-- /wp:list -->';
         $li_elements=$el['content'];
-        foreach($li_elements as $li){
-            $list.=sprintf('<li>%s</li>',
+        foreach ($li_elements as $li) {
+            $list.=sprintf(
+                '<li>%s</li>',
                 esc_html($li)
             );
         }
@@ -155,7 +160,6 @@ class AdapterGutenberg implements AdapterInterface
      */
     protected function getDigitsOnly($str)
     {
-        return preg_replace('/[^0-9]/i','',$str);
+        return preg_replace('/[^0-9]/i', '', $str);
     }
-
 }

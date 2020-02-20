@@ -41,7 +41,6 @@ class Chain
         }
         if (method_exists($this->obj, $method)) {
             $this->result = $this->result ?: call_user_func_array(array($this->obj, $method), $args);
-
         } else {
             throw new \Exception('Wrong method name ' . get_class($this->obj) . '::' . $method);
         }

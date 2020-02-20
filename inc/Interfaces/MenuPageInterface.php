@@ -1,11 +1,13 @@
 <?php
 namespace NewsParserPlugin\Interfaces;
+
 use NewsParserPlugin\Utils\MenuConfig;
+
 /**
  * Interface for Menu pages class.
- * 
- * PHP version 5.6 
- * 
+ *
+ * PHP version 5.6
+ *
  * @package  Interfaces
  * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
  * @license  MIT
@@ -13,5 +15,4 @@ use NewsParserPlugin\Utils\MenuConfig;
 interface MenuPageInterface
 {
     public function init(MenuConfig $config);
-
 }

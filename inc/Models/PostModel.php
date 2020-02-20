@@ -25,7 +25,7 @@ class PostModel implements ModelInterface
     public $title;
     /**
      * Post content.
-     * 
+     *
      * @var string
      */
     public $body;
@@ -56,7 +56,7 @@ class PostModel implements ModelInterface
     /**
      * Array of links.
      * Structure: [previewLink,editLink,deleteLink]
-     * 
+     *
      * @var array
      */
     public $links = array();
@@ -67,8 +67,8 @@ class PostModel implements ModelInterface
      */
     public $authorId;
     /**
-     * Init function 
-     * 
+     * Init function
+     *
      * @throws MyException if post have no title
      *
      * @param array $data structure['title','body','image','sourceUrl','authorId']
@@ -76,15 +76,15 @@ class PostModel implements ModelInterface
     public function __construct($data)
     {
         if (!isset($data['title'])||empty($data['title'])) {
-            throw new MyException(Errors::text('NO_TITLE'),Errors::code('BAD_REQUEST'));
+            throw new MyException(Errors::text('NO_TITLE'), Errors::code('BAD_REQUEST'));
         }
         $this->title = $data['title'];
         if (!isset($data['body'])||empty($data['body'])) {
-            throw new MyException(Errors::text('NO_BODY'),Errors::code('BAD_REQUEST'));
+            throw new MyException(Errors::text('NO_BODY'), Errors::code('BAD_REQUEST'));
         }
         $this->body = $data['body'];
         if (!isset($data['authorId'])||empty($data['authorId'])) {
-            throw new MyException(Errors::text('NO_AUTHOR'),Errors::code('BAD_REQUEST'));
+            throw new MyException(Errors::text('NO_AUTHOR'), Errors::code('BAD_REQUEST'));
         }
         $this->authorId = $data['authorId'];
 
@@ -100,14 +100,17 @@ class PostModel implements ModelInterface
      * @param string $id
      * @return false|PostModel
      */
-    static public function getPostById($id){
-        if(is_null($wp_post=get_post($id)))return false;
+    public static function getPostById($id)
+    {
+        if (is_null($wp_post = get_post($id))) {
+            return false;
+        }
         $post_data=array(
             'title'=>$wp_post->post_title,
             'body'=>$wp_post->post_content,
             'sourceUrl'=>false,
             'authorId'=>$wp_post->post_author,
-            'image'=>get_the_post_thumbnail_url($wp_post,'full')
+            'image'=>get_the_post_thumbnail_url($wp_post, 'full')
         );
         $post= new static($post_data);
         $post->ID=absint($id);
@@ -122,7 +125,7 @@ class PostModel implements ModelInterface
     {
         $this->ID = $this->createPostWordPress();
         if ($this->ID === 0) {
-            throw new MyException(Errors::text('POST_WAS_NOT_CREATED'),Errors::code('BAD_REQUEST'));
+            throw new MyException(Errors::text('POST_WAS_NOT_CREATED'), Errors::code('BAD_REQUEST'));
         }
         $this->getPostLinksWordpress();
         $this->status = 'draft';
@@ -131,25 +134,27 @@ class PostModel implements ModelInterface
      * Attach main image to wordpress post
      *
      * @param null|string $image_url
-     * @param string $alt 
+     * @param string $alt
      * @return string|int Id of saved post featured media.
      */
-    public function addPostThumbnail($image_url=null,$alt='')
+    public function addPostThumbnail($image_url = null, $alt = '')
     {
         $url=is_null($image_url)?$this->image:$image_url;
-        return $this->attachImageToPostWordpress($url, $this->ID, true,$alt);
+        $featured_image_title=!empty($alt)?$alt:$this->title;
+        return $this->attachImageToPostWordpress($url, $this->ID, true, $featured_image_title);
     }
 
     /**
      * Add link to the source  of the page
-     * 
+     *
      * @param string $source_url
      * @return void
      */
-    public function addSource($source_url=null)
+    public function addSource($source_url = null)
     {
         $source=is_null($source_url)?$this->sourceUrl:$source_url;
-        $this->body .= sprintf('<br> <a href="%s">%s</a>',
+        $this->body .= sprintf(
+            '<br> <a href="%s">%s</a>',
             \esc_url_raw($source),
             \__('Source ', NEWS_PARSER_PLUGIN_SLUG)
         );
@@ -188,7 +193,8 @@ class PostModel implements ModelInterface
      * @param string $return
      * @return string|\WP_Error
      */
-    public function mediaSideloadImage($file, $post_id = 0, $desc = null, $return = 'html'){
+    public function mediaSideloadImage($file, $post_id = 0, $desc = null, $return = 'html')
+    {
         return media_sideload_image($file, $post_id, $desc, $return);
     }
     /**
@@ -209,7 +215,7 @@ class PostModel implements ModelInterface
         );
         $postId = \wp_insert_post($post_data);
         if (\is_wp_error($postId)) {
-            throw new MyException($postId->get_error_message(),Errors::code('BAD_REQUEST'));
+            throw new MyException($postId->get_error_message(), Errors::code('BAD_REQUEST'));
         } else {
             return $postId;
         }
@@ -222,14 +228,14 @@ class PostModel implements ModelInterface
      * @param boolean $post_thumb if image will use NewsParserPlugin\as main image of the post
      * @return int image ID
      */
-    protected function attachImageToPostWordpress($image, $id, $post_thumb = false,$alt='')
+    protected function attachImageToPostWordpress($image, $id, $post_thumb = false, $alt = '')
     {
         $url = $image;
         $post_id = $id;
         $desc = $alt?:"image";
         $img_id = $this->mediaSideloadImage($url, $post_id, $desc, 'id');
         if (\is_wp_error($img_id)) {
-            throw new MyException($img_id->get_error_message().' Image url:'.esc_url_raw($url),Errors::code('BAD_REQUEST'));
+            throw new MyException($img_id->get_error_message().' Image url:'.esc_url_raw($url), Errors::code('BAD_REQUEST'));
         } else {
             if ($post_thumb) {
                 \set_post_thumbnail($post_id, $img_id);
@@ -264,7 +270,5 @@ class PostModel implements ModelInterface
         $this->links['previewLink'] = \get_post_permalink($post_id);
         $this->links['editLink'] = \get_edit_post_link($post_id, '');
         $this->links['deleteLink'] = \get_delete_post_link($post_id);
-
     }
-   
 }

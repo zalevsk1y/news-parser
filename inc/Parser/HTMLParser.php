@@ -1,8 +1,8 @@
 <?php
 namespace NewsParserPlugin\Parser;
 
-
 use Sunra\PhpSimple\HtmlDomParser;
+
 /**
  * HTML parser class
  * Parse data from html using Sunra\PhpSimple and regular expression
@@ -50,7 +50,6 @@ class HTMLParser extends Abstracts\AbstractParseContent
     public function __construct($cache_expiration = 3600)
     {
         parent::__construct($cache_expiration);
-       
     }
     /**
      * Init and set data for parser.
@@ -73,7 +72,7 @@ class HTMLParser extends Abstracts\AbstractParseContent
      * [title] - post title @string
      * [image] - post main image url @string
      * [body] - post content @string|@array
-     * 
+     *
      * @uses AbstractParseContent::pipe()
      * @param string $data HTML data.
      * @return array
@@ -89,7 +88,7 @@ class HTMLParser extends Abstracts\AbstractParseContent
     }
     /**
      * Parse post title based on both OpenGraph marks and inside h1 tag.
-     * 
+     *
      * @usesAbstractParseContent::chain()
      * @return false|string
      */
@@ -112,7 +111,7 @@ class HTMLParser extends Abstracts\AbstractParseContent
      */
 
     protected function postImage()
-    {   
+    {
         $alt=isset($this->post['title'])?$this->post['title']:'';
         $searchPattern='img[alt='.$alt.']';
         $images = $this->chain()
@@ -153,7 +152,9 @@ class HTMLParser extends Abstracts\AbstractParseContent
     public function openGrapheTitleFind()
     {
         $title_items = $this->find('meta[property=og:title]');
-        if(false===$title_items||!is_array($title_items)||empty($title_items)) return false;
+        if (false===$title_items||!is_array($title_items)||empty($title_items)) {
+            return false;
+        }
         return $title_items[0]->getAttribute('content');
     }
     /**
@@ -167,7 +168,9 @@ class HTMLParser extends Abstracts\AbstractParseContent
     public function regExp($pattern)
     {
         preg_match($pattern, $this->rawHTML, $matches);
-        if (empty($matches))return false;
+        if (empty($matches)) {
+            return false;
+        }
         return $matches[1];
     }
 
@@ -183,7 +186,9 @@ class HTMLParser extends Abstracts\AbstractParseContent
     {
         $matchesBodies = $this->find('p');
         $result = [];
-        if(empty($matchesBodies)||!is_array($matchesBodies))return false;
+        if (empty($matchesBodies)||!is_array($matchesBodies)) {
+            return false;
+        }
         foreach ($matchesBodies as $match) {
             $result[] = "<p>" . esc_html($match->plaintext) . "</p>";
         }
@@ -221,9 +226,8 @@ class HTMLParser extends Abstracts\AbstractParseContent
      * @param string $html
      * @return \simplehtmldom_1_5\simple_html_dom simplehtmldom_1_5\simple_html_dom
      */
-    protected  function createDOM($html)
+    protected function createDOM($html)
     {
         return HtmlDomParser::str_get_html($html);
     }
 }
-

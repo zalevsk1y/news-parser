@@ -47,11 +47,10 @@ class PostController extends BaseController
      * @param AbstractParseContent $parser
      * @param ResponseFormatter $formatter
      */
-    public function __construct(AbstractParseContent $parser,ResponseFormatter $formatter)
+    public function __construct(AbstractParseContent $parser, ResponseFormatter $formatter)
     {
         parent::__construct($formatter);
         $this->parser = $parser;
-
     }
     /**
      * Create post draft and return response in proper format
@@ -61,16 +60,20 @@ class PostController extends BaseController
      * @param string $_id front end index of post that should be parsed and saved as draft
      * @return void
      */
-    public function create($url,$_id)
+    public function create($url, $_id)
     {
         try {
             $parsed_url=parse_url($url);
-            if(!is_array($parsed_url)) throw new MyException (Errors::text('WRONG_OPTIONS_URL'),Errors::code('BAD_REQUEST'));
-            $parsing_options=$this->TemplateModelsFactory($parsed_url);
-            $parsed_data =$this->parser->get($url,$parsing_options->getAttributes('array'));
+            if (!is_array($parsed_url)) {
+                throw new MyException(Errors::text('WRONG_OPTIONS_URL'), Errors::code('BAD_REQUEST'));
+            }
+            $parsing_options=$this->templateModelsFactory($parsed_url);
+            $parsed_data =$this->parser->get($url, $parsing_options->getAttributes('array'));
            
             $parsed_data['authorId'] = \get_current_user_id();
-            if(!$options=$parsing_options->getExtraOptions())throw new MyException(Errors::text('NO_EXTRA_OPTIONS'),Errors::code('BAD_REQUEST'));
+            if (!$options=$parsing_options->getExtraOptions()) {
+                throw new MyException(Errors::text('NO_EXTRA_OPTIONS'), Errors::code('BAD_REQUEST'));
+            }
             $this->options=$options;
             //unescaped url
 
@@ -82,10 +85,9 @@ class PostController extends BaseController
             $this->createDraft($post)->addSource($post)->addPostThumbnail($post);
                
 
-            $response = $this->formatResponse->post($post->getAttributes())->addCustomData('_id',$_id)->message('success', sprintf(Success::text('POST_SAVED_AS_DRAFT'),$post->title));
-
+            $response = $this->formatResponse->post($post->getAttributes())->addCustomData('_id', $_id)->message('success', sprintf(Success::text('POST_SAVED_AS_DRAFT'), $post->title));
         } catch (MyException $e) {
-            $response = $this->formatResponse->error($e->getCode())->message('error', $e->getMessage())->addCustomData('_id',$_id);
+            $response = $this->formatResponse->error($e->getCode())->message('error', $e->getMessage())->addCustomData('_id', $_id);
         }
         return $response;
     }
@@ -130,7 +132,7 @@ class PostController extends BaseController
    /**
     * Get instance of PostModel class.
     *
-    * @param array $data Structure: 
+    * @param array $data Structure:
     * [title] - post title @string
     * [image] - post main image url @string
     * [body] - post content @string|@array
@@ -138,7 +140,8 @@ class PostController extends BaseController
     * [authorId]- id of wp-post author
     * @return PostModel
     */
-    protected function postModelsFactory($data){
+    protected function postModelsFactory($data)
+    {
         return new PostModel($data);
     }
     /**
@@ -146,13 +149,13 @@ class PostController extends BaseController
     *
     * @param array $url Structure:
     * [scheme] - protocol
-    * [host] - host name 
+    * [host] - host name
     * [path] - path to resource
     * [fragment] - path fragment
     * @return TemplateModel
     */
-    protected function TemplateModelsFactory($url){
+    protected function templateModelsFactory($url)
+    {
         return new TemplateModel($url['host']);
     }
-
 }

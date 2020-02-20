@@ -1,5 +1,6 @@
 <?php
 namespace NewsParserPlugin\Ajax;
+
 /**
  * Ajax parent class that provide methods for handles input arguments.
  *
@@ -12,22 +13,27 @@ class Ajax
     /**
      * Checks input argument type.
      *
-     * @param mixed $arg 
+     * @param mixed $arg
      * @param string $type
      * @param string $description
      * @return true|\WP_Error
      */
-    protected function checkArgType($arg,$type,$description='')
+    protected function checkArgType($arg, $type, $description = '')
     {
         $error_message='%s should be a %s but %s given.';
         $desc=$description?:'Argument';
-        $arg_type=gettype($arg); 
-        if($arg_type!==$type)  return new \WP_Error(400,
-            esc_html(sprintf($error_message,
-                $desc,
-                $type,
-                $arg_type)
-            ));
+        $arg_type=gettype($arg);
+        if ($arg_type!==$type) {
+            return new \WP_Error(
+                400,
+                esc_html(sprintf(
+                    $error_message,
+                    $desc,
+                    $type,
+                    $arg_type
+                ))
+            );
+        }
         return true;
     }
     /**
@@ -42,21 +48,21 @@ class Ajax
      * sanitize_callback - sanitize input data callback.
      * @return void
      */
-    protected function prepareArgs($dirty_request,$args_params)
+    protected function prepareArgs($dirty_request, $args_params)
     {
         $clean_request=array();
-        foreach($args_params as $key=>$arg){
-            if(key_exists($key,$dirty_request)){
+        foreach ($args_params as $key => $arg) {
+            if (key_exists($key, $dirty_request)) {
                 $dirty_arg=$dirty_request[$key];
-                if(is_wp_error($e=$this->checkArgType($dirty_arg,$arg['type'],$arg['description']))){
+                if (is_wp_error($e = $this->checkArgType($dirty_arg, $arg['type'], $arg['description']))) {
                     $this->sendError($e);
                 }
                 //validate arguments.
-                if(is_wp_error($e=call_user_func($arg['validate_callback'],$dirty_arg))){
+                if (is_wp_error($e = call_user_func($arg['validate_callback'], $dirty_arg))) {
                     $this->sendError($e);
                 }
                 //sanitize arguments.
-                if(($clean_arg=call_user_func($arg['sanitize_callback'],$dirty_arg))!==false){
+                if (($clean_arg=call_user_func($arg['sanitize_callback'], $dirty_arg))!==false) {
                     $clean_request[$key]=$clean_arg;
                 }
             }
@@ -70,8 +76,10 @@ class Ajax
      * @return void
      */
     protected function sendError($error)
-    {  
-        if(!is_wp_error($error)) return; 
+    {
+        if (!is_wp_error($error)) {
+            return;
+        }
         $response_message=array(
             'msg'=>array(
                 'type'=>'error',
@@ -79,7 +87,7 @@ class Ajax
             ),
             'code'=>esc_html($error->get_code())
         );
-        wp_send_json($response_message,$error->get_code());
+        wp_send_json($response_message, $error->get_code());
     }
     /**
      * Send response.
@@ -90,7 +98,7 @@ class Ajax
      */
     protected function sendResponse($response)
     {
-        switch ($response->contentType){
+        switch ($response->contentType) {
             case 'json':
                 wp_send_json($response->get('array'));
                 break;
@@ -99,7 +107,6 @@ class Ajax
                 wp_die();
                 break;
         }
-        
     }
 
     /**
@@ -107,7 +114,8 @@ class Ajax
      *
      * @return array
      */
-    protected function getJsonFromInput(){
-        return json_decode(file_get_contents('php://input'),TRUE);
+    protected function getJsonFromInput()
+    {
+        return json_decode(file_get_contents('php://input'), true);
     }
 }
