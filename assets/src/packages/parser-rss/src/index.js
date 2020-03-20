@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import Main from './containers/Main';
 
 import { Provider } from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 import parse from './reducers';
 
 import {mainMiddleware} from './middleware/core/main';
