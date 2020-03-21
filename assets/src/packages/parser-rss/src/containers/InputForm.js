@@ -18,7 +18,7 @@ import {location} from 'globals';
 export class InputForm extends React.Component{
     constructor(props){
         super(props);
-        this.state={inputValue:props.value||'https://www.'};
+        this.state={inputValue:props.value||''};
         this.inputChange=this.inputChange.bind(this);
         this.handleParsePageSubmit=this.handleParsePageSubmit.bind(this);
         this.handleParseListSubmit=this.handleParseListSubmit.bind(this);
@@ -39,9 +39,9 @@ export class InputForm extends React.Component{
      * @param {object} event Click event object. 
      */
     handleParsePageSubmit(event){
-        if(!this.state.inputValue){
-            this.props.showMessage('info','Please input page URL.');        
-            return;                                                                                                                                                                                                                                                                                                     
+        if(!this.validateIntupUrl(this.state.inputValue)){
+            this.props.showMessage('info','Please, input valid url address');
+            return;
         } 
         this.props.openVisualConstructor(this.state.inputValue)
     }
@@ -52,7 +52,11 @@ export class InputForm extends React.Component{
      */
     handleParseListSubmit(event){
         const params={entity:LIST,url:this.state.inputValue},                                                                                                                                                                           
-            url=encodeUrlWithParams(params)
+            url=encodeUrlWithParams(params);
+        if(!this.validateIntupUrl(this.state.inputValue)){
+            this.props.showMessage('info','Please, input valid url address');
+            return;
+        }
         location.assign(url);
     }
     /**
@@ -66,6 +70,14 @@ export class InputForm extends React.Component{
             return;
         } 
         this.props.parseSelected()
+    }
+    /**
+     * Validate input url string.
+     * 
+     * @param {string} url 
+     */
+    validateIntupUrl(url){
+        return (url.search(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/g)!==-1)
     }
     renderButtons(){
         switch(this.props.page){
@@ -95,7 +107,7 @@ export class InputForm extends React.Component{
 
                 <div className="row center">
                     <div className="input-wrapper">
-                        <input className="search-textbox" type="text" name="url" value={this.state.inputValue} onChange={this.inputChange}></input>
+                        <input className="search-textbox" type="url" minLength={10} required name="url" placeholder="https://" value={this.state.inputValue} onChange={this.inputChange}></input>
                         <this.renderButtons />
                     </div>
                 </div>
