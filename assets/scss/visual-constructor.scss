@@ -20,6 +20,7 @@ frame{
     z-index: 160000;
 }
 .modal-header{
+    flex-basis: 30px;
     background-color: #fff;
     border-bottom: solid 1px #ddd;
 }
@@ -45,7 +46,7 @@ frame{
         float: left;
         width:80%;
         font-size:2em !important;
-        
+        padding: 0;
     }
     .media-modal-close
     {
@@ -62,9 +63,10 @@ frame{
     box-shadow: none; 
 }
 .modal-main{
+    flex-grow:1;
     display: flex;
     flex-direction: row;
-    height:100%;
+    height:0;
 }
 .parsed-data-container{
     width:80%;
@@ -79,6 +81,7 @@ frame{
     overflow-y:scroll;
 }
 .modal-footer{
+    flex-basis: 35px;
     overflow: auto;
     height: auto;
     min-height: 30px;
