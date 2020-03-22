@@ -1,12 +1,14 @@
 <?php
 namespace NewsParserPlugin\Parser;
 
-use Sunra\PhpSimple\HtmlDomParser;
+use HungCP\PhpSimpleHtmlDom\HtmlDomParser;
+
+
 
 /**
  * HTML parser class
- * Parse data from html using Sunra\PhpSimple and regular expression
- * https://github.com/sunra/php-simple-html-dom-parser
+ * Parse data from html using voku\PhpSimple and regular expression
+ * https://github.com/caophihung94/php-simple-html-dom-parser
  *
  * PHP version 5.6
  *
@@ -221,7 +223,7 @@ class HTMLParser extends Abstracts\AbstractParseContent
         return preg_replace($pattern, '', $data);
     }
     /**
-     * Create instance of simplehtmldom_1_5\simple_html_dom  https://github.com/sunra/php-simple-html-dom-parser.
+     * Create instance of simplehtmldom_1_5\simple_html_dom  https://github.com/caophihung94/php-simple-html-dom-parser.
      *
      * @param string $html
      * @return \simplehtmldom_1_5\simple_html_dom simplehtmldom_1_5\simple_html_dom
