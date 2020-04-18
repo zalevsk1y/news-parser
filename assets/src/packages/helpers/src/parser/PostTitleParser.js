@@ -5,16 +5,17 @@ import ArrayExtendedMethods from '../classes/classesForExtend/ArrayExtenedMethod
  * @since 1.0.2
  * 
  */
-class PostTitleParser extends ArrayExtendedMethods{
+export default class PostTitleParser extends ArrayExtendedMethods{
     /**
      * Constructor.
      * 
      * @throws Error
      * @param {object} HTML document
      */
-    constructor(document){
-        if(document===undefined) throw Error('HTML document argument could not be undefined.');
-        this.doc=document;
+    constructor(doc){
+        super();
+        if(doc===undefined) throw Error('HTML document argument could not be undefined.');
+        this.doc=doc;
     }
     /**
      * Search and parse post title.
@@ -36,8 +37,8 @@ class PostTitleParser extends ArrayExtendedMethods{
      * @param {object} HTML document 
      * @returns {false|string}
      */
-    findUsingSchema(doc){
-        let metaTags=doc.getElemntsByTagName('meta');
+    findUsingSchema(){
+        let metaTags=this.doc.getElementsByTagName('meta');
         return this.forEachWithBreak(metaTags,metaTag=>metaTag.hasAttribute('property')
                 &&metaTag.getAttribute('property')==='og:title'
                 &&metaTag.hasAttribute('content')
@@ -49,11 +50,11 @@ class PostTitleParser extends ArrayExtendedMethods{
      * @param {object} HTML document 
      * @returns {false|string}
      */
-    findUsingHeaderTag(doc){
-        let h1Tag=doc.getElemntsByTagName('h1');
-        return h1Tag.length>0?h1Tag[0].innerText:false;
+    findUsingHeaderTag(){
+        let h1Tag=this.doc.getElementsByTagName('h1');
+        return h1Tag.length>0?h1Tag[0].textContent:false;
     }
 
 }
 
-export default document=>new PostTitleParser(document);
+export const postTitleParser=doc=>new PostTitleParser(doc);

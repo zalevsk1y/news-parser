@@ -33,7 +33,7 @@ class ArrayExtendedMethods{
         if(!Array.isArray(callbackArr)) return false;
         let result=false;
         for(let i=0,end=callbackArr.length;i<end;i++){
-            result=callbackArr[i](...args);
+            result=callbackArr[i].apply(this,[args]);
             if(result!==false) break;
         }
         return result;
