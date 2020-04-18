@@ -6,10 +6,11 @@ import ArrayExtendedMethods from '../classes/classesForExtend/ArrayExtenedMethod
  * 
  * @param {object} HTML document
  */
-class FeaturedImageParser extends ArrayExtendedMethods {
-    constructor(document){
-        if(document===undefined) throw Error('HTML document argument could not be undefined.');
-        this.doc=document;
+export default class FeaturedImageParser extends ArrayExtendedMethods {
+    constructor(doc){
+        super();
+        if(doc===undefined) throw Error('HTML document argument could not be undefined.');
+        this.doc=doc;
     }
     /**
      * Parse main image of post or article using methods from array.
@@ -20,7 +21,7 @@ class FeaturedImageParser extends ArrayExtendedMethods {
     findFeaturedImage(){
         const arrayOfParseCallbacks=[
             this.findUsingSchema,
-            this.findinArtileTag,
+            this.findInArticleTag,
             this.findInMainTag
         ]
         return this.reduceWithBreak(arrayOfParseCallbacks,[this.doc]);
@@ -32,8 +33,8 @@ class FeaturedImageParser extends ArrayExtendedMethods {
      * @param {object} HTML document 
      * @returns {false|string}
      */
-    findUsingSchema(doc){
-        let metaTags=doc.getElemntsByTagName('meta');
+    findUsingSchema(){
+        let metaTags=this.doc.getElementsByTagName('meta');
         return this.forEachWithBreak(metaTags,metaTag=>metaTag.hasAttribute('property')
                 &&metaTag.getAttribute('property')==='og:image'
                 &&metaTag.hasAttribute('content')
@@ -42,26 +43,28 @@ class FeaturedImageParser extends ArrayExtendedMethods {
     /**
      * Search for image in article tag.
      * 
+     *  @extends ArrayExtendedMethods.forEachWithBreak()
      *  @param {object} HTML document 
      *  @returns {false|string} 
      */
-    findinArtileTag(doc){
-        let articleImgTags=doc.querySelectorAll('article img');
-        return this.forEachWithBreak(articleTags,imgTag=>imgTag.hasAttribute('src')
+    findInArticleTag(){
+        let articleImgTags=this.doc.querySelectorAll('article img');
+        return this.forEachWithBreak(articleImgTags,imgTag=>imgTag.hasAttribute('src')
                 &&imgTag.getAttribute('src'))
     }
     /**
      * Search for image in main tag.
      * 
+     * @extends ArrayExtendedMethods.forEachWithBreak()
      * @param {object} HTML document 
      * @returns {false|string} 
      */
-    findInMainTag(doc){
-        let mainImgTags=doc.querySelectorAll('main img');
+    findInMainTag(){
+        let mainImgTags=this.doc.querySelectorAll('main img');
         return this.forEachWithBreak(mainImgTags,imgTag=>imgTag.hasAttribute('src')
                 &&imgTag.getAttribute('src'))
     }
     
 }
 
-export default document=>new FeaturedImageParser(document);
+export const featuredImageParser=doc=>new FeaturedImageParser(doc);
