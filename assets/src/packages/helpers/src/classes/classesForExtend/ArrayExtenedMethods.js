@@ -1,10 +1,10 @@
 /**
- * Class for exteds by other classes, provide extended array methods. 
+ * Class for extends by other classes, provide extended array methods. 
  */
 class ArrayExtendedMethods{
     /**
-     * Call calback function on every array element and break if callback returns anything but false.
-     * arguments passet to callback [element],[index],[array]
+     * Call callback function on every array element and break if callback returns anything but false.
+     * arguments passed to callback [element],[index],[array]
      * 
      * @param {array} arr 
      * @param {function} callback 

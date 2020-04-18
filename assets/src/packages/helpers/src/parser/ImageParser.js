@@ -6,9 +6,9 @@
  * @param {object} HTML document
  */
 class ImageParser{
-    constructor(document){
-        if(document===undefined) throw Error('Document argument of ImageParcer constructor cannot be undefined.')
-        this.doc=document;
+    constructor(doc){
+        if(doc===undefined) throw Error('Document argument of ImageParser constructor cannot be undefined.')
+        this.doc=doc;
     }
     replaceImageSrc(){
         const img=this.doc.getElementsByTagName('img');
@@ -45,4 +45,4 @@ class ImageParser{
 
 }
 
-export const imageParser=documnet=>new ImageParser(document);
+export const imageParser=doc=>new ImageParser(doc);

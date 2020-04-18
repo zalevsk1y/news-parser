@@ -2,6 +2,8 @@ import React from "react";
 import { getPluginDirUrl } from "@news-parser/helpers";
 import { imageParser } from "@news-parser/helpers/parser/ImageParser";
 import { Parser } from "@news-parser/helpers/parser/Parser";
+import { postTitleParser } from "@news-parser/helpers/parser/PostTitleParser";
+import { featuredImageParser } from "@news-parser/helpers/parser/FeaturedImageParser";
 import {
   selectTitle,
   selectFeaturedMedia,
@@ -40,12 +42,12 @@ export class Frame extends React.Component {
     const DOMData = this.replaceYouTubeFrames(this.props.data),
       doc = this.frameRef.current.contentWindow.document,
       sanitizedDOM = DOMPurify.sanitize(DOMData, {
-        ADD_TAGS: ["link"],
+        ADD_TAGS: ["link","meta"],
+        ADD_ATTR:["property","content"],
         WHOLE_DOCUMENT: true,
+        ALLOW_UNKNOWN_PROTOCOLS:true
       }),
       cssLink = document.createElement("link");
-    this.getTitle();
-    this.getFeaturedMedia();
     cssLink.href = getPluginDirUrl() + "/public/css/frame-style.css";
     cssLink.rel = "stylesheet";
     cssLink.type = "text/css";
@@ -57,6 +59,8 @@ export class Frame extends React.Component {
     doc.addEventListener("mouseout", this.mouseOut);
     doc.addEventListener("click", this.clickHandler);
     this.imagePrepare(doc);
+    this.getTitle(doc);
+    this.getFeaturedMedia(doc);
     this.parser = new Parser(this.frameRef);
     this.props.frameIsReady();
   }
@@ -65,8 +69,8 @@ export class Frame extends React.Component {
    *
    * @param {object} dom  html document object.
    */
-  imagePrepare(dom) {
-    imageParser(dom).replaceImageSrc();
+  imagePrepare(doc) {
+    imageParser(doc).replaceImageSrc();
   }
   /**
    * Find and replace YouTube frames? replacing with video tag that contains data-hash attr with youtube hash data.
@@ -85,27 +89,19 @@ export class Frame extends React.Component {
   }
   /**
    * Get post title using Open Graph protocol.
+   * 
+   *  @extends postTitleParser.findTitle()
    */
-  getTitle() {
-    const pattern = /\<meta property\=\"og\:title\" content\=\"(.*?)\"/i;
-    let title = this.props.data.match(pattern);
-    if (title !== null && title.hasOwnProperty("1")) {
-      let fixQuotes = title["1"].replace(/\&\#039\;/i, "'");
-      this.props.selectTitle(fixQuotes);
-    } else {
-      this.props.selectTitle("No Title.");
-    }
+  getTitle(doc) {
+    const title = postTitleParser(doc).findTitle()||'No title';
+    this.props.selectTitle(title);
   }
   /**
    * Get post featured media using Open Graph protocol.
    */
-  getFeaturedMedia() {
-    const pattern = /\<meta property\=\"og\:image\" content\=\"(.*?)\"/i;
-    let image = this.props.data.match(pattern);
-
-    if (image !== null && image.hasOwnProperty("1")) {
-      this.props.selectFeaturedMedia(image[1]);
-    }
+  getFeaturedMedia(doc) {
+    const image = featuredImageParser(doc).findFeaturedImage();
+    image!==false&&this.props.selectFeaturedMedia(image);
   }
   /**
    * Event listener callback to highlight html elements when mouse is over them.
@@ -161,7 +157,7 @@ export class Frame extends React.Component {
       this.removeSelectedElement(element);
     }
   }
-  render() {
+  render(){
     return (
       <iframe
         id="visual-constructor"
