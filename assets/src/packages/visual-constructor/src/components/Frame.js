@@ -89,16 +89,21 @@ export class Frame extends React.Component {
     return newDom;
   }
   /**
-   * Get post title using Open Graph protocol.
+   * Get post title.
    * 
    *  @extends postTitleParser.findTitle()
+   *  @param {string} dom
+   * 
    */
   getTitle(doc) {
     const title = postTitleParser(doc).findTitle()||'No title';
     this.props.selectTitle(title);
   }
   /**
-   * Get post featured media using Open Graph protocol.
+   * Get post featured.
+   * 
+   * @extends FeaturedImageParser.findFeaturedImage()
+   * @param {string} dom
    */
   getFeaturedMedia(doc) {
     const image = featuredImageParser(doc).findFeaturedImage();
