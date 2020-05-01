@@ -1,9 +1,18 @@
 import React from "react";
 import { getPluginDirUrl } from "@news-parser/helpers";
-import { imageParser } from "@news-parser/helpers/parser/ImageParser";
 import { Parser } from "@news-parser/helpers/parser/Parser";
 import { postTitleParser } from "@news-parser/helpers/parser/PostTitleParser";
 import { featuredImageParser } from "@news-parser/helpers/parser/FeaturedImageParser";
+import {htmlAsString} from "@news-parser/helpers/frame/HtmlAsString/HtmlAsString";
+// modifiers for HtmlAsString
+import purifyDOM from "@news-parser/helpers/frame/HtmlAsString/modifiers/purifyDOM";
+import replaceYouTubeFrames from "@news-parser/helpers/frame/HtmlAsString/modifiers/replaceYouTubeFrames";
+
+import {frameElement} from "@news-parser/helpers/frame/FrameElement/FrameElement";
+// modifiers for FrameElement
+import imagePrepare from "@news-parser/helpers/frame/FrameElement/modifiers/imagePrepare";
+import removeRelativePath from "@news-parser/helpers/frame/FrameElement/modifiers/removeRelativePath";
+//actions
 import {
   selectTitle,
   selectFeaturedMedia,
@@ -40,39 +49,33 @@ export class Frame extends React.Component {
    * Write sanitized page html into iframe.
    */
   initFrame() {
-    const DOMData = this.replaceYouTubeFrames(this.props.data),
-      doc = this.frameRef.current.contentWindow.document,
-      sanitizedDOM = DOMPurify.sanitize(DOMData, {
-        ADD_TAGS: ["link","meta"],
-        ADD_ATTR:["property","content"],
-        WHOLE_DOCUMENT: true,
-        ALLOW_UNKNOWN_PROTOCOLS:true
-      }),
-      cssLink = document.createElement("link");
-    cssLink.href = getPluginDirUrl() + "/public/css/frame-style.css";
-    cssLink.rel = "stylesheet";
-    cssLink.type = "text/css";
-    doc.open();
-    doc.write(sanitizedDOM);
-    doc.close();
-    doc.head.appendChild(cssLink);
+    const htmlData=htmlAsString(this.props.data)
+      .addModifiers([
+        purifyDOM,
+        replaceYouTubeFrames
+      ]);
+    frameElement(this.frameRef.current)
+      .injectHTML(htmlData)
+      .addModifiers([
+        removeRelativePath,
+        imagePrepare
+      ])
+      .injectCSS({
+        parent:'head',
+        tag:'link',
+        href:getPluginDirUrl() + "/public/css/frame-style.css"
+      })
     doc.addEventListener("mouseover", this.mouseOver);
     doc.addEventListener("mouseout", this.mouseOut);
     doc.addEventListener("click", this.clickHandler);
-    this.imagePrepare(doc);
     this.getTitle(doc);
     this.getFeaturedMedia(doc);
     this.parser = new Parser(this.frameRef);
     this.props.frameIsReady();
   }
-  /**
-   * Find and replace src of img tags.
-   *
-   * @param {object} dom  html document object.
-   */
-  imagePrepare(doc) {
-    imageParser(doc).replaceImageSrc();
-  }
+
+  
+  
   /**
    * Find and replace YouTube frames? replacing with video tag that contains data-hash attr with youtube hash data.
    *
@@ -108,6 +111,13 @@ export class Frame extends React.Component {
   getFeaturedMedia(doc) {
     const image = featuredImageParser(doc).findFeaturedImage();
     image!==false&&this.props.selectFeaturedMedia(image);
+  }
+  /**
+   * 
+   * @param {*} event 
+   */
+  relativeToAbsolutePath(doc){
+      replaceRelativeToAbsolutePath(doc,url)
   }
   /**
    * Event listener callback to highlight html elements when mouse is over them.
@@ -181,9 +191,10 @@ export class Frame extends React.Component {
 
 
 function mapStateToProps(state) {
-  const { rawHTML } = state.parse.dialog.visualConstructor.dialogData;
+  const { rawHTML,url } = state.parse.dialog.visualConstructor.dialogData;
   return {
     data: rawHTML,
+    url
   };
 }
 
@@ -213,6 +224,10 @@ Frame.propTypes = {
    * HTML data that should be write to the iFrame.
    */
   data: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
+  /**
+   * Url of requested site.
+   */
+  url:PropTypes.string.isRequired,
   /**
    * Select title action.Set post title.
    *
