@@ -6,6 +6,8 @@ use NewsParserPlugin\Traits\SanitizeDataTrait;
 use NewsParserPlugin\Ajax\Ajax;
 use NewsParserPlugin\Interfaces\EventControllerInterface;
 use NewsParserPlugin\Message\Errors;
+use NewsParserPlugin\Message\Success;
+use NewsParserPlugin\Exception\MyException;
 
 /**
  * Ajax singleton class provide API to the front end
@@ -57,6 +59,7 @@ class AjaxController extends Ajax
     {
         $this->event=$event;
         $this->init();
+        $this->formatter=$this->getFormatter();
     }
     /**
      * Singleton static method to get instance of class.
@@ -106,6 +109,11 @@ class AjaxController extends Ajax
         }
         return true;
     }
+    protected function sendErrorResponse(MyException $e){
+        $error_data=$this->formatter->error($e->getCode())->message('error', $e->getMessage())->get('array');
+        $error_code=$e->getCode();
+        $this->sendError($error_data,$error_code);
+    }
     /**
      * Callback that handles media api requests.
      *
@@ -137,58 +145,14 @@ class AjaxController extends Ajax
                     'sanitize_callback'=>array($this,'sanitizeMediaOptions')
                 )
         ));
-       
-        $response=$this->event->trigger('media:create', array($request['url'],$request['options']['post_id'],$request['options']['alt']));
-        $this->sendResponse($response);
+        try {
+            $media_id=$this->event->trigger('media:create', array($request['url'],$request['options']['post_id'],$request['options']['alt']));
+            $this->sendResponse($this->formatter->media($media_id)->message('success', Success::text('FEATURED_IMAGE_SAVED'))->get('array'));
+        } catch (MyException $e) {
+            $this->sendErrorResponse($e);
+        }
     }
-    /**
-     * Callback that handles options api requests.
-     *
-     * @uses ValidateDataTrait::validateExtraOptions()
-     * @uses ValidateDataTrait::validateTemplate()
-     * @uses SanitizeDataTrait::sanitizeExtraOptions()
-     * @uses SanitizeDataTrait::sanitizeTemplate()
-     * @uses EventController::trigger()
-     * @return void
-     */
-    public function templateApi()
-    {
-        //Get application\json encode data
-        $json_post = $this->getJsonFromInput();
-        $this->checkPermission('parsing_news_api', $json_post);
-
-        $request=$this->prepareArgs($json_post, array(
-            'url'=>array(
-                'description'=>'Url of post that was taken as example of template',
-                'type'=>'string',
-                'validate_callback'=>function ($url) {
-                    return wp_http_validate_url($url);
-                },
-                'sanitize_callback'=>function ($input_url) {
-                    return esc_url_raw($input_url);
-                }
-            ),
-            'extraOptions'=>array(
-                'description'=>'Extra options for automated parsing pages',
-                'type'=>'array',
-                'validate_callback'=>array($this,'validateExtraOptions'),
-                'sanitize_callback'=>array($this,'sanitizeExtraOptions')
-            ),
-            'template'=>array(
-                'description'=>'Template for automate parsing post',
-                'type'=>'array',
-                'validate_callback'=>array($this,'validateTemplate'),
-                'sanitize_callback'=>array($this,'sanitizeTemplate')
-            )
-        ));
-        $options=array(
-            'extraOptions'=>$request['extraOptions'],
-            'template'=>$request['template']
-        );
-        $response=$this->event->trigger('template:create', array($request['url'],$options));
-        
-        $this->sendResponse($response);
-    }
+   
     /**
      * Callback that handles parsing list of posts from RSS api requests.
      *
@@ -215,12 +179,15 @@ class AjaxController extends Ajax
             )
         ));
         
- 
-        $url = $request['url'];
 
-        $response = $this->event->trigger('list:get', array($url));
-        $this->sendResponse($response);
+        try{
+            $response = $this->event->trigger('list:get', array($request['url']));
+            $this->sendResponse($this->formatter->rss($response)->message('success', Success::text('RSS_LIST_PARSED'))->get('array'));
+        }catch (MyException $e){
+            $this->sendErrorResponse($e);
+        }
     }
+    
      /**
      * Callback that handles parsing single page api requests and returns HTML of the page.
      *
@@ -246,11 +213,18 @@ class AjaxController extends Ajax
                 }
             )
         ));
-        
-         
-        $url = $request['url'];
-        $response = $this->event->trigger('html:get', array($url));
-        $this->sendResponse($response);
+        $request_url=$request['url'];
+        try{
+            $html = $this->event->trigger('html:get', array($request_url));
+            $response=array(
+                'html'=>$html,
+                'url'=>$request_url
+            );
+            $this->sendResponse($this->formatter->rawHTML($response)->get('array'));
+        }catch (MyException $e){
+            $this->sendErrorResponse($e);
+        }
+       
     }
      /**
      * Callback that handles parsing single page api requests and create WP post draft using saved parsing templates.
@@ -291,10 +265,23 @@ class AjaxController extends Ajax
                 'sanitize_callback'=>function ($_id) {
                     return preg_replace('/[^0-9]/i', '', $_id);
                 }
-            )
+            ),
+            'templateUrl'=>array(
+                'description'=>'Url that identifies template',
+                'type'=>'string',
+                'validate_callback'=>function ($url) {
+                    return wp_http_validate_url($url);
+                },
+                'sanitize_callback'=>function ($input_url) {
+                    return esc_url_raw($input_url);
+                }
+            ),
         ));
-
-        $response=$this->event->trigger('post:create', $request);
-        $this->sendResponse($response);
+        try{
+            $response=$this->event->trigger('post:create', array($request['url'],$request['_id'],$request['templateUrl']));
+            $this->sendResponse($this->formatter->post($response)->message('success', sprintf(Success::text('POST_SAVED'), $response['title']))->addCustomData('_id', $request['_id'])->get('array'));
+        } catch (MyException $e) {
+            $this->sendErrorResponse($e);
+        }
     }
 }

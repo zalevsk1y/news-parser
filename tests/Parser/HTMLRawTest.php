@@ -4,16 +4,18 @@ use NewsParserPlugin\Parser\HTMLRaw;
 
 class MockHTMLRaw extends HTMLRaw
 {
+    public $url="http://www.site.com";
     protected $options=array('remove_scripts'=>true);
     public function parse($data)
     {
+    
         return parent::parse($data);
     }
 }
 class HTMLRawTest extends \WP_UnitTestCase
 {
     protected $instance;
-    public function setUp()
+    public function setUp():void
     {
         $this->instance=new MockHTMLRaw(10);
     }

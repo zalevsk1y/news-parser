@@ -1,0 +1,27 @@
+.sidebar-item-expandable{
+    padding:0px 20px 0px 10px;
+}
+.sidebar-item-expandable-area{
+    overflow: hidden;
+    padding: 5px 0px 5px 0px;
+}
+.sidebar-item-expandable-area-close{
+    height: 0px;    
+}
+
+.sidebar-item-expandable-area-open{
+    height: auto;
+}
+.sidebar-item-expandable-wide{
+    padding-top: 10px;
+    padding-bottom: 10px; 
+}
+.sidebar-item-expandable-narrow{
+    padding-top: 5px;
+    padding-bottom:5px;
+}
+
+.sidebar-item-expandable-row :nth-child(1n){
+    width: 99%;
+    margin: 5px 1px 5px 1px;
+}

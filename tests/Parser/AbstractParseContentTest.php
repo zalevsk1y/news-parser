@@ -9,12 +9,12 @@ use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 class AbstractParseContentTest extends \WP_UnitTestCase
 {
     protected $instance;
-    public function setUp()
+    public function setUp():void
     {
-        parent::setUp();
+        // parent::setUp();
         $this->mockParserContent=$this->getMockBuilder(\NewsParserPlugin\Parser\Abstracts\AbstractParseContent::class)
             ->setConstructorArgs(array(10))
-            ->setMethods(array('wpRemoteGet','parse'))
+            ->onlyMethods(array('wpRemoteGet','parse'))
             ->getMock();
         $this->mockParserContent->method('parse')
             ->will($this->returnArgument(0));

@@ -1,0 +1,27 @@
+.post-content {
+  overflow: hidden; 
+}
+.post-title-wrapper {
+  position: relative;
+  margin-top: 10px; 
+}
+.title-post-link {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  margin: 0 15px; 
+}
+.post-title {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size: 15px;
+  font-weight: 600; 
+}
+.post-description {
+  margin: 10px 15px;
+  position: relative; 
+}
+.post-description span {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  font-weight: 200; 
+}

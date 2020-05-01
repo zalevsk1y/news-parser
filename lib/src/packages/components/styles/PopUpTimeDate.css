@@ -1,0 +1,26 @@
+.pop-up input {
+    margin-bottom: 10px;
+}
+.pop-up-link{
+    cursor:pointer;
+    color:#007cba;
+    text-decoration: underline;
+    border: none;
+    background-color: transparent;
+}
+.sidebar-publish-time-input{
+    cursor: pointer;
+    color: #007cba;
+    padding: 3px;
+}
+.sidebar-publish-time-input:hover{
+    outline: 1px solid #007cba;
+    outline-offset: 1px;
+}
+
+
+.pop-up-buttons-block{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

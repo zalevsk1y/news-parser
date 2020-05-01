@@ -4,48 +4,82 @@ namespace NewsParserPlugin\Tests\Controller;
 use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Controller\MediaController;
 use NewsParserPlugin\Models\PostModel;
-use NewsParserPlugin\Utils\ResponseFormatter;
+use NewsParserPlugin\Message\Errors;
 
 class MediaControllerTest extends \WP_UnitTestCase
 {
+    protected $mockPostModel;
+    protected $mockMediaController;
+    public function setUp():void
+    {
+        parent::setUp();
+        $this->mockPostModel=$this->getMockBuilder(\NewsParserPlugin\Models\PostModel::class)
+        ->setConstructorArgs( array(
+            array(
+            'title'=>'Test post title',
+            'body'=>'Test post content.',
+            'authorId'=>1
+            )))
+        ->onlyMethods(array('addPostThumbnail'))
+        ->getMock();
+        $this->mockMediaController=$this->getMockBuilder(\NewsParserPlugin\Controller\MediaController::class)     
+        ->onlyMethods(array('postModelsFactory'))
+        ->getMock();
+    }
     /**
      * @dataProvider dataCreate
      *
      */
-    public function testCreate($args,$expected){
+    public function testCreate($args,$expected)
+    {
         extract($args);
-        $post_id=!is_null($post_id)?:$this->factory->post->create_and_get(array('post_author'=>10))->ID;
-        $mock_post_model=$this->getMockBuilder(\NewsParserPlugin\Models\PostModel::class)
-            ->setMethods(array('addPostThumbnail'))
-            ->setConstructorArgs( array(
-                array(
-                'title'=>'Test post title',
-                'body'=>'Test post content.',
-                'authorId'=>1
-                )))
-            ->getMock();
-        $mock_media_controller=$this->getMockBuilder(\NewsParserPlugin\Controller\MediaController::class)
-            ->setConstructorArgs(array(new ResponseFormatter()))        
-            ->setMethods(array('postModelsFactory'))
-            ->getMock();
-        $mock_media_controller->method('postModelsFactory')
-            ->willReturn($mock_post_model::getPostById($post_id));
-        $result=$mock_media_controller->create($url,$post_id,$alt);
-        $this->assertJsonStringEqualsJsonFile($expected,$result->get('json'));
+        $this->mockMediaController->expects($this->once())
+            ->method('postModelsFactory')
+            ->with($this->equalTo($post_id))
+            ->willReturn($this->mockPostModel);
+        $this->mockPostModel->expects($this->once())
+            ->method('addPostThumbnail')
+            ->with($this->equalTo($url),$this->equalTo($alt))
+            ->willReturn($media_id);
+        $result=$this->mockMediaController->create($url,$post_id,$alt);
+        $this->assertEquals($expected,$result);
     }
-    public function dataCreate(){
-  
+    /**
+     * @dataProvider dataCreateError
+     *
+     */
+    public function testCreateError($args,$expected)
+    {
+        extract($args);
+        $this->mockMediaController->expects($this->once())
+            ->method('postModelsFactory')
+            ->with($this->equalTo($post_id))
+            ->willReturn(false);
+            $this->expectException(MyException::class);
+            $this->expectExceptionMessage($expected);
+        $result=$this->mockMediaController->create($url,$post_id,$alt);
+    }
+    public function dataCreate()
+    {
         return array(
             array(array(
                 'url'=>'http://www.site.com/image.jpeg',
-                'post_id'=>null,
-                'alt'=>'Test image'),
-                CONTROLLER_MOCK_DIR.'/noErrorRespondMediaController.json'),
+                'post_id'=>1,
+                'alt'=>'Test image',
+                'media_id'=>10
+            ),
+                10)
+        );
+    }
+    public function dataCreateError()
+    {
+        return array(
             array(array(
                 'url'=>'http://www.site.com/image.jpeg',
                 'post_id'=>110,
-                'alt'=>'Test image')
-                ,CONTROLLER_MOCK_DIR.'/errorRespondMediaController.json')
+                'alt'=>'Test image'),
+                Errors::text('WRONG_POST_ID')
+            )
         );
     }
 }

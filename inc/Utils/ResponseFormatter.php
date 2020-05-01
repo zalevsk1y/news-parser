@@ -1,6 +1,7 @@
 <?php
 namespace NewsParserPlugin\Utils;
 
+
 /**
  * Class format response in proper way.You can build a chain of
  * method e.g. ->post($args)->message($args)->get() to get response at the end of chain add ::get()
@@ -12,8 +13,7 @@ namespace NewsParserPlugin\Utils;
  * @license  MIT
  */
 
-class ResponseFormatter
-{
+class ResponseFormatter {
 
     /**
      * Response content type.
@@ -26,16 +26,7 @@ class ResponseFormatter
      *
      * @var array
      */
-    protected $data=array('code'=>200,'msg'=>false);
-    /**
-     * Return new instance of ResponseFormatter
-     *
-     * @return ResponseFormatter
-     */
-    public static function getInstance()
-    {
-        return new static();
-    }
+    protected $data=array();
     /**
      * Format answer after post draw was created
      *
@@ -71,9 +62,9 @@ class ResponseFormatter
      */
     public function dialog($type, $data)
     {
-        $this->data['dialog']=array(
+        $this->data['data']=array(
             'type'=>$type,
-            'data'=>$data
+            'dialogData'=>$data
         );
             return $this;
     }
@@ -124,9 +115,9 @@ class ResponseFormatter
     {
         
         if ($status=='none') {
-            $this->data['msg']=false;
+            $this->data['message']=false;
         } else {
-            $this->data['msg']=array(
+            $this->data['message']=array(
             
                     'type'=>esc_html($status),
                     'text'=>esc_html($text),
@@ -134,6 +125,17 @@ class ResponseFormatter
                 
             );
         }
+        return $this;
+    }
+    /**
+     * Template options
+     *
+     * @param string $options array of template-options
+     * @return ResponseFormatter return this for chain building
+     */
+    public function options($options)
+    {
+        $this->data['data']=$options;
         return $this;
     }
     /**
@@ -149,6 +151,13 @@ class ResponseFormatter
         $escaped_value=esc_html($value);
         $this->data['data'][$escaped_field_name]=$escaped_value;
         return $this;
+    }
+    /**
+     * Returns status code
+     */
+    public function getCode()
+    {
+        return $this->data['code'];
     }
     /**
      * Return answer data in array|object|json format

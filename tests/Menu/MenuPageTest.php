@@ -7,10 +7,10 @@ use NewsParserPlugin\Utils\MenuConfig;
 class MenuPageTest extends \WP_UnitTestCase
 {
     protected $configPath;
-    public function setUp()
+    public function setUp():void
     {
         $this->configPath = UTILS_MOCK_DIR.'/menu-config.php';
-        wp_set_current_user($this->factory->user->create([
+        wp_set_current_user($this->factory()->user->create([
             'role' => 'administrator',
         ]));
     }

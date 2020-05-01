@@ -7,35 +7,38 @@ use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Utils\ResponseFormatter;
 
-class MediaController extends BaseController
+
+/**
+ * Class save media as post attachment
+ *
+ * PHP version 5.6
+ *
+ *
+ * @package  Controller
+ * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
+ * @license  MIT
+ *
+ */
+class MediaController 
 {
-    public function __construct(ResponseFormatter $formatter)
-    {
-        parent::__construct($formatter);
-    }
+    
     /**
      * Saves attached media.
      *
-     * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @throws MyException
      * @param string $url Url of image that should be download.
      * @param string $post_id Post id.
      * @param string $alt Description of image.
-     * @return ResponseFormatter
+     * @return int id of media
      */
     public function create($url, $post_id, $alt = '')
     {
-        try {
-            $post=$this->postModelsFactory($post_id);
-            if (!$post) {
-                throw new MyException(Errors::text('WRONG_POST_ID'), Errors::code('BAD_REQUEST'));
-            }
-            $media_id=$post->addPostThumbnail($url, $alt);
-            $response=$this->formatResponse->media($media_id)->message('success', Success::text('FEATURED_IMAGE_SAVED'));
-        } catch (MyException $e) {
-            $response = $this->formatResponse->error($e->getCode())->message('error', $e->getMessage());
+        $post=$this->postModelsFactory($post_id);
+        if (!$post) {
+            throw new MyException(Errors::text('WRONG_POST_ID'), Errors::code('BAD_REQUEST'));
         }
-        return $response;
+        $media_id=$post->addPostThumbnail($url, $alt);    
+        return $media_id;
     }
     /**
     * Get instance of PostModel class.

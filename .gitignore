@@ -1,12 +1,13 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/assets/node_modules
+/lib/node_modules
 /.pnp
 vendor/*
 .pnp.js
 
-
+# logs
+/logs
 
 
 
@@ -26,3 +27,9 @@ composer.lock
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+/public/js/*
+
+/.phpunit.cache
+.phpcs.xml.dist
+.phpunit.result.cache

@@ -1,0 +1,17 @@
+.post-time {
+  height: 38px;
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  color: #757575;
+  margin-left: 24px; 
+}
+.fo {
+  font-family: 'fontello';
+  display: inline-block;
+  font-style: normal; 
+}
+.fo-clock::after {
+  content: '\E801';
+  margin-right: 2px; 
+}

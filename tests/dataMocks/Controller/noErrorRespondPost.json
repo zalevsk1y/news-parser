@@ -1,1 +1,10 @@
-{"code":200,"msg":{"type":"success","text":"Post &quot;Test title&quot; was successfully parsed and saved as &quot;draft&quot;","timestamp":123456789},"data":{"post_id":5,"status":"draft","editLink":"http:\/\/example.org\/wp-admin\/post.php?post=5&action=edit","_id":"1"}}
+{
+        "post_id":4,
+        "title":"Test title",
+        "status":"parsed",
+        "links": {
+            "deleteLink": "http://example.org/wp-admin/post.php?post=4&amp;action=trash&amp;_wpnonce=7b6fbfc50b",
+            "editLink": "http://example.org/wp-admin/post.php?post=4&action=edit",
+            "previewLink": "http://example.org/?post_type=post&p=4"
+                 }
+}
