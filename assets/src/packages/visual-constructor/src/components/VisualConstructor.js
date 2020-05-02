@@ -21,13 +21,23 @@ export class VisualConstructor extends React.Component{
         super(props);
         this.close=this.close.bind(this);
         this.buttonClickHandler=this.buttonClickHandler.bind(this);
+        this.setFrameReady=this.setFrameReady.bind(this)
         this.modalWindow=this.modalWindow.bind(this);
+        this.state={
+            frameIsReady:false
+        }
     }
     /**
      * Close model window.
      */
     close(){
+        this.setState({frameIsReady:false})
         this.props.close();
+    }
+    setFrameReady(){
+        this.setState({
+            frameIsReady:true
+        })
     }
         /**
      * Prevent scrolling when modal window is open.
@@ -82,10 +92,13 @@ export class VisualConstructor extends React.Component{
                             </span>
                         </button>
                     </div>
-                    {(!this.props.frameIsReady&&<this.loadingSpinner />)}
+                    {(!this.state.frameIsReady&&<this.loadingSpinner />)}
                     <div className="modal-main">
                         <div className="parsed-data-container">
-                           <Frame />
+                           {
+                           //<Frame injectHTML={htmlData} injectCSS={} onReady={this.frameIsReady}/>
+                           }
+                           <Frame onReady={this.setFrameReady}/>
                         </div>
                         <div className="modal-right-side-bar">
                             <SidebarRight />

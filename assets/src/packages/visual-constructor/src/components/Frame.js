@@ -3,15 +3,11 @@ import { getPluginDirUrl } from "@news-parser/helpers";
 import { Parser } from "@news-parser/helpers/parser/Parser";
 import { postTitleParser } from "@news-parser/helpers/parser/PostTitleParser";
 import { featuredImageParser } from "@news-parser/helpers/parser/FeaturedImageParser";
-import { htmlAsString } from "@news-parser/helpers/frame/HtmlAsString/HtmlAsString";
-// modifiers for HtmlAsString
-import purifyDOM from "@news-parser/helpers/frame/HtmlAsString/modifiers/purifyDOM";
-import replaceYouTubeFrames from "@news-parser/helpers/frame/HtmlAsString/modifiers/replaceYouTubeFrames";
+// modifiers 
+import purifyDOM from "@news-parser/helpers/frame/FrameElement/modifiers/purifyDOM";
+
 
 import { frameElement } from "@news-parser/helpers/frame/FrameElement/FrameElement";
-// modifiers for FrameElement
-import imagePrepare from "@news-parser/helpers/frame/FrameElement/modifiers/imagePrepare";
-import replaceRelativePath from "@news-parser/helpers/frame/FrameElement/modifiers/replaceRelativePath";
 //actions
 import {
   selectTitle,
@@ -33,9 +29,12 @@ export class Frame extends React.Component {
     super(props);
     this.frameRef = React.createRef();
     this.clickHandler = this.clickHandler.bind(this);
+    this.getTitle=this.getTitle.bind(this);
+    this.getFeaturedMedia=this.getFeaturedMedia.bind(this)
   }
   componentDidUpdate(prevProps) {
     if (prevProps.data !== this.props.data && this.props.data) {
+      this.frame !== undefined && this.frame.shutDown();
       this.initFrame();
     }
   }
@@ -46,37 +45,36 @@ export class Frame extends React.Component {
    * Write sanitized page html into iframe.
    */
   initFrame() {
-   
-    const htmlData = htmlAsString(this.props.data).addModifiers([
-      purifyDOM,
-      replaceYouTubeFrames,
-    ]).html,
-    doc=this.frameRef.current.contentWindow.document;
-    frameElement(this.frameRef.current,this.props.url)
-      .injectHTML(htmlData)
-      .addModifiers([imagePrepare,replaceRelativePath])
+    this.frame = frameElement(this.frameRef.current, this.props.url)
+      .injectHTML(this.props.data, [purifyDOM])
       .injectCSS({
         parent: "head",
         tag: "link",
         href: getPluginDirUrl() + "/public/css/frame-style.css",
-      });
-    doc.addEventListener("mouseover", this.mouseOver);
-    doc.addEventListener("mouseout", this.mouseOut);
-    doc.addEventListener("click", this.clickHandler);
-    this.getTitle(doc);
-    this.getFeaturedMedia(doc);
+      })
+      .bindEvents([
+        ["mouseover", this.mouseOver],
+        ["mouseout", this.mouseOut],
+        ["click", this.clickHandler],
+      ])
+      .runMiddleware([
+        this.getTitle,
+        this.getFeaturedMedia,
+        this.props.onReady,
+      ]);
     this.parser = new Parser(this.frameRef);
-    this.props.frameIsReady();
   }
+
   /**
    * Get post title.
    *
    *  @extends postTitleParser.findTitle()
-   *  @param {string} dom
+   *  @param {object} frameRef
    *
    */
-  getTitle(doc) {
-    const title = postTitleParser(doc).findTitle() || "No title";
+  getTitle(frameRef) {
+    const doc=frameRef.contentWindow.document,
+      title = postTitleParser(doc).findTitle() || "No title";
     this.props.selectTitle(title);
   }
   /**
@@ -85,11 +83,12 @@ export class Frame extends React.Component {
    * @extends FeaturedImageParser.findFeaturedImage()
    * @param {string} dom
    */
-  getFeaturedMedia(doc) {
-    const image = featuredImageParser(doc).findFeaturedImage();
+  getFeaturedMedia(frameRef) {
+    const doc=frameRef.contentWindow.document,
+      image = featuredImageParser(doc).findFeaturedImage();
     image !== false && this.props.selectFeaturedMedia(image);
   }
-  
+
   /**
    * Event listener callback to highlight html elements when mouse is over them.
    *
@@ -146,14 +145,7 @@ export class Frame extends React.Component {
   }
   render() {
     return (
-      <iframe
-        id="visual-constructor"
-        frameBorder="0"
-        ref={this.frameRef}
-        onMouseOver={this.mouseOver}
-        onMouseOut={this.mouseOut}
-        onClick={this.clickHandler}
-      >
+      <iframe id="visual-constructor" frameBorder="0" ref={this.frameRef}>
         {" "}
       </iframe>
     );
