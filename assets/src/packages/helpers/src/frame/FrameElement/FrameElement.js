@@ -15,6 +15,7 @@ export default class FrameElement {
       throw Error("Frame element  argument could not be undefined.");
     if (url === undefined) throw Error("url argument could not be undefined.");
     this.frame = frame;
+    this.url=url
   }
   /**
    * Add array of modify functions. Facade method for forEach() method.
@@ -25,9 +26,15 @@ export default class FrameElement {
    * @returns {object} this for chaining.
    */
   addModifiers(arrayOfModifiers) {
-    arrayOfModifiers.forEach((modifier) =>
-      modifier.call(this, this.frame, this.url)
-    );
+    const runModifiers=()=>{
+        arrayOfModifiers.forEach((modifier) =>
+        modifier.call(this, this.frame, this.url)
+      )
+      this.frame.contentWindow.document.removeEventListener("DOMContentLoaded",runModifiers);
+    }
+   this.frame.contentWindow.document.addEventListener("DOMContentLoaded",runModifiers);
+
+   
     return this;
   }
   /**
@@ -36,7 +43,7 @@ export default class FrameElement {
    * @param {sting} html 
    * @returns {object} this for chaining.
    */
-  injectHTMLIntoFrame(html) {
+  injectHTML(html) {
     const document = this.frame.contentWindow.document;
     document.open();
     document.write(html);
@@ -51,6 +58,7 @@ export default class FrameElement {
    */
   injectCSS(options) {
     const document = this.frame.contentWindow.document;
+    var cssLink;
     switch (options.tag) {
       case "link":
         cssLink = document.createElement("link");

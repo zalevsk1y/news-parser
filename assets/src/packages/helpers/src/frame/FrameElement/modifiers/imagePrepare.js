@@ -1,4 +1,4 @@
-import { imageParser } from "@news-parser/helpers/parser/ImageParser";
+import { imageParser } from "../../../parser/ImageParser";
 /**
  * Facade function for ImageParser.replaceImageSrc().
  * Replace src path of <img> tags to srcset maximum width path.
@@ -8,5 +8,5 @@ import { imageParser } from "@news-parser/helpers/parser/ImageParser";
  */
 export default function imagePrepare(frame) {
   const document = frame.contentWindow.document;
-  imageParser(document).replaceImageSrc();
+  imageParser(document).replaceImageSrc(true);
 }

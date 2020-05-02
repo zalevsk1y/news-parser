@@ -3,15 +3,15 @@ import { getPluginDirUrl } from "@news-parser/helpers";
 import { Parser } from "@news-parser/helpers/parser/Parser";
 import { postTitleParser } from "@news-parser/helpers/parser/PostTitleParser";
 import { featuredImageParser } from "@news-parser/helpers/parser/FeaturedImageParser";
-import {htmlAsString} from "@news-parser/helpers/frame/HtmlAsString/HtmlAsString";
+import { htmlAsString } from "@news-parser/helpers/frame/HtmlAsString/HtmlAsString";
 // modifiers for HtmlAsString
 import purifyDOM from "@news-parser/helpers/frame/HtmlAsString/modifiers/purifyDOM";
 import replaceYouTubeFrames from "@news-parser/helpers/frame/HtmlAsString/modifiers/replaceYouTubeFrames";
 
-import {frameElement} from "@news-parser/helpers/frame/FrameElement/FrameElement";
+import { frameElement } from "@news-parser/helpers/frame/FrameElement/FrameElement";
 // modifiers for FrameElement
 import imagePrepare from "@news-parser/helpers/frame/FrameElement/modifiers/imagePrepare";
-import removeRelativePath from "@news-parser/helpers/frame/FrameElement/modifiers/removeRelativePath";
+import replaceRelativePath from "@news-parser/helpers/frame/FrameElement/modifiers/replaceRelativePath";
 //actions
 import {
   selectTitle,
@@ -21,10 +21,7 @@ import {
 } from "../actions/frame.actions";
 import { frameIsReady } from "../actions/app.actions";
 import { connect } from "react-redux";
-import DOMPurify from "dompurify";
 import PropTypes from "prop-types";
-import { document } from "globals";
-
 
 /**
  * Frame element of visual constructor modal window. Allow choose parsing content manually.
@@ -49,22 +46,20 @@ export class Frame extends React.Component {
    * Write sanitized page html into iframe.
    */
   initFrame() {
-    const htmlData=htmlAsString(this.props.data)
-      .addModifiers([
-        purifyDOM,
-        replaceYouTubeFrames
-      ]);
-    frameElement(this.frameRef.current)
+   
+    const htmlData = htmlAsString(this.props.data).addModifiers([
+      purifyDOM,
+      replaceYouTubeFrames,
+    ]).html,
+    doc=this.frameRef.current.contentWindow.document;
+    frameElement(this.frameRef.current,this.props.url)
       .injectHTML(htmlData)
-      .addModifiers([
-        removeRelativePath,
-        imagePrepare
-      ])
+      .addModifiers([imagePrepare,replaceRelativePath])
       .injectCSS({
-        parent:'head',
-        tag:'link',
-        href:getPluginDirUrl() + "/public/css/frame-style.css"
-      })
+        parent: "head",
+        tag: "link",
+        href: getPluginDirUrl() + "/public/css/frame-style.css",
+      });
     doc.addEventListener("mouseover", this.mouseOver);
     doc.addEventListener("mouseout", this.mouseOut);
     doc.addEventListener("click", this.clickHandler);
@@ -73,52 +68,28 @@ export class Frame extends React.Component {
     this.parser = new Parser(this.frameRef);
     this.props.frameIsReady();
   }
-
-  
-  
-  /**
-   * Find and replace YouTube frames? replacing with video tag that contains data-hash attr with youtube hash data.
-   *
-   * @param {string} dom
-   */
-  replaceYouTubeFrames(dom) {
-    let hashPattern = /\<iframe.*?src\=[\"\'].*?youtube\.com\/embed\/(.*?)[?\"\'].*?<\/iframe>/g,
-      replacement =
-        '<video class="news-parser-youtube" poster=' +
-        getPluginDirUrl() +
-        "/public/images/youtube-video.jpeg" +
-        ' data-hash="$1">',
-      newDom = dom.replace(hashPattern, replacement);
-    return newDom;
-  }
   /**
    * Get post title.
-   * 
+   *
    *  @extends postTitleParser.findTitle()
    *  @param {string} dom
-   * 
+   *
    */
   getTitle(doc) {
-    const title = postTitleParser(doc).findTitle()||'No title';
+    const title = postTitleParser(doc).findTitle() || "No title";
     this.props.selectTitle(title);
   }
   /**
    * Get post featured.
-   * 
+   *
    * @extends FeaturedImageParser.findFeaturedImage()
    * @param {string} dom
    */
   getFeaturedMedia(doc) {
     const image = featuredImageParser(doc).findFeaturedImage();
-    image!==false&&this.props.selectFeaturedMedia(image);
+    image !== false && this.props.selectFeaturedMedia(image);
   }
-  /**
-   * 
-   * @param {*} event 
-   */
-  relativeToAbsolutePath(doc){
-      replaceRelativeToAbsolutePath(doc,url)
-  }
+  
   /**
    * Event listener callback to highlight html elements when mouse is over them.
    *
@@ -173,7 +144,7 @@ export class Frame extends React.Component {
       this.removeSelectedElement(element);
     }
   }
-  render(){
+  render() {
     return (
       <iframe
         id="visual-constructor"
@@ -189,12 +160,11 @@ export class Frame extends React.Component {
   }
 }
 
-
 function mapStateToProps(state) {
-  const { rawHTML,url } = state.parse.dialog.visualConstructor.dialogData;
+  const { rawHTML, url } = state.parse.dialog.visualConstructor.dialogData;
   return {
     data: rawHTML,
-    url
+    url,
   };
 }
 
@@ -227,7 +197,7 @@ Frame.propTypes = {
   /**
    * Url of requested site.
    */
-  url:PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   /**
    * Select title action.Set post title.
    *
@@ -258,4 +228,3 @@ Frame.propTypes = {
    */
   frameIsReady: PropTypes.func.isRequired,
 };
-

@@ -1,3 +1,5 @@
+import { lazy } from "react";
+
 /**
  * Class search replace image src with high resolution.a1
  * 
@@ -10,17 +12,17 @@ class ImageParser{
         if(doc===undefined) throw Error('Document argument of ImageParser constructor cannot be undefined.')
         this.doc=doc;
     }
-    replaceImageSrc(){
+    replaceImageSrc(lazyLoad){
         const img=this.doc.getElementsByTagName('img');
         this.dataSet(img);
+        this.isLazy=lazyLoad!==undefined?lazyLoad:false;
     }
     dataSet(imgElements){
-        const $this=this;
         [...imgElements].forEach(imgTag=>{
             let imageScr=imgTag.dataset.hasOwnProperty('src')?imgTag.dataset.src:null;
             if (imageScr===null) return;
-            $this.lazyLoad(imgTag,imageScr);
-            $this.pictureTag(imgTag,imageScr);
+            this.lazyLoad(imgTag,imageScr);
+            this.pictureTag(imgTag,imageScr);
         });
         return this;
     }
@@ -36,10 +38,14 @@ class ImageParser{
         });
     }
     lazyLoad(imgElement,src){
+        if(!this.isLazy){
+            imgElement.src=src; 
+            return;
+        }
         const lazyLoadImgTag=new Image();
             lazyLoadImgTag.src=src;
             lazyLoadImgTag.onload=function(){
-                imgElement.src=this.src;   
+                imgElement.src=src;   
             };
     }
 

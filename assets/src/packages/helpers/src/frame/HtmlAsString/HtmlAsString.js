@@ -12,7 +12,8 @@ export default class HtmlAsString {
   constructor(html) {
     if (html === undefined)
       throw Error("HTML  string argument could not be undefined.");
-    this.html;
+    this.html=html;
+  
   }
   /**
    * Add array of modify functions. Facade method for reduce() method.
@@ -30,4 +31,4 @@ export default class HtmlAsString {
   }
 }
 
-export const htmlAsString = (html) => new HtmlAsString(html);
+export const htmlAsString = (html) =>  new HtmlAsString(html);
