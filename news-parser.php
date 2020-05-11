@@ -39,16 +39,19 @@ if(\file_exists(NEWS_PARSER_PLUGIN_DIR.'vendor/autoload.php')) require NEWS_PARS
 $container_builder=new \DI\ContainerBuilder();
 $container_builder->addDefinitions(NEWS_PARSER_PLUGIN_DIR.'di-config.php');
 $container=$container_builder->build();
-$event_controller=$container->make(Controller\EventController::class,array($container));
 
-$event_controller->on('media:create',array(Controller\MediaController::class,'create'));
-$event_controller->on('template:create',array(Controller\TemplateController::class,'create'));
-$event_controller->on('list:get',array(Controller\ListController::class,'get'));
-$event_controller->on('html:get',array(Controller\VisualConstructorController::class,'get'));
-$event_controller->on('post:create',array(Controller\PostController::class,'create'));
+$app=Core\App::start($container);
+$modifiers=array(
+   new Modifiers\ReplaceRelativePathWithAbsolute()
+);
+$app->middleware->add('htmlRaw:parse',$modifiers);
 
-Controller\AjaxController::create($event_controller);
 
-Core\Main::start($container->get(Menu\Admin\MenuPage::class),$container->get(Utils\MenuConfig::class));
+$app->event->on('media:create',array(Controller\MediaController::class,'create'));
+$app->event->on('template:create',array(Controller\TemplateController::class,'create'));
+$app->event->on('list:get',array(Controller\ListController::class,'get'));
+$app->event->on('html:get',array(Controller\VisualConstructorController::class,'get'));
+$app->event->on('post:create',array(Controller\PostController::class,'create'));
+
 
 \register_uninstall_hook(__FILE__, 'Utils\Settings::deleteSettings');

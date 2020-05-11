@@ -15,6 +15,8 @@ use NewsParserPlugin\Interfaces\EventControllerInterface;
  */
 class EventController implements EventControllerInterface
 {
+
+     static protected $instance;
     /**
      * Collection of events with controllers.
      *
@@ -33,9 +35,15 @@ class EventController implements EventControllerInterface
      * @param ContainerInterface $DIController Dependency injection controller.
      */
     
-    public function __construct(ContainerInterface $DIController)
+    protected function __construct(ContainerInterface $DI_container)
     {
-        $this->di=$DIController;
+        $this->di=$DI_container;
+    }
+    static public function getInstance($DI_container){
+        if(!self::$instance){
+            self::$instance=new self($DI_container);
+        }
+        return self::$instance;
     }
     /**
      * Bind event to controller.
@@ -87,7 +95,7 @@ class EventController implements EventControllerInterface
             throw new \Exception('EventController does not set event:'.$action.'.');
         }
         if (!is_array($args)) {
-            throw new Exception('EventController::trigger() second argument should be an array, but '.gettype($args).' given.');
+            throw new \Exception('EventController::trigger() second argument should be an array, but '.gettype($args).' given.');
         }
         return $this->di->call($this->eventCollection[$action], $args);
     }

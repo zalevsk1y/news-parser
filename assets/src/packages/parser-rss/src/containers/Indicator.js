@@ -28,6 +28,7 @@ export class Indicator extends React.Component{
      * Change state of indicator. 
      */
     animation(){
+       
         if(this.props.isAnimate){
             this.setState(this.tick())
         }else if(!this.props.isAnimate){
