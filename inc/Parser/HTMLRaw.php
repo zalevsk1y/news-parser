@@ -33,11 +33,11 @@ class HTMLRaw extends Abstracts\AbstractParseContent
     protected function parse($data)
     {
        
-        $data=apply_filters('htmlRaw:parse',$data);
+        $data=apply_filters('htmlRaw:parse',array($data,$this->url));
        
         if (is_array($this->options)&&array_key_exists('remove_scripts', $this->options)&&$this->options['remove_scripts']) {
             return $this->removeScriptTags($data);
         }
-        return ($data);
+        return $data;
     }
 }

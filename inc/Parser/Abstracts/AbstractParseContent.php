@@ -32,7 +32,8 @@ abstract class AbstractParseContent
      * @var array
      */
     protected $options;
-
+    
+    protected $url;
     /**
      * @param integer $cache_expiration
      */
@@ -104,6 +105,7 @@ abstract class AbstractParseContent
      */
     public function get($url, $options = array())
     {
+        $this->url=$url;
         if (!empty($options)) {
             $this->options=$options;
         }
