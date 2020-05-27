@@ -7,8 +7,25 @@ use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Utils\ResponseFormatter;
 
+
+/**
+ * Class save media as post attachment
+ *
+ * PHP version 5.6
+ *
+ *
+ * @package  Controller
+ * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
+ * @license  MIT
+ *
+ */
 class MediaController extends BaseController
 {
+    /**
+     * init function.
+     * 
+     * @param $formatter ResponseFormatter
+     */
     public function __construct(ResponseFormatter $formatter)
     {
         parent::__construct($formatter);

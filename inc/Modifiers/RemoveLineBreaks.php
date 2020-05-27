@@ -3,18 +3,30 @@
 namespace NewsParserPlugin\Modifiers;
 
 use NewsParserPlugin\Interfaces\MiddlewareInterface;
-
-class RemoveLineBreaks implements MiddlewareInterface{
-    public function __invoke($data){
-        return array(array_reduce(array(
-            array($this,'regexpRemoveBreak')
-        ),
-        function($acc,$modifier){
-            return \call_user_func($modifier,$acc);
-        },
-        $data)
-    );
+/**
+ * Modify HTML. Remove line breaks.
+ *
+ * PHP version 5.6
+ *
+ *
+ * @package  Modifiers
+ * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
+ * @license  MIT
+ *
+ */
+class RemoveLineBreaks extends Modifier implements MiddlewareInterface{
+    protected $modifiers;
+    /**
+     * init function
+     */
+    public function __construct(){
+        
+        $this->modifiers=array(array($this,'regexpRemoveBreak'));
+        
     }
+    /**
+     * Remove line breaks using regexp.
+     */
     protected function regexpRemoveBreak($data){
         return \preg_replace('/\n/i','',$data);
     }

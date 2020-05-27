@@ -3,19 +3,33 @@
 namespace NewsParserPlugin\Modifiers;
 
 use NewsParserPlugin\Interfaces\MiddlewareInterface;
-
-class ImagePrepare implements MiddlewareInterface{
-    public function __invoke($data){
-        return array(array_reduce(array(
-                array($this,'dataSrc'),
-                array($this,'pictureTag')
-            ),
-            function($acc,$modifier){
-                return \call_user_func($modifier,$acc);
-            },
-            $data)
-        );
+/**
+ * Modify HTML. Take source path to pictures from attributes and set it to src attribute of img tag.
+ *
+ * PHP version 5.6
+ *
+ *
+ * @package  Modifiers
+ * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
+ * @license  MIT
+ *
+ */
+class ImagePrepare extends Modifier implements MiddlewareInterface{
+    protected $modifiers;
+    /**
+     * init function
+     */
+    public function __construct(){
+        
+        $this->modifiers=array(array($this,'dataSrc'),array($this,'pictureTag'));
+        
     }
+    /**
+     * Get path to image from data-src attribute and set it to the src attribute.
+     * 
+     * @param string $data
+     * @return string 
+     */
     protected function dataSrc($data){
         return \preg_replace_callback('/(<img.*?>)/i',
             function($matches){
@@ -26,6 +40,12 @@ class ImagePrepare implements MiddlewareInterface{
             },
             $data);
     }
+    /**
+     * Get data from data-srcset of source tag and set it to srcset attribute.
+     * 
+     * @param string $data
+     * @return string 
+     */
     protected function pictureTag($data){
         return \preg_replace_callback('/(<picture.*?>.*?<\/picture>)/i',
             function($matches){
