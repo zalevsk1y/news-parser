@@ -1,7 +1,7 @@
 import { lazy } from "react";
 
 /**
- * Class search replace image src with high resolution.a1
+ * Class search replace image src with high resolution.
  * 
  * @since 1.0.0
  * 

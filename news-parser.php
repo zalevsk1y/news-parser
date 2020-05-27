@@ -42,7 +42,9 @@ $container=$container_builder->build();
 
 $app=Core\App::start($container);
 $modifiers=array(
-   new Modifiers\ReplaceRelativePathWithAbsolute()
+   new Modifiers\RemoveLineBreaks(),
+   new Modifiers\ReplaceRelativePathWithAbsolute(),
+   new Modifiers\ImagePrepare()
 );
 $app->middleware->add('htmlRaw:parse',$modifiers);
 

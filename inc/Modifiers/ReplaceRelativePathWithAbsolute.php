@@ -7,7 +7,7 @@ use NewsParserPlugin\Interfaces\MiddlewareInterface;
 class ReplaceRelativePathWithAbsolute implements MiddlewareInterface{
     public function __invoke($data){
         $domain=$this->getDomainFromUrl($data[1]);
-        return $this->replace($data[0],$domain);
+        return array($this->replace($data[0],$domain));
     
     }
     protected function getDomainFromUrl($url){

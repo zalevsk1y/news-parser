@@ -63,10 +63,10 @@ class MiddlewareController {
     }
     protected function apply($action,$value){
         if (!$this->has($action)) return $value;
-        return array_reduce($this->middleware[$action],function($acc,$middleware){
+        return (array_reduce($this->middleware[$action],function($acc,$middleware){
             $interfaces=class_implements($middleware);
             if (!in_array("NewsParserPlugin\Interfaces\MiddlewareInterface",$interfaces)) throw new Exception (get_class($middleware).' is not implement  MiddlewareInterface');
             return \call_user_func_array($middleware,$acc);
-        },$value);
+        },$value))[0];
     }
 }
