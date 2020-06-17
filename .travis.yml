@@ -25,17 +25,12 @@ matrix:
     - php: 7.0
       env: WP_VERSION=latest
     - php: 5.6
-      env: WP_VERSION=3.5.0
-    - php: 5.6
-      env: WP_VERSION=latest
-    - php: 5.6
-      env: WP_VERSION=trunk
-    - php: 5.6
-      env: WP_TRAVISCI=phpcs
-    - php: 5.3
       env: WP_VERSION=latest
       dist: precise
 
+install:
+   - composer require sunra/php-simple-html-dom-parser:1.5.2
+    
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - |
@@ -54,14 +49,16 @@ before_script:
       composer global require wp-coding-standards/wpcs
       phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
     fi
-
 script:
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
-      phpunit
+      phpunit --coverage-clover Coverage.clover tests/
       WP_MULTISITE=1 phpunit
     fi
   - |
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
       phpcs
     fi
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover Coverage.clover
