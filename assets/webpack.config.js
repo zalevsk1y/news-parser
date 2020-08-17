@@ -14,23 +14,24 @@ module.exports=(env,args)=>{
 		isProd=!isDev;
 	return {
 		mode,
-		context:path.resolve(__dirname,'src/packages/parser-rss/src'),
+		context:path.resolve(__dirname,'src','packages','parser-rss','src'),
 		entry:{
 			parser_rss:'./index.js'
 		},
 		output:{
-					path:path.resolve(__dirname,'../public/js/'),
-					publicPath:path.resolve(__dirname,'../public/js/'),
-					filename:`[name]-${VERSION}.bundle.js`
+					path:path.resolve(__dirname,'..','public'),
+					publicPath:'public',
+					filename:path.join('./js',`[name]-${VERSION}.bundle.js`)
 		},
 		module:{
 			rules: [
 				{
-					test: /\.js$/,
+					test: /\.(js|jsx)$/,
 					exclude: /(node_modules|bower_components)/,
 					loader: 'babel-loader',
 					options:{
-						presets:["@babel/preset-env","@babel/preset-react"]
+						presets:["@babel/preset-env","@babel/preset-react"],
+						plugins:["@babel/transform-react-jsx-source"]
 					}
 					
 				},
@@ -48,9 +49,9 @@ module.exports=(env,args)=>{
 			],
 		},
 		plugins:[
-			new CleanWebpackPlugin(),
+			//new CleanWebpackPlugin(),
 			new MiniCssExtractPlugin({
-				filename: `../css/[name]-${VERSION}.css`
+				filename: path.join('./css',`[name]-${VERSION}.css`)
 			})
 			
 		],
@@ -74,12 +75,18 @@ module.exports=(env,args)=>{
 					"@news-parser/visual-constructor":path.resolve(__dirname,"src/packages/visual-constructor/src/"),
 					"@news-parser/styles":path.resolve(__dirname,"scss/"),
 					"@news-parser/image":path.resolve(__dirname,"src/packages/image/src/")
-				}
+				},
+			extensions:['.js','.jsx']
 		},
 		devServer:{
 			port:9001,
-			contentBase: [path.resolve(__dirname, '../public/'),path.join(__dirname,'devServer/assets')],
-			index:path.join(__dirname, 'devServer/index.html'),
+			hot:false,
+			//hot:false,
+			liveReload:true,
+			watchContentBase:true,
+			contentBase: path.resolve(path.resolve(__dirname,'devServer','assets','public')),
+			contentBasePublicPath: '/static/public',
+			//writeToDisk:true,
 			before:devServer
 		}   
 	}

@@ -44,7 +44,7 @@ function _manually_load_plugin() {
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';
 require __DIR__.'/../autoload.php';
-require __DIR__.'/constants.php';
+//require __DIR__.'/constants.php';
 if(\file_exists(__DIR__.'/../vendor/autoload.php')) require 'vendor/autoload.php';
 }
 namespace NewsParserPlugin\Utils

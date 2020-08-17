@@ -61,14 +61,15 @@ export const selectPostMeta=(state,action)=>{
     switch (action.type){
         case `[${SELECT}:${DELETE}]${POST_META}`:
             //ES9: const {[action.payload.postId],...newState}=state
-            const newState={...state},
+            const newState={...state,length:state.length--},
                 {_id}=action.payload;
             delete newState[_id];
             return newState;
         case `[${SELECT}:${INSERT}]${POST_META}`:
             return {
                 ...state,
-                ...{[action.payload._id]:true}
+                [action.payload._id]:true,
+                length:state.length++
             };
         default:
             return {...state};
@@ -80,10 +81,8 @@ export const draftPostMeta=(state,action)=>{
             const {_id,post_id,editLink}=action.payload;
             return {
                 ...state,
-                ...{[_id]:{
-                   post_id,
-                   editLink
-                }}
+                [_id]:{post_id,editLink},
+                length:state.length++
             };
         default:
             return {...state}

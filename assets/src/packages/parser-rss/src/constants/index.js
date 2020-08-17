@@ -9,6 +9,7 @@ export const CREATE='create';
 export const PARSE='parse';
 export const DELETE='delete';
 export const INSERT='insert';
+export const REMOVE='remove'
 
 export const AJAX='ajax';
 export const REST='rest';

@@ -1,0 +1,30 @@
+$switch-width:40px;
+$switch-height:$switch-width/2;
+$switch-bubble-color: #4786ff;
+$switch-line-color:#c4c4c4;
+$switch-bubble-left:$switch-height;
+
+.switch{
+    width:$switch-width;
+    height: $switch-height;
+    position: relative;
+    cursor:pointer;
+}
+.switch-line{
+    width:100%;
+    border-bottom:solid 5px $switch-line-color;
+}
+.switch-bubble{
+    width:$switch-height;
+    height:$switch-height;
+    border-radius: 50%;
+    background-color: $switch-bubble-color;
+    position:absolute;
+    transition: left .2s;
+}
+.switch-on{
+    left:0px;
+}
+.switch-off{
+    left:$switch-bubble-left;
+}

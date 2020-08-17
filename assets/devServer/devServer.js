@@ -5,16 +5,8 @@ module.exports=(app,server)=>{
 
 
 app.use(bodyParser.urlencoded({ extended: false }))
-app.get('/admin.php',(req,res)=>{
-    switch(req.query.page.trim()){
-        case('news-parser-main-menu'):
-            res.sendFile(path.join(__dirname,"assert/index.development.parser.html"))
-            break;
-        case ('news-parser-menu-settings'):
-        res.sendFile(path.join(__dirname,"assert/index.developmnet.setting.html"))
-            break;
-    }
-    
+app.get('/',(req,res)=>{
+    res.sendFile(path.join(__dirname,"assets/index.html"))    
 })
 app.get('/parse.php',(req,res)=>{
     let url=req.query.url.trim(),

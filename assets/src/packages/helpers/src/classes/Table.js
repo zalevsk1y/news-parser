@@ -36,6 +36,38 @@ class Table{
     joinOnce(mainTable,joinTable,propName){
         return mainTable.map((data,index)=>({...data,[propName]:(joinTable[index]!==undefined&&joinTable[index])}));
     }
+    /**
+     * 
+     * @param {string} row 
+     * @param {string} operator 
+     * @param {string} value 
+     */
+    selectWhere(row,operator,value){
+        switch (operator){
+            case 'like':
+                return this._selectWhereLike(row,value);
+            default:
+                return [];
+        }
+    }
+    /**
+     * 
+     * @param {string} key 
+     */
+    removeDuplicate(key){
+        const hashTable={},uniqItemsArray=[];
+        this.table.forEach(item=>typeof(item)==='object'&&item.hasOwnProperty(key)&&(hashTable[item[key]]=item));
+        const uniqHashValues=(new Set(Object.keys(hashTable))).values();
+        return uniqHashValues.map(uniqHashValue=>hashTable[uniqHashValue]);
+    }
+    /**
+     * 
+     * @param {string} row 
+     * @param {string} value 
+     */
+    _selectWhereLike(row,value){
+        return this.table.filter(item=>(new RegExp(value,'i').test(item[row])));
+    }
 }
 
 export const table=mainTable=>(new Table(mainTable));

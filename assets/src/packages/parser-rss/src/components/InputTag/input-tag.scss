@@ -1,0 +1,39 @@
+.filters-input{
+    position: relative;
+    background-color: #f8f8f8;
+    border: solid 1px #eaeaea;
+    border-radius: 4px;
+    overflow: hidden;
+    margin:0;
+    line-height: 1.7;
+    min-height:30px;
+    cursor:text;
+    
+    .fo-close{
+        cursor:pointer;
+    }
+    .filter-tag-new{
+        width:30%;
+        display: inline-block;
+        line-height: 1.7;
+        margin:0;
+    }
+    .filter-tag{
+        display: inline-block;     
+        margin: 0;  
+    }
+    .post-filter-input{
+        width:100%;
+        background-color: transparent;
+        border: none;
+        line-height: 1.7;
+    }
+    .post-filter-input:focus{
+        border-color: transparent;
+        box-shadow: 0 0 0 0;
+    }
+}
+.focused{
+    box-shadow: 0 0 0 1px #007cba;
+    outline: 2px solid transparent;
+}

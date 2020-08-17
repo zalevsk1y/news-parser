@@ -2,6 +2,8 @@
 export const POST_META='POST_META';
 export const TOGGLE_SELECT_POST='TOGGLE_SELECT_POST';
 export const PARSE_SELECTED_POSTS='PARSE_SELECTED_POSTS';
+export const ADD_POST_FILTER='ADD_POST_FILTER';
+export const REMOVE_POST_FILTER='REMOVE_POST_FILTER';
 
 export const togglePostSelect=(_id)=>{
     return {

@@ -1,15 +1,23 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {openDialog} from '../actions/app.actions'; 
-import {fetchList} from '../actions/list.actions';
+import {openDialog} from '../../actions/app.actions'; 
+import {fetchList} from '../../actions/list.actions';
 import {encodeUrlWithParams} from '@news-parser/helpers';
-import {LIST} from '../constants';
+import {LIST} from '../../constants';
 import {VISUAL_CONSTRUCTOR} from '@news-parser/visual-constructor/constants/'
 import PropTypes from 'prop-types';
-import {parseSelected} from '../actions/page.actions';
+import {parseSelected} from '../../actions/page.actions';
 import {showMessage} from '@news-parser/message/'
+import Switch from '../../components/Switch'
 import {location} from 'globals';
+import {SettingsBox} from '../../components/SettingsBox'
+import {SettingsGrid} from '../../components/SettingsGrid';
+import {SettingsItem} from '../../components/SettingsItem'
+import {SettingTitle} from '../../components/SettingTitle';
+import {SettingValue} from '../../components/SettingValue';
+import {SettingsSubmitButton} from '../../components/SettingsSubmitButton'
 
+import './input-form.scss';
 /**
  * Input element with submit buttons.
  * 
@@ -18,46 +26,42 @@ import {location} from 'globals';
 export class InputForm extends React.Component{
     constructor(props){
         super(props);
-        this.state={inputValue:props.value||''};
-        this.inputChange=this.inputChange.bind(this);
-        this.handleParsePageSubmit=this.handleParsePageSubmit.bind(this);
-        this.handleParseListSubmit=this.handleParseListSubmit.bind(this);
-        this.handleParseSelected=this.handleParseSelected.bind(this);
-        this.renderButtons=this.renderButtons.bind(this);
+        this.state={inputValue:props.value||'',type:'rss'};
+        this.inputChangeHandler=this.inputChangeHandler.bind(this);
+        this.typeChangeHandler=this.typeChangeHandler.bind(this);
+        this.parseSubmitHandler=this.parseSubmitHandler.bind(this);
     }
     /**
      * Change state of component on input.
      * 
      * @param {object} event Change event object.
      */
-    inputChange(event){
+    inputChangeHandler(event){
         this.setState({inputValue:event.target.value})
     }
-    /**                                                                                                                                                                                                                                                                                                                                                                                                                                         
-     * Handles parse single page submit.
+    typeChangeHandler(){
+        const newState=this.state.type==='rss'?'html':'rss';
+        this.setState({type:newState});
+        console.log(newState);
+    }
+    /**
+     * Handles parse submit. 
      * 
-     * @param {object} event Click event object. 
+     * 
      */
-    handleParsePageSubmit(event){
-        if(!this.validateIntupUrl(this.state.inputValue)){
+    parseSubmitHandler(){
+        if(!this.validateInputUrl(this.state.inputValue)){
             this.props.showMessage('info','Please, input valid url address');
             return;
         } 
-        this.props.openVisualConstructor(this.state.inputValue)
-    }
-    /**
-     * Handles parse RSS posts list submit. 
-     * 
-     * @param {object} event Click event object.  
-     */
-    handleParseListSubmit(event){
-        const params={entity:LIST,url:this.state.inputValue},                                                                                                                                                                           
-            url=encodeUrlWithParams(params);
-        if(!this.validateIntupUrl(this.state.inputValue)){
-            this.props.showMessage('info','Please, input valid url address');
-            return;
+        switch (this.state.type){
+            case 'rss':
+                const url=encodeUrlWithParams({entity:LIST,url:this.state.inputValue});
+                location.assign(url);
+                break;
+            case 'html':
+                this.props.openVisualConstructor(this.state.inputValue);
         }
-        location.assign(url);
     }
     /**
      * Handles parse multiple selected from RSS list posts submit. 
@@ -76,42 +80,43 @@ export class InputForm extends React.Component{
      * 
      * @param {string} url 
      */
-    validateIntupUrl(url){
+    validateInputUrl(url){
         return (url.search(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/g)!==-1)
     }
-    renderButtons(){
-        switch(this.props.page){
-            case 'news-parser-main-menu':
-                return (
-                        <div className='row center mt-10'>
-                            <button className="main-button parse-rss-button" type="button" onClick={this.handleParseListSubmit}>Parse RSS Feed</button>
-                            <button className="main-button parse-selected-button" type="button" onClick={this.handleParseSelected}>Parse Selected</button>
-                        </div>
-                )
-            case 'news-parser-menu-parse-page':
-                return (
-                    <>
-                        <button className="main-button parse-page-button" type="button" onClick={this.handleParsePageSubmit}>Parse Page</button>
-                    </>
-                )
-            default:
-                return (
-                    <></>
-                )
-        }   
-    }
+    
     render(){
 
         return (
-            <div className="search container row">
-
-                <div className="row center">
-                    <div className="input-wrapper">
-                        <input className="search-textbox" type="url" minLength={10} required name="url" placeholder="https://" value={this.state.inputValue} onChange={this.inputChange}></input>
-                        <this.renderButtons />
-                    </div>
-                </div>
-        </div>
+            
+            <SettingsBox>
+                <SettingsGrid>
+                    <SettingsItem>
+                        <SettingTitle>Parse</SettingTitle>
+                        <SettingValue>
+                            <div className='selector-container d-flex flex-row'>
+                                <div className="search-type-text flex-grow-1">
+                                    {this.state.type==='rss'?'RSS source':'Single page'}
+                                </div>
+                                <div className='switch-container' >
+                                    <Switch state={this.state.type==='rss'?true:false} onClick={this.typeChangeHandler}/>
+                                </div>
+                            </div>
+                        </SettingValue>
+                        </SettingsItem>
+                            <SettingsItem>
+                                <SettingTitle>Url</SettingTitle>
+                                <SettingValue>
+                                    <input className="parse-url-input" type="url" onBlur={this.inputChangeHandler} />
+                                </SettingValue>
+                        </SettingsItem>
+                    </SettingsGrid>
+                <SettingsSubmitButton>
+                    <button className='button-main' onClick={this.parseSubmitHandler}>Get</button> 
+                </SettingsSubmitButton>
+            </SettingsBox>
+                
+            
+        
         )
     }
 }

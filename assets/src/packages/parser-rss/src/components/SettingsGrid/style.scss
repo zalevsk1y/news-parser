@@ -1,0 +1,10 @@
+table{
+    width:92%;
+   
+    tr>td:first-child {
+        width:20%;
+    }
+    tr:nth-child(2)>td{
+        padding-top: 3%;
+    }
+}

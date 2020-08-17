@@ -1,0 +1,25 @@
+.exp-setting-container{
+    width: 100%;
+    input{
+        display: none;
+        float:right;
+    }
+    label{
+        float: right;
+    }
+    input[type=checkbox]:checked+.exp-setting-main{
+        height: auto;
+    }
+    .exp-setting-main{
+        height: 0px;
+        overflow: hidden;
+    }
+    .fo-down-arrow{
+        position: relative;
+        visibility: visible;
+    }
+}
+
+.settings-row-expandable{
+    width: 100% !important;
+}

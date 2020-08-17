@@ -28,6 +28,8 @@ import {fetchingMiddleware as dialogFetchingMiddleware} from '@news-parser/visua
 
 import {startApp} from './actions/app.actions';
 import thunkMiddleware from 'redux-thunk';
+
+
 import ErrorBoundary from "@news-parser/error-handler"
 
 import '@news-parser/styles/parser-rss.scss';

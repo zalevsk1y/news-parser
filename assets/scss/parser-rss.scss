@@ -11,6 +11,10 @@ body {
     background-color: #f1f1f1;
 }
 
+.settings-label{
+    line-height: 1.7;
+    font-size: 18px;
+}
 .appContainer {
     margin: auto;
 }
@@ -54,16 +58,7 @@ body {
     margin: 0 5% 0 5%;
 }
 
-.container {
-    background-color: #f1f1f1;
-    border: 1px solid #e4e6eb;
-    border-radius: 4px;
-}
 
-.search {
-    margin: 2% 0 2% 0;
-    padding: 2% 0 2% 0;
-}
 
 .row {
     width: 100%;
