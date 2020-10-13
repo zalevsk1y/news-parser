@@ -6,18 +6,14 @@ $button-font-size: ($button-height)-16;
 .search {
     padding-bottom:2%;
     width:100%;
-    table{
-     
-        tr:nth-child(2)>td{
-            padding-top: 3%;
-        }
+    
         .parse-url-input{
             width:100%;
             border:solid 1px #eaeaea;
             background-color: #f8f8f8f8;
         }
        
-    }
+    
     .button-container{
         width:100%;
         margin-top:20px;

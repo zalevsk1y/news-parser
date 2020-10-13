@@ -1,4 +1,5 @@
 import React from "react";
+import './style.scss'
 
 export class SettingTitle extends React.Component{
     constructor(props){
@@ -6,9 +7,9 @@ export class SettingTitle extends React.Component{
     }
     render(){
         return (
-            <td>
+            <div className='settings-title'>
                 <span className="settings-label">{this.props.children}</span>
-            </td>
+            </div>
         )
     }
 }

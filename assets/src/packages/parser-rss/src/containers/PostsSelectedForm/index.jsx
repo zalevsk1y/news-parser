@@ -6,7 +6,7 @@ import {SettingsItem} from '../../components/SettingsItem'
 import {SettingTitle} from '../../components/SettingTitle';
 import {SettingValue} from '../../components/SettingValue';
 import {SettingsSubmitButton} from '../../components/SettingsSubmitButton';
-import {SettingsExpandableItem} from '../../components/SettingsExpandableItem';
+import {AdditionalSettingsItem} from '../../components/AdditionalSettingsItems';
 
 import './post-selected-form.scss';
 
@@ -42,9 +42,7 @@ export class PostsSelectedForm extends React.Component{
                             </div>
                         </SettingValue>
                     </SettingsItem>
-                    <SettingsExpandableItem title='Additional settings'>
-                        'Test'
-                    </SettingsExpandableItem>
+                    <AdditionalSettingsItem />
                 </SettingsGrid>
                 
                 <SettingsSubmitButton>

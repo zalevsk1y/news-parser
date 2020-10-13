@@ -7,11 +7,9 @@ export class SettingsGrid extends React.Component{
     }
     render(){
         return(
-            <table>
-                <tbody>
+            <div className="d-flex flex-column">
                     {this.props.children}
-                </tbody>
-            </table>
+            </div>
         )
     }
 }

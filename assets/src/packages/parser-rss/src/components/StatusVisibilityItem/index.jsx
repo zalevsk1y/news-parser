@@ -1,5 +1,6 @@
 import React from 'react';
 import { SettingsItem } from '../SettingsItem';
+import {SettingsExpandableItem} from '../SettingsExpandableItem';
 
 export class StatusVisibilityItem extends React.Component{
     constructor(props){
@@ -7,9 +8,9 @@ export class StatusVisibilityItem extends React.Component{
     }
     render(){
         return (
-            <SettingsItem>
+            <SettingsExpandableItem title='Status&Visibility'>
                 'Visibility'
-            </SettingsItem>
+            </SettingsExpandableItem>
         )
     }
 }

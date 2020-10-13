@@ -1,5 +1,5 @@
 import React from 'react';
-import {SettingsExpandableItem} from '../SettingsItem';
+import {SettingsExpandableItem} from '../SettingsExpandableItem';
 
 export class CategoriesExpandableItem extends React.Component{
     constructor (props){

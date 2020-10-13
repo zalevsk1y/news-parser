@@ -6,9 +6,9 @@ export class SettingValue extends React.Component{
     }
     render(){
         return (
-            <td>
+            <div className='flex-grow-1'>
                 {this.props.children}
-            </td>
+            </div>
         )
     }
 }

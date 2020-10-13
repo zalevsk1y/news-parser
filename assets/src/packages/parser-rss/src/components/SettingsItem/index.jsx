@@ -6,9 +6,9 @@ export class SettingsItem extends React.Component{
     }
     render(){
         return (
-            <tr>
+            <div className='d-flex flex-row settings-item'>
                 {this.props.children}
-            </tr>
+            </div>
         )
     }
 }
