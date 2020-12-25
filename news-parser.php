@@ -3,7 +3,7 @@
 Plugin Name: News-Parser
 Plugin URI: https://github.com/zalevsk1y/news-parser
 Description: Parse full text news from RSS Feed
-Version: 1.0.2
+Version: 1.0.3
 Author: Evgeny S.Zalevskiy <2600@ukr.net>
 Author URI: https://github.com/zalevsk1y/
 License: MIT
@@ -14,7 +14,7 @@ Text Domain: news-parser
 namespace NewsParserPlugin;
 
 
-define('NEWS_PARSER_PLUGIN_VERSION', '1.0.2');
+define('NEWS_PARSER_PLUGIN_VERSION', '1.0.3');
 define("NEWS_PARSER_PLUGIN_SLUG", 'news-parser');
 define("NEWS_PARSER_PLUGIN_ROOT_NAMESPACE", 'NewsParserPlugin');
 define("NEWS_PARSER_PLUGIN_SETTINGS_SLUG", 'news_parser_settings');
