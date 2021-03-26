@@ -45,6 +45,12 @@ class Errors
                 return \__('Sorry temporary settings cannot be saved', NEWS_PARSER_PLUGIN_SLUG);
             case 'OPTIONS_WRONG_FORMAT':
                 return \__('Options could not be saved.Wrong options format.', NEWS_PARSER_PLUGIN_SLUG);
+            case 'NO_DI_DEFENITION_FILE':
+                    return \__('File with class defenitions for DI container could not be found. Check file path.', NEWS_PARSER_PLUGIN_SLUG);
+            case 'DI_DEFENITION_FILE_WRONG_ORDER':
+                    return \__('In dependency defenition file wrong depandency oreder.Dependencies should be placed earlier in array', NEWS_PARSER_PLUGIN_SLUG);   
+            case 'NO_NEEDED_DEPENDENCY_IN_DEFENITION':
+                    return \__('No needed dependency in defenition file.', NEWS_PARSER_PLUGIN_SLUG);        
         }
     }
     public static function code($slug)
@@ -52,6 +58,8 @@ class Errors
         switch ($slug) {
             case 'BAD_REQUEST':
                 return '400 Bad Request';
+            case 'INNER_ERROR':
+                return '500 Inner Error';
         }
     }
 }
