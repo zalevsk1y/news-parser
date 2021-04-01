@@ -11,6 +11,6 @@
     "phpunit/phpunit": "5.7.27"
 },
   "scripts": {
-    "test": "phpunit --coverage-clover Coverage.clover"
+    "test": "/usr/local/opt/php@7.4/bin/php ./vendor/bin/phpunit --coverage-clover Coverage.clover ./tests/"
   }
 }

@@ -51,6 +51,9 @@ class Errors
                     return \__('In dependency defenition file wrong depandency oreder.Dependencies should be placed earlier in array', NEWS_PARSER_PLUGIN_SLUG);   
             case 'NO_NEEDED_DEPENDENCY_IN_DEFENITION':
                     return \__('No needed dependency in defenition file.', NEWS_PARSER_PLUGIN_SLUG);        
+            case 'WRONG_DEFENITION_FILE_FORMAT':
+                    return \__('Defenition file should be array.', NEWS_PARSER_PLUGIN_SLUG);            
+                    
         }
     }
     public static function code($slug)

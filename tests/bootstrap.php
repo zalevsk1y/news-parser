@@ -12,8 +12,13 @@ define('PARSER_MOCK_DIR',__DIR__.'/dataMocks/Parser');
 define('UTILS_MOCK_DIR',__DIR__.'/dataMocks/Utils');
 define('TRAITS_MOCK_DIR',__DIR__.'/dataMocks/Traits');
 define('VIEW_MOCK_DIR',__DIR__.'/dataMocks/View');
+define('DI_MOCK_DIR',__DIR__.'/dataMocks/DI');
 define('CONTROLLER_MOCK_DIR',__DIR__.'/dataMocks/Controller');
 define('MODEL_MOCK_DIR',__DIR__.'/dataMocks/Model');
+//define('NEWS_PARSER_PLUGIN_ROOT_NAMESPACE','NewsParserPlugin');
+//define('NEWS_PARSER_PLUGIN_SLUG','NewsParserPlugin');
+
+
 
 
 
@@ -39,12 +44,12 @@ function _manually_load_plugin() {
 
 }
 
-//tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
+tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';
-require __DIR__.'/../autoload.php';
-require __DIR__.'/constants.php';
+//require __DIR__.'/../autoload.php';
+//require __DIR__.'/constants.php';
 if(\file_exists(__DIR__.'/../vendor/autoload.php')) require 'vendor/autoload.php';
 }
 namespace NewsParserPlugin\Utils
