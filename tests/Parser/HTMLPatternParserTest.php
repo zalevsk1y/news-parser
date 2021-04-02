@@ -18,7 +18,7 @@ class MockHTMLPatternParser extends HTMLPatternParser
 /**
  * Test parser class.
  * 
- * @uses Sunra\PhpSimple\HtmlDomParser
+ * 
  * 
  */
 class HTMLPatternParserTest extends \WP_UnitTestCase
