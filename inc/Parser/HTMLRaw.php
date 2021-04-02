@@ -22,6 +22,7 @@ class HTMLRaw extends Abstracts\AbstractParseContent
      */
     public function __construct($cache_expiration = 600)
     {
+        $this->url='http://site.com';
         parent::__construct($cache_expiration);
     }
     /**

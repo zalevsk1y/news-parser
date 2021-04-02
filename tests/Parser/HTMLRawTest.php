@@ -4,9 +4,11 @@ use NewsParserPlugin\Parser\HTMLRaw;
 
 class MockHTMLRaw extends HTMLRaw
 {
+    public $url="http://www.site.com";
     protected $options=array('remove_scripts'=>true);
     public function parse($data)
     {
+    
         return parent::parse($data);
     }
 }

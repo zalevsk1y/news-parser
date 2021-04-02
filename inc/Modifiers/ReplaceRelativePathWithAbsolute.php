@@ -33,7 +33,7 @@ class ReplaceRelativePathWithAbsolute implements MiddlewareInterface{
      * @return string 
      */
     protected function getDomainFromUrl($url){
-        $pattern= '/(^(http:\/\/|https\:\/\/).*?)\//i';
+        $pattern= '/(^(http:\/\/|https\:\/\/))([a-z0-9\-\.A-Z]*)(\/|)/i';
         \preg_match($pattern,$url,$matches);
         return $matches[1];
     }
