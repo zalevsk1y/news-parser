@@ -30,15 +30,17 @@ class ContainerBuilder {
             $this->hasDependency($dep_item);
             if (in_array($dep_item,$this->instancesArray)){ 
                 array_push($dep_args,$this->instancesArray[$dep_item]);
-            } else {
+            } else if($this->isInstanceableDependece()){
                 array_push($dep_args,$this->createInstance($dep_item,$this->defenitionArray[$dep_item]));
+            } else {
+                array_push($dep_args,$dep_item);
             }
-            
-            
         }
-    
         $this->instancesArray[$dep_item]=new $instance_name(...$dep_args);
         return $this->instancesArray[$dep_item];
+    }
+    protected function isInstanceableDependece($dep_item){
+        return class_exists($dep_item);
     }
     protected function hasDependency($dep_item){
         $this->isArray($this->defenitionArray);
