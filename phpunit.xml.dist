@@ -7,6 +7,17 @@
 	convertNoticesToExceptions="true"
 	convertWarningsToExceptions="true"
 	>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">inc/</directory>
+			<exclude>
+				<directory suffix=".php">inc/Core</directory>
+				<directory suffix=".php">inc/Message</directory>
+				<directory suffix=".php">inc/Interfaces</directory>
+				<directory suffix=".php">inc/Factory</directory>
+			</exclude>
+		</whitelist>
+	</filter>
 	<testsuites>
 		<testsuite>
 			<directory prefix="test-" suffix=".php">./tests/</directory>
@@ -14,3 +25,4 @@
 		</testsuite>
 	</testsuites>
 </phpunit>
+
