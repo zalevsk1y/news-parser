@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1617365532">
-  <project timestamp="1617365532">
+<coverage generated="1617367927">
+  <project timestamp="1617367927">
     <package name="NewsParserPlugin\Ajax">
       <file name="/usr/local/var/www/blog/wp-content/plugins/news-parser2/inc/Ajax/Ajax.php">
         <class name="Ajax" namespace="NewsParserPlugin\Ajax" fullPackage="Ajax" package="Ajax">
@@ -395,7 +395,7 @@
     <package name="NewsParserPlugin\DI">
       <file name="/usr/local/var/www/blog/wp-content/plugins/news-parser2/inc/DI/ContainerBuilder.php">
         <class name="ContainerBuilder" namespace="NewsParserPlugin\DI">
-          <metrics complexity="12" methods="5" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="24" elements="33" coveredelements="25"/>
+          <metrics complexity="14" methods="6" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="27" elements="37" coveredelements="29"/>
         </class>
         <line num="9" type="method" name="addDefinitions" visibility="public" complexity="2" crap="2.02" count="1"/>
         <line num="10" type="stmt" count="1"/>
@@ -407,7 +407,7 @@
         <line num="17" type="method" name="get" visibility="public" complexity="1" crap="1" count="1"/>
         <line num="18" type="stmt" count="1"/>
         <line num="19" type="stmt" count="1"/>
-        <line num="21" type="method" name="createInstance" visibility="protected" complexity="5" crap="5.01" count="1"/>
+        <line num="21" type="method" name="createInstance" visibility="protected" complexity="6" crap="6.01" count="1"/>
         <line num="22" type="stmt" count="1"/>
         <line num="23" type="stmt" count="1"/>
         <line num="24" type="stmt" count="1"/>
@@ -415,22 +415,26 @@
         <line num="26" type="stmt" count="1"/>
         <line num="28" type="stmt" count="1"/>
         <line num="29" type="stmt" count="1"/>
-        <line num="30" type="stmt" count="1"/>
         <line num="31" type="stmt" count="1"/>
         <line num="32" type="stmt" count="0"/>
+        <line num="33" type="stmt" count="1"/>
         <line num="34" type="stmt" count="1"/>
+        <line num="35" type="stmt" count="1"/>
+        <line num="37" type="stmt" count="1"/>
         <line num="40" type="stmt" count="1"/>
         <line num="41" type="stmt" count="1"/>
-        <line num="43" type="method" name="hasDependency" visibility="protected" complexity="2" crap="2.06" count="1"/>
+        <line num="43" type="method" name="isInstanceableDependece" visibility="protected" complexity="1" crap="1" count="1"/>
         <line num="44" type="stmt" count="1"/>
-        <line num="45" type="stmt" count="1"/>
-        <line num="46" type="stmt" count="0"/>
+        <line num="46" type="method" name="hasDependency" visibility="protected" complexity="2" crap="2.06" count="1"/>
+        <line num="47" type="stmt" count="1"/>
         <line num="48" type="stmt" count="1"/>
-        <line num="49" type="method" name="isArray" visibility="protected" complexity="2" crap="2.15" count="1"/>
-        <line num="50" type="stmt" count="1"/>
-        <line num="51" type="stmt" count="0"/>
+        <line num="49" type="stmt" count="0"/>
+        <line num="51" type="stmt" count="1"/>
+        <line num="52" type="method" name="isArray" visibility="protected" complexity="2" crap="2.15" count="1"/>
         <line num="53" type="stmt" count="1"/>
-        <metrics loc="53" ncloc="53" classes="1" methods="5" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="24" elements="33" coveredelements="25"/>
+        <line num="54" type="stmt" count="0"/>
+        <line num="56" type="stmt" count="1"/>
+        <metrics loc="56" ncloc="56" classes="1" methods="6" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="27" elements="37" coveredelements="29"/>
       </file>
     </package>
     <package name="NewsParserPlugin\Exception">
@@ -1296,6 +1300,6 @@
         <metrics loc="66" ncloc="35" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="15" elements="20" coveredelements="16"/>
       </file>
     </package>
-    <metrics files="33" loc="3637" ncloc="1976" classes="33" methods="186" coveredmethods="108" conditionals="0" coveredconditionals="0" statements="887" coveredstatements="708" elements="1073" coveredelements="816"/>
+    <metrics files="33" loc="3640" ncloc="1979" classes="33" methods="187" coveredmethods="109" conditionals="0" coveredconditionals="0" statements="890" coveredstatements="711" elements="1077" coveredelements="820"/>
   </project>
 </coverage>

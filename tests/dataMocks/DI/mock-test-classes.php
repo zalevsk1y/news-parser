@@ -15,5 +15,10 @@ class TestClass2 {
         $this->d1=$d1;
     }
 };
-class TestClass3 {};
+class TestClass3 {
+    public $d1;
+    public function __construct($d1){
+        $this->d1=$d1;
+    }
+};
 class TestClass4 {};
