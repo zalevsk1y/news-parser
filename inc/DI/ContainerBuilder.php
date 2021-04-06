@@ -7,7 +7,7 @@ use NewsParserPlugin\Message\Errors;
 class ContainerBuilder implements ContainerInterface{
     protected $defenitionArray;
     protected $instancesArray=[];
-    public function addDefinitions(string $pathToDefenitionFile){
+    public function addDefinitions($pathToDefenitionFile){
         if(!file_exists($pathToDefenitionFile)) {
             throw new MyException(Errors::text('NO_DI_DEFENITION_FILE'), Errors::code('INNER_ERROR'));
         }
