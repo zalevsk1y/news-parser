@@ -22,8 +22,8 @@ class ReplaceRelativePathWithAbsolute implements MiddlewareInterface{
      * @return array
      */
     public function __invoke($data){
-        $domain=$this->getDomainFromUrl($data[1]);
-        return array($this->replace($data[0],$domain));
+    
+        return array($this->replace($data[0],$data[1]));
     
     }
     /**
@@ -32,10 +32,16 @@ class ReplaceRelativePathWithAbsolute implements MiddlewareInterface{
      * @param string $url
      * @return string 
      */
-    protected function getDomainFromUrl($url){
-        $pattern= '/(^(http:\/\/|https\:\/\/))([a-z0-9\-\.A-Z]*)(\/|)/i';
+    protected function parseUrl($url,$type){
+        $pattern= "/^(http(s|)\:\/\/)([a-zA-Z\.\-]+[^\/\:])/i";
         \preg_match($pattern,$url,$matches);
-        return $matches[1];
+        switch ($type){
+            case 'domain':
+                return $matches[3];
+            case 'prefix':
+                return $matches[1].$matches[3]."/";
+        }
+        
     }
     /**
      * Replace relative path to absolute.
@@ -45,13 +51,16 @@ class ReplaceRelativePathWithAbsolute implements MiddlewareInterface{
      * 
      * @return string
      */
-    protected function replace($html,$url_domain){
-        $pattern='/(src|href)=(\"|\')(?P<path>.*?)(\"|\')/i';
+    protected function replace($html,$url){
+        $pattern="/(src|href)=(\"|\')(?P<path>.*?)(\"|\')/i";
+        $url_domain=$this->parseUrl($url,"domain");
+        $url_prefix=$this->parseUrl($url,"prefix");
         return \preg_replace_callback($pattern,
-            function($matches) use($url_domain){
-                if(preg_match('/^\//i',$matches['path'],$begin)===1){
-                    return $matches[1].'="'.$url_domain.$matches['path'].'"';
-                 } else {
+            function($matches) use($url_domain, $url_prefix){
+                if(preg_match("/^(www|http(s|)|{$url_domain})/i",$matches['path'])===0){
+                    $test=$matches[1].'="'.$url_prefix.$matches['path'].'"';
+                    return $matches[1].'="'.$url_prefix.$matches['path'].'"';
+                }else {
                     return $matches[0];
                 }
             },
