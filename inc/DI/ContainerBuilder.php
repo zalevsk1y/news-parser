@@ -1,9 +1,10 @@
 <?php 
 namespace NewsParserPlugin\DI;
+use NewsParserPlugin\Interfaces\ContainerInterface;
 use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Message\Errors;
 
-class ContainerBuilder {
+class ContainerBuilder implements ContainerInterface{
     protected $defenitionArray;
     protected $instancesArray=[];
     public function addDefinitions(string $pathToDefenitionFile){
@@ -17,6 +18,21 @@ class ContainerBuilder {
     public function get($instance_name){
         $this->hasDependency($instance_name);
         return $this->createInstance($instance_name,$this->defenitionArray[$instance_name]);
+    }
+    public function call($instance_arr,$args){
+        $instance_name=$instance_arr[0];
+        $method_name=$instance_arr[1];
+        if(!is_array($instance_arr)||!is_array($args)){
+            throw new MyException(Errors::text('WRONG_ARGUMENT_FORMATE'), Errors::code('INNER_ERROR'));
+        }
+        if(count($instance_arr)!=2){
+            throw new MyException(Errors::text('WRONG_ARGUMENT_FORMATE'), Errors::code('INNER_ERROR'));
+        }
+        $instance=$this->get($instance_name);
+        if(!method_exists($instance,$method_name)){
+            throw new MyException(Errors::text('INSTANCE_DOESENT_HAVE_METHOD'), Errors::code('INNER_ERROR'));
+        }
+        return $instance->$method_name(...$args);
     }
     protected function createInstance($instance_name,$dependences){
         if (in_array($instance_name,$this->instancesArray)) return $this->instancesArray[$instance_name];

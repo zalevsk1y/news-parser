@@ -3,7 +3,7 @@ namespace NewsParserPlugin\Core;
 
 use NewsParserPlugin\Controller\AjaxController;
 use NewsParserPlugin\Controller\MiddlewareController;
-use Psr\Container\ContainerInterface;
+use NewsParserPlugin\Interfaces\ContainerInterface;
 use NewsParserPlugin\Controller\EventController;
 
 class App{

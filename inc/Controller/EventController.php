@@ -1,7 +1,7 @@
 <?php
 namespace NewsParserPlugin\Controller;
 
-use Psr\Container\ContainerInterface;
+use NewsParserPlugin\Interfaces\ContainerInterface;
 use NewsParserPlugin\Interfaces\EventControllerInterface;
 
 /**
