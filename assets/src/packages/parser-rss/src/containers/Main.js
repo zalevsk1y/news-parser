@@ -21,7 +21,7 @@ class Main extends React.Component {
   
     render() {
         return (
-            <div className={"wrap wrap-parsing"} >
+            <div className={"wrap"} >
                 <VisualConstructor />
                 <div className="parsing-title">
                     <h1>News-Parser</h1>

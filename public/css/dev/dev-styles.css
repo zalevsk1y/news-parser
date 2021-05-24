@@ -1,0 +1,21 @@
+.main-parsing-container{
+    display: flex;
+   flex-direction: row;
+   height: 93vh;
+   position: absolute;
+}
+.sidebar-width{
+    flex-basis: 200px;
+}
+#parsing-rss-app{
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    max-height: 100vw;
+}
+.left-main-sidebar{
+    background-color: aliceblue;
+    height: 100%;
+    flex-shrink: 0;
+
+}

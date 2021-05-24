@@ -5,7 +5,7 @@ const VERSION=(require("./package.json").version);
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const {CleanWebpackPlugin}=require('clean-webpack-plugin');
 const TerserJSPlugin = require("terser-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 
 module.exports=(env,args)=>{
@@ -58,7 +58,7 @@ module.exports=(env,args)=>{
 			minimize:isProd,
 			minimizer:[
 				new TerserJSPlugin({}),
-				new OptimizeCSSAssetsPlugin({})
+				new CssMinimizerPlugin({})
 			]
 		},
 		externals:{
