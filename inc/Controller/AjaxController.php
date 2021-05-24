@@ -294,7 +294,7 @@ class AjaxController extends Ajax
             )
         ));
 
-        $response=$this->event->trigger('post:create', $request);
+        $response=$this->event->trigger('post:create', array($request['url'],$request['_id']));
         $this->sendResponse($response);
     }
 }
