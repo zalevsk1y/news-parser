@@ -1,12 +1,17 @@
 import {PAGE,PARSE,SELECT,DELETE,DRAFT,INSERT,SELECTED} from '../../constants';
+import {VISUAL_CONSTRUCTOR} from '@news-parser/visual-constructor/constants/'
+
 import {apiRequest,API_SUCCESS} from '../../actions/api.actions';
 import {setPostMeta} from '../../actions/post.actions';
 import {table} from '@news-parser/helpers/classes/Table'
 import { showMessage } from '@news-parser/message/actions/';
 
+
+
 export const pageMiddleware = ({dispatch,getState})=>next=>action=>{
     next (action);
     switch(action.type){
+     
         case `[${PAGE}:${PARSE}]${SELECTED}`:
             const {data,select}=getState().parse.items,
                     selected=Object.keys(select);

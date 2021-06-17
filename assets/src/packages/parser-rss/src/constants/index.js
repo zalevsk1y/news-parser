@@ -2,6 +2,7 @@ export const PARSER_RSS='parser-rss'
 export const LIST=`${PARSER_RSS}.list`;
 export const MEDIA=`${PARSER_RSS}.media`;
 export const PAGE=`${PARSER_RSS}.page`;
+export const URL=`${PARSER_RSS}.url`;
 
 
 export const ADD='add';
@@ -17,4 +18,6 @@ export const POST='POST';
 
 export const SELECT='select';
 export const DRAFT='draft';
-export const SELECTED='SELECTED'
+export const SELECTED='SELECTED';
+
+export const SUBMIT='submit';

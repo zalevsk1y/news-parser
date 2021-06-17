@@ -3,11 +3,13 @@ import {API_SUCCESS,apiRequest} from '../../actions/api.actions';
 import {showMessage} from '../../actions/app.actions'
 import {FETCH_LIST, setList} from '../../actions/list.actions';
 import {setAppState} from '../../actions/app.actions';
-import {decodeHTMLEntities} from '@news-parser/helpers/'
+import {decodeHTMLEntities} from '@news-parser/helpers/';
+
 
 export const listMiddleware = ({dispatch})=>next=>action=>{
     next (action);
     switch(action.type){
+
         case FETCH_LIST:
             const {url}=action.payload;
             dispatch(setAppState(LIST,PARSE,{url}));

@@ -15,7 +15,8 @@ import {dialog} from './dialog'
 export const initialStateParse={
     appState:{
         isFetching:false,
-        entity:'main',
+        entity:'list',
+        submitType:'list',
         event:false,
         data:{
             url:''

@@ -16,6 +16,7 @@ import {pageMiddleware} from './middleware/api/page';
 
 import {postMiddleware} from './middleware/app/post';
 import {fetchingMiddleware} from './middleware/app/fetching';
+import {submitMiddleware} from './middleware/app/submit';
 
 
 import {dialogMiddleware} from '@news-parser/visual-constructor/middleware/app/dialog';
@@ -44,6 +45,7 @@ const store=createStore(
             listMiddleware,
             postMiddleware,
             pageMiddleware,
+            submitMiddleware,
             dialogMiddleware,
             htmlMiddleware,
             draftMiddleware,

@@ -422,6 +422,13 @@ body {
 .appContainer {
   margin: auto; }
 
+.main-parsing-container {
+  display: flex;
+  flex-direction: row;
+  height: 93vh;
+  position: absolute;
+  width: 100%; }
+
 .posts-wrapper {
   position: relative;
   display: inline-flex;
