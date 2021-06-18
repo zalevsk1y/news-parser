@@ -8,7 +8,7 @@ import VisualConstructor from '@news-parser/visual-constructor/';
 import {parseList} from '../actions/submit.action';
 import {parseURL} from '../actions/submit.action';
 import PropTypes from 'prop-types';
-import Sidebar from '@news-parser/sidebar/';
+import {SidebarMain} from '@news-parser/sidebar/';
 
 /**
  * Main application element.
@@ -33,7 +33,7 @@ class Main extends React.Component {
         return (
             <div className={"wrap"} >
                 <VisualConstructor />
-                <Sidebar></Sidebar>
+                <SidebarMain></SidebarMain>
                 <div className="parsing-title">
                     <h1>News-Parser</h1>
                 </div>

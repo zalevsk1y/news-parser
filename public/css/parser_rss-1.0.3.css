@@ -218,6 +218,20 @@ frame {
       height: 30%;
       width: 100%; } }
 
+.sidebar-width {
+  flex-basis: 200px; }
+
+#parsing-rss-app {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  max-height: 100vw; }
+
+.left-main-sidebar {
+  background-color: white;
+  height: 100%;
+  flex-shrink: 0; }
+
 @charset "UTF-8";
 .fo {
   font-family: 'fontello';
@@ -426,8 +440,7 @@ body {
   display: flex;
   flex-direction: row;
   height: 93vh;
-  position: absolute;
-  width: 100%; }
+  position: absolute; }
 
 .posts-wrapper {
   position: relative;
