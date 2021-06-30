@@ -1,5 +1,5 @@
 .sidebar-width{
-    flex-basis: 200px;
+    flex-basis: 300px;
 }
 #parsing-rss-app{
     display: flex;
@@ -13,3 +13,48 @@
     flex-shrink: 0;
 
 }
+
+
+.sidebar-header-close-cross{
+    flex-basis: 20px;
+    cursor: pointer;
+}
+.sidebar-item-border{
+    border-bottom: 1px solid #e4e6eb;
+}
+.sidebar-item{
+    min-height: 20px;
+    
+    min-height: 50px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px; 
+}
+.sidebar-item-wide {
+    padding-top: 10px;
+    padding-bottom: 10px; 
+    height: 40px;
+}
+.sidebar-item-narrow{
+    height: 20px;
+}
+.sub-sidebar-item{
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar-item-label{
+    flex-grow: 1;
+}
+
+.sub-sidebar-item select{
+        flex-grow: 1;
+        padding-left: 10px;
+}
+
+
