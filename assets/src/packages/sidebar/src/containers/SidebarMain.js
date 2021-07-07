@@ -38,7 +38,7 @@ export class SidebarMain extends React.Component{
         return {
             header:'Parsing Mode',
             render :(
-            <SidebarItemsGroup header='Status & visibility'>
+            <SidebarItemsGroup header='Status & visibility' border={'top'}>
                 <SidebarItem>
                     <SidebarItemLabel>Visibility:</SidebarItemLabel>
                     <Select onChange={(e)=>{}} >
@@ -49,6 +49,7 @@ export class SidebarMain extends React.Component{
                 </SidebarItem>
                 <SidebarItem> 
                     <SidebarItemLabel>Publish:</SidebarItemLabel>
+                    
                 </SidebarItem>
                 <SidebarItem>
                     <SidebarItemLabel>Post format:</SidebarItemLabel>
