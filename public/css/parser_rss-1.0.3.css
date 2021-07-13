@@ -286,6 +286,50 @@ frame {
   overflow: hidden;
   height: 70px; }
 
+.sidebar-publish-time-input {
+  cursor: pointer;
+  color: #007cba;
+  padding: 3px; }
+
+.sidebar-publish-time-input:hover {
+  outline: 1px solid #007cba;
+  outline-offset: 1px; }
+
+.sidebar-publish-time-containar {
+  position: relative; }
+
+.pop-up {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  padding: 10px;
+  left: -154px;
+  margin-right: 45px;
+  top: 30px; }
+
+.pop-up input {
+  margin-bottom: 10px; }
+
+.pop-up-link {
+  cursor: pointer;
+  color: #007cba;
+  text-decoration: underline;
+  border: none;
+  background-color: transparent; }
+
+.pop-up-open {
+  display: block; }
+
+.pop-up-close {
+  display: none; }
+
+.pop-up-footer {
+  width: 100%; }
+
+.pop-up-link:last-child {
+  float: right; }
+
 @charset "UTF-8";
 .fo {
   font-family: 'fontello';

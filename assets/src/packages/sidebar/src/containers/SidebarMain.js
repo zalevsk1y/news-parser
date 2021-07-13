@@ -4,6 +4,8 @@ import { Select } from '../components/Select';
 import { SidebarItemLabel } from '../components/SidebarItemLabel';
 import { SidebarItem } from '../components/SidebarItem';
 import { SidebarItemsGroup } from '../components/SidebarItemsGroup';
+import { PopUp } from '../components/PopUp';
+import { PopUpTimeDate } from '../components/PopUpTimeDate';
 
 export class SidebarMain extends React.Component{
     constructor (props){
@@ -49,7 +51,7 @@ export class SidebarMain extends React.Component{
                 </SidebarItem>
                 <SidebarItem> 
                     <SidebarItemLabel>Publish:</SidebarItemLabel>
-                    
+                    <PopUpTimeDate></PopUpTimeDate>
                 </SidebarItem>
                 <SidebarItem>
                     <SidebarItemLabel>Post format:</SidebarItemLabel>
