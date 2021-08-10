@@ -1,5 +1,6 @@
 import React from 'react';
 import { PopUp } from './PopUp';
+import '@news-parser/styles/sidebar/_popup-time-date.scss';
 
 export class PopUpTimeDate extends React.Component{
     constructor (props){

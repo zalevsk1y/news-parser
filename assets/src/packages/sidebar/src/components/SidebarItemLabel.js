@@ -1,4 +1,5 @@
 import React from 'react';
+import '@news-parser/styles/sidebar/_item-label.scss';
 
 export function SidebarItemLabel({children,className}){
     return (

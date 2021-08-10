@@ -1,8 +1,4 @@
-$item-wide-height:50px;
-$item-narrow-height:50px;
-
-$item-wide-min-height:50px;
-$item-narrow-min-height:50px;
+@import './sidebar/vars.scss';
 
 .sidebar-width{
     flex-basis: 300px;
@@ -21,34 +17,7 @@ $item-narrow-min-height:50px;
 }
 
 
-.sidebar-header-close-cross{
-    font-size: 20px;
-    cursor: pointer;
-}
-.sidebar-item-bottom-border{
-    border-bottom: 1px solid #e4e6eb;
-}
-.sidebar-item-top-border{
-    border-top: 1px solid #e4e6eb;
-}
-.sidebar-item{
 
-    display: flex;
-    align-content: center;
-    align-items: center;
-    padding-left: 10px;
-    padding-right: 20px; 
-}
-.sidebar-item-wide {
-    padding-top: 10px;
-    padding-bottom: 10px; 
-    min-height: $item-wide-min-height;
-    height: $item-wide-height;
-}
-.sidebar-item-narrow{
-    min-height: $item-narrow-min-height;
-    height: $item-narrow-height;
-}
 .sub-sidebar-item{
     width: 100%;
     
@@ -57,75 +26,11 @@ $item-narrow-min-height:50px;
     align-items: center;
 }
 
-.sidebar-item-label{
-    flex-grow: 1;
-}
-
-.sub-sidebar-item select{
-        flex-grow: 1;
-        padding-left: 10px;
-}
 
 
-.check-switch{
-    font-size: 21px;
-    cursor: pointer;
-}
-
-.check-switch-on{
-    transform: rotate(180deg);
-}
-.check-switch-off{
-    transform: rotate(0deg);
-}
-
-.sidebar-items-group-closed{
-    overflow: hidden;
-    height: $item-wide-height+20px;
-}
 
 
-.sidebar-publish-time-input{
-    cursor: pointer;
-    color: #007cba;
-    padding: 3px;
-}
-.sidebar-publish-time-input:hover{
-    outline: 1px solid #007cba;
-    outline-offset: 1px;
-}
-.sidebar-publish-time-containar{
-    position: relative;
-}
-.pop-up{
-    position: absolute;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    padding: 10px;
-    left: -154px;
-    margin-right: 45px;
-    top:30px;
-}
 
-.pop-up input {
-    margin-bottom: 10px;
-}
-.pop-up-link{
-    cursor:pointer;
-    color:#007cba;
-    text-decoration: underline;
-    border: none;
-    background-color: transparent;
 
-}
-.pop-up-link:last-child{
-    float:right;
-}
-.pop-up-open{
-    display: block;
-}
-.pop-up-close{
-    display: none;
-}
+
 

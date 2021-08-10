@@ -30,7 +30,6 @@
     "enzyme-to-json": "~3.6.2",
     "fetch-mock": "~9.11.0",
     "file-loader": "~6.2.0",
-    "image-webpack-loader": "~7.0.1",
     "jest": "~26.6.3",
     "jest-cli": "~26.6.3",
     "mini-css-extract-plugin": "~1.6.0",

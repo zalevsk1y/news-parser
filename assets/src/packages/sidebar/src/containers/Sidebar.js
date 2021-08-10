@@ -1,7 +1,8 @@
 import React from 'react';
 import {createPortal} from 'react-dom';
 import { SidebarItemLabel } from '../components/SidebarItemLabel';
-import { SidebarItem } from '../components/SidebarItem'
+import { SidebarItem } from '../components/SidebarItem';
+import '@news-parser/styles/sidebar/_sidebar.scss';
 
 export class Sidebar extends React.Component{
     constructor (props){

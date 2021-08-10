@@ -1,0 +1,19 @@
+@import './vars.scss';
+
+.pop-up{
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 10px;
+    left: -154px;
+    margin-right: 45px;
+    top:30px;
+}
+
+.pop-up-open{
+    display: block;
+}
+.pop-up-close{
+    display: none;
+}

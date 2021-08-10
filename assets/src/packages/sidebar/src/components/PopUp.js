@@ -1,4 +1,5 @@
 import React from 'react';
+import '@news-parser/styles/sidebar/_popup.scss';
 
 export function PopUp ({children,open}){
     return (

@@ -1,0 +1,18 @@
+@import './vars.scss';
+
+.sidebar-items-group-closed{
+    overflow: hidden;
+    height: $item-wide-height+20px;
+}
+
+.check-switch{
+    font-size: 21px;
+    cursor: pointer;
+}
+
+.check-switch-on{
+    transform: rotate(180deg);
+}
+.check-switch-off{
+    transform: rotate(0deg);
+}
