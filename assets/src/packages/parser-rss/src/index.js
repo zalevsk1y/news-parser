@@ -57,7 +57,8 @@ const store=createStore(
             
         )));
 store.dispatch(startApp())
-window.addEventListener('load',()=>{
+window.addEventListener('DOMContentLoaded',()=>{
+
     ReactDOM.render(
        
             <Provider store={store}> 

@@ -21,3 +21,6 @@ export const DRAFT='draft';
 export const SELECTED='SELECTED';
 
 export const SUBMIT='submit';
+
+export const SUBMIT_TYPE_LIST='list';
+export const SUBMIT_TYPE_PAGE='page';

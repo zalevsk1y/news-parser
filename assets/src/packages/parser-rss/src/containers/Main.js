@@ -8,7 +8,9 @@ import VisualConstructor from '@news-parser/visual-constructor/';
 import {parseList} from '../actions/submit.action';
 import {parseURL} from '../actions/submit.action';
 import PropTypes from 'prop-types';
+import {innerHeight, innerWidth} from 'globals';
 import {SidebarMain} from '@news-parser/sidebar/';
+import { SUBMIT_TYPE_LIST, SUBMIT_TYPE_PAGE } from '../constants'
 
 /**
  * Main application element.
@@ -20,20 +22,27 @@ class Main extends React.Component {
     constructor(props){
         super(props);
         this.submitButton=this.submitButton.bind(this);
+        this.state={isSidebarOpen:true}
+        this.viewportHeigh=innerHeight;
+        this.viewportWidth=innerWidth;
     }
     submitButton(submitType){
         switch (submitType){
-            case 'list':
+            case SUBMIT_TYPE_LIST:
                 return {buttonName:"Parse RSS Feed",submitAction:parseList};
-            case 'single':
+            case SUBMIT_TYPE_PAGE:
                 return {buttonName:"Parse Page",submitAction:parseURL};
         }
+    }
+    handleSidebeStateChange(sidebarConponentState){
+        const sidebarState=sidebarConponentState.sidebarState;
+        this.setState({isSidebarOpen:sidebarState});
     }
     render() {
         return (
             <div className={"wrap"} >
                 <VisualConstructor />
-                <SidebarMain></SidebarMain>
+                <SidebarMain viewportHeigh={this.viewportHeigh} viewportWidth={this.viewportWidth} />
                 <div className="parsing-title">
                     <h1>News-Parser</h1>
                 </div>
@@ -50,6 +59,7 @@ function mapStateToProps(state){
     
     return {
         submitType:state.parse.appState.submitType,
+        entity:state.parse.appState.entity
 
     }
 }
@@ -62,5 +72,9 @@ Main.propTypes={
     /**
      * Current app parsing entity [list|single|multi]
      */
-    submitType:PropTypes.string 
+    submitType:PropTypes.string ,
+     /**
+     * Current app parsing entity parser-rss-[list|page|media]
+     */
+    entity:PropTypes.string 
 }

@@ -5,7 +5,7 @@ import {SET_ROUTE} from '../actions/route.actions';
 import {message} from '@news-parser/message/reducers';
 import {START_FETCHING,STOP_FETCHING} from '../actions/api.actions';
 import {SET_LIST} from '../actions/list.actions';
-import {SET_APP_STATE} from '../actions/app.actions'
+import {SET_APP_STATE,CHANGE_SUBMIT_TYPE} from '../actions/app.actions'
 import {POST_META} from '../actions/post.actions';
 import {SELECT,DRAFT,INSERT,DELETE} from '../constants/index';
 
@@ -54,6 +54,11 @@ export function parse (state=initialStateParse.appState,action){
                         ...action.payload.data
                     }
             };
+        case CHANGE_SUBMIT_TYPE:
+            return {
+                ...state,
+                submitType:action.payload.submitType
+            }
         default: 
             return {...state}
     }

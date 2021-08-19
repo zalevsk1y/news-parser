@@ -1,6 +1,25 @@
 @import './_vars.scss';
 
 .sidebar-header-close-cross{
-    font-size: 20px;
+    font-size: 17px;
+    border:none;
+    background-color: transparent;
     cursor: pointer;
+}
+
+.sidebar-open-icon {
+    background-color: transparent;
+    border: none;
+    position:fixed;
+    font-size: 35px;
+    right: 35px;
+    cursor: pointer;
+    top: 45px;
+    display: inline;
+}
+
+
+
+@media screen and (min-width: 414px) {
+
 }

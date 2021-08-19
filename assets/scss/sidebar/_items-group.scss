@@ -1,5 +1,8 @@
 @import './vars.scss';
 
+.sidebar-items-group{
+    width: $item-width;
+}
 .sidebar-items-group-closed{
     overflow: hidden;
     height: $item-wide-height+20px;

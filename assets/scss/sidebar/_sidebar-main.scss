@@ -1,0 +1,19 @@
+@import './vars.scss';
+
+.sidebar-header-nav-item{
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    margin-left: 5px;
+    width: 60px;
+    cursor: pointer;
+}
+.sidebar-header-nav-container{
+    height: 100%;
+}
+.header-nav-button-active{
+   border-bottom: 3px solid;
+    border-color: $main-border-color;
+}
+
+

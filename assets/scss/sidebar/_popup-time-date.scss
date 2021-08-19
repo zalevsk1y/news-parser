@@ -11,9 +11,7 @@
     background-color: transparent;
 
 }
-.pop-up-link:last-child{
-    float:right;
-}
+
 
 .sidebar-publish-time-input{
     cursor: pointer;
@@ -28,3 +26,8 @@
     position: relative;
 }
 
+.pop-up-buttons-block{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

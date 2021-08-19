@@ -19,7 +19,7 @@ body {
     width: 100%;
     display: flex;
     flex-direction: row;
-    height: 93vh;
+    height: calc(100vh - 72px);
     position: absolute;
 }
 
@@ -57,7 +57,7 @@ body {
 }
 
 .wrap-parsing {
-    width: 90%;
+    flex-grow: 1;
     height: 100%;
     margin: 0 0% 0 5%;
     display: flex;
@@ -208,6 +208,7 @@ body {
 }
 
 .closed {
+    visibility: hidden;
     top: -100px !important;
 }
 
@@ -219,3 +220,8 @@ li {
 
 
 
+@media screen and (max-height: 768px) {
+    .main-parsing-container{
+        height: 91vh;
+    }
+}

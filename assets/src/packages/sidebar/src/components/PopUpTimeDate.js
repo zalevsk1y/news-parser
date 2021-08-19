@@ -18,8 +18,20 @@ export class PopUpTimeDate extends React.Component{
         console.log(this.state)
         this.setState({popUp:!this.state.popUp})
     }
-    closePopUp(){
+    closePopUp(event){
+        switch (event.target.value){
+            case 'Reset':
+                this.resetState();
+                break;
+            case 'Draft':
+                this.setDraft();
+                break;
+            case 'Submit':
+        }
         this.setState({popUp:false});
+    }
+    setDraft(){
+        this.setState({output:'Draft'})
     }
     timeChangeHandle(value){
         this.setState({time:value.target.value})
@@ -49,9 +61,11 @@ export class PopUpTimeDate extends React.Component{
                 <form onBlur={this.handleBlur} >
                     <input type='date' onChange={this.dateChangeHandle} autoFocus={true}></input>
                     <input type='time' value={this.state.time} onChange={this.timeChangeHandle}></input>
-                    <br></br>
-                    <input type='button' className="pop-up-link" onClick={this.closePopUp} value='Reset'></input>
-                    <input type='button' className="pop-up-link" onClick={this.closePopUp} value='Submit'></input>
+                   <div className='pop-up-buttons-block'>
+                        <input type='button' className="pop-up-link" onClick={this.closePopUp} value='Draft'></input>
+                        <input type='button' className="pop-up-link" onClick={this.closePopUp} value='Reset'></input>
+                        <input type='button' className="pop-up-link" onClick={this.closePopUp} value='Submit'></input>
+                    </div>
                 </form>
             </PopUp>
         </div>
