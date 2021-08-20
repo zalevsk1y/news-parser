@@ -13,6 +13,7 @@ import {apiMiddleware} from './middleware/core/api';
 
 import {listMiddleware} from './middleware/api/list';
 import {pageMiddleware} from './middleware/api/page';
+import {wpMiddleware} from './middleware/api/wp';
 
 import {postMiddleware} from './middleware/app/post';
 import {fetchingMiddleware} from './middleware/app/fetching';
@@ -45,6 +46,7 @@ const store=createStore(
             listMiddleware,
             postMiddleware,
             pageMiddleware,
+            wpMiddleware,
             submitMiddleware,
             dialogMiddleware,
             htmlMiddleware,

@@ -8,6 +8,7 @@ import {SET_LIST} from '../actions/list.actions';
 import {SET_APP_STATE,CHANGE_SUBMIT_TYPE} from '../actions/app.actions'
 import {POST_META} from '../actions/post.actions';
 import {SELECT,DRAFT,INSERT,DELETE} from '../constants/index';
+import { sidebar } from '@news-parser/sidebar/reducers';
 
 import {dialog} from './dialog'
 
@@ -117,6 +118,6 @@ export function route(state={page:false},action){
 }
 
 
-const itemsReducer=combineReducers({select:selectPostMeta,draft:draftPostMeta,data:posts}),
-    parserReducer=combineReducers({appState:parse,dialog,items:itemsReducer,message});
+const itemsReducer=combineReducers({select:selectPostMeta,draft:draftPostMeta,data:posts,}),
+    parserReducer=combineReducers({appState:parse,dialog,items:itemsReducer,message,sidebar});
 export default combineReducers({parse:parserReducer,route});

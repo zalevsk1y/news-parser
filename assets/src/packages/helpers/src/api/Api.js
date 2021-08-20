@@ -15,15 +15,15 @@ class Api extends BaseClass{
                 headers:this.getHeaders(url,type,method,nonce)
             };
         let {body}=params;
-        if(method===GET){
+        if(method===GET&&nonce!==null){
             url+='&_wpnonce='+nonce;
-            if(body!==undefined&& typeof body==='object'){
+            if(body!==undefined&&body!==null&& typeof body==='object'){
                 url+=Object.keys(body).map(paramName=>`&${encodeURIComponent(paramName)}=${encodeURIComponent(body[paramName])}`).join('');
             }
         }else if(type===AJAX&&method===POST){
             body=body!==undefined?{...body,_wpnonce:nonce}:{_wpnonce:nonce};
             fetchParams.body=JSON.stringify(body);
-        }else if(type===REST){
+        }else if(type===REST&&method===POST){
             fetchParams.body=JSON.stringify(body);
         }
         return fetch(url,fetchParams);
@@ -32,7 +32,7 @@ class Api extends BaseClass{
         this.argsCheck({url,type,method,nonce});
         const headers={};
         if(type===REST){
-            headers['X-WP-Nonce']=nonce;
+            nonce!==null&&(headers['X-WP-Nonce']=nonce);
             headers['Access-Control-Allow-Origin']=this.rootUrl!==undefined?this.rootUrl:'*';
         }
         if(method===POST){

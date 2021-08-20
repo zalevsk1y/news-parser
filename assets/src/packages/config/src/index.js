@@ -1,7 +1,9 @@
 import {newsParserSettings as settings,newsParserApiEndpoints as endpoints} from 'globals';
-import {POST,AJAX,REST,PARSE,CREATE} from '@news-parser/parser-rss/constants/';
+import {POST,GET,AJAX,REST,PARSE,CREATE} from '@news-parser/parser-rss/constants/';
 import {HTML,TEMPLATE,POST_DRAFT,MEDIA} from '@news-parser/visual-constructor/constants/';
-import {LIST,PAGE} from '@news-parser/parser-rss/constants/'
+import {LIST,PAGE} from '@news-parser/parser-rss/constants/';
+import {WP_API,CATEGORIES} from '@news-parser/parser-rss/constants/';
+
 const config={
     mode:'development',
     restRootUrl:settings.root,
@@ -56,8 +58,22 @@ const config={
                 method:POST,
                 type:REST,
                 nonce:settings.restApiNonce,
-                url:settings.restRoot+'wp/v2/posts'
+                url:endpoints.rootRestApi+'wp/v2/posts'
             }
+        },
+        [`${WP_API}_${CATEGORIES}`]:{
+            [GET]:{
+                method:GET,
+                type:REST,
+                nonce:null,
+                url:endpoints.rootRestApi+'wp/v2/categories?per_page=100&orderby=name&order=asc&_fields=id%2Cname%2Cparent&_locale=user',
+                perPage:100,
+                orderBy:'name',
+                order:'asc',
+                _fields:'id%2Cname%2Cparent',
+                _locale:'user'
+            }   
+            
         }
 
     },

@@ -8,7 +8,8 @@ export class SidebarMain extends React.Component{
     constructor (props){
         super(props);
         this.sidebarChangeHandler=this.sidebarChangeHandler.bind(this);
-        this.state={sidebar:'Mode'}
+        console.log(props)
+        this.state=props.entity==='parser-rss.list'?{sidebar:'Post'}:{sidebar:'Mode'};
     }
     renderHeader(){
         const navButtonClassName=`sidebar-header-nav-item`
@@ -40,3 +41,4 @@ export class SidebarMain extends React.Component{
         )
     }
 }
+

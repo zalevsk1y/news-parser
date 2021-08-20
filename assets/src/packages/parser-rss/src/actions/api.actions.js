@@ -1,4 +1,5 @@
 export const API_REQUEST='API_REQUEST';
+export const WP_API_REQUEST='WP_API_REQUEST';
 export const API_SUCCESS='API_SUCCESS';
 export const API_ERROR='API_ERROR';
 export const START_FETCHING='START_FETCHING';
@@ -14,6 +15,8 @@ export function apiRequest(entity,event,data){
         }
     }
 }
+
+
 
 export function apiSuccess(entity,event,data){
     return {

@@ -1,3 +1,4 @@
+import { sidebar } from "../../../sidebar/src/reducers"
 
 export const initialStateParse={
             appState:{
@@ -15,6 +16,9 @@ export const initialStateParse={
                 data:[],
                 select:{},
                 draft:{}
+            },
+            sidebar:{
+                categories:[]
             }
 }
 

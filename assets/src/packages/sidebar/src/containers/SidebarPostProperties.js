@@ -8,8 +8,8 @@ import { SidebarItemExpandable } from '../components/SidebarItemExpandable';
 import { TagInput } from '../components/TagInput';
 import { connect } from 'react-redux';
 import { parseSelected } from '@news-parser/parser-rss/actions/page.actions';
-
-
+import { CategoriesCheckboxList } from '../components/CategoriesCheckboxList';
+import { CategoiresOptionList } from '../components/CategoiresOptionList';
 
 export function SidebarPostProperties (props){
         const categoryName="cars",
@@ -50,8 +50,7 @@ export function SidebarPostProperties (props){
                 </SidebarItemsGroup>
                 <SidebarItemsGroup header='Categories' border={'bottom'}>
                     <SidebarItem>
-                        <input onChange={(e)=>{}} type='checkbox' id={`category-${categoryName}`}></input>
-                        <label for={`category-${categoryName}`}>{categoryName}</label>
+                        <CategoriesCheckboxList categories={props.categories} id={0} />
                     </SidebarItem>
                     <SidebarItemExpandable expandButtonCallback={(onClick)=><button onClick={onClick} className='pop-up-link'>Add New Category</button>}>
                         <div className='sidebar-item-expandable-row'>
@@ -62,7 +61,7 @@ export function SidebarPostProperties (props){
                             <label for='parent-category-select'>Parent Category</label><br></br>
                             <Select id='arent-category-select'>
                                 <option>— Parent Category —</option>
-                                <option>{categoryName}</option>
+                                <CategoiresOptionList id={0} categories={props.categories} />
                             </Select>
                        </div>
                        <div className='sidebar-item-expandable-row'>
@@ -103,7 +102,8 @@ export function SidebarPostProperties (props){
 function mapStateToProps(state){
     
     return {
-        postsSelected:Object.keys(state.parse.items.select)
+        postsSelected:Object.keys(state.parse.items.select),
+        categories:state.parse.sidebar.categories
     }
 }
 function mapDispatchToProps(dispatch){

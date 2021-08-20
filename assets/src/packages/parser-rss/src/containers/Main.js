@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import {innerHeight, innerWidth} from 'globals';
 import {SidebarMain} from '@news-parser/sidebar/';
 import { SUBMIT_TYPE_LIST, SUBMIT_TYPE_PAGE } from '../constants'
+import { getWPCategories } from '../actions/wp.api.actions';
 
 /**
  * Main application element.
@@ -25,6 +26,10 @@ class Main extends React.Component {
         this.state={isSidebarOpen:true}
         this.viewportHeigh=innerHeight;
         this.viewportWidth=innerWidth;
+        this.getSidebarData();
+    }
+    getSidebarData(){
+        this.props.getWPCategories();
     }
     submitButton(submitType){
         switch (submitType){
@@ -39,10 +44,11 @@ class Main extends React.Component {
         this.setState({isSidebarOpen:sidebarState});
     }
     render() {
+       
         return (
             <div className={"wrap"} >
                 <VisualConstructor />
-                <SidebarMain viewportHeigh={this.viewportHeigh} viewportWidth={this.viewportWidth} />
+                <SidebarMain viewportHeigh={this.viewportHeigh} viewportWidth={this.viewportWidth} entity={this.props.entity} />
                 <div className="parsing-title">
                     <h1>News-Parser</h1>
                 </div>
@@ -59,13 +65,21 @@ function mapStateToProps(state){
     
     return {
         submitType:state.parse.appState.submitType,
-        entity:state.parse.appState.entity
+        entity:state.parse.appState.entity,
+        categories:state.parse.sidebar.categories
 
+    }
+}
+function mapDispatchToProps(dispatch) {
+    return {
+        getWPCategories:()=>{
+            dispatch(getWPCategories())
+        }
     }
 }
 
 
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps,mapDispatchToProps)(Main);
 
 
 Main.propTypes={
