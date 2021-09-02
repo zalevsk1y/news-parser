@@ -291,10 +291,26 @@ class AjaxController extends Ajax
                 'sanitize_callback'=>function ($_id) {
                     return preg_replace('/[^0-9]/i', '', $_id);
                 }
+            ),
+            'data'=>array(
+                'description'=>'Object with wp post options',
+                'type'=>'array',
+                //ToDo:create validate for every prop value in data object
+                'validate_callback'=>function ($_data) {
+                    $data_properties=array_keys($data);
+                    $should_contain_props=array( 'categories','tags','comment_status','ping_status','formate','status');
+                    $diff=array_diff($data_properties,$should_contain_props);
+                    if (count($diff)>0) return false;
+                    return true;
+                },
+                //ToDo:create sanitize for every prop in data array
+                'sanitize_callback'=>function ($_data) {
+                    return $_data;
+                }
             )
         ));
 
-        $response=$this->event->trigger('post:create', array($request['url'],$request['_id']));
+        $response=$this->event->trigger('post:create', array($request['url'],$request['_id'],$request['data']));
         $this->sendResponse($response);
     }
 }

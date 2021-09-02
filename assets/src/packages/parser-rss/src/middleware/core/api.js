@@ -5,7 +5,6 @@ import {API_REQUEST,apiSuccess,apiError} from '../../actions/api.actions';
 export const apiMiddleware=({dispatch})=>next=>action=>{
     next(action);
     if (action.type.includes(API_REQUEST)){
-        debugger;
         const {entity,event,data}=action.payload,
             method=config.api[entity][event].method,
             type=config.api[entity][event].type,

@@ -18,8 +18,19 @@ export const initialStateParse={
                 draft:{}
             },
             sidebar:{
-                categories:[]
+                categories:[],
+                selectedCategories:[],
+                tags:[],
+                selectedTags:[],
+                status:'publish',
+                publish:{
+                    date:false,
+                },
+                postFormat:'standart',
+                allowComments:true,
+                allowPinbacks:true
             }
+
 }
 
 export const initialStateRoute={

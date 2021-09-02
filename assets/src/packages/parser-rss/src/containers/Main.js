@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import {innerHeight, innerWidth} from 'globals';
 import {SidebarMain} from '@news-parser/sidebar/';
 import { SUBMIT_TYPE_LIST, SUBMIT_TYPE_PAGE } from '../constants'
-import { getWPCategories } from '../actions/wp.api.actions';
+import { getWPCategories,getWPTags } from '../actions/wp.api.actions';
 
 /**
  * Main application element.
@@ -30,6 +30,7 @@ class Main extends React.Component {
     }
     getSidebarData(){
         this.props.getWPCategories();
+        this.props.getWPTags();
     }
     submitButton(submitType){
         switch (submitType){
@@ -74,6 +75,9 @@ function mapDispatchToProps(dispatch) {
     return {
         getWPCategories:()=>{
             dispatch(getWPCategories())
+        },
+        getWPTags:()=>{
+            dispatch(getWPTags())
         }
     }
 }

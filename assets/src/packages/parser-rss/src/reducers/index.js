@@ -9,28 +9,11 @@ import {SET_APP_STATE,CHANGE_SUBMIT_TYPE} from '../actions/app.actions'
 import {POST_META} from '../actions/post.actions';
 import {SELECT,DRAFT,INSERT,DELETE} from '../constants/index';
 import { sidebar } from '@news-parser/sidebar/reducers';
-
+import { initialStateParse } from './initState';
 import {dialog} from './dialog'
 
 
-export const initialStateParse={
-    appState:{
-        isFetching:false,
-        entity:'list',
-        submitType:'list',
-        event:false,
-        data:{
-            url:''
-        }
-    },
-    message:false,
-    dialog:false,
-    items:{
-        data:[],
-        select:{},
-        draft:{}
-    }
-}
+
 
 export function parse (state=initialStateParse.appState,action){
 

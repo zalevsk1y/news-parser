@@ -19,3 +19,10 @@
 .check-switch-off{
     transform: rotate(0deg);
 }
+
+@media screen and (max-width: 375px) {
+    .sidebar-items-group{
+        width: 100vw;
+    }
+ 
+}

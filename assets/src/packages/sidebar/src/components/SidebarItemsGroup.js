@@ -9,10 +9,10 @@ export function SidebarItemsGroup ({border,header,children}){
         borderClassName=border==='top'||border==='bottom'?`sidebar-item-${border}-border`:`sidebar-item-no-border`;
     return (
         <div className={`sidebar-items-group ${borderClassName} ${state===false?' sidebar-items-group-closed sidebar-item-':''}`}>
-           <SidebarItem wide={true}>
+           {header&&<SidebarItem wide={true}>
                 <SidebarItemLabel>{header}</SidebarItemLabel>
                 <span className={'check-switch check-switch-'+(state?'on':'off')} onClick={onClick}>^</span>
-            </SidebarItem>
+            </SidebarItem>}
             {children}
         </div>
     )

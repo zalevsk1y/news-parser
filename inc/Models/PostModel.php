@@ -117,18 +117,19 @@ class PostModel implements ModelInterface
         return $post;
     }
     /**
-     * Create wordpress draft gets WP post ID and change postModel status to draft
+     * Create wordpress post, gets WP post ID.
      *
+     * @param array $post_data Array with wp post attributes  https://developer.wordpress.org/reference/functions/wp_insert_post/
      * @return void
      */
-    public function createDraft()
+    public function createPost($post_data)
     {
-        $this->ID = $this->createPostWordPress();
+        $this->ID = $this->createPostWordPress($post_data);
         if ($this->ID === 0) {
             throw new MyException(Errors::text('POST_WAS_NOT_CREATED'), Errors::code('BAD_REQUEST'));
         }
         $this->getPostLinksWordpress();
-        $this->status = 'draft';
+        $this->status = $post_data['status'];
     }
     /**
      * Attach main image to wordpress post
@@ -200,19 +201,18 @@ class PostModel implements ModelInterface
     /**
      * Create wordpress post
      *
+     * @param array $post_user_data Array with wp post attributes  https://developer.wordpress.org/reference/functions/wp_insert_post/
      * @return int Post iD
      */
-    protected function createPostWordPress()
+    protected function createPostWordPress($post_user_data)
     {
-        $date = new \DateTime();
-        $post_date = $date->format('Y-m-d H:i:s');
-        $post_data = array(
+
+        $post_initial_data = array(
             'post_title' => \wp_strip_all_tags($this->title),
             'post_content' => $this->body,
-            'post_date' => $post_date,
             'post_author' => $this->authorId,
-
         );
+        $post_data=array_merge($post_initial_data,$post_user_data);
         $postId = \wp_insert_post($post_data);
         if (\is_wp_error($postId)) {
             throw new MyException($postId->get_error_message(), Errors::code('BAD_REQUEST'));

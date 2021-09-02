@@ -1,7 +1,9 @@
-@import './vars.scss';
+@import './_vars.scss';
+@import './_input-container.scss';
+
 .tag-item-container{
     padding-left: 10px;
-    padding-right: 20px; 
+    padding-right: 10px;
 }
 .tag-input-container{
     border: 1px solid rgba(0,0,0,0.4);
@@ -9,6 +11,7 @@
     cursor: text;
     overflow:hidden;
     width: 100%;
+    min-height: 38px;
     display: flex;
     flex-flow: row wrap;
 
@@ -19,10 +22,11 @@
     outline: 2px solid transparent;
 }
 
+
 .tag-input-container>input{
+    min-width: 0px;
     flex-grow: 1;
-    flex-basis:50px;
-    min-width: 50px;
+    flex-basis:$input-min-width;
     border:none;
     display: inline-block;
     width: auto;
@@ -44,7 +48,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 2px 4px 2px;
+    margin: 4px 4px 4px;
 }
 .tag-item-token button{
     border:none;

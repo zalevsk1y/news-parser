@@ -13,7 +13,9 @@ import {apiMiddleware} from './middleware/core/api';
 
 import {listMiddleware} from './middleware/api/list';
 import {pageMiddleware} from './middleware/api/page';
-import {wpMiddleware} from './middleware/api/wp';
+import {wpCategoryMiddleware} from './middleware/api/wp.category';
+import {wpTagMiddleware} from './middleware/api/wp.tag';
+
 
 import {postMiddleware} from './middleware/app/post';
 import {fetchingMiddleware} from './middleware/app/fetching';
@@ -27,6 +29,9 @@ import {draftMiddleware} from '@news-parser/visual-constructor/middleware/api/dr
 import {mediaMiddleware} from '@news-parser/visual-constructor/middleware/api/media';
 import {templateMiddleware} from '@news-parser/visual-constructor/middleware/api/template';
 import {fetchingMiddleware as dialogFetchingMiddleware} from '@news-parser/visual-constructor/middleware/app/fetching';
+
+import { categoriesMiddleware as sidebarCategorieMiddleware } from '@news-parser/sidebar/middleware/categories';
+import { tagsMiddleware as sidebarTagsMiddleware } from '@news-parser/sidebar/middleware/tags';
 
 import {startApp} from './actions/app.actions';
 import thunkMiddleware from 'redux-thunk';
@@ -46,7 +51,8 @@ const store=createStore(
             listMiddleware,
             postMiddleware,
             pageMiddleware,
-            wpMiddleware,
+            wpCategoryMiddleware,
+            wpTagMiddleware,
             submitMiddleware,
             dialogMiddleware,
             htmlMiddleware,
@@ -55,8 +61,9 @@ const store=createStore(
             templateMiddleware,
             fetchingMiddleware,
             errorMiddleware,
-            dialogFetchingMiddleware
-            
+            dialogFetchingMiddleware,
+            sidebarCategorieMiddleware,
+            sidebarTagsMiddleware
         )));
 store.dispatch(startApp())
 window.addEventListener('DOMContentLoaded',()=>{

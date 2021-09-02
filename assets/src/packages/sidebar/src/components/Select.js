@@ -1,17 +1,13 @@
 import React, { useCallback,useState } from 'react';
 import '@news-parser/styles/sidebar/_select.scss';
 
-export function Select ({onStateChange,children,value}){
+export function Select ({onChange,children,value}){
     const onChangeCallback=useCallback((e)=>{
-        const selectedValue=e.target.value
-        setState({value:selectedValue})
-        onStateChange(selectedValue)
+        onChange(e)
     })
-    const [state,setState]=useState(()=>{
-        return {value}
-    })
+
     return (
-        <select onChange={onChangeCallback} value={state.value}>
+        <select onChange={onChangeCallback} value={value}>
             {children}
         </select>
     )

@@ -5,6 +5,7 @@ import { SidebarItem } from '../components/SidebarItem';
 import { connect } from 'react-redux';
 import { changeSubmitType } from '@news-parser/parser-rss/actions/app.actions';
 import { SUBMIT_TYPE_LIST ,SUBMIT_TYPE_PAGE } from '@news-parser/parser-rss/constants';
+import { SidebarItemsGroup } from '../components/SidebarItemsGroup';
 
 export function SidebarParsingModeMenu ({submitType,changeSubmitType}){
         const PARSE_RSS='Parse RSS',
@@ -13,14 +14,14 @@ export function SidebarParsingModeMenu ({submitType,changeSubmitType}){
         const submitSelection=useCallback((e)=>{
             changeSubmitType(selectState)
         }),
-            getSelectState=useCallback((state)=>{
-                selectState=state
+            getSelectState=useCallback((e)=>{
+                selectState=e.target.value
             })
         return (
-            <>
+            <SidebarItemsGroup>
                 <SidebarItem wide={true} border={true}>
                 <SidebarItemLabel>Select parsing mode:</SidebarItemLabel>
-                <Select onStateChange={getSelectState} value={submitType}>
+                <Select onChange={getSelectState} value={submitType}>
                     <option value={SUBMIT_TYPE_LIST}>{PARSE_RSS}</option>
                     <option value={SUBMIT_TYPE_PAGE}>{PARSE_PAGE}</option>
                 </Select>
@@ -29,7 +30,7 @@ export function SidebarParsingModeMenu ({submitType,changeSubmitType}){
                     <SidebarItemLabel></SidebarItemLabel>
                     <button className='sidebar-submit-button'onClick={submitSelection}>Select</button>
                 </SidebarItem>
-            </>
+            </SidebarItemsGroup>
         )
     
 }

@@ -2,7 +2,7 @@ import {newsParserSettings as settings,newsParserApiEndpoints as endpoints} from
 import {POST,GET,AJAX,REST,PARSE,CREATE} from '@news-parser/parser-rss/constants/';
 import {HTML,TEMPLATE,POST_DRAFT,MEDIA} from '@news-parser/visual-constructor/constants/';
 import {LIST,PAGE} from '@news-parser/parser-rss/constants/';
-import {WP_API,CATEGORIES} from '@news-parser/parser-rss/constants/';
+import {WP_API,CATEGORIES,TAGS} from '@news-parser/parser-rss/constants/';
 
 const config={
     mode:'development',
@@ -72,8 +72,34 @@ const config={
                 order:'asc',
                 _fields:'id%2Cname%2Cparent',
                 _locale:'user'
+            },
+            [POST]:{
+                method:POST,
+                type:REST,
+                nonce:settings.restApiNonce,
+                url:endpoints.rootRestApi+'wp/v2/categories?_locale=user',
+                _locale:'user'
             }   
-            
+        },
+        [`${WP_API}_${TAGS}`]:{
+            [GET]:{
+                method:GET,
+                type:REST,
+                nonce:null,
+                url:endpoints.rootRestApi+'wp/v2/tags?per_page=20&orderby=count&order=desc&_fields=id%2Cname%2Ccount&_locale=user',
+                perPage:100,
+                orderBy:'count',
+                order:'desc',
+                _fields:'id%2Cname%2Ccount',
+                _locale:'user'
+            },
+            [POST]:{
+                method:POST,
+                type:REST,
+                nonce:settings.restApiNonce,
+                url:endpoints.rootRestApi+'/wp/v2/tags?_locale=user',
+                _locale:'user'
+            }   
         }
 
     },

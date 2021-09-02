@@ -58,9 +58,10 @@ class PostController extends BaseController
      * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @param string $url of post that should be parsed and saved as draft
      * @param string $_id front end index of post that should be parsed and saved as draft
+     * @param string $data object with parameters for wp post
      * @return ResponseFormatter
      */
-    public function create($url, $_id)
+    public function create($url, $_id,$data)
     {
         try {
             $parsed_url=parse_url($url);
@@ -82,10 +83,10 @@ class PostController extends BaseController
             $this->post=$post= $this->postModelsFactory($parsed_data);
  
             //Stages of post draw creating
-            $this->createDraft($post)->addSource($post)->addPostThumbnail($post);
+            $this->createPost($post,$data)->addSource($post)->addPostThumbnail($post);
                
 
-            $response = $this->formatResponse->post($post->getAttributes())->addCustomData('_id', $_id)->message('success', sprintf(Success::text('POST_SAVED_AS_DRAFT'), $post->title));
+            $response = $this->formatResponse->post($post->getAttributes())->addCustomData('_id', $_id)->message('success', sprintf(Success::text('POST_SAVED'), $post->title));
         } catch (MyException $e) {
             $response = $this->formatResponse->error($e->getCode())->message('error', $e->getMessage())->addCustomData('_id', $_id);
         }
@@ -93,14 +94,14 @@ class PostController extends BaseController
     }
    
     /**
-     * Create WP post draft
+     * Create WP post 
      *
      * @param PostModel $post
      * @return PostController
      */
-    protected function createDraft(PostModel $post)
+    protected function createPost(PostModel $post,$data)
     {
-        $post->createDraft();
+        $post->createPost($data);
         return $this;
     }
     /**

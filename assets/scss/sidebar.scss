@@ -14,7 +14,7 @@
     background-color: white;
     height: 100%;
     transition: min-width 30ms;
-    overflow-y: scroll;
+    overflow-y: auto;
     flex-shrink: 0;
 }
 
@@ -30,13 +30,24 @@
 
 
 
-@media screen and (max-width: 812px) {
+@media screen and (max-width: 782px) {
     .left-main-sidebar{
-        position: absolute;
+        position: fixed;
         right: 0px;
+        top:46px;
+        height: calc(100% - 46px);
     }
+ 
 }
 
-
+@media screen and (max-width: 1024px) {
+    .left-main-sidebar{
+        position: fixed;
+        right: 0px;
+        top:32px;
+        height: calc(100% - 32px);
+    }
+ 
+}
 
 

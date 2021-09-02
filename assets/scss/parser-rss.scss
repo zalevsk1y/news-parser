@@ -220,8 +220,41 @@ li {
 
 
 
-@media screen and (max-height: 768px) {
+@media screen and (max-height: 782px) {
     .main-parsing-container{
         height: 91vh;
     }
+    .main-button{
+        margin-top:10px;
+    }
+    .wrap-parsing{
+        margin:0;
+    }
+    .posts-wrapper{
+        width:100%;
+    }
+}
+@media screen and (max-width: 782px) {
+    .main-button{
+        margin-top:10px;
+    }
+    .wrap-parsing{
+        margin:0;
+    }
+    .posts-wrapper{
+        width:100%;
+    }
+    html{
+        font-size: 10px;
+    }
+    select {
+        font-size:13px;
+    }
+}
+@media screen and (max-width: 1024px){
+    .main-parsing-container{
+        position: relative;
+        height: auto;
+    }
+    
 }

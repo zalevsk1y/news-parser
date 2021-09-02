@@ -24,8 +24,8 @@ export const pageMiddleware = ({dispatch,getState})=>next=>action=>{
                     for(var i=0,end=selectedPosts.length;i<end;i++){
                         let url=selectedPosts[i].link,
                             inner_id=selectedPosts[i]._id;
-                        if(i===0) requestPromise=dispatch(apiRequest(PAGE,PARSE,{url,_id:inner_id}));
-                        if(i>0) requestPromise=requestPromise.then(()=>dispatch(apiRequest(PAGE,PARSE,{url,_id:inner_id})));
+                        if(i===0) requestPromise=dispatch(apiRequest(PAGE,PARSE,{url,_id:inner_id,data:action.payload.data}));
+                        if(i>0) requestPromise=requestPromise.then(()=>dispatch(apiRequest(PAGE,PARSE,{url,_id:inner_id,data:action.payload.data})));
                     }
                 }
                 break;

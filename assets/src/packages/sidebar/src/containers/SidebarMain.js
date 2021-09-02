@@ -8,7 +8,6 @@ export class SidebarMain extends React.Component{
     constructor (props){
         super(props);
         this.sidebarChangeHandler=this.sidebarChangeHandler.bind(this);
-        console.log(props)
         this.state=props.entity==='parser-rss.list'?{sidebar:'Post'}:{sidebar:'Mode'};
     }
     renderHeader(){
