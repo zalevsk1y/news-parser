@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useLayoutEffect,useState,useRef} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {decodeHTMLEntities} from '@news-parser/helpers/'
@@ -7,64 +7,45 @@ import {decodeHTMLEntities} from '@news-parser/helpers/'
  * 
  * @since 0.8.0
  */
-export class Message extends React.Component{
-    constructor(props){
-        super(props);
-        this.state={open:false};
-        this.close=this.close.bind(this);
-    }
-    /**
-     * Close message window.
-     */
-    close(){
-        this.setState({open:false})
-    }
-    /**
-     * If get mew message close current message and open new one in 400ms.
-     * 
-     * @param {object} prevProps 
-     */
-    componentDidUpdate(prevProps){
-        if(this.props.timestamp!==prevProps.timestamp){
-            if(this.state.open){
-                    this.close();
-                    window.setTimeout(()=>{
-                        this.setState({open:true})
-                    },400)
-            }else{
-                this.setState({open:true})
-            }
+
+
+
+const Message = ({type,text,timestamp}) => {
+    const [open, setOpen] = useState(false);
+    const close = () => setOpen(false);
+  //If get mew message close current message and open new one in 400ms.
+    useLayoutEffect(() => {
+        if (open) {
+          close();
+          setTimeout(() => {
+            setOpen(true);
+          }, 400);
+        } else if(timestamp!==undefined) {
+          setOpen(true);
+        }
+    }, [timestamp]);
+    const infoIcon=(type)=>{
+        switch(type){
+            case 'success':
+                return 'bi-check-circle-fill';
+            case 'error':
+                return'bi-exclamation-octagon-fill';
+            case 'info':
+                return 'bi-info-circle-fill'
         }
     }
+    return (
+      <div className="message-wrapper">
+        <div class={`alert alert-${type} alert-dismissible fade ${open?'show':''}`}>
+        <i className={infoIcon(type)} ></i>
 
-    render(){
-  
-        return (
-            <div className="message-wrapper">
-                <div className={"message container   "+(this.state.open?"":"closed")} >
-    
-                <div className="message-content">
-                    <div className="message-icon">
-                        <div className="fo fo-info" style={this.props.type==="info"?{display: 'block'}:{display: 'none'}}></div>
-                        <div className="fo fo-success" style={this.props.type==="success"?{display: 'block'}:{display: 'none'}}></div>
-                        <div className="fo fo-error" style={this.props.type==="error"?{display: 'block'}:{display: 'none'}}></div>
-                    </div>
-                    <div className="message-text">
-                        {this.props.text}
-                        
-                    </div>
-                </div>
-                <div className="message-close" onClick={this.close}>
-                    <div className="fo fo-close"></div>
-                </div>
-                </div>
-            </div>
-        )
-    }
-}
+        <span className='mx-3'>{text}</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" onClick={close}></button>
+    </div>
 
-
-
+      </div>
+    );
+  }
 
 
 

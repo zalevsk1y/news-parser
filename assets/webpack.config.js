@@ -20,7 +20,7 @@ module.exports=(env,args)=>{
 		},
 		output:{
 					path:path.resolve(__dirname,'../public/js/'),
-					publicPath:path.resolve(__dirname,'../public/js/'),
+					publicPath:'/',
 					filename:`[name]-${VERSION}.bundle.js`
 		},
 		module:{
@@ -78,7 +78,8 @@ module.exports=(env,args)=>{
 				}
 		},
 		devServer:{
-			port:9001,
+			port:5080,
+			host:'0.0.0.0',
 			contentBase: [path.resolve(__dirname, '../public/'),path.join(__dirname,'devServer/assets')],
 			index:path.join(__dirname, 'devServer/index.html'),
 			before:devServer

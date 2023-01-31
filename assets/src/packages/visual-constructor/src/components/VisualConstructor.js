@@ -9,6 +9,7 @@ import config from '@news-parser/config/';
 import {closeDialog} from '../actions/app.actions';
 import {createPostDraft} from '../actions/draft.actions';
 import {createParsingTemplate} from '../actions/template.actions';
+import '@news-parser/styles/_resize-bar.scss'
 
 /**
  * Main visual constructor window element.
@@ -100,6 +101,7 @@ export class VisualConstructor extends React.Component{
                            }
                            <Frame onReady={this.setFrameReady}/>
                         </div>
+                        <div className='resize-drag-bar'></div>
                         <div className="modal-right-side-bar">
                             <SidebarRight />
                         </div>

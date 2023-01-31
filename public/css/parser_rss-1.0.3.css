@@ -1,8 +1,20 @@
 .message-wrapper {
   width: 100%;
   display: flex;
-  justify-content: center; }
-
+  justify-content: center; 
+  position: fixed;
+  top: 37px;
+  left: 0;
+  z-index: 1000;
+}
+.alert-dismissible{
+  min-width: 44vw;
+}
+.alert-error{
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+}
 .message {
   min-width: 340px;
   min-height: 40px;
