@@ -125,7 +125,25 @@ frame {
   flex-grow: 1;
   display: flex;
   flex-direction: row;
-  height: 0; }
+  height: 0; 
+  position: relative;
+}
+.sidebar-nav{
+  position: sticky;
+  z-index: 1000;
+  top: 0px;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+.sidebar-nav .nav{
+  background-color: #fff;
+}
+
+.nav-link{
+  cursor: pointer;
+}
+.sidebar-nav .active{
+  border-bottom: #0d6efd 2px solid
+}
 
 .parsed-data-container {
   width: 80%;
@@ -139,17 +157,16 @@ frame {
   min-width: 225px;
   overflow-y: scroll; }
 
-.modal-footer {
+.visual-container-modal-footer {
   flex-basis: 35px;
   overflow: auto;
   height: auto;
-  min-height: 30px;
+  min-height: 50px;
   width: 100%;
-  padding: 1% 0 1% 0;
   border-top: solid 1px #ddd;
   background-color: #fff; }
 
-.modal-footer .button {
+.visual-container-modal-footer .button {
   position: relative;
   float: right;
   right: 2%; }
@@ -178,7 +195,9 @@ frame {
     Visual constructor sidebar 
 */
 .inner-sidebar-container {
-  padding: 5%; }
+  padding: 5%; 
+  position:relative;
+}
   .inner-sidebar-container .postbox {
     min-width: 200px; }
 

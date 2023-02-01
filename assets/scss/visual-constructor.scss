@@ -67,6 +67,22 @@ frame{
     display: flex;
     flex-direction: row;
     height:0;
+    position: relative;
+}
+.sidebar-nav{
+    position: sticky;
+    z-index: 1000;
+    top: 0px;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+    .nav{
+        background-color:#fff;
+    }
+    .active{
+        border-bottom: #0d6efd 2px solid
+    }
+}
+.nav-link{
+    cursor: pointer;
 }
 .parsed-data-container{
     width:80%;
@@ -80,17 +96,16 @@ frame{
     min-width:225px;
     overflow-y:scroll;
 }
-.modal-footer{
+.visual-container-modal-footer{
     flex-basis: 35px;
     overflow: auto;
     height: auto;
-    min-height: 30px;
+    min-height: 50px;
     width:100%;
-    padding:1% 0 1% 0;
     border-top:solid 1px #ddd;
     background-color: #fff;
 }
-.modal-footer .button{
+.visual-container-modal-footer .button{
     position: relative;
     float:right;
     right:2%;
@@ -122,6 +137,7 @@ frame{
 */
 .inner-sidebar-container{
     padding: 5%;
+    position:relative;
     .postbox{
         min-width:200px;
     }
