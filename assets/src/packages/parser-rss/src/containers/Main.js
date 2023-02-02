@@ -49,7 +49,7 @@ class Main extends React.Component {
         return (
             <div className={"wrap"} >
                 <VisualConstructor />
-                <SidebarMain viewportHeigh={this.viewportHeigh} viewportWidth={this.viewportWidth} entity={this.props.entity} />
+               
                 <div className="parsing-title">
                     <h1>News-Parser</h1>
                 </div>

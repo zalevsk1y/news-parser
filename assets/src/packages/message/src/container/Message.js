@@ -36,11 +36,11 @@ const Message = ({type,text,timestamp}) => {
     }
     return (
       <div className="message-wrapper">
-        <div class={`alert alert-${type} alert-dismissible fade ${open?'show':''}`}>
+        <div className={`alert alert-${type} alert-dismissible fade ${open?'show':''}`}>
         <i className={infoIcon(type)} ></i>
 
         <span className='mx-3'>{text}</span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" onClick={close}></button>
+        <button type="button" className="btn-close" data-bs-dismiss="alert" onClick={close}></button>
     </div>
 
       </div>
