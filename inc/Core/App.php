@@ -3,8 +3,8 @@ namespace NewsParserPlugin\Core;
 
 use NewsParserPlugin\Controller\AjaxController;
 use NewsParserPlugin\Controller\MiddlewareController;
-use NewsParserPlugin\Interfaces\ContainerInterface;
 use NewsParserPlugin\Controller\EventController;
+use \ContainerBuilder\Interfaces\ContainerInterface as ContainerInterface;
 
 class App{
     protected $ajaxController;

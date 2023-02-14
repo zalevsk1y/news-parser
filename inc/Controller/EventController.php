@@ -1,8 +1,8 @@
 <?php
 namespace NewsParserPlugin\Controller;
 
-use NewsParserPlugin\Interfaces\ContainerInterface;
 use NewsParserPlugin\Interfaces\EventControllerInterface;
+use \ContainerBuilder\Interfaces\ContainerInterface as ContainerInterface;
 
 /**
  * Class event observer. Calls controller on event trigger.

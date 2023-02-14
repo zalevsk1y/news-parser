@@ -33,7 +33,7 @@ require 'autoload.php';
 if(\file_exists(NEWS_PARSER_PLUGIN_DIR.'vendor/autoload.php')) require NEWS_PARSER_PLUGIN_DIR.'vendor/autoload.php';
 
 
-$container=new DI\ContainerBuilder();
+$container=new \ContainerBuilder\DI();
 $container->addDefinitions(NEWS_PARSER_PLUGIN_DIR.'di-config-new.php');
 //$container=$container_builder->build();
 
