@@ -1,6 +1,6 @@
 
 import {API_SUCCESS,apiRequest} from '@news-parser/parser-rss/actions/api.actions';
-
+import {closeDialog} from '../../actions/app.actions';
 import {showMessage} from '@news-parser/message/';
 import {CREATE_PARSING_TEMPLATE} from '../../actions/template.actions';
 import {formatCreateTemplateRequest} from '@news-parser/helpers/response-formatters/TemplateModel';
@@ -16,6 +16,7 @@ export const templateMiddleware = ({getState,dispatch})=>next=>action=>{
             break;
         case `[${TEMPLATE}:${CREATE}]${API_SUCCESS}`:
             const {msg}=action.payload.response;
+            dispatch(closeDialog());
             dispatch(showMessage(msg.text,msg.text));
     }
 }

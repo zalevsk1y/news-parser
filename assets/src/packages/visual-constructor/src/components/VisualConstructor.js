@@ -66,7 +66,10 @@ export class VisualConstructor extends React.Component{
         }else{
             this.props.saveTemplate()
         }
-        this.close();
+        this.setState({
+            frameIsReady:false
+        })
+        //this.close();
     }
     /**
      * Loading spinner element.
