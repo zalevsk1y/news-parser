@@ -66,7 +66,7 @@ const config={
                 method:GET,
                 type:REST,
                 nonce:null,
-                url:endpoints.rootRestApi+'wp/v2/categories?per_page=100&orderby=name&order=asc&_fields=id%2Cname%2Cparent&_locale=user',
+                url:endpoints.rootRestApi+'wp/v2/categories&per_page=100&orderby=name&order=asc&_fields=id%2Cname%2Cparent&_locale=user',
                 perPage:100,
                 orderBy:'name',
                 order:'asc',
@@ -77,7 +77,7 @@ const config={
                 method:POST,
                 type:REST,
                 nonce:settings.restApiNonce,
-                url:endpoints.rootRestApi+'wp/v2/categories?_locale=user',
+                url:endpoints.rootRestApi+'wp%2Fv2%2Fcategories&context=edit&_locale=user',
                 _locale:'user'
             }   
         },
@@ -86,7 +86,7 @@ const config={
                 method:GET,
                 type:REST,
                 nonce:null,
-                url:endpoints.rootRestApi+'wp/v2/tags?per_page=20&orderby=count&order=desc&_fields=id%2Cname%2Ccount&_locale=user',
+                url:endpoints.rootRestApi+'wp/v2/tags&per_page=20&orderby=count&order=desc&_fields=id%2Cname%2Ccount&_locale=user',
                 perPage:100,
                 orderBy:'count',
                 order:'desc',
@@ -97,7 +97,7 @@ const config={
                 method:POST,
                 type:REST,
                 nonce:settings.restApiNonce,
-                url:endpoints.rootRestApi+'/wp/v2/tags?_locale=user',
+                url:endpoints.rootRestApi+'wp/v2/tags&_locale=user',
                 _locale:'user'
             }   
         }

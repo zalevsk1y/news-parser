@@ -22,12 +22,13 @@
     height: $item-wide-height;
 }
 .sidebar-item-narrow{
-    min-height: $item-narrow-min-height;
+    padding-bottom: 10px;
 
 }
 
 .sidebar-item label{
-    padding-left:10px;
+    padding-bottom: 4px;
+    padding-left: 0px; 
 }
 
 .sidebar-submit-button{

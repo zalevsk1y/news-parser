@@ -15,6 +15,10 @@
   background-color: #f8d7da;
   border-color: #f5c2c7;
 }
+.categories-filter-input{
+  padding-bottom: 10px;
+}
+
 .message {
   min-width: 340px;
   min-height: 40px;
@@ -317,7 +321,7 @@ frame {
   height: 50px; }
 
 .sidebar-item-narrow {
-  min-height: 50px; }
+ padding-bottom: 10px;}
 
 .sidebar-item label {
   padding-left: 10px; }
@@ -419,16 +423,15 @@ frame {
 .categories-search > input {
   width: 100%; }
 
-.categories-search > label {
+.sidebar-item  label {
+  padding-bottom: 4px;
   padding-left: 0px; }
 
 .input-container {
   flex-grow: 1;
   min-width: 50px; }
 
-.tag-item-container {
-  padding-left: 10px;
-  padding-right: 10px; }
+
 
 .tag-input-container {
   border: 1px solid rgba(0, 0, 0, 0.4);
@@ -466,13 +469,14 @@ frame {
   flex-grow: 0;
   background-color: #efefef;
   border-radius: 2px;
-  min-height: 30px;
+  min-height: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 4px 4px 4px; }
+  margin: 6px 6px 6px; }
 
 .tag-item-token button {
+  padding: 0;
   border: none; }
 
 .pop-up {
