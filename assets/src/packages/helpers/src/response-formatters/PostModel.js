@@ -21,10 +21,11 @@ export class PostModel extends BaseClass{
         const argsError=this.argsCheck({postData,options,url});
         if(argsError instanceof Error) throw argsError;
         this.url=url;
-        this.options=options;
+        this.options=options.generalOptions;
         return {
                 title:postData.title,
-                content:this.formatParsedData(postData)
+                content:this.formatParsedData(postData),
+                ...options.postOptions
             }
     }
 

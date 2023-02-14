@@ -6,13 +6,15 @@ import {getPostEditLink} from "@news-parser/helpers";
 import {setPostMeta} from "@news-parser/parser-rss/actions/post.actions";
 import {showMessage} from "@news-parser/message/"
 import {formatCreatePostDraftRequest} from '@news-parser/helpers/response-formatters/PostModel';
+import {formatPostOptions} from '@news-parser/helpers/response-formatters/formatPostOptions';
 
 export const draftMiddleware=({dispatch,getState})=>next=>action=>{
     next(action);
     switch (action.type){
         case CREATE_POST_DRAFT:
             const {parsedData,options,dialogData}=getState().parse.dialog.visualConstructor,
-                preparedParsedData=formatCreatePostDraftRequest(parsedData,options,dialogData.url)
+                postOptions=formatPostOptions(getState().parse.sidebar),
+                preparedParsedData=formatCreatePostDraftRequest(parsedData,{generalOptions:options,postOptions},dialogData.url)
             dispatch(apiRequest(POST_DRAFT,CREATE,preparedParsedData));
             break;
         case `[${POST_DRAFT}:${CREATE}]API_SUCCESS`:
@@ -20,7 +22,7 @@ export const draftMiddleware=({dispatch,getState})=>next=>action=>{
                 {title,id}=action.payload.response,
                 msg={
                         type:'success',
-                        text:`Post "${title.raw}" was successfully parsed and save as "draft".`
+                        text:`Post "${title.raw}" was successfully parsed and save.`
                     };
             dispatch(setPostMeta(DRAFT,INSERT,_id,{post_id:id,editLink:getPostEditLink(id)}));
             dispatch(showMessage(msg.type,msg.text));

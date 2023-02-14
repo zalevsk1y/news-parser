@@ -3,7 +3,7 @@ import { Select } from '../../components/Select';
 import { SidebarItemLabel } from '../../components/SidebarItemLabel';
 import { SidebarItem } from '../../components/SidebarItem';
 import { SidebarItemsGroup } from '../../components/SidebarItemsGroup';
-import { PopUpTimeDate } from '../../components/PopUpTimeDate';
+import  PopUpTimeDate  from '../../components/PopUpTimeDate';
 import { publishDateSet,publishIntervalSet,postFormatSet,postStatusSet } from '../../actions/status.visability.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import '@news-parser/styles/sidebar/_status-visibility-group.scss'
@@ -48,7 +48,7 @@ const StatusVisibilityGroup=()=>{
                               <option value={'imagey'} label='Imagey'></option>
                               <option value={'link'} label='Link'></option>
                               <option value={'quote'} label='Quote'></option>
-                              <option value={'standart'} label='Standart'></option>
+                              <option value={'standard'} label='Standard'></option>
                               <option value={'status'} label='Status'></option>
                               <option value={'video'} label='Video'></option>
                           </Select>

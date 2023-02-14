@@ -26,7 +26,7 @@ export const initialStateParse={
                 publish:{
                     date:false,
                 },
-                postFormat:'standart',
+                postFormat:'standard',
                 allowComments:true,
                 allowPinbacks:true
             }
