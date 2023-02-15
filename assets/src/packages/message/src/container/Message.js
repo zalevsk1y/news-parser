@@ -1,6 +1,6 @@
-import React, { useLayoutEffect, useState, useRef } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { decodeHTMLEntities } from "@news-parser/helpers/";
 /**
  * Message window element.
@@ -8,18 +8,20 @@ import { decodeHTMLEntities } from "@news-parser/helpers/";
  * @since 0.8.0
  */
 
-const Message = ({ type, text, timestamp }) => {
-  const [open, setOpen] = useState(false);
-  const close = () => setOpen(false);
+const Message = () => {
+  const [isOpen, setMessageWindowState] = useState(false);
+  const { type, text, timestamp } = useSelector((state) => state.parse.message);
+  const close = () => setMessageWindowState(false);
+  let decodedText = text ? decodeHTMLEntities(text) : "";
   //If get mew message close current message and open new one in 400ms.
   useLayoutEffect(() => {
-    if (open) {
+    if (isOpen) {
       close();
       setTimeout(() => {
-        setOpen(true);
+        setMessageWindowState(true);
       }, 400);
     } else if (timestamp !== undefined) {
-      setOpen(true);
+      setMessageWindowState(true);
     }
   }, [timestamp]);
   const infoIcon = (type) => {
@@ -36,12 +38,12 @@ const Message = ({ type, text, timestamp }) => {
     <div className="message-wrapper">
       <div
         className={`alert alert-${type} alert-dismissible fade ${
-          open ? "show" : ""
+          isOpen ? "show" : ""
         }`}
       >
         <i className={infoIcon(type)}></i>
 
-        <span className="mx-3">{text}</span>
+        <span className="mx-3">{decodedText}</span>
         <button
           type="button"
           className="btn-close"
@@ -53,28 +55,4 @@ const Message = ({ type, text, timestamp }) => {
   );
 };
 
-function mapStateToProps(state) {
-  const { type, text, timestamp } = state.parse.message;
-
-  return {
-    type,
-    text: text ? decodeHTMLEntities(text) : "",
-    timestamp,
-  };
-}
-Message.propTypes = {
-  /**
-   * Message type [error,info,success]
-   */
-  type: PropTypes.string,
-  /**
-   * Message text.
-   */
-  text: PropTypes.string,
-  /**
-   * Timestamp of the message.
-   */
-  timestamp: PropTypes.number,
-};
-
-export default connect(mapStateToProps)(Message);
+export default Message;
