@@ -34,7 +34,7 @@ class ImagePrepare extends Modifier implements MiddlewareInterface{
         return \preg_replace_callback('/(<img.*?>)/i',
             function($matches){
                 if(preg_match('/data-src=(\'|\")(.*?)(\'|\")/i',$matches[1],$path)===1){
-                    return preg_replace('/src=(\'|\")(.*?)(\'|\")/i','src="'.$path[2].'"',$matches[1]);
+                    return preg_replace('/data-src=(\'|\")(.*?)(\'|\")/i','src="'.$path[2].'"',$matches[1]);
                 } 
                 return $matches[1];
             },
@@ -50,7 +50,7 @@ class ImagePrepare extends Modifier implements MiddlewareInterface{
         return \preg_replace_callback('/(<picture.*?>.*?<\/picture>)/i',
             function($matches){
                 if(preg_match('/data-srcset=(\'|\")(.*?)(\'|\")/i',$matches[1],$path)===1){
-                    return preg_replace('/srcset=(\'|\")(.*?)(\'|\")/i','srcset="'.$path[2].'"',$matches[1]);
+                    return preg_replace('/data-srcset=(\'|\")(.*?)(\'|\")/i','srcset="'.$path[2].'"',$matches[1]);
                 } 
                 return $matches[1];
             },

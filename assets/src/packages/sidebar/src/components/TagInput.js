@@ -1,67 +1,8 @@
 import React from "react";
 import "@news-parser/styles/sidebar/_tag-input.scss";
-
-export class TagInput1 extends React.Component {
-  constructor(props) {
-    super(props);
-    this.inputKeyPressHandler = this.inputKeyPressHandler.bind(this);
-    this.removeTag = this.removeTag.bind(this);
-  }
-  renderTags() {
-    const tags = this.props.tags || [];
-    return tags.map((item, i) => {
-      const clickCallback = (event) => {
-        this.removeTag(item);
-      };
-      return (
-        <span className="tag-item-token" key={"tag-item-" + i.toString()}>
-          <span className="tag-item-name">{item.name}</span>
-          <button className="close-tag-cross" onClick={clickCallback}>
-            x
-          </button>
-        </span>
-      );
-    });
-  }
-  removeTag(tag) {
-    this.props.onChange(tag);
-  }
-  addTag(tag) {
-    this.props.onChange({ name: this.sanitizeTag(tag) });
-  }
-  sanitizeTag(tag) {
-    return tag.replace(",", "");
-  }
-  inputKeyPressHandler(event) {
-    if (event.key === "Enter" || event.key === ",") {
-      const tag = event.target.value;
-      event.target.value = "";
-      tag !== "" && this.addTag(tag);
-    }
-  }
-  render() {
-    const inputId = `tag-input${
-      this.props.idSufix ? "-" + this.props.idSufix : ""
-    }`;
-    return (
-      <div className="tag-item-container">
-        <label htmlFor={inputId}>{this.props.labelText}</label>
-        <div className="tag-input-container input-container">
-          {this.renderTags()}
-          <input
-            type="text"
-            onKeyPress={this.inputKeyPressHandler}
-            id={inputId}
-          ></input>
-        </div>
-        <i>{this.props.bottomCapture}</i>
-      </div>
-    );
-  }
-}
+import { useRef } from "react";
 
 const TagInput = ({ tags, onChange,id:idSufix,bottomCapture,labelText }) => {
-  console.log(tags)
     const renderTags = () => {
     if (tags.length==0) return null;
     return tags.map((item, i) => {
@@ -93,6 +34,7 @@ const TagInput = ({ tags, onChange,id:idSufix,bottomCapture,labelText }) => {
 
   const inputKeyPressHandler = (event) => {
     if (event.key === "Enter" || event.key === ",") {
+      event.preventDefault();
       const tag = event.target.value;
       event.target.value = "";
       tag !== "" && addTag(tag);
@@ -105,7 +47,7 @@ const TagInput = ({ tags, onChange,id:idSufix,bottomCapture,labelText }) => {
       <label htmlFor={inputId}>{labelText}</label>
       <div className="tag-input-container input-container">
         {renderTags()}
-        <input type="text" onKeyPress={inputKeyPressHandler} id={inputId} />
+        <input type="text" onKeyDown={inputKeyPressHandler} id={inputId} />
       </div>
       <i>{bottomCapture}</i>
     </div>

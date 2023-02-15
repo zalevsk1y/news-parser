@@ -40,7 +40,6 @@ export class TagsGroup1 extends React.Component {
   }
 }
 function mapStateToProps(state) {
-  console.log(state.parse.sidebar.tags);
   return {
     tags: state.parse.sidebar.tags,
     selected: state.parse.sidebar.selectedTags,

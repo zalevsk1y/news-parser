@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState, useRef } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { decodeHTMLEntities } from "@news-parser/helpers/";

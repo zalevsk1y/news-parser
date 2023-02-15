@@ -59,11 +59,25 @@ export class Parser{
      * @returns {object}
      */
     parseImageContent(el){
-        const element=el;
-        return {
-            src:element.src,
-            alt:element.alt
+        const element=el,
+            sourceTag=element.parentElement.getElementsByTagName('source');
+       if(sourceTag.length==0){
+            return {
+                src:element.src,
+                srcSet:element.srcset,
+                sizes:element.sizes,
+                alt:element.alt
+            }
         }
+        if(sourceTag.length>0){
+            return {
+                src:sourceTag.src!==''?element.src:sourceTag[0].src,
+                srcset:sourceTag[0].srcset,
+                sizes:sourceTag[0].sizes,
+                alt:element.alt
+            }
+        }
+        
     }
     /**
      * Get <ul> tag data.

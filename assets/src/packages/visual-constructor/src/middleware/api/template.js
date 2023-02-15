@@ -17,6 +17,6 @@ export const templateMiddleware = ({getState,dispatch})=>next=>action=>{
         case `[${TEMPLATE}:${CREATE}]${API_SUCCESS}`:
             const {msg}=action.payload.response;
             dispatch(closeDialog());
-            dispatch(showMessage(msg.text,msg.text));
+            dispatch(showMessage(msg.type,msg.text));
     }
 }

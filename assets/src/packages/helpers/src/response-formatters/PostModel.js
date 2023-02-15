@@ -48,7 +48,7 @@ export class PostModel extends BaseClass{
                     postBody+=this.paragraph(item.content);
                     break;
                 case 'IMG':
-                    postBody+=this.image(item.content.src,item.content.alt);
+                    postBody+=this.image(item.content.src,item.content.srcset,item.content.alt);
                     break;
                 case 'H1':
                 case 'H2':
@@ -124,10 +124,10 @@ export class PostModel extends BaseClass{
      * @param {string} alt 
      * @returns {string}
      */
-    image(url,alt){
-        const cleanUrl=this.sanitize(url),
+    image(src,srcSet,alt){
+        const cleanSrc=this.sanitize(this.getSrcFromSrcSet(srcSet)),
             cleanAlt=this.sanitize(alt);
-        return `<!-- wp:image --><figure class="wp-block-image"><img src="${cleanUrl}" alt="${cleanAlt}"/></figure><!-- /wp:image -->`;
+        return `<!-- wp:image --><figure class="wp-block-image"><img src="${cleanSrc}" alt="${cleanAlt}"/></figure><!-- /wp:image -->`;
     }
     /**
      * Format list tag data to gutenberg list block. 
@@ -200,8 +200,18 @@ export class PostModel extends BaseClass{
     sanitizeUrl(url){
         return escURLRaw(url);
     }
-   
-
+   /**
+    * Get src from srcset
+    * 
+    * @param {string} srcSet
+    * @param {number} index
+    */
+    getSrcFromSrcSet(srcSet,index=-2){
+        let srcSetArr=srcSet.split(',');
+        if(srcSetArr.length<=index) throw new Error('Given index in greater then number of srcset breakpoints');
+        console.log(srcSetArr.at(index).trim().replace(/\s.*w/,''))
+        return srcSetArr.at(index).trim().replace(/\s.*w/,'')
+    }
 
 }
 /**
