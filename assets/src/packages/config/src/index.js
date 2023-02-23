@@ -50,6 +50,12 @@ const config={
                 type:AJAX,
                 nonce:settings.ajaxApiNonce,
                 url:endpoints[TEMPLATE]
+            },
+            [GET]:{
+                method:GET,
+                type:REST,
+                nonce:settings.restApiNonce,
+                url:endpoints.rootRestApi+'news-parser-plugin/v1/templates'
             }
         },
         //visual-constructor.post-draft

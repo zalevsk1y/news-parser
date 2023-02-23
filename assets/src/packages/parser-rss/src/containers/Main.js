@@ -1,89 +1,54 @@
-import React from 'react';
+import React,{useMemo} from 'react';
 import Message from '@news-parser/message/';
 import InputForm from './InputForm';
 import Posts from './Posts';
 import Indicator from './Indicator';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import VisualConstructor from '@news-parser/visual-constructor/';
 import {parseList} from '../actions/submit.action';
-import {parseURL} from '../actions/submit.action';
 import PropTypes from 'prop-types';
-import {innerHeight, innerWidth} from 'globals';
-import {SidebarMain} from '@news-parser/sidebar/';
-import { SUBMIT_TYPE_LIST, SUBMIT_TYPE_PAGE } from '../constants'
-import { getWPCategories,getWPTags } from '../actions/wp.api.actions';
-
+import {parseSelected} from '../actions/page.actions';
+import {SelectedPostsInfo} from './SelectedPostsInfo';
 /**
  * Main application element.
  * 
  * @since 0.8.0
  */
 
-class Main extends React.Component {
-    constructor(props){
-        super(props);
-        this.submitButton=this.submitButton.bind(this);
-        this.state={isSidebarOpen:true}
-        this.viewportHeigh=innerHeight;
-        this.viewportWidth=innerWidth;
-        this.getSidebarData();
-    }
-    getSidebarData(){
-        this.props.getWPCategories();
-        this.props.getWPTags();
-    }
-    submitButton(submitType){
-        switch (submitType){
-            case SUBMIT_TYPE_LIST:
-                return {buttonName:"Parse RSS Feed",submitAction:parseList};
-            case SUBMIT_TYPE_PAGE:
-                return {buttonName:"Parse Page",submitAction:parseURL};
-        }
-    }
-    handleSidebeStateChange(sidebarConponentState){
-        const sidebarState=sidebarConponentState.sidebarState;
-        this.setState({isSidebarOpen:sidebarState});
-    }
-    render() {
-       
-        return (
-            <div className={"wrap"} >
-                <VisualConstructor />
-               
-                <div className="parsing-title">
-                    <h1>News-Parser</h1>
-                </div>
-                <Indicator step={0.5}/>
-                <Message />
-                <InputForm {...this.submitButton(this.props.submitType)}/>
-                <Posts />
-            </div>
-        )
-    }
-}
-
-function mapStateToProps(state){
-    
-    return {
-        submitType:state.parse.appState.submitType,
-        entity:state.parse.appState.entity,
-        categories:state.parse.sidebar.categories
-
-    }
-}
-function mapDispatchToProps(dispatch) {
-    return {
-        getWPCategories:()=>{
-            dispatch(getWPCategories())
-        },
-        getWPTags:()=>{
-            dispatch(getWPTags())
-        }
-    }
-}
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(Main);
+
+const Main=( )=>{
+    const dispatch=useDispatch();
+    const selectedPosts=useSelector(state=>state.parse.items.select)
+    const parseListAction=(url)=>dispatch(parseList(url))
+    const selectedPostsCount=useMemo(()=>selectedPosts==undefined?0:Object.keys(selectedPosts).length,[selectedPosts]);
+    const isSelectedInfoOpen=selectedPostsCount>0; 
+    const parseSelectedAction=()=>dispatch(parseSelected())
+  
+    return (
+      <div className={"wrap"}>
+        <VisualConstructor />
+        <div className="parsing-title">
+          <h1>News-Parser</h1>
+        </div>
+        <Indicator step={0.5} />
+        <Message />
+        <InputForm buttonName= "Parse RSS Feed" submitAction={parseListAction} />
+        <div
+          className={`selected-posts-info row justify-content-center ${
+            isSelectedInfoOpen ? "" : "close-opacity"
+          }`}
+        >
+          <SelectedPostsInfo postsCount={selectedPostsCount} submitAction={parseSelectedAction}/>
+        </div>
+        <Posts />
+      </div>
+    );
+  }
+  
+
+export default Main;
 
 
 Main.propTypes={

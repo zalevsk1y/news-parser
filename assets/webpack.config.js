@@ -74,7 +74,8 @@ module.exports=(env,args)=>{
 					"@news-parser/visual-constructor":path.resolve(__dirname,"src/packages/visual-constructor/src/"),
 					"@news-parser/styles":path.resolve(__dirname,"scss/"),
 					"@news-parser/image":path.resolve(__dirname,"src/packages/image/src/"),
-					"@news-parser/sidebar":path.resolve(__dirname,"src/packages/sidebar/src/")
+					"@news-parser/sidebar":path.resolve(__dirname,"src/packages/sidebar/src/"),
+					"@news-parser/template":path.resolve(__dirname,"src/packages/template/src/")
 				}
 		},
 		devServer:{

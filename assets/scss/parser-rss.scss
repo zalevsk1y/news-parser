@@ -14,7 +14,16 @@ body {
 .appContainer {
     margin: auto;
 }
-
+.lh-2 {
+    line-height: 2;
+}
+.close-opacity{
+    opacity:0;
+  }
+  .selected-posts-info{
+    transition-property: opacity;
+    transition-duration: 300ms;
+  }
 .main-parsing-container{
     width: 100%;
     display: flex;

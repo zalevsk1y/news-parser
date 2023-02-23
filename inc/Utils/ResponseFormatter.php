@@ -1,6 +1,7 @@
 <?php
 namespace NewsParserPlugin\Utils;
 
+
 /**
  * Class format response in proper way.You can build a chain of
  * method e.g. ->post($args)->message($args)->get() to get response at the end of chain add ::get()
@@ -12,8 +13,7 @@ namespace NewsParserPlugin\Utils;
  * @license  MIT
  */
 
-class ResponseFormatter
-{
+class ResponseFormatter {
 
     /**
      * Response content type.
@@ -137,6 +137,17 @@ class ResponseFormatter
         return $this;
     }
     /**
+     * Template options
+     *
+     * @param string $options array of template-options
+     * @return ResponseFormatter return this for chain building
+     */
+    public function options($options)
+    {
+        $this->data['options']=$options;
+        return $this;
+    }
+    /**
      * Add custom data params to response.
      *
      * @param string $field_name
@@ -149,6 +160,13 @@ class ResponseFormatter
         $escaped_value=esc_html($value);
         $this->data['data'][$escaped_field_name]=$escaped_value;
         return $this;
+    }
+    /**
+     * Returns status code
+     */
+    public function getCode()
+    {
+        return $this->data['code'];
     }
     /**
      * Return answer data in array|object|json format

@@ -5,18 +5,22 @@ use NewsParserPlugin\Controller\AjaxController;
 use NewsParserPlugin\Controller\MiddlewareController;
 use NewsParserPlugin\Controller\EventController;
 use \ContainerBuilder\Interfaces\ContainerInterface as ContainerInterface;
+use NewsParserPlugin\Controller\TemplateApiController;
+use NewsParserPlugin\Utils\ResponseFormatter;
 
 class App{
     protected $ajaxController;
     public $middleware;
     public $DI_container;
     public $event;
+    public $templateApiController;
     protected $mainMenu;
     static protected $instance=null;
     protected function __construct(ContainerInterface $DI_container){
         $this->event=EventController::getInstance($DI_container);
         $this->DI_container=$DI_container;
         $this->ajaxController=AjaxController::create($this->event);
+        $this->templateApiController=TemplateApiController::create($this->event);
         $this->middleware=MiddlewareController::getInstance($this->event);
         $this->mainMenu=Main::start($DI_container->get(\NewsParserPlugin\Menu\Admin\MenuPage::class),$DI_container->get(\NewsParserPlugin\Utils\MenuConfig::class));
     }

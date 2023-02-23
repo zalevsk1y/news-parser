@@ -1,7 +1,7 @@
-export const API_REQUEST='API_REQUEST';
-export const WP_API_REQUEST='WP_API_REQUEST';
-export const API_SUCCESS='API_SUCCESS';
-export const API_ERROR='API_ERROR';
+export const API_REQUEST='API/REQUEST';
+export const WP_API_REQUEST='WP_API/REQUEST';
+export const API_SUCCESS='API/SUCCESS';
+export const API_ERROR='API/ERROR';
 export const START_FETCHING='START_FETCHING';
 export const STOP_FETCHING='STOP_FETCHING';
 

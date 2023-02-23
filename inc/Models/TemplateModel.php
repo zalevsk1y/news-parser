@@ -133,7 +133,20 @@ class TemplateModel implements ModelInterface
         $this->extraOptions=$options['extraOptions'];
     }
     /**
-     * Get all options in needed format.
+     * Get all options in needed format. If no options found return null.
+     *
+     * 
+     * @param string $format accept array|object|json.
+     * @return array|object|string|null
+     */
+    public function queryAttributes($format){
+        if (!isset($this->extraOptions)||!isset($this->parseTemplate)) {
+            return null;
+        }
+        return $this->formatAttributes($format);
+    }
+    /**
+     * Get all options in needed format. If no options found return Exception.
      *
      * @throws MyException if there is no options for that url.
      * @param string $format accept array|object|json.
@@ -144,6 +157,16 @@ class TemplateModel implements ModelInterface
         if (!isset($this->extraOptions)||!isset($this->parseTemplate)) {
             throw new MyException(Errors::text('NO_TEMPLATE'), Errors::code('BAD_REQUEST'));
         }
+       return $this->formatAttributes($format);
+    }
+    /**
+     * Return options data in proper format.
+     * 
+     * @param string $format accept array|object|json.
+     * @return array|object|string
+     */
+    protected function formatAttributes($format)
+    {
         $data=array(
             'extraOptions'=>$this->extraOptions,
             'template'=>$this->parseTemplate

@@ -38,7 +38,7 @@ export class InputForm extends React.Component{
             this.props.showMessage('info','Please enter valid url.');
             return;
         }
-        this.props.dispatchSubmitData(this.state.inputValue,this.props.submitAction)
+        this.props.submitAction(this.state.inputValue)
     }
     render(){
         return (

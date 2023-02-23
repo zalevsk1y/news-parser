@@ -11,7 +11,6 @@ import { showMessage } from '@news-parser/message/actions/';
 export const pageMiddleware = ({dispatch,getState})=>next=>action=>{
     next (action);
     switch(action.type){
-     
         case `[${PAGE}:${PARSE}]${SELECTED}`:
             const {data,select}=getState().parse.items,
                     selected=Object.keys(select);

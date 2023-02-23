@@ -24,16 +24,11 @@ const Message = () => {
       setMessageWindowState(true);
     }
   }, [timestamp]);
-  const infoIcon = (type) => {
-    switch (type) {
-      case "success":
-        return "bi-check-circle-fill";
-      case "error":
-        return "bi-exclamation-octagon-fill";
-      case "info":
-        return "bi-info-circle-fill";
-    }
-  };
+  const infoIcon = {
+    "success":"bi-check-circle-fill",
+    "error":"bi-exclamation-octagon-fill",
+    "info":"bi-info-circle-fill"
+    };
   return (
     <div className="message-wrapper">
       <div
@@ -41,7 +36,7 @@ const Message = () => {
           isOpen ? "show" : ""
         }`}
       >
-        <i className={infoIcon(type)}></i>
+        <i className={infoIcon[type]}></i>
 
         <span className="mx-3">{decodedText}</span>
         <button

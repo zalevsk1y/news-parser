@@ -1,6 +1,6 @@
 import { apiRequest } from "../../actions/api.actions";
 import { GET,POST, WP_API,TAGS } from "../../constants";
-import { API_SUCCESS,API_REQUEST,API_ERROR } from "../../actions/api.actions";
+import { API_SUCCESS } from "../../actions/api.actions";
 import { mapTags,mapTag,selectTag } from '@news-parser/sidebar/actions/tag.actions'
 
 

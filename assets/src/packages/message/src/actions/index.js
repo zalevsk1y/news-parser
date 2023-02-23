@@ -1,4 +1,4 @@
-export const SHOW_MESSAGE='SHOW_MESSAGE';
+export const SHOW_MESSAGE='[MESSAGE:SHOW]';
 
 export const showMessage=(type,text)=>{
     return {

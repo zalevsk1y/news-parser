@@ -12,6 +12,7 @@ export const initialStateParse={
             },
             message:false,
             dialog:false,
+            template:false,
             items:{
                 data:[],
                 select:{},

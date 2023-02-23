@@ -7,6 +7,9 @@
   left: 0;
   z-index: 1000;
 }
+.lh-2 {
+  line-height: 2 !important;
+}
 .alert-dismissible{
   min-width: 44vw;
 }
@@ -14,6 +17,13 @@
   color: #842029;
   background-color: #f8d7da;
   border-color: #f5c2c7;
+}
+.close-opacity{
+  opacity:0;
+}
+.selected-posts-info{
+  transition-property: opacity;
+  transition-duration: 300ms;
 }
 .categories-filter-input{
   padding-bottom: 10px;
@@ -537,7 +547,7 @@ input:out-of-range {
   border-bottom: 3px solid;
   border-color: #007cba; }
 
-@charset "UTF-8";
+
 .fo {
   font-family: 'fontello';
   display: inline-block;
