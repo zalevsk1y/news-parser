@@ -2,35 +2,48 @@ import {AJAX,REST,GET,POST} from '@news-parser/parser-rss/constants/index';
 import {BaseClass} from '../classes/BaseClass';
 import config from '@news-parser/config';
 
-class Api extends BaseClass{
+export class Api extends BaseClass{
+    params=null;
+    fetchParams={};
+    rootUrl;
     constructor(rootUrl){
         super();
+        console.log(this.fetchParams)
         this.rootUrl=rootUrl;
     }
     request(url,params){
         this.argsCheck({url,params});
-        const {nonce,type,method}=params,
-            fetchParams={
-                method,
-                headers:this.getHeaders(url,type,method,nonce)
-            };
-        let {body}=params;
-        if(method===GET&&nonce!==null){
-            url+='&_wpnonce='+nonce;
+        this.params={...params,url};
+        this.fetchParams.method=this.params.method;
+        this._getHeaders();
+        this._getUrl();
+        this._getBody();
+        return fetch(this.params.url,this.fetchParams);
+    }
+    _getUrl(){
+        if(this.params.method===GET){
+            let {url,body}=this.params;
             if(body!==undefined&&body!==null&& typeof body==='object'){
                 url+=Object.keys(body).map(paramName=>`&${encodeURIComponent(paramName)}=${encodeURIComponent(body[paramName])}`).join('');
             }
-        }else if(type===AJAX&&method===POST){
-            body=body!==undefined?{...body,_wpnonce:nonce}:{_wpnonce:nonce};
-            fetchParams.body=JSON.stringify(body);
-        }else if(type===REST&&method===POST){
-            fetchParams.body=JSON.stringify(body);
+            if(this.params.type==AJAX&&this.params.nonce!=null){
+                url+='&_wpnonce='+nonce;
+            }
+            this.params.url=url;
         }
-        return fetch(url,fetchParams);
     }
-    getHeaders(url,type,method,nonce){
-        this.argsCheck({url,type,method,nonce});
-        const headers={};
+    _getBody(){
+        if(this.params.method==POST){
+            let {body,nonce}=this.params;
+            if(this.params.type==AJAX){
+                body=body!==undefined?{...body,_wpnonce:nonce}:{_wpnonce:nonce};
+            } 
+            this.fetchParams.body=JSON.stringify(body);
+        }
+    }
+    _getHeaders(){
+        const headers={},
+            {nonce,type,method}=this.params;
         if(type===REST){
             nonce!==null&&(headers['X-WP-Nonce']=nonce);
             headers['Access-Control-Allow-Origin']=this.rootUrl!==undefined?this.rootUrl:'*';
@@ -39,8 +52,7 @@ class Api extends BaseClass{
             headers['Content-Type']='application/json';
             headers['accept']='application/json';
         }
-        return headers;
+        this.fetchParams.headers=headers;
     }
 }
 
-export const api=new Api(config.rootUrl);

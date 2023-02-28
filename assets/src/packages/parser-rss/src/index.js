@@ -13,6 +13,7 @@ import {apiMiddleware} from './middleware/core/api';
 
 import {listMiddleware} from './middleware/api/list';
 import {pageMiddleware} from './middleware/api/page';
+import {templateAPISuccessMiddleware} from './middleware/api/template';
 import {wpCategoryMiddleware} from './middleware/api/wp.category';
 import {wpTagMiddleware} from './middleware/api/wp.tag';
 
@@ -27,11 +28,13 @@ import {dialogMiddleware} from '@news-parser/visual-constructor/middleware/app/d
 import {htmlMiddleware} from '@news-parser/visual-constructor/middleware/api/html';
 import {draftMiddleware} from '@news-parser/visual-constructor/middleware/api/draft';
 import {mediaMiddleware} from '@news-parser/visual-constructor/middleware/api/media';
-import {templateMiddleware} from '@news-parser/visual-constructor/middleware/api/template';
+//import {templateMiddleware} from '@news-parser/visual-constructor/middleware/api/template';
 import {fetchingMiddleware as dialogFetchingMiddleware} from '@news-parser/visual-constructor/middleware/app/fetching';
 
 import { categoriesMiddleware as sidebarCategorieMiddleware } from '@news-parser/sidebar/middleware/categories';
 import { tagsMiddleware as sidebarTagsMiddleware } from '@news-parser/sidebar/middleware/tags';
+
+import { templateMiddleware } from '@news-parser/template/middleware';
 
 import {startApp} from './actions/app.actions';
 import thunkMiddleware from 'redux-thunk';
@@ -58,12 +61,13 @@ const store=createStore(
             htmlMiddleware,
             draftMiddleware,
             mediaMiddleware,
-            templateMiddleware,
+            templateAPISuccessMiddleware,
             fetchingMiddleware,
             errorMiddleware,
             dialogFetchingMiddleware,
             sidebarCategorieMiddleware,
-            sidebarTagsMiddleware
+            sidebarTagsMiddleware,
+            templateMiddleware
         )));
 store.dispatch(startApp())
 window.addEventListener('DOMContentLoaded',()=>{

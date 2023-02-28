@@ -20,11 +20,11 @@ import {SelectedPostsInfo} from './SelectedPostsInfo';
 
 const Main=( )=>{
     const dispatch=useDispatch();
-    const selectedPosts=useSelector(state=>state.parse.items.select)
+    const [selectedPosts,parsedTemplate]=useSelector(state=>[state.parse.items.select,state.parse.template])
     const parseListAction=(url)=>dispatch(parseList(url))
     const selectedPostsCount=useMemo(()=>selectedPosts==undefined?0:Object.keys(selectedPosts).length,[selectedPosts]);
     const isSelectedInfoOpen=selectedPostsCount>0; 
-    const parseSelectedAction=()=>dispatch(parseSelected())
+    const parseSelectedAction=parsedTemplate?()=>dispatch(parseSelected()):false;
   
     return (
       <div className={"wrap"}>

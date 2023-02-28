@@ -1,4 +1,5 @@
-export const SHOW_MESSAGE='[MESSAGE:SHOW]';
+import {MESSAGE,SHOW} from '../constants';
+export const SHOW_MESSAGE=`[${MESSAGE}:${SHOW}]`;
 
 export const showMessage=(type,text)=>{
     return {

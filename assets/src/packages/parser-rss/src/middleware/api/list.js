@@ -4,9 +4,10 @@ import {showMessage} from '../../actions/app.actions'
 import {FETCH_LIST, setList} from '../../actions/list.actions';
 import {setAppState} from '../../actions/app.actions';
 import {decodeHTMLEntities} from '@news-parser/helpers/';
+import { getTemplate } from '../../../../template/src/actions';
 
 
-export const listMiddleware = ({dispatch})=>next=>action=>{
+export const listMiddleware = ({dispatch,getState})=>next=>action=>{
     next (action);
     switch(action.type){
 
@@ -25,6 +26,7 @@ export const listMiddleware = ({dispatch})=>next=>action=>{
             });
             dispatch(setList(posts));
             msg&&dispatch(showMessage(msg.type,msg.text));
+            dispatch(getTemplate(getState().parse.appState.data.url) )
             break;
     }
 }

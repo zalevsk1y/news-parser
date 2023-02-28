@@ -10,18 +10,23 @@ import { decodeHTMLEntities } from "@news-parser/helpers/";
 
 const Message = () => {
   const [isOpen, setMessageWindowState] = useState(false);
+  const [msgState,setMsgState]=useState({type:'info',text:'no info'});
   const { type, text, timestamp } = useSelector((state) => state.parse.message);
   const close = () => setMessageWindowState(false);
-  let decodedText = text ? decodeHTMLEntities(text) : "";
+  let decodedText = text ? decodeHTMLEntities(text) : "",
+    open=()=>{
+      setMsgState({type,text:decodedText,timestamp});
+      setMessageWindowState(true)
+    };
   //If get mew message close current message and open new one in 400ms.
   useLayoutEffect(() => {
     if (isOpen) {
-      close();
       setTimeout(() => {
-        setMessageWindowState(true);
-      }, 400);
+        close();
+        setTimeout(open,400)
+      }, 2000);
     } else if (timestamp !== undefined) {
-      setMessageWindowState(true);
+      open()
     }
   }, [timestamp]);
   const infoIcon = {
@@ -32,13 +37,13 @@ const Message = () => {
   return (
     <div className="message-wrapper">
       <div
-        className={`alert alert-${type} alert-dismissible fade ${
+        className={`alert alert-${msgState.type} alert-dismissible fade ${
           isOpen ? "show" : ""
         }`}
       >
-        <i className={infoIcon[type]}></i>
+        <i className={infoIcon[msgState.type]}></i>
 
-        <span className="mx-3">{decodedText}</span>
+        <span className="mx-3">{msgState.text}</span>
         <button
           type="button"
           className="btn-close"

@@ -80,10 +80,8 @@ module.exports=(env,args)=>{
 		},
 		devServer:{
 			port:5080,
-			host:'0.0.0.0',
-			contentBase: [path.resolve(__dirname, '../public/'),path.join(__dirname,'devServer/assets')],
-			index:path.join(__dirname, 'devServer/index.html'),
-			before:devServer
+			host:'0.0.0.0'
+			
 		}   
 	}
 }

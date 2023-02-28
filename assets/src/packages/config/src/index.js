@@ -1,6 +1,7 @@
 import {newsParserSettings as settings,newsParserApiEndpoints as endpoints} from 'globals';
 import {POST,GET,AJAX,REST,PARSE,CREATE} from '@news-parser/parser-rss/constants/';
-import {HTML,TEMPLATE,POST_DRAFT,MEDIA} from '@news-parser/visual-constructor/constants/';
+import {TEMPLATE} from '@news-parser/template/constants'
+import {HTML,POST_DRAFT,MEDIA} from '@news-parser/visual-constructor/constants/';
 import {LIST,PAGE} from '@news-parser/parser-rss/constants/';
 import {WP_API,CATEGORIES,TAGS} from '@news-parser/parser-rss/constants/';
 
@@ -48,13 +49,13 @@ const config={
             [CREATE]:{
                 method:POST,
                 type:AJAX,
-                nonce:settings.ajaxApiNonce,
+                nonce:settings.wpRestApiNonce,
                 url:endpoints[TEMPLATE]
             },
             [GET]:{
                 method:GET,
                 type:REST,
-                nonce:settings.restApiNonce,
+                nonce:settings.wpRestApiNonce,
                 url:endpoints.rootRestApi+'news-parser-plugin/v1/templates'
             }
         },
@@ -63,7 +64,7 @@ const config={
             [CREATE]:{
                 method:POST,
                 type:REST,
-                nonce:settings.restApiNonce,
+                nonce:settings.wpRestApiNonce,
                 url:endpoints.rootRestApi+'wp/v2/posts'
             }
         },

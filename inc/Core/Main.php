@@ -66,6 +66,7 @@ class Main
                 'pluginUrl'=>esc_url_raw(NEWS_PARSER_PLUGIN_URL),
                 'restApiNonce'=>wp_create_nonce('news_parser_wp_rest'),
                 'ajaxApiNonce'=>wp_create_nonce('parsing_news_api'),
+                'wpRestApiNonce'=>wp_create_nonce('wp_rest'),
                 'editPostLink'=>esc_url_raw(admin_url('post.php?post=${postId}&action=edit'))
             );
             wp_localize_script('main-parser-rss-bundle', 'newsParserSettings', $nonce);

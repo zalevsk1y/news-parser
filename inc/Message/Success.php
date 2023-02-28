@@ -21,6 +21,8 @@ class Success
                 return \__('Post "%s" was successfully parsed and saved.', 'news-parser');
             case 'TEMPLATE_SAVED':
                 return \__('Options was saved successful.', 'news-parser');
+            case 'TEMPLATE_EXIST':
+                return \__('You have saved parsing template for this RSS thread.', 'news-parser');
             case 'FEATURED_IMAGE_SAVED':
                 return \__('Featured image was saved and attach to the post.', 'news-parser');
         }

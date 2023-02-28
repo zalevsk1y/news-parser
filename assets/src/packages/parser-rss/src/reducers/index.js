@@ -12,7 +12,7 @@ import { sidebar } from '@news-parser/sidebar/reducers';
 import { initialStateParse } from './initState';
 import {dialog} from './dialog'
 
-
+import { template } from '@news-parser/template/reducers';
 
 
 export function parse (state=initialStateParse.appState,action){
@@ -102,5 +102,5 @@ export function route(state={page:false},action){
 
 
 const itemsReducer=combineReducers({select:selectPostMeta,draft:draftPostMeta,data:posts,}),
-    parserReducer=combineReducers({appState:parse,dialog,items:itemsReducer,message,sidebar});
+    parserReducer=combineReducers({appState:parse,dialog,items:itemsReducer,message,sidebar,template});
 export default combineReducers({parse:parserReducer,route});

@@ -121,6 +121,11 @@ class TemplateApiController extends \WP_REST_Controller
                 'methods' => \WP_REST_Server::READABLE,
                 'callback' => array($this, 'getTemplates'),
                 'permission_callback' => array($this, 'checkPermission'),
+                'args' => array(
+                    'url'=> array(
+                        'validate_callback'=> array($this, 'validateUrl')
+                    )
+                )
             ),
             array(
                 'methods' => \WP_REST_Server::CREATABLE,
@@ -147,13 +152,13 @@ class TemplateApiController extends \WP_REST_Controller
     {
         
         if (!current_user_can('manage_options')) {
-           // return new \WP_Error('rest_api_forbidden', Errors::text('NO_RIGHTS_TO_PUBLISH'));
+           return new \WP_Error('rest_api_forbidden', Errors::text('NO_RIGHTS_TO_PUBLISH'));
         }
         $headers = $request->get_headers();
-        $nonce = isset($headers['x_wp_api_nonce']) ? $headers['x_wp_api_nonce'][0] : '';
+        $nonce = isset($headers['x_wp_nonce']) ? $headers['x_wp_nonce'][0] : '';
 
-        if (!wp_verify_nonce($nonce,'news_parser_wp_rest')) {
-  //          return new WP_Error('rest_forbidden', esc_html__('Invalid nonce.', 'news-parser-template'), array('status' => 403));
+        if (!wp_verify_nonce($nonce,'wp_rest')) {
+             return new WP_Error('rest_forbidden', esc_html__('Invalid nonce.', 'news-parser-template'), array('status' => 403));
         }
 
         return true;
@@ -165,11 +170,14 @@ class TemplateApiController extends \WP_REST_Controller
  * @return WP_REST_Response Response object on success, or WP_Error object on failure.
  */
 public function getTemplates($request){
+
     try{
-        $response=$this->event->trigger('template:get', array('https://www.motor1.com/rss/news/all/'));
+        $template_name=$request->get_query_params();
+        $response=$this->event->trigger('template:get', array($template_name['url']));
     }catch(Exception $e){
         $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
     }
+    
     $wp_response = new \WP_REST_Response( $response->get('json'),$response->getCode() );
     return $wp_response;
 

@@ -3,7 +3,6 @@ import { apiRequest } from '@news-parser/parser-rss/actions/api.actions';
 import {formatCreateMediaData} from '@news-parser/helpers/response-formatters/formatCreateMediaData';
 
 export const mediaMiddleware = ({dispatch,getState})=>next=>action=>{
-    next (action);
     switch(action.type){
         case `[${POST_DRAFT}:${CREATE}]API_SUCCESS`:
             const {parsedData,options}=getState().parse.dialog.visualConstructor,
@@ -12,4 +11,5 @@ export const mediaMiddleware = ({dispatch,getState})=>next=>action=>{
             if(options.addFeaturedMedia) dispatch(apiRequest(MEDIA,CREATE,requestMediaData));
             break;
     }
+    next (action);
 }
