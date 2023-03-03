@@ -1,6 +1,6 @@
 import {VISUAL_CONSTRUCTOR,FRAME} from '../constants/';
 
-export const CLOSE_DIALOG=`[${VISUAL_CONSTRUCTOR}]CLOSE_DIALOG`,
+export const CLOSE_DIALOG='[visual-constructor.dialogData.isOpen:close]',
         OPEN_DIALOG=`[${VISUAL_CONSTRUCTOR}]OPEN_DIALOG`,
         FRAME_IS_READY=`[${FRAME}]READY`;
 

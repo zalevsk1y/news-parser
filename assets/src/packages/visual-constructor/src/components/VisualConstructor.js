@@ -131,11 +131,11 @@ export class VisualConstructor extends React.Component{
 
 function mapStateToProps(state){
     const {saveParsingTemplate}=state.parse.dialog.visualConstructor.options,
-        {open,frameIsReady}=state.parse.dialog.visualConstructor.dialogData;
+        {isOpen,frameIsReady}=state.parse.dialog.visualConstructor.dialogData;
     return {
         frameIsReady,
         saveParsingTemplate,
-        open
+        open:isOpen
     };
 }
 function mapDispatchToProps(dispatch){

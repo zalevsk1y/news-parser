@@ -8,7 +8,7 @@ import { combineReducers } from 'redux';
 export const defaultState={
     dialogData:{
         isFetching:false,
-        open:false,
+        isOpen:false,
         url:false,
         _id:false,
         frameIsReady:false,

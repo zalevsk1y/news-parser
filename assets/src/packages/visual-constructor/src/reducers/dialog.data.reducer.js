@@ -11,14 +11,14 @@ export const dialogData=(state=defaultState.dialogData,action)=>{
                 const {url,_id}=action.payload;
                 return {
                     ...state,
-                    open:true,
+                    isOpen:true,
                     url,
                     _id
                 }
             case CLOSE_DIALOG:
                 return {
                     ...state,
-                    open:false,
+                    isOpen:false,
                     frameIsReady:false,
                     rawHTML:false
                 }
