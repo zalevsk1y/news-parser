@@ -28,3 +28,4 @@ export const SUBMIT_TYPE_PAGE='page';
 export const  WP_API='wp';
 export const CATEGORIES='categories';
 export const TAGS='tags';
+
