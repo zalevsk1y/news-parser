@@ -26,7 +26,7 @@ import {appDialogOpenMiddleware} from './middleware/app/dialog'
 import {dialogDataMiddleware} from '@news-parser/visual-constructor/middleware/app/dialogData';
 
 import {htmlMiddleware} from '@news-parser/visual-constructor/middleware/api/html';
-import {draftMiddleware} from '@news-parser/visual-constructor/middleware/api/draft';
+import {postMiddleware as visualConstructorPostMiddleware} from '@news-parser/visual-constructor/middleware/api/post';
 import {mediaMiddleware} from '@news-parser/visual-constructor/middleware/api/media';
 //import {templateMiddleware} from '@news-parser/visual-constructor/middleware/api/template';
 import {fetchingMiddleware as dialogFetchingMiddleware} from '@news-parser/visual-constructor/middleware/app/fetching';
@@ -60,7 +60,7 @@ const store=createStore(
             appDialogOpenMiddleware,
             dialogDataMiddleware,
             htmlMiddleware,
-            draftMiddleware,
+            visualConstructorPostMiddleware,
             mediaMiddleware,
             templateAPISuccessMiddleware,
             fetchingMiddleware,

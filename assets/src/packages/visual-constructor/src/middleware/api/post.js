@@ -1,6 +1,6 @@
 import { API_SUCCESS,apiRequest } from "@news-parser/parser-rss/actions/api.actions";
-import { POST_DRAFT } from "../../constants";
-import {CREATE_POST_DRAFT} from '../../actions/draft.actions';
+import { WP_POST } from "../../constants";
+import {CREATE_WP_POST} from '../../actions/post.actions';
 import {DRAFT,INSERT,TEMPLATE,CREATE} from '@news-parser/parser-rss/constants';
 import {getPostEditLink} from "@news-parser/helpers";
 import {setPostMeta} from "@news-parser/parser-rss/actions/post.actions";
@@ -9,16 +9,16 @@ import {closeDialog} from '../../actions/dialogData.actions';
 import {formatCreatePostDraftRequest} from '@news-parser/helpers/response-formatters/PostModel';
 import {formatPostOptions} from '@news-parser/helpers/response-formatters/formatPostOptions';
 
-export const draftMiddleware=({dispatch,getState})=>next=>action=>{
+export const postMiddleware=({dispatch,getState})=>next=>action=>{
     next(action);
     switch (action.type){
-        case CREATE_POST_DRAFT:
+        case CREATE_WP_POST:
             const {parsedData,options,dialogData}=getState().parse.dialog.visualConstructor,
                 postOptions=formatPostOptions(getState().parse.sidebar),
                 preparedParsedData=formatCreatePostDraftRequest(parsedData,{generalOptions:options,postOptions},dialogData.url)
-            dispatch(apiRequest(POST_DRAFT,CREATE,preparedParsedData));
+            dispatch(apiRequest(WP_POST,CREATE,preparedParsedData));
             break;
-        case `[${POST_DRAFT}:${CREATE}]${API_SUCCESS}`:
+        case `[${WP_POST}:${CREATE}]${API_SUCCESS}`:
             const {_id}=getState().parse.dialog.visualConstructor.dialogData,
                 {title,id}=action.payload.response,
                 msg={

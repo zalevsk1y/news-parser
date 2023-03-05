@@ -7,7 +7,7 @@ import {document} from 'globals';
 import {connect} from 'react-redux';
 import config from '@news-parser/config/';
 import {closeDialog} from '../actions/dialogData.actions';
-import {createPostDraft} from '../actions/draft.actions';
+import {createWpPost} from '../actions/post.actions';
 import {createParsingTemplate} from '../actions/template.actions';
 import '@news-parser/styles/_resize-bar.scss'
 
@@ -62,7 +62,7 @@ export class VisualConstructor extends React.Component{
      */
     buttonClickHandler(){
         if(!this.props.saveParsingTemplate){
-            this.props.createPostDraft()
+            this.props.createWpPost()
         }else{
             this.props.saveTemplate()
         }
@@ -143,8 +143,8 @@ function mapDispatchToProps(dispatch){
         close:()=>{
             dispatch(closeDialog());
         },
-        createPostDraft:()=>{
-               dispatch(createPostDraft());
+        createWpPost:()=>{
+               dispatch(createWpPost());
         },
         saveTemplate:()=>{
             dispatch(createParsingTemplate())
@@ -188,9 +188,9 @@ VisualConstructor.propTypes={
      * Creates post draft using worpress REST API.
      * 
      * 
-     * @see {@link visual-constructor/src/actions/draft.actions.js|createPostDraft}
+     * @see {@link visual-constructor/src/actions/draft.actions.js|createWpPost}
      */
-    createPostDraft:PropTypes.func.isRequired,
+    createWpPost:PropTypes.func.isRequired,
     /**
      * Save parsing rules for selected domain. .
      * 

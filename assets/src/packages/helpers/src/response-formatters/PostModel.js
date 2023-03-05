@@ -17,7 +17,7 @@ export class PostModel extends BaseClass{
      * @param {string} url 
      * @returns {Promise}
      */
-    createPostDraft(postData,options,url){
+    createWpPost(postData,options,url){
         const argsError=this.argsCheck({postData,options,url});
         if(argsError instanceof Error) throw argsError;
         this.url=url;

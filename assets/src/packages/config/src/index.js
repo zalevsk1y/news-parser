@@ -1,7 +1,7 @@
 import {newsParserSettings as settings,newsParserApiEndpoints as endpoints} from 'globals';
 import {POST,GET,AJAX,REST,PARSE,CREATE} from '@news-parser/parser-rss/constants/';
 import {TEMPLATE} from '@news-parser/template/constants'
-import {HTML,POST_DRAFT,MEDIA} from '@news-parser/visual-constructor/constants/';
+import {HTML,WP_POST,MEDIA} from '@news-parser/visual-constructor/constants/';
 import {LIST,PAGE} from '@news-parser/parser-rss/constants/';
 import {WP_API,CATEGORIES,TAGS} from '@news-parser/parser-rss/constants/';
 
@@ -60,7 +60,7 @@ const config={
             }
         },
         //visual-constructor.post-draft
-        [POST_DRAFT]:{
+        [WP_POST]:{
             [CREATE]:{
                 method:POST,
                 type:REST,

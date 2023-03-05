@@ -1,7 +1,10 @@
 export const DIALOG='dialog',
         VISUAL_CONSTRUCTOR='visual-constructor',
         HTML=`${VISUAL_CONSTRUCTOR}.html`,
-        POST_DRAFT=`${VISUAL_CONSTRUCTOR}.post-draft`,
+        WP_POST=`wp-post`,
+        // middleware path
+        API='api',
+        POST='post',
         MEDIA=`${VISUAL_CONSTRUCTOR}.media`,
         TEMPLATE=`${VISUAL_CONSTRUCTOR}.template`,
         OPTIONS=`${VISUAL_CONSTRUCTOR}.options`,
