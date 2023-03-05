@@ -1,6 +1,6 @@
 
 import {API_SUCCESS,apiRequest} from '@news-parser/parser-rss/actions/api.actions';
-import {closeDialog} from '../../actions/app.actions';
+import {closeDialog} from '../../actions/dialog.data.actions';
 import {showMessage} from '@news-parser/message/';
 import {CREATE_PARSING_TEMPLATE} from '../../actions/template.actions';
 import {formatCreateTemplateRequest} from '@news-parser/helpers/response-formatters/TemplateModel';

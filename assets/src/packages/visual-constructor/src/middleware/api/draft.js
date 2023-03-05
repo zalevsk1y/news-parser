@@ -5,7 +5,7 @@ import {DRAFT,INSERT,TEMPLATE,CREATE} from '@news-parser/parser-rss/constants';
 import {getPostEditLink} from "@news-parser/helpers";
 import {setPostMeta} from "@news-parser/parser-rss/actions/post.actions";
 import {showMessage} from "@news-parser/message/";
-import {closeDialog} from '../../actions/app.actions';
+import {closeDialog} from '../../actions/dialogData.actions';
 import {formatCreatePostDraftRequest} from '@news-parser/helpers/response-formatters/PostModel';
 import {formatPostOptions} from '@news-parser/helpers/response-formatters/formatPostOptions';
 

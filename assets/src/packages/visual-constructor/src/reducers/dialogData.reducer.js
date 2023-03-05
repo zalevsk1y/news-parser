@@ -1,6 +1,5 @@
 import {VISUAL_CONSTRUCTOR} from '../constants';
-import { OPEN_DIALOG,CLOSE_DIALOG,FRAME_IS_READY } from '../actions/app.actions';
-import  {STOP_FETCHING,START_FETCHING } from '../actions/dialogData.actions';
+import { OPEN_DIALOG,CLOSE_DIALOG,FRAME_IS_READY,STOP_FETCHING,START_FETCHING } from '../actions/dialogData.actions';
 
 import { SET_HTML } from '../actions/html.actions';
 import {defaultState} from './index';

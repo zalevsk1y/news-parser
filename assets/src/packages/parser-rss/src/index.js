@@ -21,9 +21,9 @@ import {wpTagMiddleware} from './middleware/api/wp.tag';
 import {postMiddleware} from './middleware/app/post';
 import {fetchingMiddleware} from './middleware/app/fetching';
 import {submitMiddleware} from './middleware/app/submit';
+import {appDialogOpenMiddleware} from './middleware/app/dialog'
 
-
-import {dialogMiddleware} from '@news-parser/visual-constructor/middleware/app/dialog';
+import {dialogDataMiddleware} from '@news-parser/visual-constructor/middleware/app/dialogData';
 
 import {htmlMiddleware} from '@news-parser/visual-constructor/middleware/api/html';
 import {draftMiddleware} from '@news-parser/visual-constructor/middleware/api/draft';
@@ -57,7 +57,8 @@ const store=createStore(
             wpCategoryMiddleware,
             wpTagMiddleware,
             submitMiddleware,
-            dialogMiddleware,
+            appDialogOpenMiddleware,
+            dialogDataMiddleware,
             htmlMiddleware,
             draftMiddleware,
             mediaMiddleware,

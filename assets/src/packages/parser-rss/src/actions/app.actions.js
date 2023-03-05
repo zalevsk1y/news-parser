@@ -1,7 +1,10 @@
 export const SET_APP_STATE='SET_APP_STATE';
+import { DIALOG } from '../constants';
+
 export const START_PARSE_APP='START_PARSE_APP';
-export const OPEN_DIALOG='OPEN_DIALOG';
+export const APP_DIALOG_OPEN='parser-rss/app/dialog';
 export const CHANGE_SUBMIT_TYPE = 'CHANGE_SUBMIT_TYPE';
+export const NEWS_PARSER='news-parser';
 
 export {showMessage} from '@news-parser/message/';
 
@@ -33,7 +36,7 @@ export const startApp=()=>{
 
 export const openDialog=(_id,url,type)=>{
     return {
-        type:`[${type}]OPEN_DIALOG`,
+        type:`[${NEWS_PARSER}.${DIALOG}.${type}]${APP_DIALOG_OPEN}`,
         payload:{
                 _id,
                 url,

@@ -6,7 +6,7 @@ import {PropTypes} from 'prop-types';
 import {document} from 'globals';
 import {connect} from 'react-redux';
 import config from '@news-parser/config/';
-import {closeDialog} from '../actions/app.actions';
+import {closeDialog} from '../actions/dialogData.actions';
 import {createPostDraft} from '../actions/draft.actions';
 import {createParsingTemplate} from '../actions/template.actions';
 import '@news-parser/styles/_resize-bar.scss'

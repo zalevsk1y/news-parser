@@ -15,7 +15,7 @@ import {
   selectContent,
   removeContent,
 } from "../actions/frame.actions";
-import { frameIsReady } from "../actions/app.actions";
+import { frameIsReady } from "../actions/dialogData.actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 

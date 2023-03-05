@@ -29,3 +29,4 @@ export const  WP_API='wp';
 export const CATEGORIES='categories';
 export const TAGS='tags';
 
+export const DIALOG='dialog'

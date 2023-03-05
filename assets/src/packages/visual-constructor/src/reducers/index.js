@@ -1,7 +1,7 @@
 
 import {options} from './options.reducer';
 import {parsedData} from './parsed.data.reducer';
-import {dialogData} from './dialog.data.reducer';
+import {dialogData} from './dialogData.reducer';
 import { combineReducers } from 'redux';
 
 

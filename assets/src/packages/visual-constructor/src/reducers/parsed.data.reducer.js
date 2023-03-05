@@ -1,5 +1,5 @@
 import {SELECT_TITLE,SELECT_FEATURED_MEDIA,SELECT_CONTENT,REMOVE_CONTENT} from '../actions/frame.actions';
-import {OPEN_DIALOG} from '../actions/app.actions'
+import {OPEN_DIALOG} from '../actions/dialogData.actions'
 import {defaultState} from './index';
 
 
