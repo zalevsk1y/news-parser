@@ -1,5 +1,4 @@
-import {OPEN_DIALOG} from '../../actions/dialogData.actions';
-import {fetchHTML} from '../../actions/html.actions'
+import {OPEN_DIALOG,fetchHTML} from '../../actions/dialogData.actions';
 
 export const dialogDataMiddleware=({dispatch})=>next=>action=>{
     next(action);

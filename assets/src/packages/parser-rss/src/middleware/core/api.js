@@ -11,7 +11,6 @@ export const apiMiddleware=({dispatch})=>next=>action=>{
             nonce=config.api[entity][event].nonce,
             url=config.api[entity][event].url,
             api=new Api(config.rootUrl);
-            
         return api.request(url,{
                 type,
                 method,
