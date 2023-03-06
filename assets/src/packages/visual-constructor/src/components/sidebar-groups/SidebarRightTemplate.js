@@ -9,7 +9,7 @@ import {
   toggleSaveParsingTemplate,
   toggleAddSource,
 } from "../../actions/options.actions";
-import { selectTitle, selectFeaturedMedia } from "../../actions/frame.actions";
+import { selectTitle, selectFeaturedMedia } from "../../actions/parsedData.actions";
 import config from "@news-parser/config";
 
 import PropTypes from "prop-types";

@@ -1,4 +1,4 @@
-import {SELECT_TITLE,SELECT_FEATURED_MEDIA,SELECT_CONTENT,REMOVE_CONTENT} from '../actions/frame.actions';
+import {SELECT_TITLE,SELECT_FEATURED_MEDIA,SELECT_CONTENT,REMOVE_CONTENT} from '../actions/parsedData.actions';
 import {OPEN_DIALOG} from '../actions/dialogData.actions'
 import {defaultState} from './index';
 

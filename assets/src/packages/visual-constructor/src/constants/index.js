@@ -5,11 +5,17 @@ export const DIALOG='dialog',
         // middleware path
         API='api',
         POST='post',
+        //state properties
+        PARSED_DATA='parsedData',
+        TITLE='title',
+        FEATURED_MEDIA='image',
+        CONTENT='body.item',
         MEDIA=`${VISUAL_CONSTRUCTOR}.media`,
         TEMPLATE=`${VISUAL_CONSTRUCTOR}.template`,
         OPTIONS=`${VISUAL_CONSTRUCTOR}.options`,
         FRAME=`${VISUAL_CONSTRUCTOR}.frame`,
         TOGGLE='toggle',
         SELECT='select',
+        DESELECT='deselect',
         REMOVE='remove',
         CREATE='create';

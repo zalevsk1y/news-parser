@@ -14,7 +14,7 @@ import {
   selectFeaturedMedia,
   selectContent,
   removeContent,
-} from "../actions/frame.actions";
+} from "../actions/parsedData.actions";
 import { frameIsReady } from "../actions/dialogData.actions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
