@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import  TagInput  from "../../components/TagInput";
 import { SidebarItemsGroup } from "../../components/SidebarItemsGroup";
-import { addTag, diselectTag, selectTag } from "../../actions/tag.actions";
+import { createTag, diselectTag, selectTag } from "../../actions/tag.actions";
 import { SidebarItem } from "../../components/SidebarItem";
 
 export class TagsGroup1 extends React.Component {
@@ -17,7 +17,7 @@ export class TagsGroup1 extends React.Component {
         (item) => item.name === tag.name
       )[0];
       tagExists == undefined
-        ? this.props.addTag(tag.name)
+        ? this.props.createTag(tag.name)
         : this.props.selectTag(tagExists.id);
       return;
     }
@@ -53,8 +53,8 @@ function mapDispatchToProps(dispatch) {
     diselectTag: (id) => {
       dispatch(diselectTag(id));
     },
-    addTag: (name) => {
-      dispatch(addTag(name));
+    createTag: (name) => {
+      dispatch(createTag(name));
     },
   };
 }
@@ -70,7 +70,7 @@ const TagsGroup = () => {
     if (tag.id === undefined) {
       const tagExists = tags.filter((item) => item.name === tag.name)[0];
       tagExists === undefined
-        ? dispatch(addTag(tag.name))
+        ? dispatch(createTag(tag.name))
         : dispatch(selectTag(tagExists.id));
       return;
     }

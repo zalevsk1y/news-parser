@@ -1,20 +1,25 @@
-import { OPTIONS,TOGGLE } from '../constants'
+// package name
+import { VISUAL_CONSTRUCTOR } from "../constants";
+//state properties name
+import { OPTIONS, ADD_FEATURED_MEDIA, ADD_SOURCE, SAVE_PARSING_TEMPLATE } from '../constants';
+//actions name
+import { TOGGLE } from '../constants';
 
-export const TOGGLE_ADD_FEATURED_MEDIA=`[${OPTIONS}:${TOGGLE}]FEATURED_MEDIA`;
-export const TOGGLE_ADD_SOURCE=`[${OPTIONS}:${TOGGLE}]ADD_SOURCE`;
-export const TOGGLE_SAVE_PARSING_TEMPLATE=`[${OPTIONS}:${TOGGLE}]PARSING_TEMPLATE`;
+export const TOGGLE_ADD_FEATURED_MEDIA=`[${VISUAL_CONSTRUCTOR}.${OPTIONS}.${ADD_FEATURED_MEDIA}:${TOGGLE}]`,
+    TOGGLE_ADD_SOURCE=`[${VISUAL_CONSTRUCTOR}.${OPTIONS}.${ADD_SOURCE}:${TOGGLE}]`,
+    TOGGLE_SAVE_PARSING_TEMPLATE=`[${VISUAL_CONSTRUCTOR}.${OPTIONS}.${SAVE_PARSING_TEMPLATE}:${TOGGLE}]`;
 
-export function toggleAddFeaturedMedia(){
+export const toggleAddFeaturedMedia=()=>{
     return {
         type:TOGGLE_ADD_FEATURED_MEDIA
     }
 }
-export function toggleAddSource(){
+export const toggleAddSource=()=>{
     return {
         type:TOGGLE_ADD_SOURCE
     }
 }
-export function toggleSaveParsingTemplate(){
+export const toggleSaveParsingTemplate=()=>{
     return {
         type:TOGGLE_SAVE_PARSING_TEMPLATE
     }

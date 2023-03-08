@@ -1,16 +1,22 @@
-export const SIDEBAR='sidebar';
-export const CATEGORIES='categories';
-export const CATEGORY='category';
-export const PUBLISH_DATE='publishDate';
-export const PUBLISH_INTERVAL='publishInterval';
-export const POST_FORMAT='postFormat';
-export const ALLOW_PINBACKS='allowPinbacks';
-export const ALLOW_COMMENTS='allowComments';
-export const POST_STATUS='postStatus'
-export const TAGS='tags';
-export const TAG='tag';
-export const MAP='map';
-export const ADD='add';
-export const SET='set';
-export const SELECT='select';
-export const DISELECT='diselect';
+export const SIDEBAR = "sidebar",
+  //state properties
+  CATEGORIES = "categories",
+  CATEGORY = "category",
+  PUBLISH_DATE = "publish.date",
+  PUBLISH_INTERVAL = "publishInterval",
+  POST_FORMAT = "postFormat",
+  ALLOW_PINBACKS = "allowPinbacks",
+  ALLOW_COMMENTS = "allowComments",
+  POST_STATUS = "status",
+  TAGS = "tags",
+  TAG = "tag",
+  //action names
+  MAP = "map",
+  ADD = "add",
+  PUSH = "push",
+  SET = "set",
+  SELECT = "select",
+  DISELECT = "diselect",
+  CREATE="create",
+  TOGGLE = "toggle"; 
+

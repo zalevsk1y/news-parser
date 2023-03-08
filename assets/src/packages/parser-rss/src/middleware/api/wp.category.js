@@ -1,7 +1,7 @@
 import { apiRequest } from "../../actions/api.actions";
 import { GET,POST, WP_API,CATEGORIES } from "../../constants";
 import { API_SUCCESS } from "../../actions/api.actions";
-import { mapCategories,mapCategory,selectCategory } from '@news-parser/sidebar/actions/category.actions'
+import { mapCategories,pushCategory,selectCategory } from '@news-parser/sidebar/actions/category.actions'
 
 
 export const wpCategoryMiddleware = ({dispatch})=>next=>action=>{
@@ -18,7 +18,7 @@ export const wpCategoryMiddleware = ({dispatch})=>next=>action=>{
             break;
         case `[${WP_API}_${CATEGORIES}:${POST}]${API_SUCCESS}`:
             const {id,name,parent}=action.payload.response;
-            dispatch (mapCategory({id,name,parent}));
+            dispatch (pushCategory({id,name,parent}));
             dispatch (selectCategory(id))
             break;
     }

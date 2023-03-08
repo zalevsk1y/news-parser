@@ -24,7 +24,7 @@ const TagInput = ({ tags, onChange,id:idSufix,bottomCapture,labelText }) => {
     onChange(tag);
   };
 
-  const addTag = (tag) => {
+  const createTag = (tag) => {
     onChange({ name: sanitizeTag(tag) });
   };
 
@@ -37,7 +37,7 @@ const TagInput = ({ tags, onChange,id:idSufix,bottomCapture,labelText }) => {
       event.preventDefault();
       const tag = event.target.value;
       event.target.value = "";
-      tag !== "" && addTag(tag);
+      tag !== "" && createTag(tag);
     }
   };
   

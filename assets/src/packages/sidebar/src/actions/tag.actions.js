@@ -1,40 +1,53 @@
-import { SIDEBAR,TAGS,TAG,MAP,ADD,SELECT,DISELECT } from "../constants";
+import { SIDEBAR, TAGS, TAG, MAP, SELECT, DISELECT, PUSH, CREATE } from "../constants";
 
-export const mapTags=(categoriesArr)=>{
+// [sidebar.tags:map]
+export const MAP_POST_TAGS = `[${SIDEBAR}.${TAGS}:${MAP}]`,
+    // [sidebar.tags:push]
+    PUSH_POST_TAG = `[${SIDEBAR}.${TAG}:${PUSH}]`,
+    // [sidebar.tags:create]tags
+    CRAETE_POST_TAG = `[${SIDEBAR}.${TAG}:${CREATE}]${TAGS}`,
+    // [sidebar.tags:select]
+    SELECT_POST_TAG = `[${SIDEBAR}.${TAG}:${SELECT}]`,
+    // [sidebar.tags:disselect]
+    DISELECT_POST_TAG = `[${SIDEBAR}.${TAG}:${DISELECT}]`;
+
+export const mapTags = (tagsArr) => {
     return {
-        type:`[${SIDEBAR}:${TAGS}]${MAP}`,
-        payload:categoriesArr
+        type: MAP_POST_TAGS,
+        payload: tagsArr
     }
 }
-export const mapTag=(tagObject)=>{
+
+export const pushTag = (tagObject) => {
     return {
-        type:`[${SIDEBAR}:${TAG}]${MAP}`,
-        payload:tagObject
+        type: PUSH_POST_TAG,
+        payload: tagObject
     }
 }
-export const addTag=(name)=>{
-    return{
-        type:`[${SIDEBAR}:${TAGS}]${ADD}`,
-        payload:{
+
+export const createTag = (name) => {
+    return {
+        type: CRAETE_POST_TAG,
+        payload: {
             name
         }
     }
 }
 
-export const selectTag=(id)=>{
+export const selectTag = (id) => {
     return {
-            type:`[${SIDEBAR}:${TAGS}]${SELECT}`,
-            payload:{
-                id
+        type: SELECT_POST_TAG,
+        payload: {
+            id
         }
     }
 }
 
-export const diselectTag=(id)=>{
+export const diselectTag = (id) => {
     return {
-            type:`[${SIDEBAR}:${TAGS}]${DISELECT}`,
-            payload:{
-                id
+        type: DISELECT_POST_TAG,
+        payload: {
+            id
         }
     }
 }

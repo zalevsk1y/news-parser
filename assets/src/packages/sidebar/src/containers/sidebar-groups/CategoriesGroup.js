@@ -6,7 +6,7 @@ import { SidebarItem } from "../../components/SidebarItem";
 import { SidebarItemsGroup } from "../../components/SidebarItemsGroup";
 import { SidebarItemExpandable } from "../../components/SidebarItemExpandable";
 import {
-  addCategory,
+  createCategory,
   selectCategory,
   diselectCategory,
 } from "../../actions/category.actions";
@@ -229,7 +229,7 @@ function CategoriesGroup() {
 
   const addCategoryHandler = () => {
     if (addCategoryParams.name === "") return null;
-    dispatch(addCategory(addCategoryParams.name, addCategoryParams.parent));
+    dispatch(createCategory(addCategoryParams.name, addCategoryParams.parent));
   };
 
   return (

@@ -1,19 +1,23 @@
-import { SIDEBAR,SET,ALLOW_PINBACKS,ALLOW_COMMENTS } from "../constants";
+import { SIDEBAR, TOGGLE, ALLOW_PINBACKS, ALLOW_COMMENTS } from "../constants";
 
+// [sidebar.allowPinbacks:toggle]
+export const ALLOW_POST_PINBACKS = `[${SIDEBAR}.${ALLOW_PINBACKS}:${TOGGLE}}`,
+    // [sidebar.allowComments:toggle]
+    ALLOW_POST_COMMENTS = `[${SIDEBAR}.${ALLOW_COMMENTS}:${TOGGLE}]`;
 
-export const allowPinbacksSet=checked=>{
+export const allowPinbacksSet = checked => {
     return {
-        type:`[${SIDEBAR}:${ALLOW_PINBACKS}]${SET}`,
-        payload:{
+        type: ALLOW_POST_PINBACKS,
+        payload: {
             checked
         }
     }
 }
 
-export const allowCommentsSet=checked=>{
+export const allowCommentsSet = checked => {
     return {
-        type:`[${SIDEBAR}:${ALLOW_COMMENTS}]${SET}`,
-        payload:{
+        type: ALLOW_POST_COMMENTS,
+        payload: {
             checked
         }
     }
