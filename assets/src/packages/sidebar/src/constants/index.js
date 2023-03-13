@@ -18,5 +18,6 @@ export const SIDEBAR = "sidebar",
   SELECT = "select",
   DISELECT = "diselect",
   CREATE="create",
+  GET="get",
   TOGGLE = "toggle"; 
 

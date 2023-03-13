@@ -1,8 +1,8 @@
-import { REQUEST_API,API } from "../constants"
+import { REQUEST_API,API_SUCCESS,API_ERROR } from "../constants"
 
 export function apiRequest(entity,event,data){
     return {
-        type:`[${REQUEST_API}.${entity}:${event}]${API}`,
+        type:`${REQUEST_API}.${entity}:${event}`,
         payload:{
             entity,
             event,

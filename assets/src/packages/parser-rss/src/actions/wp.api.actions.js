@@ -21,24 +21,3 @@ export const postWPCategories=(data)=>{
         }
     }
 }
-export const getWPTags=()=>{
-    return {
-        type:`[${WP_API}_${TAGS}:${GET}]`,
-        payload:{
-            entity:`${WP_API}_${TAGS}`,
-            event:GET,
-            data:null
-        }
-    }
-}
-
-export const postWPTags=(data)=>{
-    return {
-        type:`[${WP_API}_${TAGS}:${POST}]`,
-        payload:{
-            entity:`${WP_API}_${TAGS}`,
-            event:POST,
-            data
-        }
-    }
-}

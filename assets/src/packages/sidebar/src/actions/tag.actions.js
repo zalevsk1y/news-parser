@@ -1,4 +1,4 @@
-import { SIDEBAR, TAGS, TAG, MAP, SELECT, DISELECT, PUSH, CREATE } from "../constants";
+import { SIDEBAR, TAGS, TAG, MAP, SELECT, DISELECT, PUSH, CREATE, GET } from "../constants";
 
 // [sidebar.tags:map]
 export const MAP_POST_TAGS = `[${SIDEBAR}.${TAGS}:${MAP}]`,
@@ -9,7 +9,9 @@ export const MAP_POST_TAGS = `[${SIDEBAR}.${TAGS}:${MAP}]`,
     // [sidebar.tags:select]
     SELECT_POST_TAG = `[${SIDEBAR}.${TAG}:${SELECT}]`,
     // [sidebar.tags:disselect]
-    DISELECT_POST_TAG = `[${SIDEBAR}.${TAG}:${DISELECT}]`;
+    DISELECT_POST_TAG = `[${SIDEBAR}.${TAG}:${DISELECT}]`,
+    // [sidebar.tags:get]tags
+    GET_POST_TAGS = `[${SIDEBAR}.${TAGS}:${GET}]${TAG}`;
 
 export const mapTags = (tagsArr) => {
     return {
@@ -51,3 +53,13 @@ export const diselectTag = (id) => {
         }
     }
 }
+
+export const getTags = () => {
+    return {
+        type: GET_POST_TAGS,
+        payload: {
+            data: null
+        }
+    }
+}
+

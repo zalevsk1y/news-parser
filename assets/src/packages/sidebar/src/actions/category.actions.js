@@ -9,8 +9,9 @@ export const MAP_POST_CATEGORIES = `[${SIDEBAR}.${CATEGORIES}:${MAP}]`,
     // [sidebar.categories:select]
     SELECT_POST_CATEGORY = `[${SIDEBAR}.${CATEGORIES}:${SELECT}]`,
     // [sidebar.categories:diselect]
-    DISELECT_POST_CATEGORY = `[${SIDEBAR}:${CATEGORIES}]${DISELECT}`;
-
+    DISELECT_POST_CATEGORY = `[${SIDEBAR}:${CATEGORIES}]${DISELECT}`,
+    // [sidebar.categories:get]categories
+    GET_POST_CATEGORIES=`[${SIDEBAR}.${CATEGORIES}:${GET}]${CATEGORIES}`;
 
 export const mapCategories = (categoriesArr) => {
     return {
@@ -51,5 +52,11 @@ export const diselectCategory = (id) => {
         payload: {
             id
         }
+    }
+}
+
+export const getCategories=()=>{
+    return {
+        type: GET_POST_CATEGORIES
     }
 }

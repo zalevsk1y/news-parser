@@ -1,4 +1,4 @@
-import { CRAETE_POST_TAG } from "../actions/tag.actions";
+import { CRAETE_POST_TAG, GET_POST_TAGS } from "../actions/tag.actions";
 import { apiRequest } from "@news-parser/request/actions/api.actions";
 import { API_SUCCESS } from "@news-parser/request/constants";
 import { GET,POST, API_WP_TAGS } from "@news-parser/config/constants";
@@ -9,7 +9,10 @@ export const tagsMiddleware = ({dispatch})=>next=>action=>{
     next (action);
     switch(action.type){
         case CRAETE_POST_TAG:
-            dispatch (API_WP_TAGS,GET,apiRequest(action.payload));
+            dispatch (apiRequest(API_WP_TAGS,POST,action.payload));
+            break;
+        case GET_POST_TAGS:
+            dispatch (apiRequest(API_WP_TAGS,GET,action.payload));
             break;
         case `[${API_WP_TAGS}:${POST}]`:
             dispatch (apiRequest(...Object.values(action.payload)));

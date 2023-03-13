@@ -3,7 +3,7 @@ export const GET_TEMPLATE=`[${TEMPLATE}:${GET}]${TEMPLATE}/${API}`,
     CREATE_TEMPLATE=`[${TEMPLATE}:${POST}]${TEMPLATE}/${API}`,
     UPDATE_TEMPLATE=`[${TEMPLATE}:${PATCH}]${TEMPLATE}/${API}`,
     SET_TEMPLATE=`[${TEMPLATE}:${SET}]`,
-    DELETE_TEMPLATE=`[${TEMPLATE}:${DELETE}]`;
+    DELETE_TEMPLATE=`[${TEMPLATE}:${DELETE}]${TEMPLATE}/${API}`;
 
 
 export const getTemplate=url=>(

@@ -7,22 +7,36 @@ export const escURLRaw=(url)=>{
 /**
  * Get search params from url string.
  * 
- * @param {string} uri 
+ * @return {ursSearchParams} instance
  */
-export const urlSearchParams=(uri)=>{
-    if (!uri) return {};
-    const jsonParams='{\"'+uri.replace(/&/g,'","').replace(/=/g,'":"').replace(/\?/g,"")+'\"}';
-    if(jsonParams){
-        return JSON.parse(jsonParams);
-    }
-    return {};
+export const urlSearchParamsFactory=()=>{
+    const currentUrl=window.location.search;
+    return new URLSearchParams(currentUrl);
 }
-
+/**
+ * Assign new url search params to url.
+ */
+export const setUrlSearchParams=(obj)=>{
+    const searchParams=getUrlSearchParams();
+    for (const key in obj){
+        console.log(key,obj[key])
+        searchParams.set(key,obj[key]);
+    }
+    const url=window.location.origin+window.location.pathname+'?'+searchParams.toString();
+    console.log(url)
+    location.assign(url);
+}
+/**
+ * Get current url search params
+ * 
+ */
+export const getUrlSearchParams=()=>{
+    return urlSearchParamsFactory();
+}
 export function getLanguage(){
     const className=config.lang.class;
     return document.querySelector('.'+className).dataset['lang'].substring(0,2);
 }
-
 
 /**
  * Get coded hash for string.

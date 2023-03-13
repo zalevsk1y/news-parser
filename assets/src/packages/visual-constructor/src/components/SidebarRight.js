@@ -1,4 +1,4 @@
-import React, { useState,useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 
 import SidebarRightTemplate from "./sidebar-groups/SidebarRightTemplate";
 import SidebarRightPost from "./sidebar-groups/SidebarRightPost";
@@ -10,17 +10,17 @@ import SidebarRightPost from "./sidebar-groups/SidebarRightPost";
  */
 
 const SidebarRight = () => {
-  const [activeTab, setActiveTab] = useState("Template");
-  const activeTabChangeHandler = (tabName) => {
-    return () => {
-      setActiveTab(tabName);
-    };
-  };
-  const tabs={
-            'Template':()=>(<SidebarRightTemplate/>),
-            'Post':()=>(<SidebarRightPost />)
-        },
-        tabNames=useMemo(()=>Object.keys(tabs),[]);
+  useEffect(()=>{
+    useSetCategories();
+    useSetTags();
+  },[])
+  const [activeTab, setActiveTab] = useState("Template"),
+    activeTabChangeHandler = (tabName) => () => setActiveTab(tabName),
+    tabs = {
+      'Template': () => (<SidebarRightTemplate />),
+      'Post': () => (<SidebarRightPost />)
+    },
+    tabNames = useMemo(() => Object.keys(tabs), []);
   return (
     <div className="modal-right-side-bar d-flex flex-column">
       <div className="sidebar-nav">
@@ -36,9 +36,9 @@ const SidebarRight = () => {
           ))}
         </nav>
       </div>
-    {tabs[activeTab]()}
+      {tabs[activeTab]()}
 
-            
+
     </div>
   );
 };

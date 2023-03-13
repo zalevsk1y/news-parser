@@ -9,7 +9,9 @@ import parse from './reducers';
 
 import {mainMiddleware} from './middleware/core/main';
 import {errorMiddleware} from './middleware/core/error';
-import {apiMiddleware} from './middleware/core/api';
+// import {apiMiddleware} from './middleware/core/api';
+
+import {apiMiddleware} from '@news-parser/request/middleware/api'
 
 import {listMiddleware} from './middleware/api/list';
 import {pageMiddleware} from './middleware/api/page';
