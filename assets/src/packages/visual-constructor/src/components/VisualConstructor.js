@@ -1,201 +1,111 @@
-import React from 'react';
+
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import SidebarRight from './SidebarRight';
-import Frame from './Frame';
-import {Fragment} from 'react';
-import {PropTypes} from 'prop-types';
-import {document} from 'globals';
-import {connect} from 'react-redux';
-import config from '@news-parser/config/';
-import {closeDialog} from '../actions/dialogData.actions';
-import {createWpPost} from '../actions/post.actions';
-import {createParsingTemplate} from '../actions/template.actions';
+import {Frame} from './Frame';
+import { closeVisulaConstructor } from '../actions/dialogData.actions';
+import { useScrolling } from "../hooks/visual-constructor/useScrolling";
+import { useFetchHTML } from "../hooks/visual-constructor/useFetchHTML";
+import { LoadingSpinner } from "../containers/LoadingSpinner";
 import '@news-parser/styles/_resize-bar.scss'
+import { useCreateWpPost } from "../hooks/visual-constructor/useCreateWpPost";
+import { useCreateParsingTemplate } from "../hooks/visual-constructor/useCreateParsingTemplate";
+
 
 /**
- * Main visual constructor window element.
- * 
- * @since 1.0.0
- */
-export class VisualConstructor extends React.Component{
+* 
+* A functional component for the Parsing Constructor modal window, which allows users to create a post or save a parsing template.
+* The component initializes several hooks, such as useScrolling, useDispatch, useState, useSelector, useFetchHTML, useCreateWpPost, useCreateParsingTemplate,
+* to manage the state of the modal window and to fetch and parse HTML data.
+* The component also includes a modalWindow function that returns the modal window, with a header, a loading spinner, a parsed data container,
+* a sidebar, and a footer with a button to either save a template or create a post.
  
-    constructor(props){
-        super(props);
-        this.close=this.close.bind(this);
-        this.buttonClickHandler=this.buttonClickHandler.bind(this);
-        this.setFrameReady=this.setFrameReady.bind(this)
-        this.modalWindow=this.modalWindow.bind(this);
-        this.state={
-            frameIsReady:false
-        }
-    }
-    /**
-     * Close model window.
-     */
-    close(){
-        this.setState({frameIsReady:false})
-        this.props.close();
-    }
-    setFrameReady(){
-        this.setState({
-            frameIsReady:true
-        })
-    }
-        /**
-     * Prevent scrolling when modal window is open.
-     * 
-     * @param {bool} state 
-     */
-    scroll(state){
-        switch(state){
-            case (true):
-                document.documentElement.style.overflowY='auto';
-                document.body.style.overflowY='auto';
-                break;
-            case(false):
-                document.documentElement.style.overflowY='hidden';
-                document.body.style.overflowY='scroll';
-                break;
-        }
-    }
-    /**
-     * Create post draft from parsed data.
-     */
-    buttonClickHandler(){
-        if(!this.props.saveParsingTemplate){
-            this.props.createWpPost()
+*
+* @since 1.0.0
+* @returns {JSX.Element} The modal window JSX element or null if the modal is not open.
+*/
+
+
+
+function VisualConstructor() {
+    const [enableScrolling, disableScrolling] = useScrolling(),
+        dispatch = useDispatch(),
+        [frameIsReady, setFrameIsReady] = useState(false),
+        { url, isOpen } = useSelector(state => state.parse.dialog.visualConstructor.dialogData),
+        { saveParsingTemplate } = useSelector(state => state.parse.dialog.visualConstructor.options),
+        [isFetching, startFetching] = useFetchHTML(),
+        [createWpPost]=useCreateWpPost(),
+        [createParsingTemplate]=useCreateParsingTemplate(),
+        close = () => {
+            dispatch(closeVisulaConstructor());
+        },
+        buttonClickHandler = useCallback(() => {
+            if (!saveParsingTemplate) {
+                createWpPost()
+            } else {
+                createParsingTemplate();
+            }
+            //close();
+        }, [saveParsingTemplate]),
+        isVisualConstructorReady = useMemo(() => frameIsReady && !isFetching, [frameIsReady, isFetching]);
+    useEffect(() => {
+        if (isOpen) {
+            disableScrolling();
+            startFetching(url);
         }else{
-            this.props.saveTemplate()
+            enableScrolling();
+            setFrameIsReady(false);
         }
-        this.setState({
-            frameIsReady:false
-        })
-        //this.close();
-    }
-    /**
-     * Loading spinner element.
-     */
-    loadingSpinner(){
-        return (
-            <div className="loading-spinner">
-                <img src={config.spinnerImage}></img>
-            </div>
-        )
-    }
-    /**
-     * Visual-Constructor modal window.
-     */
-    modalWindow(){
+    }, [isOpen])
+
+    const modalWindow = () => {
         return (
             <div className="media-modal-wrapper">
                 <div className="modal-container">
-                    <div className="modal-header"> 
+                    <div className="modal-header">
                         <h1>Parsing Constructor</h1>
-                        <button type="button" className="media-modal-close" onClick={this.close}>
+                        <button
+                            type="button"
+                            className="media-modal-close"
+                            onClick={close}
+                        >
                             <span className="media-modal-icon">
                                 <span className="screen-reader-text">Close dialog</span>
                             </span>
                         </button>
                     </div>
-                    {(!this.state.frameIsReady&&<this.loadingSpinner />)}
+                    {!isVisualConstructorReady && <LoadingSpinner />}
                     <div className="modal-main">
                         <div className="parsed-data-container">
-                           {
-                           //<Frame injectHTML={htmlData} injectCSS={} onReady={this.frameIsReady}/>
-                           }
-                           <Frame onReady={this.setFrameReady}/>
+                            {
+                                //<Frame injectHTML={htmlData} injectCSS={} onReady={this.frameIsReady}/>
+                            }
+                            <Frame onReady={() => setFrameIsReady(true)} />
                         </div>
-                        <div className='resize-drag-bar'></div>
-                        
-                            <SidebarRight />
-                        
+                        <div className="resize-drag-bar"></div>
+
+                        <SidebarRight />
                     </div>
-                    <div className='visual-container-modal-footer d-flex flex-row justify-content-end align-items-center'>
-                        <button type="button" className="button button-large button-primary" onClick={this.buttonClickHandler}>{this.props.saveParsingTemplate?"Save Template":"Create Post"}</button>
+                    <div className="visual-container-modal-footer d-flex flex-row justify-content-end align-items-center">
+                        <button
+                            type="button"
+                            className="button button-large button-primary"
+                            onClick={buttonClickHandler}
+                        >
+                            {saveParsingTemplate ? "Save Template" : "Create Post"}
+                        </button>
                     </div>
                 </div>
                 <div className="media-modal-backdrop"></div>
             </div>
-        )
+        );
     }
 
-    render(){
-        this.props.open?this.scroll(true):this.scroll(false);
-        return (  
-            <Fragment>
-                {(this.props.open&&<this.modalWindow />)}
-            </Fragment>
-        )
-    }
+    return (
+        <>
+            {isOpen && modalWindow()}
+        </>
+    );
 }
 
-
-function mapStateToProps(state){
-    const {saveParsingTemplate}=state.parse.dialog.visualConstructor.options,
-        {isOpen,frameIsReady}=state.parse.dialog.visualConstructor.dialogData;
-    return {
-        frameIsReady,
-        saveParsingTemplate,
-        open:isOpen
-    };
-}
-function mapDispatchToProps(dispatch){
-    return {
-        close:()=>{
-            dispatch(closeDialog());
-        },
-        createWpPost:()=>{
-               dispatch(createWpPost());
-        },
-        saveTemplate:()=>{
-            dispatch(createParsingTemplate())
-        }
-    }
-}
-
-
-
-export default connect(mapStateToProps,mapDispatchToProps)(VisualConstructor); 
-
-
-
-VisualConstructor.propTypes={
-    /**
-     * Is Frame is loaded and ready to render. 
-     * 
-     * @see {@link visual-constructor/src/reducers/index.js|defaultState.dialogData}
-     */
-    frameIsReady:PropTypes.bool.isRequired,
-    /**
-     * If true this page would not be parsed.Parsing template would be created and saved instead.
-     * 
-     * @see {@link visual-constructor/src/reducers/index.js|defaultState.options}
-     */
-    saveParsingTemplate:PropTypes.bool.isRequired,
-    /**
-     * If visual constructor is open.
-     * 
-     * @see {@link visual-constructor/src/reducers/index.js|defaultState.dialogData}
-     */
-    open:PropTypes.bool.isRequired,
-    
-    /**
-     * Close visual constructor modal window.
-     * 
-     * @see {@link parser-rss/src/actions/index.js|closeDialog}
-     */
-    close:PropTypes.func.isRequired,
-    /**
-     * Creates post draft using worpress REST API.
-     * 
-     * 
-     * @see {@link visual-constructor/src/actions/draft.actions.js|createWpPost}
-     */
-    createWpPost:PropTypes.func.isRequired,
-    /**
-     * Save parsing rules for selected domain. .
-     * 
-     * 
-     * @see {@link visual-constructor/src/actions/template.actions.js|createParsingTemplate}
-     */
-    saveTemplate:PropTypes.func.isRequired
-}
+export default VisualConstructor;

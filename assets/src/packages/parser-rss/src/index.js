@@ -27,11 +27,10 @@ import {appDialogOpenMiddleware} from './middleware/app/dialog'
 
 import {dialogDataMiddleware} from '@news-parser/visual-constructor/middleware/app/dialogData';
 
-import {htmlMiddleware} from '@news-parser/visual-constructor/middleware/api/html';
 import {postMiddleware as visualConstructorPostMiddleware} from '@news-parser/visual-constructor/middleware/api/post';
 import {mediaMiddleware} from '@news-parser/visual-constructor/middleware/api/media';
 //import {templateMiddleware} from '@news-parser/visual-constructor/middleware/api/template';
-import {fetchingMiddleware as dialogFetchingMiddleware} from '@news-parser/visual-constructor/middleware/app/fetching';
+
 
 import { categoriesMiddleware as sidebarCategorieMiddleware } from '@news-parser/sidebar/middleware/categories';
 import { tagsMiddleware as sidebarTagsMiddleware } from '@news-parser/sidebar/middleware/tags';
@@ -61,13 +60,10 @@ const store=createStore(
             submitMiddleware,
             appDialogOpenMiddleware,
             dialogDataMiddleware,
-            htmlMiddleware,
             visualConstructorPostMiddleware,
             mediaMiddleware,
             templateAPISuccessMiddleware,
-            fetchingMiddleware,
             errorMiddleware,
-            dialogFetchingMiddleware,
             sidebarCategorieMiddleware,
             sidebarTagsMiddleware,
             templateMiddleware

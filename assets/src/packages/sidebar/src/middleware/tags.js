@@ -12,13 +12,13 @@ export const tagsMiddleware = ({dispatch})=>next=>action=>{
             dispatch (apiRequest(API_WP_TAGS,POST,action.payload));
             break;
         case GET_POST_TAGS:
-            dispatch (apiRequest(API_WP_TAGS,GET,action.payload));
+            //dispatch (apiRequest(API_WP_TAGS,GET,action.payload));
             break;
         case `[${API_WP_TAGS}:${POST}]`:
             dispatch (apiRequest(...Object.values(action.payload)));
             break;
         case `[${API_WP_TAGS}:${GET}]${API_SUCCESS}`:
-            dispatch (mapTags(action.payload.response))
+            //dispatch (mapTags(action.payload.response))
             break;
         case `[${API_WP_TAGS}:${POST}]${API_SUCCESS}`:
             const {id,name,count}=action.payload.response;

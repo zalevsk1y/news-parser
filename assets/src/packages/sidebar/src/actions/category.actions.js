@@ -1,4 +1,4 @@
-import { SIDEBAR, CATEGORIES, CATEGORY, MAP, SELECT, DISELECT, CREATE, PUSH } from "../constants"
+import { SIDEBAR, CATEGORIES, CATEGORY, MAP, SELECT, DISELECT, CREATE, PUSH, GET } from "../constants"
 
 // [sidebar.categories:map]
 export const MAP_POST_CATEGORIES = `[${SIDEBAR}.${CATEGORIES}:${MAP}]`,

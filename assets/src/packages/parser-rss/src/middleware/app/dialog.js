@@ -1,4 +1,4 @@
-import { openDialog as openVisualConstructor } from "../../../../visual-constructor/src/actions/dialogData.actions";
+import { openVisualConstructor } from "../../../../visual-constructor/src/actions/dialogData.actions";
 import { VISUAL_CONSTRUCTOR } from "../../../../visual-constructor/src/constants";
 import {APP_DIALOG_OPEN} from "../../actions/app.actions"
 

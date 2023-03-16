@@ -3,11 +3,11 @@ import {Fragment} from 'react';
 import {Image} from '@news-parser/image/';
 import {connect} from 'react-redux';
 import {showMessage} from '../actions/app.actions' 
-import {openDialog} from '../actions/app.actions';
 import {togglePostSelect} from '../actions/post.actions';
 import Icons from '../components/Icons';
 import PropTypes from 'prop-types';
 import { VISUAL_CONSTRUCTOR } from '@news-parser/visual-constructor/constants';
+import { openVisualConstructor } from '../../../visual-constructor/src/actions/dialogData.actions';
 
 
 /**
@@ -109,7 +109,7 @@ function mapDispatchToProps(dispatch){
             dispatch(showMessage(type,text))
         },
         openVisualConstructor:(_id,url)=>{
-            dispatch(openDialog(_id,url,VISUAL_CONSTRUCTOR))
+            dispatch(openVisualConstructor(url,_id))
         },
         selectPost:(_id)=>{
             dispatch(togglePostSelect(_id))

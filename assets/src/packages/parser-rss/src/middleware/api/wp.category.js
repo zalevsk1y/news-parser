@@ -8,13 +8,13 @@ export const wpCategoryMiddleware = ({dispatch})=>next=>action=>{
     next (action);
     switch(action.type){
         case `[${WP_API}_${CATEGORIES}:${GET}]`:
-            dispatch (apiRequest(...Object.values(action.payload)));
+            //dispatch (apiRequest(...Object.values(action.payload)));
             break;
         case `[${WP_API}_${CATEGORIES}:${POST}]`:
             dispatch (apiRequest(...Object.values(action.payload)));
             break;
         case `[${WP_API}_${CATEGORIES}:${GET}]${API_SUCCESS}`:
-            dispatch (mapCategories(action.payload.response))
+            //dispatch (mapCategories(action.payload.response))
             break;
         case `[${WP_API}_${CATEGORIES}:${POST}]${API_SUCCESS}`:
             const {id,name,parent}=action.payload.response;

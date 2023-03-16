@@ -5,7 +5,7 @@ import {DRAFT,INSERT,TEMPLATE,CREATE} from '@news-parser/parser-rss/constants';
 import {getPostEditLink} from "@news-parser/helpers";
 import {setPostMeta} from "@news-parser/parser-rss/actions/post.actions";
 import {showMessage} from "@news-parser/message/";
-import {closeDialog} from '../../actions/dialogData.actions';
+import {closeVisulaConstructor} from '../../actions/dialogData.actions';
 import {formatCreatePostDraftRequest} from '@news-parser/helpers/response-formatters/PostModel';
 import {formatPostOptions} from '@news-parser/helpers/response-formatters/formatPostOptions';
 
@@ -25,7 +25,7 @@ export const postMiddleware=({dispatch,getState})=>next=>action=>{
                         type:'success',
                         text:`Post "${title.raw}" was successfully parsed and save.`
                     };
-            dispatch(closeDialog());
+            dispatch(closeVisulaConstructor());
             dispatch(setPostMeta(DRAFT,INSERT,_id,{post_id:id,editLink:getPostEditLink(id)}));
             dispatch(showMessage(msg.type,msg.text));
             break;

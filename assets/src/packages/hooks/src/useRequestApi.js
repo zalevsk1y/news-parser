@@ -11,6 +11,7 @@ export const useRequestApi = (options, success, error) => {
         nonce = config.api[entity][event].nonce,
         url = config.api[entity][event].url,
         api = new Api(config.rootUrl);
+        console.log(url,type,method)
     return api.request(url, {
         type,
         method,

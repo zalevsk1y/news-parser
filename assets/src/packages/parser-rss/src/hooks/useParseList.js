@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useRequestApi } from "../../../hooks/useRequestApi";
+import { useRequestApi } from "@news-parser/hooks/useRequestApi";
 import { PARSER_RSS_LIST, PARSE } from '@news-parser/config/constants';
 import { useDispatch, useStore } from "react-redux";
 import {showMessage} from "@news-parser/message";

@@ -1,4 +1,4 @@
-import { useRequestApi } from "../../../hooks/useRequestApi";
+import { useRequestApi } from "@news-parser/hooks/useRequestApi";
 import { useCallback, useState } from "react";
 import { PARSER_RSS_LIST, PARSE } from "@news-parser/config/constants";
 import { showMessage } from "@news-parser/message/actions";

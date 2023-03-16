@@ -6,7 +6,7 @@ import {hash} from '@news-parser/helpers';
  */
 export class Parser{
     constructor(frameElement){
-        this.document=frameElement.current.contentWindow.document;
+        this.document=frameElement.contentWindow.document;
     }
     /**
      * Get HTMLElements data.

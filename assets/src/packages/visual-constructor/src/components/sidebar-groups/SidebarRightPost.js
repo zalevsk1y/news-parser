@@ -13,33 +13,30 @@ import DiscussionGroup from "@news-parser/sidebar/containers/sidebar-groups/Disc
  */
 
 const SidebarRightPost = () => {
-  
-  
   return (
-    
-      <div className="inner-sidebar-container">
-        <InfoBox title="Satus&Visibility">
-          <InfoBody>
-            <StatusVisibilityGroup />
-          </InfoBody>
-        </InfoBox>
-        <InfoBox title="Categories">
-          <InfoBody>
+    <div className="inner-sidebar-container">
+      <InfoBox title="Satus&Visibility">
+        <InfoBody>
+          <StatusVisibilityGroup />
+        </InfoBody>
+      </InfoBox>
+      <InfoBox title="Categories">
+        <InfoBody>
           <CategoriesGroup />
-          </InfoBody>
-        </InfoBox>
-        <InfoBox title="Tags">
-          <InfoBody>  
-            <TagsGroup />
-          </InfoBody>
-        </InfoBox>
-        <InfoBox title="Discussion">
-          <InfoBody>
-            <DiscussionGroup />
-          </InfoBody>
-        </InfoBox>
-      </div>
-   
+        </InfoBody>
+      </InfoBox>
+      <InfoBox title="Tags">
+        <InfoBody>
+          <TagsGroup />
+        </InfoBody>
+      </InfoBox>
+      <InfoBox title="Discussion">
+        <InfoBody>
+          <DiscussionGroup />
+        </InfoBody>
+      </InfoBox>
+    </div>
+
   );
 };
 

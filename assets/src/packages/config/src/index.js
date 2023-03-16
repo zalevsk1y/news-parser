@@ -1,9 +1,9 @@
 import {newsParserSettings as settings,newsParserApiEndpoints as endpoints} from 'globals';
 import {POST,GET,AJAX,REST,CREATE} from '@news-parser/parser-rss/constants/';
 import {TEMPLATE} from '@news-parser/template/constants'
-import {RAW_HTML,WP_POST,MEDIA} from '@news-parser/visual-constructor/constants/';
+import {WP_POST,MEDIA} from '@news-parser/visual-constructor/constants/';
 import {LIST,PAGE} from '@news-parser/parser-rss/constants/';
-import {API_WP_TAGS,API_WP_CATEGORIES,PARSER_RSS_LIST,PARSE} from './constants';
+import {API_WP_TAGS,API_WP_CATEGORIES,PARSER_RSS_LIST,PARSE,RAW_HTML} from './constants';
 
 const config={
     mode:'development',

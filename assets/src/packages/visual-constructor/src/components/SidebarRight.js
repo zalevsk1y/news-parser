@@ -1,19 +1,23 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 
 import SidebarRightTemplate from "./sidebar-groups/SidebarRightTemplate";
 import SidebarRightPost from "./sidebar-groups/SidebarRightPost";
 
+
 /**
- * Right side bar of visual constructor modal window.
- *
- * @since 1.0.0
+* A functional component that displays the right sidebar of the Parsing Constructor modal window.
+* The component manages the state of the sidebar by initializing the activeTab state with a default value of "Template",
+* and using the setActiveTab function to update the activeTab state when the user clicks on a different tab.
+* The component uses useMemo to compute the tabNames array, which contains the names of the tabs to be displayed on the sidebar.
+* The component also renders the tabs based on the activeTab state, using the tabs object to map the tab name to a component.
+* 
+* @since 1.0.0
+* @returns {JSX.Element} The JSX element for the right sidebar of the Parsing Constructor modal window.
+*
  */
 
 const SidebarRight = () => {
-  useEffect(()=>{
-    useSetCategories();
-    useSetTags();
-  },[])
+
   const [activeTab, setActiveTab] = useState("Template"),
     activeTabChangeHandler = (tabName) => () => setActiveTab(tabName),
     tabs = {
@@ -37,8 +41,6 @@ const SidebarRight = () => {
         </nav>
       </div>
       {tabs[activeTab]()}
-
-
     </div>
   );
 };
