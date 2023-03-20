@@ -16,12 +16,9 @@ import {apiMiddleware} from '@news-parser/request/middleware/api'
 import {listMiddleware} from './middleware/api/list';
 import {pageMiddleware} from './middleware/api/page';
 import {templateAPISuccessMiddleware} from './middleware/api/template';
-import {wpCategoryMiddleware} from './middleware/api/wp.category';
-import {wpTagMiddleware} from './middleware/api/wp.tag';
 
 
 import {postMiddleware} from './middleware/app/post';
-import {fetchingMiddleware} from './middleware/app/fetching';
 import {submitMiddleware} from './middleware/app/submit';
 import {appDialogOpenMiddleware} from './middleware/app/dialog'
 
@@ -30,10 +27,6 @@ import {dialogDataMiddleware} from '@news-parser/visual-constructor/middleware/a
 import {postMiddleware as visualConstructorPostMiddleware} from '@news-parser/visual-constructor/middleware/api/post';
 import {mediaMiddleware} from '@news-parser/visual-constructor/middleware/api/media';
 //import {templateMiddleware} from '@news-parser/visual-constructor/middleware/api/template';
-
-
-import { categoriesMiddleware as sidebarCategorieMiddleware } from '@news-parser/sidebar/middleware/categories';
-import { tagsMiddleware as sidebarTagsMiddleware } from '@news-parser/sidebar/middleware/tags';
 
 import { templateMiddleware } from '@news-parser/template/middleware';
 
@@ -55,8 +48,6 @@ const store=createStore(
             listMiddleware,
             postMiddleware,
             pageMiddleware,
-            wpCategoryMiddleware,
-            wpTagMiddleware,
             submitMiddleware,
             appDialogOpenMiddleware,
             dialogDataMiddleware,
@@ -64,8 +55,6 @@ const store=createStore(
             mediaMiddleware,
             templateAPISuccessMiddleware,
             errorMiddleware,
-            sidebarCategorieMiddleware,
-            sidebarTagsMiddleware,
             templateMiddleware
         )));
 store.dispatch(startApp())

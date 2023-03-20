@@ -1,6 +1,5 @@
-import {AJAX,REST,GET,POST} from '@news-parser/parser-rss/constants/index';
+import {AJAX,REST,GET,POST} from '@news-parser/config/constants';
 import {BaseClass} from '../classes/BaseClass';
-import config from '@news-parser/config';
 
 export class Api extends BaseClass{
     params=null;
@@ -8,29 +7,30 @@ export class Api extends BaseClass{
     rootUrl;
     constructor(rootUrl){
         super();
-        console.log(this.fetchParams)
         this.rootUrl=rootUrl;
     }
     request(url,params){
         this.argsCheck({url,params});
         this.params={...params,url};
         this.fetchParams.method=this.params.method;
-        this._getHeaders();
-        this._getUrl();
-        this._getBody();
+        this._getHeaders()._getUrl()._getBody();
         return fetch(this.params.url,this.fetchParams);
     }
     _getUrl(){
         if(this.params.method===GET){
             let {url,body}=this.params;
             if(body!==undefined&&body!==null&& typeof body==='object'){
-                url+=Object.keys(body).map(paramName=>`&${encodeURIComponent(paramName)}=${encodeURIComponent(body[paramName])}`).join('');
+                //url+=Object.keys(body).map(paramName=>`&${encodeURIComponent(paramName)}=${encodeURIComponent(body[paramName])}`).join('');
+                const searchParams=new URLSearchParams();
+                Object.keys(body).forEach(propName=>searchParams.append(propName,body[propName]));
+                url+='&'+searchParams.toString();
             }
             if(this.params.type==AJAX&&this.params.nonce!=null){
                 url+='&_wpnonce='+nonce;
             }
             this.params.url=url;
         }
+        return this;
     }
     _getBody(){
         if(this.params.method==POST){
@@ -40,6 +40,7 @@ export class Api extends BaseClass{
             } 
             this.fetchParams.body=JSON.stringify(body);
         }
+        return this;
     }
     _getHeaders(){
         const headers={},
@@ -53,6 +54,8 @@ export class Api extends BaseClass{
             headers['accept']='application/json';
         }
         this.fetchParams.headers=headers;
+        return this;
     }
+
 }
 

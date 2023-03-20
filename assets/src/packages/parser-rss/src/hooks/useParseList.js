@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { useRequestApi } from "@news-parser/hooks/useRequestApi";
+import { requestApi } from "@news-parser/helpers/api/requestApi";
 import { PARSER_RSS_LIST, PARSE } from '@news-parser/config/constants';
 import { useDispatch, useStore } from "react-redux";
-import {showMessage} from "@news-parser/message";
-import {decodeHTMLEntities} from "@news-parser/helpers"
+import { showMessage } from "@news-parser/message";
+import { decodeHTMLEntities } from "@news-parser/helpers"
 import { setList } from "../actions/list.actions";
-import {getTemplate} from "@news-parser/template/actions"
+import { getTemplate } from "@news-parser/template/actions"
 
 export const useParseList = () => {
     const [isFetching, setIsFetching] = useState(false),
-        {getState}=useStore(),
-        dispatch=useDispatch(),
+        { getState } = useStore(),
+        dispatch = useDispatch(),
         success = (entity, event, postData) => {
             const { msg, data } = postData,
                 posts = data.map((post, index) => {
@@ -30,7 +30,7 @@ export const useParseList = () => {
         fetchPostsLis = (url) => {
             const options = { entity: PARSER_RSS_LIST, event: PARSE, data: { url } };
             setIsFetching(true);
-            useRequestApi(options, success, error).then(resp => setIsFetching(false))
+            requestApi(options, success, error).then(resp => setIsFetching(false))
         }
     return [isFetching, fetchPostsLis]
 }

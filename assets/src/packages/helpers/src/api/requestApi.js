@@ -1,17 +1,22 @@
 import { useState, useEffect } from "react";
-import { Api } from '@news-parser/helpers/api/Api';
+import { Api } from './Api';
 import config from '@news-parser/config';
 
 
-export const useRequestApi = (options, success, error) => {
-    
-    const { entity, event, data } = options,
-        method = config.api[entity][event].method,
-        type = config.api[entity][event].type,
-        nonce = config.api[entity][event].nonce,
-        url = config.api[entity][event].url,
-        api = new Api(config.rootUrl);
-        console.log(url,type,method)
+export const requestApi = (options, success, error) => {
+    const { entity, event, data, searchParams } = options;
+    const method = config.api[entity][event].method;
+    const type = config.api[entity][event].type;
+    const nonce = config.api[entity][event].nonce;
+    const api = new Api(config.rootUrl);
+    let url = config.api[entity][event].url;
+    if (searchParams!==undefined){
+        const urlSearchParams=new URLSearchParams('');
+        for(const paramName in searchParams){
+            urlSearchParams.append(paramName,searchParams[paramName])
+        }
+        url+='&'+urlSearchParams.toString();
+    }
     return api.request(url, {
         type,
         method,
@@ -32,9 +37,9 @@ export const useRequestApi = (options, success, error) => {
         })
         .then(data => {
             if (data.code && data.code !== 200) {
-                error(entity, event, data);
+                return error(entity, event, data);
             } else {
-                success(entity, event, data);
+                return success(entity, event, data);
             }
         })
 }

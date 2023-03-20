@@ -2,14 +2,14 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SidebarRight from './SidebarRight';
-import {Frame} from './Frame';
+import { Frame } from './Frame';
 import { closeVisulaConstructor } from '../actions/dialogData.actions';
 import { useScrolling } from "../hooks/visual-constructor/useScrolling";
 import { useFetchHTML } from "../hooks/visual-constructor/useFetchHTML";
 import { LoadingSpinner } from "../containers/LoadingSpinner";
 import '@news-parser/styles/_resize-bar.scss'
 import { useCreateWpPost } from "../hooks/visual-constructor/useCreateWpPost";
-import { useCreateParsingTemplate } from "../hooks/visual-constructor/useCreateParsingTemplate";
+import { useCreateTemplate } from "@news-parser/template/hooks/useCreateTemplate";
 
 
 /**
@@ -34,8 +34,8 @@ function VisualConstructor() {
         { url, isOpen } = useSelector(state => state.parse.dialog.visualConstructor.dialogData),
         { saveParsingTemplate } = useSelector(state => state.parse.dialog.visualConstructor.options),
         [isFetching, startFetching] = useFetchHTML(),
-        [createWpPost]=useCreateWpPost(),
-        [createParsingTemplate]=useCreateParsingTemplate(),
+        [createWpPost] = useCreateWpPost(),
+        [isTemplateCreating, createTemplate] = useCreateTemplate(),
         close = () => {
             dispatch(closeVisulaConstructor());
         },
@@ -43,16 +43,16 @@ function VisualConstructor() {
             if (!saveParsingTemplate) {
                 createWpPost()
             } else {
-                createParsingTemplate();
+                createTemplate().then(() => close())
             }
             //close();
         }, [saveParsingTemplate]),
-        isVisualConstructorReady = useMemo(() => frameIsReady && !isFetching, [frameIsReady, isFetching]);
+        isVisualConstructorReady = useMemo(() => frameIsReady && !isFetching && !isTemplateCreating, [frameIsReady, isFetching, isTemplateCreating]);
     useEffect(() => {
         if (isOpen) {
             disableScrolling();
             startFetching(url);
-        }else{
+        } else {
             enableScrolling();
             setFrameIsReady(false);
         }

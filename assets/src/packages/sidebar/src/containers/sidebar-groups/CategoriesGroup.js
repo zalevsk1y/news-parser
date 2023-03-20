@@ -13,16 +13,31 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import { useCategoryFilter } from "../../hooks/useCategoryFilter";
-import { useNewCategory } from "../../hooks/useNewCategory";
+import { useCreateCategory } from "../../hooks/useCreateCategory";
 import "@news-parser/styles/sidebar/_input-container.scss";
 import "@news-parser/styles/sidebar/_categories-group.scss";
 
 
 import { useGetCategories } from "@news-parser/sidebar/hooks/useGetCategories";
 
+/**
+* Renders a CategoriesGroup component that displays a list of categories with checkboxes,
+* a search bar for filtering categories, and a form for adding new categories.
+*
+* @return {JSX.Element} A CategoriesGroup component
+* @example
+* <CategoriesGroup />
+* @typedef {Object} Category
+* @property {number} id - The unique identifier for the category
+* @property {string} name - The name of the category
+* @property {number} parent_id - The ID of the parent category, or 0 if it has no parent
+* @typedef {Object} Props
+* @property {Category[]} categories - An array of Category objects
+* @property {number[]} selected - An array of selected category IDs
+* @property {function} onChange - A callback function triggered when a category checkbox is toggled
+*/
 
-
-function CategoriesGroup() {
+const  CategoriesGroup=()=>{
   const categories = useSelector((state) => state.parse.sidebar.categories);
   const selected = useSelector((state) => state.parse.sidebar.selectedCategories);
   const dispatch=useDispatch()
@@ -31,9 +46,10 @@ function CategoriesGroup() {
     startCategoriesFetching();
   }, [])
   const [filterValue, setFilterValue, filteredCategories] = useCategoryFilter(categories);
-  const [newCategoryParams, newCategoryNameInputHandler, newCategoryParentSelectHandler, addCategory] = useNewCategory({ parent: 0, name: "" });
+  const [newCategoryParams, newCategoryNameInputHandler, newCategoryParentSelectHandler, addCategory] = useCreateCategory({ parent: 0, name: "" });
   const addCategoryHandler = useCallback(() => {
-    addCategory().then(() => startCategoriesFetching())
+    addCategory();
+    
   })
   const categorySelectHandler = useCallback((event, id) => {
     const checkedStatus = event.target.checked;
@@ -76,9 +92,10 @@ function CategoriesGroup() {
         <div className="sidebar-item-expandable-row">
           <label htmlFor="category-input">New Category Name</label>
           <input
+            value={newCategoryParams.name}
             type="text"
             id="category-input"
-            onBlur={newCategoryNameInputHandler}
+            onChange={newCategoryNameInputHandler}
           ></input>
         </div>
         <div className="sidebar-item-expandable-row">
