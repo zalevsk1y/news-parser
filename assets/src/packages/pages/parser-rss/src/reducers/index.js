@@ -1,13 +1,13 @@
 import {combineReducers} from 'redux';
 
 
-import {SET_ROUTE} from '../actions/route.actions';
+import {SET_ROUTE} from '../../../../parser-rss/src/actions/route.actions';
 import {message} from '@news-parser/message/reducers';
-import {START_FETCHING,STOP_FETCHING} from '../actions/api.actions';
-import {SET_LIST} from '../actions/list.actions';
-import {SET_APP_STATE,CHANGE_SUBMIT_TYPE} from '../actions/app.actions'
-import {POST_META} from '../actions/post.actions';
-import {SELECT,DRAFT,INSERT,DELETE} from '../constants/index';
+import {START_FETCHING,STOP_FETCHING} from '../../../../parser-rss/src/actions/api.actions';
+import {SET_LIST} from '../../../../parser-rss/src/actions/list.actions';
+import {SET_APP_STATE,CHANGE_SUBMIT_TYPE} from '../../../../parser-rss/src/actions/app.actions'
+import {POST_META} from '../../../../parser-rss/src/actions/post.actions';
+import {SELECT,DRAFT,INSERT,DELETE} from '../../../../parser-rss/src/constants/index';
 import { sidebar } from '@news-parser/sidebar/reducers';
 import { initialStateParse } from './initState';
 import {dialog} from './dialog'

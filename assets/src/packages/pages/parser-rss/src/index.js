@@ -7,20 +7,20 @@ import { Provider } from 'react-redux';
 import {createStore, applyMiddleware, compose} from 'redux';
 import parse from './reducers';
 
-import {mainMiddleware} from './middleware/core/main';
-import {errorMiddleware} from './middleware/core/error';
+import {mainMiddleware} from '../../../parser-rss/src/middleware/core/main';
+import {errorMiddleware} from '../../../parser-rss/src/middleware/core/error';
 // import {apiMiddleware} from './middleware/core/api';
 
 import {apiMiddleware} from '@news-parser/request/middleware/api'
 
-import {listMiddleware} from './middleware/api/list';
-import {pageMiddleware} from './middleware/api/page';
-import {templateAPISuccessMiddleware} from './middleware/api/template';
+import {listMiddleware} from '../../../parser-rss/src/middleware/api/list';
+import {pageMiddleware} from '../../../parser-rss/src/middleware/api/page';
+import {templateAPISuccessMiddleware} from '../../../parser-rss/src/middleware/api/template';
 
 
-import {postMiddleware} from './middleware/app/post';
-import {submitMiddleware} from './middleware/app/submit';
-import {appDialogOpenMiddleware} from './middleware/app/dialog'
+import {postMiddleware} from '../../../parser-rss/src/middleware/app/post';
+import {submitMiddleware} from '../../../parser-rss/src/middleware/app/submit';
+import {appDialogOpenMiddleware} from '../../../parser-rss/src/middleware/app/dialog'
 
 import {dialogDataMiddleware} from '@news-parser/visual-constructor/middleware/app/dialogData';
 
@@ -30,7 +30,7 @@ import {mediaMiddleware} from '@news-parser/visual-constructor/middleware/api/me
 
 import { templateMiddleware } from '@news-parser/template/middleware';
 
-import {startApp} from './actions/app.actions';
+import {startApp} from '../../../parser-rss/src/actions/app.actions';
 import thunkMiddleware from 'redux-thunk';
 import ErrorBoundary from "@news-parser/error-handler"
 

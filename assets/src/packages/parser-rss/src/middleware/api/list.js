@@ -5,7 +5,7 @@ import {showMessage} from '../../actions/app.actions'
 import {FETCH_LIST, setList} from '../../actions/list.actions';
 import {setAppState} from '../../actions/app.actions';
 import {decodeHTMLEntities} from '@news-parser/helpers/';
-import { getTemplate } from '../../../../template/src/actions';
+import { getTemplate } from '@news-parser/template/actions';
 
 
 export const listMiddleware = ({dispatch,getState})=>next=>action=>{

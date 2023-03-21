@@ -1,4 +1,4 @@
-import { sidebar } from "../../../sidebar/src/reducers"
+import { sidebar } from "../../../../sidebar/src/reducers"
 
 export const initialStateParse={
             appState:{
