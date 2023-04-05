@@ -15,6 +15,7 @@ import SidebarRightPost from "../../../components/sidebar-groups/SidebarRightPos
 import {useIsOpen} from '../hooks/visual-constructor/useIsOpen'
 import {useSaveParsingTemplate} from '../hooks/visual-constructor/useSaveParsingTemplate'
 import {useClose} from '../hooks/visual-constructor/useSaveParsingTemplate';
+import { useIsMutatingState } from "../hooks/visual-constructor/useSetIsMutating";
 
 /**
 * 
@@ -31,38 +32,23 @@ import {useClose} from '../hooks/visual-constructor/useSaveParsingTemplate';
 
 
 
-function VisualConstructor() {
+function VisualConstructor({children}) {
     const [enableScrolling, disableScrolling] = useScrolling();
     const [frameIsReady, setFrameIsReady] = useState(false);
     const [ url, isOpen ] = useIsOpen();
-    const shouldParsingTemplateBeSaved = useSaveParsingTemplate();
-    const [isHTMLFetching, html] = useGetHTML(url);
-    const [createWpPost] = useCreateWpPost();
-    const [isTemplateCreating, createTemplate] = useCreateTemplate();
-    const close = useClose();
-    const buttonClickHandler = useCallback(() => {
-            if (!shouldParsingTemplateBeSaved) {
-                createWpPost()
-            } else {
-                createTemplate().then(() => close())
-            }
-            //close();
-        }, [shouldParsingTemplateBeSaved]);
-    const isVisualConstructorReady = useMemo(() => frameIsReady && !isHTMLFetching && !isTemplateCreating, [frameIsReady, isHTMLFetching, isTemplateCreating]);
-    useEffect(() => {
+    const [isHTMLFetching, startHTMLFetching] = useFetchHTML(url);
+    const isMutating=useIsMutating();
+    const isVisualConstructorReady = useMemo(() => frameIsReady && !isHTMLFetching && !isMutating, [frameIsReady, isHTMLFetching, isMutating]);
+    useLayoutEffect(() => {
         if (isOpen) {
             disableScrolling();
-            startFetching(url);
+            startHTMLFetching(url);
         } else {
             enableScrolling();
             setFrameIsReady(false);
         }
-    }, [isOpen]);
-    const tabs = {
-        'Template': () => (<SidebarRightTemplate />),
-        'Post': () => (<SidebarRightPost />)
-      };
-   
+    }, [url,isOpen]);
+    
 
     return (
         <div className="media-modal-wrapper" style={{display:isOpen?'block':'none'}}>
@@ -85,11 +71,11 @@ function VisualConstructor() {
                             {
                                 //<Frame injectHTML={htmlData} injectCSS={} onReady={this.frameIsReady}/>
                             }
-                            <Frame onReady={() => setFrameIsReady(true)} html={html}/>
+                            <Frame url={url}/>
                         </div>
                         <div className="resize-drag-bar"></div>
 
-                            <SidebarRight tabs={tabs}/>
+                        {children[0]}
                     </div>
                     <div className="visual-container-modal-footer d-flex flex-row justify-content-end align-items-center">
                         <button

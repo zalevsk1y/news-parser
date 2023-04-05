@@ -1,6 +1,6 @@
 export const defaultState={
     dialogData:{
-        isFetching:false,
+        isMutating:false,
         isOpen:false,
         url:false,
         _id:false,

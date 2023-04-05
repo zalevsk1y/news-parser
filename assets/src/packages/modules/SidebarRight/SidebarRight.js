@@ -15,27 +15,26 @@ import React, { useState, useMemo } from "react";
 *
  */
 
-const SidebarRight = ({tabs}) => {
+const SidebarRight = ({tabs,children}) => {
 
-  const [activeTab, setActiveTab] = useState("Template"),
-    activeTabChangeHandler = (tabName) => () => setActiveTab(tabName),
-    tabNames = useMemo(() => Object.keys(tabs), []);
+  const [activeTab, setActiveTab] = useState(0),
+    activeTabChangeHandler = (tabIndex) => () => setActiveTab(tabIndex),
+    tabNames = useMemo(() =>(tabs.map((tab,index) => (
+      <a
+        key={tab}
+        className={`nav-link ${activeTab === index ? "active" : ""}`}
+        onClick={activeTabChangeHandler(index)}
+      >
+        {tab}
+      </a>))), [activeTab]);
   return (
     <div className="modal-right-side-bar d-flex flex-column">
       <div className="sidebar-nav">
         <nav className="nav">
-          {tabNames.map((tab) => (
-            <a
-              key={tab}
-              className={`nav-link ${activeTab === tab ? "active" : ""}`}
-              onClick={activeTabChangeHandler(tab)}
-            >
-              {tab}
-            </a>
-          ))}
+          {tabNames}
         </nav>
       </div>
-      {tabs[activeTab]()}
+      {children[activeTab]}
     </div>
   );
 };

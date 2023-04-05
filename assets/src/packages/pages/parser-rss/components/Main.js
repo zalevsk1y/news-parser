@@ -4,14 +4,14 @@ import InputForm from './InputForm';
 import Posts from './Posts';
 import Indicator from './Indicator';
 import VisualConstructor from '@news-parser/widget/visual-constructor/';
-import {useOpenVisualConstructor} from '@news-parser/widget/visual-constructor/hooks'
+import { useOpenVisualConstructor } from '@news-parser/widget/visual-constructor/hooks'
 import PropTypes from 'prop-types';
 import { parseSelected } from '../actions/page.actions';
 import { SelectedPostsInfo } from '@news-parser/modules/SelectedPostsInfo';
 import { validateIntupUrl } from '@news-parser/helpers'
 import { getUrlSearchParams } from '@news-parser/helpers/';
-import {useFetchPostsList} from '@news-parser/entity/postsList/hooks/useFetchPostsList'
-import {useSetPostsList} from '@news-parser/entity/postsList/hooks/useSetPostsList'
+import { useFetchPostsList } from '@news-parser/entity/postsList/hooks/useFetchPostsList'
+import { useFetchTemplate } from '@news-parser/entity/template/hooks/useSetPostsList'
 
 
 /**
@@ -23,24 +23,27 @@ import {useSetPostsList} from '@news-parser/entity/postsList/hooks/useSetPostsLi
 
 const Main = () => {
   const showMessage = useShowMessage();
-  const [mainState,setMainState] = useState(() => {
+  const [isPostsReady,fetchPostsList] = useFetchPostsList();
+  const [isTemplateReady,fetchTemplate] = useFetchTemplate(url);
+  const [mainState] = useState(() => {
     const searchParams = getUrlSearchParams();
+    const url = searchParams.has('url') ? searchParams.get('url') : false;
+    fetchPostsList(url);
+    fetchTemplate(url);
     return {
-      entity: searchParams.has('entity') ? searchParams.get('entity') : null,
-      url: searchParams.has('url') ? searchParams.get('url') : '',
-      template:false
-    }
+      url
+    };
   });
-  const [isPostsReady, posts] = useGetPosts(mainState.url);
-  const [isTemplateReady, template] = useGetTemplate(mainState.url);
+  const [posts] = useGetPosts();
+  const [template] = useGetTemplate();
 
-const [selectedPosts,selectedPostsCount]=useMemo(()=>{
-    const sp=posts.filter(post=>post.selected)
-    return [sp,sp.length]
-  },[posts]);
-  const isParseSelectedPostsDisabled = useMemo(() => !mainState.template && !isTemplateReady, [parsedTemplate, isTemplateFetching])
+  const [selectedPosts, selectedPostsCount] = useMemo(() => {
+    const sp = posts.filter(post => post.selected)
+    return [sp, sp.length]
+  }, [posts]);
+  const isParseSelectedPostsDisabled = useMemo(() => !template && !isTemplateReady, [template, isTemplateFetching])
   const parseSelectedHandler = useCallback(() => parsePosts(selectedPosts), [selectedPosts]);
-  const postEditDialogOpenHandler=useOpenVisualConstructor();
+  const postEditDialogOpenHandler = useOpenVisualConstructor();
   const inputSubmitHandler = useCallback((url) => {
     if (validateIntupUrl(url)) {
       setUrlSearchParams({ entity: PARSER_RSS_LIST, url })
@@ -51,7 +54,13 @@ const [selectedPosts,selectedPostsCount]=useMemo(()=>{
 
   return (
     <div className={"wrap"}>
-      <VisualConstructor />
+      <VisualConstructor >
+        <SidebarRight tabs={['Templat', 'Post']}>
+          <SidebarRightTemplate />
+          <SidebarRightPost />
+        </SidebarRight>
+        <VisualConstructorFooter />
+      </VisualConstructor>
       <div className="parsing-title">
         <h1>News-Parser</h1>
       </div>
@@ -61,7 +70,7 @@ const [selectedPosts,selectedPostsCount]=useMemo(()=>{
 
       <SelectedPostsInfo disabled={isParseSelectedPostsDisabled} submitAction={parseSelectedHandler} selectedPostsCount={selectedPostsCount} />
 
-      <Posts posts={posts} openEditor={postEditDialogOpenHandler}/>
+      <Posts posts={posts} openEditor={postEditDialogOpenHandler} />
     </div>
   );
 }

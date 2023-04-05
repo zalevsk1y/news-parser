@@ -25,8 +25,8 @@ export const Frame = ({ onReady,html,url }) => {
     [getTitle, getFeaturedMedia, selectElement, removeElement] = useFrameContent(frameRef.current),
     [mouseOver, mouseOut] = useMouseEvents();
   useEffect(() => {
-    if (data && frameRef.current) {
-      initFrame();
+    if (html && frameRef.current) {
+      initFrame(html,frameRef);
     }
     return () => {
       if (frame !== null) {
@@ -35,9 +35,9 @@ export const Frame = ({ onReady,html,url }) => {
     };
   }, [html]);
 
-  const initFrame = () => {
+  const initFrame = (html,frameRef) => {
     const newFrame = frameElement(frameRef.current, url)
-      .injectHTML(data, [purifyDOM])
+      .injectHTML(html, [purifyDOM])
       .injectCSS({
         parent: 'head',
         tag: 'link',
