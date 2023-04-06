@@ -1,7 +1,10 @@
+import {PARSER_RSS} from  '@news-parser/config/constants';
+import {POSTS,SELECTED,DRAFT,INSERT} from '../constants';
 
-export const POST_META='POST_META';
-export const TOGGLE_SELECT_POST='TOGGLE_SELECT_POST';
-export const PARSE_SELECTED_POSTS='PARSE_SELECTED_POSTS';
+//[news-parser.posts.selected:toggle]
+export const TOGGLE_POST_SELECT=`[${PARSER_RSS}.${POSTS}.${SELECTED}:${SELECT}]`;
+//[news-parser.posts.draft:insert]
+export const INSERT_DRAFT_POST=`[${PARSER_RSS}.${POSTS}.${DRAFT}:${INSERT}]`;
 
 export const togglePostSelect=(_id)=>{
     return {
@@ -11,9 +14,9 @@ export const togglePostSelect=(_id)=>{
         }
     }
 }
-export const setPostMeta=(metaData,event,_id,data)=>{
+export const insertDraftPost=(_id,data)=>{
     return {
-        type:`[${metaData}:${event}]${POST_META}`,
+        type:INSERT_DRAFT_POST,
         payload:{
             _id,
             ...data

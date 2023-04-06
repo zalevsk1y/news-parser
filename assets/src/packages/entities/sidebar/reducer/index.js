@@ -40,9 +40,9 @@ export const sidebar = (state = initialStateParse.sidebar, action) => {
             return { ...state, status: action.payload.postStatus }
         //descussion
         case ALLOW_POST_COMMENTS:
-            return { ...state, allowComments: action.payload.checked }
+            return { ...state, allowComments: !state.allowComments }
         case ALLOW_POST_PINBACKS:
-            return { ...state, allowPinbacks: action.payload.checked }
+            return { ...state, allowPinbacks: !state.allowPinbacks }
 
         default:
             return { ...state };

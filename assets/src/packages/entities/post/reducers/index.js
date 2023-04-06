@@ -1,24 +1,29 @@
+import {TOGGLE_POST_SELECT} from '../actions/post.actions';
+import {INSERT_DRAFT_POST} from '../actions/post.actions';
+
 export const selectPostMeta=(state,action)=>{
     switch (action.type){
-        case `[${SELECT}:${DELETE}]${POST_META}`:
-            //ES9: const {[action.payload.postId],...newState}=state
-            const newState={...state},
-                {_id}=action.payload;
+        case TOGGLE_POST_SELECT:
+            const {_id}=action.payload;
+            if (state.hasOwnProperty(_id)){
+            const newState={...state};
             delete newState[_id];
             return newState;
-        case `[${SELECT}:${INSERT}]${POST_META}`:
+            }else{
             return {
                 ...state,
-                ...{[action.payload._id]:true}
+                ...{[_id]:true}
             };
+        }
         default:
             return {...state};
     }
 }
 export const draftPostMeta=(state,action)=>{
     switch (action.type){
-        case `[${DRAFT}:${INSERT}]${POST_META}`:
-            const {_id,post_id,editLink}=action.payload;
+        case INSERT_DRAFT_POST:
+            const {post_id,editLink}=action.payload.data;
+            const {_id}=action.payload;
             return {
                 ...state,
                 ...{[_id]:{

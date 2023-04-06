@@ -4,7 +4,7 @@ import { Checkbox } from "../../visual-constructor/src/containers/elements/Check
 import Input from "../../visual-constructor/src/containers/elements/Input";
 import { Image } from "@news-parser/image/";
 import { useSelector } from "react-redux";
-import {config} from  "@news-parser/config";
+import { config } from "@news-parser/config";
 import { useSidebarRightTemplateEvents } from "../hooks/useSidebarRightTemplateEvents";
 
 /**
@@ -20,10 +20,10 @@ const SidebarRightTemplate = () => {
       options: state.parse.dialog.visualConstructor.options,
     })),
     [selectTitle, selectFeaturedMediaHandler, toggleSaveParsingTemplateHandler, toggleAddSourceHandler, toggleAddFeaturedMediaHandler] = useSidebarRightTemplateEvents(options, body, newTitle),
-    selectTitleHandler=useCallback(()=>{
+    selectTitleHandler = useCallback(() => {
       selectTitle(newTitle);
       setNewTitle('');
-    },[newTitle]),
+    }, [newTitle]),
     changeStateInputTitle = (value) => {
       if (!value || value === title) return;
       setNewTitle(value);
@@ -66,7 +66,7 @@ const SidebarRightTemplate = () => {
       <InfoBox title="Post title">
         <InfoBody>
           <span>{title}</span>
-          <Input onChange={changeStateInputTitle} value={newTitle}/>
+          <Input onChange={changeStateInputTitle} value={newTitle} />
           <p className="howto">
             If you want to change title, type the new title and press "Change
             title" button.

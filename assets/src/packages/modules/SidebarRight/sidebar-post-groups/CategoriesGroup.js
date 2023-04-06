@@ -15,6 +15,7 @@ import "@news-parser/styles/sidebar/_categories-group.scss";
 
 
 import { useGetCategories } from "@news-parser/sidebar/hooks/useGetCategories";
+import { useFetchCategories } from "../../../entities/sidebar/hooks/useFetchCategories";
 
 /**
 * Renders a CategoriesGroup component that displays a list of categories with checkboxes,
@@ -34,6 +35,7 @@ import { useGetCategories } from "@news-parser/sidebar/hooks/useGetCategories";
 */
 
 const  CategoriesGroup=()=>{
+  const [isFetching,startFetcingCategories]=useFetchCategories()
   const [categories,selected] = useGetCategories();
   const [selectCategory,deselectCategory]=useSelectCategory();
   const [filterValue, setFilterValue, filteredCategories] = useCategoryFilter(categories);
@@ -47,7 +49,7 @@ const  CategoriesGroup=()=>{
       deselectCategory(id);
     }
   }, [dispatch]);
-
+  useEffect(()=>startFetcingCategories(),[])
   return (
     <>
       <SidebarItem>

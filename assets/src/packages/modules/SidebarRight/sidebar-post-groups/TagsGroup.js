@@ -8,9 +8,11 @@ import {useCreateTag} from "../../hooks/useCreateTag"
 
 
 const TagsGroup = () => {
-  const [tags,selected,isTagsFetching]=useGetTags();
-  const [isTagSelected,selectTag]=useCreateTag(tags);
+  const [isFetching,startTagsFetching]=useFetchTags();
+  const [tags,selected]=useGetTags();
+  const [isMutating,selectTag]=useSelectTag(tags);
   const selectedTags=useMemo(()=>tags.filter((tag) => selected.includes(tag.id)),[tags,selected])
+  useEffect(()=>startTagsFetching())
   return (
     <SidebarItem>
       <TagInput

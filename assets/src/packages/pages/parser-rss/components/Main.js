@@ -12,7 +12,7 @@ import { validateIntupUrl } from '@news-parser/helpers'
 import { getUrlSearchParams } from '@news-parser/helpers/';
 import { useFetchPostsList } from '@news-parser/entity/postsList/hooks/useFetchPostsList'
 import { useFetchTemplate } from '@news-parser/entity/template/hooks/useSetPostsList'
-
+import { useSelectPost } from '@news-parser/entities/post/hooks/useSelectPost';
 
 /**
  * Main application element.
@@ -36,7 +36,7 @@ const Main = () => {
   });
   const [posts] = useGetPosts();
   const [template] = useGetTemplate();
-
+  const toggleSelectPost=usePostSelect()
   const [selectedPosts, selectedPostsCount] = useMemo(() => {
     const sp = posts.filter(post => post.selected)
     return [sp, sp.length]
@@ -70,7 +70,7 @@ const Main = () => {
 
       <SelectedPostsInfo disabled={isParseSelectedPostsDisabled} submitAction={parseSelectedHandler} selectedPostsCount={selectedPostsCount} />
 
-      <Posts posts={posts} openEditor={postEditDialogOpenHandler} />
+      <Posts selectPost={toggleSelectPost} posts={posts} openEditor={postEditDialogOpenHandler} />
     </div>
   );
 }
