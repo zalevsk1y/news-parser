@@ -1,4 +1,3 @@
-import { Parser } from "@news-parser/helpers/parser/Parser";
 import { featuredImageParser } from "@news-parser/helpers/parser/FeaturedImageParser";
 import { postTitleParser } from "@news-parser/helpers/parser/PostTitleParser";
 import { useSetPostTitle,useSetPostFeaturedMedia } from "@news-parser/entities/sidebarTemplate/hooks";
