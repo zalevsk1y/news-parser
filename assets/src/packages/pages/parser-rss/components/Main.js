@@ -3,14 +3,13 @@ import Message from '@news-parser/message/';
 import InputForm from './InputForm';
 import Posts from './Posts';
 import Indicator from './Indicator';
-import VisualConstructor from '@news-parser/widget/visual-constructor/';
+import {VisualConstructor,VisualConstructorFooter} from '@news-parser/widget/visual-constructor/';
 import { useOpenVisualConstructor } from '@news-parser/widget/visual-constructor/hooks'
 import PropTypes from 'prop-types';
-import { parseSelected } from '../actions/page.actions';
 import { SelectedPostsInfo } from '@news-parser/modules/SelectedPostsInfo';
 import { validateIntupUrl } from '@news-parser/helpers'
 import { getUrlSearchParams } from '@news-parser/helpers/';
-import { useFetchPostsList } from '@news-parser/entity/postsList/hooks/useFetchPostsList'
+import { useFetchPostsList,useGetPosts } from '@news-parser/entity/postsList/hooks'
 import { useFetchTemplate } from '@news-parser/entity/template/hooks/useSetPostsList'
 import { useSelectPost } from '@news-parser/entities/post/hooks/useSelectPost';
 
@@ -36,7 +35,7 @@ const Main = () => {
   });
   const [posts] = useGetPosts();
   const [template] = useGetTemplate();
-  const toggleSelectPost=usePostSelect()
+  const toggleSelectPost=useSelectPost()
   const [selectedPosts, selectedPostsCount] = useMemo(() => {
     const sp = posts.filter(post => post.selected)
     return [sp, sp.length]

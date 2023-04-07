@@ -1,11 +1,7 @@
-import { sidebar } from "../../../../sidebar/src/reducers"
+
 
 export const initialStateParse={
             appState:{
-                isFetching:false,
-                entity:'list',
-                submitType:'list',
-                event:false,
                 data:{
                     url:''
                 }
@@ -34,8 +30,3 @@ export const initialStateParse={
 
 }
 
-export const initialStateRoute={
-
-    action:false,
-    url:false,
-}

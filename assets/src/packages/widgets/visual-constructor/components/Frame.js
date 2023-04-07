@@ -6,10 +6,9 @@ import purifyDOM from "@news-parser/helpers/frame/FrameElement/modifiers/purifyD
 
 import { frameElement } from "@news-parser/helpers/frame/FrameElement/FrameElement";
 
-import { useSelector } from "react-redux";
-import { useFrameContent } from "../visual-constructor/src/hooks/frame/useFrameContent";
 import { useMouseEvents } from "../visual-constructor/src/hooks/frame/useMouseEvents";
-
+import { useFrameElementMiddleware } from "../hooks/frame/useFrameElementMiddleware";
+import { useToggleContent } from "../../../entities/sidebarTemplate/hooks/useToggleContent";
 
 /**
 * This is a frame element used in the visual constructor modal window, allowing users to manually choose parsing content.
@@ -20,10 +19,11 @@ import { useMouseEvents } from "../visual-constructor/src/hooks/frame/useMouseEv
 */
 
 export const Frame = ({ onReady,html,url }) => {
-  const frameRef = useRef(null),
-    [frame, setFrame] = useState(null),
-    [getTitle, getFeaturedMedia, selectElement, removeElement] = useFrameContent(frameRef.current),
-    [mouseOver, mouseOut] = useMouseEvents();
+  const frameRef = useRef(null);
+  const [frame, setFrame] = useState(null);
+  const [getTitle, getFeaturedMedia] = useFrameElementMiddleware();
+  const [mouseOver, mouseOut] = useMouseEvents();
+  const [selectElement,removeElement]=useToggleContent(frameRef)
   useEffect(() => {
     if (html && frameRef.current) {
       initFrame(html,frameRef);

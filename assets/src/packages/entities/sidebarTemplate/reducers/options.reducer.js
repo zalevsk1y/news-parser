@@ -1,4 +1,4 @@
-import { TOGGLE_ADD_FEATURED_MEDIA, TOGGLE_SAVE_PARSING_TEMPLATE, TOGGLE_ADD_SOURCE } from '../actions/options.actions';
+import { TOGGLE_ADD_FEATURED_MEDIA, TOGGLE_SAVE_PARSING_TEMPLATE, TOGGLE_ADD_SOURCE } from '../../../entities/sidebarTemplate/actions/options.actions';
 import { OPEN_DIALOG } from '../actions/dialogData.actions'
 import { defaultState } from './defaultState';
 
