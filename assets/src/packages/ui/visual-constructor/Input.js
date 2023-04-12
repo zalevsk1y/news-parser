@@ -5,7 +5,7 @@ import PropTypes  from 'prop-types';
  * 
  * @since 1.0.0
  */
-class Input extends React.Component {
+export class Input extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

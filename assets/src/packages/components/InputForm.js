@@ -7,7 +7,7 @@ import React, { useCallback } from 'react';
  * @since 0.8.0
  */
 
-const InputForm = ({ buttonName, submitAction, initValue, disabled }) => {
+export const InputForm = ({ buttonName, submitAction, initValue, disabled }) => {
     const [inputValue, setInputValue] = useState(initValue || "");
     const inputChange = (event) => {
         setInputValue(event.target.value);

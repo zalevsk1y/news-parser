@@ -8,7 +8,7 @@ import { decodeHTMLEntities } from "@news-parser/helpers/";
  * @since 0.8.0
  */
 
-const Message = () => {
+export const Message = () => {
   const [isOpen, setMessageWindowState] = useState(false);
   const [msgState,setMsgState]=useState({type:'info',text:'no info'});
   const { type, text, timestamp } = useSelector((state) => state.parse.message);
@@ -55,4 +55,3 @@ const Message = () => {
   );
 };
 
-export default Message;

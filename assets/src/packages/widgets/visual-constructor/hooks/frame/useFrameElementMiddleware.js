@@ -1,10 +1,10 @@
 import { featuredImageParser } from "@news-parser/helpers/parser/FeaturedImageParser";
 import { postTitleParser } from "@news-parser/helpers/parser/PostTitleParser";
-import { useSetPostTitle,useSetPostFeaturedMedia } from "@news-parser/entities/sidebarTemplate/hooks";
+import { useSetPostTitle,useSetFeaturedMedia } from "@news-parser/entities/sidebarTemplate/hooks";
 
 export const useFrameElementMiddleware = () => {
     const setPostTitle=useSetPostTitle();
-    const setPostFeaturedMedia=useSetPostFeaturedMedia();
+    const setPostFeaturedMedia=useSetFeaturedMedia();
     const getTitle = useCallback((frameRef) => {
         const document = useMemo(() => frameRef?.contentWindow?.document, [frameRef]);
             const title = postTitleParser(document).findTitle() || "No title";

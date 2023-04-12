@@ -1,7 +1,6 @@
 import { newsParserSettings as settings, newsParserApiEndpoints as endpoints } from 'globals';
 import { TEMPLATE } from './constants'
-import { WP_POST, MEDIA } from '@news-parser/visual-constructor/constants/';
-import { PAGE } from '@news-parser/parser-rss/constants/';
+import { WP_POST, MEDIA,PAGE } from './constants';
 import { API_WP_TAGS, API_WP_CATEGORIES, PARSER_RSS_LIST, PARSE, RAW_HTML } from './constants';
 import { POST, GET, AJAX, REST, CREATE, LIST } from './constants';
 

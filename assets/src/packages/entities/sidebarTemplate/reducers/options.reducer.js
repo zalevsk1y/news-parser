@@ -1,9 +1,8 @@
-import { TOGGLE_ADD_FEATURED_MEDIA, TOGGLE_SAVE_PARSING_TEMPLATE, TOGGLE_ADD_SOURCE } from '../../../entities/sidebarTemplate/actions/options.actions';
-import { OPEN_DIALOG } from '../actions/dialogData.actions'
-import { defaultState } from './defaultState';
+import { TOGGLE_ADD_FEATURED_MEDIA, TOGGLE_SAVE_PARSING_TEMPLATE, TOGGLE_ADD_SOURCE } from '../actions/options.actions';
+import { initialState } from './initialState';
 
 
-export function options(state=defaultState.options , action) {
+export function options(state=initialState , action) {
     switch (action.type) {
         case TOGGLE_ADD_FEATURED_MEDIA:
             return {

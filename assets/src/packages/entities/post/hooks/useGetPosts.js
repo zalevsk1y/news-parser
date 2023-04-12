@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import {table} from "@news-parser/helpers/classes";
+import {table} from "@news-parser/helpers/classes/Table";
 import { useMemo } from "react";
 
 export const useGetPosts=()=>{

@@ -1,4 +1,3 @@
-import VisualConstructor from './components/VisualConstructor';
-import '@news-parser/styles/visual-constructor.scss';
-
-export default VisualConstructor;
+export {VisualConstructor} from './components/VisualConstructor';
+export {VisualConstructorFooterMain} from './components/VisualConstructorFooterMain';
+// import '@news-parser/styles/visual-constructor.scss';

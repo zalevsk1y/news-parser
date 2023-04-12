@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Main from './containers/Main';
+import Main from './components/Main';
 
 import { Provider } from 'react-redux';
 import {createStore  } from 'redux';
-import { composeWithDevTools } from "redux-devtools-extension";
+import { composeWithDevTools } from '@redux-devtools/extension';
 
 import parse from './reducers';
 
 import ErrorBoundary from "@news-parser/error-handler"
 
-import '@news-parser/styles/parser-rss.scss';
+// import '@news-parser/styles/parser-rss.scss';
 
 //SetUp for Redux DevExtension.
 

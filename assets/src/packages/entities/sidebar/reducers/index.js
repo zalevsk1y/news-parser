@@ -1,11 +1,11 @@
-import { initialStateParse } from "@news-parser/parser-rss/reducers/initState";
+import { initialState } from "./initialState";
 import { MAP_POST_TAGS, PUSH_POST_TAG, SELECT_POST_TAG, DISELECT_POST_TAG } from '../actions/tag.actions';
 import { SET_POST_PUBLISH_DATE, SET_POST_FORMAT, SET_PUBLISH_INTERVAL, SET_POST_STATUS } from '../actions/status.visability.actions'
 import { ALLOW_POST_PINBACKS, ALLOW_POST_COMMENTS } from '../actions/descussion.actions'
 import { MAP_POST_CATEGORIES, PUSH_POST_CATEGORY, SELECT_POST_CATEGORY, DISELECT_POST_CATEGORY } from '../actions/category.actions'
 
 
-export const sidebar = (state = initialStateParse.sidebar, action) => {
+export const sidebar = (state = initialState, action) => {
 
     switch (action.type) {
         //Catagories
@@ -45,6 +45,6 @@ export const sidebar = (state = initialStateParse.sidebar, action) => {
             return { ...state, allowPinbacks: !state.allowPinbacks }
 
         default:
-            return { ...state };
+            return { state };
     }
 }

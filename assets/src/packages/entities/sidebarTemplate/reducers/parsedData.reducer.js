@@ -1,8 +1,8 @@
 import {SELECT_TITLE,SELECT_FEATURED_MEDIA,SELECT_CONTENT,REMOVE_CONTENT} from '../actions/parsedData.actions';
-import {defaultState} from './defaultState';
+import {initialState} from './initialState';
 
 
-export function parsedData (state=defaultState.parsedData,action){
+export function parsedData (state=initialState.parsedData,action){
 
     switch (action.type){
         case SELECT_TITLE:

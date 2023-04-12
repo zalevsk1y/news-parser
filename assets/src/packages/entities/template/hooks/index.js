@@ -1,0 +1,1 @@
+export {useFetchTemplate} from './useFetchTemplate'

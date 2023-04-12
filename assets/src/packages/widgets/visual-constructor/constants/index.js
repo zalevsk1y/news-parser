@@ -38,4 +38,5 @@ export const DIALOG = "dialog",
   OPEN = "open",
   READY = "ready",
   FETCH = "fetch",
-  SET = "set";
+  SET = "set",
+  IS_MUTATING="isMutating"

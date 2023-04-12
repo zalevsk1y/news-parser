@@ -1,10 +1,5 @@
 import React, { useCallback } from 'react';
-import Post from './Post';
-import { PostCard } from '@news-parser/ui//PostCard';
-import { PostCardBody } from '@news-parser/ui/PostCardBody';
-import { PostCardHeader } from '@news-parser/ui//PostCardHeader';
-import { PostCardImage } from '@news-parser/ui/PostCardImage';
-import { PostCardFooter } from '@news-parser/ui/PostCardFooter';
+import { PostCard,PostCardBody,PostCardHeader,PostCardImage,PostCardFooter } from '@news-parser/ui/post-card';
 
 /**
  * Renders posts from post array.

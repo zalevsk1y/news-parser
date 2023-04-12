@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import {TOGGLE_POST_SELECT,INSERT_DRAFT_POST} from '../actions/post.actions';
-import {SET_LIST} from './actions/list.actions'
+import {SET_LIST} from '../actions/list.actions'
 
-export const selectPost=(state,action)=>{
+export const selectPost=(state={},action)=>{
     switch (action.type){
         case TOGGLE_POST_SELECT:
             const {_id}=action.payload;
@@ -20,7 +20,7 @@ export const selectPost=(state,action)=>{
             return {...state};
     }
 }
-export const draftPost=(state,action)=>{
+export const draftPost=(state={},action)=>{
     switch (action.type){
         case INSERT_DRAFT_POST:
             const {post_id,editLink}=action.payload.data;

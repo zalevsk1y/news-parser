@@ -15,7 +15,7 @@ import React, { useState, useMemo } from "react";
 *
  */
 
-const SidebarRight = ({tabs,children}) => {
+export const SidebarRight = ({tabs,children}) => {
 
   const [activeTab, setActiveTab] = useState(0),
     activeTabChangeHandler = (tabIndex) => () => setActiveTab(tabIndex),
@@ -39,4 +39,3 @@ const SidebarRight = ({tabs,children}) => {
   );
 };
 
-export default SidebarRight;

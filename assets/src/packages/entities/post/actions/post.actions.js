@@ -1,5 +1,5 @@
 import {PARSER_RSS} from  '@news-parser/config/constants';
-import {POSTS,SELECTED,DRAFT,INSERT} from '../constants';
+import {POSTS,SELECTED,DRAFT,INSERT,SELECT} from '../constants';
 
 //[news-parser.posts.selected:toggle]
 export const TOGGLE_POST_SELECT=`[${PARSER_RSS}.${POSTS}.${SELECTED}:${SELECT}]`;

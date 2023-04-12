@@ -3,7 +3,7 @@ import { requestApi } from "@news-parser/helpers/api/requestApi";
 import { PARSER_RSS_LIST, PARSE } from '@news-parser/config/constants';
 import { useDispatch } from "react-redux";
 import { decodeHTMLEntities } from "@news-parser/helpers"
-import { setList } from "../../../parser-rss/src/actions/list.actions";
+import { setList } from "../actions/list.actions";
 
 export const useFetchPostsList = () => {
     const [isFetching, setIsFetching] = useState(false),

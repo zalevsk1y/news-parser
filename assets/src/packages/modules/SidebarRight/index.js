@@ -1,1 +1,1 @@
-export {SidebarRight} from './SidebarRight';
+export {SidebarRight as default} from './components/SidebarRight';

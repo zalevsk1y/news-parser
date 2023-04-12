@@ -1,7 +1,7 @@
 import { OPEN_VISUAL_CONSTRUCTOR,CLOSE_VISUAL_CONSTRUCTOR,SET_HTML } from '../actions/dialogData.actions';
-import {defaultState} from './defaultState';
+import {initialState} from './initialState';
 
-export const dialogData=(state=defaultState.dialogData,action)=>{
+export const dialogData=(state=initialState,action)=>{
     switch(action.type){
         case OPEN_VISUAL_CONSTRUCTOR:
                 const {url,_id}=action.payload;

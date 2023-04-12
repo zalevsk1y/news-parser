@@ -6,9 +6,9 @@ import purifyDOM from "@news-parser/helpers/frame/FrameElement/modifiers/purifyD
 
 import { frameElement } from "@news-parser/helpers/frame/FrameElement/FrameElement";
 
-import { useMouseEvents } from "../visual-constructor/src/hooks/frame/useMouseEvents";
+import { useMouseEvents } from "../hooks/frame/useMouseEvents";
 import { useFrameElementMiddleware } from "../hooks/frame/useFrameElementMiddleware";
-import { useToggleContent } from "../../../entities/sidebarTemplate/hooks/useToggleContent";
+import { useToggleContent } from "@news-parser/entities/sidebarTemplate/hooks/useToggleContent";
 
 /**
 * This is a frame element used in the visual constructor modal window, allowing users to manually choose parsing content.

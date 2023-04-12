@@ -1,4 +1,4 @@
-import {SET_TEMPLATE,DELETE_TEMPLATE} from '../actions'
+import {SET_TEMPLATE,DELETE_TEMPLATE} from '../actions/template.actions'
 
 export const template=(state=false,action)=>{
     switch (action.type){

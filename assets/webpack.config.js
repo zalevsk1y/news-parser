@@ -66,22 +66,16 @@ module.exports=(env,args)=>{
 		},
 		resolve: {
 			alias: {
-					"@news-parser/message": path.resolve(__dirname,"src/packages/message/src/"),
-					"@news-parser/helpers": path.resolve(__dirname,"src/packages/helpers/src/"),
-					"@news-parser/config": path.resolve(__dirname,"src/packages/config/src/"),
-					"@news-parser/error-handler": path.resolve(__dirname,"src/packages/error-handler/src/index.js"),
-					"@news-parser/visual-constructor":path.resolve(__dirname,"src/packages/visual-constructor/src/"),
+					"@news-parser/helpers": path.resolve(__dirname,"src/packages/helpers/"),
+					"@news-parser/config": path.resolve(__dirname,"src/packages/config/"),
+					"@news-parser/error-handler": path.resolve(__dirname,"src/packages/error-handler/index.js"),
 					"@news-parser/styles":path.resolve(__dirname,"scss/"),
-					"@news-parser/image":path.resolve(__dirname,"src/packages/image/src/"),
-					"@news-parser/sidebar":path.resolve(__dirname,"src/packages/sidebar/src/"),
-					"@news-parser/template":path.resolve(__dirname,"src/packages/entyties/template/src/"),
-					"@news-parser/request":path.resolve(__dirname,"src/packages/request/src/"),
-					"@news-parser/hooks":path.resolve(__dirname,"src/packages/hooks/src/"),
-					"@news-parser/pages": path.resolve(__dirname,"src/packages/parser-rss/pages/"),
-					"@news-parser/components": path.resolve(__dirname,"src/packages/parser-rss/components/"),
-					"@news-parser/entities": path.resolve(__dirname,"src/packages/parser-rss/entities/"),
-					"@news-parser/modules": path.resolve(__dirname,"src/packages/parser-rss/modules/"),
-					"@news-parser/ui": path.resolve(__dirname,"src/packages/parser-rss/ui/"),
+					"@news-parser/pages": path.resolve(__dirname,"src/packages/pages/"),
+					"@news-parser/components": path.resolve(__dirname,"src/packages/components/"),
+					"@news-parser/entities": path.resolve(__dirname,"src/packages/entities/"),
+					"@news-parser/modules": path.resolve(__dirname,"src/packages/modules/"),
+					"@news-parser/widgets": path.resolve(__dirname,"src/packages/widgets/"),
+					"@news-parser/ui": path.resolve(__dirname,"src/packages/ui/")
 				}
 		},
 		devServer:{

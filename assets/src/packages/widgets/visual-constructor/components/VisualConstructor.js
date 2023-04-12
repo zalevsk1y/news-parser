@@ -1,21 +1,11 @@
 
-import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import SidebarRight from '../../../modules/SidebarRight';
-import { Frame } from '../../../modules/Frame';
-import { closeVisulaConstructor } from '../actions/dialogData.actions';
+import React, { useState, useMemo } from "react";
+import { Frame } from './Frame';
 import { useScrolling } from "../hooks/visual-constructor/useScrolling";
 import { useFetchHTML } from "../hooks/visual-constructor/useFetchHTML";
-import { LoadingSpinner } from "../containers/LoadingSpinner";
-import '@news-parser/styles/_resize-bar.scss'
-import { useCreateWpPost } from "../hooks/visual-constructor/useCreateWpPost";
-import { useCreateTemplate } from "@news-parser/template/hooks/useCreateTemplate";
-import SidebarRightTemplate from "../../../components/sidebar-groups/SidebarRightTemplate";
-import SidebarRightPost from "../../../components/sidebar-groups/SidebarRightPost";
-import {useIsOpen} from '../hooks/visual-constructor/useIsOpen'
-import {useSaveParsingTemplate} from '../hooks/visual-constructor/useSaveParsingTemplate'
-import {useClose} from '../hooks/visual-constructor/useSaveParsingTemplate';
-import { useIsMutatingState } from "../hooks/visual-constructor/useSetIsMutating";
+import { LoadingSpinner } from "@news-parser/ui/visual-constructor/LoadingSpinner";
+// import '@news-parser/styles/_resize-bar.scss';
+import {useIsOpen} from '../hooks/visual-constructor/useIsOpen';
 
 /**
 * 
@@ -32,7 +22,7 @@ import { useIsMutatingState } from "../hooks/visual-constructor/useSetIsMutating
 
 
 
-function VisualConstructor({children}) {
+export const VisualConstructor=({children})=> {
     const [enableScrolling, disableScrolling] = useScrolling();
     const [frameIsReady, setFrameIsReady] = useState(false);
     const [ url, isOpen ] = useIsOpen();
@@ -92,4 +82,4 @@ function VisualConstructor({children}) {
     );
 }
 
-export default VisualConstructor;
+

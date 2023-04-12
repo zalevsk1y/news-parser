@@ -1,4 +1,4 @@
-import {SHOW_MESSAGE} from '../actions'
+import {SHOW_MESSAGE} from '../actions/message.actions'
 
 export const message=(state=false,action)=>{
     switch (action.type){
