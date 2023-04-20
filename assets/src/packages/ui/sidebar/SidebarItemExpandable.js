@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '@news-parser/styles/sidebar/_item-expandable.scss';
+//import '@news-parser/styles/sidebar/_item-expandable.scss';
 
 
 export function SidebarItemExpandable ({expandButtonCallback,children,wide}){

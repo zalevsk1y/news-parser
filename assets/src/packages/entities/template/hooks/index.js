@@ -1,1 +1,2 @@
-export {useFetchTemplate} from './useFetchTemplate'
+export {useFetchTemplate} from './useFetchTemplate';
+export {useGetTemplate} from './useGetTemplate';

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { InfoBox } from "../../visual-constructor/src/containers/InfoBox";
+import { InfoBox } from "@news-parser/ui/sidebar/InfoBox";
 import { FeaturedMediaGroup } from "../sidebar-template-groups/FeaturedMediaGroup";
 import { PostTitleGroup } from "../sidebar-template-groups/PostTitleGroup";
 import { ExtraOptionsGroup } from "../sidebar-template-groups/ExtraOptionsGroup";
@@ -10,7 +10,7 @@ import { ExtraOptionsGroup } from "../sidebar-template-groups/ExtraOptionsGroup"
  * @since 2.0.0
  */
 
-const SidebarRightTemplate = () => {
+export const SidebarRightTemplate = () => {
   
   return (
 
@@ -29,6 +29,5 @@ const SidebarRightTemplate = () => {
   );
 };
 
-export default SidebarRightTemplate;
 
 

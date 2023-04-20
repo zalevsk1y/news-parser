@@ -1,5 +1,5 @@
 import React from 'react';
-import '@news-parser/styles/sidebar/_item.scss';
+//import '@news-parser/styles/sidebar/_item.scss';
 
 export function SidebarItem ({border,wide,children,isEmpty}){
     const borderClassName=border==='top'||border==='bottom'?`sidebar-item-${border}-border`:`sidebar-item-no-border`,

@@ -2,15 +2,15 @@ import React, { useCallback, useMemo, useState } from 'react';
 import Message from '@news-parser/modules/Message';
 import { InputForm } from '@news-parser/components/InputForm';
 import Posts from '@news-parser/modules/Posts';
-import SidebarRight from '@news-parser/modules/SidebarRight';
+import SidebarRight,{SidebarRightTemplate,SidebarRightPost} from '@news-parser/modules/SidebarRight';
 import { VisualConstructor, VisualConstructorFooterMain as VisualConstructorFooter } from '@news-parser/widgets/visual-constructor/';
 import { SelectedPostsInfo } from '@news-parser/components/SelectedPostsInfo';
-import { validateIntupUrl } from '@news-parser/helpers/'
+import { validateIntupUrl, setUrlSearchParams } from '@news-parser/helpers/'
 import { getUrlSearchParams } from '@news-parser/helpers/';
 import { useFetchPostsList, useGetPosts, useSelectPost } from '@news-parser/entities/post/hooks/'
-import { useFetchTemplate } from '@news-parser/entities/template/hooks/'
-import {useShowMessage} from  '@news-parser/entities/message/hooks/'
-
+import { useFetchTemplate, useGetTemplate } from '@news-parser/entities/template/hooks/'
+import { useShowMessage } from '@news-parser/entities/message/hooks/'
+import { PARSER_RSS_LIST } from '@news-parser/config/constants';
 /**
  * Main application element.
  * 
@@ -25,7 +25,7 @@ const Main = () => {
   const [mainState] = useState(() => {
     const searchParams = getUrlSearchParams();
     const url = searchParams.has('url') ? searchParams.get('url') : false;
-    if(url){
+    if (url) {
       fetchPostsList(url);
       fetchTemplate(url);
     }
@@ -33,14 +33,14 @@ const Main = () => {
       url
     };
   });
-  const [posts] = useGetPosts();
-  const [template] = useGetTemplate();
-  const toggleSelectPost = useSelectPost()
+  const posts = useGetPosts();
+  const template = useGetTemplate();
+  const toggleSelectPost = useSelectPost();
   const [selectedPosts, selectedPostsCount] = useMemo(() => {
     const sp = posts.filter(post => post.selected)
     return [sp, sp.length]
   }, [posts]);
-  const isParseSelectedPostsDisabled = useMemo(() => !template && !isTemplateReady, [template, isTemplateFetching])
+  const isParseSelectedPostsDisabled = useMemo(() => !template && !isTemplateReady, [template, isTemplateReady])
   const parseSelectedHandler = useCallback(() => parsePosts(selectedPosts), [selectedPosts]);
   const inputSubmitHandler = useCallback((url) => {
     if (validateIntupUrl(url)) {

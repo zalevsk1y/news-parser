@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { API_WP_CATEGORIES, POST } from '@news-parser/config/constants'
 import { requestApi } from "@news-parser/helpers/api/requestApi";
-import { pushCategory, selectCategory } from '../actions/category.actions';
+import { selectCategory } from '../actions/category.actions';
 import { useFetchCategories } from './useFetchCategories';
 
 export const useCreateCategory = (addCategoryParams) => {

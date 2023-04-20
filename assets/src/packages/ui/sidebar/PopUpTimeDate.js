@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect,useMemo } from 'react';
 import { PopUp } from './PopUp';
-import '@news-parser/styles/sidebar/_popup-time-date.scss';
+//import '@news-parser/styles/sidebar/_popup-time-date.scss';
 
-const PopUpTimeDate = ({ date = false, onChange }) => {
+export const PopUpTimeDate = ({ date = false, onChange }) => {
   const [state, setState] = useState({ date, popUp: false });
   const modalWindowRef = useRef(null);
   const openPopUp = () => setState((prevState) => ({ ...prevState, popUp: true }));
@@ -57,4 +57,4 @@ const PopUpTimeDate = ({ date = false, onChange }) => {
   );
 };
 
-export default PopUpTimeDate;
+

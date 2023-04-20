@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import  TagInput  from "../../../sidebar/src/components/TagInput";
-import { createTag, diselectTag, selectTag } from "../../actions/tag.actions";
-import { SidebarItem } from "../../../sidebar/src/components/SidebarItem";
-import { useGetTags } from "../../hooks/useGetTags";
-import {useCreateTag} from "../../hooks/useCreateTag"
+import  {TagInput}  from "@news-parser/ui/sidebar";
+import { SidebarItem } from "@news-parser/ui/sidebar";
+import { useGetTags,useFetchTags } from "@news-parser/entities/sidebar/hooks/";
 
 
 const TagsGroup = () => {

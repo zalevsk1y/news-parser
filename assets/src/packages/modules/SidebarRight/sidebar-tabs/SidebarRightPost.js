@@ -1,10 +1,10 @@
 import React from "react";
-import { InfoBox, InfoBody } from "../../widgets/visual-constructor/src/containers/InfoBox";
+import { InfoBox, InfoBody } from "@news-parser/ui/sidebar/InfoBox";
 
-import StatusVisibilityGroup from "@news-parser/sidebar/containers/sidebar-groups/StatusVisibilityGroup";
-import CategoriesGroup from "@news-parser/sidebar/containers/sidebar-groups/CategoriesGroup";
-import TagsGroup from "@news-parser/sidebar/containers/sidebar-groups/TagsGroup";
-import DiscussionGroup from "@news-parser/sidebar/containers/sidebar-groups/DiscussionGroup";
+import StatusVisibilityGroup from "../sidebar-post-groups/StatusVisibilityGroup";
+import CategoriesGroup from "../sidebar-post-groups/CategoriesGroup";
+import TagsGroup from "../sidebar-post-groups/TagsGroup";
+import DiscussionGroup from "../sidebar-post-groups/DiscussionGroup";
 
 /**
  * Right side Main bar of visual constructor modal window.
@@ -12,7 +12,7 @@ import DiscussionGroup from "@news-parser/sidebar/containers/sidebar-groups/Disc
  * @since 2.0.0
  */
 
-const SidebarRightPost = () => {
+export const SidebarRightPost = () => {
   return (
     <div className="inner-sidebar-container">
       <InfoBox title="Satus&Visibility">
@@ -39,5 +39,3 @@ const SidebarRightPost = () => {
 
   );
 };
-
-export default SidebarRightPost;

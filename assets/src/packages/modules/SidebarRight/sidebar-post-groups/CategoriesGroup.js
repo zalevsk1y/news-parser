@@ -1,21 +1,18 @@
 import React, { useCallback, useEffect } from "react";
-import { CategoriesCheckboxList } from "../../components/CategoriesCheckboxList";
-import { CategoiresOptionList } from "../../components/CategoiresOptionList";
-import { Select } from "../../components/Select";
-import { SidebarItem } from "../../components/SidebarItem";
-import { SidebarItemsGroup } from "../../components/SidebarItemsGroup";
-import { SidebarItemExpandable } from "../../components/SidebarItemExpandable";
-import {useSelectCategory} from "@news-pareser/entyties/sidebar/hooks";
-import { useDispatch, useSelector } from "react-redux";
-
-import { useCategoryFilter } from "../../hooks/useCategoryFilter";
-import { useCreateCategory } from "../../hooks/useCreateCategory";
-import "@news-parser/styles/sidebar/_input-container.scss";
-import "@news-parser/styles/sidebar/_categories-group.scss";
+import { CategoriesCheckboxList } from "@news-parser/ui/sidebar/";
+import { CategoiresOptionList } from "@news-parser/ui/sidebar/";
+import { Select,SidebarItem,SidebarItemExpandable } from "@news-parser/ui/sidebar/";
+import {useSelectCategory} from "@news-parser/entities/sidebar/hooks";
 
 
-import { useGetCategories } from "@news-parser/sidebar/hooks/useGetCategories";
-import { useFetchCategories } from "../../../entities/sidebar/hooks/useFetchCategories";
+import { useCategoryFilter } from "../hooks/useCategoryFilter";
+import { useCreateCategory } from "@news-parser/entities/sidebar/hooks/";
+//import "@news-parser/styles/sidebar/_input-container.scss";
+//import "@news-parser/styles/sidebar/_categories-group.scss";
+
+
+import { useGetCategories } from "@news-parser/entities/sidebar/hooks/useGetCategories";
+import { useFetchCategories } from "@news-parser/entities/sidebar/hooks/useFetchCategories";
 
 /**
 * Renders a CategoriesGroup component that displays a list of categories with checkboxes,

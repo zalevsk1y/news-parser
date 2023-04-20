@@ -1,8 +1,7 @@
 import React from "react";
-import "@news-parser/styles/sidebar/_tag-input.scss";
-import { useRef } from "react";
+//import "@news-parser/styles/sidebar/_tag-input.scss";
 
-const TagInput = ({ tags, onChange,id:idSufix,bottomCapture,labelText }) => {
+export const TagInput = ({ tags, onChange,id:idSufix,bottomCapture,labelText }) => {
     const renderTags = () => {
     if (tags.length==0) return null;
     return tags.map((item, i) => {
@@ -54,4 +53,3 @@ const TagInput = ({ tags, onChange,id:idSufix,bottomCapture,labelText }) => {
   );
 };
 
-export default TagInput;

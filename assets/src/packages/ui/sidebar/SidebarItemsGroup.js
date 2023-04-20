@@ -1,7 +1,7 @@
 import React, { useCallback ,useState} from 'react';
 import { SidebarItem } from './SidebarItem';
 import { SidebarItemLabel } from './SidebarItemLabel';
-import '@news-parser/styles/sidebar/_items-group.scss';
+//import '@news-parser/styles/sidebar/_items-group.scss';
 
 export function SidebarItemsGroup ({border,header,children}){
     const [state,setState]=useState(true),

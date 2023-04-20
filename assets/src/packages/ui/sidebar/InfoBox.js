@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 /**
  * Info box element.
  * 
@@ -21,19 +21,7 @@ export function InfoBox({title,children}){
                 </div>
     )
 }
-InfoBox.propTypes={
-    /**
-     * Title of infobox.
-     */
-    title:PropTypes.string.isRequired,
-    /**
-     * Content of infobox.
-     */
-    children:PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.array
-    ]).isRequired
-}
+
 /**
  * Body of infobox element.
  * 

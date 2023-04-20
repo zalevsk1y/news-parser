@@ -1,10 +1,11 @@
-import { useToggleSaveParsingTemplate,useToggleAddSource,useGetAddSource,useGetAddfeaturedMedia } from "../../../entities/sidebarTemplate/hooks/useToggleSaveTemplate"
+import { InfoBody,Checkbox } from "@news-parser/ui/sidebar";
+import { useToggleSaveParsingTemplate,useToggleAddSource,useGetAddSource,useGetAddFeaturedMedia } from "@news-parser/entities/sidebarTemplate/hooks/"
 
 export const ExtraOptionsGroup=()=>{
     const toggleSaveParsingTemplateHandler=useToggleSaveParsingTemplate();
     const toggleAddSourceHandler=useToggleAddSource();
     const addSource=useGetAddSource();
-    const addFeaturedMedia=useGetAddfeaturedMedia();
+    const addFeaturedMedia=useGetAddFeaturedMedia();
     return (
         <InfoBody>
           <div className="info-box-container">

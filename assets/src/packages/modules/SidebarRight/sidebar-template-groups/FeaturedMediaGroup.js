@@ -1,12 +1,12 @@
-import {  InfoBody, InfoFooter } from "../../visual-constructor/src/containers/InfoBox";
-import {useGetPostFeaturedMedia,useGetAddFeaturedMedia,useSetFeatureMedia,useToggleAddFeaturedMedia} from '@news-parser/entities/sidebarTemplate/hooks'
+import {  InfoBody, InfoFooter } from "@news-parser/ui/sidebar/";
+import {useGetPostFeaturedMedia,useGetAddFeaturedMedia,useSetFeaturedMedia,useToggleAddFeaturedMedia} from '@news-parser/entities/sidebarTemplate/hooks'
 import config from '@news-parser/config';
 
 export const FeaturedMediaGroup = () => {
     const featuredMedia=useGetPostFeaturedMedia();
     const addFeaturedMedia=useGetAddFeaturedMedia;
     const toggleAddFeaturedMediaHandler=useToggleAddFeaturedMedia();
-    const selectFeaturedMediaHandler=useSetFeatureMedia();
+    const selectFeaturedMediaHandler=useSetFeaturedMedia();
     const featuredImageClassName = !addFeaturedMedia
     ? "featured-image-thumbnail no-featured-image"
     : "featured-image-thumbnail";

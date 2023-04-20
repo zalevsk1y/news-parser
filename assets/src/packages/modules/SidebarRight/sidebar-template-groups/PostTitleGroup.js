@@ -1,4 +1,4 @@
-import {  InfoBody, InfoFooter } from "../../visual-constructor/src/containers/InfoBox";
+import {  InfoBody, InfoFooter } from "@news-parser/ui/sidebar/";
 import {useGetPostTitle,useSetPostTitle} from '@news-parser/entities/sidebarTemplate/hooks';
 import { useCallback } from "react";
 

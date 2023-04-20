@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import '@news-parser/styles/sidebar/_category-item.scss';
+//import '@news-parser/styles/sidebar/_category-item.scss';
 
 export function CategoryItem (props){
     const onChange=useCallback((e)=>{

@@ -1,6 +1,6 @@
 import React from "react";
 import { CategoryItem } from "./CategoryItem";
-import "@news-parser/styles/sidebar/_category-item.scss";
+//import "@news-parser/styles/sidebar/_category-item.scss";
 
 export function CategoriesCheckboxList({
   categories,

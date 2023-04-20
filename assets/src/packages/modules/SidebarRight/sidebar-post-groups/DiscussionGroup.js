@@ -1,12 +1,6 @@
 import React from 'react';
 
-import { SidebarItemLabel } from '../../components/SidebarItemLabel';
-import { SidebarItem } from '../../components/SidebarItem';
-import { SidebarItemsGroup } from '../../components/SidebarItemsGroup';
-
-import { useDispatch,useSelector } from 'react-redux';
-import { allowCommentsSet,allowPinbacksSet } from '../../actions/descussion.actions';
-
+import { SidebarItemLabel,SidebarItem } from '@news-parser/ui/sidebar'
 
 
 const DiscussionGroup = () => {

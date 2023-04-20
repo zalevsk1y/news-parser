@@ -1,11 +1,7 @@
 import React from 'react';
-import { Select } from '../../components/Select';
-import { SidebarItemLabel } from '../../components/SidebarItemLabel';
-import { SidebarItem } from '../../components/SidebarItem';
-import { SidebarItemsGroup } from '../../components/SidebarItemsGroup';
-import PopUpTimeDate from '../../components/PopUpTimeDate';
-import { useGetStatusVisibility, useStatusVisibility } from '@news-parser/entities/sidebar';
-import '@news-parser/styles/sidebar/_status-visibility-group.scss'
+import { Select,SidebarItemLabel,SidebarItem,PopUpTimeDate } from '@news-parser/ui/sidebar/';
+import { useGetStatusVisibility, useStatusVisibility } from '@news-parser/entities/sidebar/hooks';
+//import '@news-parser/styles/sidebar/_status-visibility-group.scss'
 
 
 const StatusVisibilityGroup = () => {

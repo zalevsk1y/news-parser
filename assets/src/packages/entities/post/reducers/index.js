@@ -17,7 +17,7 @@ export const selectPost=(state={},action)=>{
             };
         }
         default:
-            return {...state};
+            return state;
     }
 }
 export const draftPost=(state={},action)=>{
@@ -33,7 +33,7 @@ export const draftPost=(state={},action)=>{
                 }}
             };
         default:
-            return {...state}
+            return state
     }
 }
 
@@ -42,7 +42,7 @@ export const posts=(state=[],action)=>{
         case SET_LIST:
                 return [...action.payload.data];
         default:
-            return [...state]
+            return state
     }
 }
 
