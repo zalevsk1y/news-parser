@@ -1,4 +1,5 @@
-import {  InfoBody, InfoFooter } from "@news-parser/ui/sidebar/";
+import React from 'react'
+import {  InfoBody, InfoFooter,Checkbox } from "@news-parser/ui/sidebar/";
 import {useGetPostFeaturedMedia,useGetAddFeaturedMedia,useSetFeaturedMedia,useToggleAddFeaturedMedia} from '@news-parser/entities/sidebarTemplate/hooks'
 import config from '@news-parser/config';
 

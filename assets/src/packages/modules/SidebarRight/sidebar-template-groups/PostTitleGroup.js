@@ -1,3 +1,4 @@
+import React,{ useState } from "react";
 import {  InfoBody, InfoFooter } from "@news-parser/ui/sidebar/";
 import {useGetPostTitle,useSetPostTitle} from '@news-parser/entities/sidebarTemplate/hooks';
 import { useCallback } from "react";
@@ -16,7 +17,7 @@ export const PostTitleGroup=()=>{
         <>
         <InfoBody>
           <span>{title}</span>
-          <Input onChange={changeStateInputTitle} value={newTitle} />
+          <input onChange={changeStateInputTitle} value={newTitle} />
           <p className="howto">
             If you want to change title, type the new title and press "Change
             title" button.

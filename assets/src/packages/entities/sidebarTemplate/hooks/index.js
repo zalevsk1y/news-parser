@@ -7,3 +7,4 @@ export {useGetAddFeaturedMedia} from './useGetAddFeaturedMedia';
 export {useGetPostFeaturedMedia} from './useGetPostFeaturedMedia';
 export {useToggleAddFeaturedMedia} from './useToggleAddFeaturedMedia';
 export {useGetPostTitle} from './useGetPostTitle';
+export {useGetSaveParsingTemplate} from './useGetSaveParsingTemplate'

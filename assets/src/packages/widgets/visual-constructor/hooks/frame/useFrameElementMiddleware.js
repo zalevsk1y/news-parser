@@ -1,3 +1,4 @@
+import { useMemo,useCallback } from "react";
 import { featuredImageParser } from "@news-parser/helpers/parser/FeaturedImageParser";
 import { postTitleParser } from "@news-parser/helpers/parser/PostTitleParser";
 import { useSetPostTitle,useSetFeaturedMedia } from "@news-parser/entities/sidebarTemplate/hooks";

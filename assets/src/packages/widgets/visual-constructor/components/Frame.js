@@ -7,7 +7,7 @@ import purifyDOM from "@news-parser/helpers/frame/FrameElement/modifiers/purifyD
 import { frameElement } from "@news-parser/helpers/frame/FrameElement/FrameElement";
 
 import { useMouseEvents } from "../hooks/frame/useMouseEvents";
-import { useFrameElementMiddleware } from "../hooks/frame/useFrameElementMiddleware";
+import { useFrameElementMiddleware } from "../hooks/";
 import { useToggleContent } from "@news-parser/entities/sidebarTemplate/hooks/useToggleContent";
 
 /**

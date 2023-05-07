@@ -11,6 +11,8 @@ import { useFetchPostsList, useGetPosts, useSelectPost } from '@news-parser/enti
 import { useFetchTemplate, useGetTemplate } from '@news-parser/entities/template/hooks/'
 import { useShowMessage } from '@news-parser/entities/message/hooks/'
 import { PARSER_RSS_LIST } from '@news-parser/config/constants';
+import {useOpenVisualConstructor} from '@news-parser/widgets/visual-constructor/hooks'
+
 /**
  * Main application element.
  * 
@@ -20,8 +22,9 @@ import { PARSER_RSS_LIST } from '@news-parser/config/constants';
 
 const Main = () => {
   const showMessage = useShowMessage();
-  const [isPostsReady, fetchPostsList] = useFetchPostsList();
+  const [isPostsFetching, fetchPostsList] = useFetchPostsList();
   const [isTemplateReady, fetchTemplate] = useFetchTemplate();
+  const openVisualConstructor=useOpenVisualConstructor();
   const [mainState] = useState(() => {
     const searchParams = getUrlSearchParams();
     const url = searchParams.has('url') ? searchParams.get('url') : false;
@@ -62,13 +65,12 @@ const Main = () => {
       <div className="parsing-title">
         <h1>News-Parser</h1>
       </div>
-      <Indicator step={0.5} />
       <Message />
       <InputForm buttonName="Parse RSS Feed" submitAction={inputSubmitHandler} initValue={mainState.url} disabled={isPostsFetching} />
 
       <SelectedPostsInfo disabled={isParseSelectedPostsDisabled} submitAction={parseSelectedHandler} selectedPostsCount={selectedPostsCount} />
 
-      <Posts selectPost={toggleSelectPost} posts={posts} openEditor={postEditDialogOpenHandler} />
+      <Posts selectPost={toggleSelectPost} posts={posts} openEditor={openVisualConstructor} />
     </div>
   );
 }

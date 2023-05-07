@@ -1,12 +1,12 @@
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo,useLayoutEffect } from "react";
 import { Frame } from './Frame';
 import { useScrolling } from "../hooks/visual-constructor/useScrolling";
 import { useFetchHTML } from "../hooks/visual-constructor/useFetchHTML";
 import { LoadingSpinner } from "@news-parser/ui/visual-constructor/LoadingSpinner";
 // import '@news-parser/styles/_resize-bar.scss';
 import {useIsOpen} from '../hooks/visual-constructor/useIsOpen';
-
+import {useIsMutating} from '../hooks/'
 /**
 * 
 * A functional component for the Parsing Constructor modal window, which allows users to create a post or save a parsing template.
@@ -67,16 +67,8 @@ export const VisualConstructor=({children})=> {
 
                         {children[0]}
                     </div>
-                    <div className="visual-container-modal-footer d-flex flex-row justify-content-end align-items-center">
-                        <button
-                            type="button"
-                            className="button button-large button-primary"
-                            onClick={buttonClickHandler}
-                        >
-                            {saveParsingTemplate ? "Save Template" : "Create Post"}
-                        </button>
+                        {children[1]}
                     </div>
-                </div>
                 <div className="media-modal-backdrop"></div>
             </div>
     );
