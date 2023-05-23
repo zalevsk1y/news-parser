@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Api } from './Api';
 import config from '@news-parser/config';
 
@@ -10,12 +9,12 @@ export const requestApi = (options, success, error) => {
     const nonce = config.api[entity][event].nonce;
     const api = new Api(config.rootUrl);
     let url = config.api[entity][event].url;
-    if (searchParams!==undefined){
-        const urlSearchParams=new URLSearchParams('');
-        for(const paramName in searchParams){
-            urlSearchParams.append(paramName,searchParams[paramName])
+    if (searchParams !== undefined) {
+        const urlSearchParams = new URLSearchParams('');
+        for (const paramName in searchParams) {
+            urlSearchParams.append(paramName, searchParams[paramName])
         }
-        url+='&'+urlSearchParams.toString();
+        url += '&' + urlSearchParams.toString();
     }
     return api.request(url, {
         type,
@@ -24,8 +23,8 @@ export const requestApi = (options, success, error) => {
         body: data
     })
         .then(res => {
-            if(res.ok==false){
-                return res.text().then(data=>({code: res.status,msg:{type:'error',text:data}}))
+            if (res.ok == false) {
+                return res.text().then(data => ({ code: res.status, msg: { type: 'error', text: data } }))
             }
             switch (res.headers.get('Content-Type')) {
                 case 'application/json; charset=UTF-8':

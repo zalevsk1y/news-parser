@@ -17,17 +17,17 @@ export const useFetchPostsList = () => {
                     return post;
                 });
             dispatch(setList(posts));
-            return msg    
+            return msg
         },
         error = (entity, event, errorData) => {
             const { msg } = errorData;
             console.error(msg.text);
-            return {msg, posts:null};
+            return { msg, posts: null };
         },
         fetchPostsList = (url) => {
             const options = { entity: PARSER_RSS_LIST, event: PARSE, data: { url } };
             setIsFetching(true);
-            return requestApi(options, success, error).then(resp => setIsFetching(false))
+            return requestApi(options, success, error).then(() => setIsFetching(false))
         }
     return [isFetching, fetchPostsList]
 }

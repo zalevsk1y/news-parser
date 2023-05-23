@@ -1,16 +1,17 @@
 import React from 'react'
-import {  InfoBody, InfoFooter,Checkbox } from "@news-parser/ui/sidebar/";
-import {useGetPostFeaturedMedia,useGetAddFeaturedMedia,useSetFeaturedMedia,useToggleAddFeaturedMedia} from '@news-parser/entities/sidebarTemplate/hooks'
+import { InfoBody, InfoFooter, Checkbox } from "@news-parser/ui/sidebar/";
+import { Image } from "@news-parser/ui";
+import { useGetPostFeaturedMedia, useGetAddFeaturedMedia, useSetFeaturedMedia, useToggleAddFeaturedMedia } from '@news-parser/entities/sidebarTemplate/hooks'
 import config from '@news-parser/config';
 
 export const FeaturedMediaGroup = () => {
-    const featuredMedia=useGetPostFeaturedMedia();
-    const addFeaturedMedia=useGetAddFeaturedMedia;
-    const toggleAddFeaturedMediaHandler=useToggleAddFeaturedMedia();
-    const selectFeaturedMediaHandler=useSetFeaturedMedia();
+    const featuredMedia = useGetPostFeaturedMedia();
+    const addFeaturedMedia = useGetAddFeaturedMedia;
+    const toggleAddFeaturedMediaHandler = useToggleAddFeaturedMedia();
+    const selectFeaturedMediaHandler = useSetFeaturedMedia();
     const featuredImageClassName = !addFeaturedMedia
-    ? "featured-image-thumbnail no-featured-image"
-    : "featured-image-thumbnail";
+        ? "featured-image-thumbnail no-featured-image"
+        : "featured-image-thumbnail";
 
     return (
         <>

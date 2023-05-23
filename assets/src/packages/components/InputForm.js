@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 
 /**
@@ -33,7 +33,7 @@ export const InputForm = ({ buttonName, submitAction, initValue, disabled }) => 
                         type="button"
                         onClick={submitClickHandler}
                     >
-                        {props.buttonName}
+                        {buttonName}
                     </button>
                 </div>
             </div>

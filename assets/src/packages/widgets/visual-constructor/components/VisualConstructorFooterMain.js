@@ -1,20 +1,23 @@
-import { useIsMutatingState } from "../hooks/visual-constructor/useSetIsMutating";
+import React, { useCallback } from 'react';
+import { useGetSaveParsingTemplate } from "@news-parser/entities/sidebarTemplate/hooks"
+import { useCreateWpPost } from '../hooks/visual-constructor';
+import { useCreateTemplate } from '@news-parser/entities/template/hooks';
+import { useClose } from '../hooks/visual-constructor/useClose'
 
 export const VisualConstructorFooterMain = () => {
-    const shouldParsingTemplateBeSaved = useSaveParsingTemplate();
-    const setIsMutating=useSetIsMutating()
+    const shouldParsingTemplateToBeSaved = useGetSaveParsingTemplate();
     const [createWpPost] = useCreateWpPost();
     const [isTemplateCreating, createTemplate] = useCreateTemplate();
     const close = useClose();
     const buttonClickHandler = useCallback(() => {
         setIsMutating(true);
-        if (!shouldParsingTemplateBeSaved) {
-            createWpPost().then(()=>setIsMutating(false)).then(()=>close())
+        if (!shouldParsingTemplateToBeSaved) {
+            createWpPost().then(() => close())
         } else {
-            createTemplate().then(()=>setIsMutating(false)).then(() => close())
+            createTemplate().then(() => close())
         }
-    
-    }, [shouldParsingTemplateBeSaved]);
+
+    }, [shouldParsingTemplateToBeSaved]);
     return (
         <div className="visual-container-modal-footer d-flex flex-row justify-content-end align-items-center">
             <button
@@ -22,7 +25,7 @@ export const VisualConstructorFooterMain = () => {
                 className="button button-large button-primary"
                 onClick={buttonClickHandler}
             >
-                {saveParsingTemplate ? "Save Template" : "Create Post"}
+                {shouldParsingTemplateToBeSaved ? "Save Template" : "Create Post"}
             </button>
         </div>
     )
