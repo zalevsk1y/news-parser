@@ -1,13 +1,11 @@
 import React, { useMemo } from 'react'
 
-export const SelectedPostsInfo=({postsCount,submitAction})=>{
-    const message=useMemo(()=>(<>You selected <strong>{postsCount}</strong> posts.</>),[postsCount]),
-        noTemplateMessage='You have no saved parsing template.',
-        buttonDisabled=useMemo(()=>submitAction?false:true,[submitAction]);
-        return (
-            <div className="col-lg-10 alert alert-secondary d-flex" role="alertdialog">
+export const SelectedPostsInfo=({disabled,selectedPostsCount,submitAction})=>{
+    const message=useMemo(()=>(<>You have selected <strong>{selectedPostsCount}</strong> posts.</>),[selectedPostsCount]);        
+    return (
+            <div className="col-lg-10 alert alert-secondary d-flex mx-auto" role="alertdialog">
                 <span className='flex-grow-1 lh-2'>{submitAction?message:noTemplateMessage}</span>
-                <button className="btn btn-secondary" disabled={buttonDisabled} onClick={buttonDisabled?undefined:submitAction}>Parse</button>
+                <button className="btn btn-secondary" disabled={disabled} onClick={submitAction}>Parse</button>
             </div>
     )
 }

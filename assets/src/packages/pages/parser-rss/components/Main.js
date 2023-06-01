@@ -23,7 +23,7 @@ import {useOpenVisualConstructor} from '@news-parser/widgets/visual-constructor/
 const Main = () => {
   const showMessage = useShowMessage();
   const [isPostsFetching, fetchPostsList] = useFetchPostsList();
-  const [isTemplateReady, fetchTemplate] = useFetchTemplate();
+  const [isTemplateFetching, fetchTemplate] = useFetchTemplate();
   const openVisualConstructor=useOpenVisualConstructor();
   const [mainState] = useState(() => {
     const searchParams = getUrlSearchParams();
@@ -40,10 +40,10 @@ const Main = () => {
   const template = useGetTemplate();
   const toggleSelectPost = useSelectPost();
   const [selectedPosts, selectedPostsCount] = useMemo(() => {
-    const sp = posts.filter(post => post.selected)
+    const sp = posts.filter(post => post.select)
     return [sp, sp.length]
   }, [posts]);
-  const isParseSelectedPostsDisabled = useMemo(() => !template && !isTemplateReady, [template, isTemplateReady])
+  const isParseSelectedPostsDisabled = useMemo(() => !template, [template])
   const parseSelectedHandler = useCallback(() => parsePosts(selectedPosts), [selectedPosts]);
   const inputSubmitHandler = useCallback((url) => {
     if (validateIntupUrl(url)) {
@@ -52,7 +52,6 @@ const Main = () => {
       showMessage('error', 'Please enter valid url.');
     }
   }, [PARSER_RSS_LIST, setUrlSearchParams]);
-
   return (
     <div className={"wrap"}>
       <VisualConstructor >
@@ -68,7 +67,7 @@ const Main = () => {
       <Message />
       <InputForm buttonName="Parse RSS Feed" submitAction={inputSubmitHandler} initValue={mainState.url} disabled={isPostsFetching} />
 
-      <SelectedPostsInfo disabled={isParseSelectedPostsDisabled} submitAction={parseSelectedHandler} selectedPostsCount={selectedPostsCount} />
+      {selectedPostsCount>0&&<SelectedPostsInfo disabled={isParseSelectedPostsDisabled} submitAction={parseSelectedHandler} selectedPostsCount={selectedPostsCount} />}
 
       <Posts selectPost={toggleSelectPost} posts={posts} openEditor={openVisualConstructor} />
     </div>

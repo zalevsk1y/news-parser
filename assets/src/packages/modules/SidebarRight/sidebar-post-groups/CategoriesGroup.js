@@ -45,7 +45,7 @@ const  CategoriesGroup=()=>{
     } else {
       deselectCategory(id);
     }
-  }, [dispatch]);
+  }, [selectCategory,deselectCategory]);
   useEffect(()=>startFetcingCategories(),[])
   return (
     <>

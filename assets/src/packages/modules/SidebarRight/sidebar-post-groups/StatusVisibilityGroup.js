@@ -5,7 +5,6 @@ import { useGetStatusVisibility, useStatusVisibility } from '@news-parser/entiti
 
 
 const StatusVisibilityGroup = () => {
-    const dispatch = useDispatch();
     const [status, publish, postFormat] = useGetStatusVisibility()
     const [postStatusChangeHandler, postFormatChangeHandler, publishDateChangeHandler] = useStatusVisibility();
 

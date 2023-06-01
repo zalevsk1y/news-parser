@@ -1,4 +1,6 @@
-export const useGetDiscussionGroup=()=>{
-    const {allowComments,allowPinbacks}=useSelector(state=>state.parser.sidebar)
-    return [allowComments,allowPinbacks]
+import { useSelector } from "react-redux";
+
+export const useGetDiscussionGroup = () => {
+    const { allowComments, allowPinbacks } = useSelector(state => state.parse.sidebar)
+    return [allowComments, allowPinbacks]
 }

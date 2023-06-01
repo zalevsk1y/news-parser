@@ -1,8 +1,9 @@
 import { useDispatch } from "react-redux";
 import { useCallback } from "react";
+import {toggleAddFeaturedMedia} from '../actions/options.actions'
 
 export const useToggleAddFeaturedMedia = ()=>{
     const dispatch=useDispatch();
-    const toggleAddFeaturedMedia=useCallback(() => dispatch(toggleAddFeaturedMedia()), [dispatch]);
-    return toggleAddFeaturedMedia
+    const toggleAddFeaturedMediaHandler=useCallback(() => dispatch(toggleAddFeaturedMedia()), []);
+    return toggleAddFeaturedMediaHandler
 } 

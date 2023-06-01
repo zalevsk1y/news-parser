@@ -159,5 +159,4 @@ export default class FrameElement {
   }
 }
 
-export const frameElement = (frameElementRef, url) =>
-  new FrameElement(frameElementRef, url);
+export const frameElement = (frameElementRef, url) => new FrameElement(frameElementRef, url);

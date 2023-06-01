@@ -1,6 +1,6 @@
+import React from "react";
 
-
-export const PostCardHeader = (pubDate) => {
+export const PostCardHeader = ({ pubDate }) => {
     return (
         <div className="post-time">
             <span className="fo fo-clock"></span>

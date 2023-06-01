@@ -45,6 +45,6 @@ export const sidebar = (state = initialState, action) => {
             return { ...state, allowPinbacks: !state.allowPinbacks }
 
         default:
-            return { state };
+            return state;
     }
 }

@@ -6,10 +6,10 @@ import config from '@news-parser/config';
 
 export const FeaturedMediaGroup = () => {
     const featuredMedia = useGetPostFeaturedMedia();
-    const addFeaturedMedia = useGetAddFeaturedMedia;
+    const addFeaturedMedia = useGetAddFeaturedMedia();
     const toggleAddFeaturedMediaHandler = useToggleAddFeaturedMedia();
     const selectFeaturedMediaHandler = useSetFeaturedMedia();
-    const featuredImageClassName = !addFeaturedMedia
+    const featuredImageClassName = addFeaturedMedia
         ? "featured-image-thumbnail no-featured-image"
         : "featured-image-thumbnail";
 

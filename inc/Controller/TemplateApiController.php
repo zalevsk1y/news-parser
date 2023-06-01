@@ -178,7 +178,7 @@ public function getTemplates($request){
         $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
     }
     
-    $wp_response = new \WP_REST_Response( $response->get('json'),$response->getCode() );
+    $wp_response = new \WP_REST_Response( $response->get('array'),$response->getCode() );
     return $wp_response;
 
 }

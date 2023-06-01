@@ -144,7 +144,7 @@ class ResponseFormatter {
      */
     public function options($options)
     {
-        $this->data['options']=$options;
+        $this->data['data']=$options;
         return $this;
     }
     /**

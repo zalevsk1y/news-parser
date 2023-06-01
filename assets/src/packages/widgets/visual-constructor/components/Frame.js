@@ -9,6 +9,7 @@ import { frameElement } from "@news-parser/helpers/frame/FrameElement/FrameEleme
 import { useMouseEvents } from "../hooks/frame/useMouseEvents";
 import { useFrameElementMiddleware } from "../hooks/";
 import { useToggleContent } from "@news-parser/entities/sidebarTemplate/hooks/useToggleContent";
+import { useGetHTML } from "../hooks/frame/useGetHTML";
 
 /**
 * This is a frame element used in the visual constructor modal window, allowing users to manually choose parsing content.
@@ -18,24 +19,14 @@ import { useToggleContent } from "@news-parser/entities/sidebarTemplate/hooks/us
 * @returns {JSX.Element} Returns the frame element with an iFrame tag containing the visual constructor.
 */
 
-export const Frame = ({ onReady,html,url }) => {
+export const Frame = ({ onReady, url }) => {
   const frameRef = useRef(null);
   const [frame, setFrame] = useState(null);
+  const html = useGetHTML();
   const [getTitle, getFeaturedMedia] = useFrameElementMiddleware();
   const [mouseOver, mouseOut] = useMouseEvents();
-  const [selectElement,removeElement]=useToggleContent(frameRef)
-  useEffect(() => {
-    if (html && frameRef.current) {
-      initFrame(html,frameRef);
-    }
-    return () => {
-      if (frame !== null) {
-        frame.shutDown();
-      }
-    };
-  }, [html]);
-
-  const initFrame = (html,frameRef) => {
+  const [selectElement, removeElement] = useToggleContent(frameRef);
+  const initFrame = (html, frameRef) => {
     const newFrame = frameElement(frameRef.current, url)
       .injectHTML(html, [purifyDOM])
       .injectCSS({
@@ -50,24 +41,36 @@ export const Frame = ({ onReady,html,url }) => {
       ])
       .runMiddleware([
         getTitle,
-        getFeaturedMedia,
-        onReady,
-      ]);
+        getFeaturedMedia
+      ])
+      .runMethodWhenReady(
+        onReady
+      )
     setFrame(newFrame);
-  },
-    clickHandler = (event) => {
-      event.preventDefault();
-      const className = event.target.className;
-      const element = event.target;
-      if (className.search(' parser-select') === -1) {
-        element.className = `${className} parser-select`;
-        selectElement(element);
-      } else {
-        element.className = className.replace(' parser-select', '');
-        removeElement(element);
-      }
+  };
+  const clickHandler = (event) => {
+    event.preventDefault();
+    const className = event.target.className;
+    const element = event.target;
+    if (className.search(' parser-select') === -1) {
+      element.className = `${className} parser-select`;
+      selectElement(element);
+    } else {
+      element.className = className.replace(' parser-select', '');
+      removeElement(element);
     }
-
+  }
+  
+  useEffect(() => {
+    if (html && frameRef.current) {
+      initFrame(html, frameRef);
+    }
+    return () => {
+      if (frame !== null) {
+        frame.shutDown();
+      }
+    };
+  }, [html]);
   return (
     <iframe id="visual-constructor" frameBorder="0" ref={frameRef}>
       {' '}

@@ -16,7 +16,7 @@ export const  SET_IS_MUTATING=`[${VISUAL_CONSTRUCTOR}.${DIALOG_DATA}.${IS_MUTATI
 
 
 
-export const openVisualConstructor = (url, _id) => {
+export const openVisualConstructor = (_id, url) => {
   return {
     type: OPEN_VISUAL_CONSTRUCTOR,
     payload: {

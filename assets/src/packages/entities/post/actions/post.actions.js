@@ -8,7 +8,7 @@ export const INSERT_DRAFT_POST=`[${PARSER_RSS}.${POSTS}.${DRAFT}:${INSERT}]`;
 
 export const togglePostSelect=(_id)=>{
     return {
-        type:TOGGLE_SELECT_POST,
+        type:TOGGLE_POST_SELECT,
         payload:{
             _id
         }

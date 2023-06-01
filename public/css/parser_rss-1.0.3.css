@@ -707,10 +707,8 @@ input:out-of-range {
   width: 100%; }
 
 .icon-selected {
-  border: solid 1px;
   color: #0073aa;
-  margin-left: 13px !important; }
-
+}
 .post-image-wrapper {
   overflow: hidden; }
 

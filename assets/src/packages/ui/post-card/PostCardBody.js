@@ -1,4 +1,6 @@
-export const PostCardBody = ({link,title,description}) => {
+import React from "react";
+
+export const PostCardBody = ({ link, title, description }) => {
     return (
         <div className="post-content">
             <div className="post-title-wrapper">

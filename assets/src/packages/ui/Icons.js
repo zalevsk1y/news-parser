@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
  * @param {string} title Icon title.
  * @param {function} onClick Function click handler.  
  */
-export default function Icons ({className,title,onClick}){
+export function Icons ({className,title,onClick}){
     return (
         <span className={className} title={title} onClick={onClick}></span>
     )

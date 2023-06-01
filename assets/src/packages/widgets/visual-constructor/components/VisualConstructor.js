@@ -1,12 +1,12 @@
 
-import React, { useState, useMemo,useLayoutEffect } from "react";
+import React, { useState, useMemo, useLayoutEffect, useCallback } from "react";
 import { Frame } from './Frame';
 import { useScrolling } from "../hooks/visual-constructor/useScrolling";
 import { useFetchHTML } from "../hooks/visual-constructor/useFetchHTML";
 import { LoadingSpinner } from "@news-parser/ui/visual-constructor/LoadingSpinner";
 // import '@news-parser/styles/_resize-bar.scss';
-import {useIsOpen} from '../hooks/visual-constructor/useIsOpen';
-import {useIsMutating} from '../hooks/'
+import { useIsOpen } from '../hooks/visual-constructor/useIsOpen';
+import { useIsMutating } from '../hooks/'
 /**
 * 
 * A functional component for the Parsing Constructor modal window, which allows users to create a post or save a parsing template.
@@ -22,12 +22,12 @@ import {useIsMutating} from '../hooks/'
 
 
 
-export const VisualConstructor=({children})=> {
+export const VisualConstructor = ({ children }) => {
     const [enableScrolling, disableScrolling] = useScrolling();
     const [frameIsReady, setFrameIsReady] = useState(false);
-    const [ url, isOpen ] = useIsOpen();
+    const [url, isOpen] = useIsOpen();
     const [isHTMLFetching, startHTMLFetching] = useFetchHTML(url);
-    const isMutating=useIsMutating();
+    const isMutating = useIsMutating();
     const isVisualConstructorReady = useMemo(() => frameIsReady && !isHTMLFetching && !isMutating, [frameIsReady, isHTMLFetching, isMutating]);
     useLayoutEffect(() => {
         if (isOpen) {
@@ -37,40 +37,41 @@ export const VisualConstructor=({children})=> {
             enableScrolling();
             setFrameIsReady(false);
         }
-    }, [url,isOpen]);
-    
+    }, [url, isOpen]);
+    const onFrameReady = useCallback(() => setFrameIsReady(true))
+
 
     return (
-        <div className="media-modal-wrapper" style={{display:isOpen?'block':'none'}}>
-                <div className="modal-container">
-                    <div className="modal-header">
-                        <h1>Parsing Constructor</h1>
-                        <button
-                            type="button"
-                            className="media-modal-close"
-                            onClick={close}
-                        >
-                            <span className="media-modal-icon">
-                                <span className="screen-reader-text">Close dialog</span>
-                            </span>
-                        </button>
+        <div className="media-modal-wrapper" style={{ display: isOpen ? 'block' : 'none' }}>
+            <div className="modal-container">
+                <div className="modal-header">
+                    <h1>Parsing Constructor</h1>
+                    <button
+                        type="button"
+                        className="media-modal-close"
+                        onClick={close}
+                    >
+                        <span className="media-modal-icon">
+                            <span className="screen-reader-text">Close dialog</span>
+                        </span>
+                    </button>
+                </div>
+                {!isVisualConstructorReady && <LoadingSpinner />}
+                <div className="modal-main">
+                    <div className="parsed-data-container">
+                        {
+                            //<Frame injectHTML={htmlData} injectCSS={} onReady={this.frameIsReady}/>
+                        }
+                        <Frame url={url} onReady={onFrameReady} />
                     </div>
-                    {!isVisualConstructorReady && <LoadingSpinner />}
-                    <div className="modal-main">
-                        <div className="parsed-data-container">
-                            {
-                                //<Frame injectHTML={htmlData} injectCSS={} onReady={this.frameIsReady}/>
-                            }
-                            <Frame url={url}/>
-                        </div>
-                        <div className="resize-drag-bar"></div>
+                    <div className="resize-drag-bar"></div>
 
-                        {children[0]}
-                    </div>
-                        {children[1]}
-                    </div>
-                <div className="media-modal-backdrop"></div>
+                    {children[0]}
+                </div>
+                {children[1]}
             </div>
+            <div className="media-modal-backdrop"></div>
+        </div>
     );
 }
 
