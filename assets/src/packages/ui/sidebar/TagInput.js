@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 //import "@news-parser/styles/sidebar/_tag-input.scss";
 
 export const TagInput = ({ tags, onChange,id:idSufix,bottomCapture,labelText }) => {
-    const renderTags = () => {
-    if (tags.length==0) return null;
+    const renderTags = useMemo(() => {
+    if (tags.length==0) return [];
     return tags.map((item, i) => {
       const removeTagHandler = () => {
         removeTag(item);
@@ -17,7 +17,7 @@ export const TagInput = ({ tags, onChange,id:idSufix,bottomCapture,labelText }) 
         </span>
       );
     });
-  };
+  },[tags])
 
   const removeTag = (tag) => {
     onChange(tag);
@@ -45,7 +45,7 @@ export const TagInput = ({ tags, onChange,id:idSufix,bottomCapture,labelText }) 
     <div className="tag-item-container">
       <label htmlFor={inputId}>{labelText}</label>
       <div className="tag-input-container input-container">
-        {renderTags()}
+        {renderTags}
         <input type="text" onKeyDown={inputKeyPressHandler} id={inputId} />
       </div>
       <i>{bottomCapture}</i>

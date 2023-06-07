@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from "react";
-
+import React, { useState, useMemo, useEffect } from "react";
+import { useResetSidebar } from "@news-parser/entities/sidebar/hooks";
 
 
 
@@ -13,13 +13,13 @@ import React, { useState, useMemo } from "react";
 * @since 1.0.0
 * @returns {JSX.Element} The JSX element for the right sidebar of the Parsing Constructor modal window.
 *
- */
+*/
 
-export const SidebarRight = ({tabs,children}) => {
-
-  const [activeTab, setActiveTab] = useState(0),
-    activeTabChangeHandler = (tabIndex) => () => setActiveTab(tabIndex),
-    tabNames = useMemo(() =>(tabs.map((tab,index) => (
+export const SidebarRight = ({ tabs, children }) => {
+  const [activeTab, setActiveTab] = useState(0);
+  const resetSidebarPostData=useResetSidebar();
+  const activeTabChangeHandler = (tabIndex) => () => setActiveTab(tabIndex);
+  const tabNames = useMemo(() => (tabs.map((tab, index) => (
       <a
         key={tab}
         className={`nav-link ${activeTab === index ? "active" : ""}`}
@@ -27,8 +27,11 @@ export const SidebarRight = ({tabs,children}) => {
       >
         {tab}
       </a>))), [activeTab]);
+    useEffect(()=>{
+      resetSidebarPostData()
+    },[])
   return (
-    <div className="modal-right-side-bar d-flex flex-column">
+    <div className="modal-right-side-bar d-flex flex-column" >
       <div className="sidebar-nav">
         <nav className="nav">
           {tabNames}

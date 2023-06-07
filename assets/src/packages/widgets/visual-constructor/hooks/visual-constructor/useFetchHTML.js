@@ -8,7 +8,8 @@ export const useFetchHTML = () => {
     const [isFetching, setIsFetching] = useState(false),
         dispatch = useDispatch(),
         success = (entity, event, html) => {
-            dispatch(setHTML(html))
+            dispatch(setHTML(html));
+            return html;
         },
         error = (entity, event, errorData) => {
             const { msg } = errorData;
@@ -17,7 +18,10 @@ export const useFetchHTML = () => {
         startFetching = (url) => {
             const options = { entity: RAW_HTML, event: PARSE, data: { url } };
             setIsFetching(true);
-            requestApi(options, success, error).then(resp => setIsFetching(false))
+            return requestApi(options, success, error).then(resp => {
+                setIsFetching(false)
+                return resp;
+            })
         };
     return [isFetching, startFetching]
 }   

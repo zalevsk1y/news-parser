@@ -3,7 +3,7 @@ import { TEMPLATE } from './constants'
 import { WP_POST, MEDIA,PAGE } from './constants';
 import { API_WP_TAGS, API_WP_CATEGORIES, PARSER_RSS_LIST, PARSE, RAW_HTML } from './constants';
 import { POST, GET, AJAX, REST, CREATE, LIST } from './constants';
-
+const NEWS_PARSER_REST_PREFIX=endpoints.rootRestApi+'news-parser-plugin/v1/';
 
 const config = {
     mode: 'development',
@@ -48,15 +48,15 @@ const config = {
         [TEMPLATE]: {
             [CREATE]: {
                 method: POST,
-                type: AJAX,
+                type: REST,
                 nonce: settings.wpRestApiNonce,
-                url: endpoints[TEMPLATE]
+                url: NEWS_PARSER_REST_PREFIX+'templates'
             },
             [GET]: {
                 method: GET,
                 type: REST,
                 nonce: settings.wpRestApiNonce,
-                url: endpoints.rootRestApi + 'news-parser-plugin/v1/templates'
+                url: NEWS_PARSER_REST_PREFIX+'templates'
             }
         },
         //visual-constructor.post-draft

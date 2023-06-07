@@ -131,6 +131,7 @@ export default class FrameElement {
     } else {
       this.waitForRun.push(callback);
     }
+    return this;
   }
   /**
    * Set DOMContentLoaded event listener that will run all callbacks that wait for it.

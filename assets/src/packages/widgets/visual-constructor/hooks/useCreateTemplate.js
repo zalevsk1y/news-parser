@@ -6,7 +6,14 @@ import { useSelector } from "react-redux";
 
 export const useCreateTemplate=()=>{
     const [isFetching,setIsFetching]=useState(false);
-    //const {options,dialogData,parsedData}=useSelector(state=>state.parse.dialog.visualConstructor);
+    const {url,parsedData,options}=useSelector(state=>({
+        parsedData:state.parse.sidebarTemplate.parsedData,
+        url:state.parse.dialog.dialogData.url,
+        options:{
+            postOptions:state.parse.sidebar,
+            extraOptions:state.parse.sidebarTemplate.options
+        }
+    }));
     const requestOptions={entity:TEMPLATE,event:CREATE,data:null};
     const error=(entity,event,errorData)=>{
         const {msg}=errorData;
@@ -15,7 +22,7 @@ export const useCreateTemplate=()=>{
     const success=(entity,event,template)=>{
         console.log(template)
     };
-    const createTemplate=(parsedData,options,url)=>{
+    const createTemplate=()=>{
         setIsFetching(true);
         const template=formatCreateTemplateRequest(parsedData,options,url);
         requestOptions.data={template};

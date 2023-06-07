@@ -9,3 +9,4 @@ export { useFetchTags } from './useFetchTags';
 export { useSelectTag } from './useSelectTag';
 export { useSelectDiscussionGroup } from './useSelectDiscussionGroup';
 export { useGetDiscussionGroup } from './useGetDiscussionGroup';
+export { useResetSidebar } from './useResetSidebar';

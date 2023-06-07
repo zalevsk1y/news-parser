@@ -13,8 +13,8 @@ const DiscussionGroup = () => {
           type="checkbox"
           className="sidebar-item-radio"
           name="allowComments"
-          checked={false}
-          onChange={()=>console.log('change')}
+          checked={allowComments}
+          onChange={allowCommentsSet}
         />
         <SidebarItemLabel>Allow comments</SidebarItemLabel>
       </SidebarItem>
@@ -23,8 +23,8 @@ const DiscussionGroup = () => {
           type="checkbox"
           className="sidebar-item-radio"
           name="allowPingbacks"
-          checked={false}
-          onChange={()=>console.log('change')}
+          checked={allowPinbacks}
+          onChange={allowPinbacksSet}
         />
         <SidebarItemLabel>
           Allow pingbacks & trackbacks

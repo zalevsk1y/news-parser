@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useGetSaveParsingTemplate } from "@news-parser/entities/sidebarTemplate/hooks"
 import { useCreateWpPost } from '../hooks/visual-constructor';
-import { useCreateTemplate } from '@news-parser/entities/template/hooks';
+import { useCreateTemplate } from '../hooks';
 import { useClose } from '../hooks/visual-constructor/useClose'
 
 export const VisualConstructorFooterMain = () => {
@@ -10,7 +10,6 @@ export const VisualConstructorFooterMain = () => {
     const [isTemplateCreating, createTemplate] = useCreateTemplate();
     const close = useClose();
     const buttonClickHandler = useCallback(() => {
-        setIsMutating(true);
         if (!shouldParsingTemplateToBeSaved) {
             createWpPost().then(() => close())
         } else {

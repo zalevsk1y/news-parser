@@ -10,25 +10,33 @@ export const SELECT_TITLE=`[${VISUAL_CONSTRUCTOR}.${PARSED_DATA}.${TITLE}:${SELE
 export function selectTitle(title){
     return {
         type:SELECT_TITLE,
-        title
+        payload:{
+            title
+        }
     }
 }
 export function selectFeaturedMedia(url){
     return {
         type:SELECT_FEATURED_MEDIA,
-        url
+        payload:{   
+            url
+        }
     }
 }
 export function selectContent(hash,content){
     return {
         type:SELECT_CONTENT,
-        hash,
-        content
+        payload:{   
+            hash,
+            content
+        }
     }
 }
 export function removeContent(hash){
     return {
         type:REMOVE_CONTENT,
-        hash
+        payload:{   
+            hash
+        }
     }
 }

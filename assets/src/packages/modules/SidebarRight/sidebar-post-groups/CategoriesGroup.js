@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect } from "react";
 import { CategoriesCheckboxList } from "@news-parser/ui/sidebar/";
 import { CategoiresOptionList } from "@news-parser/ui/sidebar/";
-import { Select,SidebarItem,SidebarItemExpandable } from "@news-parser/ui/sidebar/";
-import {useSelectCategory} from "@news-parser/entities/sidebar/hooks";
+import { Select, SidebarItem, SidebarItemExpandable } from "@news-parser/ui/sidebar/";
+import { useSelectCategory } from "@news-parser/entities/sidebar/hooks";
 
 
 import { useCategoryFilter } from "../hooks/useCategoryFilter";
@@ -31,12 +31,12 @@ import { useFetchCategories } from "@news-parser/entities/sidebar/hooks/useFetch
 * @property {function} onChange - A callback function triggered when a category checkbox is toggled
 */
 
-const  CategoriesGroup=()=>{
-  const [isFetching,startFetcingCategories]=useFetchCategories()
-  const [categories,selected] = useGetCategories();
-  const [selectCategory,deselectCategory]=useSelectCategory();
+const CategoriesGroup = () => {
+  const [isFetching, startFetcingCategories] = useFetchCategories()
+  const [categories, selected] = useGetCategories();
+  const [selectCategory, deselectCategory] = useSelectCategory();
   const [filterValue, setFilterValue, filteredCategories] = useCategoryFilter(categories);
-  const [newCategoryParams, newCategoryNameInputHandler, newCategoryParentSelectHandler, addCategoryHandler,isCategoriesMutating] = useCreateCategory({ parent: 0, name: "" });
+  const [newCategoryParams, newCategoryNameInputHandler, newCategoryParentSelectHandler, addCategoryHandler, isCategoriesMutating] = useCreateCategory({ parent: 0, name: "" });
   const categorySelectHandler = useCallback((event, id) => {
     const checkedStatus = event.target.checked;
     if (checkedStatus === undefined) return null;
@@ -45,8 +45,9 @@ const  CategoriesGroup=()=>{
     } else {
       deselectCategory(id);
     }
-  }, [selectCategory,deselectCategory]);
-  useEffect(()=>startFetcingCategories(),[])
+  }, [selectCategory, deselectCategory]);
+  const categoryInputHandler = useCallback((event) => setFilterValue(event.target.value), []);
+  useEffect(() => startFetcingCategories(), [])
   return (
     <>
       <SidebarItem>
@@ -56,7 +57,7 @@ const  CategoriesGroup=()=>{
             type="text"
             id="categories-filter-input"
             value={filterValue}
-            onChange={(e) => setFilterValue(e.target.value)}
+            onChange={categoryInputHandler}
           />
         </div>
       </SidebarItem>
@@ -97,7 +98,7 @@ const  CategoriesGroup=()=>{
         </div>
         <div className="sidebar-item-expandable-row">
           <button
-            disabled={isCategoriesMutating }
+            disabled={isCategoriesMutating}
             className="sidebar-submit-big-button"
             onClick={addCategoryHandler}
           >

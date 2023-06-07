@@ -2,7 +2,7 @@ import { TOGGLE_ADD_FEATURED_MEDIA, TOGGLE_SAVE_PARSING_TEMPLATE, TOGGLE_ADD_SOU
 import { initialState } from './initialState';
 
 
-export function options(state=initialState , action) {
+export function options(state = initialState.options, action) {
     switch (action.type) {
         case TOGGLE_ADD_FEATURED_MEDIA:
             return {

@@ -17,7 +17,7 @@ export const useFetchPostsList = () => {
                     return post;
                 });
             dispatch(setList(posts));
-            return msg
+            return postData;
         },
         error = (entity, event, errorData) => {
             const { msg } = errorData;
@@ -27,7 +27,10 @@ export const useFetchPostsList = () => {
         fetchPostsList = (url) => {
             const options = { entity: PARSER_RSS_LIST, event: PARSE, data: { url } };
             setIsFetching(true);
-            return requestApi(options, success, error).then(() => setIsFetching(false))
+            return requestApi(options, success, error).then(respData => {
+                setIsFetching(false);
+                return respData;
+            })
         }
     return [isFetching, fetchPostsList]
 }

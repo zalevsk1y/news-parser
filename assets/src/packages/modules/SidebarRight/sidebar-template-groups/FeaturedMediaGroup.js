@@ -9,7 +9,7 @@ export const FeaturedMediaGroup = () => {
     const addFeaturedMedia = useGetAddFeaturedMedia();
     const toggleAddFeaturedMediaHandler = useToggleAddFeaturedMedia();
     const selectFeaturedMediaHandler = useSetFeaturedMedia();
-    const featuredImageClassName = addFeaturedMedia
+    const featuredImageClassName = !addFeaturedMedia
         ? "featured-image-thumbnail no-featured-image"
         : "featured-image-thumbnail";
 

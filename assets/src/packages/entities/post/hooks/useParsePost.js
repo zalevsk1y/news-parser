@@ -24,7 +24,10 @@ export const useParsePost = () => {
     const parsePost=(postData)=>{
         setIsParsing(true);
         requestOptions.data={postData};
-        return requestApi(requestOptions,success,error).then(()=>setIsParsing(false))
+        return requestApi(requestOptions,success,error).then(respData=>{
+            setIsParsing(false)
+            return respData;
+        })
     }
     return [isPrsing,parsePost]
 }

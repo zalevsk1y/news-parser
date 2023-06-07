@@ -3,11 +3,14 @@ import { MAP_POST_TAGS, PUSH_POST_TAG, SELECT_POST_TAG, DISELECT_POST_TAG } from
 import { SET_POST_PUBLISH_DATE, SET_POST_FORMAT, SET_PUBLISH_INTERVAL, SET_POST_STATUS } from '../actions/status.visability.actions'
 import { ALLOW_POST_PINBACKS, ALLOW_POST_COMMENTS } from '../actions/descussion.actions'
 import { MAP_POST_CATEGORIES, PUSH_POST_CATEGORY, SELECT_POST_CATEGORY, DISELECT_POST_CATEGORY } from '../actions/category.actions'
-
+import { RESET_SIDEBAR } from '../actions/main.actions';
 
 export const sidebar = (state = initialState, action) => {
 
     switch (action.type) {
+        //Main
+        case RESET_SIDEBAR:
+            return { ...initialState };
         //Catagories
         case MAP_POST_CATEGORIES:
             return { ...state, categories: action.payload }

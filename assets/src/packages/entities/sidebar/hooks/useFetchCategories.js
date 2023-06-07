@@ -17,17 +17,20 @@ export const useFetchCategories = () => {
     const success = (entity, event, categories) => {    
         if(categories.length>0){
             categoriesArr.push(...categories);
-            options.searchParams={page:options.searchParams.page+1}
+            options.searchParams.page++;
             return requestApi(options,success,error)
         } else {
             dispatch(mapCategories(categoriesArr));
-            setIsFetching(false)
         }
         return categories;
     };
     const startFetching = () => {
+        options.searchParams.page=1;
         setIsFetching(true);
-        return requestApi(options, success, error)
+        return requestApi(options, success, error).then(respData=>{
+            setIsFetching(false)
+            return respData;
+        })
     }
     return [isFetching, startFetching];
 }

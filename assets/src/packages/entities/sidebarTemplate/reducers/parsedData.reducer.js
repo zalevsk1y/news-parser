@@ -7,7 +7,7 @@ export function parsedData (state=initialState.parsedData,action){
     switch (action.type){
         case SELECT_TITLE:
             return {...state,
-                    title:action.title
+                    title:action.payload.title
             }
         case SELECT_FEATURED_MEDIA: 
             return {...state,
@@ -16,12 +16,12 @@ export function parsedData (state=initialState.parsedData,action){
         case SELECT_CONTENT:
             return {...state,
                     body:{...state.body,
-                        [action.hash]:action.content
+                        [action.payload.hash]:action.payload.content
                     }
             }
         case REMOVE_CONTENT:
             if (state.body.hasOwnProperty(action.hash)){
-                delete state.body[action.hash]
+                delete state.body[action.payload.hash]
             }
             return {...state,
                     body:{...state.body}

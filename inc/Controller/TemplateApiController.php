@@ -131,6 +131,12 @@ class TemplateApiController extends \WP_REST_Controller
                 'methods' => \WP_REST_Server::CREATABLE,
                 'callback' => array($this, 'createTemplate'),
                 'permission_callback' => array($this, 'checkPermission'),
+                'args' => array(
+                    'url' => array (
+                        'validate_callback'=>array($this,'validateTemplate'),
+                        'sanitize_callback'=>array($this,'sanitizeTemplate')
+                    )
+                )
             ),
             array(
                 'methods' => \WP_REST_Server::EDITABLE,
@@ -177,7 +183,6 @@ public function getTemplates($request){
     }catch(Exception $e){
         $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
     }
-    
     $wp_response = new \WP_REST_Response( $response->get('array'),$response->getCode() );
     return $wp_response;
 
@@ -191,7 +196,15 @@ public function getTemplates($request){
  */
     public function createTemplate($request)
     {
-        // TODO: Implement method to create template
+        try{
+            $template=$request->get_query_params();
+            $response=$this->event->trigger('template:create', array($template['url'],$template['options']));
+        }catch(Exception $e){
+            $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
+        }
+        
+        $wp_response = new \WP_REST_Response( $response->get('array'),$response->getCode());
+        return $wp_response;
     }
 
 /**

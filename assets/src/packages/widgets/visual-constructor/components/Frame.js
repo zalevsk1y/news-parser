@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { getPluginDirUrl } from "@news-parser/helpers";
 // modifiers 
 import purifyDOM from "@news-parser/helpers/frame/FrameElement/modifiers/purifyDOM";
@@ -6,10 +6,9 @@ import purifyDOM from "@news-parser/helpers/frame/FrameElement/modifiers/purifyD
 
 import { frameElement } from "@news-parser/helpers/frame/FrameElement/FrameElement";
 
-import { useMouseEvents } from "../hooks/frame/useMouseEvents";
-import { useFrameElementMiddleware } from "../hooks/";
 import { useToggleContent } from "@news-parser/entities/sidebarTemplate/hooks/useToggleContent";
-import { useGetHTML } from "../hooks/frame/useGetHTML";
+import { useFetchHTML, useMouseEvents, useFrameElementMiddleware } from "../hooks/";
+
 
 /**
 * This is a frame element used in the visual constructor modal window, allowing users to manually choose parsing content.
@@ -21,11 +20,11 @@ import { useGetHTML } from "../hooks/frame/useGetHTML";
 
 export const Frame = ({ onReady, url }) => {
   const frameRef = useRef(null);
-  const [frame, setFrame] = useState(null);
-  const html = useGetHTML();
+  const frame = useRef(null);
+  const [isHTMLFetching, startHTMLFetching] = useFetchHTML(url);
   const [getTitle, getFeaturedMedia] = useFrameElementMiddleware();
   const [mouseOver, mouseOut] = useMouseEvents();
-  const [selectElement, removeElement] = useToggleContent(frameRef);
+  const [selectElement, removeElement, setFarame] = useToggleContent(frameRef);
   const initFrame = (html, frameRef) => {
     const newFrame = frameElement(frameRef.current, url)
       .injectHTML(html, [purifyDOM])
@@ -46,7 +45,7 @@ export const Frame = ({ onReady, url }) => {
       .runMethodWhenReady(
         onReady
       )
-    setFrame(newFrame);
+    frame.current = newFrame;
   };
   const clickHandler = (event) => {
     event.preventDefault();
@@ -60,17 +59,17 @@ export const Frame = ({ onReady, url }) => {
       removeElement(element);
     }
   }
-  
   useEffect(() => {
-    if (html && frameRef.current) {
-      initFrame(html, frameRef);
+    if (url) {
+        startHTMLFetching(url).then(html => initFrame(html, frameRef));
+        setFarame(frameRef.current)
     }
     return () => {
-      if (frame !== null) {
-        frame.shutDown();
+      if (frame.current !== null) {
+        frame.current.shutDown();
       }
     };
-  }, [html]);
+  }, [url]);
   return (
     <iframe id="visual-constructor" frameBorder="0" ref={frameRef}>
       {' '}

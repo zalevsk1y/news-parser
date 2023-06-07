@@ -2,11 +2,12 @@
 import React, { useState, useMemo, useLayoutEffect, useCallback } from "react";
 import { Frame } from './Frame';
 import { useScrolling } from "../hooks/visual-constructor/useScrolling";
-import { useFetchHTML } from "../hooks/visual-constructor/useFetchHTML";
 import { LoadingSpinner } from "@news-parser/ui/visual-constructor/LoadingSpinner";
 // import '@news-parser/styles/_resize-bar.scss';
 import { useIsOpen } from '../hooks/visual-constructor/useIsOpen';
-import { useIsMutating } from '../hooks/'
+import { useIsMutating } from '../hooks/';
+import { useClose } from "../hooks/";
+import { useResetSidebar } from "../../../entities/sidebar/hooks";
 /**
 * 
 * A functional component for the Parsing Constructor modal window, which allows users to create a post or save a parsing template.
@@ -21,23 +22,22 @@ import { useIsMutating } from '../hooks/'
 */
 
 
-
 export const VisualConstructor = ({ children }) => {
     const [enableScrolling, disableScrolling] = useScrolling();
+    const resetSidebarPostData=useResetSidebar();
     const [frameIsReady, setFrameIsReady] = useState(false);
+    const closeVisualConstructor=useClose();
     const [url, isOpen] = useIsOpen();
-    const [isHTMLFetching, startHTMLFetching] = useFetchHTML(url);
     const isMutating = useIsMutating();
-    const isVisualConstructorReady = useMemo(() => frameIsReady && !isHTMLFetching && !isMutating, [frameIsReady, isHTMLFetching, isMutating]);
+    const isVisualConstructorReady = useMemo(() => frameIsReady  && !isMutating, [frameIsReady, isMutating]);
     useLayoutEffect(() => {
         if (isOpen) {
             disableScrolling();
-            startHTMLFetching(url);
         } else {
             enableScrolling();
-            setFrameIsReady(false);
         }
-    }, [url, isOpen]);
+    }, [isOpen]);
+    useLayoutEffect(()=>setFrameIsReady(false),[url])
     const onFrameReady = useCallback(() => setFrameIsReady(true))
 
 
@@ -49,7 +49,7 @@ export const VisualConstructor = ({ children }) => {
                     <button
                         type="button"
                         className="media-modal-close"
-                        onClick={close}
+                        onClick={closeVisualConstructor}
                     >
                         <span className="media-modal-icon">
                             <span className="screen-reader-text">Close dialog</span>
@@ -66,7 +66,7 @@ export const VisualConstructor = ({ children }) => {
                     </div>
                     <div className="resize-drag-bar"></div>
 
-                    {children[0]}
+                    {isOpen&&children[0]}
                 </div>
                 {children[1]}
             </div>
