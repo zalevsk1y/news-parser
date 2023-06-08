@@ -8,4 +8,5 @@ export { useGetPostFeaturedMedia } from './useGetPostFeaturedMedia';
 export { useToggleAddFeaturedMedia } from './useToggleAddFeaturedMedia';
 export { useGetPostTitle } from './useGetPostTitle';
 export { useGetSaveParsingTemplate } from './useGetSaveParsingTemplate';
-export { useResetSidebarTemplate } from './useResetSidebarTemplate'
+export { useResetSidebarTemplate } from './useResetSidebarTemplate';
+export { useChangeFeaturedMedia } from './useChangeFeaturedMedia'

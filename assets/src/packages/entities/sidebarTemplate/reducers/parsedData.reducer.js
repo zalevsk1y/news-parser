@@ -24,7 +24,7 @@ export const parsedData = (state = initialState.parsedData, action) => {
                 }
             }
         case REMOVE_CONTENT:
-            if (state.body.hasOwnProperty(action.hash)) {
+            if (state.body.hasOwnProperty(action.payload.hash)) {
                 delete state.body[action.payload.hash]
             }
             return {

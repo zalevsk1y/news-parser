@@ -1,14 +1,14 @@
 import React from 'react'
 import { InfoBody, InfoFooter, Checkbox } from "@news-parser/ui/sidebar/";
 import { Image } from "@news-parser/ui";
-import { useGetPostFeaturedMedia, useGetAddFeaturedMedia, useSetFeaturedMedia, useToggleAddFeaturedMedia } from '@news-parser/entities/sidebarTemplate/hooks'
+import { useGetPostFeaturedMedia, useGetAddFeaturedMedia, useChangeFeaturedMedia, useToggleAddFeaturedMedia } from '@news-parser/entities/sidebarTemplate/hooks'
 import config from '@news-parser/config';
 
 export const FeaturedMediaGroup = () => {
     const featuredMedia = useGetPostFeaturedMedia();
     const addFeaturedMedia = useGetAddFeaturedMedia();
     const toggleAddFeaturedMediaHandler = useToggleAddFeaturedMedia();
-    const selectFeaturedMediaHandler = useSetFeaturedMedia();
+    const changeFeaturedMediaHandler = useChangeFeaturedMedia();
     const featuredImageClassName = !addFeaturedMedia
         ? "featured-image-thumbnail no-featured-image"
         : "featured-image-thumbnail";
@@ -36,7 +36,7 @@ export const FeaturedMediaGroup = () => {
                 <button
                     type="button"
                     className="button button-primary button-large"
-                    onClick={selectFeaturedMediaHandler}
+                    onClick={changeFeaturedMediaHandler}
                 >
                     Change image
                 </button>
