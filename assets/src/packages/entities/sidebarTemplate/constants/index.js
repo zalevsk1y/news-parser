@@ -1,5 +1,6 @@
 export const VISUAL_CONSTRUCTOR='visual-constructor';
 export const SELECT='select';
+export const RESET='reset';
 export const PARSED_DATA='parsedData';
 export const TITLE='title';
 export const FEATURED_MEDIA='featuredMedia';
