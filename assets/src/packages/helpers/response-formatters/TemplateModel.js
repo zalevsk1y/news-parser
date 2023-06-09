@@ -13,6 +13,7 @@ export class TemplateModel extends BaseClass{
      * @param {string} url 
      * @returns {object} template object.
      */
+    
     create(postData,options,url){
         const argsError=this.argsCheck({postData,options,url});
         if(argsError instanceof Error) throw argsError;

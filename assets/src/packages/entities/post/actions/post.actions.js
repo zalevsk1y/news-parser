@@ -15,6 +15,7 @@ export const togglePostSelect=(_id)=>{
     }
 }
 export const insertDraftPost=(_id,data)=>{
+    console.log(_id,data)
     return {
         type:INSERT_DRAFT_POST,
         payload:{

@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, useStore } from "react-redux";
 import { formatCreatePostDraftRequest } from '@news-parser/helpers/response-formatters/PostModel';
 import { formatPostOptions } from '@news-parser/helpers/response-formatters/formatPostOptions';
 import { useSetIsMutating } from "./useSetIsMutating";
@@ -9,28 +9,32 @@ import { insertDraftPost } from '@news-parser/entities/post/actions';
 import { getPostEditLink } from "@news-parser/helpers";
 
 export const useCreateWpPost = () => {
-    const { parsedData, options, dialogData, _id } = useSelector(state => state.parse.dialog.dialogData);
+    const store = useStore();
+    let _id;
     const dispatch = useDispatch();
-    const setIsMutating = useSetIsMutating()
+    const setIsMutating = useSetIsMutating();
     const success = (entity, event, postData) => {
-        const { title, id } = postData;
-        dispatch(insertDraftPost(_id, { post_id: id, editLink: getPostEditLink(id) }))
-        dispatch(setList(posts));
-        return msg
+        const { id } = postData;
+        dispatch(insertDraftPost(_id, { post_id: id, editLink: getPostEditLink(id) }));
+        return postData;
     };
     const error = (entity, event, errorData) => {
         const { msg } = errorData;
         console.error(msg.text);
         return { msg, posts: null };
     };
-    const createWpPostCallback = useCallback(() => {
+    const createWpPostCallback = () => {
+        const state=store.getState();
+        const {parsedData,options:extraOptions,dialogData,sidebar}={...state.parse.dialog,sidebar:state.parse.sidebar,...state.parse.sidebarTemplate}
         setIsMutating(true);
+        const postOptions = formatPostOptions(sidebar);
+        const preparedParsedData = formatCreatePostDraftRequest(parsedData, { generalOptions: extraOptions, postOptions }, dialogData.url);
         const options = { entity: WP_POST, event: CREATE, data: preparedParsedData };
-        const postOptions = formatPostOptions(getState().parse.sidebar);
-        const preparedParsedData = formatCreatePostDraftRequest(parsedData, { generalOptions: options, postOptions }, dialogData.url);
-        return requestApi(options, success, error).then(() => {
+        _id=dialogData._id;
+        return requestApi(options, success, error).then(resp => {
             setIsMutating(true);
+            return resp;
         })
-    }, [parsedData, options, dialogData])
-    return [createWpPostCallback]
+    }
+    return createWpPostCallback
 }

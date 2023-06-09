@@ -2,18 +2,20 @@ import React, { useCallback } from 'react';
 import { useGetSaveParsingTemplate } from "@news-parser/entities/sidebarTemplate/hooks"
 import { useCreateWpPost } from '../hooks/visual-constructor';
 import { useCreateTemplate } from '../hooks';
+import { useShowMessage } from '@news-parser/entities/message/hooks'
 import { useClose } from '../hooks/visual-constructor/useClose'
 
 export const VisualConstructorFooterMain = () => {
     const shouldParsingTemplateToBeSaved = useGetSaveParsingTemplate();
-    const [createWpPost] = useCreateWpPost();
+    const createWpPost = useCreateWpPost();
     const [isTemplateCreating, createTemplate] = useCreateTemplate();
     const close = useClose();
+    const showMessage = useShowMessage()
     const buttonClickHandler = useCallback(() => {
         if (!shouldParsingTemplateToBeSaved) {
-            createWpPost().then(() => close())
+            createWpPost().then(() => close()).then(() => showMessage('success', "Post was parsed and saved."))
         } else {
-            createTemplate().then(() => close())
+            createTemplate().then(() => close()).then(() => showMessage('success', "Template was saved."))
         }
 
     }, [shouldParsingTemplateToBeSaved]);

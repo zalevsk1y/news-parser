@@ -5,5 +5,6 @@ import { showMessage } from "../actions/message.actions";
 
 export const useShowMessage=()=>{
     const dispatch=useDispatch();
-    const showMessage=useCallback((type,text)=>dispatch(showMessage(type,text)),[dispatch,showMessage])
+    const showMessageHandler=useCallback((type,text)=>dispatch(showMessage(type,text)),[dispatch,showMessage])
+    return showMessageHandler;
 }

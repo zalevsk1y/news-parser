@@ -197,8 +197,8 @@ public function getTemplates($request){
     public function createTemplate($request)
     {
         try{
-            $template=$request->get_query_params();
-            $response=$this->event->trigger('template:create', array($template['url'],$template['options']));
+            $template=$request->get_params();
+            $response=$this->event->trigger('template:create', array($template['template']['url'],$template['template']));
         }catch(Exception $e){
             $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
         }

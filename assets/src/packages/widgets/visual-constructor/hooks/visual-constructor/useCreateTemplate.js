@@ -20,7 +20,7 @@ export const useCreateTemplate=()=>{
         console.error(msg.text);
     };
     const success=(entity,event,template)=>{
-        console.log(template)
+        return template;
     };
     const createTemplate=()=>{
         setIsFetching(true);

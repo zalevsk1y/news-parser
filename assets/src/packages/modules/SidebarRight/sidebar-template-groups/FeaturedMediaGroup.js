@@ -27,8 +27,8 @@ export const FeaturedMediaGroup = () => {
                     to choose in the constructor and click "Change image" button.
                 </p>
                 <Checkbox
-                    value={!addFeaturedMedia}
-                    onClick={toggleAddFeaturedMediaHandler}
+                    chekced={!addFeaturedMedia}
+                    onChange={toggleAddFeaturedMediaHandler}
                 />
                 <p className="howto inline-bl">No featured image.</p>
             </InfoBody>

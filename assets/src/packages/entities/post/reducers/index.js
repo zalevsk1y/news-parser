@@ -23,8 +23,7 @@ export const selectPost=(state={},action)=>{
 export const draftPost=(state={},action)=>{
     switch (action.type){
         case INSERT_DRAFT_POST:
-            const {post_id,editLink}=action.payload.data;
-            const {_id}=action.payload;
+            const {post_id,editLink,_id}=action.payload;
             return {
                 ...state,
                 ...{[_id]:{

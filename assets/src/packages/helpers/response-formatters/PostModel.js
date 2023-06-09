@@ -208,7 +208,7 @@ export class PostModel extends BaseClass{
     */
     getSrcFromSrcSet(srcSet,index=-2){
         let srcSetArr=srcSet.split(',');
-        if(srcSetArr.length<=index) throw new Error('Given index in greater then number of srcset breakpoints');
+        if(srcSetArr.length<=Math.abs(index)) throw new Error('Given index in greater then number of srcset breakpoints');
         console.log(srcSetArr.at(index).trim().replace(/\s.*w/,''))
         return srcSetArr.at(index).trim().replace(/\s.*w/,'')
     }
@@ -223,4 +223,4 @@ export class PostModel extends BaseClass{
  * @returns {string} 
  */
 
-export const formatCreatePostDraftRequest=(postData,options,url)=>(new PostModel()).createPostDraft(postData,options,url);
+export const formatCreatePostDraftRequest=(postData,options,url)=>((new PostModel()).createWpPost(postData,options,url));
