@@ -3,10 +3,11 @@ export const initialState={
     selectedCategories:[],
     tags:[],
     selectedTags:[],
-    status:'publish',
+    status:'draft',
     publish:{
         date:false,
     },
+    commentStatus:'open', 
     postFormat:'standard',
     allowComments:true,
     allowPinbacks:true

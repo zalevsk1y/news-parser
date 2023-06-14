@@ -121,7 +121,8 @@ class TemplateModel implements ModelInterface
     public function getExtraOptions()
     {
         return isset($this->extraOptions)?$this->extraOptions:false;
-    }/**
+    }
+    /**
      * Assign options to object properties.
      *
      * @param array $options

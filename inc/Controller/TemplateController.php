@@ -4,7 +4,7 @@ namespace NewsParserPlugin\Controller;
 use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Message\Success;
-use NewsParserPlugin\Models\TemplateModel;
+use NewsParserPlugin\Models\TemplateModelWithPostOptions as TemplateModel;
 use NewsParserPlugin\Utils\ResponseFormatter;
 
 /**
