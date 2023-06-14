@@ -18,5 +18,5 @@ export const API_WP_TAGS = "API_WP_TAGS",
   LIST="list",
   PARSER_RSS="news-parser",
   WP_POST="wp-post", 
-  MEDIA="media",
+  MEDIA="visual-constructor.media",
   PAGE="page";

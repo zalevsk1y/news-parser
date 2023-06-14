@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useGetSaveParsingTemplate } from "@news-parser/entities/sidebarTemplate/hooks"
-import { useCreateWpPost } from '../hooks/visual-constructor';
+import { useCreateWpPost } from '@news-parser/entities/post/hooks';
 import { useCreateTemplate } from '../hooks';
 import { useShowMessage } from '@news-parser/entities/message/hooks'
 import { useClose } from '../hooks/visual-constructor/useClose'

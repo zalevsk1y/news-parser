@@ -12,6 +12,7 @@ import { useFetchTemplate, useGetTemplate } from '@news-parser/entities/template
 import { useShowMessage } from '@news-parser/entities/message/hooks/'
 import { PARSER_RSS_LIST } from '@news-parser/config/constants';
 import {useOpenVisualConstructor} from '@news-parser/widgets/visual-constructor/hooks'
+import { useParsePost } from '@news-parser/entities/post/hooks';
 
 /**
  * Main application element.
@@ -25,6 +26,7 @@ const Main = () => {
   const [isPostsFetching, fetchPostsList] = useFetchPostsList();
   const [isTemplateFetching, fetchTemplate] = useFetchTemplate();
   const openVisualConstructor=useOpenVisualConstructor();
+  const parsePost=useParsePost()
   const [mainState] = useState(() => {
     const searchParams = getUrlSearchParams();
     const url = searchParams.has('url') ? searchParams.get('url') : false;
@@ -44,7 +46,13 @@ const Main = () => {
     return [sp, sp.length]
   }, [posts]);
   const isParseSelectedPostsDisabled = useMemo(() => !template, [template])
-  const parseSelectedHandler = useCallback(() => parsePosts(selectedPosts), [selectedPosts]);
+  const parseSelectedHandler = useCallback(() => {
+    let postsCounter=selectedPosts.length;
+    selectedPosts.forEach(post=>{
+    parsePost(post.url,post._id).tnen(()=>console.log(postsCounter--))
+  })
+
+}, [selectedPosts]);
   const inputSubmitHandler = useCallback((url) => {
     if (validateIntupUrl(url)) {
       setUrlSearchParams({ entity: PARSER_RSS_LIST, url })

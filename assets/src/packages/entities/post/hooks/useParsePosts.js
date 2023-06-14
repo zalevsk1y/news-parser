@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import {table} from "@news-parser/helpers/classes/Table";
-import { useParsePost } from "./useParsePost";
 import { useCallback, useState } from "react";
 
 export const useParsePosts = () => {

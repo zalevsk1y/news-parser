@@ -10,9 +10,9 @@ import { Icons } from '@news-parser/ui';
 
 export const Posts = ({ openEditor,selectPost,posts }) => {
     
-    const onClickEditPost = useCallback((event) => {
+    const onClickEditPost = useCallback((post)=>(event) => {
         event.preventDefault();
-        window.open(draft.editLink, '_blank').focus();
+        window.open(post.draft.editLink, '_blank').focus();
     }, []);
     const selectPostHandler=useCallback((_id)=>(event)=>selectPost(_id),[selectPost])
     const openEditorHandler = useCallback((_id, link) => () => openEditor(_id, link), [openEditor]);
@@ -23,7 +23,7 @@ export const Posts = ({ openEditor,selectPost,posts }) => {
                 <PostCardImage link={post.link} image={post.image} alt={post.title} />
                 <PostCardBody title={post.title} description={post.description} />
                 <PostCardFooter>
-                    {post.draft ? <Icons className='fo fo-edit' title="Edit post" onClick={onClickEditPost} /> :
+                    {post.draft ? <Icons className='fo fo-edit' title="Edit post" onClick={onClickEditPost(post)} /> :
                         [<Icons key="select" className={'fo fo-select' + (post.select === true ? ' icon-selected' : '')} title={post.select === true ? 'Unselect post' : 'Select post'} onClick={selectPostHandler(post._id)} />,
                             <Icons key="visual-editor" className='fo fo-visual-constructor' title='Visual constructor' onClick={openEditorHandler(post._id, post.link)} />]}
                 </PostCardFooter>
