@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo, useLayoutEffect, useCallback } from "react";
 import { Frame } from './Frame';
-import { useScrolling } from "../hooks/visual-constructor/useScrolling";
+import { useScrolling } from "../../../hooks/useScrolling";
 import { LoadingSpinner } from "@news-parser/ui/visual-constructor/LoadingSpinner";
 // import '@news-parser/styles/_resize-bar.scss';
 import { useIsOpen } from '../hooks/visual-constructor/useIsOpen';

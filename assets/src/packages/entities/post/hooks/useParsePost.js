@@ -14,23 +14,20 @@ import { getPostEditLink } from "@news-parser/helpers";
 */
 
 export const useParsePost = () => {
-    let _id;
     const dispatch = useDispatch();
     const options = { entity: PAGE, event: PARSE, data: null };
-    const success = (entity, event, postData) => {
-        console.log(postData)
-        const { id } = postData;
-        dispatch(togglePostSelect(_id));
-        dispatch(insertDraftPost(_id, { post_id: id, editLink: getPostEditLink(id) }));
-        return postData;
-    };
-    const error = (entity, event, errorData) => {
-        const { msg } = errorData;
-        console.error(msg.text);
-        return { msg, posts: null };
-    };
     const parsePost = (url, _id) => {
-        _id=_id;
+        const success = (entity, event, postData) => {
+            const { post_id } = postData.data;
+            dispatch(togglePostSelect(_id));
+            dispatch(insertDraftPost(_id, { post_id: post_id, editLink: getPostEditLink(post_id) }));
+            return postData;
+        };
+        const error = (entity, event, errorData) => {
+            const { msg } = errorData;
+            console.error(msg.text);
+            return { msg, posts: null };
+        };
         options.data = { url, _id };
         return requestApi(options, success, error)
     }

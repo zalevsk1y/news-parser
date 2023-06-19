@@ -61,7 +61,7 @@ class PostController extends BaseController
      * @param string $data object with parameters for wp post
      * @return ResponseFormatter
      */
-    public function create($url, $_id,$data)
+    public function create($url, $_id,$data=false)
     {
         try {
             $parsed_url=parse_url($url);

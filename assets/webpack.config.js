@@ -75,7 +75,8 @@ module.exports=(env,args)=>{
 					"@news-parser/entities": path.resolve(__dirname,"src/packages/entities/"),
 					"@news-parser/modules": path.resolve(__dirname,"src/packages/modules/"),
 					"@news-parser/widgets": path.resolve(__dirname,"src/packages/widgets/"),
-					"@news-parser/ui": path.resolve(__dirname,"src/packages/ui/")
+					"@news-parser/ui": path.resolve(__dirname,"src/packages/ui/"),
+					"@news-parser/hooks": path.resolve(__dirname,"src/packages/hooks/")
 				}
 		},
 		devServer:{

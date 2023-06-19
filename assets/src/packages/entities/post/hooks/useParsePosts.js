@@ -1,15 +1,37 @@
-import { useSelector } from "react-redux";
-import {table} from "@news-parser/helpers/classes/Table";
-import { useCallback, useState } from "react";
+import { useState } from "react";
+import { useParsePost } from "./useParsePost";
 
 export const useParsePosts = () => {
-    const [isAllParsing,setIsAllParsing]=useState(false);
-    const [isPostParsing,startPostParsing]=useParsePost();
-    const startParsing=useCallback((selectedPosts)=>{
-        setIsAllParsing(true);
-        let requestPromise=selectedPosts.map(post=>startPostParsing(post.url,post._id,data));
-        Promise.allSettled(requestPromise).then(setIsAllParsing(false))
-    });
-    return [isAllParsing,startParsing]
+    const parsePost=useParsePost();
+    const [parsedPostsCounter,setParsedPostsCounter]=useState(false);
+    const [isParsing,setIsParsing]=useState(false)
+    const postsParser=(postsArray,mode)=>{
+        setParsedPostsCounter(0);
+        setIsParsing(true);
+        const postArrLength=postsArray.length;
+        let counter=0;
+        switch(mode){
+            case 'race':
+                Promise.all(postsArray.map((post,index)=>parsePost(post.link,post._id).then(()=>{
+                        counter++;
+                        setParsedPostsCounter(counter)
+                    }))).then(()=>setIsParsing(false));
+                break;
+            case 'sequence':
+                const postsArrClone=postsArray.slice();
+                const sequenceCallback=(post,postsArr)=>{
+                    parsePost(post.link,post._id).then(()=>{
+                        setParsedPostsCounter(postArrLength-postsArr.length);
+                        if (postsArr.length>0) {
+                            sequenceCallback(postsArr.shift(),postsArr);
+                        } else {
+                            setIsParsing(false)
+                        }
+                    })
+                }
+                sequenceCallback(postsArrClone.shift(),postsArrClone);
+            break;
+   }}
+   return [parsedPostsCounter,isParsing,postsParser]
 }
             

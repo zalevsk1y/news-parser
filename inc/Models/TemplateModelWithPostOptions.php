@@ -67,4 +67,13 @@ class TemplateModelWithPostOptions extends TemplateModel{
                 return json_encode($data);
         }
     }
+    /**
+     * Getter function for post options.
+     *
+     * @return false|array
+     */
+    public function getPostOptions()
+    {
+        return isset($this->postOptions)?$this->postOptions:false;
+    }
 }

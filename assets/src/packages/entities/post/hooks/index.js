@@ -3,3 +3,4 @@ export { useFetchPostsList } from './useFetchPostsList';
 export { useGetPosts } from './useGetPosts';
 export { useCreateWpPost } from './useCreateWpPost';
 export { useParsePost } from './useParsePost'
+export { useParsePosts } from './useParsePosts'
