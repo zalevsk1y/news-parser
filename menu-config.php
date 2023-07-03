@@ -31,6 +31,14 @@ return  array(
                 'menu_slug' => NEWS_PARSER_PLUGIN_SLUG . '-menu-parse-page',
                 'template' => NEWS_PARSER_PLUGIN_DIR . '/template/menu/parsing-page-menu.php',
             ),
+            array(
+                'page_title' => 'Autopilot',
+                'parent_slug' => NEWS_PARSER_PLUGIN_SLUG . '-main-menu',
+                'menu_title' => __('Autopilot', 'news-parser'),
+                'capability' => 'manage_options',
+                'menu_slug' => NEWS_PARSER_PLUGIN_SLUG . '-menu-autopilot',
+                'template' => NEWS_PARSER_PLUGIN_DIR . '/template/menu/autopilot-page-menu.php',
+            ),
              array(
                 'page_title' => 'About News Parser',
                 'parent_slug' => NEWS_PARSER_PLUGIN_SLUG . '-main-menu',
