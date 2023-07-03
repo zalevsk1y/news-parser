@@ -43,9 +43,7 @@ export const setHTML = (htmlData) => {
 
 export const setIsMutating=(state)=>{
   return {
-    type: IS_MUTATING,
-    payload:{
-      isMutating:state
-    }
+    type: SET_IS_MUTATING,
+    payload:state
   }
 }

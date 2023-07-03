@@ -7,7 +7,8 @@ import { LoadingSpinner } from "@news-parser/ui/visual-constructor/LoadingSpinne
 import { useIsOpen } from '../hooks/visual-constructor/useIsOpen';
 import { useIsMutating } from '../hooks/';
 import { useClose } from "../hooks/";
-import { useResetSidebar } from "../../../entities/sidebar/hooks";
+import { useGetPostId } from '../hooks/';
+
 /**
 * 
 * A functional component for the Parsing Constructor modal window, which allows users to create a post or save a parsing template.
@@ -22,13 +23,13 @@ import { useResetSidebar } from "../../../entities/sidebar/hooks";
 */
 
 
-export const VisualConstructor = ({ children }) => {
+export const VisualConstructor = ({ onReady,children }) => {
     const [enableScrolling, disableScrolling] = useScrolling();
-    const resetSidebarPostData=useResetSidebar();
     const [frameIsReady, setFrameIsReady] = useState(false);
     const closeVisualConstructor=useClose();
     const [url, isOpen] = useIsOpen();
-    const isMutating = useIsMutating();
+    const [isMutating] = useIsMutating();
+    const _id=useGetPostId();
     const isVisualConstructorReady = useMemo(() => frameIsReady  && !isMutating, [frameIsReady, isMutating]);
     useLayoutEffect(() => {
         if (isOpen) {
@@ -39,7 +40,9 @@ export const VisualConstructor = ({ children }) => {
     }, [isOpen]);
     useLayoutEffect(()=>setFrameIsReady(false),[url])
     const onFrameReady = useCallback(() => setFrameIsReady(true))
-
+    if (frameIsReady&&Array.isArray(onReady)){
+        onReady.forEach(func=>func({url,_id}))
+    }
 
     return (
         <div className="media-modal-wrapper" style={{ display: isOpen ? 'block' : 'none' }}>

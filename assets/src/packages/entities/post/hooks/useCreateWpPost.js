@@ -31,15 +31,15 @@ export const useCreateWpPost = () => {
         console.error(msg.text);
         return { msg, posts: null };
     };
-    const createWpPostCallback = () => {
+    const createWpPostCallback = (postId,successCallback,errorCallback) => {
         const state = store.getState();
         const { parsedData, options: extraOptions, dialogData, sidebar } = { ...state.parse.dialog, sidebar: state.parse.sidebar, ...state.parse.sidebarTemplate }
         const postOptions = formatPostOptions(sidebar);
         const preparedParsedData = formatCreatePostDraftRequest(parsedData, { generalOptions: extraOptions, postOptions }, dialogData.url);
         const options = { entity: WP_POST, event: CREATE, data: preparedParsedData };
-        _id = dialogData._id;
-        return requestApi(options, success, error).then(wpPostData => {
-            return createWpMedia(parsedData.image, wpPostData.title.raw, wpPostData.id);
+        _id = postId??dialogData._id;
+        return requestApi(options, successCallback??success, errorCallback??error).then(wpPostData => {
+            return createWpMedia(parsedData.image, wpPostData.title.raw, wpPostData.id).then(()=>wpPostData)
         })
     }
     return createWpPostCallback

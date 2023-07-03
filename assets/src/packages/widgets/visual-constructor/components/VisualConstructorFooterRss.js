@@ -5,7 +5,7 @@ import { useCreateTemplate } from '../hooks';
 import { useShowMessage } from '@news-parser/entities/message/hooks'
 import { useClose } from '../hooks/visual-constructor/useClose'
 
-export const VisualConstructorFooterMain = () => {
+export const VisualConstructorFooterRss = () => {
     const shouldParsingTemplateToBeSaved = useGetSaveParsingTemplate();
     const createWpPost = useCreateWpPost();
     const [isTemplateCreating, createTemplate] = useCreateTemplate();

@@ -14,9 +14,10 @@ module.exports=(env,args)=>{
 		isProd=!isDev;
 	return {
 		mode,
-		context:path.resolve(__dirname,'src/packages/pages/parser-rss/'),
+		context:path.resolve(__dirname,'src/packages/pages/'),
 		entry:{
-			parser_rss:'./index.js'
+			parser_rss:'./parser-rss/index.js',
+			parser_page:'./parser-page/index.js'
 		},
 		output:{
 					path:path.resolve(__dirname,'../public/js/'),

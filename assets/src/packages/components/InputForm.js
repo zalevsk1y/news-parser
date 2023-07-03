@@ -12,7 +12,10 @@ export const InputForm = ({ buttonName, submitAction, initValue, disabled }) => 
     const inputChange = (event) => {
         setInputValue(event.target.value);
     };
-    const submitClickHandler = useCallback(() => submitAction(inputValue), [inputValue]);
+    const submitClickHandler = useCallback(() => {
+        submitAction(inputValue)
+        setInputValue('');
+    }, [inputValue]);
     return (
         <div className="search container row">
             <div className="row center">

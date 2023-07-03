@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { PostCard, PostCardBody, PostCardHeader, PostCardImage, PostCardFooter } from '@news-parser/ui/post-card';
 import { Icons } from '@news-parser/ui';
+
 /**
  * Renders posts from post array.
  * 
@@ -9,7 +10,6 @@ import { Icons } from '@news-parser/ui';
 
 
 export const Posts = ({ openEditor, selectPost, posts }) => {
-    console.log('posts rerendered')
     const onClickEditPost = useCallback((post) => (event) => {
         event.preventDefault();
         window.open(post.draft.editLink, '_blank').focus();

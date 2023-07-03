@@ -639,16 +639,6 @@ input:out-of-range {
 .img-post-link {
   position: relative; }
 
-.img-post-link::after {
-  content: "";
-  position: absolute;
-  bottom: 2px;
-  left: 45px;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 15px 15px 15px;
-  border-color: transparent transparent #FFF transparent; }
 
 .title-post-link {
   display: block;
@@ -954,7 +944,9 @@ li {
 .update-nag.notice.notice-warning.inline {
   display: none;
 }
-
+.image-news-parser{
+  max-width: 100%;
+}
 @media screen and (max-height: 782px) {
   .main-parsing-container {
     height: 91vh; }

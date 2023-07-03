@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import Message from '@news-parser/modules/Message';
 import SidebarRight, { SidebarRightTemplate, SidebarRightPost } from '@news-parser/modules/SidebarRight';
-import { VisualConstructor, VisualConstructorFooterMain as VisualConstructorFooter } from '@news-parser/widgets/visual-constructor/';
+import { VisualConstructor, VisualConstructorFooterRss as VisualConstructorFooter } from '@news-parser/widgets/visual-constructor/';
 import { getUrlSearchParams } from '@news-parser/helpers/';
 import { useFetchPostsList } from '@news-parser/entities/post/hooks/'
 import { useFetchTemplate } from '@news-parser/entities/template/hooks/'
-import { ProgressIndicator } from '@news-parser/components/ProgressIndicator';
 import { InputFormSection } from './InputFormSection';
 import { PostsSection } from './PostsSection';
 

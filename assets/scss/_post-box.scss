@@ -30,17 +30,7 @@
     position: relative;
 }
 
-.img-post-link::after {
-    content: "";
-    position: absolute;
-    bottom: 2px;
-    left: 45px;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 15px 15px 15px;
-    border-color: transparent transparent #FFF transparent;
-}
+
 
 .title-post-link {
     display: block;

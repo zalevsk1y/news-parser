@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import {TOGGLE_POST_SELECT,INSERT_DRAFT_POST} from '../actions/post.actions';
+import {TOGGLE_POST_SELECT,INSERT_DRAFT_POST,UPDATE_POST} from '../actions/post.actions';
 import {SET_LIST} from '../actions/list.actions'
 
 export const selectPost=(state={},action)=>{
@@ -39,7 +39,9 @@ export const draftPost=(state={},action)=>{
 export const posts=(state=[],action)=>{
     switch(action.type){
         case SET_LIST:
-                return [...action.payload.data];
+            return [...action.payload.data];
+        case UPDATE_POST:
+            return state.map(post=>post._id==action.payload._id?action.payload:post);
         default:
             return state
     }
