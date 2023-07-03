@@ -17,7 +17,8 @@ module.exports=(env,args)=>{
 		context:path.resolve(__dirname,'src/packages/pages/'),
 		entry:{
 			parser_rss:'./parser-rss/index.js',
-			parser_page:'./parser-page/index.js'
+			parser_page:'./parser-page/index.js',
+			autopilot:'./autopilot/index.js'
 		},
 		output:{
 					path:path.resolve(__dirname,'../public/js/'),
