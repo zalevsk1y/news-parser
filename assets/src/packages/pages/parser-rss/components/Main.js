@@ -38,9 +38,9 @@ const Main = () => {
         </SidebarRight>
         <VisualConstructorFooter />
       </VisualConstructor>
-      <div className="parsing-title">
-        <h1>News-Parser</h1>
-      </div>
+      <div class="parsing-title">
+            <h1>News-Parser <b className='main-page-header'>RSS</b></h1>
+        </div>
       <Message />
       <InputFormSection buttonName="Parse RSS Feed" initValue={mainState.url} disabled={isPostsFetching} />
       <PostsSection isFetching={isPostsFetching||isTemplateFetching} />

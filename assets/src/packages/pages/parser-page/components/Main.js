@@ -30,9 +30,9 @@ const Main = () => {
         </SidebarRight>
         <VisualConstructorFooter />
       </VisualConstructor>
-      <div className="parsing-title">
-        <h1>News-Parser</h1>
-      </div>
+      <div class="parsing-title">
+            <h1>News-Parser <b className='main-page-header'>WEB PAGE</b></h1>
+        </div>
       <Message />
       <InputFormSection buttonName="Parse page" inputSubmit={openVisualConstructorHandler} />
       <PostsSection />

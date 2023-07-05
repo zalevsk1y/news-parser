@@ -93,7 +93,7 @@ class Main
             \wp_localize_script('main-parser-rss-bundle', 'newsParserApiEndpoints', $rest_api_endpoints);
             \wp_localize_script('main-parser-page-bundle', 'newsParserApiEndpoints', $rest_api_endpoints);
         }
-        if (strrpos($hook, $this->config->menu->subs[2]->menu_slug) !=+ false) {
+        if (strrpos($hook, $this->config->menu->subs[2]->menu_slug) !== false) {
             \wp_enqueue_script('settings-parser-bundle-deps', NEWS_PARSER_PLUGIN_URL . '/public/js/settings.bundle.js');
             \wp_enqueue_style(NEWS_PARSER_PLUGIN_SLUG . '-style', NEWS_PARSER_PLUGIN_URL . '/public/css/my-style.css');
         }
