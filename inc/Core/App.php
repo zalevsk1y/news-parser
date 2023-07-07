@@ -5,7 +5,8 @@ use NewsParserPlugin\Controller\AjaxController;
 use NewsParserPlugin\Controller\MiddlewareController;
 use NewsParserPlugin\Controller\EventController;
 use \ContainerBuilder\Interfaces\ContainerInterface as ContainerInterface;
-use NewsParserPlugin\Controller\TemplateApiController;
+use NewsParserPlugin\Controller\Api\TemplateApiController;
+use NewsParserPlugin\Controller\Api\CronApiController;
 use NewsParserPlugin\Utils\ResponseFormatter;
 
 class App{
@@ -21,6 +22,7 @@ class App{
         $this->DI_container=$DI_container;
         $this->ajaxController=AjaxController::create($this->event);
         $this->templateApiController=TemplateApiController::create($this->event);
+        $this->cronApiController=CronApiController::create($this->event);
         $this->middleware=MiddlewareController::getInstance($this->event);
         $this->mainMenu=Main::start($DI_container->get(\NewsParserPlugin\Menu\Admin\MenuPage::class),$DI_container->get(\NewsParserPlugin\Utils\MenuConfig::class));
     }

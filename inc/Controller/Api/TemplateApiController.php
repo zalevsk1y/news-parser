@@ -1,5 +1,5 @@
 <?php
-namespace NewsParserPlugin\Controller;
+namespace NewsParserPlugin\Controller\Api;
 
 use NewsParserPlugin\Interfaces\EventControllerInterface;
 use NewsParserPlugin\Utils\ResponseFormatterStatic;
@@ -9,7 +9,7 @@ use NewsParserPlugin\Traits\SanitizeDataTrait;
 use NewsParserPlugin\Traits\ValidateDataTrait;
 
 /**
- * Class saves received options.
+ * Class saves received template options.
  *
  * PHP version 5.6
  *

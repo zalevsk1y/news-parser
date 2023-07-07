@@ -49,6 +49,8 @@ $app->middleware->add('htmlRaw:parse',$modifiers);
 $app->event->on('media:create',array(Controller\MediaController::class,'create'));
 $app->event->on('template:create',array(Controller\TemplateController::class,'create'));
 $app->event->on('template:get',array(Controller\TemplateController::class,'get'));
+$app->event->on('cron:create',array(Controller\CronController::class,'create'));
+$app->event->on('cron:get',array(Controller\CronController::class,'get'));
 $app->event->on('list:get',array(Controller\ListController::class,'get'));
 $app->event->on('html:get',array(Controller\VisualConstructorController::class,'get'));
 $app->event->on('post:create',array(Controller\PostControllerExtendeOptions::class,'create'));
