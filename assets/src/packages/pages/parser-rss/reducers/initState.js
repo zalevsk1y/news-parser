@@ -1,11 +1,6 @@
 
 
 export const initialStateParse={
-            appState:{
-                data:{
-                    url:''
-                }
-            },
             message:false,
             dialog:false,
             template:false,

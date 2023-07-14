@@ -25,9 +25,7 @@ const Main = () => {
       fetchPostsList(url);
       fetchTemplate(url);
     }
-    return {
-      url
-    };
+    return {url};
   });
   return (
     <div className={"wrap"}>
@@ -36,14 +34,14 @@ const Main = () => {
           <SidebarRightTemplate />
           <SidebarRightPost />
         </SidebarRight>
-        <VisualConstructorFooter />
+        <VisualConstructorFooter rssUrl={mainState.url} />
       </VisualConstructor>
       <div class="parsing-title">
             <h1>News-Parser <b className='main-page-header'>RSS</b></h1>
         </div>
       <Message />
       <InputFormSection buttonName="Parse RSS Feed" initValue={mainState.url} disabled={isPostsFetching} />
-      <PostsSection isFetching={isPostsFetching||isTemplateFetching} />
+      <PostsSection isFetching={isPostsFetching||isTemplateFetching} rssUrl={mainState.url} />
     </div>
   );
 }

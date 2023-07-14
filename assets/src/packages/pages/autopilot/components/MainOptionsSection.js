@@ -1,7 +1,16 @@
-import React from "react";
-import { PostCartLarge } from "../ui/post-card/PostCardLarge";
+import React, { useMemo,useState,useCallback } from "react";
+import { PostCartLarge } from "@news-parser/ui/post-card/PostCardLarge";
+import { HiddenBlock } from "@news-parser/ui/HiddenBlock";
+import { useGetTemplates } from "@news-parser/entities/templates/hooks/useGetTemplates";
+import { useGetCrons } from "@news-parser/entities/crons/hooks/useGetCrons";
+import { SelectGroup } from "../../../components/SelectGroup";
 
 export const MainOptionsBlock=()=>{
+    const templates=useGetTemplates();
+    const crons=useGetCrons();
+    const [selectedTemplate,setSelectedTemplate]=useState(null);
+    const selectTemplateHandler=useCallback((selectedTemplate)=>setSelectedTemplate(selectedTemplate),[setSelectedTemplate])
+    const optionsTemplates=useMemo(()=>templates.map(templateUrl=><option key={templateUrl} value={templateUrl}>{templateUrl}</option>),[templates])
     return (
         <PostCartLarge>
             <div>
@@ -9,15 +18,12 @@ export const MainOptionsBlock=()=>{
             </div>
             <div className="mt-3">
                 <div className="input-group">
-                    <select className="form-select" aria-label="Select schedule option">
-                        <option >Option 1</option>
-                        <option value="1">Option 2</option>
-                        <option value="2">Option 3</option>
-                    </select>
-                    <button className="btn btn-primary" type="button">Select</button>
+                   <SelectGroup className='form-select' placeholder='Select template url' ariaLabel='Select schedule option' onSelect={selectTemplateHandler}>
+                    {optionsTemplates}
+                    </SelectGroup> 
                 </div>
             </div>
-
+            <HiddenBlock hide={selectedTemplate===null}>
             <div className="options-block d-flex flex-row mt-4">
                 <div className="col-md-2">
                     <span>Current status:</span>
@@ -67,6 +73,7 @@ export const MainOptionsBlock=()=>{
             <div className="buttons-block mt-4">
                 <button className="btn btn-danger ps-4 pe-4">Stop</button>
             </div>
+            </HiddenBlock>
         </PostCartLarge>
     )
 }

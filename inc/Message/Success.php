@@ -25,6 +25,11 @@ class Success
                 return \__('You have saved parsing template for this RSS thread.', 'news-parser');
             case 'FEATURED_IMAGE_SAVED':
                 return \__('Featured image was saved and attach to the post.', 'news-parser');
+            case 'CRON_EXIST':
+                return \__('Cron job options already exist.', 'news-parser');
+                case 'CRON_CREATED':
+                    return \__('Cron job options successfully created.', 'news-parser');
+            
         }
     }
 }

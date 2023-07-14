@@ -11,6 +11,7 @@ return array(
     Parser\HTMLPatternParser::class=>[Utils\AdapterGutenberg::class],
     Menu\Admin\MenuPage::class=>[Utils\MenuConfig::class],
     Controller\TemplateController::class=>[Utils\ResponseFormatter::class],
+    Controller\CronController::class=>[Utils\ResponseFormatter::class],
     Controller\PostController::class=>[Parser\HTMLPatternParser::class,Utils\ResponseFormatter::class],
     Controller\PostControllerExtendeOptions::class=>[Parser\HTMLPatternParser::class,Utils\ResponseFormatter::class],
     Controller\ListController::class=>[Parser\XMLParser::class,Utils\ResponseFormatter::class],

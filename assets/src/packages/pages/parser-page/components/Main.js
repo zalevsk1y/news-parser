@@ -1,6 +1,6 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import Message from '@news-parser/modules/Message';
-import SidebarRight, { SidebarRightTemplate, SidebarRightPost } from '@news-parser/modules/SidebarRight';
+import SidebarRight, { SidebarRightTemplateSingle, SidebarRightPost } from '@news-parser/modules/SidebarRight';
 import { VisualConstructor, VisualConstructorFooterPage as VisualConstructorFooter } from '@news-parser/widgets/visual-constructor/';
 import { useOpenVisualConstructor } from '@news-parser/widgets/visual-constructor/hooks';
 import { InputFormSection } from './InputFormSection';
@@ -25,7 +25,7 @@ const Main = () => {
     <div className={"wrap"}>
       <VisualConstructor >
         <SidebarRight tabs={['Templat', 'Post']}>
-          <SidebarRightTemplate />
+          <SidebarRightTemplateSingle />
           <SidebarRightPost />
         </SidebarRight>
         <VisualConstructorFooter />

@@ -11,7 +11,6 @@ export const useCreateLocalPost = () => {
         postData.pubDate = (new Date()).toUTCString();
         posts.push({...postData});
         dispatch(setList(posts));
-        dispatch(togglePostSelect(postData._id));
         return postData._id;
     }
 }

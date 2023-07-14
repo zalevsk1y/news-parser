@@ -16,7 +16,7 @@ import { getPostEditLink } from "@news-parser/helpers";
 export const useParsePost = () => {
     const dispatch = useDispatch();
     const options = { entity: PAGE, event: PARSE, data: null };
-    const parsePost = (url, _id) => {
+    const parsePost = (url, _id, templateUrl) => {
         const success = (entity, event, postData) => {
             const { post_id } = postData.data;
             dispatch(togglePostSelect(_id));
@@ -28,7 +28,7 @@ export const useParsePost = () => {
             console.error(msg.text);
             return { msg, posts: null };
         };
-        options.data = { url, _id };
+        options.data = { url, _id,templateUrl };
         return requestApi(options, success, error)
     }
     return parsePost;

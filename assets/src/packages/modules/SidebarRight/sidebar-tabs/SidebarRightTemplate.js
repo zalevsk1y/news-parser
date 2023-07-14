@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { InfoBox } from "@news-parser/ui/sidebar/InfoBox";
 import { FeaturedMediaGroup } from "../sidebar-template-groups/FeaturedMediaGroup";
 import { PostTitleGroup } from "../sidebar-template-groups/PostTitleGroup";

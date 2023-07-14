@@ -17,6 +17,7 @@ use NewsParserPlugin\Message\Errors;
 
 class CronDataModel implements ModelInterface
 {
+    protected const CRONE_OPTIONS_TABLE = NEWS_PURSER_PLUGIN_CRON_OPTIONS_NAME;
     /**
      * Url of resource that will be source of the posts feed.
      *
@@ -65,24 +66,16 @@ class CronDataModel implements ModelInterface
     */
     protected $status='idle';
     /**
-     * Hash of resource url using as a key value.
-     *
-     * @var string
-     */
-    protected $hash;
-    /**
      * init function
      *
      * @param string $url Url of resource that will be source of the posts feed.
      */
-    public function __construct($hash,$url,$croneData)
+    public function __construct($crone_data)
     {
-        if (!$this->isOptionsValid($options)) {
+        if (!$this->isOptionsValid($crone_data)) {
             throw new MyException(Errors::text('OPTIONS_WRONG_FORMAT'), Errors::code('BAD_REQUEST'));
         }
-        $this->resourceUrl=$url;
-        $this->hash=$hash;
-        $this->assignOptions($cronData);
+        $this->assignOptions($cron_data);
     }
     /**
      * Save options using wp function update_option.
@@ -93,15 +86,25 @@ class CronDataModel implements ModelInterface
      */
     public function save()
     {
-       $cronData=$this->formatAttributes('array');
-        $result=update_option($this->hash, $cronData, '', 'no');
+       $current_cron_data=$this->formatAttributes('array');
+       $cron_data=$this->get();
+       $cron_data[$this->resourceUrl]=$current_cron_data;
+        $result=update_option($this->CRONE_OPTIONS_TABLE, $cron_data, '', 'no');
         if ($result) {
             return true;
         }
         return false;
     }
+    public function update($data){
+        if(!$this->isOptionsValid($data)){
+            throw new MyException(Errors::text('OPTIONS_WRONG_FORMAT'), Errors::code('BAD_REQUEST'));
+        }
+        $this->assignOptions($data);
+        return $this->save();
+    }
     protected function isOptionsValid(){
         if (!isset($options['options'])||
+        !isset($options['url'])||
         !isset($options['timestamp'])||
         !isset($options['croneCalls'])||
         !isset($options['parsedPosts'])||
@@ -111,13 +114,23 @@ class CronDataModel implements ModelInterface
         return true;
     }
     /**
+     * 
+     */
+    public function delete(){
+        $crone_options=$this->get();
+        if (isset($crone_options[$this->resourceUrl])) {
+            unset($crone_options[$this->resourceUrl]);
+        }
+        return update_option(self::CRONE_OPTIONS_TABLE, $crone_options);
+    }
+    /**
      * Delete function using wp delete_option.
      *
      * @return boolean
      */
-    public function delete()
+    public function deleteAll()
     {
-        return delete_option($this->hash);
+        return delete_option(self::CRONE_OPTIONS_TABLE);
     }
     /**
      * Get saved options using wp get_option()
@@ -126,7 +139,7 @@ class CronDataModel implements ModelInterface
      */
     protected function get()
     {
-        return get_option($this->hash);
+        return get_option(self::CRONE_OPTIONS_TABLE);
     }
     /**
      * Getter function for cron options.
@@ -189,6 +202,7 @@ class CronDataModel implements ModelInterface
      */
     protected function assignOptions($options)
     {
+        $this->resourceUrl=$options->url;
         $this->options=$options->options;
         $this->timestamp=$options->timestamp;
         $this->croneCalls=$options->croneCalls;
@@ -216,7 +230,7 @@ class CronDataModel implements ModelInterface
     protected function formatAttributes($format)
     {
         $data=array(
-            'url'=>$this->url,
+            'url'=>$this->resourceUrl,
             'options'=>$this->options,
             'timestamp'=>$this->timestamp,
             'croneCalls'=>$this->croneCalls,

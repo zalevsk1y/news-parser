@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import {TOGGLE_POST_SELECT,INSERT_DRAFT_POST,UPDATE_POST} from '../actions/post.actions';
+import {TOGGLE_POST_SELECT,INSERT_DRAFT_POST,UPDATE_POST, RESET_SELECTED_POST} from '../actions/post.actions';
 import {SET_LIST} from '../actions/list.actions'
 
 export const selectPost=(state={},action)=>{
@@ -16,6 +16,8 @@ export const selectPost=(state={},action)=>{
                 ...{[_id]:true}
             };
         }
+        case RESET_SELECTED_POST:
+            return {};
         default:
             return state;
     }

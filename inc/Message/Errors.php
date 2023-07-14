@@ -54,7 +54,9 @@ class Errors
             case 'NO_NEEDED_DEPENDENCY_IN_DEFENITION':
                     return \__('No needed dependency in defenition file.', NEWS_PARSER_PLUGIN_SLUG);        
             case 'WRONG_DEFENITION_FILE_FORMAT':
-                    return \__('Defenition file should be array.', NEWS_PARSER_PLUGIN_SLUG);            
+                    return \__('Defenition file should be array.', NEWS_PARSER_PLUGIN_SLUG); 
+            case 'NO_CRON':
+                return \__('Cron is not configured', NEWS_PARSER_PLUGIN_SLUG);          
                     
         }
     }

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { requestApi } from "@news-parser/helpers/api/requestApi";
 import { TEMPLATE, GET } from '@news-parser/config/constants';
 import { useDispatch } from "react-redux";
-import { decodeHTMLEntities } from "@news-parser/helpers"
 import { setTemplate } from "../actions/template.actions";
 
 export const useFetchTemplate = () => {

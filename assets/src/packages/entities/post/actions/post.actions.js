@@ -1,5 +1,5 @@
 import {PARSER_RSS} from  '@news-parser/config/constants';
-import {POSTS,SELECTED,DRAFT,INSERT,SELECT,UPDATE} from '../constants';
+import {POSTS,SELECTED,DRAFT,INSERT,SELECT,UPDATE,RESET} from '../constants';
 
 //[news-parser.posts.selected:toggle]
 export const TOGGLE_POST_SELECT=`[${PARSER_RSS}.${POSTS}.${SELECTED}:${SELECT}]`;
@@ -7,6 +7,7 @@ export const TOGGLE_POST_SELECT=`[${PARSER_RSS}.${POSTS}.${SELECTED}:${SELECT}]`
 export const INSERT_DRAFT_POST=`[${PARSER_RSS}.${POSTS}.${DRAFT}:${INSERT}]`;
 //[news-parser.posts:create]
 export const UPDATE_POST=`[${PARSER_RSS}.${POSTS}:${UPDATE}]`;
+export const RESET_SELECTED_POST=`[${PARSER_RSS}.${POSTS}.${SELECTED}:${RESET}]`;
 
 export const togglePostSelect=(_id)=>{
     return {
@@ -32,4 +33,8 @@ export const updatePost=(postData)=>{
     }
 }
 
-
+export const resetSelectedPost=()=>{
+    return {
+        type:RESET_SELECTED_POST
+    }
+}

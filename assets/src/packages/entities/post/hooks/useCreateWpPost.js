@@ -22,7 +22,6 @@ export const useCreateWpPost = () => {
     const [createWpMedia] = useDownloadMedia();
     const success = (entity, event, postData) => {
         const { id } = postData;
-        dispatch(togglePostSelect(_id));
         dispatch(insertDraftPost(_id, { post_id: id, editLink: getPostEditLink(id) }));
         return postData;
     };

@@ -1,12 +1,11 @@
 import { combineReducers } from 'redux';
-import { items } from '@news-parser/entities/post/reducers';
+import { templates } from '@news-parser/entities/templates/reducers';
+import { crons } from '@news-parser/entities/crons/reducers';
 import { message } from '@news-parser/entities/message/reducers';
-import { sidebar } from '@news-parser/entities/sidebar/reducers';
-import { template } from '@news-parser/entities/template/reducers';
-import  sidebarTemplate from '@news-parser/entities/sidebarTemplate/reducers'
-import dialog from '@news-parser/widgets/visual-constructor/reducers'
 
 
 
-const parserReducer = combineReducers({ items, dialog, message, sidebar, sidebarTemplate, template });
-export default combineReducers({ parse: parserReducer });
+
+
+const autopilotReducer = combineReducers({ templates,crons,message });
+export default combineReducers({ parse: autopilotReducer });

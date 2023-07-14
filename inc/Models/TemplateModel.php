@@ -17,6 +17,7 @@ use NewsParserPlugin\Message\Errors;
 
 class TemplateModel implements ModelInterface
 {
+    protected const TEMPLATE_TABLE_NAME = NEWS_PURSER_PLUGIN_TEMPLATE_OPTIONS_NAME;
     /**
      * Url of resource that will be source of the posts feed.
      *
@@ -56,13 +57,12 @@ class TemplateModel implements ModelInterface
      *
      * @param string $url Url of resource that will be source of the posts feed.
      */
-    public function __construct($url)
+    public function __construct($template_data)
     {
-        $this->resourceUrl=$url;
-        $this->hash=sha1($this->resourceUrl);
-        if ($options=$this->get()) {
-            $this->assignOptions($options);
-        };
+        if (!$this->isOptionsValid($template_data)) {
+            throw new MyException(Errors::text('OPTIONS_WRONG_FORMAT'), Errors::code('BAD_REQUEST'));
+        }
+        $this->assignOptions($template_data);
     }
     /**
      * Save options using wp function update_option.
@@ -71,38 +71,38 @@ class TemplateModel implements ModelInterface
      * @param array $options
      * @return boolean
      */
-    public function save($options)
+    public function save()
     {
-        if (!isset($options['extraOptions'])||!isset($options['template'])) {
-            throw new MyException(Errors::text('OPTIONS_WRONG_FORMAT'), Errors::code('BAD_REQUEST'));
+        $templates=$this->getAll();
+        $template_data=$this->getAttributes('array');
+        if(!is_array($templates)) $templates=[];
+        $templates[$this->resourceUrl]=$template_data;
+        return update_option(self::TEMPLATE_TABLE_NAME, $templates, '', 'no');
+    }
+    public function update($template_data){
+        if($this->isOptionsValid($template_data)){
+            $this->assignOptions($template_data);
+            return true;
         }
-        $data=array(
-            'extraOptions'=>$options['extraOptions'],
-            'template'=>$options['template']
-        );
-        $result=update_option($this->hash, $data, '', 'no');
-        if ($result) {
-            $this->assignOptions($data);
-        }
-        return $result;
+        return false;
     }
     /**
      * Delete function using wp delete_option.
      *
      * @return boolean
      */
-    public function delete()
+    public function deleteAll()
     {
-        return delete_option($this->hash);
+        return delete_option(self::TEMPLATE_TABLE_NAME);
     }
     /**
      * Get saved options using wp get_option()
      *
      * @return false|array
      */
-    protected function get()
+    protected function getAll()
     {
-        return get_option($this->hash);
+        return get_option(self::TEMPLATE_TABLE_NAME);
     }
     /**
      * Getter function for parseTemplate options.
@@ -122,6 +122,14 @@ class TemplateModel implements ModelInterface
     {
         return isset($this->extraOptions)?$this->extraOptions:false;
     }
+    protected function isOptionsValid($options)
+    {
+        if(!isset($options['extraOptions'])||
+        !isset($options['template'])){
+            return false; 
+        }
+        return true;
+    }
     /**
      * Assign options to object properties.
      *
@@ -130,21 +138,9 @@ class TemplateModel implements ModelInterface
      */
     protected function assignOptions($options)
     {
+        $this->resourceUrl=$options['url'];
         $this->parseTemplate=$options['template'];
         $this->extraOptions=$options['extraOptions'];
-    }
-    /**
-     * Get all options in needed format. If no options found return null.
-     *
-     * 
-     * @param string $format accept array|object|json.
-     * @return array|object|string|null
-     */
-    public function queryAttributes($format){
-        if (!isset($this->extraOptions)||!isset($this->parseTemplate)) {
-            return null;
-        }
-        return $this->formatAttributes($format);
     }
     /**
      * Get all options in needed format. If no options found return Exception.
@@ -155,9 +151,6 @@ class TemplateModel implements ModelInterface
      */
     public function getAttributes($format)
     {
-        if (!isset($this->extraOptions)||!isset($this->parseTemplate)) {
-            throw new MyException(Errors::text('NO_TEMPLATE'), Errors::code('BAD_REQUEST'));
-        }
        return $this->formatAttributes($format);
     }
     /**
@@ -169,6 +162,7 @@ class TemplateModel implements ModelInterface
     protected function formatAttributes($format)
     {
         $data=array(
+            'url'=>$this->resourceUrl,
             'extraOptions'=>$this->extraOptions,
             'template'=>$this->parseTemplate
         );

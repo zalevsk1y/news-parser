@@ -8,7 +8,7 @@ import { useOpenVisualConstructor } from '@news-parser/widgets/visual-constructo
 import { useParsePosts } from '@news-parser/entities/post/hooks';
 import { ProgressIndicator } from '@news-parser/components/ProgressIndicator';
 
-export const PostsSection = ({ isFetching }) => {
+export const PostsSection = ({ isFetching,rssUrl }) => {
     const [progressTotal, setProgressTotal] = useState(0);
     const showMessage = useShowMessage();
     const [parsedPostsCounter, isParsing, parsePosts] = useParsePosts();
@@ -29,7 +29,7 @@ export const PostsSection = ({ isFetching }) => {
     }, [posts]);
     const postsParseMessage = <>You have selected <strong>{selectedPostsCount}</strong> posts.</>;
     const parseSelectedHandler = useCallback(() => {
-        parsePosts(selectedPosts, 'race');
+        parsePosts(selectedPosts, 'race',rssUrl);
         setProgressTotal(selectedPosts.length);
     }, [selectedPosts]);
     return (

@@ -35,7 +35,8 @@ export const requestApi = (options, success, error) => {
             };
         })
         .then(data => {
-            if (data.code && data.code !== 200) {
+            console.log(data);
+            if ( data.code&&data.code !== 200  ) {
                 return error(entity, event, data);
             } else {
                 return success(entity, event, data);

@@ -27,6 +27,8 @@ define("NEWS_PARSER_PLUGIN_AJAX_MEDIA_API", 'news_parser_media_api');
 define("NEWS_PARSER_PLUGIN_AJAX_TEMPLATE_API", 'news_parser_template_api');
 define ("NEWS_PARSER_PLUGIN_VISUAL_CONSTRUCTOR","visual-constructor");
 define ("NEWS_PARSER_PLUGIN_PARSER_RSS","parser-rss");
+define ("NEWS_PURSER_PLUGIN_TEMPLATE_OPTIONS_NAME","news_parser_plugin_template_options");
+define ("NEWS_PURSER_PLUGIN_CRON_OPTIONS_NAME","news_parser_plugin_cron_options");
 
 
 require 'autoload.php';

@@ -6,3 +6,4 @@ export { useParsePost } from './useParsePost'
 export { useParsePosts } from './useParsePosts'
 export { useCreateLocalPost } from './useCreateLocalPost';
 export { useGetPostById } from './useGetPostById';
+export { useResetSelectedPosts } from './useResetSelectedPosts';

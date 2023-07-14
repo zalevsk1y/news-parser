@@ -39,7 +39,7 @@ class TemplateApiController extends \WP_REST_Controller
     /**
      * Instance of this class
      *
-     * @var AjaxController
+     * @var TemplateApiController
      */
     protected static $instance;
 
@@ -120,12 +120,7 @@ class TemplateApiController extends \WP_REST_Controller
             array(
                 'methods' => \WP_REST_Server::READABLE,
                 'callback' => array($this, 'getTemplates'),
-                'permission_callback' => array($this, 'checkPermission'),
-                'args' => array(
-                    'url'=> array(
-                        'validate_callback'=> array($this, 'validateUrl')
-                    )
-                )
+                'permission_callback' => array($this, 'checkPermission')
             ),
             array(
                 'methods' => \WP_REST_Server::CREATABLE,
@@ -178,8 +173,13 @@ class TemplateApiController extends \WP_REST_Controller
 public function getTemplates($request){
 
     try{
-        $template_name=$request->get_query_params();
-        $response=$this->event->trigger('template:get', array($template_name['url']));
+        $template_params=$request->get_query_params();
+        if(isset($template_params['url'])&&$this->validateUrl($template_params['url'])){
+            $url=$template_params['url'];
+        } else {
+            $url=null;
+        }
+        $response=$this->event->trigger('template:get', array($url));
     }catch(Exception $e){
         $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
     }
@@ -198,7 +198,7 @@ public function getTemplates($request){
     {
         try{
             $template=$request->get_params();
-            $response=$this->event->trigger('template:create', array($template['template']['url'],$template['template']));
+            $response=$this->event->trigger('template:create', array($template['template']));
         }catch(Exception $e){
             $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
         }

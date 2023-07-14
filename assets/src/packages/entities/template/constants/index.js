@@ -1,7 +1,7 @@
-export const TEMPLATE='TEMPLATE',
-        GET='GET',
-        POST='POST',
-        PATCH='PATCH',
-        SET='SET',
-        DELETE='DELETE',
-        API='API';
+export const TEMPLATE='template',
+        GET='get',
+        POST='post',
+        PATCH='patch',
+        SET='set',
+        DELETE='delete',
+        API='api';

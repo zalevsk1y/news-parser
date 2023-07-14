@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import {createStore  } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 
-import parse from './reducers';
+import autopilot from './reducers';
 
 import ErrorBoundary from "@news-parser/error-handler"
 
@@ -15,7 +15,7 @@ import ErrorBoundary from "@news-parser/error-handler"
 
 //SetUp for Redux DevExtension.
 
-const store=createStore(parse,composeWithDevTools());
+const store=createStore(autopilot,composeWithDevTools());
 
 window.addEventListener('DOMContentLoaded',()=>{
 

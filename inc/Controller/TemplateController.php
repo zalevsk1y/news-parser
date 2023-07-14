@@ -20,8 +20,8 @@ use NewsParserPlugin\Utils\ResponseFormatter;
  */
 
 class TemplateController extends BaseController
-{
-
+{   
+    protected const TEMPLATE_TABLE_NAME = NEWS_PURSER_PLUGIN_TEMPLATE_OPTIONS_NAME;
     /**
      * Init function.
      *
@@ -43,21 +43,39 @@ class TemplateController extends BaseController
      * @param array $options
      * @return ResponseFormatter
      */
-    public function create($url, $options)
+    public function create($options)
     {
-
-        $template_model = $this->modelsFactory($url);
-        $template_model->save($options);
+        $template_model = $this->modelsFactory($options);
+        $template_model->save();
         $response = $this->formatResponse->message('success', Success::text('TEMPLATE_SAVED'));
-
         return $response;
     }
     public function get($url)
+    {   
+        if($url==null){
+            return $this->getList();
+        }
+        $templates=$this->getAll();
+        if(isset($templates[$url])){
+            $template_model = $this->modelsFactory($templates[$url]);
+            return $this->formatResponse->message('success', Success::text('TEMPLATE_EXIST'))->options($template_model->getAttributes('array'));
+        }
+        return $this->formatResponse->message('info', Errors::text('NO_TEMPLATE'))->options(null);
+    }
+    protected function getAll()
     {
-        $TemplateModel = $this->modelsFactory($url);
-        $template_options = $TemplateModel->queryAttributes('array');
-        if ($template_options==null) return $this->formatResponse->message('info', Errors::text('NO_TEMPLATE'));
-        return $this->formatResponse->message('success', Success::text('TEMPLATE_EXIST'))->options($template_options);
+        if(!$templates=get_option(self::TEMPLATE_TABLE_NAME)){
+            return [];
+        }
+        return $templates;
+    }
+    protected function getList()
+    {
+        $templates = $this->getAll();
+        if (is_array($templates)) {
+            return $this->formatResponse->message('success', '')->options(array_keys($templates));  
+        }
+        return $this->formatResponse->message('info', Errors::text('NO_TEMPLATE'))->options(null);
     }
     /**
      * Get instance of TemplateModel class.
@@ -69,15 +87,9 @@ class TemplateController extends BaseController
      * [fragment] - path fragment
      * @return TemplateModel
      */
-    protected function modelsFactory($url)
+    protected function modelsFactory($template_options)
     {
-        $parsed_url = parse_url($url);
-
-        if (!is_array($parsed_url)) {
-            throw new MyException(Errors::text('WRONG_OPTIONS_URL'), Errors::code('BAD_REQUEST'));
-        }
-        $template_model = new TemplateModel($parsed_url['host']);
-
+        $template_model = new TemplateModel($template_options);
         return $template_model;
     }
 }

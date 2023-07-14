@@ -39,7 +39,7 @@ class CronApiController extends \WP_REST_Controller
     /**
      * Instance of this class
      *
-     * @var AjaxController
+     * @var CronApiController
      */
     protected static $instance;
 
@@ -121,22 +121,11 @@ class CronApiController extends \WP_REST_Controller
                 'methods' => \WP_REST_Server::READABLE,
                 'callback' => array($this, 'getCronOptions'),
                 'permission_callback' => array($this, 'checkPermission'),
-                'args' => array(
-                    'url'=> array(
-                        'validate_callback'=> array($this, 'validateUrl')
-                    )
-                )
             ),
             array(
                 'methods' => \WP_REST_Server::CREATABLE,
                 'callback' => array($this, 'createCronOptions'),
                 'permission_callback' => array($this, 'checkPermission'),
-                'args' => array(
-                    'url' => array (
-                        'validate_callback'=>array($this,'validateTemplate'),
-                        'sanitize_callback'=>array($this,'sanitizeTemplate')
-                    )
-                )
             ),
             array(
                 'methods' => \WP_REST_Server::EDITABLE,
@@ -179,7 +168,7 @@ public function getCronOptions($request){
 
     try{
         $cron_params=$request->get_query_params();
-        $response=$this->event->trigger('cron:get', array($cron_params['url']));
+        $response=$this->event->trigger('cron:get', array(isset($cron_params['url'])?isset($cron_params['url']):null));
     }catch(Exception $e){
         $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
     }

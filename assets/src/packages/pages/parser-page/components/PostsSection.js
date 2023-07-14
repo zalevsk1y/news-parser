@@ -9,9 +9,7 @@ import { useParsePosts } from '@news-parser/entities/post/hooks';
 import { ProgressIndicator } from '@news-parser/components/ProgressIndicator';
 
 export const PostsSection = ({ isFetching }) => {
-    const [progressTotal, setProgressTotal] = useState(0);
     const showMessage = useShowMessage();
-    const [parsedPostsCounter, isParsing, parsePosts] = useParsePosts();
     const openVisualConstructor = useOpenVisualConstructor();
     const posts = useGetPosts();
     const template = useGetTemplate();
@@ -23,24 +21,8 @@ export const PostsSection = ({ isFetching }) => {
             toggleSelectPost(_id)
         }
     }, [template]);
-    const [selectedPosts, selectedPostsCount] = useMemo(() => {
-        const sp = posts.filter(post => post.select)
-        return [sp, sp.length]
-    }, [posts]);
-    const postsParseMessage = <>You have selected <strong>{selectedPostsCount}</strong> posts.</>;
-    const parseSelectedHandler = useCallback(() => {
-        parsePosts(selectedPosts, 'race');
-        setProgressTotal(selectedPosts.length);
-    }, [selectedPosts]);
     return (
         <>
-            <ProgressIndicator hidden={!isParsing} total={progressTotal} count={parsedPostsCounter}>
-                <div className='progress-message'>{`${parsedPostsCounter}/${progressTotal} posts were parsed.`}</div>
-            </ProgressIndicator>
-            <ActionAlert hidden={selectedPostsCount === 0 || isParsing} >
-                <span className='flex-grow-1 lh-2'>{postsParseMessage}</span>
-                <button className="btn btn-secondary" onClick={parseSelectedHandler}>Parse</button>
-            </ActionAlert>
             {!isFetching&&<Posts selectPost={toggleSelectPostHandler} posts={posts} openEditor={openVisualConstructor} />}
         </>
     )

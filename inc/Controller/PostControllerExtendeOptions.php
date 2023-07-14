@@ -8,6 +8,7 @@ use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Message\Errors;
 
 class PostControllerExtendeOptions extends PostController{
+    protected const TEMPLATE_TABLE_NAME = NEWS_PURSER_PLUGIN_TEMPLATE_OPTIONS_NAME;
     /**
      * Parsing post options
      *
@@ -26,11 +27,7 @@ class PostControllerExtendeOptions extends PostController{
     public function create($url, $_id,$data=false)
     {
         try {
-            $parsed_url=parse_url($url);
-            if (!is_array($parsed_url)) {
-                throw new MyException(Errors::text('WRONG_OPTIONS_URL'), Errors::code('BAD_REQUEST'));
-            }
-            $parsing_options=$this->templateModelsFactory($parsed_url);
+            $parsing_options=$this->templateModelsFactory($data);
             $parsed_data =$this->parser->get($url, $parsing_options->getAttributes('array'));
            
             $parsed_data['authorId'] = \get_current_user_id();
@@ -69,8 +66,9 @@ class PostControllerExtendeOptions extends PostController{
     * [fragment] - path fragment
     * @return TemplateModelWithPostOptions
     */
-    protected function templateModelsFactory($url)
+    protected function templateModelsFactory($template_url)
     {
-        return new TemplateModelWithPostOptions($url['host']);
+        $template_data=get_option(self::TEMPLATE_TABLE_NAME);  
+        return new TemplateModelWithPostOptions($template_data[$template_url]);
     }
 }

@@ -291,10 +291,20 @@ class AjaxController extends Ajax
                 'sanitize_callback'=>function ($_id) {
                     return preg_replace('/[^0-9]/i', '', $_id);
                 }
-            )
+            ),
+            'templateUrl'=>array(
+                'description'=>'Url that identifies template',
+                'type'=>'string',
+                'validate_callback'=>function ($url) {
+                    return wp_http_validate_url($url);
+                },
+                'sanitize_callback'=>function ($input_url) {
+                    return esc_url_raw($input_url);
+                }
+            ),
         ));
 
-        $response=$this->event->trigger('post:create', array($request['url'],$request['_id']));
+        $response=$this->event->trigger('post:create', array($request['url'],$request['_id'],$request['templateUrl']));
         $this->sendResponse($response);
     }
 }

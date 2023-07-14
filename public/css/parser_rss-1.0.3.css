@@ -953,21 +953,14 @@ li {
   text-align: center;
 }
 .autopilot-tabs-container{
-  border-bottom: 1px solid transparent;
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
-  border-radius: 0rem 0.25rem 0.25rem 0.25rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
   border-color: #dee2e6 #dee2e6 #fff
 }
-.nav-link:focus,.nav-link:hover,.nav-link:active{
-  box-shadow: none !important;
-  border-color: #b5b5b5 #b5b5b5 #fff;
+.hidden-height{
+  height: 0px;
+  overflow: hidden;
 }
-.autopilot-tabs-container select,
-.autopilot-tabs-container input{
-  border-color: #ced4da !important;
-}
-
 @media screen and (max-height: 782px) {
   .main-parsing-container {
     height: 91vh; }
