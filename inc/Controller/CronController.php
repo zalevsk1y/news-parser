@@ -4,7 +4,7 @@ namespace NewsParserPlugin\Controller;
 use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Message\Success;
-use function NewsParserPlugin\Models\Factory\getCronModel;
+use NewsParserPlugin\Models\CronDataModel;
 use NewsParserPlugin\Utils\ResponseFormatter;
 
 /**
@@ -38,10 +38,12 @@ class CronController extends BaseController
      * 
      * @return array
      */
-    public function create($cron_data)
+    public function update($cron_data)
     {
-        $this->modelsFactory($cron_data)->save();
-        return $this->formatResponse->message('success',Success::text('CRON_CREATED'));
+        $cron_model=$this->modelsFactory($cron_data);
+        if($cron_model->getStatus()=='active') $cron_model->setTimestamp(time());
+        $cron_model->save();
+        return $this->formatResponse->message('success',Success::text('CRON_CREATED'))->options($cron_model->getAttributes('array'));
     }
     public function getAll()
     {
@@ -62,8 +64,27 @@ class CronController extends BaseController
         if(isset($cron_data[$url])){
             $formated_cron_data=$this->modelsFactory($cron_data[$url])->getAttributes('array');
             return $this->formatResponse->message('success',Success::text('CRON_EXIST'))->options($formated_cron_data);
-        }   
-        return $this->formatResponse->message('info',Errors::text('NO_CRON'))->options(null);
+        }
+        $default_cron_options=$this->getDefaultCronOptions();
+        $default_cron_options['url']=$url;   
+        return $this->formatResponse->message('info',Errors::text('NO_CRON'))->options($default_cron_options);
+    }
+    /**
+     * Delete cron options.
+     * 
+     * @param string $url
+     * @return null
+     * 
+     */
+    public function delete($url){
+        $cron_data=$this->getAll();
+        if(isset($cron_data[$url])){
+            unset($cron_data[$url]);
+        }
+        update_option(self::CRON_TABLE_NAME,$cron_data);
+        $default_cron_options=$this->getDefaultCronOptions();
+        $default_cron_options['url']=$url;
+        return $this->formatResponse->message('success',Success::text('CRON_DELETED'))->options($default_cron_options);
     }
     /**
      * Get instance of CronModel class.
@@ -76,6 +97,10 @@ class CronController extends BaseController
      */
     protected function modelsFactory($cron_data)
     {
-        return getCronModel($cron_data);
+        return new CronDataModel($cron_data);
+    }
+    protected function getDefaultCronOptions()
+    {
+        return CronDataModel::DEFAULT_CRONE_OPTIONS;
     }
 }

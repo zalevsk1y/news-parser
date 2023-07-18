@@ -121,16 +121,80 @@ class CronApiController extends \WP_REST_Controller
                 'methods' => \WP_REST_Server::READABLE,
                 'callback' => array($this, 'getCronOptions'),
                 'permission_callback' => array($this, 'checkPermission'),
+                'args'=> array(
+                    'url'=>array(
+                        'description' => 'Cron options id',
+                        'required' => false,
+                        'validate_callback'=>array($this,'validateUrl')
+                    )
+                )
             ),
             array(
-                'methods' => \WP_REST_Server::CREATABLE,
-                'callback' => array($this, 'createCronOptions'),
+                'methods' => \WP_REST_Server::DELETABLE,
+                'callback' => array($this, 'deleteCronOptions'),
                 'permission_callback' => array($this, 'checkPermission'),
+                'args'=> array(
+                    'url'=>array(
+                        'description' => 'Cron options id',
+                        'required' => true,
+                        'validate_callback'=>array($this,'validateUrl')
+                    )
+                )
             ),
             array(
                 'methods' => \WP_REST_Server::EDITABLE,
                 'callback' => array($this, 'updateCronOptions'),
                 'permission_callback' => array($this, 'checkPermission'),
+                'args'=> array(
+                    'url'=>array(
+                        'validate_callback'=>array($this,'validateUrl')
+                    ),
+                    'timestamp'=>array(
+                        'sanitize_callback'=>array($this,'sanitizeInteger')
+                    ),
+                    'status'=>array(
+                        'validate_callback'=>function($status){
+                            if($status!='idle'&&$status!='active'){
+                                return new \WP_Error(400, 'Wrong cron status format should be "active" or "idle"');
+                            }
+                            return true;
+                        }
+                    ),
+                    'maxCronCalls'=>array(
+                        'validate_callback'=>function ($cron_calls){
+                            if($cron_calls<1||$cron_calls>100){
+                                return new \WP_Error(400, 'Wrong maximum cron calls format should be 0-100');
+                            }
+                            return true;
+                        },
+                        'sanitize_callback'=>function ($max_cron_calls){
+                            return intval($max_cron_calls);
+                        }
+                    ),
+                    'maxPostsParsed'=>array(
+                        'validate_callback'=>function ($posts_parsed){
+                            if($posts_parsed<1||$posts_parsed>100){
+                                return new \WP_Error(400, 'Wrong maximum posts parsed format should be 0-100');
+                            }
+                            return true;
+                        },
+                        'sanitize_callback'=>function ($max_cron_calls){
+                            return intval($max_cron_calls);
+                        }
+                    ),
+                    'interval'=>array(
+                        'validate_callback'=>function ($interval){
+                            if($interval!='hourly'&&$interval!='twicedaily'&&$interval!='daily'&&$interval!='weekly'){
+                                return new \WP_Error(400, 'Cron option.interval has wrong format should be hourly,twicedaily,daily,weekly');
+                            }
+                            return true;
+                        },
+                        'sanitize_callback'=>function ($interval){
+                            return preg_replace('/[^h,o,u,r,l,y,t,w,i,c,e,d,a,k]/i','',$interval);
+                        }
+                    )
+                    
+                )
             ),
         ));
     }
@@ -168,7 +232,7 @@ public function getCronOptions($request){
 
     try{
         $cron_params=$request->get_query_params();
-        $response=$this->event->trigger('cron:get', array(isset($cron_params['url'])?isset($cron_params['url']):null));
+        $response=$this->event->trigger('cron:get', array(isset($cron_params['url'])?$cron_params['url']:null));
     }catch(Exception $e){
         $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
     }
@@ -183,11 +247,11 @@ public function getCronOptions($request){
  * @param WP_REST_Request $request Full data about the request.
  * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
  */
-    public function createCronOptions($request)
+    public function updateCronOptions($request)
     {
         try{
             $cron_params=$request->get_params();
-            $response=$this->event->trigger('cron:create', array($cron_params['options']['url'],$cron_params['options']));
+            $response=$this->event->trigger('cron:update', array($cron_params));
         }catch(Exception $e){
             $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
         }
@@ -197,13 +261,20 @@ public function getCronOptions($request){
     }
 
 /**
- * Update an existing cron options.
+ * Delete an existing cron options.
  *
  * @param WP_REST_Request $request Full data about the request.
  * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
  */
-    public function updateTemplate($request)
+    public function deleteCronOptions($request)
     {
-        // TODO: Implement method to update template
+        try{
+            $cron_params=$request->get_query_params();
+            $response=$this->event->trigger('cron:delete', array($cron_params['url']));
+        }catch(Exception $e){
+            $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
+        }
+        $wp_response = new \WP_REST_Response( $response->get('array'),$response->getCode() );
+        return $wp_response;
     }
 }

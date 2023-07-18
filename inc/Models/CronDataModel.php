@@ -18,61 +18,58 @@ use NewsParserPlugin\Message\Errors;
 class CronDataModel implements ModelInterface
 {
     protected const CRONE_OPTIONS_TABLE = NEWS_PURSER_PLUGIN_CRON_OPTIONS_NAME;
+    public const DEFAULT_CRONE_OPTIONS = [
+        'url'=>'',
+        'maxCronCalls'=>'',
+        'maxPostsParsed'=>'',
+        'interval'=>'hourly',
+        'timestamp'=>0,
+        'cronCalls'=>0,
+        'parsedPosts'=>0,
+        'status'=>'idle'
+    ];
+
     /**
      * Url of resource that will be source of the posts feed.
      *
      * @var string
      */
     protected $resourceUrl;
-    /**
-     * Cron options
-     * Structure:
-     * url: string, -  url for accessing the RSS feed, the same as for saved template
-     * options: {
-     *  maxCronCalls: number, -  maximum number of calls
-     *  maxPostsParsed: number, - maximum number of saved posts
-     *  interval: 'hourly' | 'twicedaily' | 'daily' | 'weekly' - interval at which the cron job will run
-     * }
-     * timestamp: number, -  time of the last run or the time of the last saved post indicated in the RSS feed
-     * croneCalls: number, - number of cron job calls
-     * parsedPosts: number, - number of saved posts
-     * status: 'active' | 'idle', - current state of the cron job
-     *
-     * @var array
-     */
-    protected $options;
+    protected $maxCronCalls;
+    protected $maxPostsParsed;
+    protected $interval;
     /**
     * Timestamp of last parsed post
     *
     * @var int
     */
-    protected $timestamp;
+    protected $timestam;
     /**
     * Crone calls counter
     *
     * @var int
     */
-    protected $croneCalls=0;
+    protected $cronCalls;
     /**
     * Parsed posts counter
     *
     * @var int
     */
-    protected $parsedPosts=0;
+    protected $parsedPosts;
     /**
     * Timestamp of last parsed post
     *
     * @var string 'active' | 'idle'
     */
-    protected $status='idle';
+    protected $status;
     /**
      * init function
      *
      * @param string $url Url of resource that will be source of the posts feed.
      */
-    public function __construct($crone_data)
+    public function __construct($cron_data)
     {
-        if (!$this->isOptionsValid($crone_data)) {
+        if (!$this->isOptionsValid($cron_data)) {
             throw new MyException(Errors::text('OPTIONS_WRONG_FORMAT'), Errors::code('BAD_REQUEST'));
         }
         $this->assignOptions($cron_data);
@@ -89,7 +86,7 @@ class CronDataModel implements ModelInterface
        $current_cron_data=$this->formatAttributes('array');
        $cron_data=$this->get();
        $cron_data[$this->resourceUrl]=$current_cron_data;
-        $result=update_option($this->CRONE_OPTIONS_TABLE, $cron_data, '', 'no');
+        $result=update_option(self::CRONE_OPTIONS_TABLE, $cron_data, '', 'no');
         if ($result) {
             return true;
         }
@@ -102,11 +99,13 @@ class CronDataModel implements ModelInterface
         $this->assignOptions($data);
         return $this->save();
     }
-    protected function isOptionsValid(){
-        if (!isset($options['options'])||
+    protected function isOptionsValid($options){
+        if (!isset($options['interval'])||
+        !isset($options['maxPostsParsed'])||
+        !isset($options['maxCronCalls'])||
         !isset($options['url'])||
         !isset($options['timestamp'])||
-        !isset($options['croneCalls'])||
+        !isset($options['cronCalls'])||
         !isset($options['parsedPosts'])||
         !isset($options['status'])) {
             return false;
@@ -142,14 +141,33 @@ class CronDataModel implements ModelInterface
         return get_option(self::CRONE_OPTIONS_TABLE);
     }
     /**
-     * Getter function for cron options.
+     * Getter function for maximum cron calls.
      *
-     * @return false|array
+     * @return false|int
      */
-    public function getOptions()
+    public function getMaxCronCalls()
     {
-        return isset($this->options)?$this->options:false;
+        return isset($this->maxCronCalls)?$this->maxCronCalls:false;
     }
+     /**
+     * Getter function for maximum posts parsed.
+     *
+     * @return false|int
+     */
+    public function getMaxPostsParsed()
+    {
+        return isset($this->maxPostsParsed)?$this->maxPostsParsed:false;
+    }
+     /**
+     * Getter function for parsind interval.
+     *
+     * @return false|string
+     */
+    public function getInterval()
+    {
+        return isset($this->interval)?$this->interval:false;
+    }
+    
     /**
      * Return timestamp of last parsed post.
      * 
@@ -164,9 +182,9 @@ class CronDataModel implements ModelInterface
      * 
      * @return false|int
      */
-    public function getCroneCalls()
+    public function getCronCalls()
     {
-        return isset($this->croneCalls)?$this->croneCalls:false;
+        return isset($this->cronCalls)?$this->cronCalls:false;
     }
     /**
      * Return number of parsed posts.
@@ -194,6 +212,9 @@ class CronDataModel implements ModelInterface
     public function getUrl(){
         return $this->resourceUrl;
     }
+    public function setTimestamp($timestamp){
+        $this->timestamp=$timestamp;
+    }
      /**
      * Assign options to object properties.
      *
@@ -202,12 +223,14 @@ class CronDataModel implements ModelInterface
      */
     protected function assignOptions($options)
     {
-        $this->resourceUrl=$options->url;
-        $this->options=$options->options;
-        $this->timestamp=$options->timestamp;
-        $this->croneCalls=$options->croneCalls;
-        $this->parsedPosts=$options->parsedPosts;
-        $this->status=$options->status; 
+        $this->resourceUrl=$options['url'];
+        $this->maxCronCalls=$options['maxCronCalls'];
+        $this->maxPostsParsed=$options['maxPostsParsed'];
+        $this->interval=$options['interval'];
+        $this->timestamp=$options['timestamp'];
+        $this->cronCalls=$options['cronCalls'];
+        $this->parsedPosts=$options['parsedPosts'];
+        $this->status=$options['status']; 
     }
     
     /**
@@ -231,9 +254,11 @@ class CronDataModel implements ModelInterface
     {
         $data=array(
             'url'=>$this->resourceUrl,
-            'options'=>$this->options,
+            'maxCronCalls'=>$this->maxCronCalls,
+            'maxPostsParsed'=>$this->maxPostsParsed,
+            'interval'=>$this->interval,
             'timestamp'=>$this->timestamp,
-            'croneCalls'=>$this->croneCalls,
+            'cronCalls'=>$this->cronCalls,
             'parsedPosts'=>$this->parsedPosts,
             'status'=>$this->status
         );

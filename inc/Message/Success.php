@@ -29,6 +29,8 @@ class Success
                 return \__('Cron job options already exist.', 'news-parser');
                 case 'CRON_CREATED':
                     return \__('Cron job options successfully created.', 'news-parser');
+                case 'CRON_DELETED':
+                    return \__('Cron job options successfully deleted.', 'news-parser');
             
         }
     }

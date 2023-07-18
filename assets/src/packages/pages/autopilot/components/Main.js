@@ -3,7 +3,6 @@ import Message from '@news-parser/modules/Message';
 import { RightSection } from './RightSection';
 import { MainOptionsBlock } from './MainOptionsSection';
 import { useFetchTemplates } from '../../../entities/templates/hooks/useFetchTemplates';
-import { useFetchCrons } from '../../../entities/crons/hooks/useFetchCrons';
 
 /**
  * Main application element.
@@ -14,10 +13,8 @@ import { useFetchCrons } from '../../../entities/crons/hooks/useFetchCrons';
 
 const Main = () => {
   const [isTemplatesFetching,fetchTemplates]=useFetchTemplates();
-  const [isCronsFetching,fetchCrons]=useFetchCrons();
   useEffect(()=>{
     fetchTemplates();
-    fetchCrons();
   },[])
   return (
     <div className="container">

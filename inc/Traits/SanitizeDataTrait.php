@@ -90,4 +90,16 @@ trait SanitizeDataTrait
         }
         return $clean_data;
     }
+    public function sanitizeInteger($value){
+        return intval($value);
+    }
+    public function sanitizeCronOptions($option){
+        $clean_data=array();
+        $clean_data['maxCronCalls']=intval($option['maxCronCalls']);
+        $clean_data['maxCronCalls']=$clean_data['maxCronCalls']>100?100:$clean_data['maxCronCalls'];
+        $clean_data['maxPostsParsed']=intval($option['maxPostsParsed']);
+        $clean_data['maxPostsParsed']=$clean_data['maxPostsParsed']>100?100:$clean_data['maxCronCalls'];
+        $clean_data['interval']=preg_replace('/[^h,o,u,r,l,y,t,w,i,c,e,d,a,k]/i','',$option['interval']);
+        return $clean_data;
+    }
 }

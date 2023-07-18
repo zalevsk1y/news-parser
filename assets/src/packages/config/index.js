@@ -1,8 +1,8 @@
 import { newsParserSettings as settings, newsParserApiEndpoints as endpoints } from 'globals';
-import { TEMPLATE,CRON } from './constants'
+import { TEMPLATE, CRON } from './constants'
 import { WP_POST, MEDIA, PAGE } from './constants';
 import { API_WP_TAGS, API_WP_CATEGORIES, PARSER_RSS_LIST, PARSE, RAW_HTML, PARSER_RSS_PAGE } from './constants';
-import { POST, GET, AJAX, REST, CREATE, LIST } from './constants';
+import { POST, GET, AJAX, REST, CREATE, LIST, UPDATE, DELETE } from './constants';
 const NEWS_PARSER_REST_PREFIX = endpoints.rootRestApi + 'news-parser-plugin/v1/';
 
 const config = {
@@ -58,8 +58,8 @@ const config = {
                 url: NEWS_PARSER_REST_PREFIX + 'templates'
             }
         },
-        [CRON]:{
-            [CREATE]:{
+        [CRON]: {
+            [UPDATE]: {
                 method: POST,
                 type: REST,
                 nonce: settings.wpRestApiNonce,
@@ -67,6 +67,12 @@ const config = {
             },
             [GET]: {
                 method: GET,
+                type: REST,
+                nonce: settings.wpRestApiNonce,
+                url: NEWS_PARSER_REST_PREFIX + 'cron'
+            },
+            [DELETE]: {
+                method: DELETE,
                 type: REST,
                 nonce: settings.wpRestApiNonce,
                 url: NEWS_PARSER_REST_PREFIX + 'cron'

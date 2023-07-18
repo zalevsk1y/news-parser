@@ -1,16 +1,39 @@
-import React, { useMemo,useState,useCallback } from "react";
+import React, { useMemo, useCallback } from "react";
 import { PostCartLarge } from "@news-parser/ui/post-card/PostCardLarge";
 import { HiddenBlock } from "@news-parser/ui/HiddenBlock";
-import { useGetTemplates } from "@news-parser/entities/templates/hooks/useGetTemplates";
-import { useGetCrons } from "@news-parser/entities/crons/hooks/useGetCrons";
-import { SelectGroup } from "../../../components/SelectGroup";
+import { SelectInterval } from "./SelectInterval";
+import { MaxPostsInput } from './MaxPostsInput';
+import { MaxCronInput } from './MaxCronInput';
+import { TemplateSelect } from "./TemplateSelect";
+import { useFetchCronOptions, useGetCronOptions, useMutateCronOptions } from '@news-parser/entities/cronOptions/hooks/';
+import { defaultCronData } from "@news-parser/entities/cronOptions/constants";
+import { STATUS_ACTIVE, STATUS_IDLE } from "@news-parser/entities/cronOptions/constants";
+import { DELETE } from "@news-parser/config/constants";
 
-export const MainOptionsBlock=()=>{
-    const templates=useGetTemplates();
-    const crons=useGetCrons();
-    const [selectedTemplate,setSelectedTemplate]=useState(null);
-    const selectTemplateHandler=useCallback((selectedTemplate)=>setSelectedTemplate(selectedTemplate),[setSelectedTemplate])
-    const optionsTemplates=useMemo(()=>templates.map(templateUrl=><option key={templateUrl} value={templateUrl}>{templateUrl}</option>),[templates])
+
+
+
+
+export const MainOptionsBlock = () => {
+    const [isConsOptionsSet, cronOptions] = useGetCronOptions();
+    const [isCronOpotionsMutating, mutateCronOptions] = useMutateCronOptions();
+    const [isCronOptionsFetching, fetchCronOptions] = useFetchCronOptions();
+    const buttonName = useMemo(() => cronOptions?.status === STATUS_ACTIVE ? 'Stop' : 'Start', [cronOptions.status]);
+    const selectTemplateHandler = useCallback((templateID) => {
+        fetchCronOptions(templateID);
+    });
+    const buttonHandler = useCallback(() => {
+        let newCronData = { ...cronOptions };
+        switch (cronOptions.status) {
+            case STATUS_IDLE:
+                newCronData.status = STATUS_ACTIVE;
+                mutateCronOptions(newCronData);
+                break;
+            case STATUS_ACTIVE:
+                mutateCronOptions({url:cronOptions.url},DELETE);
+                break;
+        }
+    }, [cronOptions.status, cronOptions])
     return (
         <PostCartLarge>
             <div>
@@ -18,61 +41,54 @@ export const MainOptionsBlock=()=>{
             </div>
             <div className="mt-3">
                 <div className="input-group">
-                   <SelectGroup className='form-select' placeholder='Select template url' ariaLabel='Select schedule option' onSelect={selectTemplateHandler}>
-                    {optionsTemplates}
-                    </SelectGroup> 
+                    <TemplateSelect onSelect={selectTemplateHandler} />
                 </div>
             </div>
-            <HiddenBlock hide={selectedTemplate===null}>
-            <div className="options-block d-flex flex-row mt-4">
-                <div className="col-md-2">
-                    <span>Current status:</span>
-                </div>
-                <div className="col-md-6">
-                    Running
-                </div>
-            </div>
-
-            <div className="options-block d-flex flex-row mt-4">
-                <div className="col-md-2">
-                    <span>Total posts:</span>
-                </div>
-                <div className="col-md-6">
-                    <input type="number" min="1" max="100" step="1" className="w-100" placeholder="1-100" />
-                    <div className="text-block">
-                        <i className="text-secondary small">55 posts were parsed</i>
+            <HiddenBlock hide={!isConsOptionsSet}>
+                <div className="options-block d-flex flex-row mt-4">
+                    <div className="col-md-2">
+                        <span>Current status:</span>
+                    </div>
+                    <div className="col-md-6">
+                        {cronOptions.status}
                     </div>
                 </div>
-            </div>
-            <div className="options-block d-flex flex-row mt-4">
-                <div className="col-md-2">
-                    <span>Total runs:</span>
-                </div>
-                <div className="col-md-6">
-                    <input type="number" min="1" max="100" step="1" className="w-100" placeholder="1-100" />
-                    <div className="text-block">
-                        <i className="text-secondary small">45 times parser was run.</i>
+
+                <div className="options-block d-flex flex-row mt-4">
+                    <div className="col-md-2">
+                        <span>Total posts:</span>
+                    </div>
+                    <div className="col-md-6">
+                        <MaxPostsInput min={1} max={100} step={1} className="w-100" placeholder="1-100" required disabled={cronOptions.status === 'active'} />
+                        <div className="text-block">
+                            <i className="text-secondary small">{cronOptions?.parsedPosts} posts were parsed</i>
+                        </div>
                     </div>
                 </div>
-            </div>
-           
+                <div className="options-block d-flex flex-row mt-4">
+                    <div className="col-md-2">
+                        <span>Total runs:</span>
+                    </div>
+                    <div className="col-md-6">
+                        <MaxCronInput min="1" max="100" step="1" className="w-100" placeholder="1-100" required disabled={cronOptions.status === 'active'} />
+                        <div className="text-block">
+                            <i className="text-secondary small">{cronOptions?.parsedPosts} times parser was run.</i>
+                        </div>
+                    </div>
+                </div>
 
-            <div className="options-block d-flex flex-row mt-4 pb-2">
-                <div className="col-md-2">
-                    <span>Run frequency:</span>
+
+                <div className="options-block d-flex flex-row mt-4 pb-2">
+                    <div className="col-md-2">
+                        <span>Run frequency:</span>
+                    </div>
+                    <div className="col-md-6">
+                        <SelectInterval className="form-select" required disabled={cronOptions?.status === 'active'} />
+                    </div>
                 </div>
-                <div className="col-md-6">
-                    <select className="form-select">
-                        <option value="hourly">hourly</option>
-                        <option value="twicedaily">twicedaily</option>
-                        <option value="daily">daily</option>
-                        <option value="weekly ">weekly </option>
-                    </select>
+                <div className="buttons-block mt-4">
+                    <button className='btn btn-primary' onClick={buttonHandler}>{buttonName}</button>
                 </div>
-            </div>
-            <div className="buttons-block mt-4">
-                <button className="btn btn-danger ps-4 pe-4">Stop</button>
-            </div>
             </HiddenBlock>
         </PostCartLarge>
     )

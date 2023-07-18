@@ -54,6 +54,7 @@ trait ValidateDataTrait
         }
         return true;
     }
+
     /**
      * Validate structure of input extra options.
      * Structure:['addSource','addFeaturedMedia','saveParsingTemplate','url']

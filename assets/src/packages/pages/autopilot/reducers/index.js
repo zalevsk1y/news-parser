@@ -1,11 +1,9 @@
 import { combineReducers } from 'redux';
 import { templates } from '@news-parser/entities/templates/reducers';
-import { crons } from '@news-parser/entities/crons/reducers';
+import { cronOptions } from '@news-parser/entities/cronOptions/reducers';
 import { message } from '@news-parser/entities/message/reducers';
 
 
 
-
-
-const autopilotReducer = combineReducers({ templates,crons,message });
+const autopilotReducer = combineReducers({ templates, message, cronOptions });
 export default combineReducers({ parse: autopilotReducer });
