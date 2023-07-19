@@ -22,7 +22,9 @@ export const MainOptionsBlock = () => {
     const selectTemplateHandler = useCallback((templateID) => {
         fetchCronOptions(templateID);
     });
-    const buttonHandler = useCallback(() => {
+    const submitHandler = useCallback((event) => {
+        event.preventDefault();
+        console.log(event)
         let newCronData = { ...cronOptions };
         switch (cronOptions.status) {
             case STATUS_IDLE:
@@ -53,13 +55,14 @@ export const MainOptionsBlock = () => {
                         {cronOptions.status}
                     </div>
                 </div>
-
+                <form id='cron-optios' onSubmit={submitHandler}>
                 <div className="options-block d-flex flex-row mt-4">
+                    
                     <div className="col-md-2">
-                        <span>Total posts:</span>
+                        <label htmlFor="cron-options-max-posts-parsed" className="form-lable">Total posts:</label>
                     </div>
                     <div className="col-md-6">
-                        <MaxPostsInput min={1} max={100} step={1} className="w-100" placeholder="1-100" required disabled={cronOptions.status === 'active'} />
+                        <MaxPostsInput min={1} max={100} step={1} className="w-100" id="cron-options-max-posts-parsed" placeholder="1-100" required disabled={cronOptions.status === 'active'} />
                         <div className="text-block">
                             <i className="text-secondary small">{cronOptions?.parsedPosts} posts were parsed</i>
                         </div>
@@ -67,10 +70,10 @@ export const MainOptionsBlock = () => {
                 </div>
                 <div className="options-block d-flex flex-row mt-4">
                     <div className="col-md-2">
-                        <span>Total runs:</span>
+                        <label htmlFor="cron-options-max-cron-call" className="form-lable">Total runs:</label>
                     </div>
                     <div className="col-md-6">
-                        <MaxCronInput min="1" max="100" step="1" className="w-100" placeholder="1-100" required disabled={cronOptions.status === 'active'} />
+                        <MaxCronInput min="1" max="100" step="1" className="w-100" placeholder="1-100" id="cron-options-max-cron-call" required disabled={cronOptions.status === 'active'} />
                         <div className="text-block">
                             <i className="text-secondary small">{cronOptions?.parsedPosts} times parser was run.</i>
                         </div>
@@ -80,14 +83,15 @@ export const MainOptionsBlock = () => {
 
                 <div className="options-block d-flex flex-row mt-4 pb-2">
                     <div className="col-md-2">
-                        <span>Run frequency:</span>
+                        <label htmlFor="cron-options-cron-calls-interval" className="form-lable">Run frequency:</label>
                     </div>
                     <div className="col-md-6">
-                        <SelectInterval className="form-select" required disabled={cronOptions?.status === 'active'} />
+                        <SelectInterval className={"form-select"} id="cron-options-cron-calls-interval" required disabled={cronOptions?.status === 'active'} />
                     </div>
                 </div>
+                </form>
                 <div className="buttons-block mt-4">
-                    <button className='btn btn-primary' onClick={buttonHandler}>{buttonName}</button>
+                    <button form='cron-optios' type='submit' className='btn btn-primary' >{buttonName}</button>
                 </div>
             </HiddenBlock>
         </PostCartLarge>
