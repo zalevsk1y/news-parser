@@ -7,6 +7,9 @@ import { useFetchPostsList } from '@news-parser/entities/post/hooks/'
 import { useFetchTemplate } from '@news-parser/entities/template/hooks/'
 import { InputFormSection } from './InputFormSection';
 import { PostsSection } from './PostsSection';
+import {useShowMessage} from '@news-parser/entities/message/hooks/';
+
+
 
 /**
  * Main application element.
@@ -18,11 +21,12 @@ import { PostsSection } from './PostsSection';
 const Main = () => {
   const [isPostsFetching, fetchPostsList] = useFetchPostsList();
   const [isTemplateFetching, fetchTemplate] = useFetchTemplate();
+  const showMessage=useShowMessage();
   const [mainState] = useState(() => {
     const searchParams = getUrlSearchParams();
     const url = searchParams.has('url') ? searchParams.get('url') : false;
     if (url) {
-      fetchPostsList(url);
+      fetchPostsList(url).catch(err=>showMessage('error',err.message));
       fetchTemplate(url);
     }
     return {url};

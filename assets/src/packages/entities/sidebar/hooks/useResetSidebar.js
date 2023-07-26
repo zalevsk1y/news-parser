@@ -5,6 +5,5 @@ import { resetSidebar } from "../actions/main.actions";
 
 export const useResetSidebar = () => {
     const dispatch = useDispatch();
-    const resetSidebarHandler = useCallback(() => dispatch(resetSidebar()));
-    return resetSidebarHandler;
+    return useCallback(() => dispatch(resetSidebar()),[dispatch]); 
 }

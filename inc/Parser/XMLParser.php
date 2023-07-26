@@ -65,7 +65,7 @@ class XMLParser extends Abstracts\AbstractParseContent
 
         if (!empty($errors)) {
             libxml_clear_errors();
-            throw new MyException(Errors::text('XML_PARSING'), Errors::code('BAD_REQUEST'));
+            throw new MyException(Errors::text('XML_PARSING'), Errors::code('UNSUPPORTED_MEDIA_TYPE'));
         }
 
         return $data;

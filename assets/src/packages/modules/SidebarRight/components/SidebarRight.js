@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { useResetSidebar } from "@news-parser/entities/sidebar/hooks";
 
 
 
@@ -17,7 +16,6 @@ import { useResetSidebar } from "@news-parser/entities/sidebar/hooks";
 
 export const SidebarRight = ({ tabs, children }) => {
   const [activeTab, setActiveTab] = useState(0);
-  const resetSidebarPostData=useResetSidebar();
   const activeTabChangeHandler = (tabIndex) => () => setActiveTab(tabIndex);
   const tabNames = useMemo(() => (tabs.map((tab, index) => (
       <a
@@ -27,9 +25,6 @@ export const SidebarRight = ({ tabs, children }) => {
       >
         {tab}
       </a>))), [activeTab]);
-    useEffect(()=>{
-      resetSidebarPostData()
-    },[])
   return (
     <div className="modal-right-side-bar d-flex flex-column" >
       <div className="sidebar-nav">

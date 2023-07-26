@@ -54,6 +54,7 @@ const CategoriesGroup = () => {
         <div className="input-container categories-search">
           <label htmlFor="categories-filter-input">Search Categories:</label>
           <input
+            className="form-control"
             type="text"
             id="categories-filter-input"
             value={filterValue}
@@ -79,6 +80,7 @@ const CategoriesGroup = () => {
         <div className="sidebar-item-expandable-row">
           <label htmlFor="category-input">New Category Name</label>
           <input
+            className="form-control"
             value={newCategoryParams.name}
             type="text"
             id="category-input"

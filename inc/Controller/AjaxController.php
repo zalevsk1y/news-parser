@@ -6,6 +6,8 @@ use NewsParserPlugin\Traits\SanitizeDataTrait;
 use NewsParserPlugin\Ajax\Ajax;
 use NewsParserPlugin\Interfaces\EventControllerInterface;
 use NewsParserPlugin\Message\Errors;
+use NewsParserPlugin\Message\Success;
+use NewsParserPlugin\Exception\MyException;
 
 /**
  * Ajax singleton class provide API to the front end
@@ -57,6 +59,7 @@ class AjaxController extends Ajax
     {
         $this->event=$event;
         $this->init();
+        $this->formatter=$this->getFormatter();
     }
     /**
      * Singleton static method to get instance of class.
@@ -215,12 +218,15 @@ class AjaxController extends Ajax
             )
         ));
         
- 
-        $url = $request['url'];
 
-        $response = $this->event->trigger('list:get', array($url));
-        $this->sendResponse($response);
+        try{
+            $response = $this->event->trigger('list:get', array($request['url']));
+            $this->sendResponse($this->formatter->rss($response)->message('success', Success::text('RSS_LIST_PARSED'))->get('array'));
+        }catch (MyException $e){
+            $this->sendError($this->formatter->error($e->getCode())->message('error',$e->getMessage())->get('array'),$e->getCode());
+        }
     }
+    
      /**
      * Callback that handles parsing single page api requests and returns HTML of the page.
      *
@@ -246,11 +252,14 @@ class AjaxController extends Ajax
                 }
             )
         ));
-        
-         
-        $url = $request['url'];
-        $response = $this->event->trigger('html:get', array($url));
-        $this->sendResponse($response);
+
+        try{
+            $response = $this->event->trigger('html:get', array($request['url']));
+            $this->sendResponse($this->formatter->rawHTML($response)->get('array'));
+        }catch (Exception $e){
+            $this->sendError($this->formatter->error($e->getCode())->message('error',$e->getMessage())->get('array'));
+        }
+       
     }
      /**
      * Callback that handles parsing single page api requests and create WP post draft using saved parsing templates.

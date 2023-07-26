@@ -7,7 +7,8 @@ import { LoadingSpinner } from "@news-parser/ui/visual-constructor/LoadingSpinne
 import { useIsOpen } from '../hooks/visual-constructor/useIsOpen';
 import { useIsMutating } from '../hooks/';
 import { useClose } from "../hooks/";
-import { useGetPostId } from '../hooks/';
+import { useGetPostId } from '../hooks/';;
+
 
 /**
 * 
@@ -62,14 +63,10 @@ export const VisualConstructor = ({ onReady,children }) => {
                 {!isVisualConstructorReady && <LoadingSpinner />}
                 <div className="modal-main">
                     <div className="parsed-data-container">
-                        {
-                            //<Frame injectHTML={htmlData} injectCSS={} onReady={this.frameIsReady}/>
-                        }
                         <Frame url={url} onReady={onFrameReady} />
                     </div>
                     <div className="resize-drag-bar"></div>
-
-                    {isOpen&&children[0]}
+                    {children[0]}
                 </div>
                 {children[1]}
             </div>

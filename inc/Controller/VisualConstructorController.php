@@ -5,7 +5,6 @@ use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Message\Success;
-use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Models\PostModel;
 
 /**
@@ -20,7 +19,7 @@ use NewsParserPlugin\Models\PostModel;
  *
  */
 
-class VisualConstructorController extends BaseController
+class VisualConstructorController 
 {
     /**
      * Parser
@@ -34,9 +33,8 @@ class VisualConstructorController extends BaseController
      * @param AbstractParseContent $parser
      * @param ResponseFormatter $formatter
      */
-    public function __construct(AbstractParseContent $parser, ResponseFormatter $formatter)
+    public function __construct(AbstractParseContent $parser)
     {
-        parent::__construct($formatter);
         $this->parser=$parser;
     }
     /**
@@ -49,13 +47,8 @@ class VisualConstructorController extends BaseController
      */
     public function get($url, $options = array())
     {
-        try {
-            $html_data=$this->parser->get($url, $options);
-            $response=$this->formatResponse->rawHTML($html_data);
-        } catch (MyException $e) {
-            $response = $this->formatResponse->error($e->getCode())->message('error', $e->getMessage());
-        }
-        return $response;
+        $html_data=$this->parser->get($url, $options);   
+        return $html_data;
     }
     /**
      * Magic method to call instance as class.

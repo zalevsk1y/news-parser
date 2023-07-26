@@ -6,7 +6,7 @@ import { useCallback } from "react";
 
 export const PostTitleGroup=()=>{
     const [newTitle,setNewTitle]=useState('');
-    const changeStateInputTitle=useCallback(value=>setNewTitle(value),[setNewTitle]);
+    const changeStateInputTitle=useCallback(e=>setNewTitle(e.target.value),[setNewTitle]);
     const selectTitle=useSetPostTitle()
     const title=useGetPostTitle();
     const selectTitleHandler = useCallback(() => {
@@ -17,7 +17,7 @@ export const PostTitleGroup=()=>{
         <>
         <InfoBody>
           <span>{title}</span>
-          <input onChange={changeStateInputTitle} value={newTitle} />
+          <input onChange={changeStateInputTitle} value={newTitle} type='text'  className="form-control"/>
           <p className="howto">
             If you want to change title, type the new title and press "Change
             title" button.

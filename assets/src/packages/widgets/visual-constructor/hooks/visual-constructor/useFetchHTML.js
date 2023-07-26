@@ -7,9 +7,11 @@ import { setHTML } from "../../actions/dialogData.actions";
 export const useFetchHTML = () => {
     const [isFetching, setIsFetching] = useState(false),
         dispatch = useDispatch(),
-        success = (entity, event, html) => {
-            dispatch(setHTML(html));
-            return html;
+        success = (entity, event, htmlData) => {
+            const {data}=htmlData;
+            console.log(data);
+            dispatch(setHTML(data));
+            return data;
         },
         error = (entity, event, errorData) => {
             const { msg } = errorData;

@@ -145,13 +145,7 @@ class CronController extends BaseController
         if($timestamp) return wp_unschedule_event( $timestamp, NEWS_PARSER_CRON_ACTION_PREFIX.$interval,array($interval));
 
     }
-    public static function wpCronCallback($interval="hourly"){
-        $temp=$interval;
-        var_dump($interval);
-        if(!$crons_data=get_option(self::CRON_TABLE_NAME)){
-            return [];
-        }
-    }
+    
     /**
      * Get instance of CronModel class.
      *

@@ -9,6 +9,7 @@ import { frameElement } from "@news-parser/helpers/frame/FrameElement/FrameEleme
 import { useToggleContent } from "@news-parser/entities/sidebarTemplate/hooks/useToggleContent";
 import { useFetchHTML, useMouseEvents, useFrameElementMiddleware } from "../hooks/";
 import { useResetSidebarTemplate } from "@news-parser/entities/sidebarTemplate/hooks/";
+import { useResetSidebar } from "@news-parser/entities/sidebar/hooks";
 
 
 /**
@@ -26,7 +27,8 @@ export const Frame = ({ onReady, url }) => {
   const [getTitle, getFeaturedMedia] = useFrameElementMiddleware();
   const [mouseOver, mouseOut] = useMouseEvents();
   const [selectElement, removeElement, setFarame] = useToggleContent(frameRef);
-  const resetSelectedContent=useResetSidebarTemplate()
+  const resetSelectedContent=useResetSidebarTemplate();
+  const resetSidebarData=useResetSidebar();
   const initFrame = (html, frameRef) => {
     const newFrame = frameElement(frameRef.current, url)
       .injectHTML(html, [purifyDOM])
@@ -63,6 +65,7 @@ export const Frame = ({ onReady, url }) => {
   }
   useEffect(() => {
     resetSelectedContent();
+    resetSidebarData();
     if (url) {
         startHTMLFetching(url).then(html => initFrame(html, frameRef));
         setFarame(frameRef.current)

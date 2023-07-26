@@ -10,12 +10,14 @@ export const sidebar = (state = initialState, action) => {
     switch (action.type) {
         //Main
         case RESET_SIDEBAR:
-            return { ...initialState };
+            const categories=state.categories;
+            const tags=state.tags;
+            return { ...initialState,categories,tags };
         //Catagories
         case MAP_POST_CATEGORIES:
             return { ...state, categories: action.payload }
         case PUSH_POST_CATEGORY:
-            return { ...state, categories: [...state.categories, ...action.payload] }
+            return { ...state, categories: state.categories.concat(action.payload) }
         case SELECT_POST_CATEGORY:
             if (state.selectedCategories.includes(action.payload.id)) return { ...state }
             return { ...state, selectedCategories: [...state.selectedCategories, action.payload.id] }

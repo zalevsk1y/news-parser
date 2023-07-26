@@ -67,6 +67,8 @@ class Errors
                 return '400 Bad Request';
             case 'INNER_ERROR':
                 return '500 Inner Error';
+            case 'UNSUPPORTED_MEDIA_TYPE';
+                return '415 Unsupported Media Type';
         }
     }
 }

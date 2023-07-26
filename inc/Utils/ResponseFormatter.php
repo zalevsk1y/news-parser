@@ -27,15 +27,7 @@ class ResponseFormatter {
      * @var array
      */
     protected $data=array('code'=>200,'msg'=>false);
-    /**
-     * Return new instance of ResponseFormatter
-     *
-     * @return ResponseFormatter
-     */
-    public static function getInstance()
-    {
-        return new static();
-    }
+    
     /**
      * Format answer after post draw was created
      *

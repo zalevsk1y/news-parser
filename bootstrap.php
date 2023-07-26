@@ -3,12 +3,18 @@ namespace NewsParserPlugin;
 
 use \Monolog\Logger;
 use \Monolog\Handler\StreamHandler;
+use Monolog\ErrorHandler;
+
 
 
 function news_parser_init(){
     //logger initialization
     $log = new Logger('news-parser-plugin');
-    $log->pushHandler(new StreamHandler(NEWS_PARSER_PLUGIN_DIR.'logs/news-parser.log', Logger::DEBUG));
+    $log->pushHandler(new StreamHandler(NEWS_PARSER_PLUGIN_DIR.'logs/news-parser.log', Logger::WARNING));
+    // Set up Monolog to log uncaught exceptions
+    ErrorHandler::register($log);
+    
+
     $log->info('Plugin initialized.');
 
     $container=new \ContainerBuilder\DI();

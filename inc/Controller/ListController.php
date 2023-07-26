@@ -2,9 +2,7 @@
 namespace NewsParserPlugin\Controller;
 
 use NewsParserPlugin\Exception\MyException;
-use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
-use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Models\ListModel;
 
 /**
@@ -19,7 +17,7 @@ use NewsParserPlugin\Models\ListModel;
  *
  */
 
-class ListController extends BaseController
+class ListController 
 {
     /**
      * Instance of list parser.
@@ -38,9 +36,8 @@ class ListController extends BaseController
      *
      * @param AbstractParseContent $parser
      */
-    public function __construct(AbstractParseContent $parser, ResponseFormatter $formatter)
+    public function __construct(AbstractParseContent $parser)
     {
-        parent::__construct($formatter);
         $this->parser = $parser;
     }
     /**
@@ -59,14 +56,10 @@ class ListController extends BaseController
      */
     public function get($url)
     {
-        try {
-            $listData = $this->parser->get($url);
-            $list = $this->listModelFactory($listData);
-            $response = $this->formatResponse->rss($list->getAttributes())->message('success', Success::text('RSS_LIST_PARSED'));
-        } catch (MyException $e) {
-            $response = $this->formatResponse->error($e->getCode())->message('error', $e->getMessage());
-        }
-        return $response;
+        
+        $listData = $this->parser->get($url);
+        $list = $this->listModelFactory($listData);   
+        return $list->getAttributes();
     }
     /**
     * Get instance of ListModel class.

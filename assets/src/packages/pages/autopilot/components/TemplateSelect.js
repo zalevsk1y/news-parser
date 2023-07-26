@@ -21,7 +21,7 @@ export const TemplateSelect = ({ onSelect,isFetching,placeholder,...otherProps }
                 <option value="" disabled>--{placeholder}--</option>
                 {optionsTemplates}
             </select>
-            <button className="btn btn-primary np-btn" type="button" onClick={selectClickHandler} disabled={isFetching}>{
+            <button className="btn btn-primary np-btn" type="button" onClick={selectClickHandler} disabled={isFetching||selectValue==''}>{
                 isFetching?<><span className="spinner-border spinner-border-16 np-fs-16" role="status" aria-hidden="true"></span>
                     <span className="sr-only np-fs-16">&nbsp;Loading...</span></>
                     :<span className="px-4 np-fs-16">Select</span>

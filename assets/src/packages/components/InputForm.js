@@ -7,14 +7,13 @@ import React, { useCallback, useState } from 'react';
  * @since 0.8.0
  */
 
-export const InputForm = ({ buttonName, submitAction, initValue, disabled }) => {
+export const InputForm = ({ buttonName, submitAction, initValue, disabled,isLoading }) => {
     const [inputValue, setInputValue] = useState(initValue || "");
     const inputChange = (event) => {
         setInputValue(event.target.value);
     };
     const submitClickHandler = useCallback(() => {
-        submitAction(inputValue)
-        setInputValue('');
+        submitAction(inputValue);
     }, [inputValue]);
     return (
         <div className="search container row">
@@ -32,11 +31,13 @@ export const InputForm = ({ buttonName, submitAction, initValue, disabled }) => 
                     ></input>
                     <button
                         disabled={disabled}
-                        className="main-button parse-rss-button"
+                        className="btn btn-outline-secondary ms-2 h-100 align-baseline"
                         type="button"
                         onClick={submitClickHandler}
                     >
-                        {buttonName}
+                        {isLoading?<><span className="spinner-border spinner-border-16 np-fs-16" role="status" aria-hidden="true"></span>
+                        <span className="sr-only np-fs-16">&nbsp;Loading...</span></>
+                        :buttonName}
                     </button>
                 </div>
             </div>

@@ -402,7 +402,7 @@ frame {
 
 .sidebar-item-expandable-area {
   overflow: hidden;
-  padding: 5px 0px 5px 0px; }
+  padding: 5px 1px 5px 1px; }
 
 .sidebar-item-expandable-area-close {
   height: 0px; }

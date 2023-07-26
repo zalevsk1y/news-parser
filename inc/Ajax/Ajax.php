@@ -1,6 +1,8 @@
 <?php
 namespace NewsParserPlugin\Ajax;
 
+use NewsParserPlugin\Utils\ResponseFormatter;
+
 /**
  * Ajax parent class that provide methods for handles input arguments.
  *
@@ -10,6 +12,7 @@ namespace NewsParserPlugin\Ajax;
  */
 class Ajax
 {
+    protected $formatter;
     /**
      * Checks input argument type.
      *
@@ -75,19 +78,10 @@ class Ajax
      * @param \WP_Error $error
      * @return void
      */
-    protected function sendError($error)
+    protected function sendError($error_message,$error_code)
     {
-        if (!is_wp_error($error)) {
-            return;
-        }
-        $response_message=array(
-            'msg'=>array(
-                'type'=>'error',
-                'text'=>esc_html($error->get_message())
-            ),
-            'code'=>esc_html($error->get_code())
-        );
-        wp_send_json_error($response_message, $error->get_code());
+        
+        wp_send_json_error($error_message, $error_code);
     }
     /**
      * Send response.
@@ -98,15 +92,10 @@ class Ajax
      */
     protected function sendResponse($response)
     {
-        switch ($response->contentType) {
-            case 'json':
-                wp_send_json($response->get('array'));
-                break;
-            case 'text':
-                echo $response->get('text');
-                wp_die();
-                break;
-        }
+        
+        wp_send_json($response);
+               
+        
     }
 
     /**
@@ -117,5 +106,11 @@ class Ajax
     protected function getJsonFromInput()
     {
         return json_decode(file_get_contents('php://input'), true);
+    }
+    protected function getFormatter()
+    {
+        
+        return new ResponseFormatter();
+        
     }
 }

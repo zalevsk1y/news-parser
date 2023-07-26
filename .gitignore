@@ -6,7 +6,8 @@
 vendor/*
 .pnp.js
 
-
+# logs
+/logs
 
 
 
