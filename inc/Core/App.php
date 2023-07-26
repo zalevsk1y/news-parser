@@ -39,7 +39,9 @@ class App{
         return self::$instance;
     }
     protected function addActions(){
-       
-        
+        add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'hourly',array($this->cronTaskController,'cronTaskCallback'));
+        add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'twicedaily',array($this->cronTaskController,'cronTaskCallback'));
+        add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'daily',array($this->cronTaskController,'cronTaskCallback'));
+        add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'weekly',array($this->cronTaskController,'cronTaskCallback'));
     }
 }
