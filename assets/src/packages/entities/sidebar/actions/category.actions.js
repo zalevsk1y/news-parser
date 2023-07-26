@@ -20,10 +20,10 @@ export const mapCategories = (categoriesArr) => {
     }
 }
 
-export const pushCategory = (categoryObject) => {
+export const pushCategory = (categoryObjectArray) => {
     return {
         type: PUSH_POST_CATEGORY,
-        payload: categoryObject
+        payload: categoryObjectArray
     }
 }
 

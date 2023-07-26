@@ -3,7 +3,8 @@
   "description": "Wordpress  plugin allows you to easily and quickly receive text and images from the site and from rss feed.",
   "require": {
     "caophihung94/php-simple-html-dom-parser":"1.7.3",
-    "zalevsk1y/container-builder":"1.0.0"
+    "zalevsk1y/container-builder":"1.0.0",
+    "monolog/monolog": "^2.0"
   },
   
   "require-dev": {

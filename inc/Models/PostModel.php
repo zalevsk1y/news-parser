@@ -129,7 +129,7 @@ class PostModel implements ModelInterface
             throw new MyException(Errors::text('POST_WAS_NOT_CREATED'), Errors::code('BAD_REQUEST'));
         }
         $this->getPostLinksWordpress();
-        $this->status = $post_data['status'];
+        $this->status = $post_data['post_status'];
     }
     /**
      * Attach main image to wordpress post
@@ -196,7 +196,18 @@ class PostModel implements ModelInterface
      */
     public function mediaSideloadImage($file, $post_id = 0, $desc = null, $return = 'html')
     {
-        return media_sideload_image($file, $post_id, $desc, $return);
+        if(function_exists('media_sideload_image')){
+            return \media_sideload_image($file, $post_id, $desc, $return);
+        } 
+        /** WordPress Administration File API */
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+
+        /** WordPress Image Administration API */
+        require_once ABSPATH . 'wp-admin/includes/image.php';
+
+        /** WordPress Media Administration API */
+        require_once ABSPATH . 'wp-admin/includes/media.php';
+        return \media_sideload_image($file, $post_id, $desc, $return);
     }
     /**
      * Create wordpress post

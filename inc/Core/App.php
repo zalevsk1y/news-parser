@@ -8,6 +8,9 @@ use \ContainerBuilder\Interfaces\ContainerInterface as ContainerInterface;
 use NewsParserPlugin\Controller\Api\TemplateApiController;
 use NewsParserPlugin\Controller\Api\CronApiController;
 use NewsParserPlugin\Utils\ResponseFormatter;
+use \NewsParserPlugin\Controller\CronController;
+use \NewsParserPlugin\Controller\CronTaskController;
+
 
 class App{
     protected $ajaxController;
@@ -25,6 +28,8 @@ class App{
         $this->cronApiController=CronApiController::create($this->event);
         $this->middleware=MiddlewareController::getInstance($this->event);
         $this->mainMenu=Main::start($DI_container->get(\NewsParserPlugin\Menu\Admin\MenuPage::class),$DI_container->get(\NewsParserPlugin\Utils\MenuConfig::class));
+        $this->cronTaskController=new CronTaskController($this->event);
+        $this->addActions();
     }
     static public function start(ContainerInterface $DI_container){
         if(self::$instance==null){
@@ -32,5 +37,9 @@ class App{
             return self::$instance;
         }
         return self::$instance;
+    }
+    protected function addActions(){
+       
+        
     }
 }

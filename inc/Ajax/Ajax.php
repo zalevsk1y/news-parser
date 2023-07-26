@@ -87,7 +87,7 @@ class Ajax
             ),
             'code'=>esc_html($error->get_code())
         );
-        wp_send_json($response_message, $error->get_code());
+        wp_send_json_error($response_message, $error->get_code());
     }
     /**
      * Send response.

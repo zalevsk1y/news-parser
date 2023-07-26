@@ -38,31 +38,36 @@ class CronController extends BaseController
      * 
      * @return array
      */
-    public function update($cron_data)
+    public function create($cron_data)
     {
         $cron_model=$this->modelsFactory($cron_data);
-        if($cron_model->getStatus()=='active') $cron_model->setTimestamp(time());
+        $cron_timestemp=time();
+        if($cron_model->getStatus()=='active') $cron_model->setTimestamp($cron_timestemp);
         $cron_model->save();
+        if(!$this->isCronExists($cron_model->getInterval())){
+            $this->setCron($cron_model->getInterval(),$cron_timestemp);
+        }
         return $this->formatResponse->message('success',Success::text('CRON_CREATED'))->options($cron_model->getAttributes('array'));
     }
     public function getAll()
     {
-        if(!$cron_data=get_option(self::CRON_TABLE_NAME)){
+        if(!$crons_data=get_option(self::CRON_TABLE_NAME)){
             return [];
         }
-        return $cron_data;
+        return $crons_data;
     }
     /**
-     * Get cron options.
+     * Get cron job options data.
      * 
      * @param string $url
      * @return array
      */
-    public function get($url=null){
-        $cron_data=$this->getAll();
-        if($url==null) return $this->formatResponse->message('success',Success::text('CRON_EXIST'))->options($cron_data);
-        if(isset($cron_data[$url])){
-            $formated_cron_data=$this->modelsFactory($cron_data[$url])->getAttributes('array');
+    public function get($url=null)
+    {
+        $crons_data=$this->getAll();
+        if($url==null) return $this->formatResponse->message('success',Success::text('CRON_EXIST'))->options($crons_data);
+        if(isset($crons_data[$url])){
+            $formated_cron_data=$this->modelsFactory($crons_data[$url])->getAttributes('array');
             return $this->formatResponse->message('success',Success::text('CRON_EXIST'))->options($formated_cron_data);
         }
         $default_cron_options=$this->getDefaultCronOptions();
@@ -76,15 +81,76 @@ class CronController extends BaseController
      * @return null
      * 
      */
-    public function delete($url){
-        $cron_data=$this->getAll();
-        if(isset($cron_data[$url])){
-            unset($cron_data[$url]);
+    public function delete($url)
+    {
+        $crons_data=$this->getAll();
+        $cron_model=$this->modelsFactory($crons_data[$url]);
+        if(isset($crons_data[$url])){
+            unset($crons_data[$url]);
         }
-        update_option(self::CRON_TABLE_NAME,$cron_data);
+        update_option(self::CRON_TABLE_NAME,$crons_data);
+        if(!$this->isIntervalActive($cron_model->getInterval(),$crons_data)){
+            $this->unsetCron($cron_model->getInterval());
+        }
         $default_cron_options=$this->getDefaultCronOptions();
         $default_cron_options['url']=$url;
         return $this->formatResponse->message('success',Success::text('CRON_DELETED'))->options($default_cron_options);
+    }
+    /**
+    * Check if there are any active cron jobs with the specified interval.
+    *
+    * @param int $interval The interval to check, in seconds.
+    * @param array $cron_data An array of cron job data, as returned by the `wp_get_schedules()` function.
+    * @return bool True if there are active cron jobs with the specified interval, false otherwise.
+    */
+    protected function isIntervalActive($interval,$cron_data)
+    {
+        $active_crons=array_filter($cron_data,function($cron_data) use ($interval)
+        {
+            return $cron_data['interval']==$interval&&$cron_data['status']=='active';
+        });
+        return count($active_crons)>0;
+    }
+    /**
+     * Check if a cron job with the specified interval exists.
+     *
+     * @param string $interval The interval of the cron job to check.
+     * @return int|false The timestamp of the next scheduled run of the cron job, or false if the cron job does not exist.
+     */
+
+    protected function isCronExists($interval)
+    {
+        return wp_next_scheduled(NEWS_PARSER_CRON_ACTION_PREFIX.$interval,array($interval));
+    }
+    /**
+    * Schedule a new cron job with the specified interval.
+    *
+    * @param int $interval The interval of the new cron job, in seconds.
+    * @param int $cron_timestemp The timestamp of the next scheduled run of the cron job, in Unix timestamp format.
+    * @return void
+    */
+    protected function setCron($interval,$cron_timestemp)
+    {
+        wp_schedule_event($cron_timestemp, $interval, NEWS_PARSER_CRON_ACTION_PREFIX.$interval,array($interval));
+    }
+    /**
+     * Unschedule a cron job with the specified interval.
+     *
+     * @param string $interval The interval of the cron job to unschedule.
+     * @return void
+     */
+    protected function unsetCron($interval)
+    {
+        $timestamp = $this->isCronExists($interval);
+        if($timestamp) return wp_unschedule_event( $timestamp, NEWS_PARSER_CRON_ACTION_PREFIX.$interval,array($interval));
+
+    }
+    public static function wpCronCallback($interval="hourly"){
+        $temp=$interval;
+        var_dump($interval);
+        if(!$crons_data=get_option(self::CRON_TABLE_NAME)){
+            return [];
+        }
     }
     /**
      * Get instance of CronModel class.

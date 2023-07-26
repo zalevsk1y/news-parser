@@ -1,7 +1,7 @@
 export const formatPostOptions=(options)=>{
-    console.log(options.publish)
+    console.log(options)
     return {
-        status:options.status,
+        post_status:options.status,
         post_category:options.selectedCategories,
         tags_input:options.selectedTags,
         comment_status:options.allowComments?'open':'close',

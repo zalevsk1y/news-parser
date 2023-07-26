@@ -36,7 +36,7 @@ const Main = () => {
         </SidebarRight>
         <VisualConstructorFooter rssUrl={mainState.url} />
       </VisualConstructor>
-      <div class="parsing-title">
+      <div className="parsing-title">
             <h1>News-Parser <b className='main-page-header'>RSS</b></h1>
         </div>
       <Message />

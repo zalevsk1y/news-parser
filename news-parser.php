@@ -29,6 +29,7 @@ define ("NEWS_PARSER_PLUGIN_VISUAL_CONSTRUCTOR","visual-constructor");
 define ("NEWS_PARSER_PLUGIN_PARSER_RSS","parser-rss");
 define ("NEWS_PURSER_PLUGIN_TEMPLATE_OPTIONS_NAME","news_parser_plugin_template_options");
 define ("NEWS_PURSER_PLUGIN_CRON_OPTIONS_NAME","news_parser_plugin_cron_options");
+define ("NEWS_PARSER_CRON_ACTION_PREFIX","news_parser_cron_");
 
 
 require 'autoload.php';
@@ -36,7 +37,7 @@ if(\file_exists(NEWS_PARSER_PLUGIN_DIR.'vendor/autoload.php')) require NEWS_PARS
 
 
 $container=new \ContainerBuilder\DI();
-$container->addDefinitions(NEWS_PARSER_PLUGIN_DIR.'di-config-new.php');
+$container->addDefinitions(NEWS_PARSER_PLUGIN_DIR.'di-config.php');
 //$container=$container_builder->build();
 
 $app=Core\App::start($container);
@@ -51,13 +52,17 @@ $app->middleware->add('htmlRaw:parse',$modifiers);
 $app->event->on('media:create',array(Controller\MediaController::class,'create'));
 $app->event->on('template:create',array(Controller\TemplateController::class,'create'));
 $app->event->on('template:get',array(Controller\TemplateController::class,'get'));
-$app->event->on('cron:update',array(Controller\CronController::class,'update'));
+$app->event->on('cron:create',array(Controller\CronController::class,'create'));
 $app->event->on('cron:delete',array(Controller\CronController::class,'delete'));
 $app->event->on('cron:get',array(Controller\CronController::class,'get'));
 $app->event->on('list:get',array(Controller\ListController::class,'get'));
 $app->event->on('html:get',array(Controller\VisualConstructorController::class,'get'));
 $app->event->on('post:create',array(Controller\PostControllerExtendeOptions::class,'create'));
 
-
+add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'hourly',array($app->cronTaskController,'cronTaskCallback'));
+add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'twicedaily',array($app->cronTaskController,'cronTaskCallback'));
+add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'daily',array($app->cronTaskController,'cronTaskCallback'));
+add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'weekly',array($app->cronTaskController,'cronTaskCallback'));
+ 
 
 \register_uninstall_hook(__FILE__, 'Utils\Settings::deleteSettings');

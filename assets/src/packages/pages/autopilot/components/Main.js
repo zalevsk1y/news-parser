@@ -26,7 +26,7 @@ const Main = () => {
         <div className="col-md-8">
           <MainOptionsBlock />
         </div>
-        <div className="col-md-3 d-flex flex-column">
+        <div className="col-md-4 col-lg-3 d-flex flex-column">
             <RightSection />
         </div>
       </div>

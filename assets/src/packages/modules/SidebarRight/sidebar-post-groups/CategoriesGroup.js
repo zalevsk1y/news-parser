@@ -47,7 +47,7 @@ const CategoriesGroup = () => {
     }
   }, [selectCategory, deselectCategory]);
   const categoryInputHandler = useCallback((event) => setFilterValue(event.target.value), []);
-  useEffect(() => startFetcingCategories(), [])
+  useEffect(() => startFetcingCategories(), []);
   return (
     <>
       <SidebarItem>

@@ -23,9 +23,6 @@ export const requestApi = (options, success, error) => {
         body: data
     })
         .then(res => {
-            if (res.ok == false) {
-                return res.text().then(data => ({ code: res.status, msg: { type: 'error', text: data } }))
-            }
             switch (res.headers.get('Content-Type')) {
                 case 'application/json; charset=UTF-8':
                 case 'application/json':
@@ -35,11 +32,9 @@ export const requestApi = (options, success, error) => {
             };
         })
         .then(data => {
-            console.log(data);
-            if ( data?.code !== 200  ) {
-                return error(entity, event, data);
-            } else {
-                return success(entity, event, data);
-            }
+            return success(entity, event, data);
+        })
+        .catch(err=>{
+            return error(entity, event, err);
         })
 }

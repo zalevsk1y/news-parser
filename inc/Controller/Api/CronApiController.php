@@ -142,8 +142,8 @@ class CronApiController extends \WP_REST_Controller
                 )
             ),
             array(
-                'methods' => \WP_REST_Server::EDITABLE,
-                'callback' => array($this, 'updateCronOptions'),
+                'methods' => \WP_REST_Server::CREATABLE,
+                'callback' => array($this, 'createCronOptions'),
                 'permission_callback' => array($this, 'checkPermission'),
                 'args'=> array(
                     'url'=>array(
@@ -247,11 +247,11 @@ public function getCronOptions($request){
  * @param WP_REST_Request $request Full data about the request.
  * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
  */
-    public function updateCronOptions($request)
+    public function createCronOptions($request)
     {
         try{
             $cron_params=$request->get_params();
-            $response=$this->event->trigger('cron:update', array($cron_params));
+            $response=$this->event->trigger('cron:create', array($cron_params));
         }catch(Exception $e){
             $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
         }

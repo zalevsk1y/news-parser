@@ -43,7 +43,7 @@ class CronDataModel implements ModelInterface
     *
     * @var int
     */
-    protected $timestam;
+    protected $timestamp;
     /**
     * Crone calls counter
     *
@@ -175,7 +175,7 @@ class CronDataModel implements ModelInterface
      */
     public function getTimestamp()
     {
-        return isset($this->timestamp)?$this->timestamp:false;
+        return $this->timestamp;
     }
     /**
      * Return number of cron job calls.
@@ -187,6 +187,15 @@ class CronDataModel implements ModelInterface
         return isset($this->cronCalls)?$this->cronCalls:false;
     }
     /**
+     * Increase value of cron calls counter
+     * 
+     * @return int new value of cron calls counter
+     */
+    public function increaseCronCalls()
+    {
+        return $this->cronCalls++;
+    }
+    /**
      * Return number of parsed posts.
      * 
      * @return false|int
@@ -194,6 +203,15 @@ class CronDataModel implements ModelInterface
     public function getParsedPosts()
     {
         return isset($this->parsedPosts)?$this->parsedPosts:false;
+    }
+    /**
+     * Increase parsed posts counter
+     * 
+     * @return int new value of parsed posts counter
+     */
+    public function increaseParsedPosts()
+    {
+        return $this->parsedPosts++;
     }
     /**
      * Return status of the cron job.
@@ -212,8 +230,18 @@ class CronDataModel implements ModelInterface
     public function getUrl(){
         return $this->resourceUrl;
     }
+    /**
+     * Sets a new timestamp for the Cron options model.
+     *
+     * This method sets a new timestamp for the Cron options model. This timestamp is used to determine
+     * whether a post needs to be parsed if the post's pubDate is greater than the value of this property.
+     *
+     * @param int $timestamp The new timestamp for the Cron options model.
+     * @return int new timestamp
+     */
+
     public function setTimestamp($timestamp){
-        $this->timestamp=$timestamp;
+        return $this->timestamp=$timestamp;
     }
      /**
      * Assign options to object properties.
