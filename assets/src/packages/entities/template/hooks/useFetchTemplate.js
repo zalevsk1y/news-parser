@@ -12,15 +12,11 @@ export const useFetchTemplate = () => {
             dispatch(setTemplate(data));
             return msg
         },
-        error = (entity, event, errorData) => {
-            const { msg } = errorData;
-            console.error(msg.text);
-            return { msg, posts: null };
-        },
+        error = (entity, event, errorData) => {},
         fetchTemplate = (url) => {
             const options = { entity: TEMPLATE, event: GET, data: { url } };
             setIsFetching(true);
-            return requestApi(options, success, error).then(resp => setIsFetching(false))
+            return requestApi(options, success, error).finally(resp => setIsFetching(false))
         }
     return [isFetching, fetchTemplate]
 }

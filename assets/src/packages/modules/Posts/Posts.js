@@ -20,8 +20,8 @@ export const Posts = ({ openEditor, selectPost, posts }) => {
         return posts.map(post => {
             return (<PostCard key={post.title} status={post.status} >
                 <PostCardHeader pubDate={post.pubDate} />
-                <PostCardImage link={post.link} image={post.image} alt={post.title} />
-                <PostCardBody title={post.title} description={post.description} />
+                <PostCardImage  image={post.image} alt={post.title} />
+                <PostCardBody title={post.title} description={post.description} link={post.link}/>
                 <PostCardFooter>
                     {post.draft ? <Icons className='fo fo-edit' title="Edit post" onClick={onClickEditPost(post)} /> :
                         [<Icons key="select" className={'fo fo-select' + (post.select === true ? ' icon-selected' : '')} title={post.select === true ? 'Unselect post' : 'Select post'} onClick={selectPostHandler(post._id)} />,
