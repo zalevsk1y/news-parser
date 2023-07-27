@@ -19,17 +19,10 @@ use NewsParserPlugin\Utils\ResponseFormatter;
  *
  */
 
-class TemplateController extends BaseController
+class TemplateController 
 {   
     protected const TEMPLATE_TABLE_NAME = NEWS_PURSER_PLUGIN_TEMPLATE_OPTIONS_NAME;
-    /**
-     * Init function.
-     *
-     */
-    public function __construct(ResponseFormatter $formatter)
-    {
-        parent::__construct($formatter);
-    }
+   
     /**
      * Save received options.
      *
@@ -47,20 +40,19 @@ class TemplateController extends BaseController
     {
         $template_model = $this->modelsFactory($options);
         $template_model->save();
-        $response = $this->formatResponse->message('success', Success::text('TEMPLATE_SAVED'));
-        return $response;
+        return $template_model->getAttributes('array');
     }
     public function get($url)
     {   
-        if($url==null){
-            return $this->getList();
-        }
         $templates=$this->getAll();
+        if($url==null){
+            return array_keys($templates);
+        }
         if(isset($templates[$url])){
             $template_model = $this->modelsFactory($templates[$url]);
-            return $this->formatResponse->message('success', Success::text('TEMPLATE_EXIST'))->options($template_model->getAttributes('array'));
-        }
-        return $this->formatResponse->message('info', Errors::text('NO_TEMPLATE'))->options(null);
+            return $template_model->getAttributes('array');
+        } 
+        throw new MyException( Errors::text('NO_TEMPLATE'),Errors::code('CONTENT_NOT_FOUND'));
     }
     protected function getAll()
     {
@@ -68,14 +60,6 @@ class TemplateController extends BaseController
             return [];
         }
         return $templates;
-    }
-    protected function getList()
-    {
-        $templates = $this->getAll();
-        if (is_array($templates)) {
-            return $this->formatResponse->message('success', '')->options(array_keys($templates));  
-        }
-        return $this->formatResponse->message('info', Errors::text('NO_TEMPLATE'))->options(null);
     }
     /**
      * Get instance of TemplateModel class.

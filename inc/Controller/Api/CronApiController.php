@@ -2,11 +2,11 @@
 namespace NewsParserPlugin\Controller\Api;
 
 use NewsParserPlugin\Interfaces\EventControllerInterface;
-use NewsParserPlugin\Utils\ResponseFormatterStatic;
+use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Message\Errors;
-use NewsParserPlugin\Traits\RestApiTrait;
 use NewsParserPlugin\Traits\SanitizeDataTrait;
 use NewsParserPlugin\Traits\ValidateDataTrait;
+use NewsParserPlugin\Exception\MyException;
 
 /**
  * Class saves received template options.
@@ -20,7 +20,7 @@ use NewsParserPlugin\Traits\ValidateDataTrait;
  *
  */
 
-class CronApiController extends \WP_REST_Controller
+class CronApiController extends RestApiController
 
 {
 
@@ -30,12 +30,6 @@ class CronApiController extends \WP_REST_Controller
      * @var EventControllerInterface
      */
     protected $event;
-    /**
-     * Response formatter controller.
-     *
-     * @var ResponseFormatterInterface
-     */
-    protected $formatter;
     /**
      * Instance of this class
      *
@@ -61,14 +55,6 @@ class CronApiController extends \WP_REST_Controller
      * @method sanitizeTemplate()
      */
     use SanitizeDataTrait;
-    /**
-     * Methods to format input and output data.
-     *
-     * @method sendError()
-     * @method sendResponse()
-     * @method getJsonFromInput()
-     */
-    use RestApiTrait;
     /**
      * Init method
      *
@@ -198,47 +184,24 @@ class CronApiController extends \WP_REST_Controller
             ),
         ));
     }
-
-
-/**
- * Check if user have relevant rights  and check nonce.
- *
- * @param string $action Should give context to what is taking place and be the same when nonce was created.
- * @param array $request_args Request arguments should contain _wpnonce field,
- * @return true|\WP_Error
- */
-    public function checkPermission($request)
-    {
-        
-        if (!current_user_can('manage_options')) {
-           return new \WP_Error('rest_api_forbidden', Errors::text('NO_RIGHTS_TO_PUBLISH'));
-        }
-        $headers = $request->get_headers();
-        $nonce = isset($headers['x_wp_nonce']) ? $headers['x_wp_nonce'][0] : '';
-
-        if (!wp_verify_nonce($nonce,'wp_rest')) {
-             return new WP_Error('rest_forbidden', esc_html__('Invalid nonce.', 'news-parser-template'), array('status' => 403));
-        }
-
-        return true;
-    }
 /**
  * Get autopilot cron options.
  *
  * @param WP_REST_Request $request Full data about the request.
- * @return WP_REST_Response Response object on success, or WP_Error object on failure.
+ * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
  */
 public function getCronOptions($request){
 
     try{
         $cron_params=$request->get_query_params();
-        $response=$this->event->trigger('cron:get', array(isset($cron_params['url'])?$cron_params['url']:null));
-    }catch(Exception $e){
-        $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
+        $crons_data=$this->event->trigger('cron:get', array(isset($cron_params['url'])?$cron_params['url']:null));
+        $response_data=$this->formatResponse()->message('success', null)->options($crons_data)->get('array');
+        return $this->sendResponse($response_data);
+    }catch(MyException $e){
+        $error_data=$this->formatResponse()->error($e->getCode())->message('error', $e->getMessage())->get('array');
+        $error_code=$e->getCode();
+        return $this->sendError($error_data,$error_code);
     }
-    $wp_response = new \WP_REST_Response( $response->get('array'),$response->getCode() );
-    return $wp_response;
-
 }
 
 /**
@@ -251,13 +214,15 @@ public function getCronOptions($request){
     {
         try{
             $cron_params=$request->get_params();
-            $response=$this->event->trigger('cron:create', array($cron_params));
-        }catch(Exception $e){
-            $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
+            $cron_data=$this->event->trigger('cron:create', array($cron_params));
+            $response_data=$this->formatResponse()->success()->message('success', Success::text('CRON_CREATED'))->options($cron_data)->get('array');
+            return $this->sendResponse($response_data);
+        }catch(MyException $e){
+            $error_data=$this->formatResponse()->error($e->getCode())->message('error', $e->getMessage())->get('array');
+            $error_code=$e->getCode();
+            return $this->sendError($error_data,$error_code);
         }
         
-        $wp_response = new \WP_REST_Response( $response->get('array'),$response->getCode());
-        return $wp_response;
     }
 
 /**
@@ -270,11 +235,12 @@ public function getCronOptions($request){
     {
         try{
             $cron_params=$request->get_query_params();
-            $response=$this->event->trigger('cron:delete', array($cron_params['url']));
-        }catch(Exception $e){
-            $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
+            $deleted_cron_data=$this->event->trigger('cron:delete', array($cron_params['url']));
+            $this->formatResponse()->message('success',Success::text('CRON_DELETED'))->options($deleted_cron_data);
+        }catch(MyException $e){
+            $error_data=$this->formatResponse()->error($e->getCode())->message('error', $e->getMessage())->get('array');
+            $error_code=$e->getCode();
+            return $this->sendError($error_data,$error_code);
         }
-        $wp_response = new \WP_REST_Response( $response->get('array'),$response->getCode() );
-        return $wp_response;
     }
 }

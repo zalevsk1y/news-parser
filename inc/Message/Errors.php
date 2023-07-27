@@ -69,6 +69,8 @@ class Errors
                 return '500 Inner Error';
             case 'UNSUPPORTED_MEDIA_TYPE';
                 return '415 Unsupported Media Type';
+            case 'CONTENT_NOT_FOUND':
+                return '404 Content Not Found';
         }
     }
 }

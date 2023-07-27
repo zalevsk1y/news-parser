@@ -19,17 +19,9 @@ use NewsParserPlugin\Utils\ResponseFormatter;
  *
  */
 
-class CronController extends BaseController 
+class CronController 
 {
     protected const CRON_TABLE_NAME=NEWS_PURSER_PLUGIN_CRON_OPTIONS_NAME;
-    /**
-     * Init function.
-     *
-     */
-    public function __construct(ResponseFormatter $formatter)
-    {
-        parent::__construct($formatter);
-    }
     /**
      * Creates cron options data and saves it.
      * 
@@ -47,7 +39,7 @@ class CronController extends BaseController
         if(!$this->isCronExists($cron_model->getInterval())){
             $this->setCron($cron_model->getInterval(),$cron_timestemp);
         }
-        return $this->formatResponse->message('success',Success::text('CRON_CREATED'))->options($cron_model->getAttributes('array'));
+        return $cron_model->getAttributes('array');
     }
     public function getAll()
     {
@@ -65,14 +57,14 @@ class CronController extends BaseController
     public function get($url=null)
     {
         $crons_data=$this->getAll();
-        if($url==null) return $this->formatResponse->message('success',Success::text('CRON_EXIST'))->options($crons_data);
+        if($url==null) return $crons_data;
         if(isset($crons_data[$url])){
             $formated_cron_data=$this->modelsFactory($crons_data[$url])->getAttributes('array');
-            return $this->formatResponse->message('success',Success::text('CRON_EXIST'))->options($formated_cron_data);
+            return $formated_cron_data;
         }
         $default_cron_options=$this->getDefaultCronOptions();
         $default_cron_options['url']=$url;   
-        return $this->formatResponse->message('info',Errors::text('NO_CRON'))->options($default_cron_options);
+        return $default_cron_options;
     }
     /**
      * Delete cron options.
@@ -94,7 +86,7 @@ class CronController extends BaseController
         }
         $default_cron_options=$this->getDefaultCronOptions();
         $default_cron_options['url']=$url;
-        return $this->formatResponse->message('success',Success::text('CRON_DELETED'))->options($default_cron_options);
+        return $default_cron_options;
     }
     /**
     * Check if there are any active cron jobs with the specified interval.

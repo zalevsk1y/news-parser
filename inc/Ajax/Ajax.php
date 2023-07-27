@@ -107,6 +107,13 @@ class Ajax
     {
         return json_decode(file_get_contents('php://input'), true);
     }
+    /**
+     * Get an instance of the response formatter.
+     * 
+     * @access protected
+     * @return ResponseFormatter Returns an instance of the ResponseFormatter class.
+     */
+
     protected function getFormatter()
     {
         

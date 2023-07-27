@@ -20,7 +20,7 @@ use NewsParserPlugin\Utils\ResponseFormatter;
  * @license  MIT
  *
  */
-class PostController extends BaseController
+class PostController
 {
     /**
      * Post model
@@ -47,9 +47,8 @@ class PostController extends BaseController
      * @param AbstractParseContent $parser
      * @param ResponseFormatter $formatter
      */
-    public function __construct(AbstractParseContent $parser, ResponseFormatter $formatter)
+    public function __construct(AbstractParseContent $parser)
     {
-        parent::__construct($formatter);
         $this->parser = $parser;
     }
     /**
@@ -63,7 +62,7 @@ class PostController extends BaseController
      */
     public function create($url, $_id,$data=false)
     {
-        try {
+        
             $parsed_url=parse_url($url);
             if (!is_array($parsed_url)) {
                 throw new MyException(Errors::text('WRONG_OPTIONS_URL'), Errors::code('BAD_REQUEST'));
@@ -86,11 +85,7 @@ class PostController extends BaseController
             $this->createPost($post,$data)->addSource($post)->addPostThumbnail($post);
                
 
-            $response = $this->formatResponse->post($post->getAttributes())->addCustomData('_id', $_id)->message('success', sprintf(Success::text('POST_SAVED'), $post->title));
-        } catch (MyException $e) {
-            $response = $this->formatResponse->error($e->getCode())->message('error', $e->getMessage())->addCustomData('_id', $_id);
-        }
-        return $response;
+        return $post->getAttributes();
     }
    
     /**

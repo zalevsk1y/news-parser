@@ -312,8 +312,11 @@ class AjaxController extends Ajax
                 }
             ),
         ));
-
-        $response=$this->event->trigger('post:create', array($request['url'],$request['_id'],$request['templateUrl']));
-        $this->sendResponse($response);
+        try{
+            $response=$this->event->trigger('post:create', array($request['url'],$request['_id'],$request['templateUrl']));
+            $this->sendResponse($this->formatter->post($response)->message('success', sprintf(Success::text('POST_SAVED'), $response['title']))->addCustomData('_id', $request['_id'])->get('array'));
+        } catch (MyException $e) {
+            $this->sendError($this->formatter->error($e->getCode())->message('error',$e->getMessage())->addCustomData('_id', $request['_id'])->get('array'));
+        }
     }
 }

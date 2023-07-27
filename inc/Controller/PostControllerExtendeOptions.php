@@ -26,7 +26,7 @@ class PostControllerExtendeOptions extends PostController{
      */
     public function create($url, $_id,$data=false)
     {
-        try {
+        
             $parsing_options=$this->templateModelsFactory($data);
             $parsed_data =$this->parser->get($url, $parsing_options->getAttributes('array'));
            
@@ -48,13 +48,8 @@ class PostControllerExtendeOptions extends PostController{
  
             //Stages of post draw creating
             $this->createPost($post,$postOptions)->addSource($post)->addPostThumbnail($post);
-               
-
-            $response = $this->formatResponse->post($post->getAttributes())->addCustomData('_id', $_id)->message('success', sprintf(Success::text('POST_SAVED'), $post->title));
-        } catch (MyException $e) {
-            $response = $this->formatResponse->error($e->getCode())->message('error', $e->getMessage())->addCustomData('_id', $_id);
-        }
-        return $response;
+            
+        return $post->getAttributes();
     }
     /**
     * Get instance of TemplateModel class.

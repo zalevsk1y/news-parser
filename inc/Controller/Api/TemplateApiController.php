@@ -2,11 +2,11 @@
 namespace NewsParserPlugin\Controller\Api;
 
 use NewsParserPlugin\Interfaces\EventControllerInterface;
-use NewsParserPlugin\Utils\ResponseFormatterStatic;
+use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Message\Errors;
-use NewsParserPlugin\Traits\RestApiTrait;
 use NewsParserPlugin\Traits\SanitizeDataTrait;
 use NewsParserPlugin\Traits\ValidateDataTrait;
+use NewsParserPlugin\Exception\MyException;
 
 /**
  * Class saves received template options.
@@ -20,7 +20,7 @@ use NewsParserPlugin\Traits\ValidateDataTrait;
  *
  */
 
-class TemplateApiController extends \WP_REST_Controller
+class TemplateApiController extends RestApiController
 
 {
 
@@ -61,14 +61,6 @@ class TemplateApiController extends \WP_REST_Controller
      * @method sanitizeTemplate()
      */
     use SanitizeDataTrait;
-    /**
-     * Methods to format input and output data.
-     *
-     * @method sendError()
-     * @method sendResponse()
-     * @method getJsonFromInput()
-     */
-    use RestApiTrait;
     /**
      * Init method
      *
@@ -120,7 +112,13 @@ class TemplateApiController extends \WP_REST_Controller
             array(
                 'methods' => \WP_REST_Server::READABLE,
                 'callback' => array($this, 'getTemplates'),
-                'permission_callback' => array($this, 'checkPermission')
+                'permission_callback' => array($this, 'checkPermission'),
+                'args' => array(
+                    'url' => array (
+                        'required' => false,
+                        'validate_callback'=>array($this,'validateUrl')
+                    )
+                )
             ),
             array(
                 'methods' => \WP_REST_Server::CREATABLE,
@@ -132,60 +130,29 @@ class TemplateApiController extends \WP_REST_Controller
                         'sanitize_callback'=>array($this,'sanitizeTemplate')
                     )
                 )
-            ),
-            array(
-                'methods' => \WP_REST_Server::EDITABLE,
-                'callback' => array($this, 'updateTemplate'),
-                'permission_callback' => array($this, 'checkPermission'),
-            ),
+            )
         ));
     }
 
 
 /**
- * Check if user have relevant rights  and check nonce.
- *
- * @param string $action Should give context to what is taking place and be the same when nonce was created.
- * @param array $request_args Request arguments should contain _wpnonce field,
- * @return true|\WP_Error
- */
-    public function checkPermission($request)
-    {
-        
-        if (!current_user_can('manage_options')) {
-           return new \WP_Error('rest_api_forbidden', Errors::text('NO_RIGHTS_TO_PUBLISH'));
-        }
-        $headers = $request->get_headers();
-        $nonce = isset($headers['x_wp_nonce']) ? $headers['x_wp_nonce'][0] : '';
-
-        if (!wp_verify_nonce($nonce,'wp_rest')) {
-             return new WP_Error('rest_forbidden', esc_html__('Invalid nonce.', 'news-parser-template'), array('status' => 403));
-        }
-
-        return true;
-    }
-/**
  * Get a list of templates.
  *
  * @param WP_REST_Request $request Full data about the request.
- * @return WP_REST_Response Response object on success, or WP_Error object on failure.
+ * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
  */
 public function getTemplates($request){
 
     try{
         $template_params=$request->get_query_params();
-        if(isset($template_params['url'])&&$this->validateUrl($template_params['url'])){
-            $url=$template_params['url'];
-        } else {
-            $url=null;
-        }
-        $response=$this->event->trigger('template:get', array($url));
-    }catch(Exception $e){
-        $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
+        $template_data=$this->event->trigger('template:get', array(isset($template_param['url'])?$template_param['url']:null));
+        $response_data=$this->formatResponse()->message('success', Success::text('TEMPLATE_EXIST'))->options( $template_data)->get('array');
+        return $this->sendResponse($response_data);
+    }catch(MyException $e){
+        $error_data=$this->formatResponse()->error($e->getCode())->message('error', $e->getMessage())->get('array');
+        $error_code=$e->getCode();
+        return $this->sendError($error_data,$error_code);
     }
-    $wp_response = new \WP_REST_Response( $response->get('array'),$response->getCode() );
-    return $wp_response;
-
 }
 
 /**
@@ -198,23 +165,13 @@ public function getTemplates($request){
     {
         try{
             $template=$request->get_params();
-            $response=$this->event->trigger('template:create', array($template['template']));
+            $new_template_data=$this->event->trigger('template:create', array($template['template']));
+            $response_data=$this->formatResponse()->message('success', Success::text('TEMPLATE_SAVED'))->options( $new_template_data)->get('array');
+            return $this->sendResponse($response_data);
         }catch(Exception $e){
-            $response=ResponseFormatterStatic::format()->error($e->getCode())->message('error', $e->getMessage());
+            $error_data=$this->formatResponse()->error($e->getCode())->message('error', $e->getMessage())->get('array');
+            $error_code=$e->getCode();
+            return $this->sendError($error_data,$error_code);
         }
-        
-        $wp_response = new \WP_REST_Response( $response->get('array'),$response->getCode());
-        return $wp_response;
-    }
-
-/**
- * Update an existing template.
- *
- * @param WP_REST_Request $request Full data about the request.
- * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
- */
-    public function updateTemplate($request)
-    {
-        // TODO: Implement method to update template
     }
 }

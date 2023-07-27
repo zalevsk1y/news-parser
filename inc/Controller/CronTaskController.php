@@ -17,7 +17,7 @@ class CronTaskController {
             {
                 $rss_list=$this->event->trigger('list:get',array($cron_options_model->getUrl()));
                 $last_parsed_post_timestamp=$cron_options_model->getTimestamp();
-                $this->parsePosts(array_filter($rss_list->get('object')->data,function($post_data) use ($last_parsed_post_timestamp){
+                $this->parsePosts(array_filter($rss_list,function($post_data) use ($last_parsed_post_timestamp){
                     return strtotime($post_data->pubDate)>$last_parsed_post_timestamp;
                 }),$cron_options_model);
                 $cron_options_model->increaseCronCalls();
