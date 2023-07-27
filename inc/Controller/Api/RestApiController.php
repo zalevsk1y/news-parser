@@ -46,8 +46,13 @@ class RestApiController extends \WP_REST_Controller
      * @param string $error_code The error code to send.
      * @return \WP_Error Returns a WP_Error object with the specified message and code.
      */
-    protected function sendError($response_message, $error_code) {
-        return new \WP_Error($response_message, $error_code);
+    protected function sendError($error_code,$response_message,$error_data='') {
+        if($error_code==500){
+            return new \WP_Error($error_code,$response_message,$error_data);
+        } else {
+            new \WP_REST_Response($error_data,$error_code);
+        }
+       
     }
     
     /**

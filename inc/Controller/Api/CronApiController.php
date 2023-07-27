@@ -220,7 +220,8 @@ public function getCronOptions($request){
         }catch(MyException $e){
             $error_data=$this->formatResponse()->error($e->getCode())->message('error', $e->getMessage())->get('array');
             $error_code=$e->getCode();
-            return $this->sendError($error_data,$error_code);
+            $error_message=$e->getMessage();
+            return $this->sendError($error_code,$error_message,$error_data);
         }
         
     }
@@ -240,7 +241,8 @@ public function getCronOptions($request){
         }catch(MyException $e){
             $error_data=$this->formatResponse()->error($e->getCode())->message('error', $e->getMessage())->get('array');
             $error_code=$e->getCode();
-            return $this->sendError($error_data,$error_code);
+            $error_message=$e->getMessage();
+            return $this->sendError($error_code,$error_message,$error_data);
         }
     }
 }

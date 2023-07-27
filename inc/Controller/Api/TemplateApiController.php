@@ -145,13 +145,14 @@ public function getTemplates($request){
 
     try{
         $template_params=$request->get_query_params();
-        $template_data=$this->event->trigger('template:get', array(isset($template_param['url'])?$template_param['url']:null));
+        $template_data=$this->event->trigger('template:get', array(isset($template_params['url'])?$template_params['url']:null));
         $response_data=$this->formatResponse()->message('success', Success::text('TEMPLATE_EXIST'))->options( $template_data)->get('array');
         return $this->sendResponse($response_data);
     }catch(MyException $e){
         $error_data=$this->formatResponse()->error($e->getCode())->message('error', $e->getMessage())->get('array');
         $error_code=$e->getCode();
-        return $this->sendError($error_data,$error_code);
+        $error_message=$e->getMessage();
+        return $this->sendError($error_code,$error_message,$error_data);
     }
 }
 
@@ -171,7 +172,8 @@ public function getTemplates($request){
         }catch(Exception $e){
             $error_data=$this->formatResponse()->error($e->getCode())->message('error', $e->getMessage())->get('array');
             $error_code=$e->getCode();
-            return $this->sendError($error_data,$error_code);
+            $error_message=$e->getMessage();
+            return $this->sendError($error_code,$error_message,$error_data);
         }
     }
 }
