@@ -13,5 +13,5 @@ export const InputFormSection = ({ buttonName, initValue, disabled }) => {
       showMessage('error', 'Please enter valid url.');
     }
   }, [PARSER_RSS_LIST, setUrlSearchParams]);
-  return <InputForm buttonName={buttonName} submitAction={inputSubmitHandler} initValue={initValue} disabled={disabled} isLoading={disabled}/>
+  return <InputForm className="np-fs-16" buttonName={buttonName} submitAction={inputSubmitHandler} initValue={initValue} disabled={disabled} isLoading={disabled}/>
 }

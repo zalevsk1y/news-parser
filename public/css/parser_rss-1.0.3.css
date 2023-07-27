@@ -779,8 +779,10 @@ body {
   flex-direction: column; }
 
 .search {
-  margin: 0 0 2% 0;
-  padding: 1% 0 2% 0; }
+  margin: auto;
+  padding: 1% 0 2% 0; 
+  width: 100%;
+}
 
 .row {
   width: 100%;
@@ -789,7 +791,6 @@ body {
 
 .search-textbox {
   height: 44px;
-  width: 100%;
   max-width: 584px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
   border-radius: 2px;
@@ -798,16 +799,12 @@ body {
 .center {
   text-align: center; }
 
-.main-button {
-  margin: 0px 3px 3px 4px;
-  border: 1px solid #c6c6c6;
-  border-radius: 2px;
-  color: #757575;
-  background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);
-  max-width: 144px;
-  min-width: 130px;
-  width: 40%;
-  height: 44px; }
+.main-input-button {
+  height:100%;
+  margin-left:1rem;
+  min-height: 40px;
+  min-width: 110px;
+}
 
 .main-button:hover {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
@@ -980,28 +977,44 @@ li {
 }
 @media screen and (max-height: 782px) {
   .main-parsing-container {
-    height: 91vh; }
+    height: 91vh; 
+  }
   .main-button {
-    margin-top: 10px; }
+    margin-top: 10px; 
+  }
   .wrap-parsing {
-    margin: 0; }
+    margin: 0; 
+  }
   .posts-wrapper {
-    width: 100%; } }
+    width: 100%; 
+  } 
+}
 
 @media screen and (max-width: 782px) {
-  .main-button {
-    margin-top: 10px; }
   .wrap-parsing {
-    margin: 0; }
+    margin: 0;
+   }
   .posts-wrapper {
-    width: 100%; }
+    width: 100%; 
+  }
   html {
-    font-size: 10px; }
+    font-size: 10px; 
+  }
   select {
-    font-size: 13px; } }
+    font-size: 13px; } 
+  }
 
 @media screen and (max-width: 1024px) {
   .main-parsing-container {
     position: relative;
-    height: auto; } }
+    height: auto; 
+  } 
+  }
 
+  @media screen and (max-width: 576px) {
+    .main-input-button {
+      height: auto;
+      width: 100%;
+      margin: 1rem 0 1rem 0;
+     }
+  }

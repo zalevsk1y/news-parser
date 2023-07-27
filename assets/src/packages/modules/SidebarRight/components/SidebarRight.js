@@ -20,7 +20,7 @@ export const SidebarRight = ({ tabs, children }) => {
   const tabNames = useMemo(() => (tabs.map((tab, index) => (
       <a
         key={tab}
-        className={`nav-link ${activeTab === index ? "active" : ""}`}
+        className={`nav-link flex-grow-1 text-center np-fs-16  ${activeTab === index ? "active" : ""}`}
         onClick={activeTabChangeHandler(index)}
       >
         {tab}
@@ -28,7 +28,7 @@ export const SidebarRight = ({ tabs, children }) => {
   return (
     <div className="modal-right-side-bar d-flex flex-column" >
       <div className="sidebar-nav">
-        <nav className="nav">
+        <nav className="nav d-flex flex-row w-100">
           {tabNames}
         </nav>
       </div>
