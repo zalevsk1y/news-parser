@@ -125,7 +125,7 @@ export class PostModel extends BaseClass{
      * @returns {string}
      */
     image(src,srcSet,alt){
-        const cleanSrc=this.sanitize(this.getSrcFromSrcSet(srcSet)),
+        const cleanSrc=srcSet?this.sanitize(this.getSrcFromSrcSet(srcSet)):this.sanitize(src),
             cleanAlt=this.sanitize(alt);
         return `<!-- wp:image --><figure class="wp-block-image"><img src="${cleanSrc}" alt="${cleanAlt}"/></figure><!-- /wp:image -->`;
     }
