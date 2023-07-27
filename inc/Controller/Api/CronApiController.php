@@ -215,7 +215,7 @@ public function getCronOptions($request){
         try{
             $cron_params=$request->get_params();
             $cron_data=$this->event->trigger('cron:create', array($cron_params));
-            $response_data=$this->formatResponse()->success()->message('success', Success::text('CRON_CREATED'))->options($cron_data)->get('array');
+            $response_data=$this->formatResponse()->message('success', Success::text('CRON_CREATED'))->options($cron_data)->get('array');
             return $this->sendResponse($response_data);
         }catch(MyException $e){
             $error_data=$this->formatResponse()->error($e->getCode())->message('error', $e->getMessage())->get('array');
@@ -237,7 +237,8 @@ public function getCronOptions($request){
         try{
             $cron_params=$request->get_query_params();
             $deleted_cron_data=$this->event->trigger('cron:delete', array($cron_params['url']));
-            $this->formatResponse()->message('success',Success::text('CRON_DELETED'))->options($deleted_cron_data);
+            $response_data=$this->formatResponse()->message('success',Success::text('CRON_DELETED'))->options($deleted_cron_data)->get('array');
+            return $this->sendResponse($response_data);
         }catch(MyException $e){
             $error_data=$this->formatResponse()->error($e->getCode())->message('error', $e->getMessage())->get('array');
             $error_code=$e->getCode();

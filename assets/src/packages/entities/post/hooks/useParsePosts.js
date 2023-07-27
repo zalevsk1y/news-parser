@@ -12,7 +12,7 @@ export const useParsePosts = () => {
         let counter=0;
         switch(mode){
             case 'race':
-                Promise.all(postsArray.map((post,index)=>parsePost(post.link,post._id,rssUrl).then(()=>{
+                Promise.allSettled(postsArray.map((post,index)=>parsePost(post.link,post._id,rssUrl).finally(()=>{
                         counter++;
                         setParsedPostsCounter(counter)
                     }))).then(()=>setIsParsing(false));
@@ -20,7 +20,7 @@ export const useParsePosts = () => {
             case 'sequence':
                 const postsArrClone=postsArray.slice();
                 const sequenceCallback=(post,postsArr)=>{
-                    parsePost(post.link,post._id).then(()=>{
+                    parsePost(post.link,post._id).finally(()=>{
                         setParsedPostsCounter(postArrLength-postsArr.length);
                         if (postsArr.length>0) {
                             sequenceCallback(postsArr.shift(),postsArr);
