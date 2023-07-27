@@ -24,14 +24,14 @@ import { useGetPostId } from '../hooks/';;
 */
 
 
-export const VisualConstructor = ({ onReady,children }) => {
+export const VisualConstructor = ({ onReady, children }) => {
     const [enableScrolling, disableScrolling] = useScrolling();
     const [frameIsReady, setFrameIsReady] = useState(false);
-    const closeVisualConstructor=useClose();
+    const closeVisualConstructor = useClose();
     const [url, isOpen] = useIsOpen();
     const [isMutating] = useIsMutating();
-    const _id=useGetPostId();
-    const isVisualConstructorReady = useMemo(() => frameIsReady  && !isMutating, [frameIsReady, isMutating]);
+    const _id = useGetPostId();
+    const isVisualConstructorReady = useMemo(() => frameIsReady && !isMutating, [frameIsReady, isMutating]);
     useLayoutEffect(() => {
         if (isOpen) {
             disableScrolling();
@@ -39,10 +39,10 @@ export const VisualConstructor = ({ onReady,children }) => {
             enableScrolling();
         }
     }, [isOpen]);
-    useLayoutEffect(()=>setFrameIsReady(false),[url])
+    useLayoutEffect(() => setFrameIsReady(false), [url])
     const onFrameReady = useCallback(() => setFrameIsReady(true))
-    if (frameIsReady&&Array.isArray(onReady)){
-        onReady.forEach(func=>func({url,_id}))
+    if (frameIsReady && Array.isArray(onReady)) {
+        onReady.forEach(func => func({ url, _id }))
     }
 
     return (
@@ -60,15 +60,17 @@ export const VisualConstructor = ({ onReady,children }) => {
                         </span>
                     </button>
                 </div>
-                {!isVisualConstructorReady && <LoadingSpinner />}
-                <div className="modal-main">
-                    <div className="parsed-data-container">
-                        <Frame url={url} onReady={onFrameReady} />
+                <div className="d-flex flex-column flex-grow-1">
+                    {!isVisualConstructorReady && <LoadingSpinner />}
+                    <div className="modal-main">
+                        <div className="parsed-data-container">
+                            <Frame url={url} onReady={onFrameReady} />
+                        </div>
+                        <div className="resize-drag-bar"></div>
+                        {children[0]}
                     </div>
-                    <div className="resize-drag-bar"></div>
-                    {children[0]}
+                    {children[1]}
                 </div>
-                {children[1]}
             </div>
             <div className="media-modal-backdrop"></div>
         </div>
