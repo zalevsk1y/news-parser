@@ -28,11 +28,10 @@ export const sidebar = (state = initialState, action) => {
         case MAP_POST_TAGS:
             return { ...state, tags: action.payload }
         case PUSH_POST_TAG:
-            return { ...state, tags: [...state.tags, action.payload] }
+            return { ...state, tags: {...state.tags, [action.payload.name]:action.payload} }
         case SELECT_POST_TAG:
             return { ...state, selectedTags: [...state.selectedTags, action.payload.id] }
         case DISELECT_POST_TAG:
-            if (!state.selectedTags.includes(action.payload.id)) return { ...state }
             return { ...state, selectedTags: state.selectedTags.filter(tagId => tagId !== action.payload.id) }
         //Status&Visibility
         case SET_POST_PUBLISH_DATE:

@@ -7,4 +7,3 @@ export {SidebarItemExpandable} from './SidebarItemExpandable';
 export {PopUpTimeDate} from './PopUpTimeDate';
 export {CategoriesCheckboxList} from './CategoriesCheckboxList';
 export {CategoiresOptionList} from './CategoiresOptionList';
-export {TagInput} from './TagInput';

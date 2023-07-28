@@ -24,10 +24,7 @@ export const useFetchCategories = () => {
     const startFetching = () => {
         options.searchParams.page=1;
         setIsFetching(true);
-        return requestApi(options, success, error).then(respData=>{
-            setIsFetching(false)
-            return respData;
-        })
+        return requestApi(options, success, error).finally(()=>setIsFetching(false))
     }
     return [isFetching, startFetching];
 }

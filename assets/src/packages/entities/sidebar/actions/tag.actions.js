@@ -27,14 +27,6 @@ export const pushTag = (tagObject) => {
     }
 }
 
-export const createTag = (name) => {
-    return {
-        type: CRAETE_POST_TAG,
-        payload: {
-            name
-        }
-    }
-}
 
 export const selectTag = (id) => {
     return {

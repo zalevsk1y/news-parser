@@ -32,7 +32,6 @@ import { useFetchCategories } from "@news-parser/entities/sidebar/hooks/useFetch
 */
 
 const CategoriesGroup = () => {
-  const [isFetching, startFetcingCategories] = useFetchCategories()
   const [categories, selected] = useGetCategories();
   const [selectCategory, deselectCategory] = useSelectCategory();
   const [filterValue, setFilterValue, filteredCategories] = useCategoryFilter(categories);
@@ -47,7 +46,6 @@ const CategoriesGroup = () => {
     }
   }, [selectCategory, deselectCategory]);
   const categoryInputHandler = useCallback((event) => setFilterValue(event.target.value), []);
-  useEffect(() => startFetcingCategories(), []);
   return (
     <>
       <SidebarItem>

@@ -1,31 +1,27 @@
 import { useDispatch } from "react-redux";
 import { requestApi } from "@news-parser/helpers/api/requestApi";
 import { API_WP_TAGS, POST } from "@news-parser/config/constants";
-import { selectTag } from '../actions/tag.actions';
-import { useCallback, useState } from "react";
-import { useFetchTags } from "./useFetchTags";
+import { pushTag } from '../actions/tag.actions';
+import { useState } from "react";
 
-export const useCreateTag = (tags) => {
+export const useCreateTag = () => {
     const dispatch = useDispatch();
-    const [isFetching, startFetching] = useFetchTags();
     const [isMutating, setIsMutating] = useState(false);
     const success = (entity, event, tag) => {
-        startFetching().then(() => {
-            dispatch(selectTag(tag.id));
-        })
-        return tag;
+        const { name, id } = tag;
+        dispatch(pushTag({ name, id }));
+        return { name, id };
     };
     const error = (entity, event, errorData) => {
         const { msg } = errorData;
-        return msg;
+        throw errorData;
     };
-    const createTag = useCallback((tag) => {
-        const options = { entity: API_WP_TAGS, event: POST, data: tag };
+    const createTag = (tagName) => {
+        const options = { entity: API_WP_TAGS, event: POST, data: { name: tagName } };
         setIsMutating(true);
-        return requestApi(options, success, error).then(respData=>{
-            setIsMutating(false);
-            return respData;
-        })
-    }, [tags])
-    return [isFetching, createTag];
+        return requestApi(options, success, error).finally(() =>{
+            setIsMutating(false)
+        });
+    };
+    return [isMutating, createTag];
 } 

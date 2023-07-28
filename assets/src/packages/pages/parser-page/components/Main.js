@@ -4,7 +4,7 @@ import SidebarRight, { SidebarRightTemplateSingle, SidebarRightPost } from '@new
 import { VisualConstructor, VisualConstructorFooterPage as VisualConstructorFooter } from '@news-parser/widgets/visual-constructor/';
 import { useOpenVisualConstructor } from '@news-parser/widgets/visual-constructor/hooks';
 import { InputFormSection } from './InputFormSection';
-import { PostsSection } from './PostsSection';
+import { ParsedPostsSection } from './ParsedPostsSection';
 import { useCreateLocalPost } from '@news-parser/entities/post/hooks/';
 
 /**
@@ -35,7 +35,7 @@ const Main = () => {
         </div>
       <Message />
       <InputFormSection buttonName="Parse page" inputSubmit={openVisualConstructorHandler} />
-      <PostsSection />
+      <ParsedPostsSection />
     </div>
   );
 }

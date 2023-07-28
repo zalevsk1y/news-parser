@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo, useLayoutEffect, useCallback } from "react";
+import React, { useState, useMemo, useLayoutEffect, useEffect, useCallback } from "react";
 import { Frame } from './Frame';
 import { useScrolling } from "../../../hooks/useScrolling";
 import { LoadingSpinner } from "@news-parser/ui/visual-constructor/LoadingSpinner";
@@ -7,7 +7,8 @@ import { LoadingSpinner } from "@news-parser/ui/visual-constructor/LoadingSpinne
 import { useIsOpen } from '../hooks/visual-constructor/useIsOpen';
 import { useIsMutating } from '../hooks/';
 import { useClose } from "../hooks/";
-import { useGetPostId } from '../hooks/';;
+import { useGetPostId } from '../hooks/';
+import { useFetchTags, useFetchCategories } from '@news-parser/entities/sidebar/hooks'
 
 
 /**
@@ -25,6 +26,8 @@ import { useGetPostId } from '../hooks/';;
 
 
 export const VisualConstructor = ({ onReady, children }) => {
+    const [isTagsFetching, fetchTags] = useFetchTags();
+    const [isCategoriesFetching, fetchCategories] = useFetchCategories();
     const [enableScrolling, disableScrolling] = useScrolling();
     const [frameIsReady, setFrameIsReady] = useState(false);
     const closeVisualConstructor = useClose();
@@ -32,6 +35,10 @@ export const VisualConstructor = ({ onReady, children }) => {
     const [isMutating] = useIsMutating();
     const _id = useGetPostId();
     const isVisualConstructorReady = useMemo(() => frameIsReady && !isMutating, [frameIsReady, isMutating]);
+    useEffect(() => {
+        fetchTags();
+        fetchCategories();
+    }, [])
     useLayoutEffect(() => {
         if (isOpen) {
             disableScrolling();
@@ -61,7 +68,7 @@ export const VisualConstructor = ({ onReady, children }) => {
                     </button>
                 </div>
                 <div className="d-flex flex-column flex-grow-1">
-                    {!isVisualConstructorReady && <LoadingSpinner />}
+                    {!isVisualConstructorReady && <LoadingSpinner style={{ paddingBottom: '22vh' }} />}
                     <div className="modal-main">
                         <div className="parsed-data-container">
                             <Frame url={url} onReady={onFrameReady} />

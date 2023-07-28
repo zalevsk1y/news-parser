@@ -1,3 +1,3 @@
-export { ActionAlert } from './ActionAlert';
 export { InputForm } from './InputForm';
 export { ProgressIndicator } from './ProgressIndicator';
+export {TagInput} from './TagInput';

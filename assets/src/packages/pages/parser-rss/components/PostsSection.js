@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import Posts from '@news-parser/modules/Posts';
-import { ActionAlert } from '@news-parser/components/ActionAlert';
+import { ActionAlert } from '@news-parser/ui/ActionAlert';
 import { useGetPosts, useSelectPost } from '@news-parser/entities/post/hooks/'
 import { useGetTemplate } from '@news-parser/entities/template/hooks/'
 import { useShowMessage } from '@news-parser/entities/message/hooks/'
