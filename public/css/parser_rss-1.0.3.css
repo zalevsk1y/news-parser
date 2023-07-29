@@ -472,7 +472,8 @@ frame {
   font-size: 13px; }
 
 .tag-item-name {
-  padding-left: 3px; }
+  padding-left: 3px; 
+}
 
 .tag-item-token {
   flex-grow: 0;
@@ -482,11 +483,13 @@ frame {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 6px 6px 6px; }
+  margin: 6px 6px 6px; 
+}
 
 .tag-item-token button {
   padding: 0;
-  border: none; }
+  border: none; 
+}
 
 .pop-up {
   position: absolute;

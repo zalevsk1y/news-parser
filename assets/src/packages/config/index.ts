@@ -5,7 +5,41 @@ import { API_WP_TAGS, API_WP_CATEGORIES, PARSER_RSS_LIST, PARSE, RAW_HTML, PARSE
 import { POST, GET, AJAX, REST, CREATE, LIST, UPDATE, DELETE } from './constants';
 const NEWS_PARSER_REST_PREFIX = endpoints.rootRestApi + 'news-parser-plugin/v1/';
 
-const config = {
+export interface Config {
+    mode: string;
+    restRootUrl: string;
+    pluginRoot: string;
+    editPostLink: string;
+    api: {
+      [key: string]: {
+        [key: string]: {
+          method: string;
+          type: string;
+          nonce: string | null;
+          url: string;
+          perPage?: number;
+          orderBy?: string;
+          order?: string;
+          _fields?: string;
+          _locale?: string;
+        };
+      };
+    };
+    errorReport: {
+      url: string;
+    };
+    defaultImage: string;
+    spinnerImage: string;
+    amedia: {
+      phone: number;
+    };
+    lang: {
+      class: string;
+    };
+  }
+  
+
+const config:Config = {
     mode: 'development',
     restRootUrl: settings.root,
     pluginRoot: settings.pluginUrl,

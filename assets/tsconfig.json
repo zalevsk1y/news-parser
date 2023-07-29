@@ -1,0 +1,18 @@
+{
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "**/*.test.tsx"],
+    "compilerOptions": {
+      "target": "es5",
+      "module": "CommonJS",
+      "lib": ["es6", "dom"],
+      "jsx": "react",
+      "sourceMap": true,
+      "strict": true,
+      "esModuleInterop": true,
+      "baseUrl": "./src/packages",
+      "paths": {
+        "@news-parser/config":["./config"]
+      }
+    }
+  }
+  

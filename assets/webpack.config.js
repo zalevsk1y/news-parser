@@ -34,7 +34,11 @@ module.exports=(env,args)=>{
 					options:{
 						presets:["@babel/preset-env","@babel/preset-react"]
 					}
-					
+				},
+				{
+					test: /\.ts$/,
+					use: 'ts-loader',
+					exclude: /node_modules/
 				},
 				{
 					test: /\.s(a|c)ss$/,
