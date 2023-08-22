@@ -13,8 +13,6 @@ export interface IconsProps {
  * @param {string} title Icon title.
  * @param {function} onClick Function click handler.  
  */
-export const Icons: React.FC<IconsProps> = ({ className, title, onClick }) => {
-    return (
-        <span className={className} title={title} onClick={onClick}></span>
-    )
-} 
+export const Icons: React.FC<IconsProps> = ({ className, title, onClick }) => (
+        <span className={className} title={title} onClick={onClick} />
+    ) 

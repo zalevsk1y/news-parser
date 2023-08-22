@@ -4,15 +4,24 @@
     "compilerOptions": {
       "target": "es5",
       "module": "CommonJS",
-      "lib": ["es6", "dom"],
+      "lib": ["es2022", "dom"],
       "jsx": "react",
       "sourceMap": true,
       "strict": true,
       "esModuleInterop": true,
       "baseUrl": "./src/packages",
       "paths": {
-        "@news-parser/config":["./config"]
+        "@news-parser/entities/*":["./entities/*"],
+        "@news-parser/components/*":["./components/*"],
+        "@news-parser/modules/*":["./modules/*"],
+        "@news-parser/config/*":["./config/*"],
+        "@news-parser/error-handler/*":["./error-handler/*"],
+        "@news-parser/widgets/*":["./widgets/*"],
+        "globals":["./config/globals.d.ts"],
+        "@news-parser/types":["./types/index.d.ts"],
+        "@news-parser/helpers/*":["./helpers/*"],
+        "@news-parser/ui/*":["./ui/*"]
       }
     }
-  }
+}
   

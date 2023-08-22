@@ -1,0 +1,26 @@
+.sidebar-items-group {
+  width: 300px; 
+}
+.sidebar-items-group-closed {
+  overflow: hidden;
+  height: 70px; 
+}
+
+.check-switch{
+    font-size: 21px;
+    cursor: pointer;
+}
+
+.check-switch-on{
+    transform: rotate(180deg);
+}
+.check-switch-off{
+    transform: rotate(0deg);
+}
+
+@media screen and (max-width: 375px) {
+    .sidebar-items-group{
+        width: 100vw;
+    }
+ 
+}

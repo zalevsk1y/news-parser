@@ -1,0 +1,52 @@
+.tag-item-container{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.tag-input-container {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 2px;
+    cursor: text;
+    overflow: hidden;
+    width: 100%;
+    min-height: 38px;
+    display: flex;
+    flex-flow: row wrap; 
+}
+.tag-input-container-active{
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+    outline: 2px solid transparent;
+}
+.tag-input-container > input {
+    min-width: 0px;
+    flex-grow: 1;
+    flex-basis: 50px;
+    border: none;
+    display: inline-block;
+    width: auto; }
+    .tag-input-container > input:focus {
+        border: none;
+        box-shadow: none;
+        outline: none;
+        font-size: 13px; 
+    }
+    .tag-item-name {
+        padding-left: 3px; 
+      }
+      
+      .tag-item-token {
+        flex-grow: 0;
+        background-color: #efefef;
+        border-radius: 2px;
+        min-height: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 6px 6px 6px; 
+      }
+      
+      .tag-item-token button {
+        padding: 0;
+        border: none; 
+      }
+      

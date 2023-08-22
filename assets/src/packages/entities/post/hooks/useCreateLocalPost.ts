@@ -1,0 +1,30 @@
+import { useDispatch } from 'react-redux';
+import { Post } from 'types/post';
+import { setList } from '../actions/list.actions';
+import { useGetPosts } from './useGetPosts';
+
+namespace useCreateLocalPost {
+    export type UseCreateLocalPostHandler = (post: Post) => Post['_id'];
+    export type UseCreateLocalPost = () => UseCreateLocalPostHandler;
+}
+
+/**
+ * Custom hook for showing messages by dispatching a Redux action.
+ *
+ * @returns {Function} A function to show a message by dispatching the corresponding action.
+ * - type: The type of the message action.
+ * - text: The text content of the message.
+ */
+
+export const useCreateLocalPost: useCreateLocalPost.UseCreateLocalPost = () => {
+    const dispatch = useDispatch();
+    const posts = useGetPosts('short');
+    const createLocalPostHandler: useCreateLocalPost.UseCreateLocalPostHandler = (postData) => {
+        postData._id = posts.length;
+        postData.pubDate = (new Date()).toUTCString();
+        posts.push({ ...postData });
+        dispatch(setList(posts));
+        return postData._id;
+    }
+    return createLocalPostHandler;
+}

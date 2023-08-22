@@ -1,12 +1,12 @@
 import { newsParserSettings as settings, newsParserApiEndpoints as endpoints } from 'globals';
-import { TEMPLATE, CRON } from './constants'
-import { WP_POST, MEDIA, PAGE } from './constants';
-import { API_WP_TAGS, API_WP_CATEGORIES, PARSER_RSS_LIST, PARSE, RAW_HTML, PARSER_RSS_PAGE } from './constants';
-import { POST, GET, AJAX, REST, CREATE, LIST, UPDATE, DELETE } from './constants';
-const NEWS_PARSER_REST_PREFIX = endpoints.rootRestApi + 'news-parser-plugin/v1/';
+import { configConstantsEntities,configConstantsMethods,cofigConstantsEvents } from './constants';
+
+const NEWS_PARSER_REST_PREFIX = `${endpoints.rootRestApi  }news-parser-plugin/v1/`;
+
 
 export interface Config {
     mode: string;
+    rootUrl: string;
     restRootUrl: string;
     pluginRoot: string;
     editPostLink: string;
@@ -41,123 +41,124 @@ export interface Config {
 
 const config:Config = {
     mode: 'development',
-    restRootUrl: settings.root,
+    rootUrl: endpoints.root,
+    restRootUrl: settings.restRoot,
     pluginRoot: settings.pluginUrl,
     editPostLink: settings.editPostLink,
     api: {
-        [PARSER_RSS_LIST]: {
-            [PARSE]: {
-                method: POST,
-                type: AJAX,
+        [configConstantsEntities.PARSER_RSS_LIST]: {
+            [cofigConstantsEvents.PARSE]: {
+                method: configConstantsMethods.POST,
+                type: cofigConstantsEvents.AJAX,
                 nonce: settings.ajaxApiNonce,
-                url: endpoints[LIST]
+                url: endpoints[configConstantsEntities.LIST]
             }
         },
-        ///visual-constructor.html
-        [RAW_HTML]: {
-            [PARSE]: {
-                method: POST,
-                type: AJAX,
+        /// visual-constructor.html
+        [configConstantsEntities.RAW_HTML]: {
+            [cofigConstantsEvents.PARSE]: {
+                method: configConstantsMethods.POST,
+                type: cofigConstantsEvents.AJAX,
                 nonce: settings.ajaxApiNonce,
-                url: endpoints[RAW_HTML]
+                url: endpoints[configConstantsEntities.RAW_HTML]
             }
         },
-        [PAGE]: {
-            [PARSE]: {
-                method: POST,
-                type: AJAX,
+        [configConstantsEntities.PAGE]: {
+            [cofigConstantsEvents.PARSE]: {
+                method: configConstantsMethods.POST,
+                type: cofigConstantsEvents.AJAX,
                 nonce: settings.ajaxApiNonce,
-                url: endpoints[PARSER_RSS_PAGE]
+                url: endpoints[configConstantsEntities.PARSER_RSS_PAGE]
             }
         },
-        [MEDIA]: {
-            [CREATE]: {
-                method: POST,
-                type: AJAX,
+        [configConstantsEntities.MEDIA]: {
+            [cofigConstantsEvents.CREATE]: {
+                method: configConstantsMethods.POST,
+                type: cofigConstantsEvents.AJAX,
                 nonce: settings.ajaxApiNonce,
-                url: endpoints[MEDIA]
+                url: endpoints[configConstantsEntities.MEDIA]
             }
         },
-        [TEMPLATE]: {
-            [CREATE]: {
-                method: POST,
-                type: REST,
+        [configConstantsEntities.TEMPLATE]: {
+            [cofigConstantsEvents.CREATE]: {
+                method: configConstantsMethods.POST,
+                type: cofigConstantsEvents.REST,
                 nonce: settings.wpRestApiNonce,
-                url: NEWS_PARSER_REST_PREFIX + 'templates'
+                url: `${NEWS_PARSER_REST_PREFIX  }templates`
             },
-            [GET]: {
-                method: GET,
-                type: REST,
+            [cofigConstantsEvents.GET]: {
+                method: configConstantsMethods.GET,
+                type: cofigConstantsEvents.REST,
                 nonce: settings.wpRestApiNonce,
-                url: NEWS_PARSER_REST_PREFIX + 'templates'
+                url: `${NEWS_PARSER_REST_PREFIX  }templates`
             }
         },
-        [CRON]: {
-            [UPDATE]: {
-                method: POST,
-                type: REST,
+        [configConstantsEntities.CRON]: {
+            [cofigConstantsEvents.UPDATE]: {
+                method: configConstantsMethods.POST,
+                type: cofigConstantsEvents.REST,
                 nonce: settings.wpRestApiNonce,
-                url: NEWS_PARSER_REST_PREFIX + 'cron'
+                url: `${NEWS_PARSER_REST_PREFIX  }cron`
             },
-            [GET]: {
-                method: GET,
-                type: REST,
+            [cofigConstantsEvents.GET]: {
+                method: configConstantsMethods.GET,
+                type: cofigConstantsEvents.REST,
                 nonce: settings.wpRestApiNonce,
-                url: NEWS_PARSER_REST_PREFIX + 'cron'
+                url: `${NEWS_PARSER_REST_PREFIX  }cron`
             },
-            [DELETE]: {
-                method: DELETE,
-                type: REST,
+            [cofigConstantsEvents.DELETE]: {
+                method: configConstantsMethods.DELETE,
+                type: cofigConstantsEvents.REST,
                 nonce: settings.wpRestApiNonce,
-                url: NEWS_PARSER_REST_PREFIX + 'cron'
+                url: `${NEWS_PARSER_REST_PREFIX  }cron`
             }
         },
-        //visual-constructor.post-draft
-        [WP_POST]: {
-            [CREATE]: {
-                method: POST,
-                type: REST,
+        // visual-constructor.post-draft
+        [configConstantsEntities.WP_POST]: {
+            [cofigConstantsEvents.CREATE]: {
+                method: configConstantsMethods.POST,
+                type: cofigConstantsEvents.REST,
                 nonce: settings.wpRestApiNonce,
-                url: endpoints.rootRestApi + 'wp/v2/posts'
+                url: `${endpoints.rootRestApi  }wp/v2/posts`
             }
         },
-        [API_WP_CATEGORIES]: {
-            [GET]: {
-                method: GET,
-                type: REST,
+        [configConstantsEntities.API_WP_CATEGORIES]: {
+            [cofigConstantsEvents.GET]: {
+                method: configConstantsMethods.GET,
+                type: cofigConstantsEvents.REST,
                 nonce: null,
-                url: endpoints.rootRestApi + 'wp/v2/categories&orderby=name&order=asc&_fields=id%2Cname%2Cparent&_locale=user',
+                url: `${endpoints.rootRestApi  }wp/v2/categories&orderby=name&order=asc&_fields=id%2Cname%2Cparent&_locale=user`,
                 perPage: 100,
                 orderBy: 'name',
                 order: 'asc',
                 _fields: 'id%2Cname%2Cparent',
                 _locale: 'user'
             },
-            [POST]: {
-                method: POST,
-                type: REST,
+            [cofigConstantsEvents.POST]: {
+                method: configConstantsMethods.POST,
+                type: cofigConstantsEvents.REST,
                 nonce: settings.wpRestApiNonce,
-                url: endpoints.rootRestApi + 'wp%2Fv2%2Fcategories&context=edit&_locale=user',
+                url: `${endpoints.rootRestApi  }wp%2Fv2%2Fcategories&context=edit&_locale=user`,
                 _locale: 'user'
             }
         },
-        [API_WP_TAGS]: {
-            [GET]: {
-                method: GET,
-                type: REST,
+        [configConstantsEntities.API_WP_TAGS]: {
+            [cofigConstantsEvents.GET]: {
+                method: configConstantsMethods.GET,
+                type: cofigConstantsEvents.REST,
                 nonce: null,
-                url: endpoints.rootRestApi + 'wp/v2/tags&orderby=count&order=desc&_fields=id%2Cname%2Ccount&_locale=user',
+                url: `${endpoints.rootRestApi  }wp/v2/tags&orderby=count&order=desc&_fields=id%2Cname%2Ccount&_locale=user`,
                 perPage: 100,
                 orderBy: 'count',
                 order: 'desc',
                 _fields: 'id%2Cname%2Ccount',
                 _locale: 'user'
             },
-            [POST]: {
-                method: POST,
-                type: REST,
+            [cofigConstantsEvents.POST]: {
+                method: configConstantsMethods.POST,
+                type: cofigConstantsEvents.REST,
                 nonce: settings.wpRestApiNonce,
-                url: endpoints.rootRestApi + 'wp/v2/tags&_locale=user',
+                url: `${endpoints.rootRestApi  }wp/v2/tags&_locale=user`,
                 _locale: 'user'
             }
         }
@@ -166,8 +167,8 @@ const config:Config = {
     errorReport: {
         url: 'https://github.com/zalevsk1y/news-parser/issues/new'
     },
-    defaultImage: settings.pluginUrl + '/public/images/Grey-Gradient.png',
-    spinnerImage: settings.pluginUrl + '/public/images/loading.gif',
+    defaultImage: `${settings.pluginUrl  }/public/images/Grey-Gradient.png`,
+    spinnerImage: `${settings.pluginUrl  }/public/images/loading.gif`,
     amedia: {
         phone: 782
     },

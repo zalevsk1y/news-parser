@@ -1,0 +1,22 @@
+.pop-up {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  padding: 10px;
+  left: 38px;
+  margin-right: 45px;
+  top: 38px;
+  z-index: 999999;
+}
+.pop-up-open {
+  display: block; 
+}
+
+.pop-up-close {
+  display: none; 
+}
+
+.pop-up input {
+  margin-bottom: 10px; 
+}

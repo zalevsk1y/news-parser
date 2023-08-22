@@ -1,0 +1,26 @@
+.post-container {
+    float: left;
+    width: 30%;
+    margin: 1.5%;
+    min-width: 275px;
+    background-color: #fff;
+    border: 1px solid #e4e6eb;
+    overflow: hidden;
+    border-radius: 4px;
+    transition: .3s;
+    display: flex;
+    flex-direction: column; 
+}
+  
+  .highlight {
+    box-shadow: 3px 2px 5px rgba(0, 0, 0, 0.3); 
+}
+@media screen and (max-width: 1307px) {
+    .post-container {
+      width: 100%; } 
+}
+@media screen and (max-width: 782px) {
+    .post-container {
+        width: 80%; 
+    }
+}

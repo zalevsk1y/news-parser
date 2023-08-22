@@ -6,11 +6,14 @@
     "node": "~12.22.12"
   },
   "dependencies": {
+    "@types/react-dom": "17.0.2",
     "dompurify": "2.2.8",
+    "@types/dompurify":"3.0.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-redux": "7.2.4",
-    "redux": "4.1.0"
+    "redux": "4.1.0",
+    "typescript": "^5.1.6"
   },
   "scripts": {
     "test": "jest",
@@ -18,29 +21,39 @@
     "build": "webpack --mode production",
     "dev": "webpack --mode development",
     "start": "webpack-dev-server",
-    "lint": "eslint ."
+    "lint": "eslint --ext .js,.ts,.tsx ."
   },
   "devDependencies": {
     "@babel/core": "7.21.4",
     "@babel/plugin-proposal-class-properties": "7.18.6",
     "@redux-devtools/extension": "3.2.5",
-    "babel-jest": "26.6.3",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
+    "babel-jest": "29.6.3",
     "babel-loader": "8.2.2",
-    "babel-preset-react-app": "9.1.2",
+    "babel-preset-react-app": "10.0.1",
     "body-parser": "1.20.2",
     "clean-webpack-plugin": "3.0.0",
     "css-loader": "3.6.0",
     "css-minimizer-webpack-plugin": "3.4.1",
-    "eslint": "8.45.0",
-    "eslint-plugin-react": "7.33.0",
+    "cssnano": "6.0.1",
+    "eslint": "^8.47.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "8.0.0",
+    "eslint-import-resolver-webpack": "0.13.7",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-prettier": "5.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "file-loader": "6.2.0",
     "mini-css-extract-plugin": "1.5.0",
-    "sass-loader": "8.0.0",
-    "terser-webpack-plugin": "4.1.0",
+    "prettier": "3.0.2",
+    "terser-webpack-plugin": "5.3.9",
+    "ts-loader": "9.4.4",
     "webpack": "5.78.0",
     "webpack-cli": "4.10.0",
-    "webpack-dev-server": "3.11.2",
-    "webpack-merge": "5.8.0",
-    "typescript":"5.1.6"
+    "webpack-dev-server": "4.15.1",
+    "webpack-merge": "5.8.0"
   }
 }
