@@ -1,11 +1,9 @@
-const webpack = require('webpack');
 const path = require('path');
 const VERSION = (require('./package.json').version);
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('css-minimizer-webpack-plugin');
-const cssnano = require('cssnano');
 
 
 module.exports = (env, args) => {
@@ -48,7 +46,7 @@ module.exports = (env, args) => {
       new CleanWebpackPlugin(),
       new MiniCssExtractPlugin({
         filename: `../css/[name]-${VERSION}.css`,
-      }),
+      })
 
     ],
     optimization: {

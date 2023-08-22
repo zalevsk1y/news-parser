@@ -54,7 +54,7 @@ class Main
         \wp_enqueue_style(NEWS_PARSER_PLUGIN_SLUG . '-bootstrap-icons', "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
         
     // dev style 
-        \wp_enqueue_style(NEWS_PARSER_PLUGIN_SLUG . '-dev-styles', NEWS_PARSER_PLUGIN_URL . '/public/css/dev/dev-styles.css');
+     //   \wp_enqueue_style(NEWS_PARSER_PLUGIN_SLUG . '-dev-styles', NEWS_PARSER_PLUGIN_URL . '/public/css/dev/dev-styles.css');
         if (strrpos($hook, $this->config->menu->subs[0]->menu_slug) !== false||strrpos($hook, $this->config->menu->subs[1]->menu_slug) !== false||strrpos($hook, $this->config->menu->subs[2]->menu_slug) !== false) {
             \wp_enqueue_style(NEWS_PARSER_PLUGIN_SLUG . '-media_views', NEWS_PARSER_PLUGIN_URL . '/public/css/media-views.css');
             \wp_enqueue_style(NEWS_PARSER_PLUGIN_SLUG . '-main', NEWS_PARSER_PLUGIN_URL.'/public/css/parser_rss-'.NEWS_PARSER_PLUGIN_VERSION.'.css');
@@ -64,7 +64,7 @@ class Main
             } elseif (strrpos($hook, $this->config->menu->subs[1]->menu_slug)){
                 \wp_enqueue_script('main-parser-page-bundle', 'http://localhost:5080/parser_page-'.NEWS_PARSER_PLUGIN_VERSION.'.bundle.js');
             } elseif (strrpos($hook, $this->config->menu->subs[2]->menu_slug)){
-                \wp_enqueue_script('main-parser-page-bundle', 'http://localhost:5080/autopilot-'.NEWS_PARSER_PLUGIN_VERSION.'.bundle.js');
+                \wp_enqueue_script('main-parser-autopilot-bundle', 'http://localhost:5080/autopilot-'.NEWS_PARSER_PLUGIN_VERSION.'.bundle.js');
             }
             \wp_enqueue_script(array(NEWS_PARSER_PLUGIN_SLUG.'-rest-nonce',NEWS_PARSER_PLUGIN_SLUG.'-rest-api'));
             $nonce=array(
