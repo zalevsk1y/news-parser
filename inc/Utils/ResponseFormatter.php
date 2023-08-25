@@ -26,8 +26,7 @@ class ResponseFormatter {
      *
      * @var array
      */
-    protected $data=array('code'=>200,'msg'=>false);
-    
+    protected $data=array();
     /**
      * Format answer after post draw was created
      *
@@ -63,9 +62,9 @@ class ResponseFormatter {
      */
     public function dialog($type, $data)
     {
-        $this->data['dialog']=array(
+        $this->data['data']=array(
             'type'=>$type,
-            'data'=>$data
+            'dialogData'=>$data
         );
             return $this;
     }
@@ -116,9 +115,9 @@ class ResponseFormatter {
     {
         
         if ($status=='none') {
-            $this->data['msg']=false;
+            $this->data['message']=false;
         } else {
-            $this->data['msg']=array(
+            $this->data['message']=array(
             
                     'type'=>esc_html($status),
                     'text'=>esc_html($text),

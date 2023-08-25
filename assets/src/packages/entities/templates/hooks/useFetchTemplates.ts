@@ -4,6 +4,7 @@ import { requestApi } from '@news-parser/helpers/api/requestApi';
 import { configConstantsEntities, cofigConstantsEvents } from '@news-parser/config/constants';
 import { ResponseType } from '@news-parser/types';
 import { setTemplates } from '../actions/templates.actions';
+import { MessageFormat } from 'types/message';
 
 namespace useFetchTemplates {
     export type TemplatesResponseType = ResponseType<Array<string>>;
@@ -29,7 +30,8 @@ export const useFetchTemplates: useFetchTemplates.UseFetchTemplates = () => {
             return new Promise(resoleve => resoleve(templatesDate))
         };
         const error: requestApi.RequestApiError = (errorData) => {
-            throw new Error(errorData.msg)
+            const {data}=errorData;
+            throw new Error(data.message.text);
         };
         const fetchTemplates = () => {
             const options = { entity: configConstantsEntities.TEMPLATE, event: cofigConstantsEvents.GET, data: null };

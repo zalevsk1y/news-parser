@@ -45,7 +45,7 @@ export const PostsSection: React.FC<PostsSectionProps> = ({ isFetching, rssUrl }
             </ProgressIndicator>
             <ActionAlert hidden={selectedPostsCount === 0 || isParsing} >
                 <span className='flex-grow-1 lh-2'>{postsParseMessage}</span>
-                <button className="btn btn-secondary" onClick={parseSelectedHandler} disabled={!!rssUrl}>Parse</button>
+                <button className="btn btn-secondary" onClick={parseSelectedHandler} disabled={!rssUrl}>Parse</button>
             </ActionAlert>
             {!isFetching && <Posts selectPost={toggleSelectPostHandler} posts={posts} openEditor={openVisualConstructor} />}
         </>

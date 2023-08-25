@@ -5,6 +5,7 @@ import { requestApi } from '@news-parser/helpers/api/requestApi';
 import { CronOptions } from 'types/cronOptions';
 import { ResponseType } from '@news-parser/types';
 import { setCronOpions } from '../actions/cronOptions.actions';
+import { MessageFormat } from 'types/message';
 
 namespace useMutateCronOptions {
     export type IsMutating = boolean;
@@ -30,8 +31,8 @@ export const useMutateCronOptions: useMutateCronOptions.UseMutateCronOptions = (
         return new Promise(resolve => resolve(cronData))
     };
         const error: requestApi.RequestApiError = (errorData) => {
-            const { msg } = errorData;
-            throw new Error(msg);
+            const { data } = errorData;
+            throw new Error(data.message.text);
         };
         const mutateCronData: useMutateCronOptions.MutatCronData = (cronData, event = cofigConstantsEvents.UPDATE) => {
             const options = { entity: configConstantsEntities.CRON, event, data: cronData };

@@ -9,6 +9,7 @@ import { ParserRootState } from 'types/state';
 import { WPPost, WpMedia } from 'types/post';
 import { useDownloadMedia } from './useDownloadMedia';
 import { insertDraftPost } from '../actions/post.actions';
+import {WPRestErrorResponse} from 'types/wp'
 
 namespace useCreateWpPost {
     export type WpPostResponseType = WPPost;
@@ -33,8 +34,8 @@ export const useCreateWpPost: useCreateWpPost.UseCreateWpPost = () => {
         return new Promise((resolve) => resolve(postData));
     };
     const error: requestApi.RequestApiError = (errorData) => {
-        const { msg } = errorData;
-        throw new Error(msg);
+        const { data } = errorData;
+        throw new Error(data.message.text);
     };
     const createWpPostCallback: useCreateWpPost.CreateWpPostCallback = (postID?) => {
         const state: ParserRootState = store.getState();

@@ -6,6 +6,7 @@ import { decodeHTMLEntities } from '@news-parser/helpers/index'
 import { ResponseType } from '@news-parser/types';
 import { Post } from 'types/post';
 import { setList } from '../actions/list.actions';
+import { MessageFormat } from 'types/message';
 
 namespace useFetchPostsList {
     export type isFetching = boolean;
@@ -29,10 +30,13 @@ export const useFetchPostsList: useFetchPostsList.UseFetchPostsList = () => {
     const fetchPostsList: useFetchPostsList.FetchPostsList = (url) => {
         const options: requestApi.RequestApiOptions = { entity: configConstantsEntities.PARSER_RSS_LIST, event: cofigConstantsEvents.PARSE, data: { url } };
         const error: requestApi.RequestApiError = (errorData) => {
-            throw new Error(errorData.msg);
+            const {data}=errorData;
+            console.error(errorData)
+            console.log(data.message.text)
+            throw new Error(data.message.text);
         };
         const success: requestApi.RequestApiSuccess<useFetchPostsList.PostListResponseType> = (postData) => {
-            const { msg, data } = postData;
+            const { data } = postData;
             const posts = data.map((post, index) => {
                 post._id = index;
                 post.description = decodeHTMLEntities(post.description);

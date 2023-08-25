@@ -69,7 +69,7 @@ export const VisualConstructor: React.FC<VisualConstructorProps> = ({ onReady, c
                         </span>
                     </button>
                 </div>
-                <div className='d-flex flex-column flex-grow-1'>
+                <div className='d-flex flex-column flex-grow-1 position-relative'>
                     {!isVisualConstructorReady && <LoadingSpinner style={{ paddingBottom: '22vh' }} />}
                     <div className='modal-main'>
                         <div className='parsed-data-container'>

@@ -26,9 +26,8 @@ export const useFetchTags: useFetchTags.UseFetchTags = () => {
     const tagsMap: Record<string, Tag> = {};
     const counter = 1;
     const error: requestApi.RequestApiError = (errorData) => {
-        const { msg } = errorData;
-        setIsFetching(false);
-        throw new Error(msg);
+        const { data } = errorData;
+        throw new Error(data.message.text);
     };
     const success: requestApi.RequestApiSuccess<useFetchTags.FetchTagsResponseType> = (tags) => {
         if (tags.length > 0) {
@@ -46,7 +45,7 @@ export const useFetchTags: useFetchTags.UseFetchTags = () => {
     const startFetching = () => {
         options.searchParams.page = 1;
         setIsFetching(true);
-        return requestApi(options, success, error)
+        return requestApi(options, success, error).finally(()=>setIsFetching(false))
     }
     return [isFetching, startFetching];
 }

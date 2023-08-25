@@ -4,6 +4,7 @@ import { cofigConstantsEvents, configConstantsEntities } from '@news-parser/conf
 import { useDispatch } from "react-redux";
 import { ResponseType } from "@news-parser/types";
 import { setHTML } from "../../actions/dialogData.actions";
+import { MessageFormat } from "types/message";
 
 namespace useFetchHTML {
     export type FetchHTMLResponseType = ResponseType<string>;
@@ -27,8 +28,8 @@ export const useFetchHTML: useFetchHTML.UseFetchHTML = () => {
             return new Promise(resolve => resolve(htmlData));
         };
         const error: requestApi.RequestApiError = (errorData) => {
-            const { msg } = errorData;
-            throw new Error(msg)
+            const { data } = errorData;
+            throw new Error(data.message.text);;
         };
         const startFetching = (url: string) => {
             const options: requestApi.RequestApiOptions = { entity: configConstantsEntities.RAW_HTML, event: cofigConstantsEvents.PARSE, data: { url } };

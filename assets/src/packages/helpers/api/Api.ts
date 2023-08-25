@@ -7,26 +7,18 @@ import { ApiInterface , RequestParams } from './types/api';
  */
 
 export class Api implements ApiInterface {
-    /**
-   * Request parameters.
-   *
-   * @type {RequestParams}
-   * @protected
-   */
-
-    protected params: RequestParams = {
-        type: configConstantsMethods.AJAX,
-        method: configConstantsMethods.GET,
-        nonce: null
-    };
+  
     /**
    * Root URL of the API.
    *
    * @type {string}
    * @protected
    */
+    protected fetchParams:RequestInit
 
-    constructor(protected rootUrl: string) { }
+    constructor(protected url: string, protected params: RequestParams) { 
+        this.fetchParams=this.getFetchParams();
+    }
     /**
  * Method for sending a request to the API.
  *
@@ -37,11 +29,10 @@ export class Api implements ApiInterface {
  * @public
  */
 
-    public request<ResponseType>(url: string, params: RequestParams): Promise<Response> {
-        this.params = { ...params };
-        this.getHeaders().getUrl().getBody();
-        const fetchUrl: string = this.params.url || this.rootUrl;
-        return fetch(fetchUrl, this.params);
+    public request<ResponseType>(): Promise<Response> {
+        
+        const fetchUrl: string = this.params.url || this.url;
+        return fetch(fetchUrl, this.fetchParams);
     }
     /**
    * Method for constructing the URL based on the request method and parameters.
@@ -53,18 +44,18 @@ export class Api implements ApiInterface {
     protected getUrl() {
         if (this.params.method === configConstantsMethods.GET || this.params.method == configConstantsMethods.DELETE) {
             const { body, nonce } = this.params;
-            let url = this.rootUrl;
+            let url = this.url;
             if (body !== undefined && body !== null && typeof body === 'object') {
-                const searchParams = new URLSearchParams(this.rootUrl);
+                const searchParams = new URLSearchParams();
                 Object.keys(body).forEach(propName => searchParams.append(propName, body[propName]));
-                url = searchParams.toString();
+                url +='&'+ searchParams.toString();
             }
             if (this.params.type == cofigConstantsEvents.AJAX && this.params.nonce != null) {
                 url += `&_wpnonce=${  nonce}`;
             }
-            this.params.url = url;
+            return url;
         }
-        return this;
+        return this.url;
     }
     /**
    * Method for constructing the request body based on the request method and parameters.
@@ -79,9 +70,9 @@ export class Api implements ApiInterface {
             if (this.params.type == cofigConstantsEvents.AJAX) {
                 body = body !== undefined ? { ...body, _wpnonce: nonce } : { _wpnonce: nonce };
             }
-            this.params.body = JSON.stringify(body);
+            return JSON.stringify(body);
         }
-        return this;
+        return false;
     }
     /**
    * Method for constructing the request headers based on the request method and parameters.
@@ -94,15 +85,25 @@ export class Api implements ApiInterface {
         const headers = new Headers();
             const { nonce, type, method } = this.params;
         if (type === cofigConstantsEvents.REST) {
-            if (nonce !== null) headers.append('X-WP-Nonce', nonce);
-            headers.append('Access-Control-Allow-Origin', this.rootUrl !== undefined ? this.rootUrl : '*');
+            if (nonce !== null) headers.append('X-WP-Nonce',nonce);
+            headers.append('Access-Control-Allow-Origin', this.url !== undefined ? this.url : '*');
         }
         if (method === configConstantsMethods.POST) {
             headers.append('Content-Type', 'application/json');
-            headers.append('accept', 'application/json');
+            headers.append('accept','application/json');
         }
-        this.params.headers = headers;
-        return this;
+        return headers;
+    }
+    protected getFetchParams(){
+        const fetchParams:RequestInit ={
+            method:this.params.method,
+            credentials: 'include'
+        };
+        const requestBody=this.getBody();
+        if(requestBody!==false) fetchParams.body=requestBody;
+        fetchParams.headers=this.getHeaders();
+        this.url=this.getUrl();
+        return fetchParams;
     }
 
 }

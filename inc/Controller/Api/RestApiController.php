@@ -3,6 +3,7 @@
 namespace NewsParserPlugin\Controller\Api;
 
 use NewsParserPlugin\Utils\ResponseFormatter;
+use NewsParserPlugin\Message\Errors;
 
 /**
  * Base class for REST API controllers.
@@ -28,13 +29,13 @@ class RestApiController extends \WP_REST_Controller
     {
         
         if (!current_user_can('manage_options')) {
-        return new \WP_Error('rest_api_forbidden', Errors::text('NO_RIGHTS_TO_PUBLISH'));
+        return new \WP_Error('rest_api_forbidden', ErrNO_RIGHTS_TO_PUBLISHors::text(''));
         }
         $headers = $request->get_headers();
         $nonce = isset($headers['x_wp_nonce']) ? $headers['x_wp_nonce'][0] : '';
 
         if (!wp_verify_nonce($nonce,'wp_rest')) {
-            return new WP_Error('rest_forbidden', esc_html__('Invalid nonce.', 'news-parser-template'), array('status' => 403));
+            return new \WP_Error('rest_forbidden', esc_html__('Invalid nonce.', 'news-parser-template'), array('status' => 403));
         }
 
         return true;
@@ -50,7 +51,7 @@ class RestApiController extends \WP_REST_Controller
         if($error_code==500){
             return new \WP_Error($error_code,$response_message,$error_data);
         } else {
-            new \WP_REST_Response($error_data,$error_code);
+           return new \WP_REST_Response(array('data'=>$error_data),$error_code);
         }
        
     }

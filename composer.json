@@ -11,6 +11,9 @@
     "phpunit/phpunit": "10.0.7"
 },
   "scripts": {
-    "test": "/usr/local/opt/php@7.4/bin/php ./vendor/bin/phpunit --coverage-clover Coverage.clover ./tests/"
+    "test": "phpunit --coverage-clover Coverage.clover ./tests/",
+    "test1": "phpunit ./tests/",
+    "test2": "phpunit",
+    "test4": "phpunit -v"
   }
 }

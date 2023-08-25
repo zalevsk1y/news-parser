@@ -5,6 +5,7 @@ import { getPostEditLink } from '@news-parser/helpers/index';
 import { ResponseType } from '@news-parser/types';
 import { Post, PostDraftData } from 'types/post';
 import { insertDraftPost, togglePostSelect } from '../actions/post.actions';
+import { MessageFormat } from 'types/message';
 
 namespace useParsePost {
     export type ParsePostResponsetype = ResponseType<Post & PostDraftData>;
@@ -32,8 +33,8 @@ export const useParsePost: useParsePost.UseParsePost = () => {
             return new Promise(resolve => resolve(postData));
         };
         const error: requestApi.RequestApiError = (errorData) => {
-            const { msg } = errorData;
-            throw new Error(msg)
+            const { data } = errorData;
+            throw new Error(data.message.text);
         };
         options.data = { url, _id, templateUrl };
         return requestApi(options, success, error)

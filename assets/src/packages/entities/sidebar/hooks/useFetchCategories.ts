@@ -24,8 +24,8 @@ export const useFetchCategories: useFetchCategories.UseFetchCategories = () => {
     const options: requestApi.RequestApiOptions = { entity: configConstantsEntities.API_WP_CATEGORIES, event: cofigConstantsEvents.GET, data: null, searchParams: { page: 1 } };
     const dispatch = useDispatch();
     const error: requestApi.RequestApiError = (errorData) => {
-        const { msg } = errorData;
-        throw new Error(msg)
+        const { data } = errorData;
+        throw new Error(data.message.text);
     };
     const success: requestApi.RequestApiSuccess<useFetchCategories.FetchCategories> = (categories) => {
         if (categories.length > 0) {

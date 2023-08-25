@@ -41,9 +41,10 @@ export const draftPost=(state:Record<string,boolean>|{}={},action:Action)=>{
 }
 
 export const posts=(state:Array<Post>=[],action:Action)=>{
+
     switch(action.type){
         case SET_LIST:
-            return [...action.payload.data];
+            return [...action.payload];
         case UPDATE_POST:
             return state.map(post=>post._id==action.payload._id?action.payload:post);
         default:

@@ -89,7 +89,7 @@ function CategoriesGroup() {
         <div className='sidebar-item-expandable-row'>
           <button
             disabled={isCategoriesMutating}
-            className='sidebar-submit-big-button'
+            className='btn btn-outline-secondary btn-sm'
             onClick={addCategoryHandler}
           >
             Add New Category

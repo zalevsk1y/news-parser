@@ -1,8 +1,8 @@
-import React, { useLayoutEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { decodeHTMLEntities } from "@news-parser/helpers/index";
-import { ParserRootState } from "types/state";
-import { MessageAction } from "types/message";
+import React, { useLayoutEffect, useState,useMemo } from 'react';
+import { useSelector } from 'react-redux';
+import { decodeHTMLEntities } from '@news-parser/helpers/index';
+import { ParserRootState } from 'types/state';
+import { MessageAction } from 'types/message';
 /**
  * Message window element.
  *
@@ -15,12 +15,16 @@ export const Message: React.FC = () => {
   const messageData = useSelector((state: ParserRootState) => state.parse.message);
 
   const close = () => setMessageWindowState(false);
-  if (messageData) {
-    const { type, text, timestamp } = messageData;
-    const decodedText = text ? decodeHTMLEntities(text) : "";
+  
+    const decodedText = useMemo(()=>{
+      if(messageData===false) return '';
+      return messageData.text ? decodeHTMLEntities(messageData.text) : '';
+    },[messageData])
       const open = () => {
-        setMsgState({ type, text: decodedText});
-        setMessageWindowState(true)
+        if(messageData!==false){
+          setMsgState({ type:messageData.type, text: decodedText});
+          setMessageWindowState(true);
+        }
       };
     // If get mew message close current message and open new one in 400ms.
     useLayoutEffect(() => {
@@ -29,29 +33,29 @@ export const Message: React.FC = () => {
           close();
           setTimeout(open, 400)
         }, 2000);
-      } else if (timestamp !== undefined) {
+      } else if (messageData !== false&&messageData.timestamp!==undefined) {
         open()
       }
-    }, [timestamp]);
-  }
+    }, [messageData]);
+  
   const infoIcon = {
-    "success": "bi-check-circle-fill",
-    "error": "bi-exclamation-octagon-fill",
-    "info": "bi-info-circle-fill"
+    'success': 'bi-check-circle-fill',
+    'error': 'bi-exclamation-octagon-fill',
+    'info': 'bi-info-circle-fill'
   };
   return (
-    <div className="message-wrapper">
+    <div className='message-wrapper'>
       <div
-        className={`alert alert-${msgState.type} alert-dismissible fade ${isOpen ? "show" : ""
+        className={`alert alert-${msgState.type} alert-dismissible fade ${isOpen ? 'show' : ''
           }`}
       >
         <i className={infoIcon[msgState.type]} />
 
-        <span className="mx-3">{msgState.text}</span>
+        <span className='mx-3'>{msgState.text}</span>
         <button
-          type="button"
-          className="btn-close"
-          data-bs-dismiss="alert"
+          type='button'
+          className='btn-close'
+          data-bs-dismiss='alert'
           onClick={close}
          />
       </div>

@@ -22,11 +22,11 @@ export type TemplateDataWithPostOptions=TemplateData&{
     postOptions:TemplatePostOptions
 }
 export type TemplatePostOptions={
-        post_status:Sidebar['status'],
-        post_category:Sidebar['selectedCategories'],
-        tags_input:Sidebar['selectedTags'],
-        comment_status:Sidebar['allowComments'],
-        ping_status:Sidebar['allowPinbacks'],
+        status:Sidebar['status'],
+        categories:Sidebar['selectedCategories'],
+        tags:Sidebar['selectedTags'],
+        comment_status:'open'|'close',
+        ping_status:'open'|'close',
         format:Sidebar['postFormat']
 }
 

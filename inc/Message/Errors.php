@@ -56,7 +56,9 @@ class Errors
             case 'WRONG_DEFENITION_FILE_FORMAT':
                     return \__('Defenition file should be array.', NEWS_PARSER_PLUGIN_SLUG); 
             case 'NO_CRON':
-                return \__('Cron is not configured', NEWS_PARSER_PLUGIN_SLUG);          
+                return \__('Cron is not configured', NEWS_PARSER_PLUGIN_SLUG);   
+            case 'NO_RIGHTS_TO_PUBLISH':
+                return \__('You have no rights to get, create or modify this type of content.');       
                     
         }
     }
@@ -71,6 +73,8 @@ class Errors
                 return '415 Unsupported Media Type';
             case 'CONTENT_NOT_FOUND':
                 return '404 Content Not Found';
+            case 'NO_CONTENT':
+                return '204 No Content';
         }
     }
 }

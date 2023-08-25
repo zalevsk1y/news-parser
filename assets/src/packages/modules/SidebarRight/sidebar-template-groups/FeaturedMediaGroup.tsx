@@ -19,7 +19,6 @@ export const FeaturedMediaGroup: React.FC = () => {
     const featuredImageClassName = !addFeaturedMedia
         ? 'featured-image-thumbnail no-featured-image'
         : 'featured-image-thumbnail';
-
     return (
         <>
             <InfoBody>

@@ -59,12 +59,13 @@ class Main
             \wp_enqueue_style(NEWS_PARSER_PLUGIN_SLUG . '-media_views', NEWS_PARSER_PLUGIN_URL . '/public/css/media-views.css');
             \wp_enqueue_style(NEWS_PARSER_PLUGIN_SLUG . '-main', NEWS_PARSER_PLUGIN_URL.'/public/css/parser_rss-'.NEWS_PARSER_PLUGIN_VERSION.'.css');
           //  \wp_enqueue_script('main-parser-rss-bundle', NEWS_PARSER_PLUGIN_URL . '/public/js/parser_rss-'.NEWS_PARSER_PLUGIN_VERSION.'.bundle.js');
+          //\wp_enqueue_script('main-parser-rss-bundle', 'http://localhost:5080/parser_rss-'.NEWS_PARSER_PLUGIN_VERSION.'.bundle.js');
             if(strrpos($hook, $this->config->menu->subs[0]->menu_slug)){
-                \wp_enqueue_script('main-parser-rss-bundle', 'http://localhost:5080/parser_rss-'.NEWS_PARSER_PLUGIN_VERSION.'.bundle.js');
+                \wp_enqueue_script('main-parser-rss-bundle', NEWS_PARSER_PLUGIN_URL . '/public/js/parser_rss-'.NEWS_PARSER_PLUGIN_VERSION.'.bundle.js');
             } elseif (strrpos($hook, $this->config->menu->subs[1]->menu_slug)){
-                \wp_enqueue_script('main-parser-page-bundle', 'http://localhost:5080/parser_page-'.NEWS_PARSER_PLUGIN_VERSION.'.bundle.js');
+                \wp_enqueue_script('main-parser-page-bundle', NEWS_PARSER_PLUGIN_URL . '/public/js/parser_page-'.NEWS_PARSER_PLUGIN_VERSION.'.bundle.js');
             } elseif (strrpos($hook, $this->config->menu->subs[2]->menu_slug)){
-                \wp_enqueue_script('main-parser-autopilot-bundle', 'http://localhost:5080/autopilot-'.NEWS_PARSER_PLUGIN_VERSION.'.bundle.js');
+                \wp_enqueue_script('main-parser-autopilot-bundle', NEWS_PARSER_PLUGIN_URL . '/public/js/autopilot-'.NEWS_PARSER_PLUGIN_VERSION.'.bundle.js');
             }
             \wp_enqueue_script(array(NEWS_PARSER_PLUGIN_SLUG.'-rest-nonce',NEWS_PARSER_PLUGIN_SLUG.'-rest-api'));
             $nonce=array(
@@ -77,6 +78,7 @@ class Main
             );
             \wp_localize_script('main-parser-rss-bundle', 'newsParserSettings', $nonce);
             \wp_localize_script('main-parser-page-bundle', 'newsParserSettings', $nonce);
+            \wp_localize_script('main-parser-autopilot-bundle', 'newsParserSettings', $nonce);
             $rest_api_endpoints=array(
                 'root'=>esc_url_raw(rest_url()),
                 'rssPageName'=>$this->config->menu->subs[0]->menu_slug,
@@ -92,6 +94,7 @@ class Main
             );
             \wp_localize_script('main-parser-rss-bundle', 'newsParserApiEndpoints', $rest_api_endpoints);
             \wp_localize_script('main-parser-page-bundle', 'newsParserApiEndpoints', $rest_api_endpoints);
+            \wp_localize_script('main-parser-autopilot-bundle', 'newsParserApiEndpoints', $rest_api_endpoints);
         }
         if (strrpos($hook, $this->config->menu->subs[2]->menu_slug) !== false) {
             \wp_enqueue_script('settings-parser-bundle-deps', NEWS_PARSER_PLUGIN_URL . '/public/js/settings.bundle.js');

@@ -1,10 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { configConstantsEntities, cofigConstantsEvents } from '@news-parser/config/constants'
 import { requestApi } from '@news-parser/helpers/api/requestApi';
 import { Category } from 'types/sidebar';
-import { selectCategory } from '../actions/category.actions';
-import { useFetchCategories } from './useFetchCategories';
+import { pushCategory, selectCategory } from '../actions/category.actions';
 
 namespace useCreateCategory {
   export type CreateCategoryResponseType = Required<Category>;
@@ -25,37 +24,40 @@ namespace useCreateCategory {
 
 
 export const useCreateCategory:useCreateCategory.UseCreateCategory = (addCategoryParams) => {
-  const [newCategoryParams, setNewCategoryParams] = useState<useCreateCategory.NewCategoryParams>(addCategoryParams);
+  const [newCategoryName, setNewCategoryName] = useState<string>(addCategoryParams.name);
+  const [newCategoryParent, setNewCategoryParent] = useState<number>(addCategoryParams.parent);
   const [isMutating, setIsMutating] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const [isFetching, startFetching] = useFetchCategories()
   const options: requestApi.RequestApiOptions = { entity: configConstantsEntities.API_WP_CATEGORIES, event: cofigConstantsEvents.POST, data: {} };
-  const success: requestApi.RequestApiSuccess<useCreateCategory.CreateCategoryResponseType> = (category) => startFetching().then(() => {
+  const success: requestApi.RequestApiSuccess<useCreateCategory.CreateCategoryResponseType> = (category) => {
       dispatch(selectCategory(category.id));
-      setNewCategoryParams({ ...newCategoryParams, name: '' });
-      setIsMutating(false);
+      dispatch(pushCategory({ name:category.name,id:category.id,parent:category.parent }));
+      console.log(category)
+      setNewCategoryName('');
       return new Promise(resolve=>resolve(category))
-    });
+    };
   const error: requestApi.RequestApiError = (errorData) => {
-    const { msg } = errorData;
-    throw new Error(msg)
+    const { data } = errorData;
+    console.error(errorData)
+    throw new Error(data.message.text);
   };
   const newCategoryNameInputHandler:React.FormEventHandler<HTMLInputElement>= useCallback((event) => {
     const targetElement=event.target as HTMLInputElement;
-    setNewCategoryParams({ ...newCategoryParams, name: targetElement.value });
-  }, [newCategoryParams]);
+    setNewCategoryName(targetElement.value );
+  }, [setNewCategoryName]);
 
   const newCategoryParentSelectHandler:React.ChangeEventHandler<HTMLSelectElement> = useCallback((event) => {
     const targetElement=event.target as HTMLSelectElement;
-    setNewCategoryParams({ ...newCategoryParams, parent: parseInt(targetElement.value) });
-  }, [newCategoryParams]);
+    setNewCategoryParent(parseInt(targetElement.value));
+  }, [setNewCategoryParent]);
 
   const addCategoryHandler:useCreateCategory.AddCategoryHandler = useCallback(() => {
-    if (newCategoryParams.name === '') throw new Error('Category name could not be an empty string.')
-    options.data = { name: newCategoryParams.name, parent: newCategoryParams.parent };
+    if (newCategoryName === '') throw new Error('Category name could not be an empty string.')
+    options.data = { name: newCategoryName, parent: newCategoryParent };
     setIsMutating(true);
     return requestApi(options, success, error).finally(() => setIsMutating(false))
-  }, [dispatch, newCategoryParams]);
+  }, [dispatch, newCategoryName,newCategoryParent]);
+  const newCategoryParams=useMemo(()=>({name:newCategoryName,parent:newCategoryParent}),[newCategoryName,newCategoryParent])
 
 
   return [newCategoryParams, newCategoryNameInputHandler, newCategoryParentSelectHandler, addCategoryHandler, isMutating];

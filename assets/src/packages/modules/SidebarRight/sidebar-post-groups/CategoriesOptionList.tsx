@@ -21,9 +21,10 @@ export const CategoriesOptionList: React.FC<CategoriesOptionListProps> = ({ cate
     const categoriesItems = useMemo(() => {
         const renderOptionList = (name: string, prefix: number, id?: number) => {
             const prefixCode = '\u00A0';
+            console.log(id,name,prefix)
             return (
                 <React.Fragment key={name}>
-                    <CategoriesOptionItem id={id} name={name} prefix={prefixCode.repeat(prefix)} />
+                    <CategoriesOptionItem id={id} name={`${prefixCode.repeat(prefix)}  ${name}`} />
                     {categories
                         .filter(item => item.parent == id)
                         .map(item => renderOptionList(item.name, prefix + 1, item.id))

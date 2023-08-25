@@ -78,10 +78,9 @@ class Ajax
      * @param \WP_Error $error
      * @return void
      */
-    protected function sendError($error_message,$error_code)
+    protected function sendError($error_data,$error_code)
     {
-        
-        wp_send_json_error($error_message, $error_code);
+        wp_send_json_error($error_data, $error_code);
     }
     /**
      * Send response.

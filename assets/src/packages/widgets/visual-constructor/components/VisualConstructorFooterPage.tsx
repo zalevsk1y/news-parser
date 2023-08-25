@@ -3,7 +3,7 @@ import { useCreateWpPost, useCreateLocalPost } from '@news-parser/entities/post/
 import { useShowMessage } from '@news-parser/entities/message/hooks'
 import { DEFAULT_POST_DATA } from '@news-parser/entities/post/constants';
 import { useIsMutating } from '../hooks';
-import { useClose } from '../hooks/visual-constructor/useClose'
+import { useClose } from '../hooks/visual-constructor/useClose';
 import { useGetCurrentPostAttributes } from '../hooks/visual-constructor/useGetCurrentPostAttributes';
 
 export const VisualConstructorFooterPage: React.FC = () => {

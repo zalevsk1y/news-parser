@@ -28,8 +28,8 @@ export const SidebarRight:React.FC<SidebarRightProps> = ({ tabs, children }) => 
         onClick={activeTabChangeHandler(index)}
       >
         {tab}
-      </a>))), [activeTab]);
-    const activeTabElement=useMemo(()=>React.isValidElement(children)?children[activeTab]:null,[children])
+      </a>))), [activeTab,tabs]);
+    const activeTabElement=useMemo(()=>Array.isArray(children)&&React.isValidElement(children[activeTab])?children[activeTab]:null,[children,activeTab])
   return (
     <div className="modal-right-side-bar d-flex flex-column" >
       <div className="sidebar-nav">

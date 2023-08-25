@@ -28,10 +28,6 @@ function StatusVisibilityGroup() {
                 </Select>
             </SidebarItem>
             <SidebarItem>
-                <SidebarItemLabel>Publish:</SidebarItemLabel>
-                <PopUpTimeDate onChange={publishDateChangeHandler} value={publish} />
-            </SidebarItem>
-            <SidebarItem>
                 <SidebarItemLabel>Post format:</SidebarItemLabel>
                 <Select onChange={postFormatChangeHandler} value={postFormat}>
                     <option value="aside" label='Aside' />

@@ -3,12 +3,12 @@ import { useMaxCronCalls } from "@news-parser/entities/cronOptions/hooks/useMaxC
 
 export const MaxCronInput:React.FC<HTMLProps<HTMLInputElement>> = (props) => {
     const [maxCronCalls, setMaxCronCalls] = useMaxCronCalls();
-    const [inputValue,setInputValue]=useState<string>(maxCronCalls.toString());
-    const setMaxCronHandler=useCallback(()=>setMaxCronCalls(parseInt(inputValue)),[inputValue]);
-    const inputStateChangeHandler=useCallback((e:React.ChangeEvent<HTMLInputElement>)=>setInputValue(e.target.value),[setInputValue]);
+    const [inputValue,setInputValue]=useState<number>(maxCronCalls!==undefined?maxCronCalls:0);
+    const setMaxCronHandler=useCallback(()=>setMaxCronCalls(inputValue),[inputValue]);
+    const inputStateChangeHandler=useCallback((e:React.ChangeEvent<HTMLInputElement>)=>setInputValue(parseInt(e.target.value)),[setInputValue]);
     useEffect(() => {
         if (maxCronCalls !== undefined) {
-            setInputValue(maxCronCalls.toString());
+            setInputValue(maxCronCalls);
         }
     }, [maxCronCalls]);
     return <input type="number" {...props} onBlur={setMaxCronHandler} onChange={inputStateChangeHandler} value={inputValue} />

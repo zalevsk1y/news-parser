@@ -50,7 +50,9 @@ export const MainOptionsBlock:React.FC = () => {
                         <span className='np-fs-16'>Current status:</span>
                     </div>
                     <div className='col-8 col-lg-6 np-fs-16'>
-                        &nbsp;{cronOptions.status}
+                        <b>
+                            &nbsp;{cronOptions.status}
+                        </b>
                     </div>
                 </div>
                 <form id='cron-optios' onSubmit={submitHandler}>
@@ -104,3 +106,4 @@ export const MainOptionsBlock:React.FC = () => {
         </PostCartLarge>
     )
 }
+

@@ -6,9 +6,11 @@ export type Post = {
     description: string,
     _id: number,
     post_id?: number,
-    editLink?: string,
     select?:boolean,
-    draft?:boolean
+    draft?:{
+        post_id:number,
+        editLink:string
+    }
 }
 export type WPPost = {
     id: number,

@@ -56,6 +56,22 @@ class TemplateModelWithPostOptions extends TemplateModel{
                 return json_encode($data);
         }
     }
+    protected function formatPostOptions($postOptions)
+    {
+        if (isset($postOptions['status'])){
+           $postOptions['post_status']=$postOptions['status'];
+            unset($postOptions['status']);
+        }
+        if (isset($postOptions['categories'])){
+            $postOptions['post_category']=$postOptions['categories'];
+            unset($postOptions['categories']);
+        }
+        if (isset($postOptions['tags'])){
+            $postOptions['tags_input']=$postOptions['tags'];
+            unset($postOptions['tags']);
+        }
+        return $postOptions;
+    } 
     /**
      * Getter function for post options.
      *
@@ -63,6 +79,6 @@ class TemplateModelWithPostOptions extends TemplateModel{
      */
     public function getPostOptions()
     {
-        return isset($this->postOptions)?$this->postOptions:false;
+        return isset($this->postOptions)?$this->formatPostOptions($this->postOptions):false;
     }
 }

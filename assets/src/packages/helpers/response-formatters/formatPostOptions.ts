@@ -3,10 +3,10 @@ import { TemplatePostOptions } from "types/template";
 
 
 export const formatPostOptions=(options:Sidebar):TemplatePostOptions=>({
-        post_status:options.status,
-        post_category:options.selectedCategories,
-        tags_input:options.selectedTags,
-        comment_status:options.allowComments,
-        ping_status:options.allowPinbacks,
+        status:options.status,
+        categories:options.selectedCategories,
+        tags:options.selectedTags,
+        comment_status:options.allowComments?'open':'close',
+        ping_status:options.allowPinbacks?'open':'close',
         format:options.postFormat
     })   

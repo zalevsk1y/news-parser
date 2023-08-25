@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { ResponseType } from '@news-parser/types';
 import { TemplateDataWithPostOptions } from 'types/template'
 import { setTemplate } from "../actions/template.actions";
+import { MessageFormat } from "types/message";
 
 namespace useFetchTemplate {
     export type TemplateResponseType = ResponseType<TemplateDataWithPostOptions>;
@@ -29,7 +30,8 @@ export const useFetchTemplate: useFetchTemplate.UseFetchTemplate = () => {
             return new Promise(resolve => resolve(templateData))
         };
         const error: requestApi.RequestApiError = (errorData) => {
-            throw new Error(errorData.msg)
+            const {data}=errorData;
+            throw new Error(data.message.text);
         };
         const fetchTemplate: useFetchTemplate.FetchTemplate = (url: string) => {
             const options: requestApi.RequestApiOptions = { entity: configConstantsEntities.TEMPLATE, event: configConstantsMethods.GET, data: { url } };

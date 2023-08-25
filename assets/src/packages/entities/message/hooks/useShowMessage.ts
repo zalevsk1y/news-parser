@@ -17,5 +17,5 @@ namespace useShowMessage {
 
 export const useShowMessage: useShowMessage.UseShowMessage = () => {
     const dispatch = useDispatch();
-    return useCallback((type: MessageAction['type'], text: string) => dispatch(showMessage({ type, text })), [showMessage])
+    return (type: MessageAction['type'], text: string) => dispatch(showMessage({ type, text }));
 }

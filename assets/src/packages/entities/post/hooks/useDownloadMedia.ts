@@ -25,8 +25,8 @@ export const useDownloadMedia: useDownloadMedia.UseDownloadMedia = () => {
     const [IsMutating, setIsMutating] = useState(false);
     const success: requestApi.RequestApiSuccess<useDownloadMedia.MediaResponceType> = mediaData => new Promise(resolve => resolve(mediaData))
     const error: requestApi.RequestApiError = (errorData) => {
-        const { msg } = errorData;
-        throw new Error(msg);
+        const { data } = errorData;
+        throw new Error(data.message.text);
     };
     const createWpMediaCallback: useDownloadMedia.CreateWpMediaCallback = (imageUrl, title, postID) => {
         const requestMediaData = formatCreateMediaData(imageUrl, title, postID);

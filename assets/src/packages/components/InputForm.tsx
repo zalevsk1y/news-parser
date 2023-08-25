@@ -44,6 +44,7 @@ export const InputForm: React.FC<InputFormProps> = ({ buttonName, submitAction, 
                         name='url'
                         placeholder='https://'
                         value={inputValue}
+                        disabled={disabled}
                         onChange={inputChange}
                      />
                     <button

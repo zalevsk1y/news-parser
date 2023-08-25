@@ -26,7 +26,7 @@ export const CategoriesCheckboxList: React.FC<CategoriesCheckboxListProps> = ({ 
   const categoriesItems = useMemo(() => {
     const renderCategoryItems = (cateogryObject: Category) => {
       const { name, id } = cateogryObject;
-      const onChangeHandler = useCallback((event: FormEvent<HTMLInputElement>) => (onChange ? onChange(event, id!==undefined?id:0) : false),[onChange,id]);
+      const onChangeHandler = (event: FormEvent<HTMLInputElement>) => (onChange ? onChange(event, id!==undefined?id:0) : false);
       return (
         <CategoryItem
           onChange={onChangeHandler}

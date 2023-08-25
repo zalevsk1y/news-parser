@@ -7,6 +7,7 @@ import { useFetchTemplate } from '@news-parser/entities/template/hooks/';
 import { ResponseType } from 'types/index';
 import { TemplateDataWithPostOptions } from 'types/template';
 import { ParserRootState } from 'types/state'
+import { MessageFormat } from 'types/message';
 
 namespace useCreateTemplate {
     export type CreateTemplateResponseType = ResponseType<TemplateDataWithPostOptions>;
@@ -26,8 +27,8 @@ export const useCreateTemplate: useCreateTemplate.UseCreateTemplate = () => {
     const createTemplate = (rssUrl: string) => {
         const requestOptions: requestApi.RequestApiOptions = { entity: configConstantsEntities.TEMPLATE, event: configConstantsMethods.CREATE, data: null };
         const error: requestApi.RequestApiError = (errorData) => {
-            const { msg } = errorData;
-            throw new Error(msg)
+            const { data } = errorData;
+            throw new Error(data.message.text);
         };
         const success: requestApi.RequestApiSuccess<useCreateTemplate.CreateTemplateResponseType> = (templateData) => {
             fetchTemplate(rssUrl)

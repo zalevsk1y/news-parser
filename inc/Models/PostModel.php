@@ -129,7 +129,7 @@ class PostModel implements ModelInterface
             throw new MyException(Errors::text('POST_WAS_NOT_CREATED'), Errors::code('BAD_REQUEST'));
         }
         $this->getPostLinksWordpress();
-        $this->status = $post_data['post_status'];
+        $this->status = $post_data['status'];
     }
     /**
      * Attach main image to wordpress post

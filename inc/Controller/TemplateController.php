@@ -52,7 +52,7 @@ class TemplateController
             $template_model = $this->modelsFactory($templates[$url]);
             return $template_model->getAttributes('array');
         } 
-        throw new MyException( Errors::text('NO_TEMPLATE'),Errors::code('CONTENT_NOT_FOUND'));
+        return false;
     }
     protected function getAll()
     {

@@ -5,6 +5,7 @@ import { configConstantsEntities, cofigConstantsEvents } from '@news-parser/conf
 import { CronOptions } from 'types/cronOptions';
 import { ResponseType } from 'types';
 import { setCronOpions } from '../actions/cronOptions.actions';
+import { MessageFormat } from 'types/message';
 
 
 namespace useFetchCronOptions {
@@ -31,9 +32,9 @@ export const useFetchCronOptions: useFetchCronOptions.UseFetchCronOptions = () =
             dispatch(setCronOpions(data));
             return new Promise((resolve) => resolve(cronOptions))
         };
-        const error: requestApi.RequestApiError = (errorData) => {
-            const { msg } = errorData;
-            throw new Error(msg);
+        const error:requestApi.RequestApiError = (errorData) => {
+            const { data } = errorData;
+            throw new Error(data.message.text);
         };
         const fetchCron: useFetchCronOptions.FetchCronHandler = (url) => {
             const options = { entity: configConstantsEntities.CRON, event: cofigConstantsEvents.GET, data: { url } };

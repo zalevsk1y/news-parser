@@ -19,8 +19,11 @@ export interface PostsProps{
 export const Posts:React.FC<PostsProps> = ({ openEditor, selectPost, posts }) => {
     const onClickEditPost = useCallback((post:Post) => (event:React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
-        const newWindowObject=window.open(post.editLink, '_blank');
-        newWindowObject?.focus();
+        const postDraftInfo=post.draft;
+        if (postDraftInfo!==undefined){
+            const newWindowObject=window.open(postDraftInfo.editLink, '_blank');
+            newWindowObject?.focus();
+        }
     }, []);
     const selectPostHandler = useCallback((_id:number) => (event:React.MouseEvent<HTMLElement>) => selectPost(_id), [selectPost])
     const openEditorHandler = useCallback((_id:number, link:string) => () => openEditor(_id, link), [openEditor]);
@@ -33,7 +36,7 @@ export const Posts:React.FC<PostsProps> = ({ openEditor, selectPost, posts }) =>
                         [<Icons key="select" className={`fo fo-select${  post.select === true ? ' icon-selected' : ''}`} title={post.select === true ? 'Unselect post' : 'Select post'} onClick={selectPostHandler(post._id)} />,
                         <Icons key="visual-editor" className='fo fo-visual-constructor' title='Visual constructor' onClick={openEditorHandler(post._id, post.link)} />]}
                 </PostCardFooter>
-            </PostCard>)), [posts])
+            </PostCard>)), [posts,selectPostHandler,openEditorHandler])
     return (
         <div className="posts-wrapper">
             {postCards}

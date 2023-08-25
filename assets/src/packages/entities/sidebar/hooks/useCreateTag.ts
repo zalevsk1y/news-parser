@@ -26,8 +26,8 @@ export const useCreateTag: useCreateTag.UseCreateTag = () => {
         return new Promise(resolve => resolve(tag))
     };
     const error: requestApi.RequestApiError = (errorData) => {
-        const { msg } = errorData;
-        throw new Error(msg);
+        const { data } = errorData;
+        throw new Error(data.message.text);
     };
     const createTag: useCreateTag.CreateTag = (tagName) => {
         const options: requestApi.RequestApiOptions = { entity: configConstantsEntities.API_WP_TAGS, event: cofigConstantsEvents.POST, data: { name: tagName } };

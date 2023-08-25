@@ -17,7 +17,7 @@ export const useChangeFeaturedMedia=()=>{
     const setPostFeaturedMedia=useSetFeaturedMedia();
     const {parsedData}=useSelector((state:ParserRootState)=>state.parse.sidebarTemplate);
     const changeFeaturedMedia=useCallback(()=>{
-        const imgTagObject:ParseImagedData|undefined=Object.values(parsedData.body).find((item:any):item is ParseImagedData=>item.content?.src) as ParseImagedData|undefined;
+        const imgTagObject:ParseImagedData|undefined=Object.values(parsedData.body).find((item:any):item is ParseImagedData=>item.tagName==='IMG') as ParseImagedData|undefined;
         if(imgTagObject===undefined) return;
         let src;
         if(imgTagObject.content.srcSet!==undefined) {
@@ -26,8 +26,10 @@ export const useChangeFeaturedMedia=()=>{
                 const media=srcArr.pop() as string;
                 src=media.trim().split(' ')[0];
             }
+        }else{
+            console.log(imgTagObject,src)
+            src=imgTagObject.content.src;
         }
-            imgTagObject.content.src;
         src&&setPostFeaturedMedia(src);
     },[parsedData]);
     return changeFeaturedMedia;
