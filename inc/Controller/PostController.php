@@ -62,7 +62,6 @@ class PostController
      */
     public function create($url, $_id,$data=false)
     {
-        
             $parsed_url=parse_url($url);
             if (!is_array($parsed_url)) {
                 throw new MyException(Errors::text('WRONG_OPTIONS_URL'), Errors::code('BAD_REQUEST'));

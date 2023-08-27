@@ -26,15 +26,10 @@ class TemplateController
     /**
      * Save received options.
      *
-     * @uses NewsParserPlugin\Controller\BaseController::formatResponse
-     * @uses NewsParserPlugin\Controller\BaseController::modelsFactory
-     * @uses NewsParserPlugin\Utils\ResponseFormatter::message()
-     * @uses NewsParserPlugin\Utils\ResponseFormatter::error()
-     * @uses NewsParserPlugin\Utils\ResponseFormatter::get()
      * @uses NewsParserPlugin\Models\TemplateModel::save()
      * @param string $url
      * @param array $options
-     * @return ResponseFormatter
+     * @return array
      */
     public function create($options)
     {
@@ -56,7 +51,7 @@ class TemplateController
     }
     protected function getAll()
     {
-        if(!$templates=get_option(self::TEMPLATE_TABLE_NAME)){
+        if(!$templates=$this->getOption(self::TEMPLATE_TABLE_NAME)){
             return [];
         }
         return $templates;
@@ -75,5 +70,9 @@ class TemplateController
     {
         $template_model = new TemplateModel($template_options);
         return $template_model;
+    }
+    protected function getOption($key)
+    {
+        return get_option($key);
     }
 }

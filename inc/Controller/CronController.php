@@ -43,7 +43,7 @@ class CronController
     }
     public function getAll()
     {
-        if(!$crons_data=get_option(self::CRON_TABLE_NAME)){
+        if(!$crons_data=$this->getOption(self::CRON_TABLE_NAME)){
             return [];
         }
         return $crons_data;
@@ -80,7 +80,9 @@ class CronController
         if(isset($crons_data[$url])){
             unset($crons_data[$url]);
         }
-        update_option(self::CRON_TABLE_NAME,$crons_data);
+        $this->updateOption(self::CRON_TABLE_NAME,$crons_data);
+        //check if there still left some crons that should be run in the same interval
+        //if none remove runing wp_cron in this interval
         if(!$this->isIntervalActive($cron_model->getInterval(),$crons_data)){
             $this->unsetCron($cron_model->getInterval());
         }
@@ -91,8 +93,8 @@ class CronController
     /**
     * Check if there are any active cron jobs with the specified interval.
     *
-    * @param int $interval The interval to check, in seconds.
-    * @param array $cron_data An array of cron job data, as returned by the `wp_get_schedules()` function.
+    * @param int $interval The interval to check.
+    * @param array $cron_data An array of cron job data.
     * @return bool True if there are active cron jobs with the specified interval, false otherwise.
     */
     protected function isIntervalActive($interval,$cron_data)
@@ -150,6 +152,12 @@ class CronController
     protected function modelsFactory($cron_data)
     {
         return new CronDataModel($cron_data);
+    }
+    protected function updateOption($key,$value,$autoupdate=null){
+       return update_option($key,$value,$autoupdate);
+    }
+    protected function getOption($key){
+        return get_option($key);
     }
     protected function getDefaultCronOptions()
     {

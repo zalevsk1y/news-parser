@@ -43,6 +43,8 @@ class Errors
                 return \__('No Title', NEWS_PARSER_PLUGIN_SLUG);
             case 'NO_BODY':
                 return \__('No Body', NEWS_PARSER_PLUGIN_SLUG);
+            case 'NO_AUTHOR':
+                return \__('No Author ID', NEWS_PARSER_PLUGIN_SLUG);
             case 'SETTINGS_CANNOT_BE_SAVED':
                 return \__('Sorry temporary settings cannot be saved', NEWS_PARSER_PLUGIN_SLUG);
             case 'OPTIONS_WRONG_FORMAT':

@@ -1,3 +1,9 @@
 {
-    "0":"http://www.site.com/page.html"
+    "triggerExpected":{
+        "0":"http://www.site.com/page.html"
+    },
+    "formatterExpected":"html",
+    "sendResponseExpected":{
+        "data":"html"
+    }
 }

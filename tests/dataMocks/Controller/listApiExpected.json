@@ -1,3 +1,18 @@
 {
-    "0":"http://www.site.com/page.html"
+    "triggerExpected":{
+        "0":"http://www.site.com/page.html"
+    },
+    "formatterExpected":{
+        "0":true
+    },
+    "sendResponseExpected":{
+        "data":{
+            "0":true
+        },
+        "message":{
+            "text":"XML File successfully parsed.",
+            "type":"success",
+            "timestamp":123456789
+        }
+    }
 }

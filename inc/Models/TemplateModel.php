@@ -55,9 +55,12 @@ class TemplateModel implements ModelInterface
     /**
      * init function
      *
-     * @param string $url Url of resource that will be source of the posts feed.
+     * @param array of template optrions.
+     * [url]
+     * [template]
+     * [extraOptions]
      */
-    public function __construct($template_data)
+    public function __construct(array $template_data)
     {
         if (!$this->isOptionsValid($template_data)) {
             throw new MyException(Errors::text('OPTIONS_WRONG_FORMAT'), Errors::code('BAD_REQUEST'));
@@ -77,7 +80,7 @@ class TemplateModel implements ModelInterface
         $template_data=$this->getAttributes('array');
         if(!is_array($templates)) $templates=[];
         $templates[$this->resourceUrl]=$template_data;
-        return update_option(self::TEMPLATE_TABLE_NAME, $templates, '', 'no');
+        return $this->updateOption(self::TEMPLATE_TABLE_NAME, $templates, 'no');
     }
     public function update($template_data){
         if($this->isOptionsValid($template_data)){
@@ -85,6 +88,10 @@ class TemplateModel implements ModelInterface
             return true;
         }
         return false;
+    }
+    protected function updateOption($key,$data,$autoload=null)
+    {
+        return update_option($key, $data, $autoload);
     }
     /**
      * Delete function using wp delete_option.
@@ -125,7 +132,8 @@ class TemplateModel implements ModelInterface
     protected function isOptionsValid($options)
     {
         if(!isset($options['extraOptions'])||
-        !isset($options['template'])){
+        !isset($options['template'])||
+        !isset($options['url'])){
             return false; 
         }
         return true;

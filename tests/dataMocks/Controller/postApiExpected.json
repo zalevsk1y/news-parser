@@ -1,4 +1,28 @@
 {
-    "url":"http://www.site.com/page.html",
-    "_id":1
+    "triggerExpected":{
+        "0":"http://www.site.com/page.html",
+        "1":1,
+        "2":"http://www.site.com"
+    },
+    "formatterExpected":{
+        "title":"post title",
+        "post_id":"1",
+        "status":null,
+        "links":{
+            "editLink":null
+        }
+    },
+    "sendResponseExpected":{
+        "data":{
+            "_id":"1",
+            "post_id":"1",
+            "status":null,
+            "editLink":null
+        },
+        "message":{
+            "text":"Post &quot;post title&quot; was successfully parsed and saved.",
+            "type":"success",
+            "timestamp":123456789
+        }
+    }
 }

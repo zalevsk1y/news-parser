@@ -8,8 +8,9 @@ require DI_MOCK_DIR.'/mock-test-classes.php';
 
 class ContainerBuilderTest extends \WP_UnitTestCase{
    protected $path_to_defenintion=DI_MOCK_DIR.'/mock-di-config.php';
-   public function setUp(){
-       parent::setUp();
+   public function setUp():void
+   {
+       // parent::setUp();
    }
     public function testGet (){
         $instance=new ContainerBuilder();

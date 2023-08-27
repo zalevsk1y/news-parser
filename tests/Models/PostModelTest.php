@@ -8,10 +8,10 @@ namespace NewsParserPlugin\Tests\Models;
         protected $user;
         protected $postData;
         protected $post;
-        public function setUp()
+        public function setUp():void
         {
             parent::setUp();
-            $this->user=$this->factory->user->create_and_get();
+            $this->user=$this->factory()->user->create_and_get();
             $this->postData=array(
                 'title'=>'test post title.',
                 'body'=>'test body.',
@@ -19,13 +19,12 @@ namespace NewsParserPlugin\Tests\Models;
                 'sourceUrl'=>'http://www.test-site.com/news/page1',
                 'authorId'=>$this->user->ID
             );
-
             $this->post=$this->getMockBuilder(\NewsParserPlugin\Models\PostModel::class)
                 ->setConstructorArgs(array($this->postData))
-                ->setMethods(array('mediaSideloadImage'))
+                ->onlyMethods(array('mediaSideloadImage'))
                 ->getMock();
         }
-        public function tearDown()
+        public function tearDown():void
         {
             isset($this->user->ID)&&wp_delete_user($this->user->ID);
             isset($this->post->ID)&&wp_delete_post($this->post->ID);
@@ -35,11 +34,11 @@ namespace NewsParserPlugin\Tests\Models;
          * @covers NewsParserPlugin\Models\PostModel::createPostWordPress()
          * @covers NewsParserPlugin\Models\PostModel::getPostLinksWordpress()
          */
-        public function testCreateDraft()
+        public function testCreate()
         {    
-            $this->post->createDraft();
+            $this->post->createPost(false);
             $this->assertGreaterThan(0,$this->post->ID);
-            $this->assertEquals('draft',$this->post->status);
+            $this->assertEquals('parsed',$this->post->status);
         }
         /**
          * @dataProvider dataAddPostThumbnail
@@ -72,9 +71,9 @@ namespace NewsParserPlugin\Tests\Models;
         }
         public function testGetAttributes(){
             $result=$this->post->getAttributes('array');
-            $this->assertInternalType('array',$result);
+            $this->assertIsArray($result);
             $this->assertSame(array('title','links','status','post_id'),array_keys($result));
-            $this->assertInternalType('object',$this->post->getAttributes('object'));
+            $this->assertIsObject($this->post->getAttributes('object'));
         }
         public function dataAddPostThumbnail()
         {

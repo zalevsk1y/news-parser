@@ -5,6 +5,7 @@ use NewsParserPlugin\Controller\EventController;
 use NewsParserPlugin\Models\CronDataModel;
 
 class CronTaskController {
+
     protected const CRON_TABLE_NAME=NEWS_PURSER_PLUGIN_CRON_OPTIONS_NAME;
     public function __construct(EventController $event){
         $this->event=$event;
@@ -45,7 +46,7 @@ class CronTaskController {
         return new CronDataModel($cron_options_data);
     }
     protected function getCronOptions($filter_data=[]){
-        if($crons_options=get_option(self::CRON_TABLE_NAME)){
+        if($crons_options=$this->getOption(self::CRON_TABLE_NAME)){
             return $crons_options;
             if(count($filter_data)){
                return array_filter($crons_options,function($cron_options)use($filter_data){
@@ -55,5 +56,9 @@ class CronTaskController {
         }
         
        return array();
+    }
+    protected function getOption($key)
+    {
+        return get_option($key);
     }
 }

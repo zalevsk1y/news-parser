@@ -25,9 +25,9 @@ class HTMLPatternParserTest extends \WP_UnitTestCase
 {
    
     protected $parser;
-    public function setUp()
+    public function setUp():void
     {
-        parent::setUp();
+        // parent::setUp();
         $this->parser=new MockHTMLPatternParser(new AdapterGutenberg());
     }
     /**

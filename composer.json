@@ -8,7 +8,8 @@
   },
   
   "require-dev": {
-    "phpunit/phpunit": "10.0.7"
+    "phpunit/phpunit": "^9.0.1",
+    "yoast/phpunit-polyfills":"^2.0"
 },
   "scripts": {
     "test": "phpunit --coverage-clover Coverage.clover ./tests/",

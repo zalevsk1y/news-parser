@@ -125,11 +125,8 @@ class PostModel implements ModelInterface
     public function createPost($post_data)
     {
         $this->ID = $this->createPostWordPress($post_data);
-        if ($this->ID === 0) {
-            throw new MyException(Errors::text('POST_WAS_NOT_CREATED'), Errors::code('BAD_REQUEST'));
-        }
         $this->getPostLinksWordpress();
-        $this->status = $post_data['status'];
+        if(is_array($post_data)) $this->status = $post_data['status'];
     }
     /**
      * Attach main image to wordpress post
@@ -223,6 +220,7 @@ class PostModel implements ModelInterface
             'post_content' => $this->body,
             'post_author' => $this->authorId,
         );
+        if(!is_array($post_user_data))$post_user_data=[];
         $post_data=array_merge($post_initial_data,$post_user_data);
         $postId = \wp_insert_post($post_data);
         if (\is_wp_error($postId)) {

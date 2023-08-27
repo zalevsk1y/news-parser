@@ -7,9 +7,9 @@ use NewsParserPlugin\Utils\AdapterGutenberg;
 class AdapterGutenbergTest extends \WP_UnitTestCase
 {
     protected $instance;
-    public function setUp()
+    public function setUp():void
     {
-        parent::setUp();
+        // parent::setUp();
         $this->instance=new AdapterGutenberg();
     }
     /**

@@ -15,7 +15,7 @@ class MockHTMLRaw extends HTMLRaw
 class HTMLRawTest extends \WP_UnitTestCase
 {
     protected $instance;
-    public function setUp()
+    public function setUp():void
     {
         $this->instance=new MockHTMLRaw(10);
     }

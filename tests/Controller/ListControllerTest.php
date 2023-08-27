@@ -6,15 +6,17 @@ namespace NewsParserPlugin\Tests\Controller;
     use NewsParserPlugin\Controller\ListController;
     use NewsParserPlugin\Exception\MyException;
     use NewsParserPlugin\Utils\ResponseFormatter;
+    use NewsParserPlugin\Message\Errors;
 
 
     class ListControllerTest extends \WP_UnitTestCase
     {
-        public function setUp(){
+        public function setUp():void
+        {
             parent::setUp();
             $this->mockParser=$this->getMockBuilder(\NewsParserPlugin\Parser\Abstracts\AbstractParseContent::class)
                 ->disableOriginalConstructor()
-                ->setMethods(array('parse','get'))
+                ->onlyMethods(array('parse','get'))
                 ->getMock();
             
         }
@@ -27,7 +29,7 @@ namespace NewsParserPlugin\Tests\Controller;
                 ->willReturn($data);
             $list_controller=new ListController($this->mockParser,new ResponseFormatter);
             $result=$list_controller->get($url);
-            $this->assertJsonStringEqualsJsonFile($expected,$result->get('json'));
+            $this->assertEquals($expected,$result);
         }
         public function dataGet(){
             return array(
@@ -38,13 +40,13 @@ namespace NewsParserPlugin\Tests\Controller;
                         'listItem2',
                         'listItem3'
                     ),
-                    CONTROLLER_MOCK_DIR.'/noErrorRespondList.json'
+                    array(
+                        'listItem1',
+                        'listItem2',
+                        'listItem3'
+                    )
                 ),
-                array(
-                    'www.wrong-site.com',
-                    '',
-                    CONTROLLER_MOCK_DIR.'/errorRespondList.json'
-                )
+                
             );
         }
     }

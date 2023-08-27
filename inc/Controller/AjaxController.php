@@ -109,6 +109,11 @@ class AjaxController extends Ajax
         }
         return true;
     }
+    protected function sendErrorResponse(MyException $e){
+        $error_data=$this->formatter->error($e->getCode())->message('error', $e->getMessage())->get('array');
+        $error_code=$e->getCode();
+        $this->sendError($error_data,$error_code);
+    }
     /**
      * Callback that handles media api requests.
      *
@@ -140,9 +145,12 @@ class AjaxController extends Ajax
                     'sanitize_callback'=>array($this,'sanitizeMediaOptions')
                 )
         ));
-       
-        $response=$this->event->trigger('media:create', array($request['url'],$request['options']['post_id'],$request['options']['alt']));
-        $this->sendResponse($response);
+        try {
+            $media_id=$this->event->trigger('media:create', array($request['url'],$request['options']['post_id'],$request['options']['alt']));
+            $this->sendResponse($this->formatter->media($media_id)->message('success', Success::text('FEATURED_IMAGE_SAVED'))->get('array'));
+        } catch (MyException $e) {
+            $this->sendErrorResponse($e);
+        }
     }
    
     /**
@@ -176,9 +184,7 @@ class AjaxController extends Ajax
             $response = $this->event->trigger('list:get', array($request['url']));
             $this->sendResponse($this->formatter->rss($response)->message('success', Success::text('RSS_LIST_PARSED'))->get('array'));
         }catch (MyException $e){
-            $error_data=$this->formatter->error($e->getCode())->message('error', $e->getMessage())->get('array');
-            $error_code=$e->getCode();
-            $this->sendError($error_data,$error_code);
+            $this->sendErrorResponse($e);
         }
     }
     
@@ -212,9 +218,7 @@ class AjaxController extends Ajax
             $response = $this->event->trigger('html:get', array($request['url']));
             $this->sendResponse($this->formatter->rawHTML($response)->get('array'));
         }catch (MyException $e){
-            $error_data=$this->formatter->error($e->getCode())->message('error', $e->getMessage())->get('array');
-            $error_code=$e->getCode();
-            $this->sendError($error_data,$error_code);
+            $this->sendErrorResponse($e);
         }
        
     }
@@ -273,9 +277,7 @@ class AjaxController extends Ajax
             $response=$this->event->trigger('post:create', array($request['url'],$request['_id'],$request['templateUrl']));
             $this->sendResponse($this->formatter->post($response)->message('success', sprintf(Success::text('POST_SAVED'), $response['title']))->addCustomData('_id', $request['_id'])->get('array'));
         } catch (MyException $e) {
-            $error_data=$this->formatter->error($e->getCode())->message('error', $e->getMessage())->get('array');
-            $error_code=$e->getCode();
-            $this->sendError($error_data,$error_code);
+            $this->sendErrorResponse($e);
         }
     }
 }
