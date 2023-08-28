@@ -31,7 +31,6 @@ class VisualConstructorController
      * Init function.
      *
      * @param AbstractParseContent $parser
-     * @param ResponseFormatter $formatter
      */
     public function __construct(AbstractParseContent $parser)
     {
@@ -40,10 +39,9 @@ class VisualConstructorController
     /**
      * Parse raw html data of the page.
      *
-     * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @param string $url Url of the page.
      * @param array $options Array of options.
-     * @return ResponseFormatter
+     * @return array|string
      */
     public function get($url, $options = array())
     {
@@ -55,7 +53,7 @@ class VisualConstructorController
      *
      * @param string $url Url of the page.
      * @param array $options Array of options.
-     * @return string
+     * @return array|string
      */
     public function __invoke($url, $options)
     {

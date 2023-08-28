@@ -1,7 +1,7 @@
 <?php
 namespace NewsParserPlugin\Models\Factory;
 
-use NewsParserPlugin\Models\CroneDataModel;
+use NewsParserPlugin\Models\CronDataModel;
 
 /**
  * Class operates with Cron options.

@@ -43,7 +43,7 @@ class MiddlewareController {
      *          
      * 
      * @param string $action name of action that will be used to call modifier 
-     * @param array|NewsParserPlugin\Interfaces\MiddlewareInterface $middleware 
+     * @param array|\NewsParserPlugin\Interfaces\MiddlewareInterface $middleware 
      * 
      * @return int new array of modifiers length
      */

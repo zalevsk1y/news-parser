@@ -36,7 +36,7 @@ class CronController
         $cron_timestemp=time();
         if($cron_model->getStatus()=='active') $cron_model->setTimestamp($cron_timestemp);
         $cron_model->save();
-        if(!$this->isCronExists($cron_model->getInterval())){
+        if($this->isCronExists($cron_model->getInterval())===false){
             $this->setCron($cron_model->getInterval(),$cron_timestemp);
         }
         return $cron_model->getAttributes('array');
@@ -57,7 +57,7 @@ class CronController
     public function get($url=null)
     {
         $crons_data=$this->getAll();
-        if($url==null) return $crons_data;
+        if($url===null) return $crons_data;
         if(isset($crons_data[$url])){
             $formated_cron_data=$this->modelsFactory($crons_data[$url])->getAttributes('array');
             return $formated_cron_data;
@@ -70,7 +70,7 @@ class CronController
      * Delete cron options.
      * 
      * @param string $url
-     * @return null
+     * @return array
      * 
      */
     public function delete($url)
@@ -109,7 +109,7 @@ class CronController
      * Check if a cron job with the specified interval exists.
      *
      * @param string $interval The interval of the cron job to check.
-     * @return int|false The timestamp of the next scheduled run of the cron job, or false if the cron job does not exist.
+     * @return false|int timestamp if cron job exists, or false if the cron job does not exist.
      */
 
     protected function isCronExists($interval)
@@ -136,7 +136,7 @@ class CronController
     protected function unsetCron($interval)
     {
         $timestamp = $this->isCronExists($interval);
-        if($timestamp) return wp_unschedule_event( $timestamp, NEWS_PARSER_CRON_ACTION_PREFIX.$interval,array($interval));
+        if($timestamp!==false) return wp_unschedule_event( $timestamp, NEWS_PARSER_CRON_ACTION_PREFIX.$interval,array($interval));
 
     }
     
@@ -147,7 +147,7 @@ class CronController
      * @param string $hash
      * @param array $croneData
      * 
-     * @return CroneDataModel
+     * @return NewsParserPlugin\Models\CronDataModel
      */
     protected function modelsFactory($cron_data)
     {

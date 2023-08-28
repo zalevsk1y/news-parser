@@ -25,7 +25,6 @@ class MediaController
     /**
      * Saves attached media.
      *
-     * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @throws MyException
      * @param string $url Url of image that should be download.
      * @param string $post_id Post id.

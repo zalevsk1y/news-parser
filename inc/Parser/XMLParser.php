@@ -38,7 +38,7 @@ class XMLParser extends Abstracts\AbstractParseContent
      * [status] - status of post parsed - if post was not saved as draft and draft -when post saved as draft
      *
      * @param string $xml
-     * @return array of StdClass
+     * @return object of StdClass
      *
      */
     protected function parse($xml)
@@ -83,7 +83,7 @@ class XMLParser extends Abstracts\AbstractParseContent
      *
      * @param \SimpleXMLElement $data object created by simplexml_load_string() function;
      *
-     * @return object parsed data
+     * @return array|array<mixed,object>  parsed data
      */
     protected function formatData($data)
     {
@@ -217,7 +217,7 @@ class XMLParser extends Abstracts\AbstractParseContent
     /**
      * Parse image from description using regular expression
      *
-     * @param $text text of description
+     * @param string $text text of description
      * @return string|false
      */
     public function parseImageDescription($text)
@@ -233,7 +233,7 @@ class XMLParser extends Abstracts\AbstractParseContent
      * Parsing image from XML Media:Content element.
      *
      * @param \SimpleXMLElement $xml
-     * @return void
+     * @return string|false
      */
     public function parseImageMediaTag($xml)
     {

@@ -29,7 +29,7 @@ class RestApiController extends \WP_REST_Controller
     {
         
         if (!current_user_can('manage_options')) {
-        return new \WP_Error('rest_api_forbidden', ErrNO_RIGHTS_TO_PUBLISHors::text(''));
+        return new \WP_Error('rest_api_forbidden', Errors::text('NO_RIGHTS_TO_PUBLISH'));
         }
         $headers = $request->get_headers();
         $nonce = isset($headers['x_wp_nonce']) ? $headers['x_wp_nonce'][0] : '';

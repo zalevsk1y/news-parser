@@ -32,7 +32,7 @@ class PostModel implements ModelInterface
     /**
      * Featured image url.
      *
-     * @var string
+     * @var string|false
      */
     public $image;
     /**
@@ -44,7 +44,7 @@ class PostModel implements ModelInterface
     /**
      * Url of source post.
      *
-     * @var string
+     * @var string|false
      */
     public $sourceUrl;
     /**
@@ -235,7 +235,7 @@ class PostModel implements ModelInterface
      * @param string $image url of image
      * @param int $id post ID in WP
      * @param boolean $post_thumb if image will use NewsParserPlugin\as main image of the post
-     * @return int image ID
+     * @return WP_Error|string  image ID
      */
     protected function attachImageToPostWordpress($image, $id, $post_thumb = false, $alt = '')
     {
@@ -257,7 +257,7 @@ class PostModel implements ModelInterface
      * Update wordpress post
      *
      * @param string $update_item name of updated field
-     * @param $data new data that will be add to the field
+     * @param mixed $data new data that will be add to the field
      * @return void
      */
     protected function updatePostWordPress($update_item, $data)

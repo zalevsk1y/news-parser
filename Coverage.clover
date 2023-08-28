@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1693164926">
-  <project timestamp="1693164926">
+<coverage generated="1693215591">
+  <project timestamp="1693215591">
     <file name="/var/www/html/wp-content/plugins/news-parser/inc/Ajax/Ajax.php">
       <class name="NewsParserPlugin\Ajax\Ajax" namespace="global">
         <metrics complexity="13" methods="6" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="15" elements="35" coveredelements="16"/>
@@ -389,14 +389,6 @@
       <line num="176" type="stmt" count="0"/>
       <metrics loc="180" ncloc="107" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="52" coveredstatements="0" elements="58" coveredelements="0"/>
     </file>
-    <file name="/var/www/html/wp-content/plugins/news-parser/inc/Controller/BaseController.php">
-      <class name="NewsParserPlugin\Controller\BaseController" namespace="global">
-        <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="2" coveredelements="0"/>
-      </class>
-      <line num="21" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="23" type="stmt" count="0"/>
-      <metrics loc="26" ncloc="16" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="2" coveredelements="0"/>
-    </file>
     <file name="/var/www/html/wp-content/plugins/news-parser/inc/Controller/CronController.php">
       <class name="NewsParserPlugin\Controller\CronController" namespace="global">
         <metrics complexity="21" methods="12" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="41" coveredstatements="28" elements="53" coveredelements="32"/>
@@ -529,29 +521,29 @@
       </class>
       <line num="39" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="41" type="stmt" count="1"/>
-      <line num="57" type="method" name="get" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="60" type="stmt" count="1"/>
-      <line num="61" type="stmt" count="1"/>
-      <line num="62" type="stmt" count="1"/>
-      <line num="76" type="method" name="listModelFactory" visibility="protected" complexity="1" crap="1" count="1"/>
-      <line num="78" type="stmt" count="1"/>
-      <metrics loc="81" ncloc="29" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="8" coveredelements="8"/>
+      <line num="51" type="method" name="get" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="54" type="stmt" count="1"/>
+      <line num="55" type="stmt" count="1"/>
+      <line num="56" type="stmt" count="1"/>
+      <line num="70" type="method" name="listModelFactory" visibility="protected" complexity="1" crap="1" count="1"/>
+      <line num="72" type="stmt" count="1"/>
+      <metrics loc="75" ncloc="29" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="8" coveredelements="8"/>
     </file>
     <file name="/var/www/html/wp-content/plugins/news-parser/inc/Controller/MediaController.php">
       <class name="NewsParserPlugin\Controller\MediaController" namespace="global">
         <metrics complexity="4" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="5" elements="10" coveredelements="6"/>
       </class>
-      <line num="35" type="method" name="create" visibility="public" complexity="2" crap="2" count="2"/>
+      <line num="34" type="method" name="create" visibility="public" complexity="2" crap="2" count="2"/>
+      <line num="36" type="stmt" count="2"/>
       <line num="37" type="stmt" count="2"/>
-      <line num="38" type="stmt" count="2"/>
-      <line num="39" type="stmt" count="1"/>
+      <line num="38" type="stmt" count="1"/>
+      <line num="40" type="stmt" count="1"/>
       <line num="41" type="stmt" count="1"/>
-      <line num="42" type="stmt" count="1"/>
-      <line num="50" type="method" name="postModelsFactory" visibility="protected" complexity="1" crap="2" count="0"/>
-      <line num="52" type="stmt" count="0"/>
-      <line num="62" type="method" name="__invoke" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="64" type="stmt" count="0"/>
-      <metrics loc="67" ncloc="32" classes="1" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="5" elements="10" coveredelements="6"/>
+      <line num="49" type="method" name="postModelsFactory" visibility="protected" complexity="1" crap="2" count="0"/>
+      <line num="51" type="stmt" count="0"/>
+      <line num="61" type="method" name="__invoke" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="63" type="stmt" count="0"/>
+      <metrics loc="66" ncloc="32" classes="1" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="5" elements="10" coveredelements="6"/>
     </file>
     <file name="/var/www/html/wp-content/plugins/news-parser/inc/Controller/MiddlewareController.php">
       <class name="NewsParserPlugin\Controller\MiddlewareController" namespace="global">
@@ -607,61 +599,61 @@
       <class name="NewsParserPlugin\Controller\PostController" namespace="global">
         <metrics complexity="11" methods="7" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="20" elements="31" coveredelements="24"/>
       </class>
-      <line num="50" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="52" type="stmt" count="1"/>
-      <line num="63" type="method" name="create" visibility="public" complexity="3" crap="3.03" count="1"/>
-      <line num="65" type="stmt" count="1"/>
+      <line num="48" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="50" type="stmt" count="1"/>
+      <line num="60" type="method" name="create" visibility="public" complexity="3" crap="3.03" count="1"/>
+      <line num="62" type="stmt" count="1"/>
+      <line num="63" type="stmt" count="1"/>
+      <line num="64" type="stmt" count="0"/>
       <line num="66" type="stmt" count="1"/>
-      <line num="67" type="stmt" count="0"/>
+      <line num="67" type="stmt" count="1"/>
       <line num="69" type="stmt" count="1"/>
       <line num="70" type="stmt" count="1"/>
-      <line num="72" type="stmt" count="1"/>
+      <line num="71" type="stmt" count="0"/>
       <line num="73" type="stmt" count="1"/>
-      <line num="74" type="stmt" count="0"/>
       <line num="76" type="stmt" count="1"/>
-      <line num="79" type="stmt" count="1"/>
+      <line num="78" type="stmt" count="1"/>
       <line num="81" type="stmt" count="1"/>
       <line num="84" type="stmt" count="1"/>
-      <line num="87" type="stmt" count="1"/>
-      <line num="96" type="method" name="createPost" visibility="protected" complexity="1" crap="1" count="1"/>
-      <line num="98" type="stmt" count="1"/>
-      <line num="99" type="stmt" count="1"/>
-      <line num="107" type="method" name="addPostThumbnail" visibility="protected" complexity="2" crap="2.15" count="1"/>
+      <line num="93" type="method" name="createPost" visibility="protected" complexity="1" crap="1" count="1"/>
+      <line num="95" type="stmt" count="1"/>
+      <line num="96" type="stmt" count="1"/>
+      <line num="104" type="method" name="addPostThumbnail" visibility="protected" complexity="2" crap="2.15" count="1"/>
+      <line num="106" type="stmt" count="1"/>
+      <line num="107" type="stmt" count="0"/>
       <line num="109" type="stmt" count="1"/>
-      <line num="110" type="stmt" count="0"/>
-      <line num="112" type="stmt" count="1"/>
-      <line num="120" type="method" name="addSource" visibility="protected" complexity="2" crap="2" count="1"/>
+      <line num="117" type="method" name="addSource" visibility="protected" complexity="2" crap="2" count="1"/>
+      <line num="119" type="stmt" count="1"/>
+      <line num="120" type="stmt" count="1"/>
       <line num="122" type="stmt" count="1"/>
-      <line num="123" type="stmt" count="1"/>
-      <line num="125" type="stmt" count="1"/>
-      <line num="138" type="method" name="postModelsFactory" visibility="protected" complexity="1" crap="1" count="1"/>
-      <line num="140" type="stmt" count="1"/>
-      <line num="152" type="method" name="templateModelsFactory" visibility="protected" complexity="1" crap="2" count="0"/>
-      <line num="154" type="stmt" count="0"/>
-      <metrics loc="157" ncloc="75" classes="1" methods="7" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="20" elements="31" coveredelements="24"/>
+      <line num="135" type="method" name="postModelsFactory" visibility="protected" complexity="1" crap="1" count="1"/>
+      <line num="137" type="stmt" count="1"/>
+      <line num="149" type="method" name="templateModelsFactory" visibility="protected" complexity="1" crap="2" count="0"/>
+      <line num="151" type="stmt" count="0"/>
+      <metrics loc="154" ncloc="74" classes="1" methods="7" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="20" elements="31" coveredelements="24"/>
     </file>
     <file name="/var/www/html/wp-content/plugins/news-parser/inc/Controller/PostControllerExtendeOptions.php">
       <class name="NewsParserPlugin\Controller\PostControllerExtendeOptions" namespace="global">
         <metrics complexity="4" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="0" elements="17" coveredelements="0"/>
       </class>
-      <line num="27" type="method" name="create" visibility="public" complexity="3" crap="12" count="0"/>
+      <line num="26" type="method" name="create" visibility="public" complexity="3" crap="12" count="0"/>
+      <line num="29" type="stmt" count="0"/>
       <line num="30" type="stmt" count="0"/>
-      <line num="31" type="stmt" count="0"/>
+      <line num="32" type="stmt" count="0"/>
       <line num="33" type="stmt" count="0"/>
       <line num="34" type="stmt" count="0"/>
-      <line num="35" type="stmt" count="0"/>
+      <line num="36" type="stmt" count="0"/>
       <line num="37" type="stmt" count="0"/>
-      <line num="38" type="stmt" count="0"/>
+      <line num="40" type="stmt" count="0"/>
       <line num="41" type="stmt" count="0"/>
-      <line num="42" type="stmt" count="0"/>
-      <line num="45" type="stmt" count="0"/>
-      <line num="47" type="stmt" count="0"/>
-      <line num="50" type="stmt" count="0"/>
-      <line num="52" type="stmt" count="0"/>
-      <line num="64" type="method" name="templateModelsFactory" visibility="protected" complexity="1" crap="2" count="0"/>
+      <line num="44" type="stmt" count="0"/>
+      <line num="46" type="stmt" count="0"/>
+      <line num="49" type="stmt" count="0"/>
+      <line num="51" type="stmt" count="0"/>
+      <line num="63" type="method" name="templateModelsFactory" visibility="protected" complexity="1" crap="2" count="0"/>
+      <line num="65" type="stmt" count="0"/>
       <line num="66" type="stmt" count="0"/>
-      <line num="67" type="stmt" count="0"/>
-      <metrics loc="69" ncloc="43" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="0" elements="17" coveredelements="0"/>
+      <metrics loc="68" ncloc="43" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="0" elements="17" coveredelements="0"/>
     </file>
     <file name="/var/www/html/wp-content/plugins/news-parser/inc/Controller/TemplateController.php">
       <class name="NewsParserPlugin\Controller\TemplateController" namespace="global">
@@ -694,14 +686,14 @@
       <class name="NewsParserPlugin\Controller\VisualConstructorController" namespace="global">
         <metrics complexity="3" methods="3" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="3" elements="7" coveredelements="5"/>
       </class>
-      <line num="36" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="2"/>
-      <line num="38" type="stmt" count="2"/>
-      <line num="48" type="method" name="get" visibility="public" complexity="1" crap="1" count="2"/>
-      <line num="50" type="stmt" count="2"/>
-      <line num="51" type="stmt" count="1"/>
-      <line num="60" type="method" name="__invoke" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="62" type="stmt" count="0"/>
-      <metrics loc="65" ncloc="28" classes="1" methods="3" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="3" elements="7" coveredelements="5"/>
+      <line num="35" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="37" type="stmt" count="2"/>
+      <line num="46" type="method" name="get" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="48" type="stmt" count="2"/>
+      <line num="49" type="stmt" count="1"/>
+      <line num="58" type="method" name="__invoke" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="60" type="stmt" count="0"/>
+      <metrics loc="63" ncloc="28" classes="1" methods="3" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="3" elements="7" coveredelements="5"/>
     </file>
     <file name="/var/www/html/wp-content/plugins/news-parser/inc/Exception/MyException.php">
       <class name="NewsParserPlugin\Exception\MyException" namespace="global">
@@ -1462,15 +1454,15 @@
       <line num="91" type="stmt" count="1"/>
       <line num="93" type="method" name="sanitizeInteger" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="94" type="stmt" count="0"/>
-      <line num="96" type="method" name="sanitizeCronOptions" visibility="public" complexity="3" crap="12" count="0"/>
-      <line num="97" type="stmt" count="0"/>
-      <line num="98" type="stmt" count="0"/>
-      <line num="99" type="stmt" count="0"/>
+      <line num="99" type="method" name="sanitizeCronOptions" visibility="public" complexity="3" crap="12" count="0"/>
       <line num="100" type="stmt" count="0"/>
       <line num="101" type="stmt" count="0"/>
       <line num="102" type="stmt" count="0"/>
       <line num="103" type="stmt" count="0"/>
-      <metrics loc="105" ncloc="71" classes="1" methods="6" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="26" elements="48" coveredelements="28"/>
+      <line num="104" type="stmt" count="0"/>
+      <line num="105" type="stmt" count="0"/>
+      <line num="106" type="stmt" count="0"/>
+      <metrics loc="108" ncloc="71" classes="1" methods="6" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="26" elements="48" coveredelements="28"/>
     </file>
     <file name="/var/www/html/wp-content/plugins/news-parser/inc/Traits/ValidateDataTrait.php">
       <class name="NewsParserPlugin\Traits\ValidateDataTrait" namespace="global">
@@ -1662,21 +1654,21 @@
       <line num="63" type="stmt" count="3"/>
       <line num="65" type="stmt" count="0"/>
       <line num="67" type="stmt" count="3"/>
-      <line num="69" type="method" name="callFunc" visibility="protected" complexity="2" crap="2" count="8"/>
-      <line num="71" type="stmt" count="8"/>
-      <line num="72" type="stmt" count="8"/>
-      <line num="73" type="stmt" count="8"/>
-      <line num="84" type="method" name="__call" visibility="public" complexity="5" crap="5.27" count="8"/>
-      <line num="86" type="stmt" count="8"/>
-      <line num="87" type="stmt" count="0"/>
+      <line num="72" type="method" name="callFunc" visibility="protected" complexity="2" crap="2" count="8"/>
+      <line num="74" type="stmt" count="8"/>
+      <line num="75" type="stmt" count="8"/>
+      <line num="76" type="stmt" count="8"/>
+      <line num="87" type="method" name="__call" visibility="public" complexity="5" crap="5.27" count="8"/>
       <line num="89" type="stmt" count="8"/>
-      <line num="90" type="stmt" count="8"/>
-      <line num="92" type="stmt" count="7"/>
-      <line num="93" type="stmt" count="7"/>
-      <line num="94" type="stmt" count="7"/>
-      <line num="96" type="stmt" count="0"/>
-      <line num="98" type="stmt" count="7"/>
-      <metrics loc="101" ncloc="51" classes="1" methods="4" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="18" elements="25" coveredelements="20"/>
+      <line num="90" type="stmt" count="0"/>
+      <line num="92" type="stmt" count="8"/>
+      <line num="93" type="stmt" count="8"/>
+      <line num="95" type="stmt" count="7"/>
+      <line num="96" type="stmt" count="7"/>
+      <line num="97" type="stmt" count="7"/>
+      <line num="99" type="stmt" count="0"/>
+      <line num="101" type="stmt" count="7"/>
+      <metrics loc="104" ncloc="51" classes="1" methods="4" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="18" elements="25" coveredelements="20"/>
     </file>
     <file name="/var/www/html/wp-content/plugins/news-parser/inc/Utils/ResponseFormatter.php">
       <class name="NewsParserPlugin\Utils\ResponseFormatter" namespace="global">
@@ -1774,6 +1766,6 @@
       <line num="63" type="stmt" count="1"/>
       <metrics loc="67" ncloc="36" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="14" elements="18" coveredelements="15"/>
     </file>
-    <metrics files="43" loc="4939" ncloc="2833" classes="42" methods="242" coveredmethods="89" conditionals="0" coveredconditionals="0" statements="1276" coveredstatements="717" elements="1518" coveredelements="806"/>
+    <metrics files="42" loc="4906" ncloc="2816" classes="41" methods="241" coveredmethods="89" conditionals="0" coveredconditionals="0" statements="1275" coveredstatements="717" elements="1516" coveredelements="806"/>
   </project>
 </coverage>

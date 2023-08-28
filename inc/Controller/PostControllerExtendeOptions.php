@@ -18,11 +18,10 @@ class PostControllerExtendeOptions extends PostController{
     /**
      * Create post draft and return response in proper format
      *
-     * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @param string $url of post that should be parsed and saved as draft
      * @param string $_id front end index of post that should be parsed and saved as draft
      * @param string $data object with parameters for wp post
-     * @return ResponseFormatter
+     * @return array
      */
     public function create($url, $_id,$data=false)
     {

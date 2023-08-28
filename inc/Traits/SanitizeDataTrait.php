@@ -68,7 +68,7 @@ trait SanitizeDataTrait
      * Sanitize child template element
      *
      * @param array $el  ['tagName','className','searchTemplate','position']
-     * @return void
+     * @return array
      */
     protected function sanitizeTemplateElement($el)
     {
@@ -93,6 +93,9 @@ trait SanitizeDataTrait
     public function sanitizeInteger($value){
         return intval($value);
     }
+    /**
+     * @return array
+     */
     public function sanitizeCronOptions($option){
         $clean_data=array();
         $clean_data['maxCronCalls']=intval($option['maxCronCalls']);

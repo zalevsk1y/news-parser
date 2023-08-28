@@ -49,7 +49,7 @@ class Ajax
      * type - argument type
      * validate_callback - validation callback should return boolean
      * sanitize_callback - sanitize input data callback.
-     * @return void
+     * @return array
      */
     protected function prepareArgs($dirty_request, $args_params)
     {
@@ -58,11 +58,11 @@ class Ajax
             if (key_exists($key, $dirty_request)) {
                 $dirty_arg=$dirty_request[$key];
                 if (is_wp_error($e = $this->checkArgType($dirty_arg, $arg['type'], $arg['description']))) {
-                    $this->sendError($e);
+                    $this->sendError($e->get_error_message(),$e->get_error_code());
                 }
                 //validate arguments.
                 if (is_wp_error($e = call_user_func($arg['validate_callback'], $dirty_arg))) {
-                    $this->sendError($e);
+                    $this->sendError($e->get_error_message(),$e->get_error_code());
                 }
                 //sanitize arguments.
                 if (($clean_arg=call_user_func($arg['sanitize_callback'], $dirty_arg))!==false) {

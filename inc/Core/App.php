@@ -18,7 +18,8 @@ class App{
     public $DI_container;
     public $event;
     public $templateApiController;
-    protected $mainMenu;
+    public $cronApiController;
+    public $cronTaskController;
     static protected $instance=null;
     protected function __construct(ContainerInterface $DI_container){
         $this->event=EventController::getInstance($DI_container);
@@ -27,8 +28,9 @@ class App{
         $this->templateApiController=TemplateApiController::create($this->event);
         $this->cronApiController=CronApiController::create($this->event);
         $this->middleware=MiddlewareController::getInstance($this->event);
-        $this->mainMenu=Main::start($DI_container->get(\NewsParserPlugin\Menu\Admin\MenuPage::class),$DI_container->get(\NewsParserPlugin\Utils\MenuConfig::class));
         $this->cronTaskController=new CronTaskController($this->event);
+        //init main
+        Main::start($DI_container->get(\NewsParserPlugin\Menu\Admin\MenuPage::class),$DI_container->get(\NewsParserPlugin\Utils\MenuConfig::class));
         $this->addActions();
     }
     static public function start(ContainerInterface $DI_container){
