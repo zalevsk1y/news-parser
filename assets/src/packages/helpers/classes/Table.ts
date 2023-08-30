@@ -23,7 +23,7 @@ class Table{
      * @param {object} joinTables 
      * @returns {array}
      */
-    public join(joinTables:Record<string,Record<string,boolean>>){
+    public join(joinTables:Record<string,object>){
         let newTable=this.table;
         Object.keys(joinTables).forEach(name=>newTable=this.joinOnce(newTable,joinTables[name],name));
         return newTable;
@@ -37,8 +37,8 @@ class Table{
      * @param {object} joinTable Object with mainTable items index as property name.
      * @param {string} propName Property name that will by add to mainTable. 
      */
-    joinOnce(mainTable:Array<any>,joinTable:Record<string,boolean>,propName:string){
-        return mainTable.map((data,index)=>({...data,[propName]:(joinTable[index]!==undefined&&joinTable[index])}));
+    joinOnce(mainTable:Array<any>,joinTable:object,propName:string){
+        return mainTable.map((data,index)=>({...data,[propName]:(index.toString() in joinTable)?(joinTable as any)[index.toString()]:false}));
     }
 }
 

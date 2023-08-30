@@ -1,16 +1,15 @@
-import { requestApi } from '@news-parser/helpers/api/requestApi'
+import { requestApi,RequestApiError,RequestApiSuccess,RequestApiOptions } from '@news-parser/helpers/api/requestApi'
 import { useState } from 'react'
 import { configConstantsEntities, cofigConstantsEvents } from '@news-parser/config/constants';
 import { useDispatch } from 'react-redux';
 import { Category } from 'types/sidebar';
 import { pushCategory } from '../actions/category.actions';
 
-namespace useFetchCategories {
-    export type FetchCategories = Category[];
-    export type IsFetching = boolean;
-    export type StartFetching = () => Promise<Category[]>;
-    export type UseFetchCategories = () => [IsFetching, StartFetching]
-}
+export type FetchCategories = Category[];
+export type IsFetching = boolean;
+export type StartFetching = () => Promise<Category[]>;
+export type UseFetchCategories = () => [IsFetching, StartFetching]
+
 
 /**
  * Custom hook for fetching categories.
@@ -19,15 +18,15 @@ namespace useFetchCategories {
  */
 
 
-export const useFetchCategories: useFetchCategories.UseFetchCategories = () => {
-    const [isFetching, setIsFetching] = useState<useFetchCategories.IsFetching>(false);
-    const options: requestApi.RequestApiOptions = { entity: configConstantsEntities.API_WP_CATEGORIES, event: cofigConstantsEvents.GET, data: null, searchParams: { page: 1 } };
+export const useFetchCategories: UseFetchCategories = () => {
+    const [isFetching, setIsFetching] = useState<IsFetching>(false);
+    const options: RequestApiOptions = { entity: configConstantsEntities.API_WP_CATEGORIES, event: cofigConstantsEvents.GET, data: null, searchParams: { page: 1 } };
     const dispatch = useDispatch();
-    const error: requestApi.RequestApiError = (errorData) => {
+    const error: RequestApiError = (errorData) => {
         const { data } = errorData;
         throw new Error(data.message.text);
     };
-    const success: requestApi.RequestApiSuccess<useFetchCategories.FetchCategories> = (categories) => {
+    const success: RequestApiSuccess<FetchCategories> = (categories) => {
         if (categories.length > 0) {
             dispatch(pushCategory(categories));
             options.searchParams.page++;

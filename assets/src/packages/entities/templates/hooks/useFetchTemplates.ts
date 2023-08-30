@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux'
-import { requestApi } from '@news-parser/helpers/api/requestApi';
+import { requestApi,RequestApiSuccess,RequestApiError, RequestApiOptions } from '@news-parser/helpers/api/requestApi';
 import { configConstantsEntities, cofigConstantsEvents } from '@news-parser/config/constants';
 import { ResponseType } from '@news-parser/types';
 import { setTemplates } from '../actions/templates.actions';
-import { MessageFormat } from 'types/message';
 
-namespace useFetchTemplates {
-    export type TemplatesResponseType = ResponseType<Array<string>>;
-    export type IsFetching = boolean;
-    export type FetchTemplates = () => Promise<TemplatesResponseType>;
-    export type UseFetchTemplates = () => [IsFetching, FetchTemplates]
-}
+
+export type TemplatesResponseType = ResponseType<Array<string>>;
+export type IsFetching = boolean;
+export type FetchTemplates = () => Promise<TemplatesResponseType>;
+export type UseFetchTemplates = () => [IsFetching, FetchTemplates]
+
 
 /**
  * Custom hook for fetching templates and managing the fetch status by dispatching Redux actions.
@@ -21,20 +20,20 @@ namespace useFetchTemplates {
  * - fetchTemplates: A function that triggers the fetch request for templates and returns a promise.
  */
 
-export const useFetchTemplates: useFetchTemplates.UseFetchTemplates = () => {
+export const useFetchTemplates: UseFetchTemplates = () => {
     const [isFetching, setIsFetching] = useState(false);
         const dispatch = useDispatch();
-        const success: requestApi.RequestApiSuccess<useFetchTemplates.TemplatesResponseType> = (templatesDate) => {
+        const success: RequestApiSuccess<TemplatesResponseType> = (templatesDate) => {
             const { data } = templatesDate;
             dispatch(setTemplates(data));
             return new Promise(resoleve => resoleve(templatesDate))
         };
-        const error: requestApi.RequestApiError = (errorData) => {
+        const error: RequestApiError = (errorData) => {
             const {data}=errorData;
             throw new Error(data.message.text);
         };
         const fetchTemplates = () => {
-            const options = { entity: configConstantsEntities.TEMPLATE, event: cofigConstantsEvents.GET, data: null };
+            const options:RequestApiOptions = { entity: configConstantsEntities.TEMPLATE, event: cofigConstantsEvents.GET, data: null };
             setIsFetching(true);
             return requestApi(options, success, error).finally(() => setIsFetching(false))
         }

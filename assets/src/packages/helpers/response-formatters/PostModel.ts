@@ -182,7 +182,6 @@ export class PostModel implements PostModelInterface {
     protected sortByOffset(postData:PostData['body']):ParsedData[] {
         const sortedContent:Array<ParsedData> = [];
             const postDataMap:Map<string ,ParsedData> = new Map(Object.entries(postData));
-
         while (true) {
             if (postDataMap.size===0) break;
             const topElement:{

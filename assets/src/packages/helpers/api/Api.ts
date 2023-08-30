@@ -29,7 +29,7 @@ export class Api implements ApiInterface {
  * @public
  */
 
-    public request<ResponseType>(): Promise<Response> {
+    public request(): Promise<Response> {
         
         const fetchUrl: string = this.params.url || this.url;
         return fetch(fetchUrl, this.fetchParams);
@@ -66,7 +66,8 @@ export class Api implements ApiInterface {
 
     getBody() {
         if (this.params.method == configConstantsMethods.POST || this.params.method == configConstantsMethods.PUT || this.params.method == configConstantsMethods.PATCH) {
-            let { body, nonce } = this.params;
+            let { body } = this.params;
+            const { nonce } = this.params;
             if (this.params.type == cofigConstantsEvents.AJAX) {
                 body = body !== undefined ? { ...body, _wpnonce: nonce } : { _wpnonce: nonce };
             }

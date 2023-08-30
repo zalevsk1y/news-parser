@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
 import { ParserRootState } from 'types/state';
 
-namespace useGetDiscussionGroup {
-    export type AllowComments = ParserRootState['parse']['sidebar']['allowComments'];
-    export type AllowPinbacks = ParserRootState['parse']['sidebar']['allowPinbacks'];
-    export type UseGetDiscussionGroup = () => [AllowComments, AllowPinbacks]
-}
+
+export type AllowComments = ParserRootState['parse']['sidebar']['allowComments'];
+export type AllowPinbacks = ParserRootState['parse']['sidebar']['allowPinbacks'];
+export type UseGetDiscussionGroup = () => [AllowComments, AllowPinbacks]
+
 
 /**
  * Custom hook for retrieving discussion group settings from the Redux store.
@@ -15,7 +15,7 @@ namespace useGetDiscussionGroup {
  * - allowPinbacks: A boolean indicating whether pinbacks are allowed, obtained from the Redux store.
  */
 
-export const useGetDiscussionGroup: useGetDiscussionGroup.UseGetDiscussionGroup = () => {
+export const useGetDiscussionGroup: UseGetDiscussionGroup = () => {
     const { allowComments, allowPinbacks } = useSelector((state: ParserRootState) => state.parse.sidebar)
     return [allowComments, allowPinbacks]
 }

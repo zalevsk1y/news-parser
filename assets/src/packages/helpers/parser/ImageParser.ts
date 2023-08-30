@@ -22,7 +22,7 @@ class ImageParser implements ImageParserInterface{
 
     protected dataSet(imgElements:Array<HTMLImageElement>):ImageParserInterface{
         [...imgElements].forEach(imgTag=>{
-            const imageScr=imgTag.dataset.hasOwnProperty('src')?imgTag.dataset.src:null;
+            const imageScr=('src' in imgTag.dataset)?imgTag.dataset.src:null;
             if (imageScr===null||imageScr===undefined) return;
             this.lazyLoad(imgTag,imageScr);
             this.pictureTag(imgTag,imageScr);
@@ -39,7 +39,7 @@ class ImageParser implements ImageParserInterface{
 
     // ToDo:add get picture src from wrapping tag.
     protected wrappingATag(imgElements:Array<HTMLImageElement>){
-        Array.from(imgElements).forEach(imgTag=>{
+        Array.from(imgElements).forEach(()=>{
 
         });
     }

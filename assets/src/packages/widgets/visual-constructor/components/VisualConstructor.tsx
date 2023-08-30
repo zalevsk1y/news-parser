@@ -28,8 +28,8 @@ interface VisualConstructorProps {
 
 
 export const VisualConstructor: React.FC<VisualConstructorProps> = ({ onReady, children }) => {
-    const [isTagsFetching, fetchTags] = useFetchTags();
-    const [isCategoriesFetching, fetchCategories] = useFetchCategories();
+    const [, fetchTags] = useFetchTags();
+    const [, fetchCategories] = useFetchCategories();
     const [enableScrolling, disableScrolling] = useScrolling();
     const [frameIsReady, setFrameIsReady] = useState<boolean>(false);
     const closeVisualConstructor = useClose();

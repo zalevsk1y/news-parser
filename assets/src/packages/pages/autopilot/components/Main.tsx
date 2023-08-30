@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import Message from '@news-parser/modules/Message';
 import { useFetchTemplates } from '@news-parser/entities/templates/hooks/useFetchTemplates';
 import { RightSection } from './RightSection';
@@ -13,7 +13,7 @@ import '../../styles/Main.css'
 
 
 const Main: React.FC = () => {
-  const [isTemplatesFetching, fetchTemplates] = useFetchTemplates();
+  const [, fetchTemplates] = useFetchTemplates();
   useEffect(() => {
     fetchTemplates();
   }, [])

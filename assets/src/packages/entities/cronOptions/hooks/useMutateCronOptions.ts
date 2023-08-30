@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { configConstantsEntities, cofigConstantsEvents } from '@news-parser/config/constants';
-import { requestApi } from '@news-parser/helpers/api/requestApi';
+import { requestApi,RequestApiError,RequestApiOptions,RequestApiSuccess } from '@news-parser/helpers/api/requestApi';
 import { CronOptions } from 'types/cronOptions';
 import { ResponseType } from '@news-parser/types';
 import { setCronOpions } from '../actions/cronOptions.actions';
-import { MessageFormat } from 'types/message';
 
-namespace useMutateCronOptions {
-    export type IsMutating = boolean;
-    export type MutateCronResponseType = ResponseType<CronOptions>;
-    export type MutatCronData = (cronData: CronOptions|{url:string}, event?: string) => Promise<MutateCronResponseType>;
-    export type UseMutateCronOptions = () => [IsMutating, MutatCronData]
-}
+
+
+export type IsMutating = boolean;
+export type MutateCronResponseType = ResponseType<CronOptions>;
+export type MutatCronData = (cronData: CronOptions|{url:string}, event?: string) => Promise<MutateCronResponseType>;
+export type UseMutateCronOptions = () => [IsMutating, MutatCronData]
 
 /**
  * Custom hook for mutating cron options and handling the API request.
@@ -22,20 +21,20 @@ namespace useMutateCronOptions {
  * - mutateCronData: A function that triggers the API request to mutate the cron options.
  */
 
-export const useMutateCronOptions: useMutateCronOptions.UseMutateCronOptions = () => {
+export const useMutateCronOptions: UseMutateCronOptions = () => {
     const dispatch = useDispatch();
     const [isMutating, setIsFetching] = useState(false);
-    const success: requestApi.RequestApiSuccess<useMutateCronOptions.MutateCronResponseType> = (cronData) => {
+    const success: RequestApiSuccess<MutateCronResponseType> = (cronData) => {
         const { data } = cronData;
         dispatch(setCronOpions(data))
         return new Promise(resolve => resolve(cronData))
     };
-        const error: requestApi.RequestApiError = (errorData) => {
+        const error: RequestApiError = (errorData) => {
             const { data } = errorData;
             throw new Error(data.message.text);
         };
-        const mutateCronData: useMutateCronOptions.MutatCronData = (cronData, event = cofigConstantsEvents.UPDATE) => {
-            const options = { entity: configConstantsEntities.CRON, event, data: cronData };
+        const mutateCronData: MutatCronData = (cronData, event = cofigConstantsEvents.UPDATE) => {
+            const options: RequestApiOptions = { entity: configConstantsEntities.CRON, event, data: cronData };
             setIsFetching(true);
             return requestApi(options, success, error).finally(() => setIsFetching(false))
         }

@@ -1,16 +1,16 @@
 import { useDispatch } from 'react-redux';
-import { requestApi } from '@news-parser/helpers/api/requestApi';
+import { requestApi,RequestApiError,RequestApiOptions,RequestApiSuccess } from '@news-parser/helpers/api/requestApi';
 import { configConstantsEntities, cofigConstantsEvents } from '@news-parser/config/constants';
 import { useState } from 'react';
 import { Tag } from 'types/sidebar';
 import { pushTag } from '../actions/tag.actions';
 
-namespace useCreateTag {
-    export type CreateTagResponseType = Tag;
-    export type IsMutating = boolean;
-    export type CreateTag = (tagName: string) => Promise<Tag>;
-    export type UseCreateTag = () => [IsMutating, CreateTag]
-}
+
+export type CreateTagResponseType = Tag;
+export type IsMutating = boolean;
+export type CreateTag = (tagName: string) => Promise<Tag>;
+export type UseCreateTag = () => [IsMutating, CreateTag]
+
 
 /**
  * Custom hook for creating a tag.
@@ -18,19 +18,19 @@ namespace useCreateTag {
  * @returns {Array} An array containing the isMutating flag and the createTag function.
  */
 
-export const useCreateTag: useCreateTag.UseCreateTag = () => {
+export const useCreateTag: UseCreateTag = () => {
     const dispatch = useDispatch();
     const [isMutating, setIsMutating] = useState(false);
-    const success: requestApi.RequestApiSuccess<useCreateTag.CreateTagResponseType> = (tag) => {
+    const success: RequestApiSuccess<CreateTagResponseType> = (tag) => {
         dispatch(pushTag(tag));
         return new Promise(resolve => resolve(tag))
     };
-    const error: requestApi.RequestApiError = (errorData) => {
+    const error: RequestApiError = (errorData) => {
         const { data } = errorData;
         throw new Error(data.message.text);
     };
-    const createTag: useCreateTag.CreateTag = (tagName) => {
-        const options: requestApi.RequestApiOptions = { entity: configConstantsEntities.API_WP_TAGS, event: cofigConstantsEvents.POST, data: { name: tagName } };
+    const createTag: CreateTag = (tagName) => {
+        const options: RequestApiOptions = { entity: configConstantsEntities.API_WP_TAGS, event: cofigConstantsEvents.POST, data: { name: tagName } };
         setIsMutating(true);
         return requestApi(options, success, error).finally(() => setIsMutating(false));
     };

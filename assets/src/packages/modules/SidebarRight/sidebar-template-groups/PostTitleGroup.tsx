@@ -18,8 +18,8 @@ export function PostTitleGroup() {
           <span>{title}</span>
           <input onChange={changeStateInputTitle} value={newTitle} type='text'  className="form-control"/>
           <p className="howto">
-            If you want to change title, type the new title and press "Change
-            title" button.
+          If you want to change title, type the new title and press &quot;Change
+          title&quot; button.
           </p>
         </InfoBody>
         <InfoFooter>

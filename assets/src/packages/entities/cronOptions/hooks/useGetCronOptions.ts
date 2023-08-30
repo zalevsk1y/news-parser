@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { AutopilotRootState } from 'types/state';
 import { CronOptions } from 'types/cronOptions';
 
-namespace useGetCronOptions {
-    export type IsCronOptionsSet=boolean;
-    export type UseGetCronOptions=()=>[IsCronOptionsSet,CronOptions]
-}
+
+export type IsCronOptionsSet=boolean;
+export type UseGetCronOptions=()=>[IsCronOptionsSet,CronOptions]
+
 
 /**
  * Custom hook for accessing the cron options from the Redux store.
@@ -16,7 +16,7 @@ namespace useGetCronOptions {
  * - cronOptions: The cron options object obtained from the Redux store.
  */
 
-export const useGetCronOptions:useGetCronOptions.UseGetCronOptions = () => {
+export const useGetCronOptions: UseGetCronOptions = () => {
     const { cronOptions } = useSelector((state: AutopilotRootState) => state.parse);
     const isCronOptionsSet = useMemo(() => !!cronOptions?.url, [cronOptions])
     return [isCronOptionsSet, cronOptions]

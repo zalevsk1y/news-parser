@@ -25,7 +25,7 @@ export const Posts:React.FC<PostsProps> = ({ openEditor, selectPost, posts }) =>
             newWindowObject?.focus();
         }
     }, []);
-    const selectPostHandler = useCallback((_id:number) => (event:React.MouseEvent<HTMLElement>) => selectPost(_id), [selectPost])
+    const selectPostHandler = useCallback((_id:number) => () => selectPost(_id), [selectPost])
     const openEditorHandler = useCallback((_id:number, link:string) => () => openEditor(_id, link), [openEditor]);
     const postCards = useMemo(() => posts.map(post => (<PostCard key={post.title} selected={!!post.select} >
                 <PostCardHeader pubDate={post.pubDate} />

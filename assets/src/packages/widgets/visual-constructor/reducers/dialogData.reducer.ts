@@ -6,12 +6,11 @@ import { initialState } from './initialState';
 export const dialogData = (state:DialogData = initialState, action:Action) => {
     switch (action.type) {
         case OPEN_VISUAL_CONSTRUCTOR:
-            const { url, _id } = action.payload;
             return {
                 ...state,
                 isOpen: true,
-                url,
-                _id
+                url:action.payload.url,
+                _id:action.payload.id
             }
         case CLOSE_VISUAL_CONSTRUCTOR:
             return {

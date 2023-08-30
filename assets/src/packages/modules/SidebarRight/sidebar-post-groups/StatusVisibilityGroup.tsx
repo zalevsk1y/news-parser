@@ -2,7 +2,6 @@ import React from 'react';
 import { SidebarItemLabel,SidebarItem } from '@news-parser/ui/sidebar/';
 import { useGetStatusVisibility, useStatusVisibility } from '@news-parser/entities/sidebar/hooks';
 import { Select } from '@news-parser/components/Select';
-import { PopUpTimeDate } from '@news-parser/components/sidebar/PopUpTimeDate';
 // import '@news-parser/styles/sidebar/_status-visibility-group.scss'
 
 /**
@@ -12,8 +11,8 @@ import { PopUpTimeDate } from '@news-parser/components/sidebar/PopUpTimeDate';
  * @returns {JSX.Element} The rendered component.
  */
 function StatusVisibilityGroup() {
-    const [status, publish, postFormat] = useGetStatusVisibility()
-    const [postStatusChangeHandler, postFormatChangeHandler, publishDateChangeHandler] = useStatusVisibility();
+    const [status,, postFormat] = useGetStatusVisibility()
+    const [postStatusChangeHandler, postFormatChangeHandler] = useStatusVisibility();
 
     return (
         <>

@@ -1,5 +1,3 @@
-import React from "react";
-
 export type FrameModifier=(html:string)=>string
 export type FrameMiddleware=(frame:HTMLIFrameElement)=>void
 export type DOMEventHandler=(this:Document,e:Event|MouseEvent)=>any;

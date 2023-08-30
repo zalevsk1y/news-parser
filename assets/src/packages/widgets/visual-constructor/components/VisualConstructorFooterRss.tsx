@@ -8,18 +8,19 @@ import { useClose } from '../hooks/visual-constructor/useClose';
 interface VisualConstructorFooterRss{
     rssUrl:string|false
 }
+type settledCallback = <PromiseType>(promise:Promise<PromiseType>,message:string)=>void;
 
 
 export const VisualConstructorFooterRss:React.FC<VisualConstructorFooterRss> = ({rssUrl}) => {
     const shouldParsingTemplateToBeSaved = useGetSaveParsingTemplate();
     const createWpPost = useCreateWpPost();
     const [isTemplateCreating, createTemplate] = useCreateTemplate();
-    const [isMutating,setIsMutating]=useIsMutating();
+    const [,setIsMutating]=useIsMutating();
     const resetSelectedPost = useResetSelectedPosts()
     const close = useClose();
     const showMessage = useShowMessage()
     const buttonClickHandler = useCallback(() => {
-        const settledCallback = (promis:Promise<any>,message:string) => promis.then(() => {
+        const settledCallback:settledCallback = (promise,message) => promise.then(() => {
                 setIsMutating(false);
                 resetSelectedPost();
                 close();

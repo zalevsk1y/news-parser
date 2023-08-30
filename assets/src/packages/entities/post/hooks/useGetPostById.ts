@@ -2,10 +2,9 @@ import { useSelector } from 'react-redux'
 import { ParserRootState } from 'types/state';
 import { Post } from 'types/post';
 
-namespace useGetPostById {
-    export type GetPostById = (_id: number) => Post[];
-    export type UseGetPostById = () => GetPostById
-}
+export type GetPostById = (_id: number) => Post[];
+export type UseGetPostById = () => GetPostById
+
 
 /**
 *
@@ -14,7 +13,7 @@ namespace useGetPostById {
 * @param {number} _id - The ID of the post to retrieve.
 */
 
-export const useGetPostById: useGetPostById.UseGetPostById = () => {
+export const useGetPostById: UseGetPostById = () => {
     const posts: Post[] = useSelector((state: ParserRootState) => state.parse.items.data);
     return (_id) => posts.filter(post => post._id = _id)
 }

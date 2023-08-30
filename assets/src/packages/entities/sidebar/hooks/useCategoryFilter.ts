@@ -4,11 +4,11 @@ import { Category } from 'types/sidebar';
 type GetParent = (categoryObj: Category, categoriesArr: Category[]) => Category | undefined;
 type FilterWithParent = (categoryName: string, categories: Category[]) => Category[]
 
-namespace useCategoryFilter {
-  export type FilterValue = string;
-  export type SetFilterValue=(filterValue:FilterValue)=>void;
-  export type UseCategoryFilter=(categries:Category[])=>[FilterValue,SetFilterValue,Category[]];
-}
+
+export type FilterValue = string;
+export type SetFilterValue=(filterValue:FilterValue)=>void;
+export type UseCategoryFilter=(categries:Category[])=>[FilterValue,SetFilterValue,Category[]];
+
 
 /**
  * 
@@ -19,8 +19,8 @@ namespace useCategoryFilter {
  * @since 2.0.0 
  */
 
-export const useCategoryFilter:useCategoryFilter.UseCategoryFilter = (categories) => {
-  const [filterValue, setFilterValue] = useState<useCategoryFilter.FilterValue>("");
+export const useCategoryFilter:UseCategoryFilter = (categories) => {
+  const [filterValue, setFilterValue] = useState<FilterValue>("");
   const filteredCategories: Category[] = useMemo(() => {
     const filterWithParent: FilterWithParent = (categoryName, categories) => {
       const getParent: GetParent = (categoryObj, categoryArr) =>

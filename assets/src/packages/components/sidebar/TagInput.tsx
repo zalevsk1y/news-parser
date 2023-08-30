@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import '../styles/TagInput';
 
 export interface TagInputProps {
   onCreate: (tagName: string) => void;
   id?: string;
-  bottomCapture:String,
-  labelText:String,
+  bottomCapture:string,
+  labelText:string,
   children: React.ReactNode;
 }
 

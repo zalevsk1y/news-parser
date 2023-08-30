@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState , useMemo } from 'react';
+import React, { useCallback, useState , useMemo } from 'react';
 import { TagInput } from '@news-parser/components/sidebar/TagInput';
 import { SidebarItem } from '@news-parser/ui/sidebar';
 import { useSelectTag } from '@news-parser/entities/sidebar/hooks/';
@@ -12,7 +12,7 @@ import { TagItem } from '@news-parser/ui/TagItem';
  */
 
 function TagsGroup() {
-  const [isMutating, selectTag, diselectTag] = useSelectTag();
+  const [, selectTag, diselectTag] = useSelectTag();
   const [selectedTags, setSelectedTags] = useState<Array<string>>([]);
   const createTagHandler = useCallback((tagName: string) => {
     setSelectedTags(selectedTags.concat(tagName));
@@ -24,7 +24,7 @@ function TagsGroup() {
   }, [selectedTags, diselectTag]);
   const renderTags = useMemo(() => {
     if (selectedTags.length == 0) return [];
-    return selectedTags.map((tagName, i) => {
+    return selectedTags.map((tagName) => {
       const removeHandler = () => {
         removeTagHandler(tagName);
       };

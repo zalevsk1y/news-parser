@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useMemo } from 'react';
+import React, { FormEvent, useMemo } from 'react';
 import { CategoryItem } from '@news-parser/ui/sidebar/CategoryItem';
 import { Category } from 'types/sidebar';
 import '../styles/CategoriesCheckboxList';

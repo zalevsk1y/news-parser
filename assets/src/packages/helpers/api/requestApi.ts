@@ -1,37 +1,36 @@
 import config from '@news-parser/config/index';
 import { Api } from './Api';
-import {WPRestErrorResponse}from 'types/wp';
 import { MessageFormat } from 'types/message';
 
-export namespace requestApi {
-    export type RequestApiOptions = {
+
+export type RequestApiOptions = {
         entity: string,
         event: string,
         data: any,
         searchParams?: undefined | any
-    }
-    export type ErrorResponse = {
+}
+export type ErrorResponse = {
         code: string,
         message: string,
         data: {
             message:MessageFormat
         }
-    };
-    export type RequestApiSuccess<ResponseType> = (data: ResponseType) => Promise<ResponseType>;
-    export type RequestApiError = (err:ErrorResponse) => never;
-}
+};
+export type RequestApiSuccess<ResponseType> = (data: ResponseType) => Promise<ResponseType>;
+export type RequestApiError = (err:ErrorResponse) => never;
+
 
 /**
  * Function for making an API request.
  *
  * @template ResponseType - The expected response type.
- * @param {requestApi.RequestApiOptions} options - The request options.
- * @param {requestApi.RequestApiSuccess<ResponseType>} success - The success callback function.
- * @param {requestApi.RequestApiError} error - The error callback function.
+ * @param {RequestApiOptions} options - The request options.
+ * @param {RequestApiSuccess<ResponseType>} success - The success callback function.
+ * @param {RequestApiError} error - The error callback function.
  * @returns {Promise<ResponseType>} A promise that resolves to the API response.
  */
 
-export const requestApi = <ResponseType>(options: requestApi.RequestApiOptions, success: requestApi.RequestApiSuccess<ResponseType>, error: requestApi.RequestApiError) => {
+export const requestApi = <ResponseType>(options: RequestApiOptions, success: RequestApiSuccess<ResponseType>, error: RequestApiError) => {
     const { entity, event, data, searchParams } = options;
     const {method} = config.api[entity][event];
     const {type} = config.api[entity][event];
@@ -50,7 +49,7 @@ export const requestApi = <ResponseType>(options: requestApi.RequestApiOptions, 
         nonce,
         body: data
     });
-    return api.request<ResponseType>() 
+    return api.request() 
         .then(res => {
             if (!res.ok) {
                 return res.json().then((err) => error(err))
@@ -61,7 +60,7 @@ export const requestApi = <ResponseType>(options: requestApi.RequestApiOptions, 
                     return res.json();
                 default:
                     return res.text();
-            };
+            }
         })
         .then((data: ResponseType) => success(data))
 }

@@ -1,14 +1,14 @@
 import { useGetPostFeaturedMedia, useGetPostTitle } from "@news-parser/entities/sidebarTemplate/hooks";
 import { useGetUrl } from './useGetUrl';
 
-namespace useGetCurrentPostAttributes{
-    export type  PostAttributes={
+
+export type  PostAttributes={
         image:string,
         title:string|false,
         link:string|false
     }
-    export type UseGetCurrentPostAttributes=()=>PostAttributes
-}
+export type UseGetCurrentPostAttributes=()=>PostAttributes
+
 
 /**
  * Custom hook for retrieving the current post attributes.
@@ -20,7 +20,7 @@ namespace useGetCurrentPostAttributes{
  */
 
 
-export const useGetCurrentPostAttributes:useGetCurrentPostAttributes.UseGetCurrentPostAttributes = () => {
+export const useGetCurrentPostAttributes:UseGetCurrentPostAttributes = () => {
     const featuredMedia = useGetPostFeaturedMedia();
     const title = useGetPostTitle();
     const url=useGetUrl();

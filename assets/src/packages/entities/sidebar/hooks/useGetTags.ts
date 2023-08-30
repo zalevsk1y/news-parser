@@ -1,10 +1,9 @@
 import { useSelector } from 'react-redux'
 import { ParserRootState } from 'types/state';
 
-namespace useGetTags {
-    export type Tags = ParserRootState['parse']['sidebar']['tags'];
-    export type UseGetTags = () => [Tags]
-}
+export type Tags = ParserRootState['parse']['sidebar']['tags'];
+export type UseGetTags = () => [Tags]
+
 
 /**
  * Custom hook for retrieving tags from the Redux store.
@@ -13,7 +12,7 @@ namespace useGetTags {
  * - tags: An array of tags.
  */
 
-export const useGetTags: useGetTags.UseGetTags = () => {
+export const useGetTags: UseGetTags = () => {
     const { tags } = useSelector((state: ParserRootState) => state.parse.sidebar);
     return [tags]
 }

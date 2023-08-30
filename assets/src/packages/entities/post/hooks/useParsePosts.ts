@@ -2,13 +2,12 @@ import { useState } from 'react';
 import { Post } from 'types/post';
 import { useParsePost } from './useParsePost';
 
-namespace useParsePost {
-    export type ParsedPostsCounter = number;
-    export type IsParsing = boolean;
-    export type PostsParser = (postsArray: Post[], mode: 'race' | 'sequence', rssUrl: string) => void;
-    export type UseParsePost = () => [ParsedPostsCounter, IsParsing, PostsParser];
 
-}
+export type ParsedPostsCounter = number;
+export type IsParsing = boolean;
+export type PostsParser = (postsArray: Post[], mode: 'race' | 'sequence', rssUrl: string) => void;
+export type UseParsePost = () => [ParsedPostsCounter, IsParsing, PostsParser];
+
 
 /**
 *
@@ -18,18 +17,18 @@ namespace useParsePost {
 */
 
 
-export const useParsePosts: useParsePost.UseParsePost = () => {
+export const useParsePosts: UseParsePost = () => {
     const parsePost = useParsePost();
     const [parsedPostsCounter, setParsedPostsCounter] = useState<number>(0);
     const [isParsing, setIsParsing] = useState<boolean>(false)
-    const postsParser: useParsePost.PostsParser = (postsArray, mode, rssUrl) => {
+    const postsParser: PostsParser = (postsArray, mode, rssUrl) => {
         setParsedPostsCounter(0);
         setIsParsing(true);
         const postArrLength = postsArray.length;
         let counter = 0;
         switch (mode) {
             case 'race':
-                Promise.allSettled(postsArray.map((post, index) => parsePost(post.link, post._id, rssUrl).finally(() => {
+                Promise.allSettled(postsArray.map((post) => parsePost(post.link, post._id, rssUrl).finally(() => {
                     counter++;
                     setParsedPostsCounter(counter)
                 }))).then(() => setIsParsing(false));

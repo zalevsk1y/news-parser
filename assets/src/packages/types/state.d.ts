@@ -19,11 +19,10 @@ export type ParserRootState = {
         template: false|TemplateDataWithPostOptions,
         items: {
             data: [],
-            select: {},
-            draft: {}
+            select: object,
+            draft: object
         },
         sidebar: Sidebar,
         sidebarTemplate: SidebarTemplate
     }
 }
-

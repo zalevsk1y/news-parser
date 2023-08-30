@@ -7,5 +7,5 @@ export type RequestParams={
         url?:string
 }
 export interface ApiInterface{
-    request<ResponseType>(url:string,params:RequestParams):Promise<Response>
+    request(url:string,params:RequestParams):Promise<Response>
 }

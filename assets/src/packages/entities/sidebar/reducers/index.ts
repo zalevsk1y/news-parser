@@ -12,9 +12,10 @@ export const sidebar = (state: Sidebar = initialState, action: Action) => {
     switch (action.type) {
         // Main
         case RESET_SIDEBAR:
-            const {categories} = state;
-            const {tags} = state;
-            return { ...initialState, categories, tags };
+            return { ...initialState, 
+                categories:state.categories, 
+                tags:state.tags 
+            };
         // Catagories
         case MAP_POST_CATEGORIES:
             return { ...state, categories: action.payload }

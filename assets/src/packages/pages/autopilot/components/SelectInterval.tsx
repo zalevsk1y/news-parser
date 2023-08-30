@@ -1,4 +1,4 @@
-import React, { HTMLProps, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { HTMLProps, useCallback, useMemo } from 'react';
 import { useInterval } from '@news-parser/entities/cronOptions/hooks/useInterval';
 import { CronOptions } from 'types/cronOptions';
 

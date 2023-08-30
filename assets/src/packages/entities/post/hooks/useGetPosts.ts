@@ -4,9 +4,8 @@ import { useMemo } from "react";
 import { Post } from "types/post";
 import { ParserRootState } from "types/state";
 
-namespace useGetPosts {
-    export type UseGetPosts = (data?: 'full' | 'short') => Post[]
-}
+export type UseGetPosts = (data?: 'full' | 'short') => Post[]
+
 
 /**
 *
@@ -16,7 +15,7 @@ namespace useGetPosts {
 */
 
 
-export const useGetPosts: useGetPosts.UseGetPosts = (data = 'full') => {
+export const useGetPosts: UseGetPosts = (data = 'full') => {
     const { data: posts, select, draft } = useSelector((state: ParserRootState) => state.parse.items);
     const fullPostData = useMemo(() => table(posts).join({ select, draft }), [posts, select, draft]) as Array<Post>;
     switch (data) {

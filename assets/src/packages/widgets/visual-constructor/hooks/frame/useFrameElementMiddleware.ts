@@ -1,13 +1,13 @@
-import { useMemo,useCallback } from "react";
+import { useCallback } from "react";
 import { featuredImageParser } from "@news-parser/helpers/parser/FeaturedImageParser";
 import { postTitleParser } from "@news-parser/helpers/parser/PostTitleParser";
 import { useSetPostTitle,useSetFeaturedMedia } from "@news-parser/entities/sidebarTemplate/hooks";
 
-namespace useFrameElementMiddleware{
-    export type GetTitle=(frameRef:HTMLIFrameElement)=>void;
-    export type GetFeaturedMedia=(frameRef:HTMLIFrameElement)=>void;
-    export type UseFrameElementMiddleware=()=>[GetTitle,GetFeaturedMedia]
-}
+
+export type GetTitle=(frameRef:HTMLIFrameElement)=>void;
+export type GetFeaturedMedia=(frameRef:HTMLIFrameElement)=>void;
+export type UseFrameElementMiddleware=()=>[GetTitle,GetFeaturedMedia]
+
 
 /**
  * Custom hook for handling middleware logic related to a frame element.
@@ -17,7 +17,7 @@ namespace useFrameElementMiddleware{
  * - getFeaturedMedia: A function that retrieves the featured media from a given frame element.
  */
 
-export const useFrameElementMiddleware:useFrameElementMiddleware.UseFrameElementMiddleware = () => {
+export const useFrameElementMiddleware:UseFrameElementMiddleware = () => {
     const setPostTitle=useSetPostTitle();
     const setPostFeaturedMedia=useSetFeaturedMedia();
     const getTitle = useCallback((frameRef:HTMLIFrameElement) => {

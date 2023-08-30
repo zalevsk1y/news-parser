@@ -3,14 +3,13 @@ import { useDispatch } from 'react-redux';
 import { Sidebar } from 'types/sidebar';
 import { postStatusSet, postFormatSet, publishDateSet } from '../actions/status.visability.actions';
 
-namespace useStatusVisibility {
-    export type SideberStatus = Sidebar['status'];
-    export type SidebarPostFormat = Sidebar['postFormat']
-    export type PostStatusChangeHandler = (event: React.ChangeEvent<HTMLSelectElement>) => void;
-    export type PostFormatChangeHandler = (event: React.ChangeEvent<HTMLSelectElement>) => void;
-    export type PublishDateChangeHandler = (date: string|false) => void;
-    export type UseStatusVisibility = () => [PostStatusChangeHandler, PostFormatChangeHandler, PublishDateChangeHandler]
-}
+export type SideberStatus = Sidebar['status'];
+export type SidebarPostFormat = Sidebar['postFormat']
+export type PostStatusChangeHandler = (event: React.ChangeEvent<HTMLSelectElement>) => void;
+export type PostFormatChangeHandler = (event: React.ChangeEvent<HTMLSelectElement>) => void;
+export type PublishDateChangeHandler = (date: string|false) => void;
+export type UseStatusVisibility = () => [PostStatusChangeHandler, PostFormatChangeHandler, PublishDateChangeHandler]
+
 /**
  * Custom hook for managing post status, visibility, and publish date by dispatching Redux actions.
  *
@@ -23,16 +22,16 @@ namespace useStatusVisibility {
  * @param {number} time - The new publish time for the post.
  */
 
-export const useStatusVisibility: useStatusVisibility.UseStatusVisibility = () => {
+export const useStatusVisibility: UseStatusVisibility = () => {
     const dispatch = useDispatch();
-    const postStatusChangeHandler:useStatusVisibility.PostStatusChangeHandler = useCallback((event) => {
+    const postStatusChangeHandler: PostStatusChangeHandler = useCallback((event) => {
         const targetElement = event.target as HTMLSelectElement;
-        dispatch(postStatusSet(targetElement.value as useStatusVisibility.SideberStatus))
+        dispatch(postStatusSet(targetElement.value as SideberStatus))
     }, [dispatch]);
-    const postFormatChangeHandler:useStatusVisibility.PostFormatChangeHandler = useCallback((event) => {
+    const postFormatChangeHandler: PostFormatChangeHandler = useCallback((event) => {
         const targetElement = event.target as HTMLSelectElement;
-        dispatch(postFormatSet(targetElement.value as useStatusVisibility.SidebarPostFormat))
+        dispatch(postFormatSet(targetElement.value as SidebarPostFormat))
     }, [dispatch]);
-    const publishDateChangeHandler:useStatusVisibility.PublishDateChangeHandler = useCallback((date) => dispatch(publishDateSet(date)), [dispatch]);
+    const publishDateChangeHandler: PublishDateChangeHandler = useCallback((date) => dispatch(publishDateSet(date)), [dispatch]);
     return [postStatusChangeHandler, postFormatChangeHandler, publishDateChangeHandler];
 }

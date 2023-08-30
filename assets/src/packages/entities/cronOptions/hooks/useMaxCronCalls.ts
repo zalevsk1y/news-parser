@@ -4,11 +4,11 @@ import { AutopilotRootState } from 'types/state';
 import { CronOptions } from 'types/cronOptions';
 import { setMaxCronCalls } from '../actions/cronOptions.actions';
 
-namespace useMaxCronCalls {
-    export type MaxCronCalls = CronOptions['maxCronCalls'];
-    export type SetMaxCronCallsHandler = (value: MaxCronCalls) => void;
-    export type UseMaxCronCalls = () => [MaxCronCalls, SetMaxCronCallsHandler]
-}
+
+export type MaxCronCalls = CronOptions['maxCronCalls'];
+export type SetMaxCronCallsHandler = (value: MaxCronCalls) => void;
+export type UseMaxCronCalls = () => [MaxCronCalls, SetMaxCronCallsHandler]
+
 
 /**
  * Custom hook for accessing and updating the maximum cron calls value from the Redux store.
@@ -18,10 +18,10 @@ namespace useMaxCronCalls {
  * - setMaxCronCallsHandler: A function that allows updating the maximum cron calls value by dispatching the corresponding action.
  */
 
-export const useMaxCronCalls: useMaxCronCalls.UseMaxCronCalls = () => {
+export const useMaxCronCalls: UseMaxCronCalls = () => {
     const dispatch = useDispatch();
     const maxCronCalls = useSelector((state: AutopilotRootState) => state.parse.cronOptions?.maxCronCalls);
-    const setMaxCronCallsHandler = useCallback((value: useMaxCronCalls.MaxCronCalls) => {
+    const setMaxCronCallsHandler = useCallback((value: MaxCronCalls) => {
         dispatch(setMaxCronCalls(value))
     }, []);
     return [maxCronCalls, setMaxCronCallsHandler];

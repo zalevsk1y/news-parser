@@ -1,6 +1,6 @@
 import { SetAction } from "types";
 import { Sidebar } from "types/sidebar";
-import { SIDEBAR, SET, PUBLISH_DATE, PUBLISH_INTERVAL, POST_FORMAT, POST_STATUS } from "../constants";
+import { SIDEBAR, SET, PUBLISH_DATE, POST_FORMAT, POST_STATUS } from "../constants";
 
 // [sidebar.publish.date:set]
 export const SET_POST_PUBLISH_DATE = `[${SIDEBAR}.${PUBLISH_DATE}:${SET}}`;

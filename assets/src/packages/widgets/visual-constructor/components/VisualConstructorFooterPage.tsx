@@ -10,7 +10,7 @@ export const VisualConstructorFooterPage: React.FC = () => {
     const createWpPost = useCreateWpPost();
     const currentPostAttributes = useGetCurrentPostAttributes();
     const createLocalPost = useCreateLocalPost();
-    const [isMutating, setIsMutating] = useIsMutating();
+    const [, setIsMutating] = useIsMutating();
     const close = useClose();
     const showMessage = useShowMessage()
     const buttonClickHandler = useCallback(() => {

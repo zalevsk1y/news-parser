@@ -3,10 +3,10 @@ import { Post } from 'types/post';
 import { setList } from '../actions/list.actions';
 import { useGetPosts } from './useGetPosts';
 
-namespace useCreateLocalPost {
-    export type UseCreateLocalPostHandler = (post: Post) => Post['_id'];
-    export type UseCreateLocalPost = () => UseCreateLocalPostHandler;
-}
+
+export type UseCreateLocalPostHandler = (post: Post) => Post['_id'];
+export type UseCreateLocalPost = () => UseCreateLocalPostHandler;
+
 
 /**
  * Custom hook for showing messages by dispatching a Redux action.
@@ -16,10 +16,10 @@ namespace useCreateLocalPost {
  * - text: The text content of the message.
  */
 
-export const useCreateLocalPost: useCreateLocalPost.UseCreateLocalPost = () => {
+export const useCreateLocalPost: UseCreateLocalPost = () => {
     const dispatch = useDispatch();
     const posts = useGetPosts('short');
-    const createLocalPostHandler: useCreateLocalPost.UseCreateLocalPostHandler = (postData) => {
+    const createLocalPostHandler: UseCreateLocalPostHandler = (postData) => {
         postData._id = posts.length;
         postData.pubDate = (new Date()).toUTCString();
         posts.push({ ...postData });

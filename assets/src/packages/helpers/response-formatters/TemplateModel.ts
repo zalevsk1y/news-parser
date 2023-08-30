@@ -1,6 +1,6 @@
 import { ParentElement, ParsedData , PostData  } from "types/sidebarTemplate";
 import { TemplateData, TemplateOptions } from "types/template";
-import { TemplateModelInterface,TemplateContainer,TemplateContainerChild } from "./types/templateModel";
+import { TemplateModelInterface,TemplateContainer } from "./types/templateModel";
 
 /**
  * Create parsing template for automated parsing.

@@ -1,9 +1,8 @@
 import { useSelector } from "react-redux"
 import { ParserRootState } from "types/state";
 
-namespace useGetUrl{
-    export type UseGetUrl=()=>string|false
-}
+export type UseGetUrl=()=>string|false
+
 
 /**
  * Custom hook for accessing the URL state from the dialog.url.
@@ -11,7 +10,7 @@ namespace useGetUrl{
  * @returns {string} The URL value from the Redux store.
  */
 
-export const useGetUrl:useGetUrl.UseGetUrl=()=>{
+export const useGetUrl:UseGetUrl=()=>{
     const url=useSelector((state:ParserRootState)=>state.parse.dialog.url)
     return url;
 }

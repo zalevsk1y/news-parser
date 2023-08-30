@@ -30,7 +30,7 @@ export const FeaturedMediaGroup: React.FC = () => {
                 />
                 <p className='howto'>
                     If you want to change featured image, select image you would like
-                    to choose in the constructor and click 'Change image' button.
+                    to choose in the constructor and click &apos;Change image&apos; button.
                 </p>
                 <Checkbox
                     checked={!addFeaturedMedia}

@@ -5,7 +5,7 @@ type ErrorBoundaryState={hasError:boolean}
 type ErrorBoundaryProps={children:React.ReactNode}
 
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps,ErrorBoundaryState> {
-    static getDerivedStateFromError(error:Error){
+    static getDerivedStateFromError(){
         return {hasError:true}
     }
 
@@ -31,9 +31,9 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps,ErrorBound
         return (
           <div>
             <h1>Sorry.Something went wrong.</h1>
-              <h3>If you wand to send error report please click "Send Report" button.
-              You will be redirected to error report page.Just paste details in "leave comment" section and click 
-              "Submit new issue".Thank you.</h3>
+              <h3>If you wand to send error report please click &quot;Send Report&quot; button.
+              You will be redirected to error report page.Just paste details in &quot;leave comment&quot; section and click 
+              &quot;Submit new issue&quot;.Thank you.</h3>
               <details>
                 Title!
                 <br />

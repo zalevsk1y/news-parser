@@ -4,18 +4,17 @@ import { Post } from 'types/post';
 import {TOGGLE_POST_SELECT,INSERT_DRAFT_POST,UPDATE_POST, RESET_SELECTED_POST} from '../actions/post.actions';
 import {SET_LIST} from '../actions/list.actions'
 
-export const selectPost=(state:Record<string,boolean>|{}={},action:Action)=>{
+export const selectPost=(state:Record<string,boolean>|object={},action:Action)=>{
     switch (action.type){
         case TOGGLE_POST_SELECT:
-            const _id=action.payload;
-            if (state.hasOwnProperty(_id)){
-            const newState={...state};
-            delete newState[_id];
-            return newState;
+            if (action.payload in state){
+                const newState={...state};
+                delete newState[action.payload];
+                return newState;
             }
             return {
                 ...state,
-                ...{[_id]:true}
+                ...{[action.payload]:true}
             };
         
         case RESET_SELECTED_POST:
@@ -24,15 +23,14 @@ export const selectPost=(state:Record<string,boolean>|{}={},action:Action)=>{
             return state;
     }
 }
-export const draftPost=(state:Record<string,boolean>|{}={},action:Action)=>{
+export const draftPost=(state:Record<string,boolean>|object={},action:Action)=>{
     switch (action.type){
         case INSERT_DRAFT_POST:
-            const {post_id,editLink,_id}=action.payload;
             return {
                 ...state,
-                ...{[_id]:{
-                   post_id,
-                   editLink
+                ...{[action.payload._id]:{
+                   post_id:action.payload.post_id,
+                   editLink:action.payload.editLink
                 }}
             };
         default:

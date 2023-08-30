@@ -1,15 +1,15 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux"
 import { selectContent, removeContent } from "@news-parser/entities/sidebarTemplate/actions/parsedData.actions";
 import { Parser } from "@news-parser/helpers/parser/Parser";
 import { ParserInterface } from "@news-parser/helpers/parser/types";
 
-namespace useToggleContent{
-    export type SelectElement=(element:HTMLElement)=>void;
-    export type RemoveElement=(element:HTMLElement)=>void;
-    export type InitFrame=(ref:HTMLIFrameElement)=>void;
-    export type UseToggleConten=()=>[SelectElement,RemoveElement,InitFrame]
-}
+
+export type SelectElement=(element:HTMLElement)=>void;
+export type RemoveElement=(element:HTMLElement)=>void;
+export type InitFrame=(ref:HTMLIFrameElement)=>void;
+export type UseToggleConten=()=>[SelectElement,RemoveElement,InitFrame]
+
 
 /**
  * Custom hook for toggling content and managing an iframe document.
@@ -17,8 +17,7 @@ namespace useToggleContent{
  */
 
 
-export const useToggleContent:useToggleContent.UseToggleConten = () => {
-    let frameRef;
+export const useToggleContent:UseToggleConten = () => {
     let document;
     let parser:ParserInterface;
     const dispatch = useDispatch();
@@ -34,7 +33,6 @@ export const useToggleContent:useToggleContent.UseToggleConten = () => {
     const initFrame = useCallback((ref:HTMLIFrameElement) => {
         document = ref?.contentWindow?.document;
         parser = new Parser(ref);
-        frameRef = ref
     }, []);
     return [selectElement, removeElement, initFrame];
 }

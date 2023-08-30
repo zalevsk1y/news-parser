@@ -2,11 +2,11 @@ import { useDispatch } from "react-redux";
 import { useCallback } from "react";
 import { selectCategory, diselectCategory } from "../actions/category.actions";
 
-namespace useSelectCategory {
-    export type SelectCategorieHandler = (id: number) => void;
-    export type DiselectCategoryHandler = (id: number) => void;
-    export type UseSelectCategory = () => [SelectCategorieHandler, DiselectCategoryHandler]
-}
+
+export type SelectCategorieHandler = (id: number) => void;
+export type DiselectCategoryHandler = (id: number) => void;
+export type UseSelectCategory = () => [SelectCategorieHandler, DiselectCategoryHandler]
+
 
 /**
  * Custom hook for selecting and deselecting a category by dispatching Redux actions.
@@ -17,9 +17,9 @@ namespace useSelectCategory {
  * @param {number} id - The ID of the category to be selected or deselected.
  */
 
-export const useSelectCategory: useSelectCategory.UseSelectCategory = () => {
+export const useSelectCategory: UseSelectCategory = () => {
     const dispatch = useDispatch();
     const selectCategoryHandler = useCallback((id: number) => dispatch(selectCategory(id)), [dispatch]);
-    const diselectCategoryHandler = useCallback((id: number) => dispatch(diselectCategory(id)), [dispatch]);;
+    const diselectCategoryHandler = useCallback((id: number) => dispatch(diselectCategory(id)), [dispatch]);
     return [selectCategoryHandler, diselectCategoryHandler]
 }

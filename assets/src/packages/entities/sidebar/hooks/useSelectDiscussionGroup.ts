@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { allowPinbacksSet, allowCommentsSet } from '../actions/descussion.actions';
 
 
-namespace useSelectDiscussionGroup {
-    export type SelectCategorieHandler = (event: React.ChangeEvent<HTMLInputElement>) => void;
-    export type DiselectCategoryHandler = (event: React.ChangeEvent<HTMLInputElement>) => void;
-    export type UseSelectDiscussionGroup = () => [SelectCategorieHandler, DiselectCategoryHandler]
-}
+
+export type SelectCategorieHandler = (event: React.ChangeEvent<HTMLInputElement>) => void;
+export type DiselectCategoryHandler = (event: React.ChangeEvent<HTMLInputElement>) => void;
+export type UseSelectDiscussionGroup = () => [SelectCategorieHandler, DiselectCategoryHandler]
+
 
 /**
  * Custom hook for selecting discussion group settings by dispatching Redux actions.
@@ -18,7 +18,7 @@ namespace useSelectDiscussionGroup {
  * @param {React.ChangeEvent<HTMLInputElement>} event - The event object representing the change in the input field value.
  */
 
-export const useSelectDiscussionGroup: useSelectDiscussionGroup.UseSelectDiscussionGroup = () => {
+export const useSelectDiscussionGroup: UseSelectDiscussionGroup = () => {
     const dispatch = useDispatch();
     const allowComments = useCallback((event: React.ChangeEvent<HTMLInputElement>) => dispatch(allowCommentsSet(!!event.target.value)), []);
     const allowPinbacks = useCallback((event: React.ChangeEvent<HTMLInputElement>) => dispatch(allowPinbacksSet(!!event.target.value)), []);

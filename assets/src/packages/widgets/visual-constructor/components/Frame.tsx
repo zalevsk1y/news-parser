@@ -30,7 +30,7 @@ interface FrameProps {
 export const Frame: React.FC<FrameProps> = ({ onReady, url }) => {
   const frameElementRef = useRef<HTMLIFrameElement>(null);
   const frame = useRef<{value:FrameElement|null}>({value:null});
-  const [isHTMLFetching, startHTMLFetching] = useFetchHTML();
+  const [, startHTMLFetching] = useFetchHTML();
   const showMessage=useShowMessage();
   const closeVisualConstructor = useClose();
   const [getTitle, getFeaturedMedia] = useFrameElementMiddleware();

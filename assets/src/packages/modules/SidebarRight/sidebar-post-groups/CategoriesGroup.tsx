@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { SidebarItem } from '@news-parser/ui/sidebar/';
 import { useSelectCategory } from '@news-parser/entities/sidebar/hooks';
 import { useCreateCategory } from '@news-parser/entities/sidebar/hooks/';
