@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { SidebarItem } from '../../ui/sidebar/SidebarItem';
 import { SidebarItemLabel } from '../../ui/sidebar/SidebarItemLabel';
-import '../styles/SidebarItemsGroup.scss';
+import '../styles/SidebarItemsGroup.css';
 
 export interface SidebarItemsGroupProps {
     border?: 'top' | 'bottom';

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/PostCardHeader';
+import '../styles/PostCardHeader.css';
 
 export interface PostCardHeaderProps {
     pubDate: string;

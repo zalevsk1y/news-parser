@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/InfoBox';
+import '../styles/InfoBox.css';
 
 export interface InfoBoxProps {
     title: string,

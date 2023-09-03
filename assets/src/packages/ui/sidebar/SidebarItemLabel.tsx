@@ -1,6 +1,5 @@
 import React from 'react';
-// import '@news-parser/styles/sidebar/_item-label.scss';
-import '../styles/SidebarItemLabel'
+import '../styles/SidebarItemLabel.css'
 
 export interface SidebarItemLabelProps{
     children:React.ReactNode,

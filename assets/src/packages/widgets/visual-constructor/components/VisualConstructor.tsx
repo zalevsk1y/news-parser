@@ -1,10 +1,8 @@
-
 import React, { useState, useMemo, useLayoutEffect, useEffect, useCallback } from 'react';
 import { LoadingSpinner } from '@news-parser/ui/visual-constructor/LoadingSpinner';
 import { useFetchTags, useFetchCategories } from '@news-parser/entities/sidebar/hooks'
 import { Frame } from './Frame';
 import { useScrolling } from '../../../hooks/useScrolling';
-// import '@news-parser/styles/_resize-bar.scss';
 import { useIsOpen } from '../hooks/visual-constructor/useIsOpen';
 import { useIsMutating , useClose , useGetPostId } from '../hooks';
 

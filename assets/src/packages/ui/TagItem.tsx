@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles/TagItem';
+import './styles/TagItem.css';
 
 export interface TagItemProps {
   tagName: string;

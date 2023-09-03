@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import './styles/Select';
+import './styles/Select.css';
 
 export interface SelectProps {
     onChange: React.ChangeEventHandler<HTMLSelectElement>,

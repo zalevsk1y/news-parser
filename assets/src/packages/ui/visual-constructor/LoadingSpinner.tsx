@@ -1,6 +1,6 @@
 import React from 'react';
 import config from '@news-parser/config/index';
-import '../styles/LoadingSpinner';
+import '../styles/LoadingSpinner.css';
 
 
 

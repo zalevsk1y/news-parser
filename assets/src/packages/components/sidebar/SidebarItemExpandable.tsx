@@ -1,8 +1,8 @@
-import React, { useState,useMemo } from 'react';
-import '../styles/SidebarItemExpandable'
+import React, { useState, useCallback } from 'react';
+import '../styles/SidebarItemExpandable.css'
 
 export interface SidebarItemExpandableProps {
-    expandButton: (toggleCallback:()=>void) => React.ReactElement,
+    expandButton: {value:string,className:string},
     children: React.ReactNode,
     wide?: boolean
 }
@@ -11,7 +11,7 @@ export interface SidebarItemExpandableProps {
  * A component for displaying an expandable sidebar item.
  * 
  * @param {SidebarItemExpandableProps} props - The props for the component.
- * @param {(toggleCallback: () => void) => React.ReactNode} props.expandButtonCallback - A callback function to display the expand button for the sidebar item.
+ * @param {{value:string,className:string}} props.expandButton - A callback function to display the expand button for the sidebar item.
  * @param {React.ReactNode} props.children - The child content to display within the sidebar item.
  * @param {boolean} [props.wide] - Whether the sidebar item should take up the full width of the sidebar.
  * 
@@ -22,13 +22,27 @@ export interface SidebarItemExpandableProps {
 export const SidebarItemExpandable: React.FC<SidebarItemExpandableProps> = ({ expandButton, children, wide }) => {
     const [state, setState] = useState<{itemOpen:boolean}>({ itemOpen: false });
     const wideOfItem = wide ? 'sidebar-item-expandable-wide' : 'sidebar-item-expandable-narrow';
-    const expandButtonElement=useMemo(()=>expandButton(() => setState({ itemOpen: !state.itemOpen })),[state,expandButton])
+    const expandButtonHandler=useCallback(() => setState({ itemOpen: !state.itemOpen }),[state])
     return (
         <div className={`sidebar-item-expandable ${wideOfItem}`}>
-            {expandButtonElement}
-            <div className={`sidebar-item-expandable-area sidebar-item-expandable-area-${state.itemOpen ? 'open' : 'close'}`} >
-                {children}
-            </div>
+        <button
+          onClick={expandButtonHandler}
+          className={expandButton.className}
+          aria-expanded={state.itemOpen}
+          aria-controls='sidebar-item-expandable-area'
+        >
+          {expandButton.value}
+        </button>
+        <div
+          data-testid='sidebar-item-expandable-area'  
+          role='group'
+          id='sidebar-item-expandable-area'
+          className='sidebar-item-expandable-area'
+          aria-hidden={!state.itemOpen}
+        >
+          {children}
         </div>
+      </div>
+  
     )
 }

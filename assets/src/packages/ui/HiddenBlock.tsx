@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles/HiddenBlock'
+import './styles/HiddenBlock.css'
 
 export interface HiddenBlockProps {
     hide: boolean;

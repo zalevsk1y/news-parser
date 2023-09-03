@@ -1,5 +1,5 @@
 import React from 'react';
-import '../stules/Button';
+import '../stules/Button.css';
 
 export interface ButtonProps {
     children: React.ReactNode,

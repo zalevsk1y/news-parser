@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/PostCardLarge'
+import '../styles/PostCardLarge.css'
 
 export interface PostCartLargeProps{
     className?:string,

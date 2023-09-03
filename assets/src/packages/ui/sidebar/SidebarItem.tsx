@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/SidebarItem';
+import '../styles/SidebarItem.css';
 
 export interface SidebarItemProps {
     children: React.ReactNode,

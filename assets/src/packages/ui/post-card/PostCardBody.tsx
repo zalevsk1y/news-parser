@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/PostCardBody';
+import '../styles/PostCardBody.css';
 
 export interface PostCardBodyProps {
     link: string,

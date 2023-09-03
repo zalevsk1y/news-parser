@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/CategoryItem';
+import '../styles/CategoryItem.css';
 
 export interface CategoryItemProps {
     name: string,

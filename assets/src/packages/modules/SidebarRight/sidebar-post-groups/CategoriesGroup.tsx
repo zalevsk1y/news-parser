@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useMemo,useCallback } from 'react';
 import { SidebarItem } from '@news-parser/ui/sidebar/';
 import { useSelectCategory } from '@news-parser/entities/sidebar/hooks';
 import { useCreateCategory } from '@news-parser/entities/sidebar/hooks/';
@@ -35,11 +35,7 @@ function CategoriesGroup() {
     const targetElement = event.target as HTMLInputElement;
     setFilterValue(targetElement.value)
   }, [setFilterValue]);
-  const expandButtonCallback=useCallback((toggleCallback:()=>void) => (
-    <button onClick={toggleCallback} className='pop-up-link'>
-      Add New Category
-    </button>
-  ),[])
+  const expandButton=useMemo(() => ({value:'Add New Category',className:'pop-up-link'}),[])
   return (
     <>
       <SidebarItem>
@@ -63,7 +59,7 @@ function CategoriesGroup() {
         />
       </SidebarItem>
       <SidebarItemExpandable
-        expandButton={expandButtonCallback}
+        expandButton={expandButton}
       >
         <div className='sidebar-item-expandable-row'>
           <label htmlFor='category-input'>New Category Name</label>

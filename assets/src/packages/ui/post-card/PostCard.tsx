@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/PostCard';
+import '../styles/PostCard.css';
 
 export interface PostCardProps {
     selected: boolean,

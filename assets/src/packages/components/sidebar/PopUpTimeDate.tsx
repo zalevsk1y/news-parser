@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { PopUp } from '@news-parser/ui/sidebar/PopUp';
-import '../styles/PopUpTimeDate';
+import '../styles/PopUpTimeDate.css';
 
 export interface PopUpTimeDateProps {
   value: { date: string | false },
@@ -22,8 +22,15 @@ export const PopUpTimeDate: React.FC<PopUpTimeDateProps> = ({ value, onChange })
   const [postDate, setPostDate] = useState<string | false>(value.date);
   const openPopUp = useCallback(() => setIsOpen(true), []);
   const postDateStr = useMemo(() => new Date(postDate !== false ? postDate : Date.now()).toLocaleString(), [postDate])
-  const resetClickHandler: React.MouseEventHandler<HTMLInputElement> = useCallback(() => onChange(postDate), [onChange]);
-  const submitClickHandler: React.MouseEventHandler<HTMLInputElement> = useCallback(() => onChange(postDate), [onChange, postDate]);
+  const resetClickHandler: React.MouseEventHandler<HTMLInputElement> = useCallback(() =>{
+    setPostDate(false);
+    setIsOpen(false);
+    onChange(false);
+  }, [onChange,setPostDate]);
+  const submitClickHandler: React.MouseEventHandler<HTMLInputElement> = useCallback(() =>{
+      setIsOpen(false);
+      onChange(postDate);
+  }, [onChange, postDate]);
   const dateChangeHandle: React.ChangeEventHandler<HTMLInputElement> = useCallback((event: React.FormEvent<HTMLInputElement>) => {
     const targetElement = event.target as HTMLInputElement;
     setPostDate(targetElement.value)
@@ -31,15 +38,18 @@ export const PopUpTimeDate: React.FC<PopUpTimeDateProps> = ({ value, onChange })
 
   return (
     <div className='sidebar-publish-time-containar'>
-      <span className='sidebar-publish-time-input' onClick={openPopUp}>
+      <a role="button" data-testid='post-publish-date' className='sidebar-publish-time-input' onClick={openPopUp}>
         {postDate === false ? 'Immediately' : postDateStr}
-      </span>
+      </a>
       <PopUp isOpen={isOpen}>
         <form style={{ outline: 'none' }} >
-          <input type='datetime-local' onChange={dateChangeHandle} value={postDate !== false ? postDate : ''} />
+          <label htmlFor='pop-up-time-date-input' className='visually-hidden'>Select Date and Time:</label>
+          <input data-testid='datetime-local-input' type='datetime-local' id='pop-up-time-date-input' onChange={dateChangeHandle} value={postDate !== false ? postDate : ''} />
           <div className='pop-up-buttons-block'>
-            <input type='button' className='pop-up-link' onClick={resetClickHandler} value='Reset' />
-            <input type='button' className='pop-up-link' onClick={submitClickHandler} value='Submit' />
+            <label htmlFor='pop-up-time-date-button-submit'>Submit</label>
+            <input type='button' className='pop-up-link' onClick={resetClickHandler} id='pop-up-time-date-button-reset' role='Reset' value='Reset' />
+            <label htmlFor='pop-up-time-date-button-reset'>Reset</label>
+            <input type='button' className='pop-up-link' onClick={submitClickHandler} id='pop-up-time-date-button-submit' role='Submit' value='Submit' />
           </div>
         </form>
       </PopUp>

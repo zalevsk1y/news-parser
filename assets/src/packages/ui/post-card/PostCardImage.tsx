@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/PostCardImage';
+import '../styles/PostCardImage.css';
 
 export interface PostCardImageProps {
     image: string;

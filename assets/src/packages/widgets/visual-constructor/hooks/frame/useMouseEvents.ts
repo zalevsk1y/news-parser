@@ -1,5 +1,3 @@
-
-
 export type MouseOver = (event: MouseEvent|Event) => void;
 export type MouseOut = (event: MouseEvent|Event) => void;
 export type UseMouseEvents = () => [MouseOver, MouseOut];
