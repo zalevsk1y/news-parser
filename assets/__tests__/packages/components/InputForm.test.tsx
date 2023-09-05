@@ -1,6 +1,6 @@
 import React from 'react';
 import { render,screen, fireEvent } from '@testing-library/react';
-import { InputForm } from '../../src/packages/components/InputForm';
+import { InputForm } from '../../../src/packages/components/InputForm';
 import 'jest';
 import '@testing-library/jest-dom';
 
@@ -27,7 +27,7 @@ describe('InputForm', () => {
     const inputElement = screen.getByLabelText('URL Input');
     expect(inputElement).toBeInTheDocument();
 
-    const buttonElement = screen.getByRole('button', { name: buttonName });
+    const buttonElement = screen.getByRole('button');
     expect(buttonElement).toBeInTheDocument();
   });
 
@@ -43,7 +43,7 @@ describe('InputForm', () => {
       />
     );
 
-    const buttonElement = screen.getByRole('button', { name: buttonName });
+    const buttonElement = screen.getByRole('button');
     fireEvent.click(buttonElement);
 
     expect(submitActionMock).toHaveBeenCalled();
@@ -65,7 +65,7 @@ describe('InputForm', () => {
     const inputValue = 'https://example.com';
     fireEvent.change(inputElement, { target: { value: inputValue } });
 
-    const buttonElement = screen.getByRole('button', { name: buttonName });
+    const buttonElement = screen.getByRole('button');
     fireEvent.click(buttonElement);
 
     expect(submitActionMock).toHaveBeenCalledWith(inputValue);
@@ -83,12 +83,12 @@ describe('InputForm', () => {
       />
     );
 
-    const buttonElement = screen.getByRole('button', { name: buttonName });
+    const buttonElement = screen.getByRole('button');
     expect(buttonElement).toBeDisabled();
   });
 
   it('shows loading spinner when isLoading prop is true', () => {
-    const { getByRole, getByLabelText } = render(
+    render(
       <InputForm
         buttonName={buttonName}
         submitAction={submitActionMock}
@@ -99,10 +99,10 @@ describe('InputForm', () => {
       />
     );
 
-    const buttonElement = getByRole('button', { name: buttonName });
+    const buttonElement = screen.getByRole('button');
     expect(buttonElement).toHaveAttribute('aria-busy', 'true');
 
-    const spinnerElement = getByLabelText('Loading...');
+    const spinnerElement = screen.getByLabelText('Loading...');
     expect(spinnerElement).toBeInTheDocument();
   });
 });

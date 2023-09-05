@@ -23,20 +23,37 @@ export interface ProgressIndicatorProps {
 
 export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({ hidden, total, count, children }) => {
     const [enableScrolling, disableScrolling] = useScrolling();
-    useLayoutEffect(() => {
-        if (hidden) {
-            disableScrolling()
-        } else {
-            enableScrolling();
-        }
-    }, [hidden]);
-    const progress = useMemo(() => ({ width: `${Math.round(100 * count / total)}%` }), [total, count])
-    return (
-        <div hidden={hidden} className="progress-indicator-container position-fixed">
-            <div className="progress-bar-outer">
-                <div className="progress-bar-inner" style={progress} />
-            </div>
-            {children}
-        </div>
-    )
-}
+  
+  useLayoutEffect(() => {
+    if (!hidden) {
+      disableScrolling();
+    } else {
+      enableScrolling();
+    }
+  }, [hidden]);
+
+  const progress = useMemo(() => ({ width: `${Math.round(100 * count / total)}%` }), [total, count]);
+
+  return (
+    <div
+      hidden={hidden}
+      aria-hidden={hidden}
+      role='group'
+      data-testid='progress-indicator-container'
+      className="progress-indicator-container position-fixed"
+    >
+      <div className="progress-bar-outer">
+        <div
+          className="progress-bar-inner"
+          style={progress}
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={total}
+          aria-valuenow={count}
+          data-testid="progress-bar-inner"
+        />
+      </div>
+      {children}
+    </div>
+  );
+};

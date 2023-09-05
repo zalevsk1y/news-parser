@@ -55,7 +55,6 @@ export const InputForm: React.FC<InputFormProps> = ({ buttonName, submitAction, 
               className="np-fs-16 btn btn-outline-secondary align-baseline main-input-button"
               type="button"
               onClick={submitClickHandler}
-              aria-label={isLoading ? 'Loading...' : buttonName}
               aria-busy={isLoading ? 'true' : 'false'}
             >
               {isLoading ? (
@@ -63,13 +62,16 @@ export const InputForm: React.FC<InputFormProps> = ({ buttonName, submitAction, 
                   <span
                     className="spinner-border spinner-border-16 np-fs-16"
                     role="status"
-                    aria-hidden="true"
+                    aria-label={isLoading ? 'Loading...' : buttonName}
+                    aria-hidden={isLoading?"false":"true"}
                   />
-                  <span className="sr-only np-fs-16">&nbsp;Loading...</span>
+                  <span 
+                    className="sr-only np-fs-16"
+                    aria-hidden={isLoading?"false":"true"}
+                    >&nbsp;Loading...</span>
                 </>
-              ) : (
-                buttonName
-              )}
+              ) : buttonName
+              }
             </button>
           </div>
         </div>

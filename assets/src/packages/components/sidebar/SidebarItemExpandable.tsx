@@ -34,6 +34,7 @@ export const SidebarItemExpandable: React.FC<SidebarItemExpandableProps> = ({ ex
           {expandButton.value}
         </button>
         <div
+          hidden={!state.itemOpen}
           data-testid='sidebar-item-expandable-area'  
           role='group'
           id='sidebar-item-expandable-area'

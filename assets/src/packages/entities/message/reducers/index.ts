@@ -5,9 +5,7 @@ export const message=(state=false,action:Action)=>{
     switch (action.type){
         case SHOW_MESSAGE:
             return {
-                ...action.payload,
-                timestamp:Date.now(),
-                open:true
+                ...action.payload
             }
 
         default:

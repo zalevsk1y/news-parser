@@ -1,6 +1,6 @@
 import config from '@news-parser/config/index';
 import { Api } from './Api';
-import { MessageFormat } from 'types/message';
+import { Message } from 'types/message';
 
 
 export type RequestApiOptions = {
@@ -13,7 +13,7 @@ export type ErrorResponse = {
         code: string,
         message: string,
         data: {
-            message:MessageFormat
+            message:Message
         }
 };
 export type RequestApiSuccess<ResponseType> = (data: ResponseType) => Promise<ResponseType>;

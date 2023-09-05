@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux"
-import { MessageAction } from 'types/message';
+import { Message } from 'types/message';
 import { showMessage } from "../actions/message.actions";
 
-export type UseShowMessage =()=> (type: MessageAction['type'], text: string) => void
+export type UseShowMessage =()=> (type: Message['type'], text: string) => void
 
 
 /**
@@ -15,5 +15,5 @@ export type UseShowMessage =()=> (type: MessageAction['type'], text: string) => 
 
 export const useShowMessage: UseShowMessage = () => {
     const dispatch = useDispatch();
-    return (type: MessageAction['type'], text: string) => dispatch(showMessage({ type, text }));
+    return (type: Message['type'], text: string) => dispatch(showMessage({ type, text }));
 }

@@ -8,7 +8,11 @@ export interface TabsProps {
 }
 
 export const TabsBody: React.FC<TabsProps> = ({ children, className, activeTab }) => (
-        <div className={`autopilot-tabs-container bg-white pt-3 pb-3 ps-5 pe-5 ${className ?? ''}`}>
+        <div 
+            className={`autopilot-tabs-container bg-white pt-3 pb-3 ps-5 pe-5 ${className ?? ''}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${activeTab}`}
+        >
             {children[activeTab]}
         </div>
     )

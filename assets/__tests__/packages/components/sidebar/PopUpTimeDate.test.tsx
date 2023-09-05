@@ -42,7 +42,7 @@ describe('PopUpTimeDate', () => {
     fireEvent.click(setTimeDate);
     fireEvent.change(screen.getByTestId('datetime-local-input'),{ target: { value: dateValue } });
     expect(screen.getByTestId('pop-up-window')).toHaveClass('pop-up-open');
-    fireEvent.click(screen.getByRole('Submit'));
+    fireEvent.click(screen.getByRole('submit'));
     expect(onChangeMock).toHaveBeenCalledTimes(1);
     expect(onChangeMock).toHaveBeenCalledWith(dateValue);
     expect(setTimeDate).toHaveTextContent('8/21/2022, 3:30:00 PM');
@@ -51,7 +51,7 @@ describe('PopUpTimeDate', () => {
   it('should call onChange with the original date when Reset button is clicked', () => {
     const dateValue = '2022-08-21T15:30';
     renderComponent({ value: { date: dateValue } });
-    const resetButton = screen.getByRole('Reset');
+    const resetButton = screen.getByRole('reset');
 
     fireEvent.click(resetButton);
 
