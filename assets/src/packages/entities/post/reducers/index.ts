@@ -1,54 +1,54 @@
 import { combineReducers } from 'redux';
-import { Action } from '@news-parser/types';
-import { Post } from 'types/post';
-import {TOGGLE_POST_SELECT,INSERT_DRAFT_POST,UPDATE_POST, RESET_SELECTED_POST} from '../actions/post.actions';
-import {SET_LIST} from '../actions/list.actions'
+import { Post, PostDraftData } from 'types/post';
+import { togglePostSelect, insertDraftPost, updatePost, resetSelectedPost } from '../actions/post.actions';
+import { setList } from '../actions/list.actions'
+import { createReducer } from '@reduxjs/toolkit';
+import { ParserRootState } from 'types/state';
 
-export const selectPost=(state:Record<string,boolean>|object={},action:Action)=>{
-    switch (action.type){
-        case TOGGLE_POST_SELECT:
-            if (action.payload in state){
-                const newState={...state};
+
+type SelectPostType = ParserRootState['parse']['items']['select'];
+
+export const selectPost = createReducer<SelectPostType>({}, builder => {
+    builder
+        .addCase(togglePostSelect, (state, action) => {
+            if (action.payload in state) {
+                const newState = { ...state };
                 delete newState[action.payload];
                 return newState;
             }
             return {
                 ...state,
-                ...{[action.payload]:true}
+                ...{ [action.payload]: true }
             };
-        
-        case RESET_SELECTED_POST:
-            return {};
-        default:
-            return state;
-    }
-}
-export const draftPost=(state:Record<string,boolean>|object={},action:Action)=>{
-    switch (action.type){
-        case INSERT_DRAFT_POST:
-            return {
+        })
+        .addCase(resetSelectedPost, builder => ({}))
+})
+
+type DraftPostType=ParserRootState['parse']['items']['draft']; 
+
+export const draftPost = createReducer<DraftPostType>({}, builder => {
+    builder
+        .addCase(insertDraftPost, (state, action) => (
+            {
                 ...state,
-                ...{[action.payload._id]:{
-                   post_id:action.payload.post_id,
-                   editLink:action.payload.editLink
-                }}
-            };
-        default:
-            return state
-    }
-}
-
-export const posts=(state:Array<Post>=[],action:Action)=>{
-
-    switch(action.type){
-        case SET_LIST:
-            return [...action.payload];
-        case UPDATE_POST:
-            return state.map(post=>post._id==action.payload._id?action.payload:post);
-        default:
-            return state
-    }
-}
+                ...{
+                    [action.payload._id]: {
+                        post_id: action.payload.post_id,
+                        editLink: action.payload.editLink
+                    }
+                }
+            }
+        ))
+})
 
 
-export const items=combineReducers({data:posts,select:selectPost,draft:draftPost})
+type PostsDataType=ParserRootState['parse']['items']['data'];
+
+export const posts = createReducer<PostsDataType>([], builder => {
+    builder
+        .addCase(setList, (state, action) => ([...action.payload]))
+        .addCase(updatePost, (state, action) => state.map((post: Post) => post._id == action.payload._id ? action.payload : post))
+})
+
+
+export const items = combineReducers({ data: posts, select: selectPost, draft: draftPost })

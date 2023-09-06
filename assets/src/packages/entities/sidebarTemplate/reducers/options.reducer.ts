@@ -1,28 +1,20 @@
-import { Action } from '@news-parser/types';
-import { TemplateOptions } from 'types/template';
-import { TOGGLE_ADD_FEATURED_MEDIA, TOGGLE_SAVE_PARSING_TEMPLATE, TOGGLE_ADD_SOURCE } from '../actions/options.actions';
+import { createReducer } from '@reduxjs/toolkit';
+import { toggleAddFeaturedMedia, toggleAddSource, toggleSaveParsingTemplate } from '../actions/options.actions';
 import { initialState } from './initialState';
+import { OptionsDataType } from './initialState';
 
-
-export function options(state: TemplateOptions = initialState.options, action: Action) {
-    switch (action.type) {
-        case TOGGLE_ADD_FEATURED_MEDIA:
-            return {
-                ...state,
-                addFeaturedMedia: !state.addFeaturedMedia
-            }
-        case TOGGLE_SAVE_PARSING_TEMPLATE:
-            return {
-                ...state,
-                saveParsingTemplate: !state.saveParsingTemplate
-            }
-        case TOGGLE_ADD_SOURCE: {
-            return {
-                ...state,
-                addSource: !state.addSource
-            }
-        }
-        default:
-            return state;
-    }
-}
+export const options = createReducer<OptionsDataType>(initialState.options, (builder) => {
+    builder
+        .addCase(toggleAddFeaturedMedia, (state) => ({
+            ...state,
+            addFeaturedMedia: !state.addFeaturedMedia
+        }))
+        .addCase(toggleSaveParsingTemplate, (state) => ({
+            ...state,
+            saveParsingTemplate: !state.saveParsingTemplate
+        }))
+        .addCase(toggleAddSource, (state) => ({
+            ...state,
+            addSource: !state.addSource
+        }));
+});

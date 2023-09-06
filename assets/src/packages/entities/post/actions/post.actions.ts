@@ -1,7 +1,7 @@
 import { configConstantsEntities } from '@news-parser/config/constants';
-import { SetAction } from '@news-parser/types';
 import { Post,PostDraftData } from 'types/post';
 import { POSTS, SELECTED, DRAFT, INSERT, SELECT, UPDATE, RESET } from '../constants';
+import { createAction } from '@reduxjs/toolkit';
 
 
 
@@ -13,21 +13,10 @@ export const INSERT_DRAFT_POST = `[${configConstantsEntities.PARSER_RSS}.${POSTS
 export const UPDATE_POST = `[${configConstantsEntities.PARSER_RSS}.${POSTS}:${UPDATE}]`;
 export const RESET_SELECTED_POST = `[${configConstantsEntities.PARSER_RSS}.${POSTS}.${SELECTED}:${RESET}]`;
 
-export const togglePostSelect: SetAction<Post['_id']> = (_id) => ({
-        type: TOGGLE_POST_SELECT,
-        payload: _id
-    })
-export const insertDraftPost: SetAction<PostDraftData> = (postDraftData) => ({
-        type: INSERT_DRAFT_POST,
-        payload: {
-            ...postDraftData
-        }
-    })
-export const updatePost: SetAction<Post> = (post) => ({
-        type: UPDATE_POST,
-        payload: post
-    })
+export const togglePostSelect=createAction<Post['_id']>(TOGGLE_POST_SELECT);
 
-export const resetSelectedPost = () => ({
-        type: RESET_SELECTED_POST
-    })
+export const insertDraftPost=createAction<PostDraftData>(INSERT_DRAFT_POST);
+
+export const updatePost=createAction<Post>(UPDATE_POST);
+
+export const resetSelectedPost=createAction<void>(RESET_SELECTED_POST);

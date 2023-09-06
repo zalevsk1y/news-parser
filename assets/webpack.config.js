@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('css-minimizer-webpack-plugin');
-
+const webpack = require('webpack');
 
 module.exports = (env, args) => {
   const mode = args.mode || 'development';
@@ -46,6 +46,9 @@ module.exports = (env, args) => {
       new CleanWebpackPlugin(),
       new MiniCssExtractPlugin({
         filename: `../css/[name]-${VERSION}.css`,
+      }),
+      new webpack.DefinePlugin({
+        'process.env.BUILD_MODE': JSON.stringify(args.mode)
       })
 
     ],

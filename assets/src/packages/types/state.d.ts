@@ -3,6 +3,7 @@ import { CronOptions } from './cronOptions';
 import { DialogData } from './dialog';
 import { Sidebar } from './sidebar';
 import { SidebarTemplate, TemplateDataWithPostOptions } from './template';
+import { Post, PostDraftData } from './post';
 
 export type AutopilotRootState = {
     parse: {
@@ -16,11 +17,11 @@ export type ParserRootState = {
     parse: {
         message: Message | false,
         dialog: DialogData,
-        template: false|TemplateDataWithPostOptions,
+        template: false | TemplateDataWithPostOptions,
         items: {
-            data: [],
-            select: object,
-            draft: object
+            data: Array<Post>,
+            select: Record<Post['_id'], boolean> | object,
+            draft: Record<Post['_id'], Omit<PostDraftData, '_id'>> | object
         },
         sidebar: Sidebar,
         sidebarTemplate: SidebarTemplate

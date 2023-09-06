@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 
 
 import { Provider } from 'react-redux';
-import {createStore  } from 'redux';
-import { composeWithDevTools } from '@redux-devtools/extension';
+import { configureStore } from '@reduxjs/toolkit';
+// import { composeWithDevTools } from '@redux-devtools/extension';
 
 import ErrorBoundary from "@news-parser/error-handler/index"
 import parse from './reducers';
@@ -15,7 +15,10 @@ import Main from './components/Main';
 
 // SetUp for Redux DevExtension.
 
-const store=createStore(parse,composeWithDevTools());
+const store = configureStore({
+    reducer: parse,
+    devTools: process.env.BUILD_MODE !== 'production'
+});
 
 window.addEventListener('DOMContentLoaded',()=>{
 

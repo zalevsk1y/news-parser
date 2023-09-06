@@ -1,37 +1,36 @@
-import { DialogData } from 'types/dialog';
-import { Action } from '@news-parser/types';
-import { OPEN_VISUAL_CONSTRUCTOR, CLOSE_VISUAL_CONSTRUCTOR, SET_HTML, SET_IS_MUTATING } from '../actions/dialogData.actions';
-import { initialState } from './initialState';
 
-export const dialogData = (state:DialogData = initialState, action:Action) => {
-    switch (action.type) {
-        case OPEN_VISUAL_CONSTRUCTOR:
-            return {
-                ...state,
-                isOpen: true,
-                url:action.payload.url,
-                _id:action.payload.id
-            }
-        case CLOSE_VISUAL_CONSTRUCTOR:
-            return {
-                ...state,
-                isOpen: false,
-                frameIsReady: false,
-                rawHTML: false
-            }
-        case SET_HTML:
-            return {
-                ...state,
-                rawHTML: action.payload
-            }
-        case SET_IS_MUTATING:
-            return {
-                ...state,
-                isMutating: action.payload
-            }
-        default:
-            return {
-                ...state,
-            }
-    }
-}
+import { createReducer } from '@reduxjs/toolkit';
+import { openVisualConstructor, closeVisualConstructor, setHTML, setIsMutating } from '../actions/dialogData.actions';
+import { initialState, DialogDataType } from './initialState';
+
+export const dialogData = createReducer<DialogDataType>(initialState, (builder) => {
+  builder
+    .addCase(openVisualConstructor, (state, action) => {
+      return {
+        ...state,
+        isOpen: true,
+        url: action.payload.url,
+        _id: action.payload._id
+      };
+    })
+    .addCase(closeVisualConstructor, (state) => {
+      return {
+        ...state,
+        isOpen: false,
+        frameIsReady: false,
+        rawHTML: false
+      };
+    })
+    .addCase(setHTML, (state, action) => {
+      return {
+        ...state,
+        rawHTML: action.payload
+      };
+    })
+    .addCase(setIsMutating, (state, action) => {
+      return {
+        ...state,
+        isMutating: action.payload
+      };
+    });
+});
