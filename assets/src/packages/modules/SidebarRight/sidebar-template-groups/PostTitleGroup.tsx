@@ -16,7 +16,7 @@ export function PostTitleGroup() {
         <>
         <InfoBody>
           <span>{title}</span>
-          <input onChange={changeStateInputTitle} value={newTitle} type='text'  className="form-control"/>
+          <input onChange={changeStateInputTitle} value={newTitle} type='text'  className="form-control" aria-label='New title input' name='postTitle' />
           <p className="howto">
           If you want to change title, type the new title and press &quot;Change
           title&quot; button.

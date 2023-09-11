@@ -62,12 +62,12 @@ function CategoriesGroup() {
         expandButton={expandButton}
       >
         <div className='sidebar-item-expandable-row'>
-          <label htmlFor='category-input'>New Category Name</label>
+          <label htmlFor='new-category-name-input'>New Category Name</label>
           <input
             className='form-control'
             value={newCategoryParams.name}
             type='text'
-            id='category-input'
+            id='new-category-name-input'
             onChange={newCategoryNameInputHandler}
            />
         </div>
@@ -75,7 +75,7 @@ function CategoriesGroup() {
           <label htmlFor='parent-category-select'>Parent Category</label>
           <br />
           <Select
-            id='arent-category-select'
+            id='parent-category-select'
             onChange={newCategoryParentSelectHandler}
           >
             <option value={0}>— Parent Category —</option>

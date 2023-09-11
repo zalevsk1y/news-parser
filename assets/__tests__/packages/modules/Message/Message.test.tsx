@@ -1,9 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { Message } from '../../../../src/packages/modules/Message/Message';
-import 'jest';
+import { message, MessageStateType } from '../../../../src/packages/entities/message/reducers';
+import {SHOW_MESSAGE} from '../../../../src/packages/entities/message/actions/message.actions';
+import { describe, it, jest } from '@jest/globals';
 import '@testing-library/jest-dom';
 
 jest.mock('globals', () => {
@@ -12,24 +14,29 @@ jest.mock('globals', () => {
     newsParserApiEndpoints: {}
   }
 })
-
-const mockStore = configureStore([]);
-
+type MockStoreType = {
+  parse: {
+    message: MessageStateType
+  }
+}
 describe('Message Component', () => {
+
   it('should display the message text', () => {
-    const initialState = {
+    const initialState:MockStoreType = {
       parse: {
         message: {
           type: 'info',
-          text: 'This is an info message',
-          timestamp: Date.now()
+          text: 'This is an info message'
         }
       }
     };
-    const store = mockStore(initialState);
+    const mockStore = configureStore({
+      reducer: { parse: combineReducers({ message }) },
+      preloadedState: initialState
+    });
 
     render(
-      <Provider store={store}>
+      <Provider store={mockStore}>
         <Message />
       </Provider>
     );
@@ -38,19 +45,21 @@ describe('Message Component', () => {
   });
 
   it('should close the message when the close button is clicked', async () => {
-    const initialState = {
+    const initialState:MockStoreType = {
       parse: {
         message: {
           type: 'info',
           text: 'This is an info message',
-          timestamp: Date.now()
         }
       }
     };
-    const store = mockStore(initialState);
+    const mockStore = configureStore({
+      reducer: { parse: combineReducers({ message }) },
+      preloadedState: initialState
+    });
 
     render(
-      <Provider store={store}>
+      <Provider store={mockStore}>
         <Message />
       </Provider>
     );
@@ -64,19 +73,21 @@ describe('Message Component', () => {
   });
 
   it('should open a new message after the previous one closes', async () => {
-    const initialState = {
+    const initialState:MockStoreType = {
       parse: {
         message: {
           type: 'info',
           text: 'This is the first message',
-          timestamp: Date.now()
         }
       }
     };
-    const store = mockStore(initialState);
+    const mockStore = configureStore({
+      reducer: { parse: combineReducers({ message }) },
+      preloadedState: initialState
+    });
 
     render(
-      <Provider store={store}>
+      <Provider store={mockStore}>
         <Message />
       </Provider>
     );
@@ -84,16 +95,15 @@ describe('Message Component', () => {
     expect(screen.getByLabelText('Message text')).toHaveTextContent('This is the first message');
 
 
-    store.dispatch({
-      type: 'SET_MESSAGE',
+    mockStore.dispatch({
+      type: SHOW_MESSAGE,
       payload: {
         type: 'success',
         text: 'This is the second message',
-        timestamp: Date.now()
       }
     });
-    console.log(store.getState());
-   //await screen.findByText('This is the second message');
+    const secondMessage= await screen.findByText('This is the second message')
+    expect(secondMessage).toBeInTheDocument();
 
   });
 });

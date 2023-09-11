@@ -12,7 +12,7 @@ import DiscussionGroup from '../sidebar-post-groups/DiscussionGroup';
  */
 
 export const SidebarRightPost:React.FC = () => (
-    <div className='inner-sidebar-container'>
+    <div className='inner-sidebar-container' role='tabpanel'>
       <InfoBox title='Satus&Visibility'>
         <InfoBody>
           <StatusVisibilityGroup />

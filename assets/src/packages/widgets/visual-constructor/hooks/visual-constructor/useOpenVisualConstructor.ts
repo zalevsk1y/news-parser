@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useCallback } from 'react';
 import { openVisualConstructor } from '../../actions/dialogData.actions';
 
-export type OpenVisualConstructorHandler = (_id: number|undefined, url: string) => void;
+export type OpenVisualConstructorHandler = (_id: number|false, url: string) => void;
 export type UseOpenVisualConstructor = () => OpenVisualConstructorHandler;
 /**
  * Custom hook for opening the visual constructor and dispatching the corresponding action.

@@ -22,7 +22,7 @@ export const TemplateSelect: React.FC<TemplateSelectProps> = ({ onSelect, isFetc
     }, [])
     return (
         <>
-            <select {...otherProps} onChange={selectChangeHandler} value={selectValue} >
+            <select {...otherProps} onChange={selectChangeHandler} value={selectValue} id='autopilot-post-template-select'>
                 <option value='' disabled>--{placeholder}--</option>
                 {optionsTemplates}
             </select>

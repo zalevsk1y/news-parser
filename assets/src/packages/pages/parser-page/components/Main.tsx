@@ -20,7 +20,7 @@ const Main:React.FC = () => {
   const createLocalPost=useCreateLocalPost();
  
   const openVisualConstructorHandler = useCallback((url:string) => {
-    openVisualConstructor(undefined,url);
+    openVisualConstructor(false,url);
   }, [createLocalPost,openVisualConstructor])
   return (
     <div className="wrap">

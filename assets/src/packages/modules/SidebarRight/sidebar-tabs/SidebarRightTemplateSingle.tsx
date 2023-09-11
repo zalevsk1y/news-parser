@@ -12,7 +12,7 @@ import { ExtraOptionsGroupSingle } from '../sidebar-template-groups/ExtraOptions
 
 export const SidebarRightTemplateSingle: React.FC = () => (
 
-    <div className='inner-sidebar-container'>
+    <div className='inner-sidebar-container' role='tabpanel'>
       <InfoBox title='Featured Image'>
         <FeaturedMediaGroup />
       </InfoBox>

@@ -44,11 +44,11 @@ export const PopUpTimeDate: React.FC<PopUpTimeDateProps> = ({ value, onChange })
       <PopUp isOpen={isOpen}>
         <form style={{ outline: 'none' }} >
           <label htmlFor='pop-up-time-date-input' className='visually-hidden'>Select Date and Time:</label>
-          <input data-testid='datetime-local-input' type='datetime-local' id='pop-up-time-date-input' onChange={dateChangeHandle} value={postDate !== false ? postDate : ''} />
+          <input data-testid='datetime-local-input' type='datetime-local' id='pop-up-time-date-input' onChange={dateChangeHandle} value={postDate !== false ? postDate : ''} name='postDate'/>
           <div className='pop-up-buttons-block'>
-            <label htmlFor='pop-up-time-date-button-submit'>Submit</label>
+            <label htmlFor='pop-up-time-date-button-submit'>Submit button</label>
             <input type='button' className='pop-up-link' onClick={resetClickHandler} id='pop-up-time-date-button-reset' role='reset' value='Reset' />
-            <label htmlFor='pop-up-time-date-button-reset'>Reset</label>
+            <label htmlFor='pop-up-time-date-button-reset'>Reset button</label>
             <input type='button' className='pop-up-link' onClick={submitClickHandler} id='pop-up-time-date-button-submit' role='submit' value='Submit' />
           </div>
         </form>

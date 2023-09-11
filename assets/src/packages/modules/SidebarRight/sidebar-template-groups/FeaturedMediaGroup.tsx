@@ -35,8 +35,9 @@ export const FeaturedMediaGroup: React.FC = () => {
                 <Checkbox
                     checked={!addFeaturedMedia}
                     onChange={toggleAddFeaturedMediaHandler}
+                    id='no-post-featured-media'
                 />
-                <p className='howto inline-bl'>No featured image.</p>
+                <label className='howto inline-bl' htmlFor='no-post-featured-media'>No featured image.</label>
             </InfoBody>
             <InfoFooter>
                 <button

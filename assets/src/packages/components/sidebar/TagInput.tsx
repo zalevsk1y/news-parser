@@ -38,7 +38,7 @@ export const TagInput:React.FC<TagInputProps> = ({ onCreate, id: idSufix, bottom
       <label htmlFor={inputId}>{labelText}</label>
       <div className="tag-input-container input-container" role="combobox" aria-haspopup="false" aria-expanded="false">
         {children}
-        <input type="text" onKeyDown={inputKeyPressHandler} id={inputId} role="textbox" aria-autocomplete="list" />
+        <input type="text" onKeyDown={inputKeyPressHandler} id={inputId} role="textbox" aria-autocomplete="list" name='tagName' />
       </div>
       <i>{bottomCapture}</i>
     </div>

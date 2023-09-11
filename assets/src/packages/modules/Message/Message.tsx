@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo,useRef, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { decodeHTMLEntities } from '@news-parser/helpers/index';
 import { ParserRootState } from 'types/state';
@@ -14,9 +14,13 @@ export const Message: React.FC = () => {
 
   const messageData = useSelector((state: ParserRootState) => state.parse.message);
 
-  const close = () => setMessageWindowState(false);
-  const open = () => setMessageWindowState(true);
-
+  const closeButtonRef=useRef<HTMLButtonElement>(null);
+  
+  const close = useCallback(() => setMessageWindowState(false),[]);
+  const open = () => {
+    setMessageWindowState(true);
+    if(closeButtonRef.current!==null) closeButtonRef.current.focus();
+  }
   const decodedMessageText = useMemo(() => {
     if (messageData === false) return '';
     return messageData.text ? decodeHTMLEntities(messageData.text) : '';
@@ -24,12 +28,12 @@ export const Message: React.FC = () => {
 
   // If get mew message close current message and open new one in 400ms.
   useEffect(() => {
-    if(messageData===false) return;
-      if (isOpen) {
-        setTimeout(() => {
-          close();
-          setTimeout(open, 400)
-        }, 2000);
+    if (messageData === false) return;
+    if (isOpen) {
+      setTimeout(() => {
+        close();
+        setTimeout(open, 400)
+      }, 2000);
     } else {
       open()
     }
@@ -40,7 +44,7 @@ export const Message: React.FC = () => {
     'error': 'bi-exclamation-octagon-fill',
     'info': 'bi-info-circle-fill'
   };
-  if (messageData===false) return null;
+  if (messageData === false) return null;
   return (
     <div className="message-wrapper">
       <div
@@ -56,11 +60,13 @@ export const Message: React.FC = () => {
           {decodedMessageText}
         </span>
         <button
+          tabIndex={0}
           type="button"
           className="btn-close"
           data-bs-dismiss="alert"
           aria-label="Close"
           onClick={close}
+          ref={closeButtonRef}
         />
       </div>
     </div>

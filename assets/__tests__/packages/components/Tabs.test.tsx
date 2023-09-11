@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { Tabs, TabsProps } from '../../../src/packages/components/Tabs';
-import 'jest';
+import { describe, it } from '@jest/globals';
 import '@testing-library/jest-dom';
 
 describe('Tabs', () => {

@@ -21,18 +21,20 @@ export const ExtraOptionsGroup: React.FC = () => {
         <Checkbox
           checked={addSource}
           onChange={toggleAddSourceHandler}
+          id='add-source-link-to-post'
         />
-        <p className='howto inline-bl'>Add source link to the post.</p>
+        <label htmlFor='add-source-link-to-post' className='howto inline-bl'>Add source link to the post.</label>
       </div>
       <div className='info-box-container'>
         <Checkbox
           checked={saveParsingTemplate}
           onChange={toggleSaveParsingTemplateHandler}
+          id='save-posts-parsing-template'
         />
-        <p className='howto inline-bl'>
+        <label htmlFor='save-posts-parsing-template' className='howto inline-bl'>
           Save parsing template that you can use in automatic parsing from
           this source.
-        </p>
+        </label>
       </div>
     </InfoBody>
   )

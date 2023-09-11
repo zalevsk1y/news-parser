@@ -1,7 +1,7 @@
 import React from 'react';
 import { render,screen, fireEvent } from '@testing-library/react';
 import { InputForm } from '../../../src/packages/components/InputForm';
-import 'jest';
+import { describe, it, jest } from '@jest/globals';
 import '@testing-library/jest-dom';
 
 describe('InputForm', () => {
@@ -24,7 +24,7 @@ describe('InputForm', () => {
       />
     );
 
-    const inputElement = screen.getByLabelText('URL Input');
+    const inputElement = screen.getByLabelText('Rss URL Input');
     expect(inputElement).toBeInTheDocument();
 
     const buttonElement = screen.getByRole('button');
@@ -61,7 +61,7 @@ describe('InputForm', () => {
       />
     );
 
-    const inputElement = screen.getByLabelText('URL Input');
+    const inputElement = screen.getByLabelText('Rss URL Input');
     const inputValue = 'https://example.com';
     fireEvent.change(inputElement, { target: { value: inputValue } });
 

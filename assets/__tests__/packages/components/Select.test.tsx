@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { Select, SelectProps } from '../../../src/packages/components/Select';
-import 'jest';
+import { describe, it, jest } from '@jest/globals';
 import '@testing-library/jest-dom';
 
 describe('Select', () => {

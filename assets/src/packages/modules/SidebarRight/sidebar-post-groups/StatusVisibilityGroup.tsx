@@ -17,8 +17,8 @@ function StatusVisibilityGroup() {
     return (
         <>
             <SidebarItem>
-                <SidebarItemLabel>Status:</SidebarItemLabel>
-                <Select onChange={postStatusChangeHandler} value={status}>
+                <SidebarItemLabel htmlFor='post-status-select'>Status:</SidebarItemLabel>
+                <Select onChange={postStatusChangeHandler} value={status} id='post-status-select'>
                     <option value="publish">Public</option>
                     <option value="private">Private</option>
                     <option value="draft">Draft</option>
@@ -27,8 +27,8 @@ function StatusVisibilityGroup() {
                 </Select>
             </SidebarItem>
             <SidebarItem>
-                <SidebarItemLabel>Post format:</SidebarItemLabel>
-                <Select onChange={postFormatChangeHandler} value={postFormat}>
+                <SidebarItemLabel htmlFor='post-format-select'>Post format:</SidebarItemLabel>
+                <Select onChange={postFormatChangeHandler} value={postFormat} id='post-format-select'>
                     <option value="aside" label='Aside' />
                     <option value="audio" label='Audio' />
                     <option value="chat" label='Chat' />

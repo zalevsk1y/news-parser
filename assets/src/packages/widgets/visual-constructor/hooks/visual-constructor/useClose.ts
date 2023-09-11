@@ -1,10 +1,10 @@
-import {useDispatch} from 'react-redux';
-import {useCallback} from 'react';
-import {closeVisulaConstructor} from '../../actions/dialogData.actions'
+import { useDispatch } from 'react-redux';
+import { useCallback } from 'react';
+import { closeVisualConstructor } from '../../actions/dialogData.actions'
 
-export const useClose=()=>{
-    const dispatch=useDispatch()
-    const close=useCallback(()=>dispatch(closeVisulaConstructor()),[dispatch]);
+export const useClose = () => {
+    const dispatch = useDispatch()
+    const close = useCallback(() => dispatch(closeVisualConstructor()), [dispatch]);
     return close;
 }
 

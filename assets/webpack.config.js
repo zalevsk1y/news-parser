@@ -22,6 +22,7 @@ module.exports = (env, args) => {
       path: path.resolve(__dirname, '../public/js/'),
       publicPath: '/public/js/',
       filename: `[name]-${VERSION}.bundle.js`,
+      chunkFilename: `[id]-${VERSION}.chunk.js`
     },
     module: {
       rules:
@@ -58,6 +59,9 @@ module.exports = (env, args) => {
         new TerserJSPlugin({}),
         new OptimizeCssAssetsPlugin({})  
       ],
+      splitChunks:{
+        chunks:'all'
+      }
     },
     externals: {
       globals: 'window',

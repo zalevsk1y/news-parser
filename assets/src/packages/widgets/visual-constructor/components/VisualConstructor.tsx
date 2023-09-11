@@ -5,6 +5,8 @@ import { Frame } from './Frame';
 import { useScrolling } from '../../../hooks/useScrolling';
 import { useIsOpen } from '../hooks/visual-constructor/useIsOpen';
 import { useIsMutating , useClose , useGetPostId } from '../hooks';
+import {VisualConstructorHeader} from './VisualConstructorHeader';
+
 
 interface VisualConstructorProps {
     onReady?: () => void,
@@ -54,31 +56,22 @@ export const VisualConstructor: React.FC<VisualConstructorProps> = ({ onReady, c
     if (url === false) return null;
     return (
         <div className='media-modal-wrapper' style={{ display: isOpen ? 'block' : 'none' }}>
-            <div className='modal-container'>
-                <div className='modal-header'>
-                    <h1>Parsing Constructor</h1>
-                    <button
-                        type='button'
-                        className='media-modal-close'
-                        onClick={closeVisualConstructor}
-                    >
-                        <span className='media-modal-icon'>
-                            <span className='screen-reader-text'>Close dialog</span>
-                        </span>
-                    </button>
-                </div>
-                <div className='d-flex flex-column flex-grow-1 position-relative'>
-                    {!isVisualConstructorReady && <LoadingSpinner style={{ paddingBottom: '22vh' }} />}
-                    <div className='modal-main'>
-                        <div className='parsed-data-container'>
-                            <Frame url={url} onReady={onFrameReady} />
+                {isOpen&&
+                <div className='modal-container'>
+                    <VisualConstructorHeader title='Parsing Constructor' closeHandler={closeVisualConstructor} />
+                    <div className='d-flex flex-column flex-grow-1 position-relative'>
+                        {!isVisualConstructorReady && <LoadingSpinner style={{ paddingBottom: '22vh' }} />}
+                        <div className='modal-main'>
+                            <div className='parsed-data-container'>
+                                <Frame url={url} onReady={onFrameReady} />
+                            </div>
+                            <div className='resize-drag-bar' />
+                            {children[0]}
                         </div>
-                        <div className='resize-drag-bar' />
-                        {children[0]}
+                        {children[1]}
                     </div>
-                    {children[1]}
                 </div>
-            </div>
+                }
             <div className='media-modal-backdrop' />
         </div>
     );

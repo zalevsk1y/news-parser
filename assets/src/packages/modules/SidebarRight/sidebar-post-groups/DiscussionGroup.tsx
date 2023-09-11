@@ -19,21 +19,23 @@ const DiscussionGroup: React.FC = () => {
         <input
           type='checkbox'
           className='sidebar-item-radio'
+          id='allow-comments-checkbox'
           name='allowComments'
           checked={allowComments}
           onChange={allowCommentsSet}
         />
-        <SidebarItemLabel>Allow comments</SidebarItemLabel>
+        <SidebarItemLabel htmlFor='allow-comments-checkbox'>Allow comments</SidebarItemLabel>
       </SidebarItem>
       <SidebarItem>
         <input
           type='checkbox'
           className='sidebar-item-radio'
+          id='allow-pinbacks-checkbox'
           name='allowPingbacks'
           checked={allowPinbacks}
           onChange={allowPinbacksSet}
         />
-        <SidebarItemLabel>
+        <SidebarItemLabel htmlFor='allow-pinbacks-checkbox'>
           Allow pingbacks & trackbacks
         </SidebarItemLabel>
       </SidebarItem>
