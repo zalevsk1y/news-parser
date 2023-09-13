@@ -1,12 +1,12 @@
-import React, { useState, useMemo, useLayoutEffect, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useLayoutEffect, useEffect, useCallback, Suspense } from 'react';
 import { LoadingSpinner } from '@news-parser/ui/visual-constructor/LoadingSpinner';
-import { useFetchTags, useFetchCategories } from '@news-parser/entities/sidebar/hooks'
-import { Frame } from './Frame';
+import { useFetchTags, useFetchCategories } from '@news-parser/entities/sidebar/hooks';
 import { useScrolling } from '../../../hooks/useScrolling';
 import { useIsOpen } from '../hooks/visual-constructor/useIsOpen';
-import { useIsMutating , useClose , useGetPostId } from '../hooks';
-import {VisualConstructorHeader} from './VisualConstructorHeader';
+import { useIsMutating, useClose, useGetPostId } from '../hooks';
+import { VisualConstructorHeader } from './VisualConstructorHeader';
 
+const FrameLazyLoaded=React.lazy(()=>import('./Frame'))
 
 interface VisualConstructorProps {
     onReady?: () => void,
@@ -56,14 +56,15 @@ export const VisualConstructor: React.FC<VisualConstructorProps> = ({ onReady, c
     if (url === false) return null;
     return (
         <div className='media-modal-wrapper' style={{ display: isOpen ? 'block' : 'none' }}>
-                {isOpen&&
                 <div className='modal-container'>
                     <VisualConstructorHeader title='Parsing Constructor' closeHandler={closeVisualConstructor} />
                     <div className='d-flex flex-column flex-grow-1 position-relative'>
                         {!isVisualConstructorReady && <LoadingSpinner style={{ paddingBottom: '22vh' }} />}
                         <div className='modal-main'>
                             <div className='parsed-data-container'>
-                                <Frame url={url} onReady={onFrameReady} />
+                                <Suspense fallback={'...Loading'}>
+                                    <FrameLazyLoaded url={url} onReady={onFrameReady} />
+                                </Suspense>
                             </div>
                             <div className='resize-drag-bar' />
                             {children[0]}
@@ -71,7 +72,6 @@ export const VisualConstructor: React.FC<VisualConstructorProps> = ({ onReady, c
                         {children[1]}
                     </div>
                 </div>
-                }
             <div className='media-modal-backdrop' />
         </div>
     );

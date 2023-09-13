@@ -1,4 +1,4 @@
-import DOMPurify from "dompurify";
+import DOMPurify from 'dompurify';
 /**
  * Function modifier facade for DOMPurify module.
  * Remove unsafe tags and attributes.
@@ -11,9 +11,10 @@ import DOMPurify from "dompurify";
  */
 export default function purifyDOM(html:string):string {
   return DOMPurify.sanitize(html, {
-    ADD_TAGS: ["link", "meta"],
-    ADD_ATTR: ["property", "content"],
-    WHOLE_DOCUMENT: true,
+    ADD_TAGS: ['link', 'meta','!doctype'],
+    ADD_ATTR: ['property', 'content'],
+    FORBID_ATTR: ['tabindex'],
+    WHOLE_DOCUMENT: true, 
     ALLOW_UNKNOWN_PROTOCOLS: true,
   });
 }

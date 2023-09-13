@@ -27,6 +27,7 @@ export const SidebarRight:React.FC<SidebarRightProps> = ({ tabs, children }) => 
         className={`nav-link flex-grow-1 text-center np-fs-16  ${activeTab === index ? 'active' : ''}`}
         onClick={activeTabChangeHandler(index)}
         role='tab'
+        tabIndex={0}
         aria-selected={activeTab==index}
       >
         {tab}

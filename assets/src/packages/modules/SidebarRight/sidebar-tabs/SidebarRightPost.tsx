@@ -36,3 +36,5 @@ export const SidebarRightPost:React.FC = () => (
     </div>
 
   );
+
+  export default SidebarRightPost;

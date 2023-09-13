@@ -1,5 +1,6 @@
 .post-image-wrapper {
   overflow: hidden; 
+  min-height: 200px;
 }
 .image-news-parser{
   width: 100%;

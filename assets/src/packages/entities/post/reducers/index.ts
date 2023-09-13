@@ -1,8 +1,7 @@
-import { combineReducers } from 'redux';
-import { Post, PostDraftData } from 'types/post';
+import { Post } from 'types/post';
 import { togglePostSelect, insertDraftPost, updatePost, resetSelectedPost } from '../actions/post.actions';
-import { setList } from '../actions/list.actions'
-import { createReducer } from '@reduxjs/toolkit';
+import { deletePost, pushPost, setList } from '../actions/list.actions'
+import { createReducer,combineReducers } from '@reduxjs/toolkit';
 import { ParserRootState } from 'types/state';
 
 
@@ -48,6 +47,8 @@ export const posts = createReducer<PostsDataType>([], builder => {
     builder
         .addCase(setList, (state, action) => ([...action.payload]))
         .addCase(updatePost, (state, action) => state.map((post: Post) => post._id == action.payload._id ? action.payload : post))
+        .addCase(pushPost,(state,action)=>[...state,action.payload])
+        .addCase(deletePost,(state,action)=>state.filter((post)=>post._id!==action.payload))
 })
 
 

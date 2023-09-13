@@ -43,7 +43,7 @@ export const useCreateWpPost: UseCreateWpPost = () => {
         const postOptions = formatPostOptions(sidebar);
         const preparedParsedData = formatCreatePostDraftRequest(parsedData, { ...extraOptions, ...postOptions }, url);
         const options: RequestApiOptions = { entity: configConstantsEntities.WP_POST, event: configConstantsMethods.CREATE, data: preparedParsedData };
-        if (dialog._id===false) throw Error('Wrong post id givent in dialog._id')
+        if (dialog._id===false||postID===undefined) throw Error('Wrong post id givent in dialog._id')
         _id = postID ?? dialog._id;
         return requestApi(options, success, error).then((wpPostData) => createWpMedia(parsedData.image, wpPostData.title.raw, wpPostData.id).then(() => wpPostData))
     }

@@ -29,8 +29,6 @@ class App{
         $this->cronApiController=CronApiController::create($this->event);
         $this->middleware=MiddlewareController::getInstance($this->event);
         $this->cronTaskController=new CronTaskController($this->event);
-        //init main
-        Main::start($DI_container->get(\NewsParserPlugin\Menu\Admin\MenuPage::class),$DI_container->get(\NewsParserPlugin\Utils\MenuConfig::class));
         $this->addActions();
     }
     static public function start(ContainerInterface $DI_container){

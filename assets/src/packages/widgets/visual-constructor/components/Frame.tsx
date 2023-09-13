@@ -13,6 +13,7 @@ import { useFetchHTML, useMouseEvents, useFrameElementMiddleware } from '../hook
 import { useShowMessage } from '@news-parser/entities/message/hooks/index';
 import { useClose } from '../hooks/visual-constructor/useClose';
 
+
 interface FrameProps {
   onReady: () => void,
   url: string
@@ -90,8 +91,11 @@ export const Frame: React.FC<FrameProps> = ({ onReady, url }) => {
     };
   }, [url]);
   return (
-    <iframe id='visual-constructor' frameBorder='0' ref={frameElementRef}>
+    <iframe id='visual-constructor'  tabIndex={-1} ref={frameElementRef}>
       {' '}
     </iframe>
   );
 }
+
+
+export default Frame;

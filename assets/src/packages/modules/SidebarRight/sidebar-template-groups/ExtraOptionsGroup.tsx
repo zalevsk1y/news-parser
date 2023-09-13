@@ -1,7 +1,6 @@
 import React from 'react';
 import { InfoBody, Checkbox } from '@news-parser/ui/sidebar';
 import { useToggleSaveParsingTemplate, useToggleAddSource, useGetAddSource, useGetSaveParsingTemplate } from '@news-parser/entities/sidebarTemplate/hooks/'
-import '../styles/ExtraOptionsGroup';
 
 /**
  * React functional component for rendering a group of extra options.

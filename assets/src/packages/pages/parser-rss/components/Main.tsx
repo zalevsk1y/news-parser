@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import Message from '@news-parser/modules/Message';
-import SidebarRight, { SidebarRightTemplate, SidebarRightPost } from '@news-parser/modules/SidebarRight/indext';
+import SidebarRight,{SidebarRightTemplate,SidebarRightPost} from '@news-parser/modules/SidebarRight/indext';
 import { VisualConstructor, VisualConstructorFooterRss as VisualConstructorFooter } from '@news-parser/widgets/visual-constructor/';
 import { useFetchPostsList } from '@news-parser/entities/post/hooks/'
 import { useFetchTemplate } from '@news-parser/entities/template/hooks/'
 import { useShowMessage } from '@news-parser/entities/message/hooks/';
 import { InputFormSection } from './InputFormSection';
 import { PostsSection } from './PostsSection';
-import '../../styles/Main.css'
+import '../../styles/Main.css';
 
 
 /**

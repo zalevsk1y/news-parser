@@ -6,7 +6,7 @@ import { useOpenVisualConstructor } from '@news-parser/widgets/visual-constructo
 import { useCreateLocalPost } from '@news-parser/entities/post/hooks/';
 import { InputFormSection } from './InputFormSection';
 import { ParsedPostsSection } from './ParsedPostsSection';
-import '../../styles/Main.css'
+import '../../styles/Main.css';
 
 /**
  * Main application element.

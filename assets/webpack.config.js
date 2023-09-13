@@ -22,7 +22,7 @@ module.exports = (env, args) => {
       path: path.resolve(__dirname, '../public/js/'),
       publicPath: '/public/js/',
       filename: `[name]-${VERSION}.bundle.js`,
-      chunkFilename: `[id]-${VERSION}.chunk.js`
+      chunkFilename: `[id]-${VERSION}.bundle.[ext]`
     },
     module: {
       rules:
@@ -58,10 +58,7 @@ module.exports = (env, args) => {
       minimizer: [
         new TerserJSPlugin({}),
         new OptimizeCssAssetsPlugin({})  
-      ],
-      splitChunks:{
-        chunks:'all'
-      }
+      ]
     },
     externals: {
       globals: 'window',
@@ -82,6 +79,8 @@ module.exports = (env, args) => {
       },
       extensions: ['.ts', '.tsx', '.js', '.css'],
     },
+    devtool:isDev?'source-map':false,
+
     devServer: {
       port: 5080,
       host: '0.0.0.0',

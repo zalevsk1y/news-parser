@@ -8,6 +8,8 @@ export const INSERT='insert';
 export const UPDATE='update';
 export const SET='set';
 export const RESET='reset';
+export const DELETE='delete';
+export const PUSH='push';
 
 
 export const DEFAULT_POST_DATA:Post={

@@ -4,6 +4,7 @@ namespace NewsParserPlugin;
 use \Monolog\Logger;
 use \Monolog\Handler\StreamHandler;
 use Monolog\ErrorHandler;
+use NewsParserPlugin\Core\Main;
 
 
 
@@ -22,6 +23,7 @@ function news_parser_init(){
     //$container=$container_builder->build();
  
     $app=Core\App::start($container);
+    Main::start($container->get(\NewsParserPlugin\Menu\Admin\MenuPage::class),$container->get(\NewsParserPlugin\Utils\MenuConfig::class));
     $modifiers=array(
        new Modifiers\RemoveLineBreaks(),
        new Modifiers\ReplaceRelativePathWithAbsolute(),

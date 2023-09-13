@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from '@reduxjs/toolkit';
 import { items } from '@news-parser/entities/post/reducers';
 import { message } from '@news-parser/entities/message/reducers';
 import { sidebar } from '@news-parser/entities/sidebar/reducers';

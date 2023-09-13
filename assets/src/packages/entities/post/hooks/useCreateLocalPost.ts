@@ -1,11 +1,12 @@
 import { useDispatch } from 'react-redux';
 import { Post } from 'types/post';
-import { setList } from '../actions/list.actions';
+import { deletePost, setList } from '../actions/list.actions';
 import { useGetPosts } from './useGetPosts';
 
 
 export type UseCreateLocalPostHandler = (post: Post) => Post['_id'];
-export type UseCreateLocalPost = () => UseCreateLocalPostHandler;
+export type RemoveLocalPostHandler=(localPostId:number)=>void;
+export type UseCreateLocalPost = () => [UseCreateLocalPostHandler,RemoveLocalPostHandler];
 
 
 /**
@@ -26,5 +27,8 @@ export const useCreateLocalPost: UseCreateLocalPost = () => {
         dispatch(setList(posts));
         return postData._id;
     }
-    return createLocalPostHandler;
+    const removeLocalPostHandler:RemoveLocalPostHandler=(localPostId)=>{
+        dispatch(deletePost(localPostId));
+    }
+    return [createLocalPostHandler,removeLocalPostHandler];
 }
