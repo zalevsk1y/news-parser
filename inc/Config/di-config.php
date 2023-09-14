@@ -3,7 +3,7 @@ namespace NewsParserPlugin;
 
 
 return array(
-    Utils\MenuConfig::class=>[NEWS_PARSER_PLUGIN_DIR.'menu-config.php'],
+    Utils\MenuConfig::class=>[NEWS_PARSER_PLUGIN_DIR.'inc/Config/menu-config.php'],
     Utils\AdapterGutenberg::class=>[],
     Utils\ResponseFormatter::class=>[],
     Parser\XMLParser::class=>[],
