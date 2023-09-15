@@ -3,6 +3,7 @@ import { PostCard, PostCardBody, PostCardHeader, PostCardImage, PostCardFooter }
 import { Icons } from '@news-parser/ui/index';
 import { Post } from 'types/post';
 import { window } from 'globals';
+import {InfinitePostsScroll} from './InfinitePostsScroll';
 
 export interface PostsProps {
     openEditor: (_id: number, link: string) => void,
@@ -38,7 +39,7 @@ export const Posts: React.FC<PostsProps> = ({ openEditor, selectPost, posts }) =
     </PostCard>)), [posts, selectPostHandler, openEditorHandler])
     return (
         <div className="posts-wrapper">
-            {postCards}
+            <InfinitePostsScroll className='posts-wrapper' postsArray={postCards} postsPerWindow={9} />
         </div>
     )
 }
