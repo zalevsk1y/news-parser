@@ -44023,7 +44023,10 @@ var PostsSection = function (_a) {
     }, [selectedPosts]);
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(ProgressIndicator_1.ProgressIndicator, { hidden: !isParsing, total: progressTotal, count: parsedPostsCounter },
-            react_1.default.createElement("div", { className: 'progress-message' }, "".concat(parsedPostsCounter, "/").concat(progressTotal, " posts were parsed."))),
+            react_1.default.createElement("div", { className: 'progress-message' }, "".concat(parsedPostsCounter, "/").concat(progressTotal, " posts were parsed.")),
+            react_1.default.createElement("div", { className: 'progress-message d-flex flex-row align-items-center justify-content-center' },
+                react_1.default.createElement("span", { className: "spinner-border", role: "status", "aria-describedby": 'posts-loading-indicator-description' }),
+                react_1.default.createElement("span", { id: 'posts-loading-indicator-description' }, "\u00A0\u00A0Please wait.Parsing in progress..."))),
         react_1.default.createElement(ActionAlert_1.ActionAlert, { hidden: selectedPostsCount === 0 || isParsing },
             react_1.default.createElement("span", { className: 'flex-grow-1 lh-2' }, postsParseMessage),
             react_1.default.createElement("button", { className: "btn btn-secondary", onClick: parseSelectedHandler, disabled: !rssUrl }, "Parse")),
@@ -44433,7 +44436,7 @@ __webpack_require__(/*! ../styles/PostCardImage.css */ "../ui/styles/PostCardIma
  */
 var PostCardImage = function (_a) {
     var image = _a.image, className = _a.className, alt = _a.alt;
-    return (react_1.default.createElement("div", { className: 'post-image-wrapper' },
+    return (react_1.default.createElement("div", { className: 'post-image-wrapper flex-grow-1' },
         react_1.default.createElement("img", { className: className || 'image-news-parser', src: image, alt: alt || 'image' })));
 };
 exports.PostCardImage = PostCardImage;
@@ -45036,7 +45039,6 @@ var VisualConstructorFooterPage = function () {
     var buttonClickHandler = (0, react_1.useCallback)(function () {
         setIsMutating(true);
         var postId = createLocalPost(Object.assign(constants_1.DEFAULT_POST_DATA, currentPostAttributes));
-        console.log(postId, 'Visual constructor');
         createWpPost(postId)
             .then(function () {
             setIsMutating(false);

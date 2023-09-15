@@ -37909,20 +37909,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.RightSection = void 0;
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
+var globals_1 = __webpack_require__(/*! globals */ "globals");
 // https://www.buymeacoffee.com/4832232T
 function RightSection() {
     return (react_1.default.createElement("div", { className: 'pt-2 pb-2 ps-3 pe-3 mb-2 bg-white autopilot-tabs-container' },
-        react_1.default.createElement("div", { className: 'mb-3 text-center np-fs-16' },
-            "Did you enjoy using this plugin? ",
-            react_1.default.createElement("br", null),
-            "Please leave a review!",
-            react_1.default.createElement("div", { className: 'text-center' },
-                react_1.default.createElement("a", { href: '#' }, " \u2B50\u2B50\u2B50\u2B50\u2B50"),
-                " ")),
-        react_1.default.createElement("div", { className: 'mb-3 text-center np-fs-16' },
-            react_1.default.createElement("div", { className: 'mb-2' }, "Show your support!"),
-            react_1.default.createElement("button", { className: 'btn btn-primary w-100', type: 'button' },
-                react_1.default.createElement("span", { className: 'np-fs-14' }, "Buy author a coffee \u2615")))));
+        react_1.default.createElement("h2", { className: 'np-fs-22 flex-column align-items-center' },
+            "Autopilot Parsing\u00A0 ",
+            react_1.default.createElement("span", { className: "badge bg-primary" }, "Beta")),
+        react_1.default.createElement("p", null, "The autopilot parsing feature is currently in beta mode. Please be aware that it may have some bugs or unexpected behavior. Use it carefully."),
+        react_1.default.createElement("p", null, "If you have any thoughts, feedback, or proposals, feel free to connect with the author:"),
+        react_1.default.createElement("ul", { className: 'd-flex flex-column ps-0' },
+            react_1.default.createElement("li", null,
+                react_1.default.createElement("a", { href: "https://www.instagram.com/wp_news_parser", "aria-label": "Instagram - Connect with the author" },
+                    react_1.default.createElement("img", { alt: 'Instagram icon', className: 'me-2', height: '27px', src: globals_1.newsParserSettings.pluginUrl + '/public/images/clipart1375168_d6sh2a.png' }),
+                    "Instagram")),
+            react_1.default.createElement("li", null,
+                react_1.default.createElement("a", { href: "https://discord.gg/mxhJ9hE4", "aria-label": "Discord - Connect with the author" },
+                    react_1.default.createElement("img", { alt: 'Discord icon', className: 'me-2', height: '27px', src: globals_1.newsParserSettings.pluginUrl + '/public/images/discord-icon-43742_qoe0fc.png' }),
+                    "Discord")))));
 }
 exports.RightSection = RightSection;
 

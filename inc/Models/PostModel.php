@@ -83,7 +83,7 @@ class PostModel implements ModelInterface
             throw new MyException(Errors::text('NO_BODY'), Errors::code('BAD_REQUEST'));
         }
         $this->body = $data['body'];
-        if (!isset($data['authorId'])||empty($data['authorId'])) {
+        if (!isset($data['authorId'])) {
             throw new MyException(Errors::text('NO_AUTHOR'), Errors::code('BAD_REQUEST'));
         }
         $this->authorId = $data['authorId'];
@@ -126,7 +126,7 @@ class PostModel implements ModelInterface
     {
         $this->ID = $this->createPostWordPress($post_data);
         $this->getPostLinksWordpress();
-        if(is_array($post_data)) $this->status = $post_data['status'];
+        if(is_array($post_data)) $this->status = $post_data['post_status'];
     }
     /**
      * Attach main image to wordpress post

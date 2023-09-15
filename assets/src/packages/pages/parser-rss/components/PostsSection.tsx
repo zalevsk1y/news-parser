@@ -40,8 +40,13 @@ export const PostsSection: React.FC<PostsSectionProps> = ({ isFetching, rssUrl }
     }, [selectedPosts]);
     return (
         <>
+           
             <ProgressIndicator hidden={!isParsing} total={progressTotal} count={parsedPostsCounter}>
                 <div className='progress-message'>{`${parsedPostsCounter}/${progressTotal} posts were parsed.`}</div>
+                <div className='progress-message d-flex flex-row align-items-center justify-content-center'>
+                    <span className="spinner-border" role="status" aria-describedby='posts-loading-indicator-description'></span>
+                    <span id='posts-loading-indicator-description'>&nbsp;&nbsp;Please wait.Parsing in progress...</span>
+                </div>
             </ProgressIndicator>
             <ActionAlert hidden={selectedPostsCount === 0 || isParsing} >
                 <span className='flex-grow-1 lh-2'>{postsParseMessage}</span>

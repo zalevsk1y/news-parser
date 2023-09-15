@@ -20,7 +20,7 @@ export interface PostCardImageProps {
 
 
 export const PostCardImage:React.FC<PostCardImageProps> = ({ image, className, alt }) => (
-        <div className='post-image-wrapper'>
+        <div className='post-image-wrapper flex-grow-1'>
             <img className={className || 'image-news-parser'} src={image} alt={alt || 'image'} />
         </div>
     )

@@ -54,8 +54,9 @@ class ImagePrepare extends Modifier implements MiddlewareInterface{
                 } 
                 return $matches[1];
             },
-        $data);
-                
+        $data);       
     }
+
+    
     
 }

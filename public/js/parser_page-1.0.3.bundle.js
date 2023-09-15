@@ -44307,7 +44307,7 @@ __webpack_require__(/*! ../styles/PostCardImage.css */ "../ui/styles/PostCardIma
  */
 var PostCardImage = function (_a) {
     var image = _a.image, className = _a.className, alt = _a.alt;
-    return (react_1.default.createElement("div", { className: 'post-image-wrapper' },
+    return (react_1.default.createElement("div", { className: 'post-image-wrapper flex-grow-1' },
         react_1.default.createElement("img", { className: className || 'image-news-parser', src: image, alt: alt || 'image' })));
 };
 exports.PostCardImage = PostCardImage;
@@ -44910,7 +44910,6 @@ var VisualConstructorFooterPage = function () {
     var buttonClickHandler = (0, react_1.useCallback)(function () {
         setIsMutating(true);
         var postId = createLocalPost(Object.assign(constants_1.DEFAULT_POST_DATA, currentPostAttributes));
-        console.log(postId, 'Visual constructor');
         createWpPost(postId)
             .then(function () {
             setIsMutating(false);
