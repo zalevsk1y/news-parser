@@ -152,6 +152,11 @@ class AdapterGutenberg implements AdapterInterface
         }
         return $list_begin.$list.$list_end;
     }
+    protected function imageRow($image_array){
+        $image_group_start='<!-- wp:group --><div class="row">';
+        $image_group_end='</div><!-- /wp:group -->';
+        return $image_group_start.implode('', array_map(array($this,'image'),$image_array)).$image_group_end;
+    }
     /**
      * Get only digits from string using regular expression.
      *

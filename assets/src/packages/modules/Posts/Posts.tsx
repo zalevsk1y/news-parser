@@ -36,10 +36,11 @@ export const Posts: React.FC<PostsProps> = ({ openEditor, selectPost, posts }) =
                 [<Icons key={`select-post-${post._id}`} type='checkbox' id={`post-select-icon-${post._id}`} className={`fo fo-select${post.select === true ? ' icon-selected' : ''}`}  onClick={selectPostHandler(post._id)} ariaLabel={post.select === true ? 'Unselect post' : 'Select post'} />,
                 <Icons key={`post-visual-editor-${post._id}`} type='button' id={`post-visual-editor-icon-${post._id}`} className='fo fo-visual-constructor' ariaLabel='Visual constructor' onClick={openEditorHandler(post._id, post.link)}  />]}
         </PostCardFooter>
-    </PostCard>)), [posts, selectPostHandler, openEditorHandler])
+    </PostCard>)), [posts, selectPostHandler, openEditorHandler]);
+    // <InfinitePostsScroll className='posts-wrapper' postsArray={postCards} postsPerWindow={9} />
     return (
         <div className="posts-wrapper">
-            <InfinitePostsScroll className='posts-wrapper' postsArray={postCards} postsPerWindow={9} />
+           <InfinitePostsScroll className='posts-wrapper' postsArray={postCards} postsPerWindow={9} />
         </div>
     )
 }

@@ -59,7 +59,6 @@ class HTMLPatternParser extends HTMLParser
         }
         $elements = $container[0]->find($search_template);
         $body = $this->parseContainer($elements);
-
         return $body ? $this->adapter->convert($body) : '';
     }
 

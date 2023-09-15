@@ -43409,16 +43409,14 @@ var react_infinite_scroll_component_1 = __importDefault(__webpack_require__(/*! 
 var InfinitePostsScroll = function (_a) {
     var postsArray = _a.postsArray, postsPerWindow = _a.postsPerWindow, className = _a.className;
     var _b = (0, react_1.useState)(function () { return postsArray.length > postsPerWindow; }), hasMore = _b[0], setHasMore = _b[1];
-    var _c = (0, react_1.useState)(function () { return postsArray.slice(0, postsPerWindow); }), postsToRender = _c[0], setPostsToRender = _c[1];
-    var _d = (0, react_1.useState)(postsPerWindow), endPointer = _d[0], setEndPointer = _d[1];
+    var _c = (0, react_1.useState)(postsPerWindow), endPointer = _c[0], setEndPointer = _c[1];
     var next = (0, react_1.useCallback)(function () {
         var nextEndPointer = endPointer + postsPerWindow;
         setEndPointer(nextEndPointer);
-        setPostsToRender(postsArray.slice(0, nextEndPointer));
         if (nextEndPointer >= postsArray.length)
             setHasMore(false);
     }, [endPointer]);
-    return (react_1.default.createElement(react_infinite_scroll_component_1.default, { className: className, dataLength: postsToRender.length, next: next, hasMore: hasMore, scrollThreshold: 0.8, loader: react_1.default.createElement("div", null, "...Loading"), scrollableTarget: 'parsing-rss-app' }, postsToRender));
+    return (react_1.default.createElement(react_infinite_scroll_component_1.default, { className: className, dataLength: endPointer, next: next, hasMore: hasMore, scrollThreshold: 0.8, loader: react_1.default.createElement("div", { className: "" }, "...Loading"), scrollableTarget: 'parsing-rss-app' }, postsArray.slice(0, endPointer)));
 };
 exports.InfinitePostsScroll = InfinitePostsScroll;
 
@@ -43485,6 +43483,7 @@ var Posts = function (_a) {
         react_1.default.createElement(index_1.PostCardBody, { title: post.title, description: post.description, link: post.link }),
         react_1.default.createElement(index_1.PostCardFooter, null, post.draft ? react_1.default.createElement(index_2.Icons, { type: 'button', id: "post-edit-icon-".concat(post._id), className: 'fo fo-edit', onClick: onClickEditPost(post), ariaLabel: 'Edit post' }) :
             [react_1.default.createElement(index_2.Icons, { key: "select-post-".concat(post._id), type: 'checkbox', id: "post-select-icon-".concat(post._id), className: "fo fo-select".concat(post.select === true ? ' icon-selected' : ''), onClick: selectPostHandler(post._id), ariaLabel: post.select === true ? 'Unselect post' : 'Select post' }), react_1.default.createElement(index_2.Icons, { key: "post-visual-editor-".concat(post._id), type: 'button', id: "post-visual-editor-icon-".concat(post._id), className: 'fo fo-visual-constructor', ariaLabel: 'Visual constructor', onClick: openEditorHandler(post._id, post.link) })]))); }); }, [posts, selectPostHandler, openEditorHandler]);
+    // <InfinitePostsScroll className='posts-wrapper' postsArray={postCards} postsPerWindow={9} />
     return (react_1.default.createElement("div", { className: "posts-wrapper" },
         react_1.default.createElement(InfinitePostsScroll_1.InfinitePostsScroll, { className: 'posts-wrapper', postsArray: postCards, postsPerWindow: 9 })));
 };
