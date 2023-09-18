@@ -6,7 +6,7 @@ namespace NewsParserPlugin\Traits;
  *
  * PHP version 5.6
  *
- * @package  Parser
+ * @package  Traits
  * @author   Evgeniy S.Zalevskiy <2600@urk.net>
  * @license  MIT
  */

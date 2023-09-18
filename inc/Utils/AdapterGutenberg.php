@@ -53,6 +53,8 @@ class AdapterGutenberg implements AdapterInterface
                 case 'iframe':
                     $post_content.=$this->youtubeVideo($el);
                     break;
+                case 'imgRow':
+                    $post_content.=$this->imageRow($el);
             }
         }
         return $post_content;
@@ -125,9 +127,17 @@ class AdapterGutenberg implements AdapterInterface
     {
         $clean_src=\esc_url_raw($element['content']['src']);
         $clean_alt=esc_html($element['content']['alt']);
-        $image_block_tag='<!-- wp:image --><figure class="wp-block-image"><img src="%s" alt="%s"/></figure><!-- /wp:image -->';
+        $wp_image_declaration=sprintf(
+            '{"id": "%s","sizeSlug": "%sS","url": "%s","alt": "%s"}',
+            'null',
+            'large',
+            $clean_src,
+            $clean_alt
+        );
+        $image_block_tag='<!-- wp:image %s --><figure class="wp-block-image"><img src="%s" alt="%s"/></figure><!-- /wp:image -->';
         return sprintf(
             $image_block_tag,
+            $wp_image_declaration,
             $clean_src,
             $clean_alt
         );
@@ -152,10 +162,25 @@ class AdapterGutenberg implements AdapterInterface
         }
         return $list_begin.$list.$list_end;
     }
-    protected function imageRow($image_array){
-        $image_group_start='<!-- wp:group --><div class="row">';
+    /**
+     * Wraps the 'img' elements in a group container for WP Gutenberg elements.
+     *
+     * @param array $image_array The array of 'img' elements to wrap.
+     * @return string The wrapped group container for the 'img' elements.
+     */
+    protected function imageRow($image_array)
+    {
+        $group_description=sprintf(
+            '{"className":"row","layout":{"type":"%s","flexWrap":"%s"}}',
+            'flex',
+            'nowrap'
+        );
+        $image_group_start=sprintf(
+            '<!-- wp:group %s --><div class="wp-block-group row ">',
+            $group_description
+        );
         $image_group_end='</div><!-- /wp:group -->';
-        return $image_group_start.implode('', array_map(array($this,'image'),$image_array)).$image_group_end;
+        return $image_group_start.implode('', array_map(array($this,'image'),$image_array['content'])).$image_group_end;
     }
     /**
      * Get only digits from string using regular expression.

@@ -79,7 +79,7 @@ class HTMLPatternParser extends HTMLParser
             );
             switch ($el_tag) {
                 case 'img':
-                    if (!$this->isImageFitToContent($el)) {
+                    if (!$this->isImageFitToContext($el)) {
                         break;
                     }
                     $image_srcset = $this->parseSourceImageTag($el);
@@ -171,7 +171,7 @@ class HTMLPatternParser extends HTMLParser
      *
      * @return bool Whether the image fits the content based on keywords.
      */
-    protected function isImageFitToContent($image_element)
+    protected function isImageFitToContext($image_element)
     {
         $pattern = '/\b(or|,|and|\.)\b/';
         $replacement = '';

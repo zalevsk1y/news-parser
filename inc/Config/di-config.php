@@ -8,7 +8,10 @@ return array(
     Utils\ResponseFormatter::class=>[],
     Parser\XMLParser::class=>[],
     Parser\HTMLRaw::class=>[],
-    Parser\HTMLPatternParserWithModifiers::class=>[Utils\AdapterGutenberg::class],
+    Parser\HTMLPatternParserWithModifiers::class=>[Utils\AdapterGutenberg::class,3600,[
+        'NewsParserPlugin\Parser\Modifiers\removeDublicatedPicturesModifier',
+        'NewsParserPlugin\Parser\Modifiers\groupPicturesModifier'
+    ]],
     Menu\Admin\MenuPage::class=>[Utils\MenuConfig::class],
     Controller\TemplateController::class=>[],
     Controller\CronController::class=>[],
