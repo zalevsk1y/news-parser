@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { toggleAddFeaturedMedia, toggleAddSource, toggleSaveParsingTemplate } from '../actions/options.actions';
+import { toggleAddFeaturedMedia, toggleAddSource, toggleSaveParsingTemplate,toggleGroupImageRow } from '../actions/options.actions';
 import { initialState } from './initialState';
 import { OptionsDataType } from './initialState';
 
@@ -9,12 +9,17 @@ export const options = createReducer<OptionsDataType>(initialState.options, (bui
             ...state,
             addFeaturedMedia: !state.addFeaturedMedia
         }))
+        .addCase(toggleAddSource, (state) => ({
+            ...state,
+            addSource: !state.addSource
+        }))
+        .addCase(toggleGroupImageRow, (state) => ({
+            ...state,
+            groupImagesRow: !state.groupImagesRow
+        }))
         .addCase(toggleSaveParsingTemplate, (state) => ({
             ...state,
             saveParsingTemplate: !state.saveParsingTemplate
         }))
-        .addCase(toggleAddSource, (state) => ({
-            ...state,
-            addSource: !state.addSource
-        }));
+        
 });

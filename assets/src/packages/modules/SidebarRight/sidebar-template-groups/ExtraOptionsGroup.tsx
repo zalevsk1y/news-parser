@@ -24,7 +24,7 @@ export const ExtraOptionsGroup: React.FC = () => {
         />
         <label htmlFor='add-source-link-to-post' className='howto inline-bl'>Add source link to the post.</label>
       </div>
-      <div className='info-box-container'>
+      {saveParsingTemplate!==undefined&&<div className='info-box-container'>
         <Checkbox
           checked={saveParsingTemplate}
           onChange={toggleSaveParsingTemplateHandler}
@@ -34,7 +34,7 @@ export const ExtraOptionsGroup: React.FC = () => {
           Save parsing template that you can use in automatic parsing from
           this source.
         </label>
-      </div>
+      </div>}
     </InfoBody>
   )
 }

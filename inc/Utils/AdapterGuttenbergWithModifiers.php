@@ -1,8 +1,7 @@
 <?php
-namespace NewsParserPlugin\Parser;
+namespace NewsParserPlugin\Utils;
 
-use NewsParserPlugin\Parser\HTMLPatternParser;
-use NewsParserPlugin\Interfaces\AdapterInterface;
+
 use NewsParserPlugin\Traits\FunctionAutoloadTrait;
 /**
  * Class HTMLPatternParser
@@ -11,9 +10,10 @@ use NewsParserPlugin\Traits\FunctionAutoloadTrait;
  *
  * @package NewsParserPlugin\Parser
  */
-class HTMLPatternParserWithModifiers extends HTMLPatternParser
+class AdapterGuttenbergWithModifiers extends AdapterGuttenberg
 {
-/**
+    protected $modifiers;
+    /**
      * Methods to get function psr-4 like way
      *
      * @method loadFunction()
@@ -21,16 +21,14 @@ class HTMLPatternParserWithModifiers extends HTMLPatternParser
      */
     use FunctionAutoloadTrait;
 
-    public function __construct(AdapterInterface $adapter, $cache_expiration = 3600,$modifiers=[])
-    {
-        parent::__construct($adapter,$cache_expiration);
-        $this->modifiers=$modifiers;
+    public function addModifiers($modifiers_array){
+        $this->modifiers=$modifiers_array;
     }
-    protected function parseContainer($elements)
+    public function convert($body)
     {
-        return $this->addModifiers(parent::parseContainer($elements));
+        return parent::convert($this->applyModifiers($body));
     }
-    protected function addModifiers($body_array){
+    protected function applyModifiers($body_array){
         //implement modification
         if(count($this->modifiers)>0){
             $body_array=array_reduce($this->modifiers,array($this,'modefierExecuterCallback'),$body_array );

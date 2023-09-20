@@ -40716,7 +40716,7 @@ exports.initialState = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.toggleSaveParsingTemplate = exports.toggleAddSource = exports.toggleAddFeaturedMedia = exports.TOGGLE_SAVE_PARSING_TEMPLATE = exports.TOGGLE_ADD_SOURCE = exports.TOGGLE_ADD_FEATURED_MEDIA = void 0;
+exports.toggleGroupImageRow = exports.toggleSaveParsingTemplate = exports.toggleAddSource = exports.toggleAddFeaturedMedia = exports.TOOGLE_GROUP_IMAGES_ROW = exports.TOGGLE_SAVE_PARSING_TEMPLATE = exports.TOGGLE_ADD_SOURCE = exports.TOGGLE_ADD_FEATURED_MEDIA = void 0;
 var toolkit_1 = __webpack_require__(/*! @reduxjs/toolkit */ "../../../node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
 var constants_1 = __webpack_require__(/*! ../constants */ "../entities/sidebarTemplate/constants/index.ts");
 // state properties name
@@ -40726,9 +40726,11 @@ var constants_3 = __webpack_require__(/*! ../constants */ "../entities/sidebarTe
 exports.TOGGLE_ADD_FEATURED_MEDIA = "[".concat(constants_1.VISUAL_CONSTRUCTOR, ".").concat(constants_2.OPTIONS, ".").concat(constants_2.ADD_FEATURED_MEDIA, ":").concat(constants_3.TOGGLE, "]");
 exports.TOGGLE_ADD_SOURCE = "[".concat(constants_1.VISUAL_CONSTRUCTOR, ".").concat(constants_2.OPTIONS, ".").concat(constants_2.ADD_SOURCE, ":").concat(constants_3.TOGGLE, "]");
 exports.TOGGLE_SAVE_PARSING_TEMPLATE = "[".concat(constants_1.VISUAL_CONSTRUCTOR, ".").concat(constants_2.OPTIONS, ".").concat(constants_2.SAVE_PARSING_TEMPLATE, ":").concat(constants_3.TOGGLE, "]");
+exports.TOOGLE_GROUP_IMAGES_ROW = "[".concat(constants_1.VISUAL_CONSTRUCTOR, ".").concat(constants_2.OPTIONS, ".").concat(constants_2.GROUP_IMAGES_ROW, ":").concat(constants_3.TOGGLE, "]");
 exports.toggleAddFeaturedMedia = (0, toolkit_1.createAction)(exports.TOGGLE_ADD_FEATURED_MEDIA);
 exports.toggleAddSource = (0, toolkit_1.createAction)(exports.TOGGLE_ADD_SOURCE);
 exports.toggleSaveParsingTemplate = (0, toolkit_1.createAction)(exports.TOGGLE_SAVE_PARSING_TEMPLATE);
+exports.toggleGroupImageRow = (0, toolkit_1.createAction)(exports.TOOGLE_GROUP_IMAGES_ROW);
 
 
 /***/ }),
@@ -40768,7 +40770,7 @@ exports.resetSidebarTemplate = (0, toolkit_1.createAction)(exports.RESET_SIDEBAR
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TOGGLE = exports.SAVE_PARSING_TEMPLATE = exports.ADD_SOURCE = exports.ADD_FEATURED_MEDIA = exports.OPTIONS = exports.DISELECT = exports.CONTENT = exports.FEATURED_MEDIA = exports.TITLE = exports.PARSED_DATA = exports.RESET = exports.SELECT = exports.VISUAL_CONSTRUCTOR = void 0;
+exports.TOGGLE = exports.GROUP_IMAGES_ROW = exports.SAVE_PARSING_TEMPLATE = exports.ADD_SOURCE = exports.ADD_FEATURED_MEDIA = exports.OPTIONS = exports.DISELECT = exports.CONTENT = exports.FEATURED_MEDIA = exports.TITLE = exports.PARSED_DATA = exports.RESET = exports.SELECT = exports.VISUAL_CONSTRUCTOR = void 0;
 exports.VISUAL_CONSTRUCTOR = 'visual-constructor';
 exports.SELECT = 'select';
 exports.RESET = 'reset';
@@ -40781,6 +40783,7 @@ exports.OPTIONS = 'options';
 exports.ADD_FEATURED_MEDIA = 'addFeaturedMedia';
 exports.ADD_SOURCE = 'addSource';
 exports.SAVE_PARSING_TEMPLATE = 'saveParsingTemplate';
+exports.GROUP_IMAGES_ROW = 'groupImagesRow';
 exports.TOGGLE = 'toggle';
 
 
@@ -41180,9 +41183,9 @@ exports.initialState = {
         body: {}
     },
     options: {
+        groupImagesRow: false,
         addFeaturedMedia: true,
         addSource: false,
-        saveParsingTemplate: false
     }
 };
 
@@ -41216,8 +41219,9 @@ var initialState_1 = __webpack_require__(/*! ./initialState */ "../entities/side
 exports.options = (0, toolkit_1.createReducer)(initialState_1.initialState.options, function (builder) {
     builder
         .addCase(options_actions_1.toggleAddFeaturedMedia, function (state) { return (__assign(__assign({}, state), { addFeaturedMedia: !state.addFeaturedMedia })); })
-        .addCase(options_actions_1.toggleSaveParsingTemplate, function (state) { return (__assign(__assign({}, state), { saveParsingTemplate: !state.saveParsingTemplate })); })
-        .addCase(options_actions_1.toggleAddSource, function (state) { return (__assign(__assign({}, state), { addSource: !state.addSource })); });
+        .addCase(options_actions_1.toggleAddSource, function (state) { return (__assign(__assign({}, state), { addSource: !state.addSource })); })
+        .addCase(options_actions_1.toggleGroupImageRow, function (state) { return (__assign(__assign({}, state), { groupImagesRow: !state.groupImagesRow })); })
+        .addCase(options_actions_1.toggleSaveParsingTemplate, function (state) { return (__assign(__assign({}, state), { saveParsingTemplate: !state.saveParsingTemplate })); });
 });
 
 
@@ -43349,7 +43353,7 @@ var InfinitePostsScroll = function (_a) {
         if (nextEndPointer >= postsArray.length)
             setHasMore(false);
     }, [endPointer]);
-    return (react_1.default.createElement(react_infinite_scroll_component_1.default, { className: className, dataLength: endPointer, next: next, hasMore: hasMore, scrollThreshold: 0.8, loader: react_1.default.createElement("div", { className: "" }, "...Loading"), scrollableTarget: 'parsing-rss-app' }, postsArray.slice(0, endPointer)));
+    return (react_1.default.createElement(react_infinite_scroll_component_1.default, { className: className, dataLength: endPointer, next: next, hasMore: hasMore, scrollThreshold: 0.9, loader: react_1.default.createElement("div", { className: "" }, "...Loading"), scrollableTarget: 'parsing-rss-app' }, postsArray.slice(0, endPointer)));
 };
 exports.InfinitePostsScroll = InfinitePostsScroll;
 
@@ -44112,7 +44116,7 @@ var ExtraOptionsGroup = function () {
         react_1.default.createElement("div", { className: 'info-box-container' },
             react_1.default.createElement(sidebar_1.Checkbox, { checked: addSource, onChange: toggleAddSourceHandler, id: 'add-source-link-to-post' }),
             react_1.default.createElement("label", { htmlFor: 'add-source-link-to-post', className: 'howto inline-bl' }, "Add source link to the post.")),
-        react_1.default.createElement("div", { className: 'info-box-container' },
+        saveParsingTemplate !== undefined && react_1.default.createElement("div", { className: 'info-box-container' },
             react_1.default.createElement(sidebar_1.Checkbox, { checked: saveParsingTemplate, onChange: toggleSaveParsingTemplateHandler, id: 'save-posts-parsing-template' }),
             react_1.default.createElement("label", { htmlFor: 'save-posts-parsing-template', className: 'howto inline-bl' }, "Save parsing template that you can use in automatic parsing from this source."))));
 };
@@ -44467,6 +44471,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
 var react_dom_1 = __importDefault(__webpack_require__(/*! react-dom */ "../../../node_modules/react-dom/index.js"));
+var initialState_1 = __webpack_require__(/*! ./reducers/initialState */ "./parser-page/reducers/initialState.ts");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "../../../node_modules/react-redux/es/index.js");
 var toolkit_1 = __webpack_require__(/*! @reduxjs/toolkit */ "../../../node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
 // import { composeWithDevTools } from '@redux-devtools/extension';
@@ -44477,7 +44482,8 @@ var Main_1 = __importDefault(__webpack_require__(/*! ./components/Main */ "./par
 // SetUp for Redux DevExtension.
 var store = (0, toolkit_1.configureStore)({
     reducer: reducers_1.default,
-    devTools: "development" !== 'production'
+    devTools: "development" !== 'production',
+    preloadedState: initialState_1.parserPageInitialState
 });
 window.addEventListener('DOMContentLoaded', function () {
     react_dom_1.default.render(react_1.default.createElement(react_redux_1.Provider, { store: store },
@@ -44509,6 +44515,31 @@ var reducers_5 = __importDefault(__webpack_require__(/*! @news-parser/entities/s
 var reducers_6 = __importDefault(__webpack_require__(/*! @news-parser/widgets/visual-constructor/reducers */ "../widgets/visual-constructor/reducers/index.ts"));
 var parserReducer = (0, toolkit_1.combineReducers)({ items: reducers_1.items, dialog: reducers_6.default, message: reducers_2.message, sidebar: reducers_3.sidebar, sidebarTemplate: reducers_5.default, template: reducers_4.template });
 exports["default"] = (0, toolkit_1.combineReducers)({ parse: parserReducer });
+
+
+/***/ }),
+
+/***/ "./parser-page/reducers/initialState.ts":
+/*!**********************************************!*\
+  !*** ./parser-page/reducers/initialState.ts ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.parserPageInitialState = void 0;
+exports.parserPageInitialState = {
+    parse: {
+        sidebarTemplate: {
+            options: {
+                groupImagesRow: false,
+                addFeaturedMedia: true,
+                addSource: false
+            }
+        }
+    }
+};
 
 
 /***/ }),

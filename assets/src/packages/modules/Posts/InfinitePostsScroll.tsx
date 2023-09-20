@@ -21,7 +21,7 @@ export const InfinitePostsScroll:React.FC<InfinitePostsScrollProps> = ({ postsAr
       dataLength={endPointer}
       next={next}
       hasMore={hasMore}
-      scrollThreshold={0.8}
+      scrollThreshold={0.9}
       loader={<div className="">...Loading</div>}
       scrollableTarget={'parsing-rss-app'}
     >

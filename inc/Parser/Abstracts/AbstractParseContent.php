@@ -5,6 +5,7 @@ use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Utils\Pipe;
 use NewsParserPlugin\Utils\Chain;
+use NewsParserPlugin\Models\TemplateModel;
 
 /**
  * Base abstract class for parser.
@@ -102,15 +103,15 @@ abstract class AbstractParseContent
      * Get html data from the cache or download it, pass them to the parser and cache if needed.
      *
      * @param string $url url of the page that should get.
-     * @param array $options Extra options that might be used by parser.
+     * @param TemplateModel $options Extra options that might be used by parser.
      * @return array|stdClass|string Parsed data.
      */
-    public function get($url, $options = array())
+    public function get($url, $options=array())
     {
         $this->url=$url;
-        if (!empty($options)) {
-            $this->options=$options;
-        }
+       
+        $this->options=$options;
+        
         $data = $this->getFromCache($url);
         if (gettype($data)==='string') {
             $response = $this->parse($data);

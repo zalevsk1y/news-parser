@@ -7,6 +7,13 @@ use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Message\Errors;
 
+
+/**
+ * Class PostControllerExtendeOptions
+ *
+ * This class extends the `PostController` class and provides additional functionality related to extended options for posts.
+ */
+
 class PostControllerExtendeOptions extends PostController{
     protected const TEMPLATE_TABLE_NAME = NEWS_PURSER_PLUGIN_TEMPLATE_OPTIONS_NAME;
     /**
@@ -15,41 +22,57 @@ class PostControllerExtendeOptions extends PostController{
      * @var array
      */
     protected $postOptions;
-    /**
-     * Create post draft and return response in proper format
+   /**
+     * Get the PostOptionsModel instance.
      *
-     * @param string $url of post that should be parsed and saved as draft
-     * @param string $_id front end index of post that should be parsed and saved as draft
-     * @param string $data object with parameters for wp post
-     * @return array
+     * @param int $options_id The ID of the options.
+     * @return PostOptionsModel The PostOptionsModel instance.
+     * @throws MyException If no extra options or post options are available.
      */
-    public function create($url, $_id,$data=false)
-    {
-        
-            $parsing_options=$this->templateModelsFactory($data);
-            $parsed_data =$this->parser->get($url, $parsing_options->getAttributes('array'));
-           
-            $parsed_data['authorId'] = \get_current_user_id();
-            if (!$extraOptions=$parsing_options->getExtraOptions()) {
-                throw new MyException(Errors::text('NO_EXTRA_OPTIONS'), Errors::code('BAD_REQUEST'));
-            }
-            if (!$postOptions=$parsing_options->getPostOptions()) {
-                throw new MyException(Errors::text('NO_POST_OPTIONS'), Errors::code('BAD_REQUEST'));
-            }
-           
-            $this->options=$extraOptions;
-            $this->postOptions=$postOptions;
-            //unescaped url
 
-            $parsed_data['sourceUrl'] = $url;
-         
-            $this->post=$post= $this->postModelsFactory($parsed_data);
- 
-            //Stages of post draw creating
-            $this->createPost($post,$postOptions)->addSource($post)->addPostThumbnail($post);
-            
-        return $post->getAttributes();
+    protected function getPostOptionsModel($options_id)
+    {
+        $options_model=$this->templateModelsFactory($options_id);
+        if (!$extraOptions=$options_model->getExtraOptions()) {
+            throw new MyException(Errors::text('NO_EXTRA_OPTIONS'), Errors::code('BAD_REQUEST'));
+        }
+        if (!$postOptions=$options_model->getPostOptions()) {
+            throw new MyException(Errors::text('NO_POST_OPTIONS'), Errors::code('BAD_REQUEST'));
+        }
+        $this->options=$extraOptions;
+        $this->postOptions=$postOptions;
+        return $options_model;
+    } 
+    /**
+     * Create the post using the post options.
+     *
+     * @return $this The current instance of the class.
+     */
+
+    protected function createPost()
+    {
+        $this->post->createPost($this->postOptions);
+        
     }
+    /**
+     * Add modifiers to adapter
+     */
+    protected function addAdapterModifiers()
+    {
+        $modifiers_array=[
+            'NewsParserPlugin\Parser\Modifiers\removeDublicatedPicturesModifier'
+        ];
+        if ($this->options['groupImagesRow']) {
+            array_push($modifiers_array,'NewsParserPlugin\Parser\Modifiers\groupPicturesModifier');
+        }
+        
+        $this->adapter->addModifiers($modifiers_array);
+    }
+    protected function applyOptionsModifiers()
+    {
+        $this->addSource()->addPostThumbnail();
+    }
+    
     /**
     * Get instance of TemplateModel class.
     *

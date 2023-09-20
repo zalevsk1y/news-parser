@@ -15,6 +15,7 @@ export type AutopilotRootState = {
 
 export type ParserRootState = {
     parse: {
+        page:string,
         message: Message | false,
         dialog: DialogData,
         template: false | TemplateDataWithPostOptions,

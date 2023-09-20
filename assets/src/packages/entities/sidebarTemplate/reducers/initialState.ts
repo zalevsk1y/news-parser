@@ -10,8 +10,8 @@ export const initialState:ParserRootState['parse']['sidebarTemplate']={
         body:{}
     },
     options:{
+        groupImagesRow:false,
         addFeaturedMedia:true,
         addSource:false,
-        saveParsingTemplate:false
     }
 }

@@ -14,9 +14,10 @@ export type SidebarTemplate={
 }
 
 export type TemplateOptions={
+    groupImagesRow:boolean,
     addFeaturedMedia: boolean,
     addSource: boolean,
-    saveParsingTemplate: boolean
+    saveParsingTemplate?: boolean
 }
 export type TemplateDataWithPostOptions=TemplateData&{
     postOptions:TemplatePostOptions

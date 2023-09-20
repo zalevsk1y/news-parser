@@ -1,11 +1,9 @@
+import {TemplateOptions} from 'types/template'
 
-
-export type WPPostData={
+export type WPPostData=TemplateOptions&
+{
     title:string|false,
     content:string,
-    addFeaturedMedia: boolean;
-    addSource: boolean;
-    saveParsingTemplate: boolean;
 }
 
 export interface PostModelInterface{

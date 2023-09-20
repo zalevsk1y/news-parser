@@ -13,7 +13,7 @@ use NewsParserPlugin\Interfaces\AdapterInterface;
  * @author   Evgeniy S.Zalevskiy <2600@urk.net>
  * @license  MIT
  */
-class AdapterGutenberg implements AdapterInterface
+class AdapterGuttenberg implements AdapterInterface
 {
     /**
      * Create gutenberg editors blocks mark up from array.
