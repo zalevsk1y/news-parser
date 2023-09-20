@@ -38935,7 +38935,7 @@ var TagInput = function (_a) {
         }
     }, [onCreate]);
     var inputId = "tag-input".concat(idSufix ? "-".concat(idSufix) : '');
-    return (react_1.default.createElement("div", { className: "tag-item-container" },
+    return (react_1.default.createElement("div", { className: "tag-item-container w-100" },
         react_1.default.createElement("label", { htmlFor: inputId }, labelText),
         react_1.default.createElement("div", { className: "tag-input-container input-container", role: "combobox", "aria-haspopup": "false", "aria-expanded": "false" },
             children,
@@ -39452,7 +39452,7 @@ var __assign = (this && this.__assign) || function () {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.useCreateWpPost = void 0;
 var react_redux_1 = __webpack_require__(/*! react-redux */ "../../../node_modules/react-redux/es/index.js");
-var PostModel_1 = __webpack_require__(/*! @news-parser/helpers/response-formatters/PostModel */ "../helpers/response-formatters/PostModel.ts");
+var formatCreatePostDraftRequest_1 = __webpack_require__(/*! @news-parser/helpers/response-formatters/formatCreatePostDraftRequest */ "../helpers/response-formatters/formatCreatePostDraftRequest.ts");
 var formatPostOptions_1 = __webpack_require__(/*! @news-parser/helpers/response-formatters/formatPostOptions */ "../helpers/response-formatters/formatPostOptions.ts");
 var requestApi_1 = __webpack_require__(/*! @news-parser/helpers/api/requestApi */ "../helpers/api/requestApi.ts");
 var constants_1 = __webpack_require__(/*! @news-parser/config/constants */ "../config/constants.ts");
@@ -39485,7 +39485,7 @@ var useCreateWpPost = function () {
         if (!url)
             throw new Error('Error URL parametr given in dialog.url.');
         var postOptions = (0, formatPostOptions_1.formatPostOptions)(sidebar);
-        var preparedParsedData = (0, PostModel_1.formatCreatePostDraftRequest)(parsedData, __assign(__assign({}, extraOptions), postOptions), url);
+        var preparedParsedData = (0, formatCreatePostDraftRequest_1.formatCreatePostDraftRequest)(parsedData, __assign(__assign({}, extraOptions), postOptions), url);
         var options = { entity: constants_1.configConstantsEntities.WP_POST, event: constants_1.configConstantsMethods.CREATE, data: preparedParsedData };
         if (dialog._id !== false) {
             _id = dialog._id;
@@ -39723,10 +39723,46 @@ exports.useParsePost = useParsePost;
 /*!***********************************************!*\
   !*** ../entities/post/hooks/useParsePosts.ts ***!
   \***********************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.useParsePosts = void 0;
 var react_1 = __webpack_require__(/*! react */ "../../../node_modules/react/index.js");
@@ -39742,34 +39778,69 @@ var useParsePosts = function () {
     var _a = (0, react_1.useState)(0), parsedPostsCounter = _a[0], setParsedPostsCounter = _a[1];
     var _b = (0, react_1.useState)(false), isParsing = _b[0], setIsParsing = _b[1];
     var postsParser = function (postsArray, mode, rssUrl) {
+        if (mode === void 0) { mode = 'race'; }
         setParsedPostsCounter(0);
         setIsParsing(true);
-        var postArrLength = postsArray.length;
         var counter = 0;
         switch (mode) {
             case 'race':
-                Promise.allSettled(postsArray.map(function (post) { return parsePost(post.link, post._id, rssUrl).finally(function () {
+                return Promise.all(postsArray.map(function (post) { return parsePost(post.link, post._id, rssUrl).finally(function () {
                     counter++;
                     setParsedPostsCounter(counter);
-                }); })).then(function () { return setIsParsing(false); });
-                break;
+                }); })).finally(function () { return setIsParsing(false); });
             case 'sequence':
-                var postsArrClone = postsArray.slice();
-                var sequenceCallback_1 = function (post, postsArr) {
-                    if (!post)
-                        return;
-                    parsePost(post.link, post._id, rssUrl).finally(function () {
-                        setParsedPostsCounter(postArrLength - postsArr.length);
-                        if (postsArr.length > 0) {
-                            sequenceCallback_1(postsArr.shift(), postsArr);
-                        }
-                        else {
-                            setIsParsing(false);
+                var sequenceRunCallback = function () { return __awaiter(void 0, void 0, void 0, function () {
+                    var outputArray, parsingResult, _i, postsArray_1, post, error_1;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                outputArray = [];
+                                _i = 0, postsArray_1 = postsArray;
+                                _a.label = 1;
+                            case 1:
+                                if (!(_i < postsArray_1.length)) return [3 /*break*/, 7];
+                                post = postsArray_1[_i];
+                                _a.label = 2;
+                            case 2:
+                                _a.trys.push([2, 4, , 5]);
+                                return [4 /*yield*/, parsePost(post.link, post._id, rssUrl)];
+                            case 3:
+                                parsingResult = _a.sent();
+                                return [3 /*break*/, 5];
+                            case 4:
+                                error_1 = _a.sent();
+                                setIsParsing(false);
+                                throw new Error(error_1.message);
+                            case 5:
+                                outputArray.push(parsingResult);
+                                setParsedPostsCounter(postsArray.length - outputArray.length);
+                                _a.label = 6;
+                            case 6:
+                                _i++;
+                                return [3 /*break*/, 1];
+                            case 7:
+                                setIsParsing(false);
+                                return [2 /*return*/, outputArray];
                         }
                     });
-                };
-                sequenceCallback_1(postsArrClone.shift(), postsArrClone);
-                break;
+                }); };
+                return sequenceRunCallback();
+            /*
+            const postsArrClone = postsArray.slice();
+            const sequenceCallback = (post: Post | undefined, postsArr: Post[]) => {
+                if (!post) return;
+                parsePost(post.link, post._id, rssUrl).finally(() => {
+                    setParsedPostsCounter(postArrLength - postsArr.length);
+                    if (postsArr.length > 0) {
+                        sequenceCallback(postsArr.shift(), postsArr);
+                    } else {
+                        setIsParsing(false)
+                    }
+                })
+            }
+            sequenceCallback(postsArrClone.shift(), postsArrClone);
+            break;
+            */
         }
     };
     return [parsedPostsCounter, isParsing, postsParser];
@@ -40716,7 +40787,7 @@ exports.initialState = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.toggleGroupImageRow = exports.toggleSaveParsingTemplate = exports.toggleAddSource = exports.toggleAddFeaturedMedia = exports.TOOGLE_GROUP_IMAGES_ROW = exports.TOGGLE_SAVE_PARSING_TEMPLATE = exports.TOGGLE_ADD_SOURCE = exports.TOGGLE_ADD_FEATURED_MEDIA = void 0;
+exports.toggleAddSrcSetAndSizes = exports.toggleGroupImageRow = exports.toggleSaveParsingTemplate = exports.toggleAddSource = exports.toggleAddFeaturedMedia = exports.TOGGLE_ADD_SRCSET_AND_SIZES = exports.TOGGLE_GROUP_IMAGES_ROW = exports.TOGGLE_SAVE_PARSING_TEMPLATE = exports.TOGGLE_ADD_SOURCE = exports.TOGGLE_ADD_FEATURED_MEDIA = void 0;
 var toolkit_1 = __webpack_require__(/*! @reduxjs/toolkit */ "../../../node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
 var constants_1 = __webpack_require__(/*! ../constants */ "../entities/sidebarTemplate/constants/index.ts");
 // state properties name
@@ -40726,11 +40797,13 @@ var constants_3 = __webpack_require__(/*! ../constants */ "../entities/sidebarTe
 exports.TOGGLE_ADD_FEATURED_MEDIA = "[".concat(constants_1.VISUAL_CONSTRUCTOR, ".").concat(constants_2.OPTIONS, ".").concat(constants_2.ADD_FEATURED_MEDIA, ":").concat(constants_3.TOGGLE, "]");
 exports.TOGGLE_ADD_SOURCE = "[".concat(constants_1.VISUAL_CONSTRUCTOR, ".").concat(constants_2.OPTIONS, ".").concat(constants_2.ADD_SOURCE, ":").concat(constants_3.TOGGLE, "]");
 exports.TOGGLE_SAVE_PARSING_TEMPLATE = "[".concat(constants_1.VISUAL_CONSTRUCTOR, ".").concat(constants_2.OPTIONS, ".").concat(constants_2.SAVE_PARSING_TEMPLATE, ":").concat(constants_3.TOGGLE, "]");
-exports.TOOGLE_GROUP_IMAGES_ROW = "[".concat(constants_1.VISUAL_CONSTRUCTOR, ".").concat(constants_2.OPTIONS, ".").concat(constants_2.GROUP_IMAGES_ROW, ":").concat(constants_3.TOGGLE, "]");
+exports.TOGGLE_GROUP_IMAGES_ROW = "[".concat(constants_1.VISUAL_CONSTRUCTOR, ".").concat(constants_2.OPTIONS, ".").concat(constants_2.GROUP_IMAGES_ROW, ":").concat(constants_3.TOGGLE, "]");
+exports.TOGGLE_ADD_SRCSET_AND_SIZES = "[".concat(constants_1.VISUAL_CONSTRUCTOR, ".").concat(constants_2.OPTIONS, ".").concat(constants_2.ADD_SRCSET_AND_SIZES, ":").concat(constants_3.TOGGLE, "]");
 exports.toggleAddFeaturedMedia = (0, toolkit_1.createAction)(exports.TOGGLE_ADD_FEATURED_MEDIA);
 exports.toggleAddSource = (0, toolkit_1.createAction)(exports.TOGGLE_ADD_SOURCE);
 exports.toggleSaveParsingTemplate = (0, toolkit_1.createAction)(exports.TOGGLE_SAVE_PARSING_TEMPLATE);
-exports.toggleGroupImageRow = (0, toolkit_1.createAction)(exports.TOOGLE_GROUP_IMAGES_ROW);
+exports.toggleGroupImageRow = (0, toolkit_1.createAction)(exports.TOGGLE_GROUP_IMAGES_ROW);
+exports.toggleAddSrcSetAndSizes = (0, toolkit_1.createAction)(constants_2.ADD_SRCSET_AND_SIZES);
 
 
 /***/ }),
@@ -40770,7 +40843,7 @@ exports.resetSidebarTemplate = (0, toolkit_1.createAction)(exports.RESET_SIDEBAR
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TOGGLE = exports.GROUP_IMAGES_ROW = exports.SAVE_PARSING_TEMPLATE = exports.ADD_SOURCE = exports.ADD_FEATURED_MEDIA = exports.OPTIONS = exports.DISELECT = exports.CONTENT = exports.FEATURED_MEDIA = exports.TITLE = exports.PARSED_DATA = exports.RESET = exports.SELECT = exports.VISUAL_CONSTRUCTOR = void 0;
+exports.TOGGLE = exports.ADD_SRCSET_AND_SIZES = exports.GROUP_IMAGES_ROW = exports.SAVE_PARSING_TEMPLATE = exports.ADD_SOURCE = exports.ADD_FEATURED_MEDIA = exports.OPTIONS = exports.DISELECT = exports.CONTENT = exports.FEATURED_MEDIA = exports.TITLE = exports.PARSED_DATA = exports.RESET = exports.SELECT = exports.VISUAL_CONSTRUCTOR = void 0;
 exports.VISUAL_CONSTRUCTOR = 'visual-constructor';
 exports.SELECT = 'select';
 exports.RESET = 'reset';
@@ -40784,6 +40857,7 @@ exports.ADD_FEATURED_MEDIA = 'addFeaturedMedia';
 exports.ADD_SOURCE = 'addSource';
 exports.SAVE_PARSING_TEMPLATE = 'saveParsingTemplate';
 exports.GROUP_IMAGES_ROW = 'groupImagesRow';
+exports.ADD_SRCSET_AND_SIZES = 'addSrcSetAndSizes';
 exports.TOGGLE = 'toggle';
 
 
@@ -40798,7 +40872,7 @@ exports.TOGGLE = 'toggle';
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.useChangeFeaturedMedia = exports.useResetSidebarTemplate = exports.useGetSaveParsingTemplate = exports.useGetPostTitle = exports.useToggleAddFeaturedMedia = exports.useGetPostFeaturedMedia = exports.useGetAddFeaturedMedia = exports.useGetAddSource = exports.useToggleAddSource = exports.useToggleSaveParsingTemplate = exports.useSetFeaturedMedia = exports.useSetPostTitle = void 0;
+exports.useGetAddSrcSetAndSizes = exports.useToggleAddSrcSetAndSizes = exports.useToggleGroupImageRow = exports.useGetGroupImageRow = exports.useChangeFeaturedMedia = exports.useResetSidebarTemplate = exports.useGetSaveParsingTemplate = exports.useGetPostTitle = exports.useToggleAddFeaturedMedia = exports.useGetPostFeaturedMedia = exports.useGetAddFeaturedMedia = exports.useGetAddSource = exports.useToggleAddSource = exports.useToggleSaveParsingTemplate = exports.useSetFeaturedMedia = exports.useSetPostTitle = void 0;
 var useSetPostTitle_1 = __webpack_require__(/*! ./useSetPostTitle */ "../entities/sidebarTemplate/hooks/useSetPostTitle.ts");
 Object.defineProperty(exports, "useSetPostTitle", ({ enumerable: true, get: function () { return useSetPostTitle_1.useSetPostTitle; } }));
 var useSetFeaturedMedia_1 = __webpack_require__(/*! ./useSetFeaturedMedia */ "../entities/sidebarTemplate/hooks/useSetFeaturedMedia.ts");
@@ -40823,6 +40897,14 @@ var useResetSidebarTemplate_1 = __webpack_require__(/*! ./useResetSidebarTemplat
 Object.defineProperty(exports, "useResetSidebarTemplate", ({ enumerable: true, get: function () { return useResetSidebarTemplate_1.useResetSidebarTemplate; } }));
 var useChangeFeaturedMedia_1 = __webpack_require__(/*! ./useChangeFeaturedMedia */ "../entities/sidebarTemplate/hooks/useChangeFeaturedMedia.ts");
 Object.defineProperty(exports, "useChangeFeaturedMedia", ({ enumerable: true, get: function () { return useChangeFeaturedMedia_1.useChangeFeaturedMedia; } }));
+var useGetGroupImageRow_1 = __webpack_require__(/*! ./useGetGroupImageRow */ "../entities/sidebarTemplate/hooks/useGetGroupImageRow.ts");
+Object.defineProperty(exports, "useGetGroupImageRow", ({ enumerable: true, get: function () { return useGetGroupImageRow_1.useGetGroupImageRow; } }));
+var useToggleGroupImageRow_1 = __webpack_require__(/*! ./useToggleGroupImageRow */ "../entities/sidebarTemplate/hooks/useToggleGroupImageRow.ts");
+Object.defineProperty(exports, "useToggleGroupImageRow", ({ enumerable: true, get: function () { return useToggleGroupImageRow_1.useToggleGroupImageRow; } }));
+var useToggleAddSrcSetAndSizes_1 = __webpack_require__(/*! ./useToggleAddSrcSetAndSizes */ "../entities/sidebarTemplate/hooks/useToggleAddSrcSetAndSizes.ts");
+Object.defineProperty(exports, "useToggleAddSrcSetAndSizes", ({ enumerable: true, get: function () { return useToggleAddSrcSetAndSizes_1.useToggleAddSrcSetAndSizes; } }));
+var useGetAddSrcSetAndSizes_1 = __webpack_require__(/*! ./useGetAddSrcSetAndSizes */ "../entities/sidebarTemplate/hooks/useGetAddSrcSetAndSizes.ts");
+Object.defineProperty(exports, "useGetAddSrcSetAndSizes", ({ enumerable: true, get: function () { return useGetAddSrcSetAndSizes_1.useGetAddSrcSetAndSizes; } }));
 
 
 /***/ }),
@@ -40904,6 +40986,46 @@ var useGetAddSource = function () {
     return addSource;
 };
 exports.useGetAddSource = useGetAddSource;
+
+
+/***/ }),
+
+/***/ "../entities/sidebarTemplate/hooks/useGetAddSrcSetAndSizes.ts":
+/*!********************************************************************!*\
+  !*** ../entities/sidebarTemplate/hooks/useGetAddSrcSetAndSizes.ts ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useGetAddSrcSetAndSizes = void 0;
+var react_redux_1 = __webpack_require__(/*! react-redux */ "../../../node_modules/react-redux/es/index.js");
+var useGetAddSrcSetAndSizes = function () {
+    var addSrcSetAndSizes = (0, react_redux_1.useSelector)(function (state) { return state.parse.sidebarTemplate.options; }).addSrcSetAndSizes;
+    return addSrcSetAndSizes;
+};
+exports.useGetAddSrcSetAndSizes = useGetAddSrcSetAndSizes;
+
+
+/***/ }),
+
+/***/ "../entities/sidebarTemplate/hooks/useGetGroupImageRow.ts":
+/*!****************************************************************!*\
+  !*** ../entities/sidebarTemplate/hooks/useGetGroupImageRow.ts ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useGetGroupImageRow = void 0;
+var react_redux_1 = __webpack_require__(/*! react-redux */ "../../../node_modules/react-redux/es/index.js");
+var useGetGroupImageRow = function () {
+    var groupImagesRow = (0, react_redux_1.useSelector)(function (state) { return state.parse.sidebarTemplate.options; }).groupImagesRow;
+    return groupImagesRow;
+};
+exports.useGetGroupImageRow = useGetGroupImageRow;
 
 
 /***/ }),
@@ -41083,6 +41205,29 @@ exports.useToggleAddSource = useToggleAddSource;
 
 /***/ }),
 
+/***/ "../entities/sidebarTemplate/hooks/useToggleAddSrcSetAndSizes.ts":
+/*!***********************************************************************!*\
+  !*** ../entities/sidebarTemplate/hooks/useToggleAddSrcSetAndSizes.ts ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useToggleAddSrcSetAndSizes = void 0;
+var react_1 = __webpack_require__(/*! react */ "../../../node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "../../../node_modules/react-redux/es/index.js");
+var options_actions_1 = __webpack_require__(/*! ../actions/options.actions */ "../entities/sidebarTemplate/actions/options.actions.ts");
+var useToggleAddSrcSetAndSizes = function () {
+    var dispatch = (0, react_redux_1.useDispatch)();
+    var addSource = (0, react_1.useCallback)(function () { return dispatch((0, options_actions_1.toggleAddSrcSetAndSizes)()); }, [dispatch, options_actions_1.toggleAddSrcSetAndSizes]);
+    return addSource;
+};
+exports.useToggleAddSrcSetAndSizes = useToggleAddSrcSetAndSizes;
+
+
+/***/ }),
+
 /***/ "../entities/sidebarTemplate/hooks/useToggleContent.ts":
 /*!*************************************************************!*\
   !*** ../entities/sidebarTemplate/hooks/useToggleContent.ts ***!
@@ -41122,6 +41267,29 @@ var useToggleContent = function () {
     return [selectElement, removeElement, initFrame];
 };
 exports.useToggleContent = useToggleContent;
+
+
+/***/ }),
+
+/***/ "../entities/sidebarTemplate/hooks/useToggleGroupImageRow.ts":
+/*!*******************************************************************!*\
+  !*** ../entities/sidebarTemplate/hooks/useToggleGroupImageRow.ts ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useToggleGroupImageRow = void 0;
+var react_1 = __webpack_require__(/*! react */ "../../../node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "../../../node_modules/react-redux/es/index.js");
+var options_actions_1 = __webpack_require__(/*! ../actions/options.actions */ "../entities/sidebarTemplate/actions/options.actions.ts");
+var useToggleGroupImageRow = function () {
+    var dispatch = (0, react_redux_1.useDispatch)();
+    var addSource = (0, react_1.useCallback)(function () { return dispatch((0, options_actions_1.toggleGroupImageRow)()); }, [dispatch, options_actions_1.toggleGroupImageRow]);
+    return addSource;
+};
+exports.useToggleGroupImageRow = useToggleGroupImageRow;
 
 
 /***/ }),
@@ -41183,6 +41351,7 @@ exports.initialState = {
         body: {}
     },
     options: {
+        addSrcSetAndSizes: false,
         groupImagesRow: false,
         addFeaturedMedia: true,
         addSource: false,
@@ -41221,7 +41390,10 @@ exports.options = (0, toolkit_1.createReducer)(initialState_1.initialState.optio
         .addCase(options_actions_1.toggleAddFeaturedMedia, function (state) { return (__assign(__assign({}, state), { addFeaturedMedia: !state.addFeaturedMedia })); })
         .addCase(options_actions_1.toggleAddSource, function (state) { return (__assign(__assign({}, state), { addSource: !state.addSource })); })
         .addCase(options_actions_1.toggleGroupImageRow, function (state) { return (__assign(__assign({}, state), { groupImagesRow: !state.groupImagesRow })); })
-        .addCase(options_actions_1.toggleSaveParsingTemplate, function (state) { return (__assign(__assign({}, state), { saveParsingTemplate: !state.saveParsingTemplate })); });
+        .addCase(options_actions_1.toggleSaveParsingTemplate, function (state) { return (__assign(__assign({}, state), { saveParsingTemplate: !state.saveParsingTemplate })); })
+        .addCase(options_actions_1.toggleAddSrcSetAndSizes, function (state) {
+        return __assign(__assign({}, state), { addSrcSetAndSizes: !state.addSrcSetAndSizes });
+    });
 });
 
 
@@ -42343,6 +42515,7 @@ var index_1 = __webpack_require__(/*! @news-parser/helpers/index */ "../helpers/
 var Parser = /** @class */ (function () {
     function Parser(frameElement) {
         var _a;
+        this.iframe = frameElement;
         this.document = (_a = frameElement.contentWindow) === null || _a === void 0 ? void 0 : _a.document;
     }
     /**
@@ -42353,35 +42526,36 @@ var Parser = /** @class */ (function () {
      */
     Parser.prototype.parseElementData = function (el) {
         var element = el;
-        var parsedData = {
-            tagName: '',
-            className: '',
-            offsetTop: 0,
-            parent: []
-        };
-        parsedData.tagName = element.tagName;
-        parsedData.className = element.className.replace(' parser-select', '').replace(' mouse-over', '');
-        switch (parsedData.tagName) {
+        var tagName = element.tagName;
+        var className = element.className.replace(' parser-select', '').replace(' mouse-over', '');
+        var content;
+        switch (tagName) {
             case 'IMG':
-                parsedData.content = this.parseImageContent(element);
+                content = this.parseImageContent(element);
                 break;
             case 'UL':
-                parsedData.content = this.parseListContent(element);
+                content = this.parseListContent(element);
                 break;
             case 'VIDEO':
-                parsedData.content = element.dataset.hash;
-                parsedData.tagName = 'IFRAME';
-                parsedData.className = element.className.replace('news-parser-youtube', '').replace(' parser-select', '').replace(' mouse-over', '');
+                content = element.dataset.hash;
+                tagName = 'IFRAME';
+                className = element.className.replace('news-parser-youtube', '').replace(' parser-select', '').replace(' mouse-over', '');
                 break;
             default:
-                parsedData.content = element.innerText;
+                content = element.innerText;
         }
-        parsedData.offsetTop = this.getOffsetTop(element);
-        parsedData.parent = this.getParentsArray(element);
+        var offsetTop = this.getOffsetTop(element);
+        var parent = this.getParentsArray(element);
         var elementHash = (0, index_1.hash)(Math.random().toString());
         return {
             hash: elementHash.toString(),
-            content: parsedData
+            content: {
+                content: content,
+                tagName: tagName,
+                className: className,
+                offsetTop: offsetTop,
+                parent: parent
+            }
         };
     };
     /**
@@ -42391,7 +42565,7 @@ var Parser = /** @class */ (function () {
      * @returns {number}
      */
     Parser.prototype.getOffsetTop = function (el) {
-        var bodyScrollTop = this.document ? this.document.body.scrollTop : 0;
+        var bodyScrollTop = this.iframe.contentWindow ? this.iframe.contentWindow.scrollY : 0;
         return el.getBoundingClientRect().top + bodyScrollTop;
     };
     /**
@@ -42403,15 +42577,17 @@ var Parser = /** @class */ (function () {
     Parser.prototype.parseImageContent = function (el) {
         var sourceTag = el.parentElement ? el.parentElement.getElementsByTagName('source') : [];
         if (sourceTag.length == 0) {
+            var src_1 = el.srcset ? this.getSrcFromSrcSet(el.srcset) : el.src;
             return {
-                src: el.src,
+                src: src_1,
                 srcSet: el.srcset,
                 sizes: el.sizes,
                 alt: el.alt
             };
         }
+        var src = sourceTag[0].srcset ? this.getSrcFromSrcSet(sourceTag[0].srcset) : sourceTag[0].src !== '' ? el.src : sourceTag[0].src;
         return {
-            src: sourceTag[0].src !== '' ? el.src : sourceTag[0].src,
+            src: src,
             srcSet: sourceTag[0].srcset,
             sizes: sourceTag[0].sizes,
             alt: el.alt
@@ -42451,6 +42627,22 @@ var Parser = /** @class */ (function () {
             parentElement = parentElement.parentElement;
         }
         return parent;
+    };
+    /**
+     * Get src from srcset
+     *
+     * @param {string} srcSet
+     * @param {number} index
+     */
+    Parser.prototype.getSrcFromSrcSet = function (srcSet, index) {
+        if (index === void 0) { index = -2; }
+        var srcSetArr = srcSet.split(',');
+        if (srcSetArr.length <= Math.abs(index))
+            throw new Error('Given index in greater then number of srcset breakpoints');
+        var srcMediaElement = srcSetArr.at(index);
+        if (srcMediaElement !== undefined)
+            return srcMediaElement.trim().replace(/\s.*w/, '');
+        return '';
     };
     return Parser;
 }());
@@ -42553,276 +42745,6 @@ var PostTitleParser = /** @class */ (function (_super) {
 exports["default"] = PostTitleParser;
 var postTitleParser = function (doc) { return new PostTitleParser(doc); };
 exports.postTitleParser = postTitleParser;
-
-
-/***/ }),
-
-/***/ "../helpers/response-formatters/PostModel.ts":
-/*!***************************************************!*\
-  !*** ../helpers/response-formatters/PostModel.ts ***!
-  \***************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.formatCreatePostDraftRequest = exports.PostModel = void 0;
-var index_1 = __webpack_require__(/*! ../index */ "../helpers/index.ts");
-var __1 = __webpack_require__(/*! .. */ "../helpers/index.ts");
-/**
- * Format data for request to create wordpress post draft.
- *
- * @since 1.0.0
- */
-var PostModel = /** @class */ (function () {
-    function PostModel(postData, options, url) {
-        this.postData = postData;
-        this.options = options;
-        this.url = url;
-        this.content = this.formatParsedData(postData.body);
-    }
-    /**
-     * Format request to create post draft.
-     *
-     * @param {object} postData
-     * @param {object} options
-     * @param {string} url
-     * @returns {Promise}
-     */
-    PostModel.prototype.generateWpPostData = function () {
-        return __assign({ title: this.postData.title, content: this.content }, this.options);
-    };
-    /**
-     * Format parsed data.
-     *
-     * @param {object} content
-     * @return {string}
-     */
-    PostModel.prototype.formatParsedData = function (postData) {
-        var _this = this;
-        var contentArray = this.sortByOffset(postData);
-        var postBody = '';
-        contentArray.forEach(function (item) {
-            switch (item.tagName) {
-                case 'SPAN':
-                    postBody += _this.simpleText(item.content);
-                    break;
-                case 'DIV':
-                case 'P':
-                    postBody += _this.paragraph(item.content);
-                    break;
-                case 'IMG':
-                    postBody += _this.image(item.content);
-                    break;
-                case 'H1':
-                case 'H2':
-                case 'H3':
-                    postBody += _this.heading(item.content, item.tagName.toLowerCase());
-                    break;
-                case 'UL':
-                    postBody += _this.list(item.content);
-                    break;
-                case 'IFRAME':
-                    postBody += _this.youtubeVideo(item.content);
-                    break;
-            }
-        });
-        if (this.options.addSource) {
-            postBody += this.addSourceLink(this.url);
-        }
-        return postBody;
-    };
-    /**
-     * Add link to the source page.
-     *
-     * @param {string} link
-     * @returns {string}
-     */
-    PostModel.prototype.addSourceLink = function (link) {
-        return "<a href='".concat(this.sanitizeUrl(link), "'>Source</a>");
-    };
-    /**
-     * Format text content.
-     *
-     * @param {string} text
-     */
-    PostModel.prototype.simpleText = function (text) {
-        var cleanContent = this.sanitize(text);
-        return cleanContent;
-    };
-    /**
-     * Format youtube video as gutenberg video block.
-     *
-     * @param {string} hash Youtube video hash
-     * @returns {string}
-     */
-    PostModel.prototype.youtubeVideo = function (hash) {
-        if (typeof hash !== 'string')
-            return '';
-        var cleanHash = hash.replace(/[^0-9a-zA-Z\_]/g, '');
-        return "<!-- wp:core-embed/youtube {'url':'https://youtu.be/".concat(cleanHash, "','type':'video','providerNameSlug':'youtube','className':'wp-embed-aspect-16-9 wp-has-aspect-ratio'} -->") +
-            "<figure class='wp-block-embed-youtube wp-block-embed is-type-video is-provider-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio'><div class='wp-block-embed__wrapper'>" +
-            "https://youtu.be/".concat(cleanHash, "</div></figure><!-- /wp:core-embed/youtube -->");
-    };
-    /**
-     * Format paragraph tag data to gutenberg paragraph block data.
-     *
-     * @param {string} text
-     * @returns {string}
-     */
-    PostModel.prototype.paragraph = function (text) {
-        return "<!-- wp:paragraph --><p>".concat(this.sanitize(text), "</p><!-- /wp:paragraph -->");
-    };
-    /**
-     * Format heading tag data to gutenberg heading block.
-     *
-     * @param {string} text
-     * @param {string} type
-     * @returns {string}
-     */
-    PostModel.prototype.heading = function (text, type) {
-        if (typeof text !== 'string' || typeof 'type' !== 'string')
-            return '';
-        return "<!-- wp:heading {'level':".concat(type.replace('h', ''), "} --><").concat(this.sanitize(type), ">").concat(this.sanitize(text), "</").concat(this.sanitize(type), "><!-- /wp:heading -->");
-    };
-    /**
-     * Format image tag data to gutenberg image block.
-     *
-     * @param {ImageContent} imageContent
-     * @returns {string}
-     */
-    PostModel.prototype.image = function (imageContent) {
-        if (typeof imageContent === 'string' || Array.isArray(imageContent) || imageContent == undefined)
-            return '';
-        var src = imageContent.src, srcSet = imageContent.srcSet, alt = imageContent.alt;
-        var parsedSrc = srcSet && this.getSrcFromSrcSet(srcSet);
-        var cleanSrc = parsedSrc ? this.sanitize(parsedSrc) : this.sanitize(src);
-        var cleanAlt = this.sanitize(alt);
-        return "<!-- wp:image --><figure class='wp-block-image'><img src='".concat(cleanSrc, "' alt='").concat(cleanAlt, "'/></figure><!-- /wp:image -->");
-    };
-    /**
-     * Format list tag data to gutenberg list block.
-     *
-     * @param {array} listArray
-     * @returns {string}
-     */
-    PostModel.prototype.list = function (listArray) {
-        var _this = this;
-        if (!Array.isArray(listArray))
-            return '';
-        var listBegin = '<!-- wp:list --><ul>';
-        var list = '';
-        var listEnd = '</ul><!-- /wp:list -->';
-        listArray.forEach(function (item) {
-            list += "<li>".concat(_this.sanitize(item), "</li>");
-        });
-        return listBegin + list + listEnd;
-    };
-    /**
-     * Format quote tag data to gutenberg quote block.
-     *
-     * @param {string} text
-     * @returns {string}
-     */
-    PostModel.prototype.quote = function (text) {
-        var cleanContent = this.sanitize(text);
-        var quote = '<!-- wp:quote --><blockquote class="wp-block - quote"><p>%s</p><p></p></blockquote><!-- /wp:quote -->';
-        return (0, __1.sprintf)(quote, cleanContent);
-    };
-    /**
-     * Sort elements data by offset of the top of page.
-     *
-     * @param {object} objectOfContent
-     * @returns {array}
-     */
-    PostModel.prototype.sortByOffset = function (postData) {
-        var sortedContent = [];
-        var postDataMap = new Map(Object.entries(postData));
-        var _loop_1 = function () {
-            if (postDataMap.size === 0)
-                return "break";
-            var topElement = {
-                hash: '',
-                offsetTop: Math.pow(10, 10)
-            };
-            postDataMap.forEach(function (item, hash) {
-                if (item.offsetTop < topElement.offsetTop) {
-                    topElement.offsetTop = item.offsetTop;
-                    topElement.hash = hash;
-                }
-            });
-            var postData_1 = postDataMap.get(topElement.hash);
-            if (postData_1 !== undefined)
-                sortedContent.push(postData_1);
-            postDataMap.delete(topElement.hash);
-        };
-        while (true) {
-            var state_1 = _loop_1();
-            if (state_1 === "break")
-                break;
-        }
-        return sortedContent;
-    };
-    /**
-     * Sanitize data.
-     *
-     * @param {string} content
-     * @returns {string}
-     */
-    PostModel.prototype.sanitize = function (content) {
-        if (typeof content !== 'string')
-            return '';
-        return (0, index_1.escHTML)(content);
-    };
-    /**
-     * Sanitize url to insert into the link or src attributes.
-     *
-     * @param {string} url
-     * @returns {string}
-     */
-    PostModel.prototype.sanitizeUrl = function (url) {
-        return (0, index_1.escURLRaw)(url);
-    };
-    /**
-     * Get src from srcset
-     *
-     * @param {string} srcSet
-     * @param {number} index
-     */
-    PostModel.prototype.getSrcFromSrcSet = function (srcSet, index) {
-        if (index === void 0) { index = -2; }
-        var srcSetArr = srcSet.split(',');
-        if (srcSetArr.length <= Math.abs(index))
-            throw new Error('Given index in greater then number of srcset breakpoints');
-        var srcMediaElement = srcSetArr.at(index);
-        if (srcMediaElement !== undefined)
-            return srcMediaElement.trim().replace(/\s.*w/, '');
-        return false;
-    };
-    return PostModel;
-}());
-exports.PostModel = PostModel;
-/**
- * Facade function for PostModel class.
- *
- * @param {object} postData
- * @param {object} options
- * @param {string} url
- * @returns {string}
- */
-var formatCreatePostDraftRequest = function (postData, options, url) { return ((new PostModel(postData, options, url)).generateWpPostData()); };
-exports.formatCreatePostDraftRequest = formatCreatePostDraftRequest;
 
 
 /***/ }),
@@ -43122,6 +43044,359 @@ exports.formatCreateTemplateRequest = formatCreateTemplateRequest;
 
 /***/ }),
 
+/***/ "../helpers/response-formatters/adapters/AdapterGuttenberg.ts":
+/*!********************************************************************!*\
+  !*** ../helpers/response-formatters/adapters/AdapterGuttenberg.ts ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.adapterGuttenberg = exports.AdapterGuttenberg = void 0;
+/**
+ * Wrap HTML data with Guttenbewrg style comments to markup html code as Guttenberg blocks.
+ *
+ * @since 1.0.0
+ */
+var AdapterGuttenberg = /** @class */ (function () {
+    function AdapterGuttenberg() {
+    }
+    /**
+     * Format youtube video as gutenberg video block.
+     *
+     * @param {string} hash Youtube video hash
+     * @returns {string}
+     */
+    AdapterGuttenberg.prototype.youtubeVideo = function (hash) {
+        if (typeof hash !== 'string')
+            return '';
+        return "<!-- wp:core-embed/youtube {'url':'https://youtu.be/".concat(hash, "','type':'video','providerNameSlug':'youtube','className':'wp-embed-aspect-16-9 wp-has-aspect-ratio'} -->") +
+            "<figure class='wp-block-embed-youtube wp-block-embed is-type-video is-provider-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio'><div class='wp-block-embed__wrapper'>" +
+            "https://youtu.be/".concat(hash, "</div></figure><!-- /wp:core-embed/youtube -->");
+    };
+    /**
+     * Format paragraph tag data to gutenberg paragraph block data.
+     *
+     * @param {string} text
+     * @returns {string}
+     */
+    AdapterGuttenberg.prototype.paragraph = function (text) {
+        return "<!-- wp:paragraph --><p>".concat(text, "</p><!-- /wp:paragraph -->");
+    };
+    /**
+     * Format heading tag data to gutenberg heading block.
+     *
+     * @param {string} text
+     * @param {string} type type of heding h1- h6
+     * @returns {string}
+     */
+    AdapterGuttenberg.prototype.heading = function (text, type) {
+        return "<!-- wp:heading {\"level\":".concat(type.replace('h', ''), "} --><").concat(type, ">").concat(text, "</").concat(type, "><!-- /wp:heading -->");
+    };
+    /**
+     * Format image tag data to gutenberg image block.
+     *
+     * @param {ImageContent} imageContent
+     * @returns {string}
+     */
+    AdapterGuttenberg.prototype.image = function (imageContent) {
+        var src = imageContent.src, srcSet = imageContent.srcSet, sizes = imageContent.sizes, alt = imageContent.alt;
+        return "<!-- wp:image {\"id\":\"null\" \"sizeSlug\":\"large\" \"url\":\"".concat(src, "\" \"alt\": \"").concat(alt, "\"} --><figure class='wp-block-image'><img src=\"").concat(src, "\" alt=\"").concat(alt, "\" ").concat(srcSet !== undefined ? 'srcset="' + srcSet + '"' : '', "  ").concat(sizes !== undefined ? 'sizes="' + sizes + '"' : '', " /></figure><!-- /wp:image -->");
+    };
+    /**
+     * Join any two guttenberg blocks in one row block
+     *
+     * @param guttenbergBlocksArray array of any two Guttenberg bloks
+     * @returns {string}
+     */
+    AdapterGuttenberg.prototype.groupRow = function (guttenbergBlocksArray) {
+        return "<!-- wp:group {\"className\":\"row\",\"layout\":{\"type\":\"flex\",\"flexWrap\":\"nowrap\"}} --><div class=\"wp-block-group row \">".concat(guttenbergBlocksArray.join(''), "</div><!-- /wp:group -->");
+    };
+    /**
+     * Format list tag data to gutenberg list block.
+     *
+     * @param {array} listArray
+     * @returns {string}
+     */
+    AdapterGuttenberg.prototype.list = function (listArray) {
+        var listBegin = '<!-- wp:list --><ul>';
+        var list = '';
+        var listEnd = '</ul><!-- /wp:list -->';
+        listArray.forEach(function (item) {
+            list += "<li>".concat(item, "</li>");
+        });
+        return listBegin + list + listEnd;
+    };
+    /**
+     * Format quote tag data to gutenberg quote block.
+     *
+     * @param {string} text
+     * @returns {string}
+     */
+    AdapterGuttenberg.prototype.quote = function (text) {
+        return "<!-- wp:quote --><blockquote class=\"wp-block - quote\"><p>".concat(text, "</p><p></p></blockquote><!-- /wp:quote -->");
+    };
+    return AdapterGuttenberg;
+}());
+exports.AdapterGuttenberg = AdapterGuttenberg;
+exports.adapterGuttenberg = new AdapterGuttenberg();
+
+
+/***/ }),
+
+/***/ "../helpers/response-formatters/controllers/PostFormatController.ts":
+/*!**************************************************************************!*\
+  !*** ../helpers/response-formatters/controllers/PostFormatController.ts ***!
+  \**************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PostFormatController = void 0;
+var index_1 = __webpack_require__(/*! ../../index */ "../helpers/index.ts");
+/**
+ * Format data for request to create wordpress post draft.
+ *
+ * @since 1.0.0
+ */
+var PostFormatController = /** @class */ (function () {
+    function PostFormatController(postData, options, url, adapter) {
+        this.postData = postData;
+        this.options = options;
+        this.url = url;
+        this.adapter = adapter;
+        this.contentModifierBeforConvert = [];
+        this.contentModifierAfterConvert = [];
+        this.content = this.sortByOffset(this.postData.body);
+    }
+    /**
+     * Format request to create post draft.
+     *
+     * @param {object} postData
+     * @param {object} options
+     * @param {string} url
+     * @returns post data
+     */
+    PostFormatController.prototype.generateWpPostData = function () {
+        var modifiedContentArray = this.applyContentModifiersBefor(this.content);
+        var contentString = this.convertPostContentToString(modifiedContentArray);
+        var modifiedContentString = this.applyContentModifiersAfter(contentString);
+        return __assign({ title: this.postData.title, content: modifiedContentString }, this.options);
+    };
+    PostFormatController.prototype.addContentModiersBeforConversion = function (modifiers) {
+        this.contentModifierBeforConvert = this.contentModifierBeforConvert.concat(modifiers);
+    };
+    PostFormatController.prototype.addContentModiersAfterConversion = function (modifiers) {
+        this.contentModifierAfterConvert = this.contentModifierAfterConvert.concat(modifiers);
+    };
+    PostFormatController.prototype.applyContentModifiersBefor = function (content) {
+        return this.contentModifierBeforConvert.reduce(function (contentArray, modifier) { return modifier(contentArray); }, content);
+    };
+    PostFormatController.prototype.applyContentModifiersAfter = function (content) {
+        return this.contentModifierAfterConvert.reduce(function (contentString, modifier) { return modifier(contentString); }, content);
+    };
+    /**
+     * Format parsed data.
+     *
+     * @param {object} content
+     * @return {string}
+     */
+    PostFormatController.prototype.convertPostContentToString = function (postContentElementsArray) {
+        var _this = this;
+        var contentOutput = '';
+        postContentElementsArray.forEach(function (contentElement) {
+            switch (contentElement.tagName) {
+                case 'SPAN':
+                    contentOutput += _this.simpleText(contentElement.content);
+                    break;
+                case 'DIV':
+                case 'P':
+                    contentOutput += _this.paragraph(contentElement.content);
+                    break;
+                case 'IMG':
+                    contentOutput += _this.image(contentElement.content);
+                    break;
+                case 'H1':
+                case 'H2':
+                case 'H3':
+                    contentOutput += _this.heading(contentElement.content, contentElement.tagName.toLowerCase());
+                    break;
+                case 'UL':
+                    contentOutput += _this.list(contentElement.content);
+                    break;
+                case 'IFRAME':
+                    contentOutput += _this.youtubeVideo(contentElement.content);
+                    break;
+                case 'IMGROW':
+                    contentOutput += _this.imageRow(contentElement.content);
+            }
+        });
+        return contentOutput;
+    };
+    /**
+     * Format text content.
+     *
+     * @param {string} text
+     */
+    PostFormatController.prototype.simpleText = function (text) {
+        var cleanContent = this.sanitize(text);
+        return cleanContent;
+    };
+    /**
+     * Format youtube video as video block.
+     *
+     * @param {string} hash Youtube video hash
+     * @returns {string}
+     */
+    PostFormatController.prototype.youtubeVideo = function (hash) {
+        if (typeof hash !== 'string')
+            return '';
+        var cleanHash = hash.replace(/[^0-9a-zA-Z\_]/g, '');
+        return this.adapter.youtubeVideo(cleanHash);
+    };
+    /**
+     * Format paragraph tag data to gutenberg paragraph block data.
+     *
+     * @param {string} text
+     * @returns {string}
+     */
+    PostFormatController.prototype.paragraph = function (text) {
+        if (typeof text !== 'string')
+            return '';
+        return this.adapter.paragraph(this.sanitize(text));
+    };
+    /**
+     * Format heading tag data to gutenberg heading block.
+     *
+     * @param {string} text
+     * @param {string} type
+     * @returns {string}
+     */
+    PostFormatController.prototype.heading = function (text, type) {
+        if (typeof text !== 'string' || typeof 'type' !== 'string')
+            return '';
+        return this.adapter.heading(this.sanitize(text), this.sanitize(type));
+    };
+    PostFormatController.prototype.imageRow = function (imageContent) {
+        if (imageContent === undefined)
+            return '';
+        var covertImage = this.image.bind(this);
+        var imagesString = imageContent.map(function (imageElement) { return covertImage(imageElement['content']); });
+        return this.adapter.groupRow(imagesString);
+    };
+    /**
+     * Format image tag data to gutenberg image block.
+     *
+     * @param {ImageContent} imageContent
+     * @returns {string}
+     */
+    PostFormatController.prototype.image = function (imageContent) {
+        if (typeof imageContent === 'string' || Array.isArray(imageContent) || imageContent == undefined)
+            return '';
+        var src = imageContent.src, srcSet = imageContent.srcSet, alt = imageContent.alt, sizes = imageContent.sizes;
+        var cleanSrc = src ? this.sanitize(src) : this.sanitize(src);
+        var cleanSrcSet = srcSet !== undefined ? this.sanitize(srcSet) : srcSet;
+        var cleanAlt = this.sanitize(alt);
+        return this.adapter.image({ src: cleanSrc, alt: cleanAlt, srcSet: cleanSrcSet, sizes: sizes });
+    };
+    /**
+     * Format list tag data to gutenberg list block.
+     *
+     * @param {array} listArray
+     * @returns {string}
+     */
+    PostFormatController.prototype.list = function (listArray) {
+        if (!Array.isArray(listArray))
+            return '';
+        var sinitize = this.sanitize;
+        return this.adapter.list(listArray.map(function (item) { return sinitize(item); }));
+    };
+    /**
+     * Format quote tag data to gutenberg quote block.
+     *
+     * @param {string} text
+     * @returns {string}
+     */
+    PostFormatController.prototype.quote = function (text) {
+        if (typeof text !== 'string')
+            return '';
+        var cleanContent = this.sanitize(text);
+        return this.adapter.quote(cleanContent);
+    };
+    /**
+     * Sort elements data by offset of the top of page.
+     *
+     * @param {object} objectOfContent
+     * @returns {array}
+     */
+    PostFormatController.prototype.sortByOffset = function (postData) {
+        var sortedContent = [];
+        var postDataMap = new Map(Object.entries(postData));
+        var _loop_1 = function () {
+            if (postDataMap.size === 0)
+                return "break";
+            var topElement = {
+                hash: '',
+                offsetTop: Math.pow(10, 10)
+            };
+            postDataMap.forEach(function (item, hash) {
+                if (item.offsetTop < topElement.offsetTop) {
+                    topElement.offsetTop = item.offsetTop;
+                    topElement.hash = hash;
+                }
+            });
+            var postData_1 = postDataMap.get(topElement.hash);
+            if (postData_1 !== undefined)
+                sortedContent.push(postData_1);
+            postDataMap.delete(topElement.hash);
+        };
+        while (true) {
+            var state_1 = _loop_1();
+            if (state_1 === "break")
+                break;
+        }
+        return sortedContent;
+    };
+    /**
+     * Sanitize data.
+     *
+     * @param {string} content
+     * @returns {string}
+     */
+    PostFormatController.prototype.sanitize = function (content) {
+        if (typeof content !== 'string')
+            return '';
+        return (0, index_1.escHTML)(content);
+    };
+    /**
+     * Sanitize url to insert into the link or src attributes.
+     *
+     * @param {string} url
+     * @returns {string}
+     */
+    PostFormatController.prototype.sanitizeUrl = function (url) {
+        return (0, index_1.escURLRaw)(url);
+    };
+    return PostFormatController;
+}());
+exports.PostFormatController = PostFormatController;
+
+
+/***/ }),
+
 /***/ "../helpers/response-formatters/formatCreateMediaData.ts":
 /*!***************************************************************!*\
   !*** ../helpers/response-formatters/formatCreateMediaData.ts ***!
@@ -43152,6 +43427,51 @@ exports.formatCreateMediaData = formatCreateMediaData;
 
 /***/ }),
 
+/***/ "../helpers/response-formatters/formatCreatePostDraftRequest.ts":
+/*!**********************************************************************!*\
+  !*** ../helpers/response-formatters/formatCreatePostDraftRequest.ts ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.formatCreatePostDraftRequest = void 0;
+var PostFormatController_1 = __webpack_require__(/*! ./controllers/PostFormatController */ "../helpers/response-formatters/controllers/PostFormatController.ts");
+var AdapterGuttenberg_1 = __webpack_require__(/*! ./adapters/AdapterGuttenberg */ "../helpers/response-formatters/adapters/AdapterGuttenberg.ts");
+var groupImagesInRows_1 = __webpack_require__(/*! ./modifiers/before/groupImagesInRows */ "../helpers/response-formatters/modifiers/before/groupImagesInRows.ts");
+var addSourseLink_1 = __webpack_require__(/*! ./modifiers/after/addSourseLink */ "../helpers/response-formatters/modifiers/after/addSourseLink.ts");
+var generateImageSizesBreakpoints_1 = __webpack_require__(/*! ./modifiers/before/generateImageSizesBreakpoints */ "../helpers/response-formatters/modifiers/before/generateImageSizesBreakpoints.ts");
+var removeSrcSetAndSizeAttr_1 = __webpack_require__(/*! ./modifiers/before/removeSrcSetAndSizeAttr */ "../helpers/response-formatters/modifiers/before/removeSrcSetAndSizeAttr.ts");
+/**
+ * Formats the create post draft request by creating an instance of the PostController class and applying modifiers to modify the parsed data according to the set template options.
+ *
+ * @param {object} postData - The post data to be formatted.
+ * @param {object} options - The template options for formatting the post data.
+ * @param {string} url - The URL for the post.
+ * @returns {string} - The formatted post data.
+ */
+var formatCreatePostDraftRequest = function (postData, options, url) {
+    var postController = new PostFormatController_1.PostFormatController(postData, options, url, AdapterGuttenberg_1.adapterGuttenberg);
+    if (options.addSrcSetAndSizes) {
+        postController.addContentModiersBeforConversion(generateImageSizesBreakpoints_1.generateImageSizesBreakpoints);
+    }
+    else {
+        postController.addContentModiersBeforConversion(removeSrcSetAndSizeAttr_1.removeSrcSetAndSizeAttr);
+    }
+    if (options.groupImagesRow) {
+        postController.addContentModiersBeforConversion(groupImagesInRows_1.groupImagesInRows);
+    }
+    if (options.addSource) {
+        postController.addContentModiersAfterConversion((0, addSourseLink_1.addSourceLink)(url));
+    }
+    return postController.generateWpPostData();
+};
+exports.formatCreatePostDraftRequest = formatCreatePostDraftRequest;
+
+
+/***/ }),
+
 /***/ "../helpers/response-formatters/formatPostOptions.ts":
 /*!***********************************************************!*\
   !*** ../helpers/response-formatters/formatPostOptions.ts ***!
@@ -43171,6 +43491,155 @@ var formatPostOptions = function (options) { return ({
     format: options.postFormat
 }); };
 exports.formatPostOptions = formatPostOptions;
+
+
+/***/ }),
+
+/***/ "../helpers/response-formatters/modifiers/after/addSourseLink.ts":
+/*!***********************************************************************!*\
+  !*** ../helpers/response-formatters/modifiers/after/addSourseLink.ts ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.addSourceLink = void 0;
+var index_1 = __webpack_require__(/*! ../../../index */ "../helpers/index.ts");
+/**
+* Add link to the source page.
+*
+* @param {string} link
+* @returns {string}
+*/
+var addSourceLink = function (link) { return function (contentString) {
+    return contentString + "<a href='".concat((0, index_1.escURLRaw)(link), "'>Source</a>");
+}; };
+exports.addSourceLink = addSourceLink;
+
+
+/***/ }),
+
+/***/ "../helpers/response-formatters/modifiers/before/generateImageSizesBreakpoints.ts":
+/*!****************************************************************************************!*\
+  !*** ../helpers/response-formatters/modifiers/before/generateImageSizesBreakpoints.ts ***!
+  \****************************************************************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.generateImageSizesBreakpoints = void 0;
+var generateImageSizesBreakpoints = function (elemntsArray) {
+    var brackPointsArray = [480, 768, 1024, 1280, 1440, 1900];
+    return elemntsArray.map(function (element) {
+        if (element.tagName !== 'IMG' || element.content === undefined)
+            return element;
+        var srcSet = element.content.srcSet;
+        var srcSetArray = srcSet.split(',');
+        var sizes = srcSetArray.map(function (imageSrc) {
+            var imageWidth = parseInt(imageSrc.trim().split(' ')[1]);
+            for (var _i = 0, brackPointsArray_1 = brackPointsArray; _i < brackPointsArray_1.length; _i++) {
+                var breakPoint = brackPointsArray_1[_i];
+                if (imageWidth < breakPoint) {
+                    return "(max-width: ".concat(breakPoint, "px) ").concat(imageWidth, "w");
+                }
+            }
+            return "".concat(imageWidth, "w");
+        });
+        return __assign(__assign({}, element), { content: __assign(__assign({}, element.content), { sizes: sizes.join(',') }) });
+    });
+};
+exports.generateImageSizesBreakpoints = generateImageSizesBreakpoints;
+
+
+/***/ }),
+
+/***/ "../helpers/response-formatters/modifiers/before/groupImagesInRows.ts":
+/*!****************************************************************************!*\
+  !*** ../helpers/response-formatters/modifiers/before/groupImagesInRows.ts ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.groupImagesInRows = void 0;
+var groupImagesInRows = function (elemntsArray) {
+    var newContentArray = [];
+    var previosElement = null;
+    for (var _i = 0, elemntsArray_1 = elemntsArray; _i < elemntsArray_1.length; _i++) {
+        var element = elemntsArray_1[_i];
+        if (previosElement === null) {
+            previosElement = element;
+            newContentArray.push(element);
+            continue;
+        }
+        if (element.tagName === 'IMG' && (previosElement === null || previosElement === void 0 ? void 0 : previosElement.tagName) === 'IMG') {
+            newContentArray.pop();
+            newContentArray.push({
+                tagName: 'IMGROW',
+                content: [
+                    element,
+                    previosElement
+                ],
+                offsetTop: previosElement.offsetTop,
+                parent: previosElement.parent
+            });
+        }
+        else {
+            newContentArray.push(element);
+        }
+        previosElement = newContentArray[newContentArray.length - 1];
+    }
+    return newContentArray;
+};
+exports.groupImagesInRows = groupImagesInRows;
+
+
+/***/ }),
+
+/***/ "../helpers/response-formatters/modifiers/before/removeSrcSetAndSizeAttr.ts":
+/*!**********************************************************************************!*\
+  !*** ../helpers/response-formatters/modifiers/before/removeSrcSetAndSizeAttr.ts ***!
+  \**********************************************************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.removeSrcSetAndSizeAttr = void 0;
+var removeSrcSetAndSizeAttr = function (elemntsArray) {
+    return elemntsArray.map(function (element) {
+        if (element.tagName !== 'IMG' || element.content === undefined)
+            return element;
+        var newElement = __assign(__assign({}, element), { content: __assign(__assign({}, element.content), { srcSet: '', sizes: '' }) });
+        return newElement;
+    });
+};
+exports.removeSrcSetAndSizeAttr = removeSrcSetAndSizeAttr;
 
 
 /***/ }),
@@ -43506,58 +43975,10 @@ exports.SidebarRight = SidebarRight;
 
 /***/ }),
 
-/***/ "../modules/SidebarRight/hooks/useCategoryFilter.ts":
-/*!**********************************************************!*\
-  !*** ../modules/SidebarRight/hooks/useCategoryFilter.ts ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.useCategoryFilter = void 0;
-var react_1 = __webpack_require__(/*! react */ "../../../node_modules/react/index.js");
-/**
- *
- * A custom React hook that provides category filtering functionality.
- *
- * @param {Array} categories - An array of category objects.
- * @returns {Array} An array containing the filter value, a function to set the filter value, and an array of filtered categories.
- * @since 2.0.0
- */
-var useCategoryFilter = function (categories) {
-    var _a = (0, react_1.useState)(""), filterValue = _a[0], setFilterValue = _a[1];
-    var filteredCategories = (0, react_1.useMemo)(function () {
-        var filterWithParent = function (categoryName, categories) {
-            var getParent = function (categoryObj, categoryArr) {
-                return categoryArr.find(function (categoryItem) { return categoryItem.id === categoryObj.parent; }) || false;
-            };
-            var filteredCategories = categories.filter(function (category) {
-                return category.name.includes(categoryName);
-            });
-            filteredCategories.forEach(function (categoryItem) {
-                var parentCategoryItem = getParent(categoryItem, categories);
-                if (parentCategoryItem !== false) {
-                    var parentCategorieId_1 = parentCategoryItem.id;
-                    filteredCategories.findIndex(function (categoryItem) { return categoryItem.id === parentCategorieId_1; }) === -1 &&
-                        filteredCategories.push(parentCategoryItem);
-                }
-            });
-            return filteredCategories;
-        };
-        return filterWithParent(filterValue, categories);
-    }, [filterValue, categories]);
-    return [filterValue, setFilterValue, filteredCategories];
-};
-exports.useCategoryFilter = useCategoryFilter;
-
-
-/***/ }),
-
-/***/ "../modules/SidebarRight/sidebar-post-groups/CategoriesCheckboxList.tsx":
-/*!******************************************************************************!*\
-  !*** ../modules/SidebarRight/sidebar-post-groups/CategoriesCheckboxList.tsx ***!
-  \******************************************************************************/
+/***/ "../modules/SidebarRight/components/groups/post-groups/CategoriesCheckboxList.tsx":
+/*!****************************************************************************************!*\
+  !*** ../modules/SidebarRight/components/groups/post-groups/CategoriesCheckboxList.tsx ***!
+  \****************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -43589,7 +44010,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CategoriesCheckboxList = void 0;
 var react_1 = __importStar(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
 var CategoryItem_1 = __webpack_require__(/*! @news-parser/ui/sidebar/CategoryItem */ "../ui/sidebar/CategoryItem.tsx");
-__webpack_require__(/*! ../styles/CategoriesCheckboxList */ "../modules/SidebarRight/styles/CategoriesCheckboxList.css");
+__webpack_require__(/*! ../../../styles/CategoriesCheckboxList */ "../modules/SidebarRight/styles/CategoriesCheckboxList.css");
 /**
  * React functional component for rendering a list of categories as checkboxes.
  *
@@ -43624,10 +44045,10 @@ exports.CategoriesCheckboxList = CategoriesCheckboxList;
 
 /***/ }),
 
-/***/ "../modules/SidebarRight/sidebar-post-groups/CategoriesGroup.tsx":
-/*!***********************************************************************!*\
-  !*** ../modules/SidebarRight/sidebar-post-groups/CategoriesGroup.tsx ***!
-  \***********************************************************************/
+/***/ "../modules/SidebarRight/components/groups/post-groups/CategoriesGroup.tsx":
+/*!*********************************************************************************!*\
+  !*** ../modules/SidebarRight/components/groups/post-groups/CategoriesGroup.tsx ***!
+  \*********************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -43663,9 +44084,9 @@ var hooks_2 = __webpack_require__(/*! @news-parser/entities/sidebar/hooks/ */ ".
 var useGetCategories_1 = __webpack_require__(/*! @news-parser/entities/sidebar/hooks/useGetCategories */ "../entities/sidebar/hooks/useGetCategories.ts");
 var Select_1 = __webpack_require__(/*! @news-parser/components/Select */ "../components/Select.tsx");
 var SidebarItemExpandable_1 = __webpack_require__(/*! @news-parser/components/sidebar/SidebarItemExpandable */ "../components/sidebar/SidebarItemExpandable.tsx");
-var useCategoryFilter_1 = __webpack_require__(/*! ../hooks/useCategoryFilter */ "../modules/SidebarRight/hooks/useCategoryFilter.ts");
-var CategoriesOptionList_1 = __webpack_require__(/*! ./CategoriesOptionList */ "../modules/SidebarRight/sidebar-post-groups/CategoriesOptionList.tsx");
-var CategoriesCheckboxList_1 = __webpack_require__(/*! ./CategoriesCheckboxList */ "../modules/SidebarRight/sidebar-post-groups/CategoriesCheckboxList.tsx");
+var useCategoryFilter_1 = __webpack_require__(/*! ../../../hooks/useCategoryFilter */ "../modules/SidebarRight/hooks/useCategoryFilter.ts");
+var CategoriesOptionList_1 = __webpack_require__(/*! ./CategoriesOptionList */ "../modules/SidebarRight/components/groups/post-groups/CategoriesOptionList.tsx");
+var CategoriesCheckboxList_1 = __webpack_require__(/*! ./CategoriesCheckboxList */ "../modules/SidebarRight/components/groups/post-groups/CategoriesCheckboxList.tsx");
 /**
  * React functional component for rendering a group of categories with search, checkboxes, and add functionality.
  *
@@ -43719,10 +44140,10 @@ exports["default"] = CategoriesGroup;
 
 /***/ }),
 
-/***/ "../modules/SidebarRight/sidebar-post-groups/CategoriesOptionList.tsx":
-/*!****************************************************************************!*\
-  !*** ../modules/SidebarRight/sidebar-post-groups/CategoriesOptionList.tsx ***!
-  \****************************************************************************/
+/***/ "../modules/SidebarRight/components/groups/post-groups/CategoriesOptionList.tsx":
+/*!**************************************************************************************!*\
+  !*** ../modules/SidebarRight/components/groups/post-groups/CategoriesOptionList.tsx ***!
+  \**************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -43786,10 +44207,10 @@ exports.CategoriesOptionList = CategoriesOptionList;
 
 /***/ }),
 
-/***/ "../modules/SidebarRight/sidebar-post-groups/DiscussionGroup.tsx":
-/*!***********************************************************************!*\
-  !*** ../modules/SidebarRight/sidebar-post-groups/DiscussionGroup.tsx ***!
-  \***********************************************************************/
+/***/ "../modules/SidebarRight/components/groups/post-groups/DiscussionGroup.tsx":
+/*!*********************************************************************************!*\
+  !*** ../modules/SidebarRight/components/groups/post-groups/DiscussionGroup.tsx ***!
+  \*********************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -43823,10 +44244,10 @@ exports["default"] = DiscussionGroup;
 
 /***/ }),
 
-/***/ "../modules/SidebarRight/sidebar-post-groups/StatusVisibilityGroup.tsx":
-/*!*****************************************************************************!*\
-  !*** ../modules/SidebarRight/sidebar-post-groups/StatusVisibilityGroup.tsx ***!
-  \*****************************************************************************/
+/***/ "../modules/SidebarRight/components/groups/post-groups/StatusVisibilityGroup.tsx":
+/*!***************************************************************************************!*\
+  !*** ../modules/SidebarRight/components/groups/post-groups/StatusVisibilityGroup.tsx ***!
+  \***************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -43852,7 +44273,7 @@ function StatusVisibilityGroup() {
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(sidebar_1.SidebarItem, null,
             react_1.default.createElement(sidebar_1.SidebarItemLabel, { htmlFor: 'post-status-select' }, "Status:"),
-            react_1.default.createElement(Select_1.Select, { onChange: postStatusChangeHandler, value: status, id: 'post-status-select' },
+            react_1.default.createElement(Select_1.Select, { onChange: postStatusChangeHandler, value: status, id: 'post-status-select', className: 'min-w-50' },
                 react_1.default.createElement("option", { value: "publish" }, "Public"),
                 react_1.default.createElement("option", { value: "private" }, "Private"),
                 react_1.default.createElement("option", { value: "draft" }, "Draft"),
@@ -43860,7 +44281,7 @@ function StatusVisibilityGroup() {
                 react_1.default.createElement("option", { value: "future" }, "Future"))),
         react_1.default.createElement(sidebar_1.SidebarItem, null,
             react_1.default.createElement(sidebar_1.SidebarItemLabel, { htmlFor: 'post-format-select' }, "Post format:"),
-            react_1.default.createElement(Select_1.Select, { onChange: postFormatChangeHandler, value: postFormat, id: 'post-format-select' },
+            react_1.default.createElement(Select_1.Select, { onChange: postFormatChangeHandler, value: postFormat, id: 'post-format-select', className: 'min-w-50' },
                 react_1.default.createElement("option", { value: "aside", label: 'Aside' }),
                 react_1.default.createElement("option", { value: "audio", label: 'Audio' }),
                 react_1.default.createElement("option", { value: "chat", label: 'Chat' }),
@@ -43877,10 +44298,10 @@ exports["default"] = StatusVisibilityGroup;
 
 /***/ }),
 
-/***/ "../modules/SidebarRight/sidebar-post-groups/TagsGroup.tsx":
-/*!*****************************************************************!*\
-  !*** ../modules/SidebarRight/sidebar-post-groups/TagsGroup.tsx ***!
-  \*****************************************************************/
+/***/ "../modules/SidebarRight/components/groups/post-groups/TagsGroup.tsx":
+/*!***************************************************************************!*\
+  !*** ../modules/SidebarRight/components/groups/post-groups/TagsGroup.tsx ***!
+  \***************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -43949,146 +44370,10 @@ exports["default"] = TagsGroup;
 
 /***/ }),
 
-/***/ "../modules/SidebarRight/sidebar-tabs/SidebarRightPost.tsx":
-/*!*****************************************************************!*\
-  !*** ../modules/SidebarRight/sidebar-tabs/SidebarRightPost.tsx ***!
-  \*****************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.SidebarRightPost = void 0;
-var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
-var InfoBox_1 = __webpack_require__(/*! @news-parser/ui/sidebar/InfoBox */ "../ui/sidebar/InfoBox.tsx");
-var StatusVisibilityGroup_1 = __importDefault(__webpack_require__(/*! ../sidebar-post-groups/StatusVisibilityGroup */ "../modules/SidebarRight/sidebar-post-groups/StatusVisibilityGroup.tsx"));
-var CategoriesGroup_1 = __importDefault(__webpack_require__(/*! ../sidebar-post-groups/CategoriesGroup */ "../modules/SidebarRight/sidebar-post-groups/CategoriesGroup.tsx"));
-var TagsGroup_1 = __importDefault(__webpack_require__(/*! ../sidebar-post-groups/TagsGroup */ "../modules/SidebarRight/sidebar-post-groups/TagsGroup.tsx"));
-var DiscussionGroup_1 = __importDefault(__webpack_require__(/*! ../sidebar-post-groups/DiscussionGroup */ "../modules/SidebarRight/sidebar-post-groups/DiscussionGroup.tsx"));
-/**
- * Right side Main bar of visual constructor modal window.
- *
- * @since 2.0.0
- */
-var SidebarRightPost = function () { return (react_1.default.createElement("div", { className: 'inner-sidebar-container', role: 'tabpanel' },
-    react_1.default.createElement(InfoBox_1.InfoBox, { title: 'Satus&Visibility' },
-        react_1.default.createElement(InfoBox_1.InfoBody, null,
-            react_1.default.createElement(StatusVisibilityGroup_1.default, null))),
-    react_1.default.createElement(InfoBox_1.InfoBox, { title: 'Categories' },
-        react_1.default.createElement(InfoBox_1.InfoBody, null,
-            react_1.default.createElement(CategoriesGroup_1.default, null))),
-    react_1.default.createElement(InfoBox_1.InfoBox, { title: 'Tags' },
-        react_1.default.createElement(InfoBox_1.InfoBody, null,
-            react_1.default.createElement(TagsGroup_1.default, null))),
-    react_1.default.createElement(InfoBox_1.InfoBox, { title: 'Discussion' },
-        react_1.default.createElement(InfoBox_1.InfoBody, null,
-            react_1.default.createElement(DiscussionGroup_1.default, null))))); };
-exports.SidebarRightPost = SidebarRightPost;
-exports["default"] = exports.SidebarRightPost;
-
-
-/***/ }),
-
-/***/ "../modules/SidebarRight/sidebar-tabs/SidebarRightTemplate.tsx":
-/*!*********************************************************************!*\
-  !*** ../modules/SidebarRight/sidebar-tabs/SidebarRightTemplate.tsx ***!
-  \*********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.SidebarRightTemplate = void 0;
-var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
-var InfoBox_1 = __webpack_require__(/*! @news-parser/ui/sidebar/InfoBox */ "../ui/sidebar/InfoBox.tsx");
-var FeaturedMediaGroup_1 = __webpack_require__(/*! ../sidebar-template-groups/FeaturedMediaGroup */ "../modules/SidebarRight/sidebar-template-groups/FeaturedMediaGroup.tsx");
-var PostTitleGroup_1 = __webpack_require__(/*! ../sidebar-template-groups/PostTitleGroup */ "../modules/SidebarRight/sidebar-template-groups/PostTitleGroup.tsx");
-var ExtraOptionsGroup_1 = __webpack_require__(/*! ../sidebar-template-groups/ExtraOptionsGroup */ "../modules/SidebarRight/sidebar-template-groups/ExtraOptionsGroup.tsx");
-/**
- * Right side Main bar of visual constructor modal window.
- *
- * @since 2.0.0
- */
-var SidebarRightTemplate = function () { return (react_1.default.createElement("div", { className: 'inner-sidebar-container', role: 'tabpanel' },
-    react_1.default.createElement(InfoBox_1.InfoBox, { title: 'Featured Image' },
-        react_1.default.createElement(FeaturedMediaGroup_1.FeaturedMediaGroup, null)),
-    react_1.default.createElement(InfoBox_1.InfoBox, { title: 'Post title' },
-        react_1.default.createElement(PostTitleGroup_1.PostTitleGroup, null)),
-    react_1.default.createElement(InfoBox_1.InfoBox, { title: 'Extra options' },
-        react_1.default.createElement(ExtraOptionsGroup_1.ExtraOptionsGroup, null)))); };
-exports.SidebarRightTemplate = SidebarRightTemplate;
-exports["default"] = exports.SidebarRightTemplate;
-
-
-/***/ }),
-
-/***/ "../modules/SidebarRight/sidebar-tabs/SidebarRightTemplateSingle.tsx":
-/*!***************************************************************************!*\
-  !*** ../modules/SidebarRight/sidebar-tabs/SidebarRightTemplateSingle.tsx ***!
-  \***************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.SidebarRightTemplateSingle = void 0;
-var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
-var InfoBox_1 = __webpack_require__(/*! @news-parser/ui/sidebar/InfoBox */ "../ui/sidebar/InfoBox.tsx");
-var FeaturedMediaGroup_1 = __webpack_require__(/*! ../sidebar-template-groups/FeaturedMediaGroup */ "../modules/SidebarRight/sidebar-template-groups/FeaturedMediaGroup.tsx");
-var PostTitleGroup_1 = __webpack_require__(/*! ../sidebar-template-groups/PostTitleGroup */ "../modules/SidebarRight/sidebar-template-groups/PostTitleGroup.tsx");
-var ExtraOptionsGroupSingle_1 = __webpack_require__(/*! ../sidebar-template-groups/ExtraOptionsGroupSingle */ "../modules/SidebarRight/sidebar-template-groups/ExtraOptionsGroupSingle.tsx");
-/**
- * Right side Main bar of visual constructor modal window.
- *
- * @since 2.0.0
- */
-var SidebarRightTemplateSingle = function () { return (react_1.default.createElement("div", { className: 'inner-sidebar-container', role: 'tabpanel' },
-    react_1.default.createElement(InfoBox_1.InfoBox, { title: 'Featured Image' },
-        react_1.default.createElement(FeaturedMediaGroup_1.FeaturedMediaGroup, null)),
-    react_1.default.createElement(InfoBox_1.InfoBox, { title: 'Post title' },
-        react_1.default.createElement(PostTitleGroup_1.PostTitleGroup, null)),
-    react_1.default.createElement(InfoBox_1.InfoBox, { title: 'Extra options' },
-        react_1.default.createElement(ExtraOptionsGroupSingle_1.ExtraOptionsGroupSingle, null)))); };
-exports.SidebarRightTemplateSingle = SidebarRightTemplateSingle;
-
-
-/***/ }),
-
-/***/ "../modules/SidebarRight/sidebar-tabs/index.ts":
-/*!*****************************************************!*\
-  !*** ../modules/SidebarRight/sidebar-tabs/index.ts ***!
-  \*****************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.SidebarRightTemplateSingle = exports.SidebarRightTemplate = exports.SidebarRightPost = exports["default"] = void 0;
-var SidebarRight_1 = __webpack_require__(/*! ../components/SidebarRight */ "../modules/SidebarRight/components/SidebarRight.tsx");
-Object.defineProperty(exports, "default", ({ enumerable: true, get: function () { return SidebarRight_1.SidebarRight; } }));
-var SidebarRightPost_1 = __webpack_require__(/*! ./SidebarRightPost */ "../modules/SidebarRight/sidebar-tabs/SidebarRightPost.tsx");
-Object.defineProperty(exports, "SidebarRightPost", ({ enumerable: true, get: function () { return SidebarRightPost_1.SidebarRightPost; } }));
-var SidebarRightTemplate_1 = __webpack_require__(/*! ./SidebarRightTemplate */ "../modules/SidebarRight/sidebar-tabs/SidebarRightTemplate.tsx");
-Object.defineProperty(exports, "SidebarRightTemplate", ({ enumerable: true, get: function () { return SidebarRightTemplate_1.SidebarRightTemplate; } }));
-var SidebarRightTemplateSingle_1 = __webpack_require__(/*! ./SidebarRightTemplateSingle */ "../modules/SidebarRight/sidebar-tabs/SidebarRightTemplateSingle.tsx");
-Object.defineProperty(exports, "SidebarRightTemplateSingle", ({ enumerable: true, get: function () { return SidebarRightTemplateSingle_1.SidebarRightTemplateSingle; } }));
-
-
-/***/ }),
-
-/***/ "../modules/SidebarRight/sidebar-template-groups/ExtraOptionsGroup.tsx":
-/*!*****************************************************************************!*\
-  !*** ../modules/SidebarRight/sidebar-template-groups/ExtraOptionsGroup.tsx ***!
-  \*****************************************************************************/
+/***/ "../modules/SidebarRight/components/groups/template-groups/ExtraOptionsGroup.tsx":
+/*!***************************************************************************************!*\
+  !*** ../modules/SidebarRight/components/groups/template-groups/ExtraOptionsGroup.tsx ***!
+  \***************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -44101,6 +44386,7 @@ exports.ExtraOptionsGroup = void 0;
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
 var sidebar_1 = __webpack_require__(/*! @news-parser/ui/sidebar */ "../ui/sidebar/index.ts");
 var hooks_1 = __webpack_require__(/*! @news-parser/entities/sidebarTemplate/hooks/ */ "../entities/sidebarTemplate/hooks/index.ts");
+var sidebar_2 = __webpack_require__(/*! @news-parser/ui/sidebar */ "../ui/sidebar/index.ts");
 /**
  * React functional component for rendering a group of extra options.
  *
@@ -44112,58 +44398,23 @@ var ExtraOptionsGroup = function () {
     var toggleAddSourceHandler = (0, hooks_1.useToggleAddSource)();
     var addSource = (0, hooks_1.useGetAddSource)();
     var saveParsingTemplate = (0, hooks_1.useGetSaveParsingTemplate)();
-    return (react_1.default.createElement(sidebar_1.InfoBody, null,
-        react_1.default.createElement("div", { className: 'info-box-container' },
-            react_1.default.createElement(sidebar_1.Checkbox, { checked: addSource, onChange: toggleAddSourceHandler, id: 'add-source-link-to-post' }),
-            react_1.default.createElement("label", { htmlFor: 'add-source-link-to-post', className: 'howto inline-bl' }, "Add source link to the post.")),
-        saveParsingTemplate !== undefined && react_1.default.createElement("div", { className: 'info-box-container' },
-            react_1.default.createElement(sidebar_1.Checkbox, { checked: saveParsingTemplate, onChange: toggleSaveParsingTemplateHandler, id: 'save-posts-parsing-template' }),
-            react_1.default.createElement("label", { htmlFor: 'save-posts-parsing-template', className: 'howto inline-bl' }, "Save parsing template that you can use in automatic parsing from this source."))));
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(sidebar_2.SidebarItem, null,
+            react_1.default.createElement(sidebar_1.Checkbox, { checked: addSource, onChange: toggleAddSourceHandler, id: 'add-source-link-to-post-checkbox' }),
+            react_1.default.createElement(sidebar_2.SidebarItemLabel, { className: 'howto inline-bl', htmlFor: 'add-source-link-to-post-checkbox' }, "Add source link to the post")),
+        react_1.default.createElement(sidebar_2.SidebarItem, null,
+            react_1.default.createElement(sidebar_1.Checkbox, { checked: saveParsingTemplate, onChange: toggleSaveParsingTemplateHandler, id: 'save-posts-parsing-template-checkbox' }),
+            react_1.default.createElement(sidebar_2.SidebarItemLabel, { className: 'howto inline-bl', htmlFor: 'save-posts-parsing-template-checkbox' }, "Save parsing template that you can use in automatic parsing from this source."))));
 };
 exports.ExtraOptionsGroup = ExtraOptionsGroup;
 
 
 /***/ }),
 
-/***/ "../modules/SidebarRight/sidebar-template-groups/ExtraOptionsGroupSingle.tsx":
-/*!***********************************************************************************!*\
-  !*** ../modules/SidebarRight/sidebar-template-groups/ExtraOptionsGroupSingle.tsx ***!
-  \***********************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ExtraOptionsGroupSingle = void 0;
-var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
-var sidebar_1 = __webpack_require__(/*! @news-parser/ui/sidebar */ "../ui/sidebar/index.ts");
-var hooks_1 = __webpack_require__(/*! @news-parser/entities/sidebarTemplate/hooks/ */ "../entities/sidebarTemplate/hooks/index.ts");
-/**
- * React functional component for rendering a single extra option.
- *
- * @component
- * @returns {JSX.Element} The rendered component.
- */
-var ExtraOptionsGroupSingle = function () {
-    var toggleAddSourceHandler = (0, hooks_1.useToggleAddSource)();
-    var addSource = (0, hooks_1.useGetAddSource)();
-    return (react_1.default.createElement(sidebar_1.InfoBody, null,
-        react_1.default.createElement("div", { className: "info-box-container" },
-            react_1.default.createElement(sidebar_1.Checkbox, { checked: addSource, onChange: toggleAddSourceHandler }),
-            react_1.default.createElement("p", { className: "howto inline-bl" }, "Add source link to the post."))));
-};
-exports.ExtraOptionsGroupSingle = ExtraOptionsGroupSingle;
-
-
-/***/ }),
-
-/***/ "../modules/SidebarRight/sidebar-template-groups/FeaturedMediaGroup.tsx":
-/*!******************************************************************************!*\
-  !*** ../modules/SidebarRight/sidebar-template-groups/FeaturedMediaGroup.tsx ***!
-  \******************************************************************************/
+/***/ "../modules/SidebarRight/components/groups/template-groups/FeaturedMediaGroup.tsx":
+/*!****************************************************************************************!*\
+  !*** ../modules/SidebarRight/components/groups/template-groups/FeaturedMediaGroup.tsx ***!
+  \****************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -44175,6 +44426,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.FeaturedMediaGroup = void 0;
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
 var sidebar_1 = __webpack_require__(/*! @news-parser/ui/sidebar/ */ "../ui/sidebar/index.ts");
+var sidebar_2 = __webpack_require__(/*! @news-parser/ui/sidebar */ "../ui/sidebar/index.ts");
 var Image_1 = __webpack_require__(/*! @news-parser/ui/Image */ "../ui/Image.tsx");
 var hooks_1 = __webpack_require__(/*! @news-parser/entities/sidebarTemplate/hooks */ "../entities/sidebarTemplate/hooks/index.ts");
 var index_1 = __importDefault(__webpack_require__(/*! @news-parser/config/index */ "../config/index.ts"));
@@ -44188,28 +44440,315 @@ var FeaturedMediaGroup = function () {
     var featuredMedia = (0, hooks_1.useGetPostFeaturedMedia)();
     var addFeaturedMedia = (0, hooks_1.useGetAddFeaturedMedia)();
     var toggleAddFeaturedMediaHandler = (0, hooks_1.useToggleAddFeaturedMedia)();
-    var changeFeaturedMediaHandler = (0, hooks_1.useChangeFeaturedMedia)();
     var featuredImageClassName = !addFeaturedMedia
         ? 'featured-image-thumbnail no-featured-image'
         : 'featured-image-thumbnail';
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(sidebar_1.InfoBody, null,
-            react_1.default.createElement(Image_1.Image, { src: featuredMedia, className: featuredImageClassName, alt: 'Featured image thumbnail', defaultImage: index_1.default.defaultImage }),
-            react_1.default.createElement("p", { className: 'howto' }, "If you want to change featured image, select image you would like to choose in the constructor and click 'Change image' button."),
-            react_1.default.createElement(sidebar_1.Checkbox, { checked: !addFeaturedMedia, onChange: toggleAddFeaturedMediaHandler, id: 'no-post-featured-media' }),
-            react_1.default.createElement("label", { className: 'howto inline-bl', htmlFor: 'no-post-featured-media' }, "No featured image.")),
-        react_1.default.createElement(sidebar_1.InfoFooter, null,
-            react_1.default.createElement("button", { type: 'button', className: 'button button-primary button-large', onClick: changeFeaturedMediaHandler }, "Change image"))));
+        react_1.default.createElement(sidebar_2.SidebarItem, null,
+            react_1.default.createElement(Image_1.Image, { src: featuredMedia, className: featuredImageClassName, alt: 'Featured image thumbnail', defaultImage: index_1.default.defaultImage })),
+        react_1.default.createElement(sidebar_2.SidebarItem, null,
+            react_1.default.createElement("p", { className: 'howto' }, "If you want to change featured image, select image you would like to choose in the constructor and click 'Change image' button.")),
+        react_1.default.createElement(sidebar_2.SidebarItem, null,
+            react_1.default.createElement(sidebar_1.Checkbox, { checked: !addFeaturedMedia, onChange: toggleAddFeaturedMediaHandler, id: 'no-post-featured-media-checkbox' }),
+            react_1.default.createElement(sidebar_2.SidebarItemLabel, { className: 'howto inline-bl', htmlFor: 'no-post-featured-media-checkbox' }, "No featured image."))));
 };
 exports.FeaturedMediaGroup = FeaturedMediaGroup;
 
 
 /***/ }),
 
-/***/ "../modules/SidebarRight/sidebar-template-groups/PostTitleGroup.tsx":
-/*!**************************************************************************!*\
-  !*** ../modules/SidebarRight/sidebar-template-groups/PostTitleGroup.tsx ***!
-  \**************************************************************************/
+/***/ "../modules/SidebarRight/components/groups/template-groups/ImageOptionsGroup.tsx":
+/*!***************************************************************************************!*\
+  !*** ../modules/SidebarRight/components/groups/template-groups/ImageOptionsGroup.tsx ***!
+  \***************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ImageOptionsGroup = void 0;
+var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
+var sidebar_1 = __webpack_require__(/*! @news-parser/ui/sidebar */ "../ui/sidebar/index.ts");
+var sidebar_2 = __webpack_require__(/*! @news-parser/ui/sidebar */ "../ui/sidebar/index.ts");
+var hooks_1 = __webpack_require__(/*! @news-parser/entities/sidebarTemplate/hooks/ */ "../entities/sidebarTemplate/hooks/index.ts");
+var hooks_2 = __webpack_require__(/*! @news-parser/entities/sidebarTemplate/hooks/ */ "../entities/sidebarTemplate/hooks/index.ts");
+/**
+ * React functional component for rendering a image parsing options.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered component.
+ */
+var ImageOptionsGroup = function () {
+    var toggleGroupImageRowHandler = (0, hooks_1.useToggleGroupImageRow)();
+    var groupImageRow = (0, hooks_1.useGetGroupImageRow)();
+    var toggleAddSrcSetAndSizesHandler = (0, hooks_2.useToggleAddSrcSetAndSizes)();
+    var addSrcSetAndSizes = (0, hooks_2.useGetAddSrcSetAndSizes)();
+    if (groupImageRow === undefined)
+        return null;
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(sidebar_1.SidebarItem, null,
+            react_1.default.createElement(sidebar_2.Checkbox, { checked: groupImageRow, onChange: toggleGroupImageRowHandler, id: 'group-images-in-row-checkbox' }),
+            react_1.default.createElement(sidebar_1.SidebarItemLabel, { className: 'howto inline-bl', htmlFor: 'group-images-in-row-checkbox' }, "Groups images in two in the row.")),
+        react_1.default.createElement(sidebar_1.SidebarItem, null,
+            react_1.default.createElement(sidebar_2.Checkbox, { checked: addSrcSetAndSizes, onChange: toggleAddSrcSetAndSizesHandler, id: 'add-images-srcset-and-sizes-checkbox' }),
+            react_1.default.createElement(sidebar_1.SidebarItemLabel, { className: 'howto inline-bl', htmlFor: 'add-images-srcset-and-sizes-checkbox' }, "Add srcset and sizes attribures to the parsed images."))));
+};
+exports.ImageOptionsGroup = ImageOptionsGroup;
+
+
+/***/ }),
+
+/***/ "../modules/SidebarRight/components/groups/template-groups/PostTitleGroup.tsx":
+/*!************************************************************************************!*\
+  !*** ../modules/SidebarRight/components/groups/template-groups/PostTitleGroup.tsx ***!
+  \************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PostTitleGroup = void 0;
+var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
+var sidebar_1 = __webpack_require__(/*! @news-parser/ui/sidebar */ "../ui/sidebar/index.ts");
+var hooks_1 = __webpack_require__(/*! @news-parser/entities/sidebarTemplate/hooks */ "../entities/sidebarTemplate/hooks/index.ts");
+/**
+ * Component representing a group for managing the post title in the sidebar.
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.newTitle - The new title value.
+ * @param {ChangeEventHandler<HTMLInputElement>} props.onChange - The change event handler for the input element.
+ * @returns {JSX.Element} The rendered PostTitleGroup component.
+ */
+var PostTitleGroup = function (_a) {
+    var newTitle = _a.newTitle, onChange = _a.onChange;
+    var currentTitle = (0, hooks_1.useGetPostTitle)();
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(sidebar_1.SidebarItem, null,
+            react_1.default.createElement("span", null, currentTitle)),
+        react_1.default.createElement(sidebar_1.SidebarItem, null,
+            react_1.default.createElement("input", { onChange: onChange, value: newTitle, type: 'text', className: "form-control", "aria-describedby": 'new-post-title-description', "aria-label": 'New title input', name: 'postTitle' })),
+        react_1.default.createElement(sidebar_1.SidebarItem, null,
+            react_1.default.createElement("p", { className: "howto", id: 'new-post-title-description' }, "If you want to change title, type the new title and press \"Change title\" button."))));
+};
+exports.PostTitleGroup = PostTitleGroup;
+
+
+/***/ }),
+
+/***/ "../modules/SidebarRight/components/sections/post-sections/CategoriesSection.tsx":
+/*!***************************************************************************************!*\
+  !*** ../modules/SidebarRight/components/sections/post-sections/CategoriesSection.tsx ***!
+  \***************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.CategoriesSection = void 0;
+var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
+var InfoBox_1 = __webpack_require__(/*! @news-parser/ui/sidebar/InfoBox */ "../ui/sidebar/InfoBox.tsx");
+var CategoriesGroup_1 = __importDefault(__webpack_require__(/*! ../../groups/post-groups/CategoriesGroup */ "../modules/SidebarRight/components/groups/post-groups/CategoriesGroup.tsx"));
+/**
+ * Component representing the right sidebar section for post categories.
+ * @component
+ * @returns {JSX.Element} The rendered SidebarRightPost component.
+ */
+var CategoriesSection = function () { return (react_1.default.createElement(InfoBox_1.InfoBox, { title: 'Categories' },
+    react_1.default.createElement(InfoBox_1.InfoBody, null,
+        react_1.default.createElement(CategoriesGroup_1.default, null)))); };
+exports.CategoriesSection = CategoriesSection;
+
+
+/***/ }),
+
+/***/ "../modules/SidebarRight/components/sections/post-sections/DiscussionSection.tsx":
+/*!***************************************************************************************!*\
+  !*** ../modules/SidebarRight/components/sections/post-sections/DiscussionSection.tsx ***!
+  \***************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DiscussionSection = void 0;
+var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
+var InfoBox_1 = __webpack_require__(/*! @news-parser/ui/sidebar/InfoBox */ "../ui/sidebar/InfoBox.tsx");
+var DiscussionGroup_1 = __importDefault(__webpack_require__(/*! ../../groups/post-groups/DiscussionGroup */ "../modules/SidebarRight/components/groups/post-groups/DiscussionGroup.tsx"));
+/**
+ * Component representing the section for Discussion options in the sidebar.
+ * @component
+ * @returns {JSX.Element} The rendered StatusVisibilitySection component.
+ */
+var DiscussionSection = function () { return (react_1.default.createElement(InfoBox_1.InfoBox, { title: 'Discussion' },
+    react_1.default.createElement(InfoBox_1.InfoBody, null,
+        react_1.default.createElement(DiscussionGroup_1.default, null)))); };
+exports.DiscussionSection = DiscussionSection;
+
+
+/***/ }),
+
+/***/ "../modules/SidebarRight/components/sections/post-sections/StatusVisibilitySection.tsx":
+/*!*********************************************************************************************!*\
+  !*** ../modules/SidebarRight/components/sections/post-sections/StatusVisibilitySection.tsx ***!
+  \*********************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.StatusVisibilitySection = void 0;
+var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
+var InfoBox_1 = __webpack_require__(/*! @news-parser/ui/sidebar/InfoBox */ "../ui/sidebar/InfoBox.tsx");
+var StatusVisibilityGroup_1 = __importDefault(__webpack_require__(/*! ../../groups/post-groups/StatusVisibilityGroup */ "../modules/SidebarRight/components/groups/post-groups/StatusVisibilityGroup.tsx"));
+/**
+ * Component representing the section for status and visibility in the sidebar.
+ * @component
+ * @returns {JSX.Element} The rendered StatusVisibilitySection component.
+ */
+var StatusVisibilitySection = function () { return (react_1.default.createElement(InfoBox_1.InfoBox, { title: 'Satus&Visibility' },
+    react_1.default.createElement(InfoBox_1.InfoBody, null,
+        react_1.default.createElement(StatusVisibilityGroup_1.default, null)))); };
+exports.StatusVisibilitySection = StatusVisibilitySection;
+
+
+/***/ }),
+
+/***/ "../modules/SidebarRight/components/sections/post-sections/TagsSection.tsx":
+/*!*********************************************************************************!*\
+  !*** ../modules/SidebarRight/components/sections/post-sections/TagsSection.tsx ***!
+  \*********************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TagsSection = void 0;
+var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
+var InfoBox_1 = __webpack_require__(/*! @news-parser/ui/sidebar/InfoBox */ "../ui/sidebar/InfoBox.tsx");
+var TagsGroup_1 = __importDefault(__webpack_require__(/*! ../../groups/post-groups/TagsGroup */ "../modules/SidebarRight/components/groups/post-groups/TagsGroup.tsx"));
+/**
+ * Component representing the right sidebar section for post tags.
+ * @component
+ * @returns {JSX.Element} The rendered SidebarRightPost component.
+ */
+var TagsSection = function () { return (react_1.default.createElement(InfoBox_1.InfoBox, { title: 'Tags' },
+    react_1.default.createElement(InfoBox_1.InfoBody, null,
+        react_1.default.createElement(TagsGroup_1.default, null)))); };
+exports.TagsSection = TagsSection;
+
+
+/***/ }),
+
+/***/ "../modules/SidebarRight/components/sections/template-sections/ExtraOptionsSection.tsx":
+/*!*********************************************************************************************!*\
+  !*** ../modules/SidebarRight/components/sections/template-sections/ExtraOptionsSection.tsx ***!
+  \*********************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ExtraOptionsSection = void 0;
+var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
+var sidebar_1 = __webpack_require__(/*! @news-parser/ui/sidebar */ "../ui/sidebar/index.ts");
+var ExtraOptionsGroup_1 = __webpack_require__(/*! ../../groups/template-groups/ExtraOptionsGroup */ "../modules/SidebarRight/components/groups/template-groups/ExtraOptionsGroup.tsx");
+var ExtraOptionsSection = function () {
+    return (react_1.default.createElement(sidebar_1.InfoBox, { title: 'Extra options' },
+        react_1.default.createElement(sidebar_1.InfoBody, null,
+            react_1.default.createElement(ExtraOptionsGroup_1.ExtraOptionsGroup, null))));
+};
+exports.ExtraOptionsSection = ExtraOptionsSection;
+
+
+/***/ }),
+
+/***/ "../modules/SidebarRight/components/sections/template-sections/FeaturedMediaSection.tsx":
+/*!**********************************************************************************************!*\
+  !*** ../modules/SidebarRight/components/sections/template-sections/FeaturedMediaSection.tsx ***!
+  \**********************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.FeaturedMediaSection = void 0;
+var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
+var sidebar_1 = __webpack_require__(/*! @news-parser/ui/sidebar/ */ "../ui/sidebar/index.ts");
+var hooks_1 = __webpack_require__(/*! @news-parser/entities/sidebarTemplate/hooks */ "../entities/sidebarTemplate/hooks/index.ts");
+var FeaturedMediaGroup_1 = __webpack_require__(/*! ../../groups/template-groups/FeaturedMediaGroup */ "../modules/SidebarRight/components/groups/template-groups/FeaturedMediaGroup.tsx");
+/**
+ * React functional component for rendering a section related to the featured media.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered component.
+ */
+var FeaturedMediaSection = function () {
+    var changeFeaturedMediaHandler = (0, hooks_1.useChangeFeaturedMedia)();
+    return (react_1.default.createElement(sidebar_1.InfoBox, { title: 'Featured Image' },
+        react_1.default.createElement(sidebar_1.InfoBody, null,
+            react_1.default.createElement(FeaturedMediaGroup_1.FeaturedMediaGroup, null)),
+        react_1.default.createElement(sidebar_1.InfoFooter, null,
+            react_1.default.createElement("button", { type: 'button', className: 'button button-primary button-large', onClick: changeFeaturedMediaHandler }, "Change image"))));
+};
+exports.FeaturedMediaSection = FeaturedMediaSection;
+
+
+/***/ }),
+
+/***/ "../modules/SidebarRight/components/sections/template-sections/ImageOptionsSection.tsx":
+/*!*********************************************************************************************!*\
+  !*** ../modules/SidebarRight/components/sections/template-sections/ImageOptionsSection.tsx ***!
+  \*********************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ImageOptionsSection = void 0;
+var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
+var sidebar_1 = __webpack_require__(/*! @news-parser/ui/sidebar */ "../ui/sidebar/index.ts");
+var ImageOptionsGroup_1 = __webpack_require__(/*! ../../groups/template-groups/ImageOptionsGroup */ "../modules/SidebarRight/components/groups/template-groups/ImageOptionsGroup.tsx");
+var ImageOptionsSection = function () {
+    return (react_1.default.createElement(sidebar_1.InfoBox, { title: 'Image options' },
+        react_1.default.createElement(sidebar_1.InfoBody, null,
+            react_1.default.createElement(ImageOptionsGroup_1.ImageOptionsGroup, null))));
+};
+exports.ImageOptionsSection = ImageOptionsSection;
+
+
+/***/ }),
+
+/***/ "../modules/SidebarRight/components/sections/template-sections/PostTitleSection.tsx":
+/*!******************************************************************************************!*\
+  !*** ../modules/SidebarRight/components/sections/template-sections/PostTitleSection.tsx ***!
+  \******************************************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -44238,28 +44777,167 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.PostTitleGroup = void 0;
+exports.PostTitleSection = void 0;
 var react_1 = __importStar(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
 var sidebar_1 = __webpack_require__(/*! @news-parser/ui/sidebar/ */ "../ui/sidebar/index.ts");
 var hooks_1 = __webpack_require__(/*! @news-parser/entities/sidebarTemplate/hooks */ "../entities/sidebarTemplate/hooks/index.ts");
-function PostTitleGroup() {
+var PostTitleGroup_1 = __webpack_require__(/*! ../../groups/template-groups/PostTitleGroup */ "../modules/SidebarRight/components/groups/template-groups/PostTitleGroup.tsx");
+/**
+ * Component representing the section for changing the post title in the sidebar.
+ * @returns {JSX.Element} The rendered PostTitleSection component.
+ */
+function PostTitleSection() {
     var _a = (0, react_1.useState)(''), newTitle = _a[0], setNewTitle = _a[1];
-    var changeStateInputTitle = (0, react_1.useCallback)(function (e) { return setNewTitle(e.target.value); }, [setNewTitle]);
     var selectTitle = (0, hooks_1.useSetPostTitle)();
-    var title = (0, hooks_1.useGetPostTitle)();
+    var inputChangeHandler = (0, react_1.useCallback)(function (e) {
+        var inputElement = e.target;
+        setNewTitle(inputElement.value);
+    }, [setNewTitle]);
     var selectTitleHandler = (0, react_1.useCallback)(function () {
         selectTitle(newTitle);
         setNewTitle('');
     }, [newTitle]);
-    return (react_1.default.createElement(react_1.default.Fragment, null,
+    return (react_1.default.createElement(sidebar_1.InfoBox, { title: 'Post title' },
         react_1.default.createElement(sidebar_1.InfoBody, null,
-            react_1.default.createElement("span", null, title),
-            react_1.default.createElement("input", { onChange: changeStateInputTitle, value: newTitle, type: 'text', className: "form-control", "aria-label": 'New title input', name: 'postTitle' }),
-            react_1.default.createElement("p", { className: "howto" }, "If you want to change title, type the new title and press \"Change title\" button.")),
+            react_1.default.createElement(PostTitleGroup_1.PostTitleGroup, { newTitle: newTitle, onChange: inputChangeHandler })),
         react_1.default.createElement(sidebar_1.InfoFooter, null,
             react_1.default.createElement("button", { type: "button", className: "button button-primary button-large", onClick: selectTitleHandler }, "Change title"))));
 }
-exports.PostTitleGroup = PostTitleGroup;
+exports.PostTitleSection = PostTitleSection;
+
+
+/***/ }),
+
+/***/ "../modules/SidebarRight/components/tabs/SidebarRightPost.tsx":
+/*!********************************************************************!*\
+  !*** ../modules/SidebarRight/components/tabs/SidebarRightPost.tsx ***!
+  \********************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SidebarRightPost = void 0;
+var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
+var StatusVisibilitySection_1 = __webpack_require__(/*! ../sections/post-sections/StatusVisibilitySection */ "../modules/SidebarRight/components/sections/post-sections/StatusVisibilitySection.tsx");
+var CategoriesSection_1 = __webpack_require__(/*! ../sections/post-sections/CategoriesSection */ "../modules/SidebarRight/components/sections/post-sections/CategoriesSection.tsx");
+var TagsSection_1 = __webpack_require__(/*! ../sections/post-sections/TagsSection */ "../modules/SidebarRight/components/sections/post-sections/TagsSection.tsx");
+var DiscussionSection_1 = __webpack_require__(/*! ../sections/post-sections/DiscussionSection */ "../modules/SidebarRight/components/sections/post-sections/DiscussionSection.tsx");
+/**
+ * Post tab of visual constructor modal window.
+ *
+ */
+var SidebarRightPost = function () { return (react_1.default.createElement("div", { className: 'inner-sidebar-container', role: 'tabpanel' },
+    react_1.default.createElement(StatusVisibilitySection_1.StatusVisibilitySection, null),
+    react_1.default.createElement(CategoriesSection_1.CategoriesSection, null),
+    react_1.default.createElement(TagsSection_1.TagsSection, null),
+    react_1.default.createElement(DiscussionSection_1.DiscussionSection, null))); };
+exports.SidebarRightPost = SidebarRightPost;
+exports["default"] = exports.SidebarRightPost;
+
+
+/***/ }),
+
+/***/ "../modules/SidebarRight/components/tabs/SidebarRightTemplate.tsx":
+/*!************************************************************************!*\
+  !*** ../modules/SidebarRight/components/tabs/SidebarRightTemplate.tsx ***!
+  \************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SidebarRightTemplate = void 0;
+var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
+var FeaturedMediaSection_1 = __webpack_require__(/*! ../sections/template-sections/FeaturedMediaSection */ "../modules/SidebarRight/components/sections/template-sections/FeaturedMediaSection.tsx");
+var ExtraOptionsSection_1 = __webpack_require__(/*! ../sections/template-sections/ExtraOptionsSection */ "../modules/SidebarRight/components/sections/template-sections/ExtraOptionsSection.tsx");
+var ImageOptionsSection_1 = __webpack_require__(/*! ../sections/template-sections/ImageOptionsSection */ "../modules/SidebarRight/components/sections/template-sections/ImageOptionsSection.tsx");
+var PostTitleSection_1 = __webpack_require__(/*! ../sections/template-sections/PostTitleSection */ "../modules/SidebarRight/components/sections/template-sections/PostTitleSection.tsx");
+/**
+ * Template tab of visual constructor modal window.
+ *
+ */
+var SidebarRightTemplate = function () { return (react_1.default.createElement("div", { className: 'inner-sidebar-container', role: 'tabpanel' },
+    react_1.default.createElement(FeaturedMediaSection_1.FeaturedMediaSection, null),
+    react_1.default.createElement(PostTitleSection_1.PostTitleSection, null),
+    react_1.default.createElement(ImageOptionsSection_1.ImageOptionsSection, null),
+    react_1.default.createElement(ExtraOptionsSection_1.ExtraOptionsSection, null))); };
+exports.SidebarRightTemplate = SidebarRightTemplate;
+exports["default"] = exports.SidebarRightTemplate;
+
+
+/***/ }),
+
+/***/ "../modules/SidebarRight/components/tabs/index.ts":
+/*!********************************************************!*\
+  !*** ../modules/SidebarRight/components/tabs/index.ts ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SidebarRightTemplate = exports.SidebarRightPost = exports["default"] = void 0;
+var SidebarRight_1 = __webpack_require__(/*! ../SidebarRight */ "../modules/SidebarRight/components/SidebarRight.tsx");
+Object.defineProperty(exports, "default", ({ enumerable: true, get: function () { return SidebarRight_1.SidebarRight; } }));
+var SidebarRightPost_1 = __webpack_require__(/*! ./SidebarRightPost */ "../modules/SidebarRight/components/tabs/SidebarRightPost.tsx");
+Object.defineProperty(exports, "SidebarRightPost", ({ enumerable: true, get: function () { return SidebarRightPost_1.SidebarRightPost; } }));
+var SidebarRightTemplate_1 = __webpack_require__(/*! ./SidebarRightTemplate */ "../modules/SidebarRight/components/tabs/SidebarRightTemplate.tsx");
+Object.defineProperty(exports, "SidebarRightTemplate", ({ enumerable: true, get: function () { return SidebarRightTemplate_1.SidebarRightTemplate; } }));
+
+
+/***/ }),
+
+/***/ "../modules/SidebarRight/hooks/useCategoryFilter.ts":
+/*!**********************************************************!*\
+  !*** ../modules/SidebarRight/hooks/useCategoryFilter.ts ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useCategoryFilter = void 0;
+var react_1 = __webpack_require__(/*! react */ "../../../node_modules/react/index.js");
+/**
+ *
+ * A custom React hook that provides category filtering functionality.
+ *
+ * @param {Array} categories - An array of category objects.
+ * @returns {Array} An array containing the filter value, a function to set the filter value, and an array of filtered categories.
+ * @since 2.0.0
+ */
+var useCategoryFilter = function (categories) {
+    var _a = (0, react_1.useState)(""), filterValue = _a[0], setFilterValue = _a[1];
+    var filteredCategories = (0, react_1.useMemo)(function () {
+        var filterWithParent = function (categoryName, categories) {
+            var getParent = function (categoryObj, categoryArr) {
+                return categoryArr.find(function (categoryItem) { return categoryItem.id === categoryObj.parent; }) || false;
+            };
+            var filteredCategories = categories.filter(function (category) {
+                return category.name.includes(categoryName);
+            });
+            filteredCategories.forEach(function (categoryItem) {
+                var parentCategoryItem = getParent(categoryItem, categories);
+                if (parentCategoryItem !== false) {
+                    var parentCategorieId_1 = parentCategoryItem.id;
+                    filteredCategories.findIndex(function (categoryItem) { return categoryItem.id === parentCategorieId_1; }) === -1 &&
+                        filteredCategories.push(parentCategoryItem);
+                }
+            });
+            return filteredCategories;
+        };
+        return filterWithParent(filterValue, categories);
+    }, [filterValue, categories]);
+    return [filterValue, setFilterValue, filteredCategories];
+};
+exports.useCategoryFilter = useCategoryFilter;
 
 
 /***/ }),
@@ -44356,7 +45034,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var react_1 = __importStar(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
 var Message_1 = __importDefault(__webpack_require__(/*! @news-parser/modules/Message */ "../modules/Message/index.ts"));
-var sidebar_tabs_1 = __importStar(__webpack_require__(/*! @news-parser/modules/SidebarRight/sidebar-tabs/ */ "../modules/SidebarRight/sidebar-tabs/index.ts"));
+var tabs_1 = __importStar(__webpack_require__(/*! @news-parser/modules/SidebarRight/components/tabs */ "../modules/SidebarRight/components/tabs/index.ts"));
 var index_1 = __webpack_require__(/*! @news-parser/widgets/visual-constructor/components/index */ "../widgets/visual-constructor/components/index.ts");
 var hooks_1 = __webpack_require__(/*! @news-parser/widgets/visual-constructor/hooks */ "../widgets/visual-constructor/hooks/index.ts");
 var hooks_2 = __webpack_require__(/*! @news-parser/entities/post/hooks/ */ "../entities/post/hooks/index.ts");
@@ -44376,9 +45054,9 @@ var Main = function () {
     }, [createLocalPost, openVisualConstructor]);
     return (react_1.default.createElement("div", { className: "wrap" },
         react_1.default.createElement(index_1.VisualConstructor, null,
-            react_1.default.createElement(sidebar_tabs_1.default, { tabs: ['Templat', 'Post'] },
-                react_1.default.createElement(sidebar_tabs_1.SidebarRightTemplateSingle, null),
-                react_1.default.createElement(sidebar_tabs_1.SidebarRightPost, null)),
+            react_1.default.createElement(tabs_1.default, { tabs: ['Templat', 'Post'] },
+                react_1.default.createElement(tabs_1.SidebarRightTemplate, null),
+                react_1.default.createElement(tabs_1.SidebarRightPost, null)),
             react_1.default.createElement(index_1.VisualConstructorFooterPage, null)),
         react_1.default.createElement("div", { className: 'parsing-title' },
             react_1.default.createElement("h1", null,
@@ -44533,9 +45211,10 @@ exports.parserPageInitialState = {
     parse: {
         sidebarTemplate: {
             options: {
+                addSrcSetAndSizes: false,
                 groupImagesRow: false,
                 addFeaturedMedia: true,
-                addSource: false
+                addSource: false,
             }
         }
     }
@@ -44959,24 +45638,18 @@ exports.CategoryItem = CategoryItem;
 
 "use strict";
 
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Checkbox = void 0;
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
-var Checkbox = function (props) { return (react_1.default.createElement("input", __assign({ type: 'checkbox' }, props))); };
+var Checkbox = function (_a) {
+    var checked = _a.checked, onChange = _a.onChange, id = _a.id;
+    if (checked === undefined)
+        return null;
+    return (react_1.default.createElement("input", { type: 'checkbox', checked: checked, id: id, onChange: onChange }));
+};
 exports.Checkbox = Checkbox;
 
 
@@ -44990,12 +45663,32 @@ exports.Checkbox = Checkbox;
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.InfoFooter = exports.InfoBody = exports.InfoBox = void 0;
-var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
 __webpack_require__(/*! ../styles/InfoBox.css */ "../ui/styles/InfoBox.css");
 /**
  * A component for displaying information in a styled box.
@@ -45008,7 +45701,9 @@ __webpack_require__(/*! ../styles/InfoBox.css */ "../ui/styles/InfoBox.css");
  */
 var InfoBox = function (_a) {
     var title = _a.title, children = _a.children;
-    return (react_1.default.createElement("div", { id: 'postimagediv', className: 'postbox' },
+    if (react_1.Children.toArray(children).length == 0)
+        return null;
+    return (react_1.default.createElement("div", { className: 'postbox' },
         react_1.default.createElement("div", { className: 'd-flex flex-row' },
             react_1.default.createElement("h2", { className: 'ui-sortable-handle infobox-header flex-grow-1' },
                 react_1.default.createElement("span", null, title))),
@@ -45541,7 +46236,7 @@ var VisualConstructorFooterRss = function (_a) {
         }
         else if (typeof rssUrl === 'string')
             settledCallback(createTemplate(rssUrl), "Template was saved.");
-    }, [shouldParsingTemplateToBeSaved]);
+    }, [shouldParsingTemplateToBeSaved, createTemplate]);
     return (react_1.default.createElement("div", { className: "visual-container-modal-footer d-flex flex-row justify-content-end align-items-center" },
         react_1.default.createElement("button", { disabled: isTemplateCreating, type: "button", className: "button button-large button-primary", onClick: buttonClickHandler }, shouldParsingTemplateToBeSaved ? "Save Template" : "Create Post")));
 };

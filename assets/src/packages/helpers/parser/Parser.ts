@@ -1,6 +1,6 @@
 import { hash } from '@news-parser/helpers/index';
 import { ImageContent, ParsedData } from 'types/sidebarTemplate';
-import { ParserInterface } from './types';
+import { ParsedElementData, ParserInterface } from './types';
 /**
  * Get HTML element data.
  * 
@@ -8,8 +8,9 @@ import { ParserInterface } from './types';
  */
 export class Parser implements ParserInterface {
     protected document: Document | undefined;
-
+    protected iframe: HTMLIFrameElement;
     constructor(frameElement: HTMLIFrameElement) {
+        this.iframe=frameElement;
         this.document = frameElement.contentWindow?.document;
     }
 
@@ -21,36 +22,37 @@ export class Parser implements ParserInterface {
      */
     parseElementData(el: HTMLElement) {
         const element = el;
-            const parsedData: ParsedData = {
-                tagName: '',
-                className: '',
-                offsetTop: 0,
-                parent: []
-            };
-        parsedData.tagName = element.tagName;
-        parsedData.className = element.className.replace(' parser-select', '').replace(' mouse-over', '');
-        switch (parsedData.tagName) {
+        let tagName = element.tagName;
+        let className = element.className.replace(' parser-select', '').replace(' mouse-over', '');
+        let content;
+        switch (tagName) {
             case 'IMG':
-                parsedData.content = this.parseImageContent(element as HTMLImageElement);
+                content = this.parseImageContent(element as HTMLImageElement);
                 break;
             case 'UL':
-                parsedData.content = this.parseListContent(element as HTMLUListElement);
+                content = this.parseListContent(element as HTMLUListElement);
                 break;
             case 'VIDEO':
-                parsedData.content = element.dataset.hash;
-                parsedData.tagName = 'IFRAME';
-                parsedData.className = element.className.replace('news-parser-youtube', '').replace(' parser-select', '').replace(' mouse-over', '');
+                content = element.dataset.hash;
+                tagName = 'IFRAME';
+                className = element.className.replace('news-parser-youtube', '').replace(' parser-select', '').replace(' mouse-over', '');
                 break;
             default:
-                parsedData.content = element.innerText;
+                content = element.innerText;
         }
-        parsedData.offsetTop = this.getOffsetTop(element);
-        parsedData.parent = this.getParentsArray(element);
+        let offsetTop = this.getOffsetTop(element);
+        let parent = this.getParentsArray(element);
         const elementHash = hash(Math.random().toString());
         return {
             hash: elementHash.toString(),
-            content: parsedData
-        }
+            content: {
+                content,
+                tagName,
+                className,
+                offsetTop,
+                parent
+            }
+        } as ParsedElementData
     }
 
     /**
@@ -60,7 +62,7 @@ export class Parser implements ParserInterface {
      * @returns {number}
      */
     getOffsetTop(el: HTMLElement) {
-        const bodyScrollTop = this.document ? this.document.body.scrollTop : 0;
+        const bodyScrollTop = this.iframe.contentWindow ? this.iframe.contentWindow.scrollY : 0;
         return el.getBoundingClientRect().top + bodyScrollTop;
     }
 
@@ -73,15 +75,17 @@ export class Parser implements ParserInterface {
     parseImageContent(el: HTMLImageElement): ImageContent {
         const sourceTag: HTMLCollectionOf<HTMLSourceElement> | [] = el.parentElement ? el.parentElement.getElementsByTagName('source') : [];
         if (sourceTag.length == 0) {
+            let src=el.srcset?this.getSrcFromSrcSet(el.srcset):el.src;
             return {
-                src: el.src,
+                src,
                 srcSet: el.srcset,
                 sizes: el.sizes,
                 alt: el.alt
             }
         }
+        let src=sourceTag[0].srcset?this.getSrcFromSrcSet(sourceTag[0].srcset):sourceTag[0].src !== '' ? el.src : sourceTag[0].src
         return {
-            src: sourceTag[0].src !== '' ? el.src : sourceTag[0].src,
+            src,
             srcSet: sourceTag[0].srcset,
             sizes: sourceTag[0].sizes,
             alt: el.alt
@@ -123,5 +127,18 @@ export class Parser implements ParserInterface {
             parentElement = parentElement.parentElement;
         }
         return parent;
+    }
+    /**
+     * Get src from srcset
+     * 
+     * @param {string} srcSet
+     * @param {number} index
+     */
+    protected getSrcFromSrcSet(srcSet: string, index: number = -2): string {
+        const srcSetArr: Array<string> = srcSet.split(',');
+        if (srcSetArr.length <= Math.abs(index)) throw new Error('Given index in greater then number of srcset breakpoints');
+        const srcMediaElement = srcSetArr.at(index)
+        if (srcMediaElement !== undefined) return srcMediaElement.trim().replace(/\s.*w/, '');
+        return '';
     }
 }

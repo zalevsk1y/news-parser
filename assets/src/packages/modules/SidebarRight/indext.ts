@@ -1,4 +1,3 @@
 export { SidebarRight as default } from './components/SidebarRight';
-export { SidebarRightTemplate } from './sidebar-tabs/SidebarRightTemplate';
-export { SidebarRightTemplateSingle } from './sidebar-tabs/SidebarRightTemplateSingle';
-export { SidebarRightPost } from './sidebar-tabs/SidebarRightPost';
+export { SidebarRightTemplate } from './components/tabs/SidebarRightTemplate';
+export { SidebarRightPost } from './components/tabs/SidebarRightPost';

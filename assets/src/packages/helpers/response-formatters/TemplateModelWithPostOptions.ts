@@ -17,9 +17,9 @@ export class TemplateModelWithPostOptions extends TemplateModel implements Templ
 
     createTemplateData():TemplateDataWithPostOptions {
         const arrayOfElements:ParsedData[] = Object.keys(this.postData.body).map(propName => this.postData.body[propName]);
-            const cleanedData = this.removeDuplicate(arrayOfElements);
-            const sortedData = this.sortByDOMPosition(cleanedData);
-            const container = this.createContainer(sortedData);
+        const cleanedData = this.removeDuplicate(arrayOfElements);
+        const sortedData = this.sortByDOMPosition(cleanedData);
+        const container = this.createContainer(sortedData);
         const template = {
             url: this.url,
             postOptions: this.formatPostOptions(this.postOptions),

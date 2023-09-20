@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import Message from '@news-parser/modules/Message';
-import SidebarRight, { SidebarRightTemplateSingle, SidebarRightPost } from '@news-parser/modules/SidebarRight/sidebar-tabs/';
+import SidebarRight, { SidebarRightTemplate, SidebarRightPost } from '@news-parser/modules/SidebarRight/components/tabs';
 import { VisualConstructor, VisualConstructorFooterPage as VisualConstructorFooter } from '@news-parser/widgets/visual-constructor/components/index';
 import { useOpenVisualConstructor } from '@news-parser/widgets/visual-constructor/hooks';
 import { useCreateLocalPost } from '@news-parser/entities/post/hooks/';
@@ -26,7 +26,7 @@ const Main:React.FC = () => {
     <div className="wrap">
       <VisualConstructor >
         <SidebarRight tabs={['Templat', 'Post']}>
-          <SidebarRightTemplateSingle />
+          <SidebarRightTemplate />
           <SidebarRightPost />
         </SidebarRight>
         <VisualConstructorFooter />

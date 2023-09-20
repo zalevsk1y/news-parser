@@ -66,6 +66,7 @@ trait ValidateDataTrait
     {
         $extra_option_should_have_keys=array(
             'addSource',
+            'groupImagesRow',
             'addFeaturedMedia',
             'saveParsingTemplate'
         );

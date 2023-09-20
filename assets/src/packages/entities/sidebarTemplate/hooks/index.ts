@@ -9,4 +9,8 @@ export { useToggleAddFeaturedMedia } from './useToggleAddFeaturedMedia';
 export { useGetPostTitle } from './useGetPostTitle';
 export { useGetSaveParsingTemplate } from './useGetSaveParsingTemplate';
 export { useResetSidebarTemplate } from './useResetSidebarTemplate';
-export { useChangeFeaturedMedia } from './useChangeFeaturedMedia'
+export { useChangeFeaturedMedia } from './useChangeFeaturedMedia';
+export { useGetGroupImageRow } from './useGetGroupImageRow';
+export { useToggleGroupImageRow } from './useToggleGroupImageRow';
+export { useToggleAddSrcSetAndSizes } from './useToggleAddSrcSetAndSizes';
+export { useGetAddSrcSetAndSizes } from './useGetAddSrcSetAndSizes'

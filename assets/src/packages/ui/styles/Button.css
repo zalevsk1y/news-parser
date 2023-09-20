@@ -25,3 +25,19 @@
     background: #008ec2;
     border-color: #006799;
     color: #fff; }
+
+  .button-secondary:hover {
+    background: #fafafa;
+    border-color: #999;
+    color: #23282d; }
+    
+  .button:focus {
+    background: #fafafa;
+    border-color: #999;
+    color: #23282d; }
+      
+  .button-secondary {
+  color: #555;
+  border-color: #ccc;
+  background: #f7f7f7;
+  box-shadow: 0 1px 0 #ccc; }

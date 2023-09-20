@@ -51,7 +51,7 @@ class PostControllerExtendeOptions extends PostController{
 
     protected function createPost()
     {
-        $this->post->createPost($this->postOptions);
+            $this->post->createPost($this->postOptions);
         
     }
     /**

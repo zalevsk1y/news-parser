@@ -1,6 +1,7 @@
 import React, { HTMLProps, useCallback } from 'react';
 
 export interface SelectProps {
+    className?:string,
     onChange: React.ChangeEventHandler<HTMLSelectElement>,
     children: React.ReactNode,
     value?: string,

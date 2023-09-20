@@ -30,7 +30,7 @@ export const VisualConstructorFooterRss:React.FC<VisualConstructorFooterRss> = (
             settledCallback(createWpPost(), "Post was parsed and saved.")
         } else if(typeof rssUrl==='string')settledCallback(createTemplate(rssUrl), "Template was saved.")
        
-    }, [shouldParsingTemplateToBeSaved]);
+    }, [shouldParsingTemplateToBeSaved,createTemplate]);
     return (
         <div className="visual-container-modal-footer d-flex flex-row justify-content-end align-items-center">
             <button

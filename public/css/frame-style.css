@@ -1,14 +1,18 @@
 .mouse-over {
+  outline: rgba(107, 214, 204, 0.5) dotted 3px;
     background-color: rgba(107, 214, 204, 0.5); 
     box-sizing: border-box;
-    opacity: 50%;
   }
   
-  .parser-select {
+  img.parser-select {
     background-color: rgba(107, 214, 204, 0.8); 
     opacity: 50%;
   }
-  
+  .parser-select{
+    box-sizing: border-box;
+    background-color:rgba(107, 214, 204, 0.8);
+    outline: rgba(107, 214, 204, 0.8) solid 3px; 
+  }
   
 .news-parser-youtube{
     width: 100%;

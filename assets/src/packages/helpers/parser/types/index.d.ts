@@ -1,8 +1,9 @@
 import { ImageContent, ParsedData, ParentElement } from "types/sidebarTemplate"
+import {ImageRowGroupElement} from 'types/sidebarTemplate'
 
 export type ParsedElementData = {
     hash: string,
-    content: ParsedData
+    content: Exclude<ParsedData,ImageRowGroupElement>
 }
 
 export interface ParserInterface {

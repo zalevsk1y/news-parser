@@ -128,7 +128,7 @@ class AdapterGuttenberg implements AdapterInterface
         $clean_src=\esc_url_raw($element['content']['src']);
         $clean_alt=esc_html($element['content']['alt']);
         $wp_image_declaration=sprintf(
-            '{"id": "%s","sizeSlug": "%sS","url": "%s","alt": "%s"}',
+            '{"id": "%s","sizeSlug": "%s","url": "%s","alt": "%s"}',
             'null',
             'large',
             $clean_src,

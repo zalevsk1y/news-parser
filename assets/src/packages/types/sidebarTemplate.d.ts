@@ -8,26 +8,29 @@ export type ParentElement={
     className:string,
     tagName:string
 }
-export type  ParsedData={
-    content?:string|ImageContent|string[]|undefined
-    tagName:string
+type BaseElement={
     className?:string
     offsetTop:number
     parent: ParentElement[] 
 }
-
-export interface ParsedImageData extends ParsedData{
-    content:ImageContent;
-}
-
-export interface ParsedListData extends ParsedData{
-    content:string[];
-}
-
-export interface ParsedTextData extends ParsedData{
-    content:string;
-}
-
+export type ImageElement=BaseElement&{
+    content?:ImageContent
+    tagName:'IMG'
+};
+export type ImageRowGroupElement=BaseElement&{
+    content:Array<ImageElement>
+    tagName:'IMGROW'
+};
+export type InlineElement=BaseElement&{
+    content?:string
+    tagName:'SPAN'|'P'|'H1'|'H2'|'H3'|'IFRAME'|'DIV'
+};
+export type ListElement=BaseElement&{
+    content?:Array<string>
+    tagName:'UL'
+};
+export type  ParsedData=ImageElement|ImageRowGroupElement|InlineElement|ListElement;
+   
 export type PostData={
     image: string,
     title: false | string,

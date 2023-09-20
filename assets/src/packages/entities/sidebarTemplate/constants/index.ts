@@ -11,4 +11,5 @@ export const ADD_FEATURED_MEDIA='addFeaturedMedia';
 export const ADD_SOURCE='addSource';
 export const SAVE_PARSING_TEMPLATE='saveParsingTemplate';
 export const GROUP_IMAGES_ROW='groupImagesRow';
+export const ADD_SRCSET_AND_SIZES='addSrcSetAndSizes';
 export const TOGGLE='toggle';

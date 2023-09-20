@@ -166,16 +166,15 @@ class HTMLPatternParser extends HTMLParser
      */
     protected function isImageFitToContext($image_element)
     {
-        $pattern = '/\b(or|,|and|\.)\b/';
+        $pattern = '/\b(Or|And|It|Is|Are|Was|Were|Then|There|Here|If|Could|,|\.)\b/';
         $replacement = '';
-        $keywords = explode(' ', preg_replace($pattern, $replacement, $this->post['title']));
+        $keywords = preg_split('/\s+/', trim(preg_replace($pattern, $replacement, $this->post['title'])));
         $image_alt = array_key_exists('alt', $image_element->attr) ? $image_element->attr['alt'] : '';
         foreach ($keywords as $keyword) {
             if (stripos($image_alt, $keyword) !== false) {
                 return true;
             }
         }
-
         return false;
     }
 }

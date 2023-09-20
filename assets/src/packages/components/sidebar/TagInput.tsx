@@ -34,7 +34,7 @@ export const TagInput:React.FC<TagInputProps> = ({ onCreate, id: idSufix, bottom
   }, [onCreate]);
   const inputId:string = `tag-input${idSufix ? `-${  idSufix}` : ''}`;
   return (
-    <div className="tag-item-container">
+    <div className="tag-item-container w-100">
       <label htmlFor={inputId}>{labelText}</label>
       <div className="tag-input-container input-container" role="combobox" aria-haspopup="false" aria-expanded="false">
         {children}

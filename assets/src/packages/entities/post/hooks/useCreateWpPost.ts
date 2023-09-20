@@ -1,5 +1,5 @@
 import { useDispatch, useStore } from 'react-redux';
-import { formatCreatePostDraftRequest } from '@news-parser/helpers/response-formatters/PostModel';
+import { formatCreatePostDraftRequest } from '@news-parser/helpers/response-formatters/formatCreatePostDraftRequest';
 import { formatPostOptions } from '@news-parser/helpers/response-formatters/formatPostOptions';
 import { requestApi,RequestApiError,RequestApiOptions,RequestApiSuccess } from '@news-parser/helpers/api/requestApi';
 import { configConstantsEntities, configConstantsMethods } from '@news-parser/config/constants';

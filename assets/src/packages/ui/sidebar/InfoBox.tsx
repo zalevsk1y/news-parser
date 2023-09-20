@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children } from 'react';
 import '../styles/InfoBox.css';
 
 export interface InfoBoxProps {
@@ -16,16 +16,19 @@ export interface InfoBoxProps {
  * @returns {JSX.Element} The rendered InfoBox component.
  */
 
-export const InfoBox: React.FC<InfoBoxProps> = ({ title, children }) => (
-        <div id='postimagediv' className='postbox'>
-            <div className='d-flex flex-row'>
-                <h2 className='ui-sortable-handle infobox-header flex-grow-1'>
-                    <span>{title}</span>
-                </h2>
+export const InfoBox: React.FC<InfoBoxProps> = ({ title, children }) => {
+    if(Children.toArray(children).length==0) return null;
+    return(
+            <div className='postbox'>
+                <div className='d-flex flex-row'>
+                    <h2 className='ui-sortable-handle infobox-header flex-grow-1'>
+                        <span>{title}</span>
+                    </h2>
+                </div>
+                {children}
             </div>
-            {children}
-        </div>
     )
+} 
 
 export interface InfoHeaderProps {
     children: React.ReactNode

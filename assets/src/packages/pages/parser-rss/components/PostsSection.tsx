@@ -35,7 +35,9 @@ export const PostsSection: React.FC<PostsSectionProps> = ({ isFetching, rssUrl }
     const postsParseMessage = <>You have selected <strong>{selectedPostsCount}</strong> posts.</>;
     const parseSelectedHandler = useCallback(() => {
         if(typeof rssUrl!=='string') return;
-        parsePosts(selectedPosts, 'race', rssUrl);
+        parsePosts(selectedPosts, 'race', rssUrl)
+            .then(()=>showMessage('success','Posts were parsed successfully'))
+            .catch(()=>showMessage('error','Some of the posts could not be parsed.'));
         setProgressTotal(selectedPosts.length);
     }, [selectedPosts]);
     return (

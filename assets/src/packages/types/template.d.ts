@@ -14,7 +14,8 @@ export type SidebarTemplate={
 }
 
 export type TemplateOptions={
-    groupImagesRow:boolean,
+    addSrcSetAndSizes?:boolean,
+    groupImagesRow?:boolean,
     addFeaturedMedia: boolean,
     addSource: boolean,
     saveParsingTemplate?: boolean
