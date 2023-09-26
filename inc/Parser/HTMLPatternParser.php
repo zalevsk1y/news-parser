@@ -81,6 +81,8 @@ class HTMLPatternParser extends HTMLParser
                         'alt' => $el->alt,
                         // If the lazy load attribute data-src exists, take that as the source of the image. If none, take the src attribute.
                         'src' => $image_srcset !== false ? $this->srcSetSplit($image_srcset) : ((is_array($el->attr) && array_key_exists('data-src', $el->attr)) ? $this->srcSetSplit($el->attr['data-src']) : $el->src),
+                        'srcSet' => $image_srcset!==false ? $image_srcset : '',
+                        'sizes'=>''
                     );
                     break;
                 case 'ul':

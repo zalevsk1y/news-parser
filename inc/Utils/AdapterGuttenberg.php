@@ -55,6 +55,9 @@ class AdapterGuttenberg implements AdapterInterface
                     break;
                 case 'imgRow':
                     $post_content.=$this->imageRow($el);
+                    break;
+                case 'source':
+                    $post_content.=$this->sourceLink($el);
             }
         }
         return $post_content;
@@ -126,7 +129,9 @@ class AdapterGuttenberg implements AdapterInterface
     protected function image($element)
     {
         $clean_src=\esc_url_raw($element['content']['src']);
-        $clean_alt=esc_html($element['content']['alt']);
+        $clean_alt=\esc_html($element['content']['alt']);
+        $clean_src_set=array_key_exists('srcSet',$element['content'])?\esc_html($element['content']['srcSet']):'';
+        $clean_sizes=array_key_exists('sizes',$element['content'])?\esc_html($element['content']['sizes']):'';
         $wp_image_declaration=sprintf(
             '{"id": "%s","sizeSlug": "%s","url": "%s","alt": "%s"}',
             'null',
@@ -134,12 +139,14 @@ class AdapterGuttenberg implements AdapterInterface
             $clean_src,
             $clean_alt
         );
-        $image_block_tag='<!-- wp:image %s --><figure class="wp-block-image"><img src="%s" alt="%s"/></figure><!-- /wp:image -->';
+        $image_block_tag='<!-- wp:image %s --><figure class="wp-block-image"><img src="%s"  alt="%s" %s %s/></figure><!-- /wp:image -->';
         return sprintf(
             $image_block_tag,
             $wp_image_declaration,
             $clean_src,
-            $clean_alt
+            $clean_alt,
+            $clean_src_set!==''?'srcset="'.$clean_src_set.'"':'',
+            $clean_sizes!==''?'sizes="'.$clean_sizes.'"':''
         );
     }
     /**
@@ -191,5 +198,15 @@ class AdapterGuttenberg implements AdapterInterface
     protected function getDigitsOnly($str)
     {
         return preg_replace('/[^0-9]/i', '', $str);
+    }
+    protected function sourceLink($element){
+        $clean_href=\esc_url_raw($element['content']['href']);
+        $clean_text=\esc_html($element['content']['text']);
+        $link_element =sprintf(
+            '<a rel="nofollow" href="%s">%s</a>',
+            $clean_href,
+            $clean_text
+        );
+        return '<!-- wp:paragraph --><p>'.$link_element.'</p><!-- /wp:paragraph -->';
     }
 }

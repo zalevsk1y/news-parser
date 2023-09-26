@@ -27,6 +27,7 @@ class TemplateModel implements ModelInterface
     /**
      * Extra options
      * Structure:
+     * [addSrcSetAndSizes] - bool - add sizes attribute with image sizes breakpoints
      * [groupImagesRow] - bool - Groups images in Guttenberg group by two and arrange them in a row
      * [addFeaturedMedia]- bool- Add featured media to the post.
      * [addSource] -bool - Add link to the source page to th end of the post.

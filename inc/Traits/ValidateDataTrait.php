@@ -68,7 +68,7 @@ trait ValidateDataTrait
             'addSource',
             'groupImagesRow',
             'addFeaturedMedia',
-            'saveParsingTemplate'
+            'addSrcSetAndSizes'
         );
     
         return $this->checkArrayKeys($extra_option_should_have_keys, $extra_options);

@@ -9,22 +9,32 @@ use NewsParserPlugin\Models\PostModel;
 use NewsParserPlugin\Models\TemplateModel;
 use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Interfaces\AdapterInterface;
+use NewsParserPlugin\Traits\FunctionAutoloadTrait;
+use NewsParserPlugin\Interfaces\PostControllerInterface;
 
 /**
  * Class controller for post parsing.
  *
- * PHP version 5.6
  *
  * @package  Controller
  * @license  MIT
  */
-class PostController
+class PostController implements PostControllerInterface
 {
+
+    /**
+     * Methods to get function psr-4 like way.
+     *
+     * @method loadFunction()
+     * @method executerCallback()
+     */
+    use FunctionAutoloadTrait;
     /**
      * @var PostModel Post model
      */
-    public $post;
-
+    protected $post;
+    protected $beforeAdapterModifiers;
+    protected $postModifiers;
     /**
      * @var array $parsedData Structure:
      * [title] - post title @string
@@ -46,15 +56,32 @@ class PostController
     protected $parser;
 
     /**
-     * Init function
+     * Class Constructor.
+     *
+     * Initializes the class instance.
      *
      * @param AbstractParseContent $parser Parser instance for parsing content.
      * @param AdapterInterface $adapter Adapter instance that converts array of body elements data.
+     * @param array $before_adapter_modifiers (optional) Associative array of modifiers to be applied before the adapter conversion. The format is as follows:
+     *   [
+     *     'option_id' => [
+     *          'path_to_true_modifier_function',
+     *          'path_to_false_modifier_function'
+     *         ],
+     *          ...
+     *         ]
+     * The 'option_id' is the identifier of the option.
+     * The 'path_to_true_modifier_function' is the full PSR-4 like path to the modifier function that will be applied if the 'option_id' is true.
+     * The 'path_to_false_modifier_function' is the full PSR-4 like path to the modifier function that will be applied if the 'option_id' is false.
+     * @param array $post_modifiers (optional) Associative array of modifiers to be applied after the adapter conversion. The format is the same as the before_adapter_modifiers array.
      */
-    public function __construct(AbstractParseContent $parser, AdapterInterface $adapter)
+
+    public function __construct(AbstractParseContent $parser, AdapterInterface $adapter,array $before_adapter_modifiers=[],array $post_modifiers=[])
     {
         $this->adapter = $adapter;
         $this->parser = $parser;
+        $this->beforeAdapterModifiers=$before_adapter_modifiers;
+        $this->postModifiers=$post_modifiers;
     }
 
     /**
@@ -75,44 +102,152 @@ class PostController
         $post_options_model = $this->getPostOptionsModel($template_url);
         $this->parsedData = $this->parser->get($url, $post_options_model->getAttributes('array'));
 
-        // Apply adapter to adapt parsed body of the post to editor or make changes according to options
-        $this->applyBodyAdapter();
         $this->assignAuthorId();
         
         // Unescaped URL
         $this->assignSourceUrl($url);
-
+        $this->applyBeforAdapterModifiers();
+        // Apply adapter to adapt parsed body of the post to editor or make changes according to options
+        $this->applyBodyAdapter();
+       
         // Get post model
         $this->post =  $this->postModelsFactory();
         $this->createPost();
 
         // Apply modifiers to post according to template post options
-        $this->applyOptionsModifiers();
+        $this->applyPostModifiers();
 
         return $this->post->getAttributes();
     }
+    /**
+     * Retrieves the parsed data associated with the PostController.
+     *
+     * This method returns the parsed data stored in the PostController object.
+     *
+     * @return array The parsed data associated with the PostController.
+     */ 
 
+    public function getParsedData()
+    {
+        return $this->parsedData;
+    }
+    /**
+     * Updates the body array in the parsed data of the PostController.
+     *
+     * This method takes an array of body elements and updates the 'body' key in the parsed data of the PostController with the provided array.
+     *
+     * @param array $body_array The array of body elements to update the parsed data with.
+     * @return void
+     */
+
+    public function updateParsedDataBody(array $body_array)
+    {
+        $this->parsedData['body']=$body_array;
+    }
     /**
      * Apply body adapter to parsed data
      */
     protected function applyBodyAdapter()
     {
-        $this->addAdapterModifiers();
         $pre_adapted_body = \apply_filters('news_parser_filter_pre_adapter', $this->parsedData['body']);
         $post_adapter_body = $this->adapter->convert($pre_adapted_body);
         $this->parsedData['body'] = \apply_filters('news_parser_filter_post_adapter', $post_adapter_body);
     }
     /**
-     * Add modifiers to adapter
+     * Add modifiers to the adapter.
+     *
+     * The modifiers array should be in the following format:
+     * 
+     * [
+     *    'option_id' => [
+     *        'path_to_true_modifier_function',
+     *        'path_to_false_modifier_function'
+     *    ],
+     *    ...
+     * ]
+     *
+     * The 'option_id' is the identifier of the option.
+     * The 'path_to_true_modifier_function' is the full PSR-4 like path to the modifier function that will be applied if the 'option_id' is true.
+     * The 'path_to_false_modifier_function' is the full PSR-4 like path to the modifier function that will be applied if the 'option_id' is false. If a false modifier is not provided, it can be set as null.
+     *
+     * Syntax Example:
+     * $modifiers_array = [
+     *    'option1' => [
+     *        'Namespace\Modifiers\TrueModifier',
+     *        'Namespace\Modifiers\FalseModifier'
+     *    ],
+     *    'option2' => [
+     *        'Namespace\Modifiers\AnotherTrueModifier',
+     *        null
+     *    ],
+     *    ...
+     * ];
+     *
+     * @return void
      */
-    protected function addAdapterModifiers()
-    {
-        $this->adapter->addModifiers([
-            'NewsParserPlugin\Parser\Modifiers\removeDublicatedPicturesModifier',
-            'NewsParserPlugin\Parser\Modifiers\groupPicturesModifier'
-        ]);
-    }
 
+    protected function applyBeforAdapterModifiers()
+    {
+        //add modifier that removes duplicated images from parsed data
+        $this->executerCallback($this,'NewsParserPlugin\Parser\Modifiers\AdapterModifiers\Before\removeDublicatedPicturesModifier');
+        foreach ($this->beforeAdapterModifiers as $option_id=>$modifier_function){
+            if(array_key_exists($option_id,$this->options)&&$this->options[$option_id]) 
+            {
+                $this->executerCallback($this,$modifier_function[0]);
+
+            }else if($modifier_function[1]!==null){
+                $this->executerCallback($this,$modifier_function[1]);
+            }
+        }
+    }
+    /**
+     * Apply post modifiers to the adapter.
+     *
+     * The `executerCallback` function is a trait that allows executing a function by given path in a PSR-4 like way.
+     *
+     * The modifiers array should be in the following format:
+     * 
+     * [
+     *    'option_id' => [
+     *        'path_to_true_modifier_function',
+     *        'path_to_false_modifier_function'
+     *    ],
+     *    ...
+     * ]
+     *
+     * The 'option_id' is the identifier of the option.
+     * The 'path_to_true_modifier_function' is the full PSR-4 like path to the modifier function that will be applied if the 'option_id' is true.
+     * The 'path_to_false_modifier_function' is the full PSR-4 like path to the modifier function that will be applied if the 'option_id' is false.
+     *
+     * Syntax Example:
+     * $modifiers_array = [
+     *    'option1' => [
+     *        'Namespace\Modifiers\TrueModifier',
+     *        'Namespace\Modifiers\FalseModifier'
+     *    ],
+     *    'option2' => [
+     *        'Namespace\Modifiers\AnotherTrueModifier',
+     *        'Namespace\Modifiers\AnotherFalseModifier'
+     *    ],
+     *    ...
+     * ];
+     *
+     * @return void
+     */
+
+    protected function applyPostModifiers()
+    {
+        foreach ($this->postModifiers as $option_id=>$modifier_function){
+            if(array_key_exists($option_id,$this->options)&&$this->options[$option_id])
+            {
+                $this->executerCallback($this->post,$modifier_function[0]);
+
+            } else if ($modifier_function[1]!==null)
+            {
+                $this->executerCallback($this->post,$modifier_function[1]);
+            }
+        }
+    }
     /**
      * Get the post options model based on the given options ID
      *
@@ -146,14 +281,6 @@ class PostController
     protected function assignSourceUrl($url)
     {
         $this->parsedData['sourceUrl'] = $url;
-    }
-
-    /**
-     * Apply options modifiers to the post
-     */
-    protected function applyOptionsModifiers()
-    {
-        $this->addSource()->addPostThumbnail();
     }
 
     /**

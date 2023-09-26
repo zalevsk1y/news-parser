@@ -54,24 +54,7 @@ class PostControllerExtendeOptions extends PostController{
             $this->post->createPost($this->postOptions);
         
     }
-    /**
-     * Add modifiers to adapter
-     */
-    protected function addAdapterModifiers()
-    {
-        $modifiers_array=[
-            'NewsParserPlugin\Parser\Modifiers\removeDublicatedPicturesModifier'
-        ];
-        if ($this->options['groupImagesRow']) {
-            array_push($modifiers_array,'NewsParserPlugin\Parser\Modifiers\groupPicturesModifier');
-        }
-        
-        $this->adapter->addModifiers($modifiers_array);
-    }
-    protected function applyOptionsModifiers()
-    {
-        $this->addSource()->addPostThumbnail();
-    }
+   
     
     /**
     * Get instance of TemplateModel class.
