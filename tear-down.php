@@ -7,8 +7,10 @@
 function my_plugin_uninstall() {
     
 
-    // Delete options
-    delete_option('your_plugin_option');
+    // Delete cron options
+    delete_option(NEWS_PURSER_PLUGIN_CRON_OPTIONS_NAME);
+     // Delete template options
+    delete_option(NEWS_PURSER_PLUGIN_TEMPLATE_OPTIONS_NAME);
 
    
 }
