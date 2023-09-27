@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { requestApi,RequestApiError,RequestApiOptions,RequestApiSuccess } from '@news-parser/helpers/api/requestApi';
 import { configConstantsMethods, configConstantsEntities } from '@news-parser/config/constants';
-import { formatCreateTemplateRequest } from '@news-parser/helpers/response-formatters/TemplateModelWithPostOptions';
+import { formatCreateTemplateWithOptionsRequest } from '@news-parser/helpers/response-formatters/formatCreateTemplateWithOptionsRequest';
 import { useSelector } from 'react-redux';
 import { useFetchTemplate } from '@news-parser/entities/template/hooks/';
 import { ResponseType } from 'types/index';
@@ -34,7 +34,7 @@ export const useCreateTemplate: UseCreateTemplate = () => {
             return new Promise(resolve => resolve(templateData));
         };
         setIsFetching(true);
-            const template = formatCreateTemplateRequest(parsedData, rssUrl, postOptions, extraOptions);
+            const template = formatCreateTemplateWithOptionsRequest(parsedData, rssUrl, postOptions, extraOptions);
             requestOptions.data = { template };
             return requestApi(requestOptions, success, error).finally(() => setIsFetching(false))
         }

@@ -42816,301 +42816,6 @@ exports.postTitleParser = postTitleParser;
 
 /***/ }),
 
-/***/ "../helpers/response-formatters/TemplateModel.ts":
-/*!*******************************************************!*\
-  !*** ../helpers/response-formatters/TemplateModel.ts ***!
-  \*******************************************************/
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.formatCreateTemplateRequest = exports.TemplateModel = void 0;
-/**
- * Create parsing template for automated parsing.
- *
- * @since 1.0.0
- */
-var TemplateModel = /** @class */ (function () {
-    function TemplateModel(postData, options, url) {
-        this.postData = postData;
-        this.options = options;
-        this.url = url;
-    }
-    /**
-     * Create parsing template from selected in visual constructor blocks.
-     *
-     * @returns {object} template object.
-     */
-    TemplateModel.prototype.createTemplateData = function () {
-        var _this = this;
-        var arrayOfElements = Object.values(this.postData.body);
-        var cleanedData = this.removeDuplicate(arrayOfElements);
-        var sortedData = this.sortByDOMPosition(cleanedData);
-        var container = this.createContainer(sortedData);
-        var template = {
-            url: this.url,
-            extraOptions: this.options,
-            template: container
-        };
-        if (container === undefined)
-            return template;
-        sortedData.forEach(function (item) {
-            var tagName = item.tagName.toLowerCase();
-            var searchTemplate = _this.createSearchTemplate(item, container.className);
-            container.children.push({
-                tagName: tagName,
-                searchTemplate: searchTemplate,
-                position: 'all'
-            });
-        });
-        return template;
-    };
-    /**
-     * Find common parent of HTML blocks.
-     *
-     * @param {array} arrayOfItems
-     * @returns {object}
-     */
-    TemplateModel.prototype.createContainer = function (arrayOfItems) {
-        var _this = this;
-        var arrayOfParents = arrayOfItems[0].parent;
-        var _loop_1 = function (key) {
-            var hasParent = true;
-            var parentItem = arrayOfParents[key];
-            arrayOfItems.forEach(function (item) {
-                if (!_this.hasParent(item, parentItem))
-                    hasParent = false;
-            });
-            if (hasParent) {
-                var className = parentItem.className.trim();
-                var tagName = parentItem.tagName.toLowerCase();
-                return { value: {
-                        className: className,
-                        tagName: tagName,
-                        searchTemplate: "".concat(tagName, "[class=").concat(className, "]"),
-                        children: []
-                    } };
-            }
-        };
-        for (var key in arrayOfParents) {
-            var state_1 = _loop_1(key);
-            if (typeof state_1 === "object")
-                return state_1.value;
-        }
-    };
-    /**
-     * Check if HTML block has parent.
-     *
-     * @param {object} item
-     * @param {object} parentItem
-     * @returns {boolean}
-     */
-    TemplateModel.prototype.hasParent = function (item, parentItem) {
-        for (var key in item.parent) {
-            var parent_1 = item.parent[key];
-            if (parent_1.tagName == parentItem.tagName && parent_1.className == parentItem.className) {
-                return true;
-            }
-        }
-        return false;
-    };
-    /**
-     * Create search string for php-simple-html-dom-parser (https://simplehtmldom.sourceforge.io/)
-     *
-     * @param {object} item
-     * @param {object} containerClassName
-     * @return {string}
-     */
-    TemplateModel.prototype.createSearchTemplate = function (item, containerClassName) {
-        var parentTagName = item.parent[0].tagName.toLowerCase();
-        var parentClassName = item.parent[0].className.trim();
-        var tagName = item.tagName.toLowerCase();
-        var className = item.className !== undefined ? this.getClassName(item.className) : '';
-        return className ? "".concat(tagName, ".").concat(className) : parentClassName !== containerClassName ? "".concat(parentTagName, ".").concat(this.getClassName(parentClassName), " ").concat(tagName) : tagName;
-    };
-    /**
-     * Get class name (with no digit) of HTML block.
-     *
-     * @param {string} className
-     * @param {number} index Position in className string.
-     * @returns {string}
-     */
-    TemplateModel.prototype.getClassName = function (className, index) {
-        if (index === void 0) { index = 0; }
-        var classNameArray = className.trim().split(' ');
-        var noDigitsClassNames = classNameArray.filter(function (partName) {
-            if (partName.search(/([0-9])/g) === -1) {
-                return partName.trim();
-            }
-        });
-        return noDigitsClassNames.length ? noDigitsClassNames[index] : classNameArray[0];
-    };
-    /**
-     * Removes duplicated HTML blocks.
-     *
-     * @param {array} arrayOfItems
-     * @returns {array}
-     */
-    TemplateModel.prototype.removeDuplicate = function (arrayOfItems) {
-        var _this = this;
-        var tempArray = __spreadArray([], arrayOfItems, true);
-        var newArray = [];
-        var _loop_2 = function () {
-            if (tempArray.length == 0)
-                return "break";
-            var itemObject = tempArray.shift();
-            tempArray = tempArray.filter(function (item) {
-                if (!_this.theSame(itemObject, item))
-                    return item;
-            });
-            newArray.push(itemObject);
-            if (tempArray.length <= 1) {
-                tempArray.length === 1 && newArray.push(tempArray[0]);
-                return "break";
-            }
-        };
-        while (true) {
-            var state_2 = _loop_2();
-            if (state_2 === "break")
-                break;
-        }
-        return newArray;
-    };
-    /**
-     * Check HTML blocks have the same attributes.
-     *
-     * @param {object} itemObject1
-     * @param {object} itemObject2
-     * @return {boolean}
-     */
-    TemplateModel.prototype.theSame = function (itemObject1, itemObject2) {
-        if (itemObject1 === undefined || itemObject2 === undefined)
-            return false;
-        if (itemObject1.tagName !== itemObject2.tagName) {
-            return false;
-        }
-        if (itemObject1.className !== itemObject2.className) {
-            return false;
-        }
-        if (itemObject1.parent.length !== itemObject2.parent.length) {
-            return false;
-        }
-        return true;
-    };
-    /**
-     * Sorting HTML blocks by number of parents.
-     *
-     * @param {array} arrayOfElements
-     * @returns {array}
-     */
-    TemplateModel.prototype.sortByDOMPosition = function (arrayOfElements) {
-        var newArray = __spreadArray([], arrayOfElements, true);
-        newArray.sort(function (item1, item2) { return item1.parent.length - item2.parent.length; });
-        return newArray;
-    };
-    return TemplateModel;
-}());
-exports.TemplateModel = TemplateModel;
-/**
- * Create parsing template from selected in visual constructor blocks.
- *
- * @param {object} postData
- * @param {object} options
- * @param {string} url
- * @returns {object} template object.
- */
-var formatCreateTemplateRequest = function (postData, options, url) { return (new TemplateModel(postData, options, url)).createTemplateData(); };
-exports.formatCreateTemplateRequest = formatCreateTemplateRequest;
-
-
-/***/ }),
-
-/***/ "../helpers/response-formatters/TemplateModelWithPostOptions.ts":
-/*!**********************************************************************!*\
-  !*** ../helpers/response-formatters/TemplateModelWithPostOptions.ts ***!
-  \**********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.formatCreateTemplateRequest = exports.TemplateModelWithPostOptions = void 0;
-var TemplateModel_1 = __webpack_require__(/*! ./TemplateModel */ "../helpers/response-formatters/TemplateModel.ts");
-var formatPostOptions_1 = __webpack_require__(/*! ./formatPostOptions */ "../helpers/response-formatters/formatPostOptions.ts");
-var TemplateModelWithPostOptions = /** @class */ (function (_super) {
-    __extends(TemplateModelWithPostOptions, _super);
-    function TemplateModelWithPostOptions(postData, url, postOptions, extraOptions) {
-        var _this = _super.call(this, postData, extraOptions, url) || this;
-        _this.postOptions = postOptions;
-        return _this;
-    }
-    /**
-     * Create parsing template from selected in visual constructor blocks.
-     *
-     * @returns {object} template object.
-     */
-    TemplateModelWithPostOptions.prototype.createTemplateData = function () {
-        var _this = this;
-        var arrayOfElements = Object.keys(this.postData.body).map(function (propName) { return _this.postData.body[propName]; });
-        var cleanedData = this.removeDuplicate(arrayOfElements);
-        var sortedData = this.sortByDOMPosition(cleanedData);
-        var container = this.createContainer(sortedData);
-        var template = {
-            url: this.url,
-            postOptions: this.formatPostOptions(this.postOptions),
-            extraOptions: this.options,
-            template: container
-        };
-        if (container === undefined)
-            return template;
-        sortedData.forEach(function (item) {
-            var tagName = item.tagName.toLowerCase();
-            var searchTemplate = _this.createSearchTemplate(item, container.className);
-            container.children.push({
-                tagName: tagName,
-                searchTemplate: searchTemplate,
-                position: 'all'
-            });
-        });
-        return template;
-    };
-    TemplateModelWithPostOptions.prototype.formatPostOptions = function (postOptions) {
-        return (0, formatPostOptions_1.formatPostOptions)(postOptions);
-    };
-    return TemplateModelWithPostOptions;
-}(TemplateModel_1.TemplateModel));
-exports.TemplateModelWithPostOptions = TemplateModelWithPostOptions;
-var formatCreateTemplateRequest = function (postData, url, postOptions, extraOptions) { return (new TemplateModelWithPostOptions(postData, url, postOptions, extraOptions)).createTemplateData(); };
-exports.formatCreateTemplateRequest = formatCreateTemplateRequest;
-
-
-/***/ }),
-
 /***/ "../helpers/response-formatters/adapters/AdapterGuttenberg.ts":
 /*!********************************************************************!*\
   !*** ../helpers/response-formatters/adapters/AdapterGuttenberg.ts ***!
@@ -43464,6 +43169,269 @@ exports.PostFormatController = PostFormatController;
 
 /***/ }),
 
+/***/ "../helpers/response-formatters/controllers/TemplateFormatController.ts":
+/*!******************************************************************************!*\
+  !*** ../helpers/response-formatters/controllers/TemplateFormatController.ts ***!
+  \******************************************************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TemplateFormatController = void 0;
+/**
+ * Create parsing template for automated parsing.
+ *
+ * @since 1.0.0
+ */
+var TemplateFormatController = /** @class */ (function () {
+    function TemplateFormatController(postData, options, url) {
+        this.postData = postData;
+        this.options = options;
+        this.url = url;
+    }
+    /**
+     * Create parsing template from selected in visual constructor blocks.
+     *
+     * @returns {object} template object.
+     */
+    TemplateFormatController.prototype.generateTemplateData = function () {
+        var _this = this;
+        var arrayOfElements = Object.values(this.postData.body);
+        var cleanedData = this.removeDuplicate(arrayOfElements);
+        var sortedData = this.sortByDOMPosition(cleanedData);
+        var container = this.createContainer(sortedData);
+        var template = {
+            url: this.url,
+            extraOptions: this.options,
+            template: container
+        };
+        if (container === undefined)
+            return template;
+        sortedData.forEach(function (item) {
+            var tagName = item.tagName.toLowerCase();
+            var searchTemplate = _this.createSearchTemplate(item, container.className);
+            container.children.push({
+                tagName: tagName,
+                searchTemplate: searchTemplate,
+                position: 'all'
+            });
+        });
+        return template;
+    };
+    /**
+     * Find common parent of HTML blocks.
+     *
+     * @param {array} arrayOfItems
+     * @returns {object}
+     */
+    TemplateFormatController.prototype.createContainer = function (arrayOfItems) {
+        var _this = this;
+        var arrayOfParents = arrayOfItems[0].parent;
+        var _loop_1 = function (key) {
+            var hasParent = true;
+            var parentItem = arrayOfParents[key];
+            arrayOfItems.forEach(function (item) {
+                if (!_this.hasParent(item, parentItem))
+                    hasParent = false;
+            });
+            if (hasParent) {
+                var className = parentItem.className.trim();
+                var tagName = parentItem.tagName.toLowerCase();
+                return { value: {
+                        className: className,
+                        tagName: tagName,
+                        searchTemplate: "".concat(tagName, "[class=").concat(className, "]"),
+                        children: []
+                    } };
+            }
+        };
+        for (var key in arrayOfParents) {
+            var state_1 = _loop_1(key);
+            if (typeof state_1 === "object")
+                return state_1.value;
+        }
+    };
+    /**
+     * Check if HTML block has parent.
+     *
+     * @param {object} item
+     * @param {object} parentItem
+     * @returns {boolean}
+     */
+    TemplateFormatController.prototype.hasParent = function (item, parentItem) {
+        for (var key in item.parent) {
+            var parent_1 = item.parent[key];
+            if (parent_1.tagName == parentItem.tagName && parent_1.className == parentItem.className) {
+                return true;
+            }
+        }
+        return false;
+    };
+    /**
+     * Create search string for php-simple-html-dom-parser (https://simplehtmldom.sourceforge.io/)
+     *
+     * @param {object} item
+     * @param {object} containerClassName
+     * @return {string}
+     */
+    TemplateFormatController.prototype.createSearchTemplate = function (item, containerClassName) {
+        var parentTagName = item.parent[0].tagName.toLowerCase();
+        var parentClassName = item.parent[0].className.trim();
+        var tagName = item.tagName.toLowerCase();
+        var className = item.className !== undefined ? this.getClassName(item.className) : '';
+        return className ? "".concat(tagName, ".").concat(className) : parentClassName !== containerClassName ? "".concat(parentTagName, ".").concat(this.getClassName(parentClassName), " ").concat(tagName) : tagName;
+    };
+    /**
+     * Get class name (with no digit) of HTML block.
+     *
+     * @param {string} className
+     * @param {number} index Position in className string.
+     * @returns {string}
+     */
+    TemplateFormatController.prototype.getClassName = function (className, index) {
+        if (index === void 0) { index = 0; }
+        var classNameArray = className.trim().split(' ');
+        var noDigitsClassNames = classNameArray.filter(function (partName) {
+            if (partName.search(/([0-9])/g) === -1) {
+                return partName.trim();
+            }
+        });
+        return noDigitsClassNames.length ? noDigitsClassNames[index] : classNameArray[0];
+    };
+    /**
+     * Removes duplicated HTML blocks.
+     *
+     * @param {array} arrayOfItems
+     * @returns {array}
+     */
+    TemplateFormatController.prototype.removeDuplicate = function (arrayOfItems) {
+        var _this = this;
+        var tempArray = __spreadArray([], arrayOfItems, true);
+        var newArray = [];
+        var _loop_2 = function () {
+            if (tempArray.length == 0)
+                return "break";
+            var itemObject = tempArray.shift();
+            tempArray = tempArray.filter(function (item) {
+                if (!_this.theSame(itemObject, item))
+                    return item;
+            });
+            newArray.push(itemObject);
+            if (tempArray.length <= 1) {
+                tempArray.length === 1 && newArray.push(tempArray[0]);
+                return "break";
+            }
+        };
+        while (true) {
+            var state_2 = _loop_2();
+            if (state_2 === "break")
+                break;
+        }
+        return newArray;
+    };
+    /**
+     * Check HTML blocks have the same attributes.
+     *
+     * @param {object} itemObject1
+     * @param {object} itemObject2
+     * @return {boolean}
+     */
+    TemplateFormatController.prototype.theSame = function (itemObject1, itemObject2) {
+        if (itemObject1 === undefined || itemObject2 === undefined)
+            return false;
+        if (itemObject1.tagName !== itemObject2.tagName) {
+            return false;
+        }
+        if (itemObject1.className !== itemObject2.className) {
+            return false;
+        }
+        if (itemObject1.parent.length !== itemObject2.parent.length) {
+            return false;
+        }
+        return true;
+    };
+    /**
+     * Sorting HTML blocks by number of parents.
+     *
+     * @param {array} arrayOfElements
+     * @returns {array}
+     */
+    TemplateFormatController.prototype.sortByDOMPosition = function (arrayOfElements) {
+        var newArray = __spreadArray([], arrayOfElements, true);
+        newArray.sort(function (item1, item2) { return item1.parent.length - item2.parent.length; });
+        return newArray;
+    };
+    return TemplateFormatController;
+}());
+exports.TemplateFormatController = TemplateFormatController;
+
+
+/***/ }),
+
+/***/ "../helpers/response-formatters/controllers/TemplateFormatWithPostOptionsController.ts":
+/*!*********************************************************************************************!*\
+  !*** ../helpers/response-formatters/controllers/TemplateFormatWithPostOptionsController.ts ***!
+  \*********************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TemplateFormatWithPostOptionsController = void 0;
+var TemplateFormatController_1 = __webpack_require__(/*! ./TemplateFormatController */ "../helpers/response-formatters/controllers/TemplateFormatController.ts");
+var formatPostOptions_1 = __webpack_require__(/*! ../formatPostOptions */ "../helpers/response-formatters/formatPostOptions.ts");
+var TemplateFormatWithPostOptionsController = /** @class */ (function (_super) {
+    __extends(TemplateFormatWithPostOptionsController, _super);
+    function TemplateFormatWithPostOptionsController(postData, url, postOptions, extraOptions) {
+        var _this = _super.call(this, postData, extraOptions, url) || this;
+        _this.postOptions = postOptions;
+        return _this;
+    }
+    /**
+     * Create parsing template from selected in visual constructor blocks.
+     *
+     * @returns {object} template object.
+     */
+    TemplateFormatWithPostOptionsController.prototype.generateTemplateData = function () {
+        var template = _super.prototype.generateTemplateData.call(this);
+        template.postOptions = this.formatPostOptions(this.postOptions);
+        return template;
+    };
+    TemplateFormatWithPostOptionsController.prototype.formatPostOptions = function (postOptions) {
+        return (0, formatPostOptions_1.formatPostOptions)(postOptions);
+    };
+    return TemplateFormatWithPostOptionsController;
+}(TemplateFormatController_1.TemplateFormatController));
+exports.TemplateFormatWithPostOptionsController = TemplateFormatWithPostOptionsController;
+
+
+/***/ }),
+
 /***/ "../helpers/response-formatters/formatCreateMediaData.ts":
 /*!***************************************************************!*\
   !*** ../helpers/response-formatters/formatCreateMediaData.ts ***!
@@ -43535,6 +43503,23 @@ var formatCreatePostDraftRequest = function (postData, options, url) {
     return postController.generateWpPostData();
 };
 exports.formatCreatePostDraftRequest = formatCreatePostDraftRequest;
+
+
+/***/ }),
+
+/***/ "../helpers/response-formatters/formatCreateTemplateWithOptionsRequest.ts":
+/*!********************************************************************************!*\
+  !*** ../helpers/response-formatters/formatCreateTemplateWithOptionsRequest.ts ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.formatCreateTemplateWithOptionsRequest = void 0;
+var TemplateFormatWithPostOptionsController_1 = __webpack_require__(/*! ./controllers/TemplateFormatWithPostOptionsController */ "../helpers/response-formatters/controllers/TemplateFormatWithPostOptionsController.ts");
+var formatCreateTemplateWithOptionsRequest = function (postData, url, postOptions, extraOptions) { return (new TemplateFormatWithPostOptionsController_1.TemplateFormatWithPostOptionsController(postData, url, postOptions, extraOptions)).generateTemplateData(); };
+exports.formatCreateTemplateWithOptionsRequest = formatCreateTemplateWithOptionsRequest;
 
 
 /***/ }),
@@ -46636,7 +46621,7 @@ exports.useCreateTemplate = void 0;
 var react_1 = __webpack_require__(/*! react */ "../../../node_modules/react/index.js");
 var requestApi_1 = __webpack_require__(/*! @news-parser/helpers/api/requestApi */ "../helpers/api/requestApi.ts");
 var constants_1 = __webpack_require__(/*! @news-parser/config/constants */ "../config/constants.ts");
-var TemplateModelWithPostOptions_1 = __webpack_require__(/*! @news-parser/helpers/response-formatters/TemplateModelWithPostOptions */ "../helpers/response-formatters/TemplateModelWithPostOptions.ts");
+var formatCreateTemplateWithOptionsRequest_1 = __webpack_require__(/*! @news-parser/helpers/response-formatters/formatCreateTemplateWithOptionsRequest */ "../helpers/response-formatters/formatCreateTemplateWithOptionsRequest.ts");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "../../../node_modules/react-redux/es/index.js");
 var hooks_1 = __webpack_require__(/*! @news-parser/entities/template/hooks/ */ "../entities/template/hooks/index.ts");
 var useCreateTemplate = function () {
@@ -46658,7 +46643,7 @@ var useCreateTemplate = function () {
             return new Promise(function (resolve) { return resolve(templateData); });
         };
         setIsFetching(true);
-        var template = (0, TemplateModelWithPostOptions_1.formatCreateTemplateRequest)(parsedData, rssUrl, postOptions, extraOptions);
+        var template = (0, formatCreateTemplateWithOptionsRequest_1.formatCreateTemplateWithOptionsRequest)(parsedData, rssUrl, postOptions, extraOptions);
         requestOptions.data = { template: template };
         return (0, requestApi_1.requestApi)(requestOptions, success, error).finally(function () { return setIsFetching(false); });
     };

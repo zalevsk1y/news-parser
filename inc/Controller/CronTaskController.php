@@ -3,6 +3,7 @@ namespace NewsParserPlugin\Controller;
 
 use NewsParserPlugin\Controller\EventController;
 use NewsParserPlugin\Models\CronDataModel;
+use NewsParserPlugin\Exception\MyException;
 
 class CronTaskController {
 
@@ -15,7 +16,7 @@ class CronTaskController {
         foreach ($cron_options as $cron_options_data){
             $cron_options_model=$this->getCronOptionsModel($cron_options_data);
             if($cron_options_model->getCronCalls()<$cron_options_model->getMaxCronCalls())
-            {
+            { 
                 $rss_list=$this->event->trigger('list:get',array($cron_options_model->getUrl()));
                 $last_parsed_post_timestamp=$cron_options_model->getTimestamp();
                 $this->parsePosts(array_filter($rss_list,function($post_data) use ($last_parsed_post_timestamp){
@@ -29,10 +30,16 @@ class CronTaskController {
     protected function parsePosts($posts_rss_data,$cron_options_model){
         //to avoid sorting data by pubDate use $latest_timestamp
         $latest_timestamp=$cron_options_model->getTimestamp();
-        foreach ($posts_rss_data as $post_data){
+        foreach (array_reverse($posts_rss_data) as $post_data){
             if($cron_options_model->getParsedPosts()<$cron_options_model->getMaxPostsParsed())
             {
-                $this->event->trigger('post:create',array($post_data->link,null,$cron_options_model->getUrl()));
+                try{
+                    $this->event->trigger('post:create',array($post_data->link,null,$cron_options_model->getUrl()));
+                }catch (MyException $e)
+                {
+                    $this->event->trigger('log:error',array($e->getMessage()));
+                    continue;
+                }
                 $cron_options_model->increaseParsedPosts();
                 $post_timestamp=strtotime($post_data->pubDate);
                 if($latest_timestamp<$post_timestamp) $latest_timestamp=$post_timestamp;

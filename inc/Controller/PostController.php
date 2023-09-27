@@ -102,10 +102,12 @@ class PostController implements PostControllerInterface
         $post_options_model = $this->getPostOptionsModel($template_url);
         $this->parsedData = $this->parser->get($url, $post_options_model->getAttributes('array'));
 
+        
         $this->assignAuthorId();
         
         // Unescaped URL
         $this->assignSourceUrl($url);
+        $this->checkParsedData();
         $this->applyBeforAdapterModifiers();
         // Apply adapter to adapt parsed body of the post to editor or make changes according to options
         $this->applyBodyAdapter();
@@ -336,5 +338,20 @@ class PostController implements PostControllerInterface
     protected function templateModelsFactory($url)
     {
         return new TemplateModel($url['host']);
+    }
+    protected function checkParsedData()
+    {
+        if(!array_key_exists('title',$this->parsedData)||empty($this->parsedData['title'])){
+            throw new MyException(Errors::text('NO_TITLE'),Errors::code('INNER_ERROR'));
+        }
+        if(!array_key_exists('body',$this->parsedData)||!is_array($this->parsedData['body'])){
+            throw new MyException(Errors::text('NO_BODY'),Errors::code('INNER_ERROR'));
+        }
+        if(!array_key_exists('authorId',$this->parsedData)||empty($this->parsedData['authorId'])){
+            throw new MyException(Errors::text('NO_AUTHOR'),Errors::code('INNER_ERROR'));
+        }
+        if(!array_key_exists('sourceUrl',$this->parsedData)||empty($this->parsedData['sourceUrl'])){
+            throw new MyException(Errors::text('NO_POST_URL'),Errors::code('INNER_ERROR'));
+        }
     }
 }

@@ -1,13 +1,16 @@
 import { ParentElement, ParsedData , PostData  } from "types/sidebarTemplate";
-import { TemplateData, TemplateOptions } from "types/template";
-import { TemplateModelInterface,TemplateContainer } from "./types/templateModel";
+import {  TemplateOptions } from "types/template";
+import { TemplateFormatControllerInteface,TemplateContainer } from "../types/templateFormatController";
 
+type TemplateOptionsType={
+    extraOptions:TemplateOptions
+}
 /**
  * Create parsing template for automated parsing.
  * 
  * @since 1.0.0
  */
-export class TemplateModel implements TemplateModelInterface{
+export class TemplateFormatController  implements TemplateFormatControllerInteface<TemplateOptionsType>{
 
     constructor (protected postData:PostData,protected options:TemplateOptions,protected url:string){
 
@@ -18,14 +21,14 @@ export class TemplateModel implements TemplateModelInterface{
      * @returns {object} template object.
      */
 
-    public createTemplateData():TemplateData {
+    public generateTemplateData() {
         const arrayOfElements:ParsedData[] = Object.values(this.postData.body);
             const cleanedData = this.removeDuplicate(arrayOfElements);
             const sortedData = this.sortByDOMPosition(cleanedData);
             const container = this.createContainer(sortedData);
-        const template:TemplateData = {
+        const template = {
             url: this.url,
-            extraOptions: this.options,
+            extraOptions:this.options,
             template: container
         };
         if(container===undefined) return template
@@ -178,13 +181,3 @@ export class TemplateModel implements TemplateModelInterface{
 
 
 }
-
-/** 
- * Create parsing template from selected in visual constructor blocks.
- * 
- * @param {object} postData 
- * @param {object} options 
- * @param {string} url 
- * @returns {object} template object.
- */
-export const formatCreateTemplateRequest = (postData:PostData,options:TemplateOptions,url:string) => (new TemplateModel(postData, options, url)).createTemplateData();

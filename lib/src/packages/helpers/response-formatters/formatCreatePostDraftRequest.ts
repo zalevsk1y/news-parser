@@ -3,7 +3,7 @@ import { TemplateOptions, TemplatePostOptions } from 'types/template';
 import { PostFormatController } from './controllers/PostFormatController';
 import { adapterGuttenberg } from './adapters/AdapterGuttenberg';
 import { groupImagesInRows } from './modifiers/before/groupImagesInRows'
-import { addSourceLink } from './modifiers/after/addSourseLink';
+import { addSourceLink } from './modifiers/after/addSourceLink';
 import { generateImageSizesBreakpoints } from './modifiers/before/generateImageSizesBreakpoints';
 import {removeSrcSetAndSizeAttr} from './modifiers/before/removeSrcSetAndSizeAttr';
 

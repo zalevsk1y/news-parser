@@ -3,6 +3,7 @@ namespace NewsParserPlugin;
 
 
 return array(
+    \Monolog\Logger::class=>[NEWS_PARSER_PLUGIN_SLUG],
     Utils\MenuConfig::class=>[NEWS_PARSER_PLUGIN_DIR.'inc/Config/menu-config.php'],
     Utils\AdapterGuttenberg::class=>[],
     Utils\ResponseFormatter::class=>[],

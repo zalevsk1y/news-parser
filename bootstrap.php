@@ -9,21 +9,22 @@ use NewsParserPlugin\Core\ScriptLoadingManager;
 
 
 function news_parser_init(){
-    //logger initialization
-    $log = new Logger('news-parser-plugin');
-    $log->pushHandler(new StreamHandler(NEWS_PARSER_PLUGIN_DIR.'logs/news-parser.log', Logger::WARNING));
-    // Set up Monolog to log uncaught exceptions
-    ErrorHandler::register($log);
-    
-
-    $log->info('Plugin initialized.');
     
     // Dependency Injection container initialization
 
     $container=new \ContainerBuilder\DI();
     $container->addDefinitions(NEWS_PARSER_PLUGIN_DIR.'inc/Config/di-config.php');
     //$container=$container_builder->build();
- 
+   
+    //logger initialization
+    $log = $container->get(\Monolog\Logger::class);
+    //new Logger('news-parser-plugin');
+    $log->pushHandler(new StreamHandler(NEWS_PARSER_PLUGIN_DIR.'logs/news-parser.log', Logger::WARNING));
+    // Set up Monolog to log uncaught exceptions
+    ErrorHandler::register($log);
+    
+
+    $log->info('Plugin initialized.');
     // Load script, style, and global variable configurations
 
     //$scripts_config= include NEWS_PARSER_PLUGIN_DIR.'inc/Config/scripts-config.php';
@@ -63,5 +64,7 @@ function news_parser_init(){
     $app->event->on('list:get',array(Controller\ListController::class,'get'));
     $app->event->on('html:get',array(Controller\VisualConstructorController::class,'get'));
     $app->event->on('post:create',array(Controller\PostControllerExtendeOptions::class,'create'));
+    $app->event->on('log:error',array(\Monolog\Logger::class,'error'));
+    $app->event->on('log:info',array(\Monolog\Logger::class,'info'));
 
  }

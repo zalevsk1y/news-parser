@@ -26,7 +26,7 @@ trait FunctionAutoloadTrait
     protected function executerCallback($argument,$function_callback){
         $function_callback_path=$this->loadFunction($function_callback); 
         if(!is_null($function_callback_path)){
-            include $function_callback_path;
+            include_once $function_callback_path;
             if (function_exists($function_callback)){
                 return call_user_func($function_callback, $argument);
             }

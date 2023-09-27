@@ -1,12 +1,9 @@
 import { TemplateData,TemplateDataWithPostOptions } from "types/template"
 
-export interface TemplateModelInterface{
-    createTemplateData():TemplateData
+export interface TemplateFormatControllerInteface<OptionsType>{
+    generateTemplateData():TemplateData&OptionsType
 }
 
-export interface TemplateModelWithPostOptionsInterface{
-    createTemplateData():TemplateDataWithPostOptions
-}
 
 export type TemplateContainerChild={
     tagName:string,
