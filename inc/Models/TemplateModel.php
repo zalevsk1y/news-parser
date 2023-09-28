@@ -6,17 +6,21 @@ use NewsParserPlugin\Interfaces\ModelInterface;
 use NewsParserPlugin\Message\Errors;
 
 /**
- * Class operates with parsing options.
+ * Class TemplateModel
  *
- * PHP version 5.6
+ * This class represents a model that operates with parsing options.
  *
  * @package  Models
- * @author   Evgeniy S.Zalevskiy <2600@urk.net>
  * @license  MIT
  */
 
+
 class TemplateModel implements ModelInterface
 {
+    /**
+     * The name of the template table.
+     */
+
     protected const TEMPLATE_TABLE_NAME = NEWS_PURSER_PLUGIN_TEMPLATE_OPTIONS_NAME;
     /**
      * Url of resource that will be source of the posts feed.
@@ -76,22 +80,47 @@ class TemplateModel implements ModelInterface
      * @param array $options
      * @return boolean
      */
-    public function save()
+    public function create()
     {
         $templates=$this->getAll();
         $template_data=$this->getAttributes('array');
         if(!is_array($templates)) $templates=[];
         $templates[$this->resourceUrl]=$template_data;
-        return $this->updateOption(self::TEMPLATE_TABLE_NAME, $templates, 'no');
+        return $this->updateOptions(self::TEMPLATE_TABLE_NAME, $templates, 'no');
     }
-    public function update($template_data){
-        if($this->isOptionsValid($template_data)){
-            $this->assignOptions($template_data);
-            return true;
+    /**
+     * Update options using wp function update_option.
+     *
+     * @param string $key The option key.
+     * @param mixed $data The option data.
+     * @param string|null $autoload Optional. Whether to load the option when WordPress starts up ('yes' or 'no').
+     *
+     * @return bool Returns true if the options were successfully updated, false otherwise.
+     */
+
+    public function update()
+    {
+        $templates=$this->getAll();
+        if(array_key_exists($this->url,$templates)){
+            return $this->updateOptions(self::TEMPLATE_TABLE_NAME, $templates, 'no');
         }
         return false;
     }
-    protected function updateOption($key,$data,$autoload=null)
+    /**
+     * Delete options using wp function update_option.
+     *
+     * @return bool Returns true if the options were successfully deleted, false otherwise.
+     */
+
+    public function delete (){
+        $templates=$this->getAll();
+        if(array_key_exists($this->url,$templates)){
+            unset($templates[$this->url]);
+            return $this->updateOptions(self::TEMPLATE_TABLE_NAME, $templates, 'no');
+        }
+        return false;
+    }
+    protected function updateOptions($key,$data,$autoload=null)
     {
         return update_option($key, $data, $autoload);
     }
@@ -100,7 +129,7 @@ class TemplateModel implements ModelInterface
      *
      * @return boolean
      */
-    public function deleteAll()
+    public static function deleteAll()
     {
         return delete_option(self::TEMPLATE_TABLE_NAME);
     }
@@ -131,6 +160,14 @@ class TemplateModel implements ModelInterface
     {
         return isset($this->extraOptions)?$this->extraOptions:false;
     }
+    /**
+     * Check if the options have a valid format.
+     *
+     * @param array $options The options to validate.
+     *
+     * @return bool Returns true if the options have a valid format, false otherwise.
+     */
+
     protected function isOptionsValid($options)
     {
         if(!isset($options['extraOptions'])||

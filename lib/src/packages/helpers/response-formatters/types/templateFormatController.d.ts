@@ -1,4 +1,4 @@
-import { TemplateData,TemplateDataWithPostOptions } from "types/template"
+import { TemplateData } from "types/template"
 
 export interface TemplateFormatControllerInteface<OptionsType>{
     generateTemplateData():TemplateData&OptionsType

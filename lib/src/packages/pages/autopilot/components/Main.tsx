@@ -23,13 +23,14 @@ const Main: React.FC = () => {
         <h1>News-Parser <b className='main-page-header'>Autopilot</b></h1>
       </div>
       <Message />
-      <div className='row mt-4'>
-        <div className='col-md-8'>
-          <MainOptionsBlock />
-        </div>
-        <div className='col-md-4 col-lg-3 d-flex flex-column'>
+      <div className='row mt-4 d-flex flex-row justify-content-center'>
+        <div className='col-md-5 col-lg-4 order-md-last d-flex flex-column'>
           <RightSection />
         </div>
+        <div className='col-md-7 col-lg-8'>
+          <MainOptionsBlock />
+        </div>
+        
       </div>
     </div>
   );

@@ -339,6 +339,13 @@ class PostController implements PostControllerInterface
     {
         return new TemplateModel($url['host']);
     }
+    /**
+     * Check parsed data for required fields.
+     *
+     * @throws MyException When any of the required fields are missing or empty.
+     * @return void
+     */
+
     protected function checkParsedData()
     {
         if(!array_key_exists('title',$this->parsedData)||empty($this->parsedData['title'])){
@@ -352,6 +359,11 @@ class PostController implements PostControllerInterface
         }
         if(!array_key_exists('sourceUrl',$this->parsedData)||empty($this->parsedData['sourceUrl'])){
             throw new MyException(Errors::text('NO_POST_URL'),Errors::code('INNER_ERROR'));
+        }
+        if(!array_key_exists('image',$this->parsedData)||empty($this->parsedData['image'])){
+            if($this->options['addFeaturedMedia']){
+                throw new MyException(Errors::text('NO_IMAGE'),Errors::code('INNER_ERROR'));
+            }
         }
     }
 }

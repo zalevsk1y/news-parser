@@ -91,6 +91,12 @@ const config:Config = {
                 type: cofigConstantsEvents.REST,
                 nonce: settings.wpRestApiNonce,
                 url: `${NEWS_PARSER_REST_PREFIX  }templates`
+            },
+            [cofigConstantsEvents.DELETE]: {
+                method: configConstantsMethods.DELETE,
+                type: cofigConstantsEvents.REST,
+                nonce: settings.wpRestApiNonce,
+                url: `${NEWS_PARSER_REST_PREFIX  }templates`
             }
         },
         [configConstantsEntities.CRON]: {

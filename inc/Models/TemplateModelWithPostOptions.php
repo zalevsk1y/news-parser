@@ -6,11 +6,29 @@ use NewsParserPlugin\Interfaces\ModelInterface;
 use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Models\TemplateModel;  
 
+/**
+ * Class TemplateModelWithPostOptions
+ *
+ * This class extends the TemplateModel class and adds support for post options.
+ *
+ * @package  Models
+ * @license  MIT
+ */
 
 class TemplateModelWithPostOptions extends TemplateModel{
-
+    /**
+     * Post options.
+     *
+     * @var array
+     */
     protected $postOptions;
-    
+    /**
+     * Check if the options have a valid format.
+     *
+     * @param array $options The options to validate.
+     *
+     * @return bool Returns true if the options have a valid format, false otherwise.
+     */
     protected function isOptionsValid($options)
     {
         if(!isset($options['extraOptions'])||
@@ -56,6 +74,14 @@ class TemplateModelWithPostOptions extends TemplateModel{
                 return json_encode($data);
         }
     }
+    /**
+     * Format the post options array to match the expected format.
+     *
+     * @param array $postOptions The post options to format.
+     *
+     * @return array Returns the formatted post options array.
+     */
+
     protected function formatPostOptions($postOptions)
     {
         if (isset($postOptions['status'])){
@@ -75,8 +101,9 @@ class TemplateModelWithPostOptions extends TemplateModel{
     /**
      * Getter function for post options.
      *
-     * @return false|array
+     * @return false|array Returns the post options as an array, or false if no options are set.
      */
+
     public function getPostOptions()
     {
         return isset($this->postOptions)?$this->formatPostOptions($this->postOptions):false;

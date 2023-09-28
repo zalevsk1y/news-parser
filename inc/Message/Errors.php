@@ -40,13 +40,15 @@ class Errors
             case 'PROGRAM_ERROR':
                 return \__('Some program error has occurred', NEWS_PARSER_PLUGIN_SLUG);
             case 'NO_TITLE':
-                return \__('Parsed post has no "Title".', NEWS_PARSER_PLUGIN_SLUG);
+                return \__('Parsing error.Parsed post has no "Title".', NEWS_PARSER_PLUGIN_SLUG);
             case 'NO_BODY':
-                return \__('Parsed post has no "Body"', NEWS_PARSER_PLUGIN_SLUG);
+                return \__('Parsing error.Parsed post has no "Body"', NEWS_PARSER_PLUGIN_SLUG);
             case 'NO_AUTHOR':
                 return \__('No Author ID was set to parsed post', NEWS_PARSER_PLUGIN_SLUG);
             case 'NO_POST_URL':
                 return \__('No source URL was set to parsed post', NEWS_PARSER_PLUGIN_SLUG);
+            case 'NO_IMAGE':
+                return \__('Parsing error.No post image URL was set to parsed post', NEWS_PARSER_PLUGIN_SLUG);
             case 'SETTINGS_CANNOT_BE_SAVED':
                 return \__('Sorry temporary settings cannot be saved', NEWS_PARSER_PLUGIN_SLUG);
             case 'OPTIONS_WRONG_FORMAT':

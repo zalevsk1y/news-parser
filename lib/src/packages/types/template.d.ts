@@ -1,4 +1,4 @@
-import { TemplateContainer } from "@news-parser/helpers/response-formatters/types/templateModel";
+import { TemplateContainer } from "@news-parser/helpers/response-formatters/types/templateFormatController";
 import { PostData } from "./sidebarTemplate"
 import { Sidebar } from "./sidebar";
 

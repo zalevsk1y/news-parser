@@ -58,6 +58,8 @@ function news_parser_init(){
     $app->event->on('media:create',array(Controller\MediaController::class,'create'));
     $app->event->on('template:create',array(Controller\TemplateController::class,'create'));
     $app->event->on('template:get',array(Controller\TemplateController::class,'get'));
+    $app->event->on('template:delete',array(Controller\TemplateController::class,'delete'));
+    $app->event->on('template.keys:get',array(Controller\TemplateController::class,'templateKeys'));
     $app->event->on('cron:create',array(Controller\CronController::class,'create'));
     $app->event->on('cron:delete',array(Controller\CronController::class,'delete'));
     $app->event->on('cron:get',array(Controller\CronController::class,'get'));

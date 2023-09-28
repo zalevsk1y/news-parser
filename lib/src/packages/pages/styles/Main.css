@@ -564,7 +564,7 @@ body {
   margin: 0;
   padding: 0;
   width: auto;
-  background-color: #f1f1f1; }
+  background-color: #f8f9fa!important; }
 
 .appContainer {
   margin: auto; }
@@ -716,11 +716,7 @@ li {
 .parsing-title{
   text-align: center;
 }
-.autopilot-tabs-container{
-  border: 1px solid transparent;
-  border-radius: 0.25rem;
-  border-color: #dee2e6 #dee2e6 #fff
-}
+
 .hidden-height{
   height: 0px;
   overflow: hidden;

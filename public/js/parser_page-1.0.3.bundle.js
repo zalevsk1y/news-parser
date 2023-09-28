@@ -39067,6 +39067,12 @@ var config = {
                 nonce: globals_1.newsParserSettings.wpRestApiNonce,
                 url: "".concat(NEWS_PARSER_REST_PREFIX, "templates")
             },
+            _f[constants_1.cofigConstantsEvents.DELETE] = {
+                method: constants_1.configConstantsMethods.DELETE,
+                type: constants_1.cofigConstantsEvents.REST,
+                nonce: globals_1.newsParserSettings.wpRestApiNonce,
+                url: "".concat(NEWS_PARSER_REST_PREFIX, "templates")
+            },
             _f),
         _a[constants_1.configConstantsEntities.CRON] = (_g = {},
             _g[constants_1.cofigConstantsEvents.UPDATE] = {
@@ -43408,7 +43414,7 @@ exports.formatCreatePostDraftRequest = void 0;
 var PostFormatController_1 = __webpack_require__(/*! ./controllers/PostFormatController */ "../helpers/response-formatters/controllers/PostFormatController.ts");
 var AdapterGuttenberg_1 = __webpack_require__(/*! ./adapters/AdapterGuttenberg */ "../helpers/response-formatters/adapters/AdapterGuttenberg.ts");
 var groupImagesInRows_1 = __webpack_require__(/*! ./modifiers/before/groupImagesInRows */ "../helpers/response-formatters/modifiers/before/groupImagesInRows.ts");
-var addSourseLink_1 = __webpack_require__(/*! ./modifiers/after/addSourseLink */ "../helpers/response-formatters/modifiers/after/addSourseLink.ts");
+var addSourceLink_1 = __webpack_require__(/*! ./modifiers/after/addSourceLink */ "../helpers/response-formatters/modifiers/after/addSourceLink.ts");
 var generateImageSizesBreakpoints_1 = __webpack_require__(/*! ./modifiers/before/generateImageSizesBreakpoints */ "../helpers/response-formatters/modifiers/before/generateImageSizesBreakpoints.ts");
 var removeSrcSetAndSizeAttr_1 = __webpack_require__(/*! ./modifiers/before/removeSrcSetAndSizeAttr */ "../helpers/response-formatters/modifiers/before/removeSrcSetAndSizeAttr.ts");
 /**
@@ -43431,7 +43437,7 @@ var formatCreatePostDraftRequest = function (postData, options, url) {
         postController.addContentModiersBeforConversion(groupImagesInRows_1.groupImagesInRows);
     }
     if (options.addSource) {
-        postController.addContentModiersAfterConversion((0, addSourseLink_1.addSourceLink)(url));
+        postController.addContentModiersAfterConversion((0, addSourceLink_1.addSourceLink)(url));
     }
     return postController.generateWpPostData();
 };
@@ -43480,9 +43486,9 @@ exports.formatPostOptions = formatPostOptions;
 
 /***/ }),
 
-/***/ "../helpers/response-formatters/modifiers/after/addSourseLink.ts":
+/***/ "../helpers/response-formatters/modifiers/after/addSourceLink.ts":
 /*!***********************************************************************!*\
-  !*** ../helpers/response-formatters/modifiers/after/addSourseLink.ts ***!
+  !*** ../helpers/response-formatters/modifiers/after/addSourceLink.ts ***!
   \***********************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 

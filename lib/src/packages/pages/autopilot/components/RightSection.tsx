@@ -4,7 +4,7 @@ import { newsParserSettings } from 'globals';
 
 export function RightSection() {
     return (
-        <div className='pt-2 pb-2 ps-3 pe-3 mb-2 bg-white autopilot-tabs-container'>
+        <div className='pt-2 pb-2 ps-3 pe-3 mb-2'>
             <h2 className='np-fs-22 flex-column align-items-center'>
                 Autopilot Parsing&nbsp; <span className="badge bg-primary">Beta</span>
             </h2>
