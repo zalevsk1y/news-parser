@@ -6,6 +6,6 @@ export interface CronOptions {
     timestamp: null | string,
     cronCalls: number,
     parsedPosts: number,
-    status: 'active' | 'idle'
+    status: 'active' | 'inactive'
 }
 

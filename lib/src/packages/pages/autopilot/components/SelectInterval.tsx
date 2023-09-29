@@ -1,6 +1,7 @@
 import React, { HTMLProps, useCallback, useMemo } from 'react';
 import { useInterval } from '@news-parser/entities/cronOptions/hooks/useInterval';
 import { CronOptions } from 'types/cronOptions';
+import { Select } from '@news-parser/components/Select';
 
 export const SelectInterval: React.FC<HTMLProps<HTMLSelectElement>> = (props) => {
     const [interval, setInterval] = useInterval();
@@ -11,8 +12,8 @@ export const SelectInterval: React.FC<HTMLProps<HTMLSelectElement>> = (props) =>
         setInterval(postingInterval)
     }, [setInterval]);
     return (
-        <select {...props} value={interval} onChange={selectStateChangeHandler} >
+        <Select {...props} value={interval} onChange={selectStateChangeHandler} >
             {optionsItems}
-        </select>
+        </Select>
     )
 }

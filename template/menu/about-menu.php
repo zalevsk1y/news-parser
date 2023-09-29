@@ -73,6 +73,23 @@
                         href="https://github.com/sunra/php-simple-html-dom-parser">https://github.com/sunra/php-simple-html-dom-parser</a>
                 </li>
             </ul>
+            <p>
+                If you have any thoughts, feedback, or proposals, feel free to connect with the author:
+            </p>
+            <ul className='d-flex flex-column ps-0'>
+                <li>
+                    <a href="https://www.instagram.com/wp_news_parser" aria-label="Instagram - Connect with the author">
+                        <img alt='Instagram icon' className='me-2' height={'27px'} src={newsParserSettings.pluginUrl + '/public/images/clipart1375168_d6sh2a.png'} ></img>
+                        Instagram
+                    </a>
+                </li>
+                <li>
+                    <a href="https://discord.gg/mxhJ9hE4" aria-label="Discord - Connect with the author">
+                        <img alt='Discord icon' className='me-2' height={'27px'} src={newsParserSettings.pluginUrl + '/public/images/discord-icon-43742_qoe0fc.png'} ></img>
+                        Discord
+                    </a>
+                </li>
+            </ul>
             <h2>If you find an issue, let us know <a
                     href="https://github.com/zalevsk1y/news-parser/issues?state=open">here</a>!</p>
         </article>

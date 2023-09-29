@@ -11,7 +11,7 @@ const initialCroneState: CroneOptionsStateType = {
     timestamp: null,
     cronCalls: 0,
     parsedPosts: 0,
-    status: 'idle'
+    status: 'inactive'
 };
 export const cronOptions = createReducer<CroneOptionsStateType>(initialCroneState, (builder) => {
     builder

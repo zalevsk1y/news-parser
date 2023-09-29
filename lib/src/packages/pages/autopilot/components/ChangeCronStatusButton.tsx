@@ -7,7 +7,7 @@ export type ChangeCronStatusButtonType = {
 
 export const ChangeCronStatusButton: React.FC<ChangeCronStatusButtonType> = ({ isLoading, buttonName }) => {
     return (
-        <button form='cron-optios' type='submit' className='btn btn-primary np-btn' >
+        <button form='cron-optios' type='submit' className='btn btn-primary np-btn btn-lg w-100' >
             {
                 isLoading ?
                     <>

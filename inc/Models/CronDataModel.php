@@ -26,7 +26,7 @@ class CronDataModel implements ModelInterface
         'timestamp'=>0,
         'cronCalls'=>0,
         'parsedPosts'=>0,
-        'status'=>'idle'
+        'status'=>'inactive'
     ];
 
     /**
@@ -59,7 +59,7 @@ class CronDataModel implements ModelInterface
     /**
     * Timestamp of last parsed post
     *
-    * @var string 'active' | 'idle'
+    * @var string 'active' | 'inactive'
     */
     protected $status;
     /**

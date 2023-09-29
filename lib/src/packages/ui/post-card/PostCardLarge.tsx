@@ -18,7 +18,7 @@ export interface PostCartLargeProps{
 
 
 export const PostCartLarge:React.FC<PostCartLargeProps>=({ children, className })=>(
-        <div className={` pt-3 pb-3 px-3 ${className??''}`}>
+        <div className={` pt-2 pb-3 ${className??''}`}>
             {children}
         </div>
     )

@@ -1,12 +1,12 @@
 import React, { HTMLProps, useCallback } from 'react';
 
-export interface SelectProps {
+export interface SelectProps extends React.HTMLProps<HTMLSelectElement>{
     className?:string,
     onChange: React.ChangeEventHandler<HTMLSelectElement>,
     children: React.ReactNode,
     value?: string,
     id?:string,
-    otherProps?:React.HTMLProps<HTMLSelectElement>
+    
 }
 
 /**
@@ -26,7 +26,7 @@ export const Select: React.FC<SelectProps> = ({ onChange, children, value,id,...
         onChange(e)
     },[])
     return (
-        <select {...otherProps} onChange={onChangeCallback} value={value} id={id} >
+        <select {...otherProps} onChange={onChangeCallback} value={value} id={id} style={{maxWidth:'none',minHeight:'34px'}}>
             {children   }
         </select>
     )

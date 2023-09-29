@@ -140,8 +140,8 @@ class CronApiController extends RestApiController
                     ),
                     'status'=>array(
                         'validate_callback'=>function($status){
-                            if($status!='idle'&&$status!='active'){
-                                return new \WP_Error(400, 'Wrong cron status format should be "active" or "idle"');
+                            if($status!='inactive'&&$status!='active'){
+                                return new \WP_Error(400, 'Wrong cron status format should be "active" or "inactive"');
                             }
                             return true;
                         }

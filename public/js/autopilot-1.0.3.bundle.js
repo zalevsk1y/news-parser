@@ -2378,19 +2378,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../ui/styles/HiddenBlock.css":
-/*!************************************!*\
-  !*** ../ui/styles/HiddenBlock.css ***!
-  \************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "../ui/styles/PostCardLarge.css":
 /*!**************************************!*\
   !*** ../ui/styles/PostCardLarge.css ***!
@@ -36317,6 +36304,84 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "../components/Select.tsx":
+/*!********************************!*\
+  !*** ../components/Select.tsx ***!
+  \********************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Select = void 0;
+var react_1 = __importStar(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
+/**
+ * A component that displays a select element with options, and allows for a callback function to be called when the selected option changes.
+ *
+ * @param {SelectProps} props - The component props.
+ * @param {function} onChange - A callback function that will be called when the selected option changes.
+ * @param {ReactNode} children - The child components to render as options in the select element.
+ * @param {HTMLProps} otherProps - other html props(WAI-ARIA) that could be to select tag.
+ * @param {string} value - The value of the currently selected option.
+ * @returns {JSX.Element} A select element containing the child components as options.
+ */
+var Select = function (_a) {
+    var onChange = _a.onChange, children = _a.children, value = _a.value, id = _a.id, otherProps = __rest(_a, ["onChange", "children", "value", "id"]);
+    var onChangeCallback = (0, react_1.useCallback)(function (e) {
+        onChange(e);
+    }, []);
+    return (react_1.default.createElement("select", __assign({}, otherProps, { onChange: onChangeCallback, value: value, id: id, style: { maxWidth: 'none', minHeight: '34px' } }), children));
+};
+exports.Select = Select;
+
+
+/***/ }),
+
 /***/ "../config/constants.ts":
 /*!******************************!*\
   !*** ../config/constants.ts ***!
@@ -36566,7 +36631,7 @@ exports.setCronStatus = (0, toolkit_1.createAction)(exports.SET_CRON_STATUS);
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.STATUS_ACTIVE = exports.STATUS_IDLE = exports.PAGE = exports.SET = exports.STATUS = exports.TIMESTAMP = exports.INTERVAL = exports.MAX_CRON_CALLS = exports.MAX_POSTS = exports.CRON_OPTIONS = exports.SELECTED_TEMPLATE = void 0;
+exports.STATUS_ACTIVE = exports.STATUS_INACTIVE = exports.PAGE = exports.SET = exports.STATUS = exports.TIMESTAMP = exports.INTERVAL = exports.MAX_CRON_CALLS = exports.MAX_POSTS = exports.CRON_OPTIONS = exports.SELECTED_TEMPLATE = void 0;
 exports.SELECTED_TEMPLATE = 'selectedTemplate';
 exports.CRON_OPTIONS = 'cronOptions';
 exports.MAX_POSTS = 'maxPostsParsed';
@@ -36576,7 +36641,7 @@ exports.TIMESTAMP = 'timestamp';
 exports.STATUS = 'status';
 exports.SET = 'set';
 exports.PAGE = 'page';
-exports.STATUS_IDLE = 'idle';
+exports.STATUS_INACTIVE = 'inactive';
 exports.STATUS_ACTIVE = 'active';
 
 
@@ -36850,7 +36915,7 @@ var initialCroneState = {
     timestamp: null,
     cronCalls: 0,
     parsedPosts: 0,
-    status: 'idle'
+    status: 'inactive'
 };
 exports.cronOptions = (0, toolkit_1.createReducer)(initialCroneState, function (builder) {
     builder
@@ -37597,7 +37662,7 @@ exports.ChangeCronStatusButton = void 0;
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
 var ChangeCronStatusButton = function (_a) {
     var isLoading = _a.isLoading, buttonName = _a.buttonName;
-    return (react_1.default.createElement("button", { form: 'cron-optios', type: 'submit', className: 'btn btn-primary np-btn' }, isLoading ?
+    return (react_1.default.createElement("button", { form: 'cron-optios', type: 'submit', className: 'btn btn-primary np-btn btn-lg w-100' }, isLoading ?
         react_1.default.createElement(react_1.default.Fragment, null,
             react_1.default.createElement("span", { className: 'spinner-border spinner-border-16 np-fs-16 ', role: 'status', "aria-hidden": 'true' }),
             react_1.default.createElement("span", { className: 'sr-only np-fs-16' }, "\u00A0Loading...")) :
@@ -37653,7 +37718,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CronOptionsBlock = void 0;
 var react_1 = __importStar(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
-var HiddenBlock_1 = __webpack_require__(/*! @news-parser/ui/HiddenBlock */ "../ui/HiddenBlock.tsx");
 var SelectInterval_1 = __webpack_require__(/*! ./SelectInterval */ "./autopilot/components/SelectInterval.tsx");
 var MaxPostsInput_1 = __webpack_require__(/*! ./MaxPostsInput */ "./autopilot/components/MaxPostsInput.tsx");
 var MaxCronInput_1 = __webpack_require__(/*! ./MaxCronInput */ "./autopilot/components/MaxCronInput.tsx");
@@ -37671,7 +37735,7 @@ var CronOptionsBlock = function () {
         event.preventDefault();
         var newCronData = __assign({}, cronOptions);
         switch (cronOptions.status) {
-            case constants_1.STATUS_IDLE:
+            case constants_1.STATUS_INACTIVE:
                 newCronData.status = constants_1.STATUS_ACTIVE;
                 mutateCronOptions(newCronData);
                 break;
@@ -37680,34 +37744,31 @@ var CronOptionsBlock = function () {
                 break;
         }
     }, [cronOptions.status, cronOptions]);
-    return (react_1.default.createElement(HiddenBlock_1.HiddenBlock, { hide: !isConsOptionsSet },
-        react_1.default.createElement(SettingsBlock_1.SettingsBlock, null,
-            react_1.default.createElement("span", { className: 'np-fs-16' }, "Current status:"),
-            react_1.default.createElement("b", { className: "np-fs-16" },
-                "\u00A0",
-                cronOptions.status)),
-        react_1.default.createElement("form", { id: 'cron-optios', onSubmit: submitHandler },
-            react_1.default.createElement(SettingsBlock_1.SettingsBlock, null,
-                react_1.default.createElement("label", { htmlFor: 'cron-options-max-posts-parsed', className: 'form-lable np-fs-16' }, "Total posts:"),
+    return (react_1.default.createElement("form", { hidden: !isConsOptionsSet, id: 'cron-optios', onSubmit: submitHandler },
+        react_1.default.createElement("div", { className: 'row' },
+            react_1.default.createElement(SettingsBlock_1.SettingsBlock, { className: 'col-sm-12 mt-3' },
+                react_1.default.createElement("span", { className: 'np-fs-16' }, "Current status:"),
+                react_1.default.createElement("b", { className: "np-fs-16 ms-2 ".concat(cronOptions.status == constants_1.STATUS_ACTIVE ? 'text-success' : 'text-danger') }, cronOptions.status.toUpperCase())),
+            react_1.default.createElement(SettingsBlock_1.SettingsBlock, { className: 'col-sm-6 mt-3' },
+                react_1.default.createElement("label", { htmlFor: 'cron-options-max-posts-parsed', className: 'form-lable mb-2 np-fs-16' }, "Total posts:"),
                 react_1.default.createElement(MaxPostsInput_1.MaxPostsInput, { min: 1, max: 100, step: 1, className: 'w-100 np-fs-16', id: 'cron-options-max-posts-parsed', placeholder: '1-100', required: true, disabled: cronOptions.status === 'active' }),
                 react_1.default.createElement("i", { className: 'text-secondary np-fs-16' }, cronOptions === null || cronOptions === void 0 ? void 0 :
                     cronOptions.parsedPosts,
                     " posts were parsed")),
-            react_1.default.createElement(SettingsBlock_1.SettingsBlock, null,
-                react_1.default.createElement("label", { htmlFor: 'cron-options-max-cron-call', className: 'form-lable np-fs-16' }, "Total runs:"),
+            react_1.default.createElement(SettingsBlock_1.SettingsBlock, { className: 'col-sm-6 mt-3' },
+                react_1.default.createElement("label", { htmlFor: 'cron-options-max-cron-call', className: 'form-lable mb-2 np-fs-16' }, "Total runs:"),
                 react_1.default.createElement(MaxCronInput_1.MaxCronInput, { min: '1', max: '100', step: '1', className: 'w-100 np-fs-16', placeholder: '1-100', id: 'cron-options-max-cron-call', required: true, disabled: cronOptions.status === 'active' }),
                 react_1.default.createElement("i", { className: 'text-secondary np-fs-16' }, cronOptions === null || cronOptions === void 0 ? void 0 :
                     cronOptions.cronCalls,
                     " times parser was run.")),
-            react_1.default.createElement(SettingsBlock_1.SettingsBlock, null,
-                react_1.default.createElement("label", { htmlFor: 'cron-options-cron-calls-interval', className: 'form-lable np-fs-16' }, "Run frequency:"),
-                react_1.default.createElement(SelectInterval_1.SelectInterval, { className: "form-select", id: 'cron-options-cron-calls-interval', required: true, disabled: (cronOptions === null || cronOptions === void 0 ? void 0 : cronOptions.status) === 'active' }),
-                react_1.default.createElement("i", { className: 'text-secondary np-fs-16' }, cronOptions === null || cronOptions === void 0 ? void 0 :
-                    cronOptions.cronCalls,
-                    " times parser was run."))),
-        react_1.default.createElement("div", { className: 'buttons-block mt-4' },
-            react_1.default.createElement(ChangeCronStatusButton_1.ChangeCronStatusButton, { isLoading: isCronOpotionsMutating, buttonName: buttonName }),
-            cronOptions.status === constants_1.STATUS_IDLE && react_1.default.createElement(DeleteTemplateButton_1.DeleteTemplateButton, null))));
+            react_1.default.createElement(SettingsBlock_1.SettingsBlock, { className: 'col-sm-12 mt-3' },
+                react_1.default.createElement("label", { htmlFor: 'cron-options-cron-calls-interval', className: 'form-lable mb-2 np-fs-16' }, "Run frequency:"),
+                react_1.default.createElement(SelectInterval_1.SelectInterval, { className: 'form-select', id: 'cron-options-cron-calls-interval', required: true, disabled: (cronOptions === null || cronOptions === void 0 ? void 0 : cronOptions.status) === 'active' }))),
+        react_1.default.createElement("div", { className: 'row mt-4' },
+            react_1.default.createElement("div", { className: 'col-md-6' },
+                react_1.default.createElement(ChangeCronStatusButton_1.ChangeCronStatusButton, { isLoading: isCronOpotionsMutating, buttonName: buttonName })),
+            cronOptions.status === constants_1.STATUS_INACTIVE && react_1.default.createElement("div", { className: 'col-md-6 mt-sm-0 mt-3' },
+                react_1.default.createElement(DeleteTemplateButton_1.DeleteTemplateButton, null)))));
 };
 exports.CronOptionsBlock = CronOptionsBlock;
 
@@ -37729,7 +37790,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DeleteTemplateButton = void 0;
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
 var DeleteTemplateButton = function () {
-    return (react_1.default.createElement("button", { className: 'ms-2 btn btn-danger np-btn' },
+    return (react_1.default.createElement("button", { className: 'btn btn-outline-secondary np-btn btn-lg w-100' },
         react_1.default.createElement("span", { className: "px-4 np-fs-16" }, "Delete Template")));
 };
 exports.DeleteTemplateButton = DeleteTemplateButton;
@@ -37797,7 +37858,7 @@ var Main = function () {
         react_1.default.createElement("div", { className: 'row mt-4 d-flex flex-row justify-content-center' },
             react_1.default.createElement("div", { className: 'col-md-5 col-lg-4 order-md-last d-flex flex-column' },
                 react_1.default.createElement(RightSection_1.RightSection, null)),
-            react_1.default.createElement("div", { className: 'col-md-7 col-lg-8' },
+            react_1.default.createElement("div", { className: 'col-md-7 col-lg-6' },
                 react_1.default.createElement(MainOptionsSection_1.MainOptionsBlock, null)))));
 };
 exports["default"] = Main;
@@ -37849,9 +37910,8 @@ var MainOptionsBlock = function () {
         fetchCronOptions(templateID);
     }, [fetchCronOptions]);
     return (react_1.default.createElement(PostCardLarge_1.PostCartLarge, { className: 'mb-4' },
-        react_1.default.createElement("div", null,
-            react_1.default.createElement("h2", { className: 'np-fs-22' }, "Schedule Options")),
-        react_1.default.createElement("div", { className: 'mt-3' },
+        react_1.default.createElement("h2", { className: 'np-fs-22 mb-3' }, "Schedule Options"),
+        react_1.default.createElement("div", { className: 'row' },
             react_1.default.createElement("div", { className: 'input-group' },
                 react_1.default.createElement(TemplateSelect_1.TemplateSelect, { className: 'form-select', placeholder: 'Select template url', "aria-label": 'Select schedule option', onSelect: selectTemplateHandler, isFetching: isCronOptionsFetching }))),
         react_1.default.createElement(CronOptionsBlock_1.CronOptionsBlock, null)));
@@ -38002,24 +38062,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.RightSection = void 0;
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
-var globals_1 = __webpack_require__(/*! globals */ "globals");
 // https://www.buymeacoffee.com/4832232T
 function RightSection() {
     return (react_1.default.createElement("div", { className: 'pt-2 pb-2 ps-3 pe-3 mb-2' },
         react_1.default.createElement("h2", { className: 'np-fs-22 flex-column align-items-center' },
             "Autopilot Parsing\u00A0 ",
             react_1.default.createElement("span", { className: "badge bg-primary" }, "Beta")),
-        react_1.default.createElement("p", null, "The autopilot parsing feature is currently in beta mode. Please be aware that it may have some bugs or unexpected behavior. Use it carefully."),
-        react_1.default.createElement("p", null, "If you have any thoughts, feedback, or proposals, feel free to connect with the author:"),
-        react_1.default.createElement("ul", { className: 'd-flex flex-column ps-0' },
-            react_1.default.createElement("li", null,
-                react_1.default.createElement("a", { href: "https://www.instagram.com/wp_news_parser", "aria-label": "Instagram - Connect with the author" },
-                    react_1.default.createElement("img", { alt: 'Instagram icon', className: 'me-2', height: '27px', src: globals_1.newsParserSettings.pluginUrl + '/public/images/clipart1375168_d6sh2a.png' }),
-                    "Instagram")),
-            react_1.default.createElement("li", null,
-                react_1.default.createElement("a", { href: "https://discord.gg/mxhJ9hE4", "aria-label": "Discord - Connect with the author" },
-                    react_1.default.createElement("img", { alt: 'Discord icon', className: 'me-2', height: '27px', src: globals_1.newsParserSettings.pluginUrl + '/public/images/discord-icon-43742_qoe0fc.png' }),
-                    "Discord")))));
+        react_1.default.createElement("p", null, "The autopilot parsing feature is currently in beta mode. Please be aware that it may have some bugs or unexpected behavior. Use it carefully.")));
 }
 exports.RightSection = RightSection;
 
@@ -38072,6 +38121,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SelectInterval = void 0;
 var react_1 = __importStar(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
 var useInterval_1 = __webpack_require__(/*! @news-parser/entities/cronOptions/hooks/useInterval */ "../entities/cronOptions/hooks/useInterval.ts");
+var Select_1 = __webpack_require__(/*! @news-parser/components/Select */ "../components/Select.tsx");
 var SelectInterval = function (props) {
     var _a = (0, useInterval_1.useInterval)(), interval = _a[0], setInterval = _a[1];
     var optionsItemsArray = ['hourly', 'daily', 'weekly', 'monthly', 'yearly'];
@@ -38080,7 +38130,7 @@ var SelectInterval = function (props) {
         var postingInterval = e.target.value;
         setInterval(postingInterval);
     }, [setInterval]);
-    return (react_1.default.createElement("select", __assign({}, props, { value: interval, onChange: selectStateChangeHandler }), optionsItems));
+    return (react_1.default.createElement(Select_1.Select, __assign({}, props, { value: interval, onChange: selectStateChangeHandler }), optionsItems));
 };
 exports.SelectInterval = SelectInterval;
 
@@ -38102,12 +38152,11 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SettingsBlock = void 0;
 var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
 var SettingsBlock = function (_a) {
-    var children = _a.children;
-    return (react_1.default.createElement("div", { className: 'options-block d-flex flex-row mt-4' },
-        react_1.default.createElement("div", { className: 'col-4 col-lg-2' }, children[0]),
-        react_1.default.createElement("div", { className: 'col-8 col-lg-6' },
-            children[1],
-            children[2] && react_1.default.createElement("div", { className: 'text-block' }, children[2]))));
+    var className = _a.className, children = _a.children;
+    return (react_1.default.createElement("div", { className: className },
+        children[0],
+        children[1],
+        children[2] && react_1.default.createElement("div", { className: 'text-block mt-2' }, children[2])));
 };
 exports.SettingsBlock = SettingsBlock;
 
@@ -38171,6 +38220,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TemplateSelect = void 0;
 var react_1 = __importStar(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
 var useGetTemplates_1 = __webpack_require__(/*! @news-parser/entities/templates/hooks/useGetTemplates */ "../entities/templates/hooks/useGetTemplates.ts");
+var Select_1 = __webpack_require__(/*! @news-parser/components/Select */ "../components/Select.tsx");
 var TemplateSelect = function (_a) {
     var onSelect = _a.onSelect, isFetching = _a.isFetching, placeholder = _a.placeholder, otherProps = __rest(_a, ["onSelect", "isFetching", "placeholder"]);
     var templates = (0, useGetTemplates_1.useGetTemplates)();
@@ -38184,7 +38234,7 @@ var TemplateSelect = function (_a) {
         setSelectValue(e.target.value);
     }, []);
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement("select", __assign({}, otherProps, { onChange: selectChangeHandler, value: selectValue, id: 'autopilot-post-template-select' }),
+        react_1.default.createElement(Select_1.Select, __assign({}, otherProps, { onChange: selectChangeHandler, value: selectValue, id: 'autopilot-post-template-select', disabled: isFetching }),
             react_1.default.createElement("option", { value: '', disabled: true },
                 "--",
                 placeholder,
@@ -38253,39 +38303,6 @@ exports["default"] = (0, toolkit_1.combineReducers)({ parse: autopilotReducer })
 
 /***/ }),
 
-/***/ "../ui/HiddenBlock.tsx":
-/*!*****************************!*\
-  !*** ../ui/HiddenBlock.tsx ***!
-  \*****************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.HiddenBlock = void 0;
-var react_1 = __importDefault(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
-__webpack_require__(/*! ./styles/HiddenBlock.css */ "../ui/styles/HiddenBlock.css");
-/**
-* A component for rendering a block that can be hidden.
-*
-* @param {HiddenBlockProps} props - The props for the component.
-* @param {boolean} props.hide - Whether the block should be hidden.
-* @param {React.ReactNode} props.children - The child content to display within the block.
-*
-* @returns {JSX.Element} The rendered HiddenBlock component.
-*/
-var HiddenBlock = function (_a) {
-    var hide = _a.hide, children = _a.children;
-    return (react_1.default.createElement("div", { className: hide ? 'hidden-height' : '' }, children));
-};
-exports.HiddenBlock = HiddenBlock;
-
-
-/***/ }),
-
 /***/ "../ui/post-card/PostCardLarge.tsx":
 /*!*****************************************!*\
   !*** ../ui/post-card/PostCardLarge.tsx ***!
@@ -38312,7 +38329,7 @@ __webpack_require__(/*! ../styles/PostCardLarge.css */ "../ui/styles/PostCardLar
  */
 var PostCartLarge = function (_a) {
     var children = _a.children, className = _a.className;
-    return (react_1.default.createElement("div", { className: " pt-3 pb-3 px-3 ".concat(className !== null && className !== void 0 ? className : '') }, children));
+    return (react_1.default.createElement("div", { className: " pt-2 pb-3 ".concat(className !== null && className !== void 0 ? className : '') }, children));
 };
 exports.PostCartLarge = PostCartLarge;
 

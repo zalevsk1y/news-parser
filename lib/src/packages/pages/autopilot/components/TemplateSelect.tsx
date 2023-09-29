@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { useGetTemplates } from '@news-parser/entities/templates/hooks/useGetTemplates';
+import { Select } from '@news-parser/components/Select';
 
 interface TemplateSelectProps {
     onSelect: (templateId: string) => void,
@@ -22,10 +23,10 @@ export const TemplateSelect: React.FC<TemplateSelectProps> = ({ onSelect, isFetc
     }, [])
     return (
         <>
-            <select {...otherProps} onChange={selectChangeHandler} value={selectValue} id='autopilot-post-template-select'>
+            <Select {...otherProps} onChange={selectChangeHandler} value={selectValue} id='autopilot-post-template-select' disabled={isFetching}>
                 <option value='' disabled>--{placeholder}--</option>
                 {optionsTemplates}
-            </select>
+            </Select>
             <button className='btn btn-primary np-btn' type='button' onClick={selectClickHandler} disabled={isFetching || selectValue == ''}>{
                 isFetching ? <><span className='spinner-border spinner-border-16 np-fs-16' role='status' aria-hidden='true' />
                     <span className='sr-only np-fs-16'>&nbsp;Loading...</span></>

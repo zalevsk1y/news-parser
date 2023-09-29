@@ -27,7 +27,7 @@ const Main: React.FC = () => {
         <div className='col-md-5 col-lg-4 order-md-last d-flex flex-column'>
           <RightSection />
         </div>
-        <div className='col-md-7 col-lg-8'>
+        <div className='col-md-7 col-lg-6'>
           <MainOptionsBlock />
         </div>
         

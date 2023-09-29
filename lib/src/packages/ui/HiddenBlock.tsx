@@ -3,7 +3,8 @@ import './styles/HiddenBlock.css'
 
 export interface HiddenBlockProps {
     hide: boolean;
-    children: React.ReactNode;
+    children: React.ReactNode,
+    className?:string
 }
 
 /**
@@ -17,8 +18,8 @@ export interface HiddenBlockProps {
 */
 
 
-export const HiddenBlock: React.FC<HiddenBlockProps> = ({ hide, children }) => (
-        <div className={hide ? 'hidden-height' : ''}>
+export const HiddenBlock: React.FC<HiddenBlockProps> = ({ hide, className,children }) => (
+        <div hidden={hide} className={className}>
             {children}
         </div>
     )

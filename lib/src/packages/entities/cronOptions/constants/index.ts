@@ -8,5 +8,5 @@ export const STATUS='status';
 export const SET='set';
 export const PAGE='page';
 
-export const STATUS_IDLE='idle';
+export const STATUS_INACTIVE='inactive';
 export const STATUS_ACTIVE='active';

@@ -38877,7 +38877,7 @@ var Select = function (_a) {
     var onChangeCallback = (0, react_1.useCallback)(function (e) {
         onChange(e);
     }, []);
-    return (react_1.default.createElement("select", __assign({}, otherProps, { onChange: onChangeCallback, value: value, id: id }), children));
+    return (react_1.default.createElement("select", __assign({}, otherProps, { onChange: onChangeCallback, value: value, id: id, style: { maxWidth: 'none', minHeight: '34px' } }), children));
 };
 exports.Select = Select;
 

@@ -3,10 +3,6 @@
   border-radius: 0.25rem;
   border-color: #dee2e6 #dee2e6 #fff
 }
-.hidden-height{
-    height: 0px;
-    overflow: hidden;
-  }
 .message-wrapper {
   width: 100%;
   display: flex;
