@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/PostCardLarge.css'
 
-export interface PostCartLargeProps{
+export type PostCartLargeProps={
     className?:string,
     children:React.ReactNode
 }

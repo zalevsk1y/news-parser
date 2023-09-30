@@ -32,6 +32,7 @@ export const TemplateSelect: React.FC<TemplateSelectProps> = ({ onSelect, isFetc
                     <span className='sr-only np-fs-16'>&nbsp;Loading...</span></>
                     : <span className='px-4 np-fs-16'>Select</span>
             }</button>
+            
         </>
     )
 }

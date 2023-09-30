@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/SidebarItemLabel.css'
 
-export interface SidebarItemLabelProps{
+export type SidebarItemLabelProps={
     children:React.ReactNode,
     className?:string,
     htmlFor:string

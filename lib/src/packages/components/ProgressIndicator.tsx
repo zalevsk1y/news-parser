@@ -1,8 +1,8 @@
 import React, { useMemo, useLayoutEffect } from "react";
 import { useScrolling } from '../hooks/useScrolling';
-// import '../../../scss/progress-indicator.scss';
+import './styles/ProgressIndicator.css';
 
-export interface ProgressIndicatorProps {
+export type ProgressIndicatorProps= {
     hidden?: boolean,
     total: number,
     count: number,

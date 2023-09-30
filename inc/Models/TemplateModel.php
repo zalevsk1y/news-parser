@@ -101,7 +101,7 @@ class TemplateModel implements ModelInterface
     public function update()
     {
         $templates=$this->getAll();
-        if(array_key_exists($this->url,$templates)){
+        if(array_key_exists($this->resourceUrl,$templates)){
             return $this->updateOptions(self::TEMPLATE_TABLE_NAME, $templates, 'no');
         }
         return false;
@@ -114,8 +114,8 @@ class TemplateModel implements ModelInterface
 
     public function delete (){
         $templates=$this->getAll();
-        if(array_key_exists($this->url,$templates)){
-            unset($templates[$this->url]);
+        if(array_key_exists($this->resourceUrl,$templates)){
+            unset($templates[$this->resourceUrl]);
             return $this->updateOptions(self::TEMPLATE_TABLE_NAME, $templates, 'no');
         }
         return false;

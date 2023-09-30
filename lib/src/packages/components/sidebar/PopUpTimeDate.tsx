@@ -2,7 +2,7 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { PopUp } from '@news-parser/ui/sidebar/PopUp';
 import '../styles/PopUpTimeDate.css';
 
-export interface PopUpTimeDateProps {
+export type PopUpTimeDateProps= {
   value: { date: string | false },
   // date format ISO 8601 - 2022-08-21T15:30
   onChange: (date: string | false) => void

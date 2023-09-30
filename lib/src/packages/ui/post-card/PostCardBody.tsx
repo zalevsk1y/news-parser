@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/PostCardBody.css';
 
-export interface PostCardBodyProps {
+export type PostCardBodyProps= {
     link: string,
     title: string,
     description: string,

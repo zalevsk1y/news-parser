@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import '../styles/SidebarItemExpandable.css'
 
-export interface SidebarItemExpandableProps {
+export type SidebarItemExpandableProps= {
     expandButton: {value:string,className:string},
     children: React.ReactNode,
     wide?: boolean

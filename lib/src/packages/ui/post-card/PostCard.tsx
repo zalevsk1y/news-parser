@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/PostCard.css';
 
-export interface PostCardProps {
+export type PostCardProps ={
     selected: boolean,
     children: React.ReactNode
 }

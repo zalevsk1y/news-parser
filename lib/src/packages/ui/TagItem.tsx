@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles/TagItem.css';
 
-export interface TagItemProps {
+export type TagItemProps = {
   tagName: string;
   removeTagHandler: React.MouseEventHandler<HTMLButtonElement>;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import config from '@news-parser/config/index';
 
-export interface ImageProps {
+export type ImageProps ={
   src?: string,
   className?: string,
   alt?: string,

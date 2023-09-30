@@ -4099,6 +4099,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "../components/styles/ProgressIndicator.css":
+/*!**************************************************!*\
+  !*** ../components/styles/ProgressIndicator.css ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "../components/styles/SidebarItemExpandable.css":
 /*!******************************************************!*\
   !*** ../components/styles/SidebarItemExpandable.css ***!
@@ -38774,6 +38787,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ProgressIndicator = void 0;
 var react_1 = __importStar(__webpack_require__(/*! react */ "../../../node_modules/react/index.js"));
 var useScrolling_1 = __webpack_require__(/*! ../hooks/useScrolling */ "../hooks/useScrolling.ts");
+__webpack_require__(/*! ./styles/ProgressIndicator.css */ "../components/styles/ProgressIndicator.css");
 /**
  * A component that displays a progress bar and an optional child component, with an option to disable scrolling when the progress bar is visible.
  *
@@ -46410,7 +46424,7 @@ var VisualConstructorHeader = function (_a) {
             closeButton.current.focus();
     }, []);
     return (react_1.default.createElement("div", { className: 'modal-header' },
-        react_1.default.createElement("h1", null, title),
+        react_1.default.createElement("h2", null, title),
         react_1.default.createElement("button", { ref: closeButton, type: 'button', className: 'media-modal-close', onClick: closeHandler, "aria-label": 'Close dialog' },
             react_1.default.createElement("span", { className: 'media-modal-icon' }))));
 };

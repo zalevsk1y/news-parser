@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/CategoryItem.css';
 
-export interface CategoryItemProps {
+export type CategoryItemProps= {
     name: string,
     checked: boolean,
     onChange: React.FormEventHandler<HTMLInputElement>,

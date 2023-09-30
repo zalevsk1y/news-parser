@@ -1,7 +1,7 @@
 import React from 'react';
 import '../stules/Button.css';
 
-export interface ButtonProps {
+export type ButtonProps ={
     children: React.ReactNode,
     onClick: React.MouseEventHandler<HTMLButtonElement>
 }

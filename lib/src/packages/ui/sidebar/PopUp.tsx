@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/PopUp.css';
 
-export interface PopUpProps{
+export type PopUpProps={
         isOpen:boolean,
         children:React.ReactNode,
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles/HiddenBlock.css'
 
-export interface HiddenBlockProps {
+export type HiddenBlockProps ={
     hide: boolean;
     children: React.ReactNode,
     className?:string

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export interface CategoriesOptionItemProps {
+export type CategoriesOptionItemProps= {
     name: string,
     id?: string | number
 }

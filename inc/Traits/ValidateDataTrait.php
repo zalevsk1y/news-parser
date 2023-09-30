@@ -80,7 +80,7 @@ trait ValidateDataTrait
      * @param array $template
      * @return true|/WP_Error
      */
-    public function validateTemplate($template)
+    public function validateHTMLTemplate($html_template)
     {
         $container_should_have_keys=array(
             'tagName',
@@ -90,13 +90,13 @@ trait ValidateDataTrait
         );
         $child_should_have_keys=array_slice($container_should_have_keys, 0, -2);
         array_push($child_should_have_keys, 'position');
-        if (!$this->checkArrayKeys($container_should_have_keys, $template)) {
+        if (!$this->checkArrayKeys($container_should_have_keys, $html_template)) {
             return false;
         }
-        if (!is_array($template['children'])) {
+        if (!is_array($html_template['children'])) {
             return new \WP_Error(400, 'Template patterns array should have children section.');
         }
-        foreach ($template['children'] as $child) {
+        foreach ($html_template['children'] as $child) {
             if (is_wp_error($result = $this->checkArrayKeys($child_should_have_keys, $child))) {
                 return $result;
             }
@@ -119,5 +119,17 @@ trait ValidateDataTrait
             return true;
         }
         return new \WP_Error(400, 'No needed parameters in extraOptions parsing options array.Missing keys:'.implode(',', $has_difference));
+    }
+    public function validateTemplate($template){
+        $template_should_have_keys=array(
+            'url',
+            'extraOptions',
+            'template',
+            'postOptions'
+        );
+        if (!$this->checkArrayKeys($template_should_have_keys, $template)) {
+            return false;
+        }
+        return $this->validateExtraOptions($template['extraOptions'])&&$this->validateHTMLTemplate($template['template']);
     }
 }

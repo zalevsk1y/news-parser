@@ -1,6 +1,6 @@
 import React, { HTMLProps, useCallback } from 'react';
 
-export interface SelectProps extends React.HTMLProps<HTMLSelectElement>{
+export type SelectProps=React.HTMLProps<HTMLSelectElement>&{
     className?:string,
     onChange: React.ChangeEventHandler<HTMLSelectElement>,
     children: React.ReactNode,

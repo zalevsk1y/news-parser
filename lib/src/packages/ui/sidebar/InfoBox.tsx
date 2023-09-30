@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import '../styles/InfoBox.css';
 
-export interface InfoBoxProps {
+export type InfoBoxProps= {
     title: string,
     children: React.ReactNode
 }

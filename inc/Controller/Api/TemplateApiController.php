@@ -125,7 +125,7 @@ class TemplateApiController extends RestApiController
                 'callback' => array($this, 'createTemplate'),
                 'permission_callback' => array($this, 'checkPermission'),
                 'args' => array(
-                    'url' => array (
+                    'template' => array (
                         'validate_callback'=>array($this,'validateTemplate'),
                         'sanitize_callback'=>array($this,'sanitizeTemplate')
                     )
@@ -137,8 +137,8 @@ class TemplateApiController extends RestApiController
                     'permission_callback' => array($this, 'checkPermission'),
                     'args' => array(
                         'url' => array (
-                            'validate_callback'=>array($this,'validateTemplate'),
-                            'sanitize_callback'=>array($this,'sanitizeTemplate')
+                            'required' => true,
+                            'validate_callback'=>array($this,'validateUrl')
                         )
                     )
                 )
@@ -198,8 +198,8 @@ public function getTemplates($request){
     {
         try{
             $template=$request->get_params();
-            $deleted_template_data=$this->event->trigger('template:delete', array($template['url']));
-            $response_data=$this->formatResponse()->message('success', Success::text('TEMPLATE_DELETE'))->get('array');
+            $templates_data=$this->event->trigger('template:delete', array($template['url']));
+            $response_data=$this->formatResponse()->message('success', Success::text('TEMPLATE_DELETE'))->options($templates_data)->get('array');
             return $this->sendResponse($response_data);
         }catch(MyException $e){
             $error_data=$this->formatResponse()->error($e->getCode())->message('error', $e->getMessage())->get('array');

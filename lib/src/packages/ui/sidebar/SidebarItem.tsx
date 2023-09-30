@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/SidebarItem.css';
 
-export interface SidebarItemProps {
+export type SidebarItemProps= {
     children: React.ReactNode,
     border?: 'top' | 'bottom',
     wide?: boolean,

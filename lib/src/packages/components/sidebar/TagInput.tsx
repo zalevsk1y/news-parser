@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import '../styles/TagInput.css';
 
-export interface TagInputProps {
+export type TagInputProps= {
   onCreate: (tagName: string) => void;
   id?: string;
   bottomCapture:string,

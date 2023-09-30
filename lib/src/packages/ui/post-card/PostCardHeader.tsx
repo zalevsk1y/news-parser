@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/PostCardHeader.css';
 
-export interface PostCardHeaderProps {
+export type PostCardHeaderProps= {
     pubDate: string;
 }
 

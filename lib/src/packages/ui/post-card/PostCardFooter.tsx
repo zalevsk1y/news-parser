@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/PostCardFooter.css';
 
-export interface PostCardFooterProps {
+export type PostCardFooterProps ={
     children: React.ReactNode
 }
 

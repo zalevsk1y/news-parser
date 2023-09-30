@@ -4,7 +4,7 @@ import '../styles/LoadingSpinner.css';
 
 
 
-export interface LoadingSpinnerProps {
+export type LoadingSpinnerProps= {
     style: React.CSSProperties
 }
 

@@ -7,6 +7,10 @@
   left: 0;
   z-index: 1000;
 }
+.modal{
+  display: block!important;
+  z-index: 100001!important;
+}
 .lh-2 {
   line-height: 2 !important;
 }
@@ -671,37 +675,7 @@ body {
 .about-text p,
 li {
   font-size: 16px; }
-.progress-indicator-container{
-  position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.75);
-			z-index: 9999;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-}
-.progress-bar-outer {
-    width:20rem;
-    padding: 2px;
-    border-radius: 15px;
-    margin-bottom: 10px;
-    border: 2px solid;
-    border-color:#fff;
-}
-.progress-bar-inner{
-    border-radius: 5px;
-    height:10px;
-    background-color:#fff;
-}
-.progress-message {
-    color: #fff;
-    font-size: 18px;
-    text-align: center;
-}
+
 /*remove WP update sign*/
 .update-nag.notice.notice-warning.inline {
   display: none;
@@ -748,7 +722,19 @@ li {
   white-space: nowrap;
   border: 0;
   }
-  
+  .modal-window-shader-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 100000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 @media screen and (max-height: 782px) {
   .main-parsing-container {
     height: 91vh; 

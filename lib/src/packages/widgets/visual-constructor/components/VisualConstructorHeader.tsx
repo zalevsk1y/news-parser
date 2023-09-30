@@ -12,7 +12,7 @@ export const VisualConstructorHeader:React.FC<VisualConstructorHeaderProps>=({ti
     },[])
     return (
         <div className='modal-header'>
-                    <h1>{title}</h1>
+                    <h2>{title}</h2>
                     <button
                         ref={closeButton}
                         type='button'

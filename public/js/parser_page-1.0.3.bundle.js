@@ -46278,7 +46278,7 @@ var VisualConstructorHeader = function (_a) {
             closeButton.current.focus();
     }, []);
     return (react_1.default.createElement("div", { className: 'modal-header' },
-        react_1.default.createElement("h1", null, title),
+        react_1.default.createElement("h2", null, title),
         react_1.default.createElement("button", { ref: closeButton, type: 'button', className: 'media-modal-close', onClick: closeHandler, "aria-label": 'Close dialog' },
             react_1.default.createElement("span", { className: 'media-modal-icon' }))));
 };

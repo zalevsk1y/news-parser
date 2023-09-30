@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 
-export interface IconsProps {
+export type IconsProps ={
     className: string,
     type:'button'|'checkbox'
     ariaLabel:string,

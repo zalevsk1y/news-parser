@@ -1,18 +1,8 @@
 import { setCronOpions, setMaxPosts, setMaxCronCalls, setInterval, setCronStatus } from '../actions/cronOptions.actions'
 import { createReducer } from '@reduxjs/toolkit';
-import { AutopilotRootState } from 'types/state'
+import {initialCroneState} from './initialState';
+import {CroneOptionsStateType} from './CroneOptionsStateType';
 
-type CroneOptionsStateType = AutopilotRootState['parse']['cronOptions']
-const initialCroneState: CroneOptionsStateType = {
-    url: '',
-    maxCronCalls: 0,
-    maxPostsParsed: 0,
-    interval: 'hourly',
-    timestamp: null,
-    cronCalls: 0,
-    parsedPosts: 0,
-    status: 'inactive'
-};
 export const cronOptions = createReducer<CroneOptionsStateType>(initialCroneState, (builder) => {
     builder
         .addCase(setCronOpions, (state, action) => ({ ...action.payload }))

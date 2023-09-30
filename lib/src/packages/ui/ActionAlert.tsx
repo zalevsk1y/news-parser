@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface ActionAlertProps{
+export type ActionAlertProps={
     hidden:boolean,
     children:React.ReactNode
 }

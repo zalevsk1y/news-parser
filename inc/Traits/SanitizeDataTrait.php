@@ -50,19 +50,32 @@ trait SanitizeDataTrait
         return $clean_data;
     }
     /**
-     * Sanitize template pattern array.
+     * Sanitize  HTML template pattern array.
      *
      * @param array $template ['tagName','className','searchTemplate','children']
      * @return array
      */
-    public function sanitizeTemplate($template)
+    public function sanitizeHTMLtemplate($html_template)
     {
-        $clean_data=$this->sanitizeTemplateElement($template);
+        $clean_data=$this->sanitizeTemplateElement($html_template);
         $clean_data['children']=array();
-        foreach ($template['children'] as $child) {
+        foreach ($html_template['children'] as $child) {
             array_push($clean_data['children'], $this->sanitizeTemplateElement($child));
         }
         return $clean_data;
+    }
+    public function sanitizeTemplate($template)
+    {
+        return $clean_data=array(
+            'template'=>$this->sanitizeHTMLtemplate($template['template']),
+            'extraOptions'=>$this->sanitizeExtraOptions($template['extraOptions']),
+            'url'=>\esc_url($template['url']),
+            'postOptions'=>$this->sanitizePostOptions($template['postOptions'])
+        );
+    }
+    protected function sanitizePostOptions($post_options){
+        //ToDo: Implement post options sanitizing
+        return $post_options;
     }
     /**
      * Sanitize child template element

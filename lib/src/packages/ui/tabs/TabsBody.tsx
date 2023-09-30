@@ -1,7 +1,7 @@
 import React from 'react';
 // import '../styles/TabsBody.css'
 
-export interface TabsProps {
+export type TabsProps ={
     children: Array<React.ReactElement>,
     className?: string,
     activeTab: number,

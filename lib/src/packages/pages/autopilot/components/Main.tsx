@@ -24,10 +24,10 @@ const Main: React.FC = () => {
       </div>
       <Message />
       <div className='row mt-4 d-flex flex-row justify-content-center'>
-        <div className='col-md-5 col-lg-4 order-md-last d-flex flex-column'>
+        <div className='col-md-3 col-lg-4 order-md-last d-flex flex-column'>
           <RightSection />
         </div>
-        <div className='col-md-7 col-lg-6'>
+        <div className='col-md-9 col-lg-7 col-xl-6'>
           <MainOptionsBlock />
         </div>
         

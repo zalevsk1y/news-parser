@@ -67,6 +67,7 @@ class TemplateController
         if ($template) {
             $template->delete();
         }
+        return $this->templateKeys();
     }
 
     /**

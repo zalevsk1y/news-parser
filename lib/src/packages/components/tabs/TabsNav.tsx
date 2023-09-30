@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 
-export interface TabsNavProps {
+export type TabsNavProps= {
     className?: string,
     tabs: string[],
     onChange: (index: number) => void,

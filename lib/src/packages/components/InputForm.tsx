@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import './styles/InputForm.css';
 
-export interface InputFormProps {
+export type InputFormProps= {
   buttonName: string;
   submitAction: (value: string) => void;
   initValue?: string;
