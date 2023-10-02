@@ -178,8 +178,8 @@ public function getTemplates($request){
     {
         try{
             $template=$request->get_params();
-            $new_template_data=$this->event->trigger('template:create', array($template['template']));
-            $response_data=$this->formatResponse()->message('success', Success::text('TEMPLATE_SAVED'))->options( $new_template_data)->get('array');
+            $template_model_data=$this->event->trigger('template:create', array($template['template']));
+            $response_data=$this->formatResponse()->message('success', Success::text('TEMPLATE_SAVED'))->options($template_model_data)->get('array');
             return $this->sendResponse($response_data);
         }catch(MyException $e){
             $error_data=$this->formatResponse()->error($e->getCode())->message('error', $e->getMessage())->get('array');

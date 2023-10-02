@@ -32,7 +32,7 @@ class PostController implements PostControllerInterface
     /**
      * @var PostModel Post model
      */
-    protected $post;
+    public $post;
     protected $beforeAdapterModifiers;
     protected $postModifiers;
     /**
@@ -101,7 +101,6 @@ class PostController implements PostControllerInterface
         }
         $post_options_model = $this->getPostOptionsModel($template_url);
         $this->parsedData = $this->parser->get($url, $post_options_model->getAttributes('array'));
-
         
         $this->assignAuthorId();
         
@@ -190,9 +189,14 @@ class PostController implements PostControllerInterface
 
     protected function applyBeforAdapterModifiers()
     {
-        //add modifier that removes duplicated images from parsed data
-        $this->executerCallback($this,'NewsParserPlugin\Parser\Modifiers\AdapterModifiers\Before\removeDublicatedPicturesModifier');
-        foreach ($this->beforeAdapterModifiers as $option_id=>$modifier_function){
+        //beforeAll modifiers executes before all others 
+        if(array_key_exists('beforeOptions',$this->beforeAdapterModifiers)&&is_array($this->beforeAdapterModifiers['beforeOptions'])){
+            foreach($this->beforeAdapterModifiers['beforeOptions'] as $modifier_function){
+                $this->executerCallback($this,$modifier_function);
+            }
+        } 
+        if(!array_key_exists('options',$this->beforeAdapterModifiers)) return null;
+        foreach ($this->beforeAdapterModifiers['options'] as $option_id=>$modifier_function){
             if(array_key_exists($option_id,$this->options)&&$this->options[$option_id]) 
             {
                 $this->executerCallback($this,$modifier_function[0]);
@@ -351,7 +355,7 @@ class PostController implements PostControllerInterface
         if(!array_key_exists('title',$this->parsedData)||empty($this->parsedData['title'])){
             throw new MyException(Errors::text('NO_TITLE'),Errors::code('INNER_ERROR'));
         }
-        if(!array_key_exists('body',$this->parsedData)||!is_array($this->parsedData['body'])){
+        if(!array_key_exists('body',$this->parsedData)||empty($this->parsedData['body'])){
             throw new MyException(Errors::text('NO_BODY'),Errors::code('INNER_ERROR'));
         }
         if(!array_key_exists('authorId',$this->parsedData)||empty($this->parsedData['authorId'])){
@@ -366,4 +370,5 @@ class PostController implements PostControllerInterface
             }
         }
     }
+
 }

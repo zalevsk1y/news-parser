@@ -122,11 +122,11 @@ class PostModel implements ModelInterface
      * @param array $post_data Array with wp post attributes  https://developer.wordpress.org/reference/functions/wp_insert_post/
      * @return void
      */
-    public function createPost($post_data)
+    public function createPost($post_data=[])
     {
         $this->ID = $this->createPostWordPress($post_data);
         $this->getPostLinksWordpress();
-        if(is_array($post_data)) $this->status = $post_data['post_status'];
+        if(array_key_exists('post_status',$post_data)) $this->status = $post_data['post_status'];
     }
     /**
      * Attach main image to wordpress post

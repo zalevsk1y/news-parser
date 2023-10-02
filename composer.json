@@ -13,7 +13,7 @@
     "scrutinizer/ocular": "dev-master"
 },
   "scripts": {
-    "test": "phpunit --coverage-clover Coverage.clover ./tests/",
+    "test": "XDEBUG_MODE=coverage phpunit --coverage-clover Coverage.clover ./tests/",
     "caverage": "./vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover"
   }
 }

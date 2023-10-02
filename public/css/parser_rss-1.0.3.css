@@ -550,8 +550,8 @@ frame {
   width: 80%; }
 
 .featured-image-thumbnail {
-  width: 266px;
-  height: 150px; }
+  width: 100%;
+ }
 
 .no-featured-image {
   opacity: 0.3; }

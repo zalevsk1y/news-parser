@@ -39,6 +39,8 @@ trait SanitizeDataTrait
                 case 'addFeaturedMedia':
                 case 'saveParsingTemplate':
                 case 'addSource':
+                case 'addSrcSetAndSizes':
+                case 'groupImagesRow':
                 //use json_decode to prevent "false" string converted to boolean true
                     $clean_data[$key]=boolval(json_decode($option));
                     break;

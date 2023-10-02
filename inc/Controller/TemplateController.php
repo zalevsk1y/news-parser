@@ -22,7 +22,7 @@ class TemplateController
      * Save received options.
      *
      * @param array $options The received options.
-     * @return array The attributes of the created template model.
+     * @return TemplateModel  created template model.
      */
     public function create($options)
     {
@@ -38,11 +38,12 @@ class TemplateController
      * Get template by URL.
      *
      * @param string $url The URL of the template.
-     * @return TemplateModel|null The template model if found, null otherwise.
+     * @return array|false The array of  template model attributes if found, false otherwise.
      */
     public function get($url)
     {
-        return $this->findByUrl($url);
+        $template_model=$this->findByUrl($url);
+        return $template_model!==false?$template_model->getAttributes('array'):$template_model;
     }
 
     /**
@@ -80,7 +81,7 @@ class TemplateController
         if (!$templates = $this->getOption(self::TEMPLATE_TABLE_NAME)) {
             return [];
         }
-        return $templates;
+        return json_decode(json_encode($templates),true);
     }
 
     /**

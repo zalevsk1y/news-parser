@@ -2,7 +2,7 @@
 namespace NewsParserPlugin\Tests\Controller;
 
     use NewsParserPlugin\Controller\TemplateController;
-    use NewsParserPlugin\Models\TemplateModel;
+    use NewsParserPlugin\Models\TemplateModelWithPostOptions as TemplateModel;
 
     class TemplateControllerTest extends \WP_UnitTestCase
     {
@@ -17,7 +17,7 @@ namespace NewsParserPlugin\Tests\Controller;
             ->getMock();
             $this->templateModelMock=$this->getMockBuilder(\NewsParserPlugin\Models\TemplateModel::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(array('save','getAttributes'))
+            ->onlyMethods(array('create','getAttributes'))
             ->getMock();
             $this->templateController->method('modelsFactory')
             ->willReturn($this->templateModelMock);
@@ -29,8 +29,8 @@ namespace NewsParserPlugin\Tests\Controller;
             $this->templateModelMock->expects($this->once())
             ->method('getAttributes')
             ->willReturn($expected);
-            $result=$this->templateController->create($options);
-            $this->assertEquals($expected,$result);
+            $template_model_data=$this->templateController->create($options);
+            $this->assertEquals($expected,$template_model_data);
         }
          /**
          * @dataProvider dataGet
@@ -38,11 +38,11 @@ namespace NewsParserPlugin\Tests\Controller;
         public function testGet($templateId,$options,$expected){
             $this->templateModelMock->method('getAttributes')
             ->willReturn($expected);
-            $this->templateController->expects($this->once())
+            $this->templateController
             ->method('getAll')
             ->willReturn($options);
-            $result=$this->templateController->get($templateId);
-            $this->assertEquals($expected,$result);
+            $template_model_data=$this->templateController->get($templateId);
+            $this->assertEquals($expected,$template_model_data);
         }
         public function dataCreate(){
             return array(
@@ -63,7 +63,7 @@ namespace NewsParserPlugin\Tests\Controller;
                 array(
                     null,
                     array($this->templateId=>array('extraOptions'=>true,'template'=>true,'url'=>$this->templateId)),
-                    array($this->templateId)
+                    false
                 ),
                 array(
                     $this->templateId,

@@ -20,11 +20,14 @@ export const VisualConstructorFooterRss:React.FC<VisualConstructorFooterRss> = (
     const close = useClose();
     const showMessage = useShowMessage()
     const buttonClickHandler = useCallback(() => {
-        const settledCallback:settledCallback = (promise,message) => promise.then(() => {
+        const settledCallback:settledCallback = (promise,message) => promise
+            .then(()=>showMessage('success',message))
+            .catch((err)=>showMessage('success',err.message))
+            .finally(() => {
                 setIsMutating(false);
                 resetSelectedPost();
                 close();
-            }).then(()=>showMessage('success',message));
+            })
         setIsMutating(true);
         if (!shouldParsingTemplateToBeSaved) {
             settledCallback(createWpPost(), "Post was parsed and saved.")

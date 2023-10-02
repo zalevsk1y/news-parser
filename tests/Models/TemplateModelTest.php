@@ -17,7 +17,7 @@ class TemplateModelTest extends \WP_UnitTestCase
         parent::setUp();
         $this->templateModel=$this->getMockBuilder(\NewsParserPlugin\Models\TemplateModel::class)
         ->setConstructorArgs(array($this->options)) 
-        ->onlyMethods(array('updateOption','getAll'))
+        ->onlyMethods(array('updateOptions','getAll'))
         ->getMock();
     }
     public function testIsOptionsValid()
@@ -27,14 +27,14 @@ class TemplateModelTest extends \WP_UnitTestCase
          $this->expectExceptionMessage(Errors::text('OPTIONS_WRONG_FORMAT'));
          new TemplateModel( array('template'=>true,'extraOptions'=>true));
     }
-    public function testSave()
+    public function testCreate()
     {
         //test correct data format
         $templates=array($this->options['url']=>$this->options);
         $this->templateModel->expects($this->once())
-        ->method('updateOption')
+        ->method('updateOptions')
         ->with($this->equalTo(NEWS_PURSER_PLUGIN_TEMPLATE_OPTIONS_NAME,$templates,'no'));
-        $this->templateModel->save();
+        $this->templateModel->create();
     }
     public function testGetTemplate()
     {

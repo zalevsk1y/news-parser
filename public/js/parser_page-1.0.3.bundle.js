@@ -46216,11 +46216,14 @@ var VisualConstructorFooterRss = function (_a) {
     var close = (0, useClose_1.useClose)();
     var showMessage = (0, hooks_3.useShowMessage)();
     var buttonClickHandler = (0, react_1.useCallback)(function () {
-        var settledCallback = function (promise, message) { return promise.then(function () {
+        var settledCallback = function (promise, message) { return promise
+            .then(function () { return showMessage('success', message); })
+            .catch(function (err) { return showMessage('success', err.message); })
+            .finally(function () {
             setIsMutating(false);
             resetSelectedPost();
             close();
-        }).then(function () { return showMessage('success', message); }); };
+        }); };
         setIsMutating(true);
         if (!shouldParsingTemplateToBeSaved) {
             settledCallback(createWpPost(), "Post was parsed and saved.");

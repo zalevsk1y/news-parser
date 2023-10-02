@@ -27,7 +27,7 @@
                 }
             }
         },
-        "1":"<!-- wp:image --><figure class=\"wp-block-image\"><img src=\"http://www.test-site.com/image.jpg\" alt=\"Test image\"/></figure><!-- /wp:image -->"
+        "1":"<!-- wp:image {\"id\": \"null\",\"sizeSlug\": \"large\",\"url\": \"http://www.test-site.com/image.jpg\",\"alt\": \"Test image\"} --><figure class=\"wp-block-image\"><img src=\"http://www.test-site.com/image.jpg\"  alt=\"Test image\"  /></figure><!-- /wp:image -->"
     },
     "3":{
         "0":{

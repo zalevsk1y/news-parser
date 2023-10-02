@@ -36,7 +36,7 @@ namespace NewsParserPlugin\Tests\Models;
          */
         public function testCreate()
         {    
-            $this->post->createPost(false);
+            $this->post->createPost();
             $this->assertGreaterThan(0,$this->post->ID);
             $this->assertEquals('parsed',$this->post->status);
         }

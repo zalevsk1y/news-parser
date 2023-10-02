@@ -1,7 +1,6 @@
 <?php
 namespace NewsParserPlugin\Tests\Controller;
 use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
-use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Controller\PostController;
 use NewsParserPlugin\Exception\MyException;
 
@@ -11,6 +10,7 @@ class PostControllerTest extends \WP_UnitTestCase
     protected $post;
     protected $mockTemplateModel;
     protected $mockParser;
+    protected $mockAdapter;
     
     public function setUp():void
     {
@@ -35,6 +35,12 @@ class PostControllerTest extends \WP_UnitTestCase
             ->disableOriginalConstructor()
             ->onlyMethods(array('get','parse'))
             ->getMock();
+        $this->mockAdapter=$this->getMockBuilder(\NewsParserPlugin\Utils\AdapterGuttenberg::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(array('convert'))
+            ->getMock();
+        $this->mockAdapter->method('convert')
+            ->willReturn('Adapted test content');
     }
     public function tearDown():void
     {
@@ -47,15 +53,15 @@ class PostControllerTest extends \WP_UnitTestCase
      *
      * @return void
      */
-    public function testCreate($url,$data,$expected)
+    public function testCreate($url,$parsed_data,$expected)
     {
         $this->mockParser->method('get')
-            ->willReturn($data);
+            ->willReturn($parsed_data);
         $mock_post_controller=$this->getMockBuilder(\NewsParserPlugin\Controller\PostController::class)
             ->setConstructorArgs(
                 array(
                     $this->mockParser,
-                    new ResponseFormatter()
+                    $this->mockAdapter
                 )
             )
             ->onlyMethods(array('TemplateModelsFactory'))
