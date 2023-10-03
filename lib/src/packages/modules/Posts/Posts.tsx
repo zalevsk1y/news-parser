@@ -28,7 +28,7 @@ export const Posts: React.FC<PostsProps> = ({ openEditor, selectPost, posts }) =
     const selectPostHandler = useCallback((_id: number) => () => selectPost(_id), [selectPost])
     const openEditorHandler = useCallback((_id: number, link: string) => () => openEditor(_id, link), [openEditor]);
     const postCards = useMemo(() => posts.map(post => (<PostCard key={post.title} selected={!!post.select} >
-        <PostCardHeader pubDate={post.pubDate} />
+        <PostCardHeader pubDate={(new Date(post.pubDate)).toUTCString()} />
         <PostCardImage image={post.image} alt={post.title} />
         <PostCardBody title={post.title} description={post.description} link={post.link} />
         <PostCardFooter>

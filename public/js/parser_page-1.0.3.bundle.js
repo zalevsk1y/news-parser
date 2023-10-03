@@ -39582,8 +39582,6 @@ var useFetchPostsList = function () {
         var options = { entity: constants_1.configConstantsEntities.PARSER_RSS_LIST, event: constants_1.cofigConstantsEvents.PARSE, data: { url: url } };
         var error = function (errorData) {
             var data = errorData.data;
-            console.error(errorData);
-            console.log(data.message.text);
             throw new Error(data.message.text);
         };
         var success = function (postData) {
@@ -43875,7 +43873,7 @@ var Posts = function (_a) {
     var selectPostHandler = (0, react_1.useCallback)(function (_id) { return function () { return selectPost(_id); }; }, [selectPost]);
     var openEditorHandler = (0, react_1.useCallback)(function (_id, link) { return function () { return openEditor(_id, link); }; }, [openEditor]);
     var postCards = (0, react_1.useMemo)(function () { return posts.map(function (post) { return (react_1.default.createElement(index_1.PostCard, { key: post.title, selected: !!post.select },
-        react_1.default.createElement(index_1.PostCardHeader, { pubDate: post.pubDate }),
+        react_1.default.createElement(index_1.PostCardHeader, { pubDate: (new Date(post.pubDate)).toUTCString() }),
         react_1.default.createElement(index_1.PostCardImage, { image: post.image, alt: post.title }),
         react_1.default.createElement(index_1.PostCardBody, { title: post.title, description: post.description, link: post.link }),
         react_1.default.createElement(index_1.PostCardFooter, null, post.draft ? react_1.default.createElement(index_2.Icons, { type: 'button', id: "post-edit-icon-".concat(post._id), className: 'fo fo-edit', onClick: onClickEditPost(post), ariaLabel: 'Edit post' }) :

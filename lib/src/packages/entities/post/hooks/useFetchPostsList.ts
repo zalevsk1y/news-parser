@@ -30,8 +30,6 @@ export const useFetchPostsList: UseFetchPostsList = () => {
         const options: RequestApiOptions = { entity: configConstantsEntities.PARSER_RSS_LIST, event: cofigConstantsEvents.PARSE, data: { url } };
         const error: RequestApiError = (errorData) => {
             const {data}=errorData;
-            console.error(errorData)
-            console.log(data.message.text)
             throw new Error(data.message.text);
         };
         const success: RequestApiSuccess<PostListResponseType> = (postData) => {
