@@ -117,7 +117,7 @@ class ScriptLoadingManager
     public function enqueueDependecies($hook)
     {
         $this->enqueueData('global');
-        if (strrpos($hook, $this->config->menu->subs[0]->menu_slug) !== false || strrpos($hook, $this->config->menu->subs[1]->menu_slug) !== false || strrpos($hook, $this->config->menu->subs[2]->menu_slug) !== false) {
+        if (strrpos($hook, $this->config->menu->subs[0]->menu_slug) !== false || strrpos($hook, $this->config->menu->subs[1]->menu_slug) !== false || strrpos($hook, $this->config->menu->subs[2]->menu_slug) !== false|| strrpos($hook, $this->config->menu->subs[3]->menu_slug) !== false) {
             // enqueue common script and styles
             $this->enqueueData('shared');
 
