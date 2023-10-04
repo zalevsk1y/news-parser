@@ -45915,24 +45915,28 @@ var hooks_2 = __webpack_require__(/*! @news-parser/entities/sidebar/hooks */ "..
 var hooks_3 = __webpack_require__(/*! ../hooks */ "../widgets/visual-constructor/hooks/index.ts");
 var index_2 = __webpack_require__(/*! @news-parser/entities/message/hooks/index */ "../entities/message/hooks/index.ts");
 var useClose_1 = __webpack_require__(/*! ../hooks/visual-constructor/useClose */ "../widgets/visual-constructor/hooks/visual-constructor/useClose.ts");
+var useIsOpen_1 = __webpack_require__(/*! ../hooks/visual-constructor/useIsOpen */ "../widgets/visual-constructor/hooks/visual-constructor/useIsOpen.ts");
 /**
 * This is a frame element used in the visual constructor modal window, allowing users to manually choose parsing content.
 *
 * @since 1.0.0
-* @param {string} url - url for iframe element
+*
 * @param {Function} onReady - Callback function to execute when the frame is ready.
 * @returns {JSX.Element} Returns the frame element with an iFrame tag containing the visual constructor.
 */
 var Frame = function (_a) {
-    var onReady = _a.onReady, url = _a.url;
+    var onReady = _a.onReady;
+    var _b = (0, useIsOpen_1.useIsOpen)(), url = _b[0], isOpen = _b[1];
+    if (url === false)
+        return null;
     var frameElementRef = (0, react_1.useRef)(null);
     var frame = (0, react_1.useRef)({ value: null });
-    var _b = (0, hooks_3.useFetchHTML)(), startHTMLFetching = _b[1];
+    var _c = (0, hooks_3.useFetchHTML)(), startHTMLFetching = _c[1];
     var showMessage = (0, index_2.useShowMessage)();
     var closeVisualConstructor = (0, useClose_1.useClose)();
-    var _c = (0, hooks_3.useFrameElementMiddleware)(), getTitle = _c[0], getFeaturedMedia = _c[1];
-    var _d = (0, hooks_3.useMouseEvents)(), mouseOver = _d[0], mouseOut = _d[1];
-    var _e = (0, useToggleContent_1.useToggleContent)(), selectElement = _e[0], removeElement = _e[1], setFarame = _e[2];
+    var _d = (0, hooks_3.useFrameElementMiddleware)(), getTitle = _d[0], getFeaturedMedia = _d[1];
+    var _e = (0, hooks_3.useMouseEvents)(), mouseOver = _e[0], mouseOut = _e[1];
+    var _f = (0, useToggleContent_1.useToggleContent)(), selectElement = _f[0], removeElement = _f[1], setFarame = _f[2];
     var resetSelectedContent = (0, hooks_1.useResetSidebarTemplate)();
     var resetSidebarData = (0, hooks_2.useResetSidebar)();
     var clickHandler = function (event) {
@@ -45971,8 +45975,14 @@ var Frame = function (_a) {
         frame.current.value = newFrame;
     };
     (0, react_1.useEffect)(function () {
-        resetSelectedContent();
+        if (isOpen === false)
+            resetSelectedContent();
         resetSidebarData();
+        if (frame.current.value !== null) {
+            frame.current.value.shutDown();
+        }
+    }, [isOpen]);
+    (0, react_1.useEffect)(function () {
         if (url) {
             startHTMLFetching(url).then(function (resp) { return initFrame(resp.data, frameElementRef); }).catch(function (error) {
                 closeVisualConstructor();
@@ -45980,12 +45990,9 @@ var Frame = function (_a) {
             });
             frameElementRef.current !== null && setFarame(frameElementRef.current);
         }
-        return function () {
-            if (frame.current.value !== null) {
-                frame.current.value.shutDown();
-            }
-        };
     }, [url]);
+    if (isOpen === false)
+        return null;
     return (react_1.default.createElement("iframe", { id: 'visual-constructor', tabIndex: -1, ref: frameElementRef }, ' '));
 };
 exports.Frame = Frame;
@@ -46067,10 +46074,11 @@ var VisualConstructor = function (_a) {
             disableScrolling();
         }
         else {
+            setFrameIsReady(false);
             enableScrolling();
         }
     }, [isOpen]);
-    (0, react_1.useLayoutEffect)(function () { return setFrameIsReady(false); }, [url]);
+    //useLayoutEffect(() => setFrameIsReady(false), [url])
     var onFrameReady = (0, react_1.useCallback)(function () { return setFrameIsReady(true); }, [setFrameIsReady]);
     if (frameIsReady && Array.isArray(onReady)) {
         onReady.forEach(function (func) { return func({ url: url, _id: _id }); });
@@ -46085,7 +46093,7 @@ var VisualConstructor = function (_a) {
                 react_1.default.createElement("div", { className: 'modal-main' },
                     react_1.default.createElement("div", { className: 'parsed-data-container' },
                         react_1.default.createElement(react_1.Suspense, { fallback: '...Loading' },
-                            react_1.default.createElement(FrameLazyLoaded, { url: url, onReady: onFrameReady }))),
+                            react_1.default.createElement(FrameLazyLoaded, { onReady: onFrameReady }))),
                     react_1.default.createElement("div", { className: 'resize-drag-bar' }),
                     children[0]),
                 children[1])),

@@ -45,15 +45,16 @@ export const VisualConstructor: React.FC<VisualConstructorProps> = ({ onReady, c
         if (isOpen) {
             disableScrolling();
         } else {
+            setFrameIsReady(false)
             enableScrolling();
         }
     }, [isOpen]);
-    useLayoutEffect(() => setFrameIsReady(false), [url])
+    //useLayoutEffect(() => setFrameIsReady(false), [url])
     const onFrameReady = useCallback(() => setFrameIsReady(true), [setFrameIsReady])
     if (frameIsReady && Array.isArray(onReady)) {
         onReady.forEach(func => func({ url, _id }))
     }
-    if (url === false) return null;
+    if (url===false) return null;
     return (
         <div className='media-modal-wrapper' style={{ display: isOpen ? 'block' : 'none' }}>
                 <div className='modal-container'>
@@ -63,7 +64,7 @@ export const VisualConstructor: React.FC<VisualConstructorProps> = ({ onReady, c
                         <div className='modal-main'>
                             <div className='parsed-data-container'>
                                 <Suspense fallback={'...Loading'}>
-                                    <FrameLazyLoaded url={url} onReady={onFrameReady} />
+                                    <FrameLazyLoaded onReady={onFrameReady} />
                                 </Suspense>
                             </div>
                             <div className='resize-drag-bar' />

@@ -12,28 +12,30 @@ import { useResetSidebar } from '@news-parser/entities/sidebar/hooks';
 import { useFetchHTML, useMouseEvents, useFrameElementMiddleware } from '../hooks';
 import { useShowMessage } from '@news-parser/entities/message/hooks/index';
 import { useClose } from '../hooks/visual-constructor/useClose';
-
+import { useIsOpen } from '../hooks/visual-constructor/useIsOpen';
 
 interface FrameProps {
-  onReady: () => void,
-  url: string
+  onReady: () => void
 }
 
 /**
 * This is a frame element used in the visual constructor modal window, allowing users to manually choose parsing content.
 *
 * @since 1.0.0
-* @param {string} url - url for iframe element
+* 
 * @param {Function} onReady - Callback function to execute when the frame is ready.
 * @returns {JSX.Element} Returns the frame element with an iFrame tag containing the visual constructor.
 */
 
-export const Frame: React.FC<FrameProps> = ({ onReady, url }) => {
+export const Frame: React.FC<FrameProps> = ({ onReady }) => {
+  const [url, isOpen] = useIsOpen();
+  if (url===false) return null;
   const frameElementRef = useRef<HTMLIFrameElement>(null);
   const frame = useRef<{value:FrameElement|null}>({value:null});
   const [, startHTMLFetching] = useFetchHTML();
   const showMessage=useShowMessage();
   const closeVisualConstructor = useClose();
+  
   const [getTitle, getFeaturedMedia] = useFrameElementMiddleware();
   const [mouseOver, mouseOut] = useMouseEvents();
   const [selectElement, removeElement, setFarame] = useToggleContent();
@@ -75,8 +77,15 @@ export const Frame: React.FC<FrameProps> = ({ onReady, url }) => {
     frame.current.value = newFrame;
   };
   useEffect(() => {
+    if(isOpen===false)
     resetSelectedContent();
     resetSidebarData();
+    if (frame.current.value !== null) {
+      frame.current.value.shutDown();
+    }
+  }, [isOpen]);
+  
+  useEffect(()=>{
     if (url) {
       startHTMLFetching(url).then(resp => initFrame(resp.data, frameElementRef)).catch(error=>{
         closeVisualConstructor();
@@ -84,12 +93,8 @@ export const Frame: React.FC<FrameProps> = ({ onReady, url }) => {
       });
       frameElementRef.current!==null&&setFarame(frameElementRef.current)
     }
-    return () => {
-      if (frame.current.value !== null) {
-        frame.current.value.shutDown();
-      }
-    };
-  }, [url]);
+  },[url])
+  if(isOpen===false)return null;
   return (
     <iframe id='visual-constructor'  tabIndex={-1} ref={frameElementRef}>
       {' '}
