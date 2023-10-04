@@ -37,7 +37,7 @@ class CronTaskController {
                     $this->event->trigger('post:create',array($post_data->link,null,$cron_options_model->getUrl()));
                 }catch (MyException $e)
                 {
-                    $this->event->trigger('log:error',array($e->getMessage()));
+                   //ToDo: should add some logging 
                     continue;
                 }
                 $cron_options_model->increaseParsedPosts();
