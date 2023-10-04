@@ -44469,12 +44469,14 @@ var ExtraOptionsGroup = function () {
     var addSource = (0, hooks_1.useGetAddSource)();
     var saveParsingTemplate = (0, hooks_1.useGetSaveParsingTemplate)();
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(sidebar_2.SidebarItem, null,
-            react_1.default.createElement(sidebar_1.Checkbox, { checked: addSource, onChange: toggleAddSourceHandler, id: 'add-source-link-to-post-checkbox' }),
-            react_1.default.createElement(sidebar_2.SidebarItemLabel, { className: 'howto inline-bl', htmlFor: 'add-source-link-to-post-checkbox' }, "Add source link to the post")),
-        react_1.default.createElement(sidebar_2.SidebarItem, null,
-            react_1.default.createElement(sidebar_1.Checkbox, { checked: saveParsingTemplate, onChange: toggleSaveParsingTemplateHandler, id: 'save-posts-parsing-template-checkbox' }),
-            react_1.default.createElement(sidebar_2.SidebarItemLabel, { className: 'howto inline-bl', htmlFor: 'save-posts-parsing-template-checkbox' }, "Save parsing template that you can use in automatic parsing from this source."))));
+        addSource !== undefined &&
+            react_1.default.createElement(sidebar_2.SidebarItem, null,
+                react_1.default.createElement(sidebar_1.Checkbox, { checked: addSource, onChange: toggleAddSourceHandler, id: 'add-source-link-to-post-checkbox' }),
+                react_1.default.createElement(sidebar_2.SidebarItemLabel, { className: 'howto inline-bl', htmlFor: 'add-source-link-to-post-checkbox' }, "Add source link to the post")),
+        saveParsingTemplate !== undefined &&
+            react_1.default.createElement(sidebar_2.SidebarItem, null,
+                react_1.default.createElement(sidebar_1.Checkbox, { checked: saveParsingTemplate, onChange: toggleSaveParsingTemplateHandler, id: 'save-posts-parsing-template-checkbox' }),
+                react_1.default.createElement(sidebar_2.SidebarItemLabel, { className: 'howto inline-bl', htmlFor: 'save-posts-parsing-template-checkbox' }, "Save parsing template that you can use in automatic parsing from this source."))));
 };
 exports.ExtraOptionsGroup = ExtraOptionsGroup;
 
