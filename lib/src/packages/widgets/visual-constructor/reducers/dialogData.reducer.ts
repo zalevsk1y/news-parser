@@ -1,6 +1,6 @@
 
 import { createReducer } from '@reduxjs/toolkit';
-import { openVisualConstructor, closeVisualConstructor, setHTML, setIsMutating } from '../actions/dialogData.actions';
+import { openVisualConstructor, closeVisualConstructor, setHTML, setIsMutating, addDialogCache } from '../actions/dialogData.actions';
 import { initialState, DialogDataType } from './initialState';
 
 export const dialogData = createReducer<DialogDataType>(initialState, (builder) => {
@@ -14,20 +14,13 @@ export const dialogData = createReducer<DialogDataType>(initialState, (builder) 
       };
     })
     .addCase(closeVisualConstructor, (state) => {
-      let newCache: false | Record<string, string> = false;
-      const newCacheItem = (state.url !== false&&state.rawHTML!==false) ? { [state.url]: state.rawHTML } : false;
-      if (state.cache !== false) {
-        newCache = newCacheItem !== false ? { ...state.cache, ...newCacheItem  } : { ...state.cache };
-      } else {
-        newCache=newCacheItem;
-      }
+
       return {
         ...state,
         url: false,
         isOpen: false,
         frameIsReady: false,
         rawHTML: false,
-        cache: newCache
       };
 
     })
@@ -42,5 +35,19 @@ export const dialogData = createReducer<DialogDataType>(initialState, (builder) 
         ...state,
         isMutating: action.payload
       };
-    });
+    })
+    .addCase(addDialogCache, (state, action) => {
+      let newCache: false | Record<string, string> = false;
+      const newCacheItem = action.payload;
+      if (state.cache !== false) {
+        newCache = { ...state.cache, ...newCacheItem };
+      } else {
+        newCache = newCacheItem;
+      }
+      return {
+        ...state,
+        cache: newCache
+      };
+
+    })
 });

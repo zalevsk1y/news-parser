@@ -17,7 +17,7 @@
 "4":{
     "tagName":"img",
         "content":{
-            "alt":false,
+            "alt":"Lorem ipsum dolor sit amet",
             "src":"testsite.com/large-image.src",
             "srcSet":"",
             "sizes":""
@@ -26,7 +26,7 @@
 "5":{
     "tagName":"img",
         "content":{
-            "alt":false,
+            "alt":"Lorem ipsum dolor sit amet",
             "src":"testsite.com/large-image1.src",
             "srcSet":"",
             "sizes":""

@@ -16,7 +16,7 @@ export class Api implements ApiInterface {
    */
     protected fetchParams:RequestInit
 
-    constructor(protected url: string, protected params: RequestParams) { 
+    constructor(protected url: string, protected params: RequestParams,protected controller?:AbortController) { 
         this.fetchParams=this.getFetchParams();
     }
     /**
@@ -100,6 +100,7 @@ export class Api implements ApiInterface {
             method:this.params.method,
             credentials: 'include'
         };
+        fetchParams.signal=this.controller?this.controller.signal:undefined;
         const requestBody=this.getBody();
         if(requestBody!==false) fetchParams.body=requestBody;
         fetchParams.headers=this.getHeaders();

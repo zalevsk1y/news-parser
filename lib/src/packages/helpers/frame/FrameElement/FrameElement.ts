@@ -185,6 +185,7 @@ export default class FrameElement implements FrameElementInterface {
   public shutDown(runBeforeShutDown?: Array<FrameMiddleware>) {
     if (runBeforeShutDown !== undefined) runBeforeShutDown.forEach((callback) => callback.call(this, this.frame))
     this.unbindEvents();
+    this.injectHTML('<html></html>',[]);
   }
 }
 

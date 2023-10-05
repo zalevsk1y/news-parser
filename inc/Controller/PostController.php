@@ -171,8 +171,12 @@ class PostController implements PostControllerInterface
      * The 'path_to_true_modifier_function' is the full PSR-4 like path to the modifier function that will be applied if the 'option_id' is true.
      * The 'path_to_false_modifier_function' is the full PSR-4 like path to the modifier function that will be applied if the 'option_id' is false. If a false modifier is not provided, it can be set as null.
      *
+     * beforOptions - modifiers will be run without options check
+     * options - modifiers will run conditional according post options state
      * Syntax Example:
      * $modifiers_array = [
+     * 'beforOptions'=>['Namespace\Modifiers\Modifier'...]
+     * 'options'=>[
      *    'option1' => [
      *        'Namespace\Modifiers\TrueModifier',
      *        'Namespace\Modifiers\FalseModifier'
@@ -182,6 +186,7 @@ class PostController implements PostControllerInterface
      *        null
      *    ],
      *    ...
+     * ]
      * ];
      *
      * @return void

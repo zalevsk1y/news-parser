@@ -213,9 +213,13 @@ class AjaxController extends Ajax
                 }
             )
         ));
-
+        $request_url=$request['url'];
         try{
-            $response = $this->event->trigger('html:get', array($request['url']));
+            $html = $this->event->trigger('html:get', array($request_url));
+            $response=array(
+                'html'=>$html,
+                'url'=>$request_url
+            );
             $this->sendResponse($this->formatter->rawHTML($response)->get('array'));
         }catch (MyException $e){
             $this->sendErrorResponse($e);

@@ -90,7 +90,7 @@ abstract class AbstractParseContent
         if (is_wp_error($data)) {
             $error_code=$data->get_error_code();
             $error_message=$data->get_error_message($error_code);
-            throw new MyException(Errors::text('FILE_DOWNLOAD'), Errors::code('INNER_ERROR'));
+                throw new MyException(Errors::text('FILE_DOWNLOAD'), Errors::code('INNER_ERROR'));
         }
         $response_code= wp_remote_retrieve_response_code($data);
         if ($response_code!=200) {

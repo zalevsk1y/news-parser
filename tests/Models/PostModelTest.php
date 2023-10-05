@@ -47,7 +47,7 @@ namespace NewsParserPlugin\Tests\Models;
          */
         public function testAddPostThumbnail($media_id,$expected)
         {
-            $this->post->expects($this->once())
+            $this->post
                 ->method('mediaSideloadImage')
                 ->with(
                     $this->equalTo('http://www.site.com/image.jpeg'),

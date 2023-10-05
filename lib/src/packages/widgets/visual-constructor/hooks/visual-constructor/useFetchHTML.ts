@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState, useRef } from "react";
 import { requestApi, RequestApiError, RequestApiOptions, RequestApiSuccess } from "@news-parser/helpers/api/requestApi";
 import { cofigConstantsEvents, configConstantsEntities } from '@news-parser/config/constants';
 import { useDispatch } from "react-redux";
@@ -7,10 +7,11 @@ import { setHTML } from "../../actions/dialogData.actions";
 import { useDialogCache } from "./useDialogCache";
 
 
-export type FetchHTMLResponseType = ResponseType<string>;
+export type FetchHTMLResponseType = ResponseType<{ html: string, url: string }>;
 export type isFetching = boolean;
+export type AbortFetching = () => void;
 export type StartFetching = (url: string) => Promise<FetchHTMLResponseType>;
-export type UseFetchHTML = () => [isFetching, StartFetching];
+export type UseFetchHTML = () => [isFetching, AbortFetching, StartFetching];
 
 
 /**
@@ -22,10 +23,12 @@ export type UseFetchHTML = () => [isFetching, StartFetching];
 export const useFetchHTML: UseFetchHTML = () => {
     const [isFetching, setIsFetching] = useState(false);
     const dispatch = useDispatch();
-    const getDialogCache=useDialogCache()
+    const getDialogCache = useDialogCache();
+    const abortController=useRef<AbortController|null>(null);
+    const abortFetching = () => { abortController.current !== null && abortController.current.abort() };
     const success: RequestApiSuccess<FetchHTMLResponseType> = (htmlData) => {
         const { data } = htmlData;
-        dispatch(setHTML(data));
+        dispatch(setHTML(data.html));
         return new Promise(resolve => resolve(htmlData));
     };
     const error: RequestApiError = (errorData) => {
@@ -33,21 +36,25 @@ export const useFetchHTML: UseFetchHTML = () => {
         throw new Error(data.message.text);
     };
     const startFetching = (url: string) => {
-        const cachedHTML=getDialogCache(url);
-        if(cachedHTML!==false) {
+        const cachedHTML = getDialogCache(url);
+        if (cachedHTML !== false) {
             setHTML(cachedHTML);
-            const response:FetchHTMLResponseType={
-                data:cachedHTML,
-                msg:{
-                    type:'success',
-                    text:'Cached page HTML'
+            const response: FetchHTMLResponseType = {
+                data: {
+                    html: cachedHTML,
+                    url: url
+                },
+                msg: {
+                    type: 'success',
+                    text: 'Cached page HTML'
                 }
             }
-            return new Promise(resolve=>resolve(response)) as Promise<FetchHTMLResponseType>
+            return new Promise(resolve => resolve(response)) as Promise<FetchHTMLResponseType>
         }
+        abortController.current = new AbortController()
         const options: RequestApiOptions = { entity: configConstantsEntities.RAW_HTML, event: cofigConstantsEvents.PARSE, data: { url } };
         setIsFetching(true);
-        return requestApi(options, success, error).finally(() => { setIsFetching(false) })
+        return requestApi(options, success, error, abortController.current).finally(() => { setIsFetching(false) })
     };
-    return [isFetching, startFetching]
+    return [isFetching, abortFetching, startFetching]
 }   

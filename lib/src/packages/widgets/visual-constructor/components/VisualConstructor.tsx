@@ -5,8 +5,9 @@ import { useScrolling } from '../../../hooks/useScrolling';
 import { useIsOpen } from '../hooks/visual-constructor/useIsOpen';
 import { useIsMutating, useClose, useGetPostId } from '../hooks';
 import { VisualConstructorHeader } from './VisualConstructorHeader';
-
-const FrameLazyLoaded=React.lazy(()=>import('./Frame'))
+import { Frame } from './Frame';
+import { useResetSidebarTemplate } from '@news-parser/entities/sidebarTemplate/hooks/';
+import { useResetSidebar } from '@news-parser/entities/sidebar/hooks';
 
 interface VisualConstructorProps {
     onReady?: () => void,
@@ -35,7 +36,8 @@ export const VisualConstructor: React.FC<VisualConstructorProps> = ({ onReady, c
     const closeVisualConstructor = useClose();
     const [url, isOpen] = useIsOpen();
     const [isMutating] = useIsMutating();
-    const _id = useGetPostId();
+    const resetSelectedContent = useResetSidebarTemplate();
+    const resetSidebarData = useResetSidebar();
     const isVisualConstructorReady = useMemo(() => frameIsReady && !isMutating, [frameIsReady, isMutating]);
     useEffect(() => {
         fetchTags();
@@ -45,34 +47,33 @@ export const VisualConstructor: React.FC<VisualConstructorProps> = ({ onReady, c
         if (isOpen) {
             disableScrolling();
         } else {
-            setFrameIsReady(false)
+            setFrameIsReady(false);
+            resetSelectedContent();
+            resetSidebarData();
             enableScrolling();
         }
     }, [isOpen]);
-    //useLayoutEffect(() => setFrameIsReady(false), [url])
-    const onFrameReady = useCallback(() => setFrameIsReady(true), [setFrameIsReady])
-    if (frameIsReady && Array.isArray(onReady)) {
-        onReady.forEach(func => func({ url, _id }))
-    }
-    if (url===false) return null;
+    const onFrameReady = useCallback(() => setFrameIsReady(true), [setFrameIsReady]);
     return (
         <div className='media-modal-wrapper' style={{ display: isOpen ? 'block' : 'none' }}>
-                <div className='modal-container'>
-                    <VisualConstructorHeader title='Parsing Constructor' closeHandler={closeVisualConstructor} />
-                    <div className='d-flex flex-column flex-grow-1 position-relative'>
-                        {!isVisualConstructorReady && <LoadingSpinner style={{ paddingBottom: '22vh' }} />}
-                        <div className='modal-main'>
-                            <div className='parsed-data-container'>
-                                <Suspense fallback={'...Loading'}>
-                                    <FrameLazyLoaded onReady={onFrameReady} />
-                                </Suspense>
-                            </div>
-                            <div className='resize-drag-bar' />
-                            {children[0]}
+            <div className='modal-container'>
+                <VisualConstructorHeader title='Parsing Constructor' closeHandler={closeVisualConstructor} />
+                <div className='d-flex flex-column flex-grow-1 position-relative'>
+                    {!isVisualConstructorReady && <LoadingSpinner style={{ paddingBottom: '22vh' }} />}
+                    <div className='modal-main'>
+                        <div className='parsed-data-container'>
+                            <Frame onReady={onFrameReady} isOpen={isOpen} url={url} />
                         </div>
-                        {children[1]}
+                        <div className='resize-drag-bar' />
+                        {
+                            // The menu element should be unmounted from the DOM when the visual constructor is closed
+                            // to avoid unnecessary recalculations and re-renders of elements that are not in use. Performance optimization
+                            isOpen && children[0]
+                        }
                     </div>
+                    {children[1]}
                 </div>
+            </div>
             <div className='media-modal-backdrop' />
         </div>
     );

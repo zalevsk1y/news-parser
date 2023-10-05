@@ -3,7 +3,7 @@ import { TemplateOptions, TemplatePostOptions } from 'types/template';
 import { PostFormatController } from './controllers/PostFormatController';
 import { adapterGuttenberg } from './adapters/AdapterGuttenberg';
 import { groupImagesInRows } from './modifiers/before/groupImagesInRows'
-import { addSourceLink } from './modifiers/after/addSourceLink';
+import { addSourceLink } from './modifiers/before/addSourceLink';
 import { generateImageSizesBreakpoints } from './modifiers/before/generateImageSizesBreakpoints';
 import {removeSrcSetAndSizeAttr} from './modifiers/before/removeSrcSetAndSizeAttr';
 
@@ -28,7 +28,7 @@ export const formatCreatePostDraftRequest = (postData: PostData, options: Partia
         postController.addContentModiersBeforConversion(groupImagesInRows)
     }
     if (options.addSource) {
-        postController.addContentModiersAfterConversion(addSourceLink(url))
+        postController.addContentModiersBeforConversion(addSourceLink(url))
     }
     return postController.generateWpPostData();
 };

@@ -4,6 +4,9 @@
     },
     "formatterExpected":"html",
     "sendResponseExpected":{
-        "data":"html"
+        "data":{
+            "html":"html",
+            "url":"http://www.site.com/page.html"
+        }
     }
 }

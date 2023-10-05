@@ -30,7 +30,7 @@ class AdapterGuttenbergTest extends \WP_UnitTestCase
     }
     public function  dataBlocks()
     {
-        $blocks=json_decode(file_get_contents(UTILS_MOCK_DIR.'/AdapterGuttenbergMocks.json'),true);
+        $blocks=json_decode(file_get_contents(UTILS_MOCK_DIR.'/adapterGuttenbergMocks.json'),true);
         return $blocks;
     }
 

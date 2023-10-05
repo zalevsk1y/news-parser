@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 
 export type VisualConstructorHeaderProps={
-    title:string;
+    title:string,
     closeHandler:()=>void
 }
 

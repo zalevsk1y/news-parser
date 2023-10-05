@@ -235,14 +235,18 @@ class PostModel implements ModelInterface
      * @param string $image url of image
      * @param int $id post ID in WP
      * @param boolean $post_thumb if image will use NewsParserPlugin\as main image of the post
+     * @param int $max_attempt counts of downloads attempts
      * @return WP_Error|string  image ID
      */
-    protected function attachImageToPostWordpress($image, $id, $post_thumb = false, $alt = '')
+    protected function attachImageToPostWordpress($image, $id, $post_thumb = false, $alt = '',$max_attempt=3)
     {
         $url = $image;
         $post_id = $id;
         $desc = $alt?:"image";
-        $img_id = $this->mediaSideloadImage($url, $post_id, $desc, 'id');
+        for ($attempt = 0;$attempt<$max_attempt;$attempt++){
+            $img_id = $this->mediaSideloadImage($url, $post_id, $desc, 'id');
+            if(!\is_wp_error($img_id)) break;
+        }
         if (\is_wp_error($img_id)) {
             throw new MyException($img_id->get_error_message().' Image url:'.esc_url_raw($url), Errors::code('BAD_REQUEST'));
         } else {

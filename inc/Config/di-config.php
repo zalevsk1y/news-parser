@@ -20,10 +20,11 @@ return array(
                 'NewsParserPlugin\Parser\Modifiers\AdapterModifiers\Before\removeSrcSetAndSizesModifier'],
             'groupImagesRow'=>['NewsParserPlugin\Parser\Modifiers\AdapterModifiers\Before\groupPicturesModifier',null],
             'addSource'=>['NewsParserPlugin\Parser\Modifiers\AdapterModifiers\Before\addSourceModifier',null],
-            ],[
+            ]],
+        [
             'addFeaturedMedia'=>['NewsParserPlugin\Parser\Modifiers\PostModifiers\addPostThumbnailModifier',null]
         ]
-    ]],
+    ],
     Controller\ListController::class=>[Parser\XMLParser::class],
     Controller\VisualConstructorController::class=>[Parser\HTMLRaw::class],
     Controller\MediaController::class=>[Utils\ResponseFormatter::class],

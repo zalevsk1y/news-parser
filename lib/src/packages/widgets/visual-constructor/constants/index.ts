@@ -18,6 +18,7 @@ export const DIALOG = "dialog";
   export const IS_OPEN = "isOpen";
   export const RAW_HTML = "rawHtml";
   export const FRAME_IS_READY_PROP = "frameIsReady";
+  export const CACHE="cache"
   // options property
   export const ADD_SOURCE = "addSource";
   export const ADD_FEATURED_MEDIA = "addFeaturedMedia";
@@ -31,6 +32,7 @@ export const DIALOG = "dialog";
   export const SELECT = "select";
   export const DESELECT = "deselect";
   export const REMOVE = "remove";
+  export const ADD = "add";
   export const CREATE = "create";
   export const START = "start";
   export const STOP = "stop";

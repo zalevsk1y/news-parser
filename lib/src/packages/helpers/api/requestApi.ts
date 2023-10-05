@@ -30,7 +30,7 @@ export type RequestApiError = (err:ErrorResponse) => never;
  * @returns {Promise<ResponseType>} A promise that resolves to the API response.
  */
 
-export const requestApi = <ResponseType>(options: RequestApiOptions, success: RequestApiSuccess<ResponseType>, error: RequestApiError) => {
+export const requestApi = <ResponseType>(options: RequestApiOptions, success: RequestApiSuccess<ResponseType>, error: RequestApiError,controller?:AbortController) => {
     const { entity, event, data, searchParams } = options;
     const {method} = config.api[entity][event];
     const {type} = config.api[entity][event];
@@ -48,7 +48,9 @@ export const requestApi = <ResponseType>(options: RequestApiOptions, success: Re
         method,
         nonce,
         body: data
-    });
+    },
+    controller
+    );
     return api.request() 
         .then(res => {
             if (!res.ok) {
@@ -64,4 +66,3 @@ export const requestApi = <ResponseType>(options: RequestApiOptions, success: Re
         })
         .then((data: ResponseType) => success(data))
 }
-

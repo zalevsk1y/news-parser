@@ -1,14 +1,13 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux"
 import { selectContent, removeContent } from "@news-parser/entities/sidebarTemplate/actions/parsedData.actions";
 import { Parser } from "@news-parser/helpers/parser/Parser";
 import { ParserInterface } from "@news-parser/helpers/parser/types";
 
 
-export type SelectElement=(element:HTMLElement)=>void;
-export type RemoveElement=(element:HTMLElement)=>void;
-export type InitFrame=(ref:HTMLIFrameElement)=>void;
-export type UseToggleConten=()=>[SelectElement,RemoveElement,InitFrame]
+export type SelectElement = (element: HTMLElement) => void;
+export type RemoveElement = (element: HTMLElement) => void;
+export type UseToggleConten = (frameRef: HTMLIFrameElement|null) => [SelectElement, RemoveElement]
 
 
 /**
@@ -17,22 +16,20 @@ export type UseToggleConten=()=>[SelectElement,RemoveElement,InitFrame]
  */
 
 
-export const useToggleContent:UseToggleConten = () => {
-    let document;
-    let parser:ParserInterface;
+export const useToggleContent: UseToggleConten = (frameRef) => {
+    let parser: ParserInterface|null = useMemo(() =>frameRef===null?null:new Parser(frameRef), [frameRef])
     const dispatch = useDispatch();
-    const selectElement = useCallback((element:HTMLElement) => {
+    const selectElement = useCallback((element: HTMLElement) => {
+        if(parser===null) return;
         const { hash, content } = parser.parseElementData(element);
         element.id = hash;
-        dispatch(selectContent({hash, content}));
-    }, [document]);
-    const removeElement = useCallback((element:HTMLElement) => {
+        dispatch(selectContent({ hash, content }));
+    }, [parser]);
+    const removeElement = useCallback((element: HTMLElement) => {
+        if(parser===null) return;
         const hash = element.id;
         hash && dispatch(removeContent(hash));
-    }, [document]);
-    const initFrame = useCallback((ref:HTMLIFrameElement) => {
-        document = ref?.contentWindow?.document;
-        parser = new Parser(ref);
-    }, []);
-    return [selectElement, removeElement, initFrame];
+    }, [parser]);
+
+    return [selectElement, removeElement];
 }
