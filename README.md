@@ -49,13 +49,13 @@ After selecting the desired content, you need to click on the "Create Post" butt
 
 Watch this short video to learn HOW TO PARSE FROM RSS with news-parser plugin:
 
-[![Alt text](http://img.youtube.com/vi/xrZdkV0xA08/0.jpg)](https://www.youtube.com/watch?v=xrZdkV0xA08)
+[![Alt text](http://img.youtube.com/vi/Aiye15Cp5_8/0.jpg)](https://www.youtube.com/watch?v=Aiye15Cp5_8)
 
 To parse several posts, select posts and press the Parse Selected button. Wait for the data to be saved,you`ll be notified by the message at the top of the screen. The icon at the bottom of the post allows you to go on to edit or publish a saved draft.Note that parsing selected post could be done only if you created parsing template!
 
 Watch this short video to learn HOW TO PARSE SEVERAL POSTS:
 
-[![Alt text](http://img.youtube.com/vi/1LttLG9n4t4/0.jpg)](https://www.youtube.com/watch?v=1LttLG9n4t4)
+[![Alt text](http://img.youtube.com/vi/m85PExDeAMA/0.jpg)](https://www.youtube.com/watch?v=m85PExDeAMA)
 
 ### Visual Constructor.
 
@@ -68,7 +68,7 @@ To add a source link, check the box labeled 'Add source link' to the post. in th
 
 Watch this short video to learn HOW TO USE VISUAL CONSTRUCTOR:
 
-[![Alt text](http://img.youtube.com/vi/gGqbRBnGeNE/0.jpg)](https://www.youtube.com/watch?v=gGqbRBnGeNE)
+[![Alt text](http://img.youtube.com/vi/0yS0ptvBpzY/0.jpg)](https://www.youtube.com/watch?v=0yS0ptvBpzY)
 
 ### Create Parsing Template
 
@@ -76,7 +76,7 @@ To save the template, it is necessary to mark the content in the main window of 
 
 Watch this short video to learn HOW TO CREATE PARSING TEMPLATE:
 
-[![Alt text](http://img.youtube.com/vi/gWo2aRTGttM/0.jpg)](https://www.youtube.com/watch?v=gWo2aRTGttM)
+[![Alt text](http://img.youtube.com/vi/0awSRLWsP/0.jpg)](https://www.youtube.com/watch?v=0awSRLWsP)
 
 ### Parsing single page.
 
@@ -85,7 +85,7 @@ To parse a single page, select News-Parsing-> Parse Page in the admin panel of y
 
 Watch this short video to learn HOW TO PARSE SINGLE PAGE with news-parser plugin:
 
-[![Alt text](http://img.youtube.com/vi/9x56djil-b0/0.jpg)](https://www.youtube.com/watch?v=9x56djil-b0)
+[![Alt text](http://img.youtube.com/vi/Sbke_LF-TFA/0.jpg)](https://www.youtube.com/watch?v=Sbke_LF-TFA)
 
 
 ## Autopilot Function for Automatic RSS Parsing
@@ -109,7 +109,7 @@ To configure the autopilot settings, follow these steps:
 
 Watch this short video to learn HOW TO USE AUTOPILOT with news-parser plugin:
 
-[![Alt text](http://img.youtube.com/vi/9x56djil-b0/0.jpg)](https://www.youtube.com/watch?v=9x56djil-b0)
+[![Alt text](http://img.youtube.com/vi/Eu_5GR32nB0/0.jpg)](https://www.youtube.com/watch?v=Eu_5GR32nB0)
 ## Dependencies
 
 *  php-simple-html-dom-parser https://github.com/sunra/php-simple-html-dom-parser
@@ -117,3 +117,4 @@ Watch this short video to learn HOW TO USE AUTOPILOT with news-parser plugin:
 ## Bugs ##
 
 If you find an issue, let us know [here](https://github.com/zalevsk1y/news-parser/issues?state=open)!
+

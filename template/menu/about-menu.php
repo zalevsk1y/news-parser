@@ -53,11 +53,11 @@
             </ul>
             <p>After selecting the desired content, you need to click on the "Create Post" button. Once the data is processed, the post will be created. If necessary, you can continue editing the post in the built-in WordPress editor by clicking on the "Edit post" icon. This will open the saved post in the built-in editor in a separate browser tab. After saving the changes, you can check the result on your website to ensure that the post appears as intended.</p>
             <p>Watch this short video to learn HOW TO PARSE FROM RSS with news-parser plugin:</p>
-            <div class="youtube-video-container mb-4 "><iframe  src="https://www.youtube.com/embed/xrZdkV0xA08" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+            <div class="youtube-video-container mb-4 "><iframe  src="https://www.youtube.com/embed/Aiye15Cp5_8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
             <p>To parse several posts, select posts and press the Parse Selected button. Wait for the data to be saved,you`ll be notified by the message at the top of the screen. The icon at the bottom of the post allows you to go on to edit or publish a saved draft.Note that parsing selected post could be done only if you created parsing template!</p>
 
             <p>Watch this short video to learn HOW TO PARSE SEVERAL POSTS:</p>
-            <div class="youtube-video-container mb-4"><iframe  src="https://www.youtube.com/embed/1LttLG9n4t4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+            <div class="youtube-video-container mb-4"><iframe  src="https://www.youtube.com/embed/m85PExDeAMA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
             
             <h4>Visual Constructor</h4>
 
@@ -70,16 +70,16 @@
                 To add a source link, check the box labeled 'Add source link' to the post. in the 'Extra Options' submenu.</p>
 
             <p>Watch this short video to learn HOW TO USE VISUAL CONSTRUCTOR:</p>
-            <div class="youtube-video-container mb-4"><iframe  src="https://www.youtube.com/embed/gGqbRBnGeNE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+            <div class="youtube-video-container mb-4"><iframe  src="https://www.youtube.com/embed/0yS0ptvBpzY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
             <h4>Create Parsing Template</h4>
             <p>To save the template, it is necessary to mark the content in the main window of the visual constructor, select the 'Save parsing template that you can use in automatic parsing from this source item.' and click the Save Tempalte button. It is important to understand that individual posts even from one source can be very different, therefore parsed pages may not contain the content you need.</p>
             <p>Watch this short video to learn HOW TO CREATE PARSING TEMPLATE:</p>
-            <div class="youtube-video-container mb-4"><iframe  src="https://www.youtube.com/embed/gWo2aRTGttM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+            <div class="youtube-video-container mb-4"><iframe  src="https://www.youtube.com/embed/0awSRLWsP-I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
             <h4>Parsing single page.</h4>
             <p>To parse a single page, select News-Parsing-> Parse Page in the admin panel of your site. In the search bar, enter the site address URL and press Parse Page button. Visual constructor will open. In the visual constructor, select the content and click the Create Post Draft button. The draft will be automatically created and you can edit it in the Posts editor.If everything suits you, you can simply publish this post or edit it at your discretion.</p>
             <p>Watch this short video to learn HOW TO PARSE SINGLE PAGE with news-parser plugin:</p>
-            <div class="youtube-video-container mb-4"><iframe  src="https://www.youtube.com/embed/9x56djil-b0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+            <div class="youtube-video-container mb-4"><iframe  src="https://www.youtube.com/embed/Sbke_LF-TFA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
             
             <h4>Autopilot Function for Automatic RSS Parsing</h4>
                 <p>The autopilot function is now available to automatically parse posts from an RSS feed. Please note that the <a href="https://developer.wordpress.org/plugins/cron/">wp-cron</a> is used for scheduling the autopilot function, which triggers the task scheduler only when the website is visited. If you encounter issues with this function, you can add the following option to the <code>wp-config.php</code> file: <code>define('ALTERNATE_WP_CRON', true);</code></p>
@@ -99,7 +99,7 @@
                     <li>Additionally, in this menu, you can delete previously saved parsing templates.</li>
                 </ol>
                 <p>Watch this short video to learn HOW TO USE AUTOPILOT with news-parser plugin.</p>
-            <div class="youtube-video-container mb-4"><iframe  src="https://www.youtube.com/embed/9x56djil-b0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+            <div class="youtube-video-container mb-4"><iframe  src="https://www.youtube.com/embed/Eu_5GR32nB0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
             <h3>Dependencies</h3>
             <ul>
                 <li>php-simple-html-dom-parser <a
@@ -111,7 +111,7 @@
             </p>
             <ul className='list-unstyled list-inline'>
                 <li class="list-inline-item">
-                <img alt='Instagram icon' className='me-2' height="20px" src=<?php echo NEWS_PARSER_PLUGIN_URL.'/public/images/clipart1375168_d6sh3a.png'?> />
+                <img alt='Instagram icon' className='me-2' height="20px" src=<?php echo NEWS_PARSER_PLUGIN_URL.'/public/images/clipart1375168_d6sh2a.png'?> />
                     <a href="https://www.instagram.com/wp_news_parser" aria-label="Instagram - Connect with the author">
                         
                         Instagram
