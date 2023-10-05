@@ -7,5 +7,6 @@ export const initialState: DialogDataType = {
         url: false,
         _id: false,
         frameIsReady: false,
-        rawHTML: false
+        rawHTML: false,
+        cache:false
 }

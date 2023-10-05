@@ -45977,14 +45977,13 @@ var Frame = function (_a) {
         frame.current.value = newFrame;
     };
     (0, react_1.useEffect)(function () {
-        if (isOpen === false)
+        if (isOpen === false) {
             resetSelectedContent();
-        resetSidebarData();
-        if (frame.current.value !== null) {
-            frame.current.value.shutDown();
+            resetSidebarData();
+            if (frame.current.value !== null) {
+                frame.current.value.shutDown();
+            }
         }
-    }, [isOpen]);
-    (0, react_1.useEffect)(function () {
         if (url) {
             startHTMLFetching(url).then(function (resp) { return initFrame(resp.data, frameElementRef); }).catch(function (error) {
                 closeVisualConstructor();
@@ -45992,7 +45991,7 @@ var Frame = function (_a) {
             });
             frameElementRef.current !== null && setFarame(frameElementRef.current);
         }
-    }, [url]);
+    }, [isOpen]);
     if (isOpen === false)
         return null;
     return (react_1.default.createElement("iframe", { id: 'visual-constructor', tabIndex: -1, ref: frameElementRef }, ' '));
@@ -46559,6 +46558,35 @@ exports.useCreateTemplate = useCreateTemplate;
 
 /***/ }),
 
+/***/ "../widgets/visual-constructor/hooks/visual-constructor/useDialogCache.ts":
+/*!********************************************************************************!*\
+  !*** ../widgets/visual-constructor/hooks/visual-constructor/useDialogCache.ts ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useDialogCache = void 0;
+var react_redux_1 = __webpack_require__(/*! react-redux */ "../../../node_modules/react-redux/es/index.js");
+var useDialogCache = function () {
+    var cache = (0, react_redux_1.useSelector)(function (state) { return state.parse.dialog; }).cache;
+    return function (url) {
+        if (cache === false)
+            return false;
+        if (url in cache) {
+            return cache[url];
+        }
+        else {
+            return false;
+        }
+    };
+};
+exports.useDialogCache = useDialogCache;
+
+
+/***/ }),
+
 /***/ "../widgets/visual-constructor/hooks/visual-constructor/useFetchHTML.ts":
 /*!******************************************************************************!*\
   !*** ../widgets/visual-constructor/hooks/visual-constructor/useFetchHTML.ts ***!
@@ -46574,6 +46602,7 @@ var requestApi_1 = __webpack_require__(/*! @news-parser/helpers/api/requestApi *
 var constants_1 = __webpack_require__(/*! @news-parser/config/constants */ "../config/constants.ts");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "../../../node_modules/react-redux/es/index.js");
 var dialogData_actions_1 = __webpack_require__(/*! ../../actions/dialogData.actions */ "../widgets/visual-constructor/actions/dialogData.actions.ts");
+var useDialogCache_1 = __webpack_require__(/*! ./useDialogCache */ "../widgets/visual-constructor/hooks/visual-constructor/useDialogCache.ts");
 /**
  * Custom hook for fetching HTML data.
  *
@@ -46582,6 +46611,7 @@ var dialogData_actions_1 = __webpack_require__(/*! ../../actions/dialogData.acti
 var useFetchHTML = function () {
     var _a = (0, react_1.useState)(false), isFetching = _a[0], setIsFetching = _a[1];
     var dispatch = (0, react_redux_1.useDispatch)();
+    var getDialogCache = (0, useDialogCache_1.useDialogCache)();
     var success = function (htmlData) {
         var data = htmlData.data;
         dispatch((0, dialogData_actions_1.setHTML)(data));
@@ -46592,6 +46622,18 @@ var useFetchHTML = function () {
         throw new Error(data.message.text);
     };
     var startFetching = function (url) {
+        var cachedHTML = getDialogCache(url);
+        if (cachedHTML !== false) {
+            (0, dialogData_actions_1.setHTML)(cachedHTML);
+            var response_1 = {
+                data: cachedHTML,
+                msg: {
+                    type: 'success',
+                    text: 'Cached page HTML'
+                }
+            };
+            return new Promise(function (resolve) { return resolve(response_1); });
+        }
         var options = { entity: constants_1.configConstantsEntities.RAW_HTML, event: constants_1.cofigConstantsEvents.PARSE, data: { url: url } };
         setIsFetching(true);
         return (0, requestApi_1.requestApi)(options, success, error).finally(function () { setIsFetching(false); });
@@ -46799,7 +46841,13 @@ exports.dialogData = (0, toolkit_1.createReducer)(initialState_1.initialState, f
         return __assign(__assign({}, state), { isOpen: true, url: action.payload.url, _id: action.payload._id });
     })
         .addCase(dialogData_actions_1.closeVisualConstructor, function (state) {
-        return __assign(__assign({}, state), { isOpen: false, frameIsReady: false, rawHTML: false });
+        var _a;
+        var newCache = false;
+        if (state.cache !== false) {
+            var newCacheItem = (state.url !== false && state.rawHTML !== false) ? (_a = {}, _a[state.url] = state.rawHTML, _a) : false;
+            newCache = newCacheItem !== false ? __assign(__assign({}, state.cache), newCacheItem) : __assign({}, state.cache);
+        }
+        return __assign(__assign({}, state), { url: false, isOpen: false, frameIsReady: false, rawHTML: false, cache: newCache });
     })
         .addCase(dialogData_actions_1.setHTML, function (state, action) {
         return __assign(__assign({}, state), { rawHTML: action.payload });
@@ -46844,7 +46892,8 @@ exports.initialState = {
     url: false,
     _id: false,
     frameIsReady: false,
-    rawHTML: false
+    rawHTML: false,
+    cache: false
 };
 
 

@@ -4,5 +4,6 @@ export interface DialogData {
     url: string | false,
     _id: number | false,
     frameIsReady: boolean,
-    rawHTML: string | false
+    rawHTML: string | false,
+    cache:false|Record<string,string>
 }
