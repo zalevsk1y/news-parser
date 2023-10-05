@@ -15,12 +15,12 @@ export const dialogData = createReducer<DialogDataType>(initialState, (builder) 
     })
     .addCase(closeVisualConstructor, (state) => {
       let newCache: false | Record<string, string> = false;
-
+      const newCacheItem = (state.url !== false&&state.rawHTML!==false) ? { [state.url]: state.rawHTML } : false;
       if (state.cache !== false) {
-        const newCacheItem = (state.url !== false&&state.rawHTML!==false) ? { [state.url]: state.rawHTML } : false;
         newCache = newCacheItem !== false ? { ...state.cache, ...newCacheItem  } : { ...state.cache };
+      } else {
+        newCache=newCacheItem;
       }
-
       return {
         ...state,
         url: false,

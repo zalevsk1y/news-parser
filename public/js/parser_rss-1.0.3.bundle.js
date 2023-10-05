@@ -46990,9 +46990,12 @@ exports.dialogData = (0, toolkit_1.createReducer)(initialState_1.initialState, f
         .addCase(dialogData_actions_1.closeVisualConstructor, function (state) {
         var _a;
         var newCache = false;
+        var newCacheItem = (state.url !== false && state.rawHTML !== false) ? (_a = {}, _a[state.url] = state.rawHTML, _a) : false;
         if (state.cache !== false) {
-            var newCacheItem = (state.url !== false && state.rawHTML !== false) ? (_a = {}, _a[state.url] = state.rawHTML, _a) : false;
             newCache = newCacheItem !== false ? __assign(__assign({}, state.cache), newCacheItem) : __assign({}, state.cache);
+        }
+        else {
+            newCache = newCacheItem;
         }
         return __assign(__assign({}, state), { url: false, isOpen: false, frameIsReady: false, rawHTML: false, cache: newCache });
     })
