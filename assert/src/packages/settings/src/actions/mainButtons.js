@@ -25,22 +25,37 @@ function setAllSettings(data){
         settings:data.settings
     }
 }
-
+function fetchError(error){
+    return {
+        type:types.main.FETCH_ERROR,
+        data:{
+            error:1,
+            message:{
+                type:'error',
+                text:'Error connecting to the server.',
+                timestamp:Date.now()
+            }
+        }
+    }
+}
 export function saveSettingsToServer (dispatch,settings,nonce){
   
-    const parameters=config.emulateJSON?oldServerData('settings',settings):newServerData(settings);
+    const parameters=config.emulateJSON?oldServerData({'settings':settings}):newServerData(settings);
     return dispatch=>{
         dispatch(sendToServer())
         return fetch(config.settingsApi.saveSettings+'&_wpnonce='+nonce,
         parameters
        )
        .then(response=>response.json())
-       .then((json,error)=>{
+       .then((json)=>{
             
-           if(!error&&json){
+           if(json){
             dispatch(responseFromServer(json));
-        
+            
            }
+       })
+       .catch(error=>{
+           dispatch(fetchError(error))
        })
     }
 }
@@ -49,11 +64,14 @@ export function getSettingsFromServer (dispatch,nonce){
     return dispatch=>{ 
         return fetch(config.settingsApi.getSettings+'&_wpnonce='+nonce,parameters)
        .then(response=>response.json())
-       .then((json,error)=>{
-           if(!error&&json){
+       .then((json)=>{
+           if(json){
             dispatch(setAllSettings(json));
            }
        })
+       .catch(error=>{
+        dispatch(fetchError(error))
+    })
     }
 }
 export function getDefaultSettingsFromServer (dispatch,nonce){
@@ -62,9 +80,12 @@ export function getDefaultSettingsFromServer (dispatch,nonce){
         return fetch(config.settingsApi.getDefaultSettings+'&_wpnonce='+nonce,parameters)
        .then(response=>response.json())
        .then((json,error)=>{
-           if(!error&&json){
+           if(json){
             dispatch(setAllSettings(json));
            }
        })
+       .catch(error=>{
+        dispatch(fetchError(error))
+    })
     }
 }

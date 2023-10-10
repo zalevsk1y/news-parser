@@ -10,6 +10,7 @@ import {uriToJson} from '@news-parser/helpers';
 
 import {setRoute} from './actions';
 import thunkMiddleware from 'redux-thunk';
+import ErrorBoundary from "@news-parser/error-handler"
 //import App from './App';
 
 const store=createStore(
@@ -22,7 +23,14 @@ const store=createStore(
 
 store.dispatch(setRoute(uriParams))
 window.addEventListener('load',()=>{
-    ReactDOM.render(<Provider store={store}> <Main /></Provider>, document.getElementById('parsing-app'));
+    ReactDOM.render(
+       
+            <Provider store={store}> 
+                <ErrorBoundary>
+                    <Main />
+                </ErrorBoundary>
+            </Provider>
+       , document.getElementById('parsing-app'));
 })
 
 

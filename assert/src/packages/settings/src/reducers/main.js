@@ -11,13 +11,21 @@ export function main(state={},action){
             return {...state,
                 isFetching:false,
                 error:action.data.err,
-                message:action.data.msg
+                message:action.data.msg,
+                lang:action.data.lang
+            }
+        case types.main.FETCH_ERROR:
+            return {...state,
+                isFetching:false,
+                error:action.data.error,
+                message:action.data.message
             }
         default:
             return {...state,
                 isFetching:false,
                 error:false,
-                message:false
+                message:false,
+              
     };
     }
 }

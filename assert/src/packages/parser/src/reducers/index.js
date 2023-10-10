@@ -53,13 +53,23 @@ export function parse (state=initialStateParse,action){
                  action:'main',
                  dialog:false
             }
+        case types.FETCH_ERROR:
+            return {
+                ...state,
+                isFetching:false,
+                url:false,
+                action:'main',
+                message:action.data.msg,
+                error:action.data.err,
+                actionParams:false
+            }
         case types.RECEIVE_ERROR:
             return{...state,
                 isFetching:false,
                 url:false,
                 action:'main',
                 message:action.data.msg,
-                error:action.data.error,
+                error:action.data.err,
                 actionParams:false
             }
         case types.CREATE_MESSAGE:

@@ -5,6 +5,8 @@ exports[`Tab should render correctly  1`] = `
   className="main-tabs tab1 active-tab"
   onClick={[Function]}
 >
-  testTab
+  <Connect(Translate)>
+    testTab
+  </Connect(Translate)>
 </h2>
 `;

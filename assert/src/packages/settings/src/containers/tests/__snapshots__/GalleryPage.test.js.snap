@@ -8,7 +8,9 @@ exports[`Gallery Page should render correctly 1`] = `
     <tbody>
       <tr>
         <th>
-          Add Gallery to post.
+          <Connect(Translate)>
+            Add gallery to post
+          </Connect(Translate)>
         </th>
         <td>
           <Switch
@@ -27,7 +29,9 @@ exports[`Gallery Page should render correctly 1`] = `
     <tbody>
       <tr>
         <th>
-          Shortcode for gallery
+          <Connect(Translate)>
+            Shortcode for gallery
+          </Connect(Translate)>
         </th>
         <td>
           <Input
@@ -38,11 +42,16 @@ exports[`Gallery Page should render correctly 1`] = `
           <p
             className="description"
           >
-            You can add short code for additional gallery plugin.More 
+            <Connect(Translate)>
+              You can add short code for additional gallery plugin.More
+            </Connect(Translate)>
+              
             <a
               href="#"
             >
-              info
+              <Connect(Translate)>
+                info
+              </Connect(Translate)>
             </a>
             .
           </p>
@@ -50,7 +59,9 @@ exports[`Gallery Page should render correctly 1`] = `
       </tr>
       <tr>
         <th>
-          Parameter name for gallery
+          <Connect(Translate)>
+            Parameter name for gallery
+          </Connect(Translate)>
         </th>
         <td>
           <Input
@@ -61,11 +72,16 @@ exports[`Gallery Page should render correctly 1`] = `
           <p
             className="description"
           >
-            You can specify name of parameter for pictures IDs.More 
+            <Connect(Translate)>
+              You can specify name of parameter for pictures IDs.More
+            </Connect(Translate)>
+             
             <a
               href="#"
             >
-              info
+              <Connect(Translate)>
+                info
+              </Connect(Translate)>
             </a>
             .
           </p>

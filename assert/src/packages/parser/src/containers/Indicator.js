@@ -25,7 +25,7 @@ export class Indicator extends React.Component{
         ;
     }
     handleScroll(){
-        const windowWidth=parseInt*(window.innerWidth),
+        const windowWidth=parseInt(window.innerWidth),
               yOffset=window.pageYOffset;
         if(config.amedia.phone<windowWidth){
             this.state.top!==false&&this.setState({top:false});

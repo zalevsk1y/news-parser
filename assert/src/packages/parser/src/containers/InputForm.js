@@ -1,8 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {parsePage,parseRSSList} from '../actions';
-import {getNonce,getUrlWithParams} from '@news-parser/helpers'
-import PropTypes from 'prop-types'
+import {getNonce,getUrlWithParams} from '@news-parser/helpers';
+import PropTypes from 'prop-types';
+import Translate from './Translate';
 
 export class InputForm extends React.Component{
     constructor(props){
@@ -40,8 +41,8 @@ export class InputForm extends React.Component{
                     </div>
                 </div>
                 <div className="row center">
-                        <button className="main-button parse-rss-button" type="button" onClick={this.handleParseListSubmit}>Parse RSS Feed</button>
-                        <button className="main-button parse-page-button" type="button" onClick={this.handleParsePageSubmit}>Parse Page</button>
+                        <button className="main-button parse-rss-button" type="button" onClick={this.handleParseListSubmit}><Translate>Parse RSS Feed</Translate></button>
+                        <button className="main-button parse-page-button" type="button" onClick={this.handleParsePageSubmit}><Translate>Parse Page</Translate></button>
                 </div>
            
         </div>

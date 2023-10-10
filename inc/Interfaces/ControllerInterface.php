@@ -1,6 +1,6 @@
 <?php
-namespace Interfaces;
+namespace NewsParserPlugin\Interfaces;
 
 interface ControllerInterface{
-    public function get(string $url,string $options);
+    public function get();
 }

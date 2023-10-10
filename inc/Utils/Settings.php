@@ -1,32 +1,48 @@
 <?php
-namespace Utils;
-use Exception\MyException;
+namespace NewsParserPlugin\Utils;
+use NewsParserPlugin\Exception\MyException;
 /**
- * Simple IOC container for resolving dependency injection
+ * Class manipulates plugin settings using WP methods
  *
  * @package  Utils
  * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
  * @license  MIT
- * @link     https://github.com/2600BottlesOnTheWall
  */
 
 class Settings
 {
     protected $settings;
     public function __construct(){
-        $options=\get_option(NEWS_PARSER_SETTINGS_SLUG);
+        $options=\get_option(NEWS_PARSER_PLUGIN_SETTINGS_SLUG);
         if(!$options){
             $options=$this->default();
-            \add_option(NEWS_PARSER_SETTINGS_SLUG,$options);    
+            \add_option(NEWS_PARSER_PLUGIN_SETTINGS_SLUG,$options);    
         }
         $this->settings=$options;
     }
-    public function deleteSettings(){
-        \delete_option(NEWS_PARSER_SETTINGS_SLUG);
+    /**
+     * Delete settings from the WP db delete_option()
+     *
+     * @return void
+     */
+    public static function deleteSettings(){
+        \delete_option(NEWS_PARSER_PLUGIN_SETTINGS_SLUG);
     }
+    /**
+     * Get settings data function in useful format
+     *
+     * @param string $type
+     * @return object|array|json
+     */
     public function get($type='object'){
         return $this->transformDatatype($type,$this->settings);
     }
+    /**
+     * Set new settings using WP update_option()
+     *
+     * @param array $new_settings
+     * @return boolean
+     */
     public function set(array $new_settings){
         //$newSettings is not sql sanitized, wp function update_options sanitize data so there's no need to run any extra san functions
         // /src/wp-includes/option.php 
@@ -42,7 +58,7 @@ class Settings
         }
     
         $this->settings=json_encode($settings_array);
-        return \update_option(NEWS_PARSER_SETTINGS_SLUG,$this->settings);
+        return \update_option(NEWS_PARSER_PLUGIN_SETTINGS_SLUG,$this->settings);
     }
     protected function arrayCopy(array $parent,array $child){
         foreach($parent as $key=>$value){
@@ -50,6 +66,12 @@ class Settings
         }
         return $child;
     }
+    /**
+     * Get default settings
+     *
+     * @param string $type
+     * @return object|array|json
+     */
     public function getDefault($type='object'){
         return $this->transformDatatype($type,$this->default());
     }

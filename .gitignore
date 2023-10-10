@@ -3,13 +3,22 @@
 # dependencies
 /assert/node_modules
 /.pnp
+vendor/*
 .pnp.js
+#do not ignor 
+!/vendor/composer/
+!/vendor/sunra/
+!/vendor/autoload.php
+
+
+
 
 # testing
 /coverage
 
 
 # misc
+/.vscode
 .DS_Store
 .env.local
 .env.development.local

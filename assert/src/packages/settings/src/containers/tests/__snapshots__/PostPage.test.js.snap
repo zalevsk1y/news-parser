@@ -8,7 +8,9 @@ exports[`Post Page should render correctly 1`] = `
     <tbody>
       <tr>
         <th>
-          Add thumbnail to post
+          <Connect(Translate)>
+            Add main image to post
+          </Connect(Translate)>
         </th>
         <td>
           <Switch
@@ -21,7 +23,9 @@ exports[`Post Page should render correctly 1`] = `
       </tr>
       <tr>
         <th>
-          Parse all pictures
+          <Connect(Translate)>
+            Parse all pictures
+          </Connect(Translate)>
         </th>
         <td>
           <Switch
@@ -33,11 +37,16 @@ exports[`Post Page should render correctly 1`] = `
           <p
             className="description"
           >
-            Parsed pictures urls will be add to your post body. More
+            <Connect(Translate)>
+              Try to parse additional image from the page.More
+            </Connect(Translate)>
+             
             <a
               href="#"
             >
-              info
+              <Connect(Translate)>
+                info
+              </Connect(Translate)>
             </a>
           </p>
         </td>
@@ -50,7 +59,9 @@ exports[`Post Page should render correctly 1`] = `
     <tbody>
       <tr>
         <th>
-          Show select pictures dialog
+          <Connect(Translate)>
+            Show select pictures dialog
+          </Connect(Translate)>
         </th>
         <td>
           <Switch
@@ -62,18 +73,25 @@ exports[`Post Page should render correctly 1`] = `
           <p
             className="description"
           >
-            Parsed pictures urls will be add to your post body. More
+            <Connect(Translate)>
+              Show preview of all parsed images in additional window.More
+            </Connect(Translate)>
+             
             <a
               href="#"
             >
-              info
+              <Connect(Translate)>
+                info
+              </Connect(Translate)>
             </a>
           </p>
         </td>
       </tr>
       <tr>
         <th>
-          Maximum Pictures to add
+          <Connect(Translate)>
+            Maximum pictures to add
+          </Connect(Translate)>
         </th>
         <td>
           <InputField
@@ -86,7 +104,9 @@ exports[`Post Page should render correctly 1`] = `
           <p
             className="description"
           >
-            You can specify maximum number of pictures to add to your post.
+            <Connect(Translate)>
+              You can specify maximum number of pictures to add to your post
+            </Connect(Translate)>
           </p>
         </td>
       </tr>

@@ -1,8 +1,26 @@
 <?php
-namespace Message;
+namespace NewsParserPlugin\Message;
 
+/**
+ * Class success message storage
+ *
+ *
+ * @package  Message
+ * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
+ * @license  MIT
+ */
 class Success{
-    const RSS_LIST_PARSED="File successfully parsed, wait for data download";
-    const POST_SAVED_AS_DRAFT="Post was successful saved as 'draft'.";
-    const SETTINGS_SAVED="Settings was saved successfull.";
+
+    public static function text($slug){
+        switch($slug){
+            case 'RSS_LIST_PARSED':
+                return  \__('XML File successfully parsed.','news-parser');
+            case 'POST_SAVED_AS_DRAFT':
+                return \__('Post was successful saved as "draft"','news-parser');
+            case 'SETTINGS_SAVED':
+                return \__('Settings was saved successful.','news-parser');    
+        }
+    }
+
+   
 }
