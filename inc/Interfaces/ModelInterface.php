@@ -1,5 +1,5 @@
 <?php
-namespace Interfaces;
+namespace NewsParserPlugin\Interfaces;
 
 /**
  * Interface for Menu pages class.
@@ -8,7 +8,6 @@ namespace Interfaces;
  * @package  Menu
  * @author   Evgeniy S.Zalevskiy <2600@ukr.net>
  * @license  MIT
- * @link     https://github.com/2600BottlesOnTheWall
  */
 interface ModelInterface{
     public function getAttributes($format);

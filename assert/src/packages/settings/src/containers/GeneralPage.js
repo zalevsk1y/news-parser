@@ -4,13 +4,14 @@ import React from 'react';
 import Switch from '../components/Switch.js';
 import {GENERAL_FIELD_NAME} from '../actions/index';
 import PropTypes from 'prop-types';
+import Translate from './Translate';
 
 export const GeneralPage = ({settings, toggleAddSource}) => (
     <table className="settings-content">
         <tbody>
             <tr>
                 <th>
-                    Add a link to the source
+                    <Translate>Add a link to the source</Translate>
                 </th>
                 <td>
                     <Switch

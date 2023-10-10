@@ -10,7 +10,8 @@ export const types = {
     SET_ROUTE: 'SET_ROUTE',
     OPEN_DIALOG:'OPEN_DIALOG',
     CLOSE_DIALOG:'CLOSE_DIALOG',
-    CREATE_MESSAGE:'CREATE_MESSAGE'
+    CREATE_MESSAGE:'CREATE_MESSAGE',
+    FETCH_ERROR:'FETCH_ERROR'
 }
 
 export function requestPostsList(url) {
@@ -101,45 +102,47 @@ export function closeDialog(){
         type:types.CLOSE_DIALOG
     }
 }
+function fetchError(error){
+    return {
+        type:types.FETCH_ERROR,
+        data:{
+            error:1,
+            msg:{
+                type:'error',
+                text:'Error connecting to the server.',
+                timestamp:Date.now()
+            }
+        }
+    }
+}
 export function parseRSSList(params) {
     params.dispatch(requestPostsList(params.url));
-    let requestUrl=config.parsingApi.list + encodeURIComponent(params.url)+'&_wpnonce='+params.nonce;
+    const requestUrl=config.parsingApi.list + encodeURIComponent(params.url)+'&_wpnonce='+params.nonce;
+    const parameters=config.emulateJSON?oldServerData(params.options):newServerData(params.options);
     return dispatch => {
-        return fetch(requestUrl, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-            })
+        return fetch(requestUrl,parameters)
             .then(response => response.json())
-            .then((json, error) => {
-                error && console.error(error);
+            .then((json) => {
                 if (!json.err) {
                     dispatch(receivePostsList(params.url, json))
                 } else {
                     dispatch(receiveError(params.url, json));
                 }
             })
+            .catch(error=>{
+                dispatch(fetchError(error))
+            })
     }
 }
 export function parsePage (params) {
     params.dispatch(requestPost(params.url,params.id));
-    var requestUrl=config.parsingApi.single + encodeURIComponent(params.url)+'&_wpnonce='+params.nonce,
-          fetchParams={
-            headers:{'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    },
-            method:'POST'
-        };
-    if(params.options){
-        fetchParams=config.emulateJSON?oldServerData('options',params.options):newServerData({options:params.options});
-    }
+    const requestUrl=config.parsingApi.single + encodeURIComponent(params.url)+'&_wpnonce='+params.nonce;
+    const parameters=config.emulateJSON?oldServerData(params.options):newServerData(params.options);
     return dispatch => {
-        return fetch(requestUrl,fetchParams)
+        return fetch(requestUrl,parameters)
             .then(response => response.json())
             .then((json, error) => {
-                error && console.error(error);   
+                if(json){  
                     switch(true){
                         case(json.dialog!==undefined):
                             dispatch(openDialog(params.url,json))
@@ -152,6 +155,10 @@ export function parsePage (params) {
                             dispatch(receiveError(params.url, json));
                             break;
                     }
+                }
+            })
+            .catch(error=>{
+                dispatch(fetchError(error))
             })
     }
 }

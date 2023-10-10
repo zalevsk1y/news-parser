@@ -1,21 +1,37 @@
 <?php
-namespace View;
 
+namespace NewsParserPlugin\View;
+
+/**
+ * Class loading template file and render it with args.
+ *
+ * @author  Evgeniy S.Zalevskiy <2600@ukr.net>
+ * @license MIT https://opensource.org/licenses/MIT
+ */
 class TemplateRender
 {
-    public function render($template_path,$object_args){
-        if(!file_exists($template_path)){
+    protected $path;
+    protected $args;
+    public function __construct(string $template_path,array $args=[]){
+        if (!file_exists($template_path)) {
             throw new \Exception('Cannot load template file '.$template_path);
         }
-        foreach($object_args as $key=>$item){
-            ${$key}=$item;
-        }
-        ob_start();
-        include ($template_path);
-        $content=ob_get_contents();
-        ob_end_clean();
-        return $content;
+        $this->path=$template_path;
+        $this->args=$args;
     }
-
-
+    /**
+     * Render template.
+     *
+     *
+     * @return void
+     */
+    public function render()
+    {
+        if(count($this->args)>0){
+            foreach ($this->args as $key => $item) {
+                ${$key} = $item;
+            }
+        }
+        include $this->path;
+    }
 }

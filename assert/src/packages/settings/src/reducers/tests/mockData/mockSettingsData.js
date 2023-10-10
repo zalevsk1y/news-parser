@@ -4,7 +4,7 @@ export const mockSettingsData={
         err:0,
         msg:{
             text:'ok',
-            status:'success'
+            type:'success'
         }
     },
     settings:{

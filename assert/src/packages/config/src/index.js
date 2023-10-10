@@ -11,6 +11,9 @@ const config={
         list:'admin-ajax.php?action=news_parser_parsing_api&status=list&url=',
         single:'admin-ajax.php?action=news_parser_parsing_api&status=single&url='
     },
+    errorReport:{
+        url:'https://github.com/zalevsk1y/news-parser/issues/new'
+    },
     defaultImage:'/images/Grey-Gradient.png',
     nonce:{
         id:{
@@ -29,6 +32,9 @@ const config={
     },
     amedia:{
         phone:782
+    },
+    lang:{
+        class:'wrap'
     }
 } 
 

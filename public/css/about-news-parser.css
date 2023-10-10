@@ -1,0 +1,11 @@
+.wrap-about-news-parser{
+    display:flex;
+    justify-content: center;
+}
+.container-about{
+    min-width:350px;
+    width:700px;
+}
+.container-about li{
+    list-style:initial; 
+}

@@ -5,12 +5,11 @@ import SidebarLeft from '../components/SidebarLeft';
 import Toolbar from '../components/Toolbar'; 
 import config from "@news-parser/config";
 
-
 export class ModalGallery extends React.Component{
     constructor(props){
         super(props);
         this.state=({status:this.status});
-        this.onSateChange=this.onSateChange.bind(this);
+        this.onStateChange=this.onStateChange.bind(this);
         this.close=this.close.bind(this);
         this.renderContent=this.renderContent.bind(this);
         this.sendGalleryData=this.sendGalleryData.bind(this);
@@ -20,9 +19,9 @@ export class ModalGallery extends React.Component{
         if(this.props!==prevProps){
                 this.setState({status:this.props.status})
         }
-        this.onSateChange();
+        this.onStateChange();
     }
-    onSateChange(){
+    onStateChange(){
         this.props.onStateChange(this.state.status)
     }
     close(){

@@ -1,0 +1,84 @@
+{
+    "Settings":{
+        "en":"Settings",
+        "ru":"Настройки"
+    },
+    "General":{
+        "en":"General",
+        "ru":"Общие"
+    },
+    "Post":{
+        "en":"Post",
+        "ru":"Пост"
+    },
+    "Gallery":{
+        "en":"Gallery",
+        "ru":"Галерея"
+    },
+    "Save settings":{
+        "en":"Save settings",
+        "ru":"Сохранить настройки"
+    },
+    "Reset settings":{
+        "en":"Reset settings",
+        "ru":"Сброс настроек"
+    },
+    "Add a link to the source":{
+        "en":"Add a link to the source",
+        "ru":"Добавить ссылку на источник"
+    },
+    "Add main image to post":{
+       "en":"Add main image to post",
+       "ru":"Добавить изображение к посту"
+    },
+    "Parse all pictures":{
+        "en":"Parse all pictures",
+        "ru":"Парсить все изображения"
+    },
+    "Show select pictures dialog":{
+        "en":"Show select pictures dialog",
+        "ru":"Показать окно выбора изображений"
+    },
+    "Maximum pictures to add":{
+        "en":"Maximum pictures to add",
+        "ru":"Максимальное количество изображений для загрузки"
+    },
+    "Add gallery to post":{
+        "en":"Add gallery to post",
+        "ru":"Добавить галерею"	
+    },
+    "Shortcode for gallery":{
+        "en":"Shortcode for gallery",
+        "ru":"Шорткод для галереи"
+    },	
+    "Parameter name for gallery":{
+        "en":"Parameter name for gallery",
+        "ru":"Имя параметра для галереи"
+    },
+    "Try to parse additional image from the page.More":{
+        "en":"Try to parse additional image from the page.More",
+        "ru":"Парсить дополнительные изображения со страницы.Дополнительная"
+    },
+    "Show preview of all parsed images in additional window.More":{
+        "en":"Show preview of all parsed images in additional window.More",
+        "ru":"Показать все изображения в дополнитнльном окне.Дополнительная "
+    },
+    "You can specify maximum number of pictures to add to your post":{
+        "en":"You can specify maximum number of pictures to add to your post.",
+        "ru":"Вы можете указать максимальное количество изображений которе будет добавлено к вашему посту"
+    },
+    "You can add short code for additional gallery plugin.More":{
+        "en":"You can add short code for additional gallery plugin.More",
+        "ru":"Вы можете указать шорткод для дополнительного плагина галереи.Дополнительная"
+    },
+    "You can specify name of parameter for pictures IDs.More":{
+        "en":"You can specify name of parameter for pictures IDs.More",
+        "ru":"Вы можете указать имя параметра который использует плагин для передачи ID изображений.Дополнительная"
+    },
+    "info":{
+        "en":"info",
+        "ru":"информация"
+    }
+
+
+}
