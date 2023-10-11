@@ -1,0 +1,21 @@
+.footer-post {
+  margin-top: auto;
+  height: 38px;
+  min-height: 20px;
+  width: 100%;
+  background-color: #f1f1ff;
+  color: #c6c6c6;
+  font-size: 17px;
+  display: flex;
+  align-items: center; 
+}
+
+.footer-post .fo {
+  margin-left: 15px;
+  cursor: pointer;
+  padding: 1px; 
+}
+
+.footer-post .fo:hover {
+  color: #757575; 
+}

@@ -1,7 +1,6 @@
 <?php
 namespace NewsParserPlugin\Tests\Controller;
 use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
-use NewsParserPlugin\Utils\ResponseFormatter;
 use NewsParserPlugin\Controller\PostController;
 use NewsParserPlugin\Exception\MyException;
 
@@ -11,17 +10,19 @@ class PostControllerTest extends \WP_UnitTestCase
     protected $post;
     protected $mockTemplateModel;
     protected $mockParser;
+    protected $mockAdapter;
     
-    public function setUp()
+    public function setUp():void
     {
         parent::setUp();
-        $this->user=$this->factory->user->create_and_get([
+        $this->user=$this->factory()->user->create_and_get([
             'role' => 'administrator',
         ]);
-        wp_set_current_user($this->user->ID);
+        \wp_set_current_user($this->user->ID);
+       
         $this->mockTemplateModel=$mock_options_model=$this->getMockBuilder(\NewsParserPlugin\Models\TemplateModel::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('getExtraOptions','getAttributes'))
+            ->onlyMethods(array('getExtraOptions','getAttributes'))
             ->getMock();
         $mock_options_model->method('getExtraOptions')
             ->willReturn( array(
@@ -32,38 +33,47 @@ class PostControllerTest extends \WP_UnitTestCase
             ->willReturn(array());
         $this->mockParser=$this->getMockBuilder(\NewsParserPlugin\Parser\Abstracts\AbstractParseContent::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('get','parse'))
+            ->onlyMethods(array('get','parse'))
             ->getMock();
+        $this->mockAdapter=$this->getMockBuilder(\NewsParserPlugin\Utils\AdapterGuttenberg::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(array('convert'))
+            ->getMock();
+        $this->mockAdapter->method('convert')
+            ->willReturn('Adapted test content');
     }
-    public function tearDown()
+    public function tearDown():void
     {
         isset($this->user)&&wp_delete_user($this->user->ID);
         isset($this->post)&&wp_delete_post($this->post->ID);
-        parent::tearDown();
+        //parent::tearDown();
     }
     /**
      * @dataProvider dataCreate
      *
      * @return void
      */
-    public function testCreate($url,$data,$expected){
-       
+    public function testCreate($url,$parsed_data,$expected)
+    {
         $this->mockParser->method('get')
-            ->willReturn($data);
+            ->willReturn($parsed_data);
         $mock_post_controller=$this->getMockBuilder(\NewsParserPlugin\Controller\PostController::class)
             ->setConstructorArgs(
                 array(
                     $this->mockParser,
-                    new ResponseFormatter()
+                    $this->mockAdapter
                 )
             )
-            ->setMethods(array('TemplateModelsFactory'))
+            ->onlyMethods(array('TemplateModelsFactory'))
             ->getMock();
         $mock_post_controller->method('TemplateModelsFactory')
             ->willReturn($this->mockTemplateModel);    
         $result=$mock_post_controller->create($url,1);
         $this->post=$mock_post_controller->post;
-        $this->assertJsonStringEqualsJsonFile($expected,$result->get('json'));
+        $expected['post_id']=$this->post->ID;
+        $expected['links']['deleteLink']=get_delete_post_link($this->post->ID);
+
+        $this->assertEquals($expected,$result);
     }
     public function dataCreate(){
         return array(
@@ -74,13 +84,8 @@ class PostControllerTest extends \WP_UnitTestCase
                     'body'=>'Test content.',
                     'image'=>'site.com/image.jpg'
                 ),
-                CONTROLLER_MOCK_DIR.'/noErrorRespondPost.json'
-            ),
-            array(
-                'http://www.wrong-site.com/post.html',
-                array(),
-                CONTROLLER_MOCK_DIR.'/errorRespondPost.json'
-                )
+                json_decode(file_get_contents(CONTROLLER_MOCK_DIR.'/noErrorRespondPost.json'),true)
+            )
         );
     }
 }

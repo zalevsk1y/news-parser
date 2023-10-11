@@ -12,7 +12,7 @@ function news_parser_plugin_autoload($class)
 
     $path = __DIR__ . DIRECTORY_SEPARATOR . 'inc' . DIRECTORY_SEPARATOR . $cl . ".php";
     if (file_exists($path)) {
-        include $path;
+        include_once $path;
     }
 }
 

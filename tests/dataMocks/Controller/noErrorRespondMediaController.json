@@ -1,1 +1,1 @@
-{"code":200,"msg":{"type":"success","text":"Featured image was saved and attach to the post.","timestamp":123456789},"data":{"mediaId":""}}
+{"data":{"mediaId":""},"message":{"type":"success","text":"Featured image was saved and attach to the post.","timestamp":123456789}}

@@ -5,6 +5,7 @@ use NewsParserPlugin\Exception\MyException;
 use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Utils\Pipe;
 use NewsParserPlugin\Utils\Chain;
+use NewsParserPlugin\Models\TemplateModel;
 
 /**
  * Base abstract class for parser.
@@ -32,7 +33,8 @@ abstract class AbstractParseContent
      * @var array
      */
     protected $options;
-
+    
+    protected $url;
     /**
      * @param integer $cache_expiration
      */
@@ -86,11 +88,13 @@ abstract class AbstractParseContent
         $request_args=array('user-agent'=>'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36');
         $data = $this->wpRemoteGet($url, $request_args);
         if (is_wp_error($data)) {
-            throw new MyException(Errors::text('FILE_DOWNLOAD'), Errors::code('BAD_REQUEST'));
+            $error_code=$data->get_error_code();
+            $error_message=$data->get_error_message($error_code);
+                throw new MyException(Errors::text('FILE_DOWNLOAD'), Errors::code('INNER_ERROR'));
         }
         $response_code= wp_remote_retrieve_response_code($data);
         if ($response_code!=200) {
-            throw new MyException(Errors::text('FILE_DOWNLOAD'), Errors::code('BAD_REQUEST'));
+            throw new MyException(Errors::text('FILE_DOWNLOAD'), Errors::code('INNER_ERROR'));
         }
         $body=wp_remote_retrieve_body($data);
         return $body;
@@ -99,14 +103,15 @@ abstract class AbstractParseContent
      * Get html data from the cache or download it, pass them to the parser and cache if needed.
      *
      * @param string $url url of the page that should get.
-     * @param array $options Extra options that might be used by parser.
+     * @param TemplateModel $options Extra options that might be used by parser.
      * @return array|stdClass|string Parsed data.
      */
-    public function get($url, $options = array())
+    public function get($url, $options=array())
     {
-        if (!empty($options)) {
-            $this->options=$options;
-        }
+        $this->url=$url;
+       
+        $this->options=$options;
+        
         $data = $this->getFromCache($url);
         if (gettype($data)==='string') {
             $response = $this->parse($data);

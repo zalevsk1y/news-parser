@@ -1,0 +1,21 @@
+.input-container {
+    flex-grow: 1;
+    min-width: 50px;
+}
+
+.categories-search {
+    padding-bottom: 10px;
+}
+
+.categories-search>input {
+    width: 100%;
+}
+
+.categories-filter-input {
+    padding-bottom: 10px;
+}
+
+.sidebar-item-expandable-row :nth-child(1n) {
+    width: 100%;
+    margin: 5px 0px 5px 0px;
+}

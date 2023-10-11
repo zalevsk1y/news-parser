@@ -22,6 +22,7 @@ class HTMLRaw extends Abstracts\AbstractParseContent
      */
     public function __construct($cache_expiration = 600)
     {
+        $this->url='http://site.com';
         parent::__construct($cache_expiration);
     }
     /**
@@ -32,6 +33,9 @@ class HTMLRaw extends Abstracts\AbstractParseContent
      */
     protected function parse($data)
     {
+       
+        $data=apply_filters('htmlRaw:parse',array($data,$this->url));
+       
         if (is_array($this->options)&&array_key_exists('remove_scripts', $this->options)&&$this->options['remove_scripts']) {
             return $this->removeScriptTags($data);
         }

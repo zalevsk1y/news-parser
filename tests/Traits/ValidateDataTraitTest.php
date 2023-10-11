@@ -10,9 +10,9 @@ class MockValidateDataTrait
 class ValidateDataTraitTest extends \WP_UnitTestCase
 {
     protected $instance;
-    public function setUp()
+    public function setUp():void
     {
-        parent::setUp();
+        // parent::setUp();
         $this->instance=new MockValidateDataTrait();
     }
     public function testValidateImageUrl()
@@ -40,7 +40,7 @@ class ValidateDataTraitTest extends \WP_UnitTestCase
         $result=$this->instance->validateMediaOptions($input);
         $this->assertTrue(is_wp_error($result));
     }
-    public function testValidateTemplate()
+    public function testValidateHTMLTemplate()
     {
         $input=array(
             'tagName'=>'div',
@@ -55,7 +55,7 @@ class ValidateDataTraitTest extends \WP_UnitTestCase
                 )
             )
         );
-        $result=$this->instance->validateTemplate($input);
+        $result=$this->instance->validateHTMLTemplate($input);
         $this->assertTrue($result);
     }
 }

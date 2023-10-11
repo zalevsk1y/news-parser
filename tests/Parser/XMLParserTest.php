@@ -21,7 +21,7 @@ class DummyXMLParser extends XMLParser
 class XMLParserTest extends \WP_UnitTestCase
 {
     protected $instance;
-    public function setUp()
+    public function setUp():void
     {
         $this->instance=new DummyXMLParser(10);
         $this->xml=file_get_contents(PARSER_MOCK_DIR.'/testXML.xml');

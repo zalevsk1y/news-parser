@@ -39,6 +39,8 @@ trait SanitizeDataTrait
                 case 'addFeaturedMedia':
                 case 'saveParsingTemplate':
                 case 'addSource':
+                case 'addSrcSetAndSizes':
+                case 'groupImagesRow':
                 //use json_decode to prevent "false" string converted to boolean true
                     $clean_data[$key]=boolval(json_decode($option));
                     break;
@@ -50,25 +52,38 @@ trait SanitizeDataTrait
         return $clean_data;
     }
     /**
-     * Sanitize template pattern array.
+     * Sanitize  HTML template pattern array.
      *
      * @param array $template ['tagName','className','searchTemplate','children']
      * @return array
      */
-    public function sanitizeTemplate($template)
+    public function sanitizeHTMLtemplate($html_template)
     {
-        $clean_data=$this->sanitizeTemplateElement($template);
+        $clean_data=$this->sanitizeTemplateElement($html_template);
         $clean_data['children']=array();
-        foreach ($template['children'] as $child) {
+        foreach ($html_template['children'] as $child) {
             array_push($clean_data['children'], $this->sanitizeTemplateElement($child));
         }
         return $clean_data;
+    }
+    public function sanitizeTemplate($template)
+    {
+        return $clean_data=array(
+            'template'=>$this->sanitizeHTMLtemplate($template['template']),
+            'extraOptions'=>$this->sanitizeExtraOptions($template['extraOptions']),
+            'url'=>\esc_url($template['url']),
+            'postOptions'=>$this->sanitizePostOptions($template['postOptions'])
+        );
+    }
+    protected function sanitizePostOptions($post_options){
+        //ToDo: Implement post options sanitizing
+        return $post_options;
     }
     /**
      * Sanitize child template element
      *
      * @param array $el  ['tagName','className','searchTemplate','position']
-     * @return void
+     * @return array
      */
     protected function sanitizeTemplateElement($el)
     {
@@ -88,6 +103,21 @@ trait SanitizeDataTrait
                     $clean_data[$key]=preg_replace('/[^a-z0-9]/i', '', $param);
             }
         }
+        return $clean_data;
+    }
+    public function sanitizeInteger($value){
+        return intval($value);
+    }
+    /**
+     * @return array
+     */
+    public function sanitizeCronOptions($option){
+        $clean_data=array();
+        $clean_data['maxCronCalls']=intval($option['maxCronCalls']);
+        $clean_data['maxCronCalls']=$clean_data['maxCronCalls']>100?100:$clean_data['maxCronCalls'];
+        $clean_data['maxPostsParsed']=intval($option['maxPostsParsed']);
+        $clean_data['maxPostsParsed']=$clean_data['maxPostsParsed']>100?100:$clean_data['maxCronCalls'];
+        $clean_data['interval']=preg_replace('/[^h,o,u,r,l,y,t,w,i,c,e,d,a,k]/i','',$option['interval']);
         return $clean_data;
     }
 }

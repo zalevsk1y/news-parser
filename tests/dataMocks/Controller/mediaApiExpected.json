@@ -1,5 +1,18 @@
 {
-    "0":"http://www.test-site.com/image.jpg",
-    "1":1,
-    "2":"Test image description."
+    "triggerExpected":{
+        "0":"http://www.test-site.com/image.jpg",
+        "1":1,
+        "2":"Test image description."
+    },
+    "formatterExpected":10,
+    "sendResponseExpected":{
+        "data":{
+            "mediaId":"10"
+        },
+        "message":{
+            "text":"Featured image was saved and attach to the post.",
+            "type":"success",
+            "timestamp":123456789
+        }
+    }
 }

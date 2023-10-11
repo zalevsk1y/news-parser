@@ -32,7 +32,7 @@ class PostModel implements ModelInterface
     /**
      * Featured image url.
      *
-     * @var string
+     * @var string|false
      */
     public $image;
     /**
@@ -44,7 +44,7 @@ class PostModel implements ModelInterface
     /**
      * Url of source post.
      *
-     * @var string
+     * @var string|false
      */
     public $sourceUrl;
     /**
@@ -83,7 +83,7 @@ class PostModel implements ModelInterface
             throw new MyException(Errors::text('NO_BODY'), Errors::code('BAD_REQUEST'));
         }
         $this->body = $data['body'];
-        if (!isset($data['authorId'])||empty($data['authorId'])) {
+        if (!isset($data['authorId'])) {
             throw new MyException(Errors::text('NO_AUTHOR'), Errors::code('BAD_REQUEST'));
         }
         $this->authorId = $data['authorId'];
@@ -117,18 +117,16 @@ class PostModel implements ModelInterface
         return $post;
     }
     /**
-     * Create wordpress draft gets WP post ID and change postModel status to draft
+     * Create wordpress post, gets WP post ID.
      *
+     * @param array $post_data Array with wp post attributes  https://developer.wordpress.org/reference/functions/wp_insert_post/
      * @return void
      */
-    public function createDraft()
+    public function createPost($post_data=[])
     {
-        $this->ID = $this->createPostWordPress();
-        if ($this->ID === 0) {
-            throw new MyException(Errors::text('POST_WAS_NOT_CREATED'), Errors::code('BAD_REQUEST'));
-        }
+        $this->ID = $this->createPostWordPress($post_data);
         $this->getPostLinksWordpress();
-        $this->status = 'draft';
+        if(array_key_exists('post_status',$post_data)) $this->status = $post_data['post_status'];
     }
     /**
      * Attach main image to wordpress post
@@ -195,24 +193,35 @@ class PostModel implements ModelInterface
      */
     public function mediaSideloadImage($file, $post_id = 0, $desc = null, $return = 'html')
     {
-        return media_sideload_image($file, $post_id, $desc, $return);
+        if(function_exists('media_sideload_image')){
+            return \media_sideload_image($file, $post_id, $desc, $return);
+        } 
+        /** WordPress Administration File API */
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+
+        /** WordPress Image Administration API */
+        require_once ABSPATH . 'wp-admin/includes/image.php';
+
+        /** WordPress Media Administration API */
+        require_once ABSPATH . 'wp-admin/includes/media.php';
+        return \media_sideload_image($file, $post_id, $desc, $return);
     }
     /**
      * Create wordpress post
      *
+     * @param array $post_user_data Array with wp post attributes  https://developer.wordpress.org/reference/functions/wp_insert_post/
      * @return int Post iD
      */
-    protected function createPostWordPress()
+    protected function createPostWordPress($post_user_data)
     {
-        $date = new \DateTime();
-        $post_date = $date->format('Y-m-d H:i:s');
-        $post_data = array(
+
+        $post_initial_data = array(
             'post_title' => \wp_strip_all_tags($this->title),
             'post_content' => $this->body,
-            'post_date' => $post_date,
             'post_author' => $this->authorId,
-
         );
+        if(!is_array($post_user_data))$post_user_data=[];
+        $post_data=array_merge($post_initial_data,$post_user_data);
         $postId = \wp_insert_post($post_data);
         if (\is_wp_error($postId)) {
             throw new MyException($postId->get_error_message(), Errors::code('BAD_REQUEST'));
@@ -226,14 +235,18 @@ class PostModel implements ModelInterface
      * @param string $image url of image
      * @param int $id post ID in WP
      * @param boolean $post_thumb if image will use NewsParserPlugin\as main image of the post
-     * @return int image ID
+     * @param int $max_attempt counts of downloads attempts
+     * @return WP_Error|string  image ID
      */
-    protected function attachImageToPostWordpress($image, $id, $post_thumb = false, $alt = '')
+    protected function attachImageToPostWordpress($image, $id, $post_thumb = false, $alt = '',$max_attempt=3)
     {
         $url = $image;
         $post_id = $id;
         $desc = $alt?:"image";
-        $img_id = $this->mediaSideloadImage($url, $post_id, $desc, 'id');
+        for ($attempt = 0;$attempt<$max_attempt;$attempt++){
+            $img_id = $this->mediaSideloadImage($url, $post_id, $desc, 'id');
+            if(!\is_wp_error($img_id)) break;
+        }
         if (\is_wp_error($img_id)) {
             throw new MyException($img_id->get_error_message().' Image url:'.esc_url_raw($url), Errors::code('BAD_REQUEST'));
         } else {
@@ -248,7 +261,7 @@ class PostModel implements ModelInterface
      * Update wordpress post
      *
      * @param string $update_item name of updated field
-     * @param $data new data that will be add to the field
+     * @param mixed $data new data that will be add to the field
      * @return void
      */
     protected function updatePostWordPress($update_item, $data)

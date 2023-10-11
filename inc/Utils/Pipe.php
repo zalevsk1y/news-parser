@@ -66,6 +66,9 @@ class Pipe
         }
         return $this;
     }
+    /**
+     * @return \NewsParserPlugin\Utils\Pipe
+     */
     protected function callFunc($function_name, $args)
     {
         $temp_result = call_user_func_array($function_name, $args);

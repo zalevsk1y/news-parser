@@ -9,9 +9,9 @@ class MockSanitizeDataTrait {
 class SanitizeDataTraitTest extends \WP_UnitTestCase
 {
     protected $instance;
-    public function setUp()
+    public function setUp():void
     {
-        parent::setUp();
+        // parent::setUp();
         $this->instance=new MockSanitizeDataTrait();
     }
     public function testSanitizeMediaOptions()
@@ -32,12 +32,16 @@ class SanitizeDataTraitTest extends \WP_UnitTestCase
         $input=array(
             'addFeaturedMedia'=>'true',
             'saveParsingTemplate'=>true,
-            'addSource'=>'false'
+            'addSource'=>'false',
+            'addSrcSetAndSizes'=>false,
+            'groupImagesRow'=>'true'
         );
         $expected=array(
             'addFeaturedMedia'=>true,
             'saveParsingTemplate'=>true,
-            'addSource'=>false
+            'addSource'=>false,
+            'addSrcSetAndSizes'=>false,
+            'groupImagesRow'=>true
         );
         $result=$this->instance->sanitizeExtraOptions($input);
         $this->assertEquals($expected,$result);
@@ -45,7 +49,7 @@ class SanitizeDataTraitTest extends \WP_UnitTestCase
     /**
      * @covers NewsParserPlugin\Traits\SanitizeDataTrait::sanitizeTemplateElement()
      */
-    public function testSanitizeTemplate()
+    public function testSanitizeHTMLtemplate()
     {
         $input=array(
             'tagName'=>'div',
@@ -73,7 +77,7 @@ class SanitizeDataTraitTest extends \WP_UnitTestCase
                 )
             )
         );
-        $result=$this->instance->sanitizeTemplate($input);
+        $result=$this->instance->sanitizeHTMLtemplate($input);
         $this->assertEquals($expected,$result);
     }
 }   

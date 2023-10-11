@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - development
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: bitnami/mysql:8.0.20
+        env:
+          MYSQL_ROOT_PASSWORD: 12345
+          MYSQL_DATABASE: wordpress_test
+          MYSQL_USER: wordpress_test
+          MYSQL_PASSWORD: 11111
+          MYSQL_ROOT_HOST: "%"
+          MYSQL_AUTHENTICATION_PLUGIN: mysql_native_password
+
+        ports:
+          - 3306:3306
+        
+
+
+    strategy:
+      matrix:
+        include:
+          - php-version: 7.3
+            wp-version: latest
+            php-unit-version: 9.6.13
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+
+      - name: Install tar package
+        run: sudo apt-get install tar
+
+      - name: Install MySQL Client
+        run: sudo apt-get install -y mysql-client
+
+      - name: Install dependencies
+        run: composer require sunra/php-simple-html-dom-parser:1.5.2
+
+      - name: Remove xdebug.ini if exists
+        run: |
+          if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
+            phpenv config-rm xdebug.ini
+          else
+            echo "xdebug.ini does not exist"
+          fi
+          
+      - name: Install PHPUnit Polyfills
+        run: composer require yoast/phpunit-polyfills
+      
+      - name: Install PHPUnit 
+        run: composer require -W phpunit/phpunit
+
+
+      - name: Set up WordPress tests
+        run: |
+          if [[ ! -z "${{ matrix.wp-version }}" ]] ; then
+            bash bin/install-wp-tests.sh wordpress_test wordpress_test 11111 127.0.0.1 ${{ matrix.wp-version }} true
+          fi
+
+      - name: Run tests
+        run: |
+            composer run test2 
+        
+
+      - name: Upload code coverage to Scrutinizer
+        run: |
+          wget https://scrutinizer-ci.com/ocular.phar
+          php ocular.phar code-coverage:upload --format=php-clover Coverage.clover
+
+      
+        

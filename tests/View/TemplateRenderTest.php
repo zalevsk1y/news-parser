@@ -9,7 +9,8 @@ class TemplateRenderTest extends \WP_UnitTestCase
         $this->expectException(\Exception::class);
         new TemplateRender('wrong-template-path.php');
     }
-    public function testRender(){
+    public function testRender()
+    {
         $template_path=VIEW_MOCK_DIR.'/RenderTemplateMock.php';
         $expected=file_get_contents(VIEW_MOCK_DIR.'/RenderTemplateSnapshot.html');
         $args=array(

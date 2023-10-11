@@ -1,0 +1,16 @@
+.loading-spinner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-color: white;
+    opacity: 0.9;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+  
+.loading-spinner img {
+      width: auto;
+      height: 16em; 
+}

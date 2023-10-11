@@ -4,10 +4,7 @@ use NewsParserPlugin\Models\ListModel;
 
 class ListModelTest extends \WP_UnitTestCase
 {
-    /**
-     * @dataProvider dataTypes
-     */
-    public function testGetAttributes($dataType,$expected)
+    public function testGetAttributes()
     {
         $list_array=array(
             'listItem1',
@@ -15,13 +12,7 @@ class ListModelTest extends \WP_UnitTestCase
             'listItem3'
         );
         $list=new ListModel($list_array);
-        $this->assertInternalType($expected,$list->getAttributes($dataType));
+        $this->assertIsArray($list->getAttributes());
     }
-    public function dataTypes(){
-        return array(
-            array('array','array'),
-            array('json','string'),
-            array('object','array')
-        );
-    }
+    
 }

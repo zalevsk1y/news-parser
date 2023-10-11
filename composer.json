@@ -3,14 +3,15 @@
   "description": "Wordpress  plugin allows you to easily and quickly receive text and images from the site and from rss feed.",
 
   "require": {
+    "php": ">=7.2",
     "caophihung94/php-simple-html-dom-parser":"1.7.3",
-    "php-di/php-di":"^5.4.6"
+    "zalevsk1y/container-builder":"^1.0.2"
   },
   
-  "require-dev": {
-    "phpunit/phpunit": "5.7.27"
-},
   "scripts": {
-    "test": "phpunit --coverage-clover Coverage.clover"
+    "test1": "XDEBUG_MODE=coverage phpunit --coverage-clover Coverage.clover ./tests/",
+    "test2": "phpunit --coverage-clover Coverage.clover ./tests/",
+    "caverage": "./vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover"
   }
 }
+

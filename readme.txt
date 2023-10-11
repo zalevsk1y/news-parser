@@ -3,10 +3,10 @@ Contributors: bikkel
 Donate link: 
 Author: Evgeniy Zalevskiy
 Tags: scraper,parser,rss,news,autopilot
-Requires PHP: 5.6
-Requires at least: 3.5.0
-Tested up to: 5.3.2
-Stable tag: 1.0.2
+Requires PHP: 7.2
+Requires at least: 5.2.0
+Tested up to: 6.3.1
+Stable tag: 2.0.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -18,13 +18,13 @@ News-parser is a plugin for WordPress that allows you to easily receive the full
 ==  Features ==
 
 *   Gutenberg editor support.
+*   Autopilot Function for Automatic RSS Parsing
 *   Visual content extractor.
 *   Flexible template creation system to speed up parsing.
 *   Ability to parse not only from RSS XML source but also from url.
 
 == Future plans ==
 
-*   Add auto-pilot feature.
 *   Parsing videos from other(than YouTube) sources.
 *   Saving images to the Media Library .
 *   Have an idea? – Please, feel free to let me know. Let’s make News-Parser even better!
@@ -44,13 +44,13 @@ To parse RSS, go to the News-Parsing->Parsing RSS menu in the admin panel of you
 
 Watch this short video to learn HOW TO PARSE FROM RSS with news-parser plugin:
 
-https://www.youtube.com/watch?v=xrZdkV0xA08
+https://www.youtube.com/watch?v=Aiye15Cp5_8
 
 To parse several posts, select posts and press the Parse Selected button. Wait for the data to be saved,you`ll be notified by the message at the top of the screen. The icon at the bottom of the post allows you to go on to edit or publish a saved draft.Note that parsing selected post could be done only if you created parsing template!
 
 Watch this short video to learn HOW TO PARSE SEVERAL POSTS with news-parser plugin:
 
-https://www.youtube.com/watch?v=1LttLG9n4t4
+https://www.youtube.com/watch?v=m85PExDeAMA
 
 = Visual Constructor. =
 
@@ -63,7 +63,7 @@ To add a source link, check the box labeled 'Add source link' to the post. in th
 
 Watch this short video to learn HOW TO USE VISUAL CONSTRUCTOR:
 
-https://www.youtube.com/watch?v=gGqbRBnGeNE
+https://www.youtube.com/watch?v=0yS0ptvBpzY
 
 = Create Parsing Template =
 
@@ -71,7 +71,7 @@ To save the template, it is necessary to mark the content in the main window of 
 
 Watch this short video to learn HOW TO CREATE PARSING TEMPLATE:
 
-https://www.youtube.com/watch?v=gWo2aRTGttM
+https://www.youtube.com/watch?v=0awSRLWsP
 
 = Parse single page. =
 
@@ -79,7 +79,30 @@ To parse a single page, select News-Parsing-> Parse Page in the admin panel of y
 
 Watch this short video to learn HOW TO PARSE SINGLE PAGE with news-parser plugin:
 
-https://www.youtube.com/watch?v=9x56djil-b0
+https://www.youtube.com/watch?v=Sbke_LF-TFA
+
+= Autopilot Function for Automatic RSS Parsing =
+
+The autopilot function is now available to automatically parse posts from an RSS feed. Please note that the wp-cron (`https://developer.wordpress.org/plugins/cron/`) is used for scheduling the autopilot function, which triggers the task scheduler only when the website is visited. If you encounter issues with this function, you can add the following option to the wp-config.php file: `define('ALTERNATE_WP_CRON', true);`
+
+To configure the autopilot settings, follow these steps:
+
+1. Navigate to the Autopilot tab in the menu (News Parser -> Autopilot).
+2. In the Schedule Options, select the URL that corresponds to the RSS source from which parsing will take place.
+3. Click on the Select button.
+4. After the data is loaded, the following options will be available:
+
+   - Status: Determines whether the autopilot is activated for this source.
+   - Maximum Number of Posts: Sets the maximum number of posts to be parsed from this source.
+   - Maximum Number of Autopilot Runs: Specifies the maximum number of times the autopilot should run for this source.
+   - Parsing Frequency: Defines the frequency at which parsing should occur from this source.
+
+5. Additionally, in this menu, you can delete previously saved parsing templates.
+
+
+Watch this short video to learn HOW TO USE AUTOPILOT with news-parser plugin:
+
+https://www.youtube.com/watch?v=Eu_5GR32nB0
 
 == Dependencies ==
 
@@ -87,9 +110,22 @@ https://www.youtube.com/watch?v=9x56djil-b0
 
 == Bugs ==
 
-If you find an issue, let us know [here](https://github.com/zalevsk1y/news-parser/issues?state=open)!
+If you find an issue, let us know [here](https://github.com/zalevsk1y/news-parser/issues?state=open) or [Discord](https://discord.gg/mxhJ9hE4)
+
+== Contacts ==
+
+*   [GitHub](https://github.com/zalevsk1y/news-parser)
+*   [Discord](https://discord.gg/mxhJ9hE4)
+*   [Instagram](https://www.instagram.com/wp_news_parser)
 
 == Changelog ==
+
+
+= 2.0.0 - 11-10-23
+
+* Added: Autopilot functions for automate post parsing.
+* Added: Post options system 
+* Fix: some bugs.
 
 = 1.0.2 - 20-04-21 =
 
