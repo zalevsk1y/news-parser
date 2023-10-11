@@ -1,0 +1,1 @@
+{"code":200,"msg":{"type":"success","text":"Post &quot;Test title&quot; was successfully parsed and saved as &quot;draft&quot;","timestamp":123456789},"data":{"post_id":5,"status":"draft","editLink":"http:\/\/example.org\/wp-admin\/post.php?post=5&action=edit","_id":"1"}}

@@ -1,153 +1,121 @@
 <?php
 namespace NewsParserPlugin\Ajax;
 
-use NewsParserPlugin\Controller\ListController;
-use NewsParserPlugin\Controller\PostController;
-use NewsParserPlugin\Controller\SettingsController;
-use NewsParserPlugin\Utils\Sanitize;
-
 /**
- * Ajax singleton class provide API to the front end
+ * Ajax parent class that provide methods for handles input arguments.
  *
  * @package Ajax
  * @author  Evgeny S.Zalevskiy <2600@ukr.net>
  * @license MIT <https://opensource.org/licenses/MIT>
  */
-
 class Ajax
 {
-    protected $post;
-    protected $list;
-    protected $settings;
-    protected static $instance;
-
-    protected function __construct(ListController $listController, PostController $postController, SettingsController $settingsController)
+    /**
+     * Checks input argument type.
+     *
+     * @param mixed $arg
+     * @param string $type
+     * @param string $description
+     * @return true|\WP_Error
+     */
+    protected function checkArgType($arg, $type, $description = '')
     {
-        $this->list = $listController;
-        $this->post = $postController;
-        $this->settings = $settingsController;
-        $this->init();
+        $error_message='%s should be a %s but %s given.';
+        $desc=$description?:'Argument';
+        $arg_type=gettype($arg);
+        if ($arg_type!==$type) {
+            return new \WP_Error(
+                400,
+                esc_html(sprintf(
+                    $error_message,
+                    $desc,
+                    $type,
+                    $arg_type
+                ))
+            );
+        }
+        return true;
     }
-    public static function getInstance(ListController $listController, PostController $postController, SettingsController $settingsController)
+    /**
+     * Sanitize and validate input arguments.
+     *
+     * @param array $dirty_request
+     * @param array $args_params
+     * Structure:
+     * description - descriptions of the argument.Using to send as additional error info.
+     * type - argument type
+     * validate_callback - validation callback should return boolean
+     * sanitize_callback - sanitize input data callback.
+     * @return void
+     */
+    protected function prepareArgs($dirty_request, $args_params)
     {
-        if (self::$instance) {
-            return self::$instance;
-        } else {
-            self::$instance = new self($listController, $postController, $settingsController);
-            return self::$instance;
+        $clean_request=array();
+        foreach ($args_params as $key => $arg) {
+            if (key_exists($key, $dirty_request)) {
+                $dirty_arg=$dirty_request[$key];
+                if (is_wp_error($e = $this->checkArgType($dirty_arg, $arg['type'], $arg['description']))) {
+                    $this->sendError($e);
+                }
+                //validate arguments.
+                if (is_wp_error($e = call_user_func($arg['validate_callback'], $dirty_arg))) {
+                    $this->sendError($e);
+                }
+                //sanitize arguments.
+                if (($clean_arg=call_user_func($arg['sanitize_callback'], $dirty_arg))!==false) {
+                    $clean_request[$key]=$clean_arg;
+                }
+            }
         }
+        return $clean_request;
     }
-    protected function init()
+    /**
+     * Send json message on error.
+     *
+     * @param \WP_Error $error
+     * @return void
+     */
+    protected function sendError($error)
     {
-        \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_PARSING_API, array($this, 'parsingApi'));
-        \add_action('wp_ajax_' . NEWS_PARSER_PLUGIN_AJAX_SETTINGS_API, array($this, 'settingsApi'));
-
+        if (!is_wp_error($error)) {
+            return;
+        }
+        $response_message=array(
+            'msg'=>array(
+                'type'=>'error',
+                'text'=>esc_html($error->get_message())
+            ),
+            'code'=>esc_html($error->get_code())
+        );
+        wp_send_json($response_message, $error->get_code());
     }
-
-    public function settingsApi()
+    /**
+     * Send response.
+     *
+     * @param NewsParserPlugin\Utils\ResponseFormatter $response
+     * @param string $response
+     * @return void
+     */
+    protected function sendResponse($response)
     {
-        if (!\is_admin()) {
-            \wp_die();
-        }
-
-        if (isset($_GET['status'])) {
-            $status = \sanitize_text_field($_GET['status']);
-        } else if (!isset($_GET['status'])) {
-            \wp_die();
-        }
-        switch ($status) {
-            case 'get':
-                if (!\check_ajax_referer('parsing_settings_api_get')) {
-                    \wp_die();
-                }
-
-                $response = $this->settings->get('json');
-                echo $response;
-                \wp_die();
+        switch ($response->contentType) {
+            case 'json':
+                wp_send_json($response->get('array'));
                 break;
-            case 'default':
-                if (!\check_ajax_referer('parsing_settings_api_get')) {
-                    \wp_die();
-                }
-
-                $response = $this->settings->getDefault();
-                echo $response;
-                \wp_die();
-                break;
-            case 'save':
-                if (!\check_ajax_referer('parsing_settings_api_save')) {
-                   \wp_die();
-                }
-
-                $new_settings = \sanitize_text_field($_POST['settings']);
-                $new_settings = \json_decode(\stripslashes($new_settings), true);
-                $response = $this->settings->set($new_settings);
-                echo $response;
-                \wp_die();
-                break;
-        }
-        \wp_die();
-    }
-
-    public function parsingApi()
-    {
-        if (!\is_admin()) {
-           \wp_die();
-        }
-
-        if (isset($_GET['status'])) {
-            $status = \sanitize_text_field($_GET['status']);
-        } else if (!isset($_GET['status'])) {
-            \wp_die();
-        }
-        if (isset($_GET['url'])) {
-            $url = Sanitize::sanitizeURL($_GET['url']);
-        } else {
-            \wp_die();
-        };
-        switch ($status) {
-            case 'list':
-                if (!\check_ajax_referer('parsing_news_api')) {
-                    \wp_die();
-                }
-
-                $response = $this->createList($url);
-                break;
-            case 'single':
-                if (!\check_ajax_referer('parsing_news_api')) {
-                    \wp_die();
-                }
-
-                if (isset($_POST['gallery'])) {
-                    $unslashed_gallery=stripslashes($_POST['gallery']);
-                    $gallery=json_decode($unslashed_gallery, true);
-                    $options = Sanitize::sanitizeUrlArray($gallery);
-                } else {
-                    $options = null;
-                }
-
-                $response = $this->createPostDraft($url, $options);
+            case 'text':
+                echo $response->get('text');
+                wp_die();
                 break;
         }
-        echo $response;
-        \wp_die();
     }
 
-    protected function sanitizeUrlArray(array $urls_array)
+    /**
+     * Get application/json encoded data using php://input
+     *
+     * @return array
+     */
+    protected function getJsonFromInput()
     {
-        $output = [];
-        foreach ($urls_array as $key => $item) {
-            $output[$key] = Sanitize::sanitizeImageURL($item);
-        }
-        return $output;
+        return json_decode(file_get_contents('php://input'), true);
     }
-    protected function createList($url)
-    {
-        return $this->list->get($url);
-    }
-    protected function createPostDraft($url, $options)
-    {
-        return $this->post->get($url, $options);
-    }
-
 }

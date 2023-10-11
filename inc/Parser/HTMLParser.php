@@ -1,15 +1,14 @@
 <?php
 namespace NewsParserPlugin\Parser;
 
-use NewsParserPlugin\Utils\ChainController;
-use NewsParserPlugin\Utils\Sanitize;
 use Sunra\PhpSimple\HtmlDomParser;
 
 /**
  * HTML parser class
  * Parse data from html using Sunra\PhpSimple and regular expression
+ * https://github.com/sunra/php-simple-html-dom-parser
  *
- * PHP version 7.2.1
+ * PHP version 5.6
  *
  *
  * @package  Parser
@@ -18,147 +17,161 @@ use Sunra\PhpSimple\HtmlDomParser;
  *
  */
 
-class HTMLParser extends ParseContent
+class HTMLParser extends Abstracts\AbstractParseContent
 {
-    protected $parser;
-    protected $dom = null;
-    protected $rawHTML = null;
     /**
-     * You could use NewsParserPlugin\any of HTML parsers.
-     * But they should have method ::find() and getAttribute;
-     * And should return array.
+     * instance of HtmlDomParser
      *
-     * @param HtmlDomParser $HTMLParserClass You can use NewsParserPlugin\any Parser that have same interface.
+     * @var object simplehtmldom_1_5\simple_html_dom
      */
-    public function __construct(HtmlDomParser $HTMLParserClass, $cache_expiration = 600)
-    {
-        parent::__construct($cache_expiration);
-        $this->parser = $HTMLParserClass;
-    }
+    protected $dom;
     /**
-     * Create StdClass object from parsed data.
+     * String with HTML data.
+     *
+     * @var string
+     */
+    protected $rawHTML;
+    /**
+     * Parsed data.
      * Structure :
      * [title] - post title @string
-     * [image] - post main image url @string unescaped
-     * [body] - post body @string
-     * [gallery] - post image gallery array|'' empty string if none
+     * [image] - post main image url @string
+     * [body] - post content @string|@array
      *
-     * @return StdClass
+     * @var array
      */
+    protected $post=array();
+
+
+    /**
+     * Init function.
+     *
+     */
+    public function __construct($cache_expiration = 3600)
+    {
+        parent::__construct($cache_expiration);
+    }
+    /**
+     * Init and set data for parser.
+     *
+     * @param string $data
+     * @return void
+     */
+    public function initParser($data)
+    {
+        $clean_html=$this->pipe($data)
+            ->removeScriptTags()
+            ->removeStyleTags()
+            ->get();
+        $this->dom = $this->createDOM($clean_html);
+        $this->rawHTML = $clean_html;
+    }
+    /**
+     * Create array from parsed data.
+     * Structure :
+     * [title] - post title @string
+     * [image] - post main image url @string
+     * [body] - post content @string|@array
+     *
+     * @uses AbstractParseContent::pipe()
+     * @param string $data HTML data.
+     * @return array
+     */
+
     protected function parse($data)
     {
-        $this->dom = $this->parser::str_get_html($data);
-        $this->rawHTML = $data;
+        $this->initParser($data);
         $this->post['title'] = esc_html($this->postTitle());
-        $this->post['image'] = Sanitize::sanitizeImageURL($this->postImage());
+        $this->post['image'] = esc_url_raw($this->postImage());
         $this->post['body'] = $this->postBody();
-        $this->post['gallery'] = Sanitize::sanitizeUrlArray($this->postGallery());
         return $this->post;
     }
     /**
-     * Parse post title based on both OpenGraph marks and Schema.org marks.
+     * Parse post title based on both OpenGraph marks and inside h1 tag.
      *
-     * @return string
+     * @usesAbstractParseContent::chain()
+     * @return false|string
      */
 
-    public function postTitle()
+    protected function postTitle()
     {
         $title = $this->chain()
         // Parse title based on OpenGraph marks
             ->openGrapheTitleFind()
-        // Parse title based on Schema.org marks
-            ->titleRegExp("/\<h1\>(.*?)\<\/h1\>/i")
+        // Parse title inside h1 tag
+            ->regExp("/\<h1\>(.*?)\<\/h1\>/i")
             ->get();
         return $title;
     }
     /**
      * Parse main image of the post based on Open Graphe protocol and simple image tag search .
      *
-     * @return string Image url
+     * @uses AbstractParseContent::chain()
+     * @return false|string Image url
      */
-    public function postImage()
+
+    protected function postImage()
     {
-        $imageUrl = $this->chain()
+        $alt=isset($this->post['title'])?$this->post['title']:'';
+        $searchPattern='img[alt='.$alt.']';
+        $images = $this->chain()
         // Parse gallery images based on Schema.org marks
-            ->imageFinder('meta[property=og:image]')
-        // Parse gallery images based on OpenGraph marks
-            ->imageFinder('img')
+            ->find('meta[property=og:image]')
+        // Parse gallery images based image tag search
+            ->find($searchPattern)
             ->get();
-        if (!count($imageUrl)) {
+        if (empty($images)) {
             return false;
         }
-
-        return is_array($imageUrl) ? $imageUrl[0] : $imageUrl;
+        return $this->chain($images[0])
+            ->getAttribute('content')
+            ->getAttribute('data-src')
+            ->getAttribute('src')
+            ->get();
     }
 
     /**
      * Parse post body
      *
-     *
      * @return string
      */
 
-    public function postBody()
+    protected function postBody()
     {
         //Parse body inside <p> tag
         $body = $this->parseBodyTagP();
         return $body ?: '';
-
     }
-
-    /**
-     * Parse gallery
-     *
-     * @return array Array of parsed images url
-     */
-
-    public function postGallery()
-    {
-        $gallery = $this->chain()
-            ->postGalleryRegExp("/original\=\"(.*?\.jpg)/i")
-            ->postGalleryRegExp("/data\-src\=\"(.*?\.jpg)/i")
-            ->postGalleryRegExp("/data\-srcset\=\"(.*?\.jpg)/i")
-            ->postGalleryRegExp("/data\-orig\-file\=\"(.*?\.jpg)/i")
-            ->get();
-        return $gallery ?: '';
-    }
+    
     /**
      * Parse title based on OpenGraphe marks <meta property=og:title content="...">
      *
-     * @return string title
+     * @return false|string title
      */
 
     public function openGrapheTitleFind()
     {
-
         $title_items = $this->find('meta[property=og:title]');
-        $title = false;
-        if ($title_items && !is_array($title_items)) {
-            $title = $title_items->getAttribute('content');
-        } else if ($title_items && is_array($title_items) && count($title_items)) {
-            $title = $title_items[0]->getAttribute('content');
-        } else if (!count($title_items)) {
-            $title = false;
+        if (false===$title_items||!is_array($title_items)||empty($title_items)) {
+            return false;
         }
-        return $title;
-
+        return $title_items[0]->getAttribute('content');
     }
     /**
      * Parse title with Regular expression
      *
      * @param string  $pattern regular expression pattern
      *
-     * @return string
+     * @return false|string
      */
 
-    public function titleRegExp($pattern)
+    public function regExp($pattern)
     {
         preg_match($pattern, $this->rawHTML, $matches);
-        if (!count($matches)) {
+        if (empty($matches)) {
             return false;
         }
-
-        return $matches[0];
+        return $matches[1];
     }
 
     /**
@@ -166,13 +179,16 @@ class HTMLParser extends ParseContent
      *
      *
      *
-     * @return string
+     * @return false|string
      */
 
     public function parseBodyTagP()
     {
         $matchesBodies = $this->find('p');
         $result = [];
+        if (empty($matchesBodies)||!is_array($matchesBodies)) {
+            return false;
+        }
         foreach ($matchesBodies as $match) {
             $result[] = "<p>" . esc_html($match->plaintext) . "</p>";
         }
@@ -180,68 +196,22 @@ class HTMLParser extends ParseContent
         return $output == "<p></p>" ? false : $output;
     }
     /**
-     * Find image using vendor Sunra\PhpSimple\HtmlDomParser. Tag <img> should have alt property as part of SEO
-     * optimization to avoid parsing to many unnecessary images.
-     *
-     * @param string  $findPattern - PhpSimple find pattern https://simplehtmldom.sourceforge.io/
-     *
-     * @return array Array of image urls parsed from page
-     */
-
-    public function ImageFinder($findPattern)
-    {
-        $imageUrl = $this->find($findPattern);
-        if (!count($imageUrl)) {
-            return false;
-        }
-        $gallery = array();
-        foreach ($imageUrl as $image) {
-            $test = $image->getAttribute('alt');
-            $url = $image->getAttribute('alt') ? $image->getAttribute('src') : false;
-            if ($url && strpos($url, '.jpg')) {
-                $gallery[] = $url;
-            }
-
-        }
-        return count($gallery) ? $gallery : false;
-    }
-    /**
-     * Parse images for gallery using regular expression
-     *
-     * @param string $pattern should be valid regular expression
-     *
-     * @return array parsed images ulr
-     */
-    public function postGalleryRegExp($pattern)
-    {
-        preg_match_all($pattern, $this->rawHTML, $matches);
-        if (count($matches[1])) {
-            $large = $matches[1];
-        } else {
-            $large = false;
-        }
-
-        return $large;
-    }
-
-    /**
      * Facade for ::find() method of Sunra\PhpSimple
      *
      * @param string $query Search query.https://simplehtmldom.sourceforge.io/
      *
-     * @return array|HtmlDomParser
+     * @return false|array of HtmlDomParser objects if found.
      */
 
     public function find($query)
     {
         $result = $this->dom->find($query);
-        return count($result) ? $result : false;
+        return !empty($result) ? $result : false;
     }
-
     /**
      * Remove HTML tags from the text.
      *
-     * @param string $data    text with tags
+     * @param string $data text with tags
      * @param string $pattern regexp pattern for tags default '@(<[^>]*>)@')
      *
      * @return string
@@ -251,12 +221,13 @@ class HTMLParser extends ParseContent
         return preg_replace($pattern, '', $data);
     }
     /**
-     * Facade for chain building class. use NewsParserPlugin\::get() function at the end to get result.
+     * Create instance of simplehtmldom_1_5\simple_html_dom  https://github.com/sunra/php-simple-html-dom-parser.
      *
-     * @return object ChainController
+     * @param string $html
+     * @return \simplehtmldom_1_5\simple_html_dom simplehtmldom_1_5\simple_html_dom
      */
-    protected function chain()
+    protected function createDOM($html)
     {
-        return new ChainController($this);
+        return HtmlDomParser::str_get_html($html);
     }
 }

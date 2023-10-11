@@ -8,21 +8,20 @@
 	convertWarningsToExceptions="true"
 	>
 	<filter>
-  		<whitelist processUncoveredFilesFromWhitelist="true">
+		<whitelist processUncoveredFilesFromWhitelist="true">
 			<directory suffix=".php">inc/</directory>
 			<exclude>
 				<directory suffix=".php">inc/Core</directory>
 				<directory suffix=".php">inc/Message</directory>
 				<directory suffix=".php">inc/Interfaces</directory>
 				<directory suffix=".php">inc/Factory</directory>
-				<directory suffix=".php">inc/Exception</directory>
 			</exclude>
-  		</whitelist>
+		</whitelist>
 	</filter>
 	<testsuites>
 		<testsuite name="news-parser">
-			<directory prefix="test-" suffix=".php">./tests/</directory>
-			<exclude>./tests/test-sample.php</exclude>
+			<directory  suffix=".php">./tests/</directory>
+			<exclude>./tests/boostrap.php</exclude>
 		</testsuite>
 	</testsuites>
 </phpunit>

@@ -1,14 +1,11 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/assert/node_modules
+/assets/node_modules
 /.pnp
 vendor/*
 .pnp.js
-#do not ignor 
-!/vendor/composer/
-!/vendor/sunra/
-!/vendor/autoload.php
+
 
 
 
@@ -24,6 +21,7 @@ vendor/*
 .env.development.local
 .env.test.local
 .env.production.local
+composer.lock
 
 npm-debug.log*
 yarn-debug.log*

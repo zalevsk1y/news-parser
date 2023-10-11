@@ -1,0 +1,40 @@
+{
+    "url":"http://www.site.com/page.html",
+    "extraOptions":{
+        "addFeaturedMedia":true,
+        "addSource":false,
+        "saveParsingTemplate":false
+    },
+    "template":{
+        "className":"root",
+        "tagName":"div",
+        "searchTemplate":"div[class=root]",
+        "children":{
+            "0":{
+                "tagName":"iframe",
+                "searchTemplate":"div.video-player iframe",
+                "position":"all"
+            },
+            "1":{
+                "tagName":"h2",
+                "searchTemplate":"h2.preview ",
+                "position":"all"
+            },
+            "2":{
+                "tagName":"p",
+                "searchTemplate":"div.postBody p",
+                "position":"all"
+            },
+            "3":{
+                "tagName":"img",
+                "searchTemplate":"div.image-gallery img",
+                "position":"all"
+            },
+            "4":{
+                "tagName":"ul",
+                "searchTemplate":"ul.list",
+                "position":"all"
+            }
+        }
+    }
+}

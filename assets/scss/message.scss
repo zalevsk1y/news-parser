@@ -1,0 +1,63 @@
+@import 'mixins/_fo-icon.scss';
+
+.message-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.message {
+    min-width: 340px;
+    min-height: 40px;
+    width: 57%;
+
+    transition: 0.5s ease;
+    position: fixed;
+    padding: 2% 0 2% 0;
+    display: flex;
+    justify-content: flex-start;
+    z-index: 99900;
+    top: 24px;
+    background-color: #fff;
+    box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+.message-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message-close {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 20px;
+    cursor: pointer;
+    font-size: 25px;
+    color: #757575;
+}
+
+.message-icon {
+    margin-left: 20px;
+    font-size: 26px;
+    color: #757575;
+}
+
+.message-text {
+    font-size: 15px;
+    margin-left: 25px;
+}
+@media screen and (max-width: 600px){
+    .message {
+        position:absolute;
+
+       
+    }
+}
+@media screen and (max-width: 782px) {
+    .message{
+        top:45px;
+        width: 81%;
+    }
+
+}

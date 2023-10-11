@@ -2,20 +2,17 @@
 namespace NewsParserPlugin\Controller;
 
 use NewsParserPlugin\Exception\MyException;
-use NewsParserPlugin\Interfaces\ControllerInterface;
-use NewsParserPlugin\Interfaces\FactoryInterface;
-use NewsParserPlugin\Message\Error;
+use NewsParserPlugin\Message\Errors;
 use NewsParserPlugin\Message\Success;
 use NewsParserPlugin\Models\PostModel;
-use NewsParserPlugin\Parser\ParseContent;
-use NewsParserPlugin\Utils\PipeController;
+use NewsParserPlugin\Models\TemplateModel;
+use NewsParserPlugin\Parser\Abstracts\AbstractParseContent;
 use NewsParserPlugin\Utils\ResponseFormatter;
-use NewsParserPlugin\Utils\Settings;
 
 /**
- * Class controller for post
+ * Class controller for post parsing.
  *
- * PHP version 7.2.1
+ * PHP version 5.6
  *
  *
  * @package  Controller
@@ -23,160 +20,142 @@ use NewsParserPlugin\Utils\Settings;
  * @license  MIT
  *
  */
-class PostController 
+class PostController extends BaseController
 {
-    protected $postFactory;
-    protected $postData;
-    protected $settings;
-    protected $formatResponse;
-    protected $postParser;
+    /**
+     * Post model
+     *
+     * @var PostModel
+     */
+    public $post;
+    /**
+     * Parsing extra options
+     *
+     * @var array
+     */
+    protected $options;
+    /**
+     * Parser object
+     *
+     * @var AbstractParseContent
+     */
+    protected $parser;
 
-
-    public function __construct(ParseContent $postParser, Settings $settings, ResponseFormatter $formatter, FactoryInterface $postFactory)
+    /**
+     * Init function
+     *
+     * @param AbstractParseContent $parser
+     * @param ResponseFormatter $formatter
+     */
+    public function __construct(AbstractParseContent $parser, ResponseFormatter $formatter)
     {
-        $this->postParser = $postParser;
-        $this->settings = $settings->get();
-        $this->formatResponse = $formatter;
-        $this->postFactory = $postFactory;
+        parent::__construct($formatter);
+        $this->parser = $parser;
     }
     /**
-     * Get create post draft and return response in proper format
-     * All facade of PostModel class methods created for convenience of using in pipe
+     * Create post draft and return response in proper format
      *
+     * @uses NewsParserPlugin\Controller\BaseController::formatResponse
      * @param string $url of post that should be parsed and saved as draft
-     * @param array $options [gallery images that was selected]
-     * @return void
+     * @param string $_id front end index of post that should be parsed and saved as draft
+     * @return ResponseFormatter
      */
-    public function get(string $url, array $options = null)
+    public function create($url, $_id)
     {
         try {
-            $parsed_data =$this->postParser->get($url);
+            $parsed_url=parse_url($url);
+            if (!is_array($parsed_url)) {
+                throw new MyException(Errors::text('WRONG_OPTIONS_URL'), Errors::code('BAD_REQUEST'));
+            }
+            $parsing_options=$this->templateModelsFactory($parsed_url);
+            $parsed_data =$this->parser->get($url, $parsing_options->getAttributes('array'));
+           
             $parsed_data['authorId'] = \get_current_user_id();
-
+            if (!$options=$parsing_options->getExtraOptions()) {
+                throw new MyException(Errors::text('NO_EXTRA_OPTIONS'), Errors::code('BAD_REQUEST'));
+            }
+            $this->options=$options;
             //unescaped url
 
             $parsed_data['sourceUrl'] = $url;
          
-            $post = $this->postFactory->get($parsed_data);
-            //if option "show image selection dialog window" gallery data will send as response
-            if (!$this->imagesWasSelected($options) && !empty($post->gallery)) {
-                return $this->formatResponse->dialog('gallery', $post->gallery)->message('none')->get('json');
-            }
+            $this->post=$post= $this->postModelsFactory($parsed_data);
+ 
             //Stages of post draw creating
-            $this->pipe($post)
-                ->createDraft()
-                ->addSource()
-                ->addPostThumbnail()
-                ->updateImageGallery($options)
-                ->downloadGalleryPictures()
-                ->createGalleryShortcode();
+            $this->createDraft($post)->addSource($post)->addPostThumbnail($post);
+               
 
-            $response = $this->formatResponse->post($post->getAttributes())->message('success', Success::text('POST_SAVED_AS_DRAFT'))->get('json');
-
+            $response = $this->formatResponse->post($post->getAttributes())->addCustomData('_id', $_id)->message('success', sprintf(Success::text('POST_SAVED_AS_DRAFT'), $post->title));
         } catch (MyException $e) {
-            $response = $this->formatResponse->error(1)->message('error', $e->getMessage())->get('json');
+            $response = $this->formatResponse->error($e->getCode())->message('error', $e->getMessage())->addCustomData('_id', $_id);
         }
         return $response;
     }
-    /**
-     * Check if parseOtherPictures and showPicturesDialog options was selected than should return gallery images for modal gallery window.
-     *
-     * @param $options
-     * @return boolean
-     */
-    public function imagesWasSelected($options)
-    {
-        if ($this->settings->post->parseOtherPictures && $this->settings->post->showPicturesDialog && !$options) {
-            return false;
-        }
-        return true;
-    }
+   
     /**
      * Create WP post draft
      *
      * @param PostModel $post
-     * @return PostModel
+     * @return PostController
      */
-    public function createDraft(PostModel $post)
+    protected function createDraft(PostModel $post)
     {
         $post->createDraft();
-        return $post;
+        return $this;
     }
     /**
      * Add main image to the post
      *
      * @param PostModel $post
-     * @return PostModel
+     * @return PostController
      */
-    public function addPostThumbnail(PostModel $post)
+    protected function addPostThumbnail(PostModel $post)
     {
-        if ($this->settings->post->addThumbnail) {
+        if ($this->options['addFeaturedMedia']) {
             $post->addPostThumbnail();
         }
-        return $post;
+        return $this;
     }
     /**
      * Add link to the source
      *
      * @param PostModel $post
-     * @return PostModel
+     * @return PostController
      */
-    public function addSource(PostModel $post)
+    protected function addSource(PostModel $post)
     {
-        if ($this->settings->general->addSource) {
+        if ($this->options['addSource']) {
             $post->addSource();
         }
-        return $post;
+        return $this;
+    }
+   /**
+    * Get instance of PostModel class.
+    *
+    * @param array $data Structure:
+    * [title] - post title @string
+    * [image] - post main image url @string
+    * [body] - post content @string|@array
+    * [sourceUrl]-url of source page @string
+    * [authorId]- id of wp-post author
+    * @return PostModel
+    */
+    protected function postModelsFactory($data)
+    {
+        return new PostModel($data);
     }
     /**
-     * Update images in the post gallery
-     *
-     * @param array $new_gallery
-     * @param PostModel $post
-     * @return PostModel
-     */
-    public function updateImageGallery($new_gallery, PostModel $post)
+    * Get instance of TemplateModel class.
+    *
+    * @param array $url Structure:
+    * [scheme] - protocol
+    * [host] - host name
+    * [path] - path to resource
+    * [fragment] - path fragment
+    * @return TemplateModel
+    */
+    protected function templateModelsFactory($url)
     {
-        if (!empty($new_gallery) && is_array($new_gallery) && isset($new_gallery)) {
-            $post->gallery = $new_gallery;
-        }
-        return $post;
+        return new TemplateModel($url['host']);
     }
-    /**
-     * Download pictures and attach then to the post
-     *
-     * @param PostModel $post
-     * @return PostModel
-     */
-    public function downloadGalleryPictures(PostModel $post)
-    {
-        if ($this->settings->post->parseOtherPictures) {
-            $post->downloadGalleryPictures($this->settings->post->maxPictures);
-        }
-        return $post;
-    }
-    /**
-     * Create gallery shortcode and add it to post body
-     *
-     * @param PostModel $post
-     * @return PostModel
-     */
-    public function createGalleryShortcode(PostModel $post)
-    {
-        if ($this->settings->gallery->addGallery && !empty($post->gallery)) {
-            $post->createGalleryShortcode($this->settings->gallery->shortCode, $this->settings->gallery->parameterName);
-        }
-        return $post;
-    }
-    /**
-     * Facade for pipe Utils\PipeController
-     *
-     * @param $input_data data that would be transferred thru the pipe
-     * @return PipeController
-     */
-    protected function pipe($input_data)
-    {
-        return new PipeController($this, $input_data);
-    }
-
 }

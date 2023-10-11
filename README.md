@@ -9,17 +9,16 @@ News-parser is a plugin for Wordpress that allows you to easily receive the full
 
 ### Features
 
-*   Paging data directly from the site
-*   Ability to parse not only text, but also pictures
-*   Flexible settings system
-*   Possibility to use shortcodes
-*   Translation into several languages
-*   Ability to parse e only from RSS but also from url
+*   Support of Gutenberg editor
+*   Visual content extractor
+*   Flexible template creation system to speed up parsing
+*   Ability to parse not only from RSS XML source but also from url
 
 ### Future plans
 
 *   Add auto-pilot feature.
-*   Add visual content extractor.
+*   Parsing videos from other(than YouTube) sources
+*   Saving images to the Media Library 
 *   Have an idea? – Please, feel free to let me know. Let’s make News-Parser even better!
 
 ### Installing
@@ -31,41 +30,50 @@ This will download the latest developer copy of News-parser.
 
 ## How to use NewsParserPlugin plugin?
 
-Just enter the address of the RSS source in the search bar and click "Parse RSS Feed" button, you will receive a list of articles from this source. In order to save the draft, simply click on the download check in the lower right corner of the block with the post interesting for you and it will be saved as a draft. Go to the menu item Posts-> All Posts in your admin panel to find the draft of the post you parsed. If everything suits you, you can simply publish this post or edit it at your discretion.
+### Parsing RSS.
+
+To parse RSS, go to the News-Parsing->Parsing RSS menu in the admin panel of your site. Enter the RSS feed address in the search bar. Click on the Parse RSS Feed button. When parsed data is fetched from the server,it will appear on your screen. You can open the visual extractor by clicking on the icon and create a template for parsing posts from this RSS source or simply select the content you are interested in and save it as a draft.
 
 Watch this short video to learn HOW TO PARSE FROM RSS with news-parser plugin:
 
-[![Alt text](http://img.youtube.com/vi/GgmNEgVQCoo/0.jpg)](https://www.youtube.com/watch?v=GgmNEgVQCoo)
+[![Alt text](http://img.youtube.com/vi/xrZdkV0xA08/0.jpg)](https://www.youtube.com/watch?v=xrZdkV0xA08)
 
-You can also parse just pages with individual posts. Enter the Url page, click the "Parse Page" button and page will be saved in your posts as a draft. To edit or publish data, go to the menu item Posts-> All Posts in your admin panel, find the draft of the post that you spars. If everything suits you, you can simply publish this post or edit it at your discretion.
+To parse several posts, select posts and press the Parse Selected button. Wait for the data to be saved,you`ll be notified by the message at the top of the screen. The icon at the bottom of the post allows you to go on to edit or publish a saved draft.Note that parsing selected post could be done only if you created parsing template!
+
+Watch this short video to learn HOW TO PARSE SEVERAL POSTS:
+
+[![Alt text](http://img.youtube.com/vi/1LttLG9n4t4/0.jpg)](https://www.youtube.com/watch?v=1LttLG9n4t4)
+
+### Visual Constructor.
+
+To create a template or simply select the content you are interested in, use the visual constructor. You can open visual constructor by clicking icon at the bottom of post box.  
+To select content, click on the block that you need in the main window and it will be marked with a turquoise frame. When you hover over the content, the expected area will be painted in turquoise color.
+To cancel the selection, click on the block again. Try to separate different types of content (pictures, video, text) into separate blocks. The YouTube video will be replaced with a picture of the YouTube logo. You can extrude it and this video will be inserted into your post. Parsing videos from other sources is not yet supported. Pictures are inserted into your post as a link; the exception is a featured image which is saved in your media library.
+In the sidebar, you can change the featured image of your post. Just select the appropriate image on the left side of the designer and click the Change Image button. The last image you selected will be selected as featured image. You can also create a post without featured image. Just click on No featured image.
+You can change the name of the post in the next submenu 'Post title'. Write your version of the post title in textaria and click the Change Title button.
+To add a source link, check the box labeled 'Add source link' to the post. in the 'Extra Options' submenu.
+
+Watch this short video to learn HOW TO USE VISUAL CONSTRUCTOR:
+
+[![Alt text](http://img.youtube.com/vi/gGqbRBnGeNE/0.jpg)](https://www.youtube.com/watch?v=gGqbRBnGeNE)
+
+### Create Parsing Template
+
+To save the template, it is necessary to mark the content in the main window of the visual constructor, select the 'Save parsing template that you can use in automatic parsing from this source item.' and click the Save Tempalte button. It is important to understand that individual posts even from one source can be very different, therefore parsed pages may not contain the content you need.
+
+Watch this short video to learn HOW TO CREATE PARSING TEMPLATE:
+
+[![Alt text](http://img.youtube.com/vi/gWo2aRTGttM/0.jpg)](https://www.youtube.com/watch?v=gWo2aRTGttM)
+
+### Parsing single page.
+
+
+To parse a single page, select News-Parsing-> Parse Page in the admin panel of your site. In the search bar, enter the site address URL and press Parse Page button. Visual constructor will open. In the visual constructor, select the content and click the Create Post Draft button. The draft will be automatically created and you can edit it in the Posts editor.If everything suits you, you can simply publish this post or edit it at your discretion.
 
 Watch this short video to learn HOW TO PARSE SINGLE PAGE with news-parser plugin:
 
-[![Alt text](http://img.youtube.com/vi/bLXMZ8M5za0/0.jpg)](https://www.youtube.com/watch?v=bLXMZ8M5za0)
+[![Alt text](http://img.youtube.com/vi/9x56djil-b0/0.jpg)](https://www.youtube.com/watch?v=9x56djil-b0)
 
-In the setting you can set the ability to select pictures that will be attached to your post. And also automatically generate a shortcode for the gallery (for example [MySliderGallery](https://wordpress.org/plugins/mygallery/)).
-
-## Settings
-
-Settings, for your convenience, are divided into three parts - General, Post, Gallery.
-
-General:
-
-*   Add a link to the source - adds a link at the end of the post to the source of information.
-
-Post:
-
-*   Add main image to post - Determines whether "featured image" should be added to the post automatically.
-*   Parse all pictures - Determines whether to parse images other than "featured image".
-*   Show select pictures dialog - if this item is selected you can manually select images that need to be added to the post. If this item is not selected, then all images that were parsed will be added to the post automatically.
-*   Maximum pictures to add - Maximum number of images that the parser will parse from each page.
-
-
-Gallery:
-
-*   Add gallery to post - Allows you to automatically add shortcodes of gallery plugins to the post and pass image id to them.
-*   Shortcode for gallery - Gallery plugin shortcode name. An example ([MyGallerySlider plugin](https://wordpress.org/plugins/mygallery/)) has the following shortcode format `[my-gallery ids = 1,2,3,4]`. In this column you should enter `my-gallery` in the next `ids` as the parameter name.
-*   Parameter name for gallery - the name of the parameter to which the list of id images is transferred.
 
 ## Dependencies
 

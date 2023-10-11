@@ -6,44 +6,115 @@ use NewsParserPlugin\Interfaces\ModelInterface;
 use NewsParserPlugin\Message\Errors;
 
 /**
- * Class creates post model as facade to wordpress function
+ * Class creates post model as facade to wordpress functions.
  *
- * PHP version 7.2.1
+ * PHP version 5.6
  *
- * @package  Parser
+ * @package  Models
  * @author   Evgeniy S.Zalevskiy <2600@urk.net>
  * @license  MIT
  */
 
 class PostModel implements ModelInterface
 {
+    /**
+     * Title of the post.
+     *
+     * @var string
+     */
     public $title;
+    /**
+     * Post content.
+     *
+     * @var string
+     */
     public $body;
+    /**
+     * Featured image url.
+     *
+     * @var string
+     */
     public $image;
-    public $gallery = array();
+    /**
+     * Status of the post could be parsed|draft
+     *
+     * @var string
+     */
     public $status;
+    /**
+     * Url of source post.
+     *
+     * @var string
+     */
     public $sourceUrl;
-    public $postId;
+    /**
+     * Id of wordpress post.
+     *
+     * @var int
+     */
+    public $ID;
+    /**
+     * Array of links.
+     * Structure: [previewLink,editLink,deleteLink]
+     *
+     * @var array
+     */
     public $links = array();
+    /**
+     * Wordpress authoe id.
+     *
+     * @var string
+     */
     public $authorId;
-
+    /**
+     * Init function
+     *
+     * @throws MyException if post have no title
+     *
+     * @param array $data structure['title','body','image','sourceUrl','authorId']
+     */
     public function __construct($data)
     {
-        if (!$data['title']) {
-            throw new MyException(Errors::text('NO_TITLE'));
+        if (!isset($data['title'])||empty($data['title'])) {
+            throw new MyException(Errors::text('NO_TITLE'), Errors::code('BAD_REQUEST'));
         }
-
         $this->title = $data['title'];
-        if (!$data['body']) {
-            throw new MyException(Errors::text('NO_BODY'));
+        if (!isset($data['body'])||empty($data['body'])) {
+            throw new MyException(Errors::text('NO_BODY'), Errors::code('BAD_REQUEST'));
         }
-
         $this->body = $data['body'];
-        $this->image = $data['image'];
-        $this->gallery = $data['gallery'];
-        $this->sourceUrl = $data['sourceUrl'];
+        if (!isset($data['authorId'])||empty($data['authorId'])) {
+            throw new MyException(Errors::text('NO_AUTHOR'), Errors::code('BAD_REQUEST'));
+        }
         $this->authorId = $data['authorId'];
+
+   
+        $this->image = isset($data['image'])?$data['image']:false;
+        $this->sourceUrl = isset($data['sourceUrl'])?$data['sourceUrl']:false;
+
         $this->status = 'parsed';
+    }
+    /**
+     * Create post instance from existed post data.
+     *
+     * @param string $id
+     * @return false|PostModel
+     */
+    public static function getPostById($id)
+    {
+        if (is_null($wp_post = get_post($id))) {
+            return false;
+        }
+        $post_data=array(
+            'title'=>$wp_post->post_title,
+            'body'=>$wp_post->post_content,
+            'sourceUrl'=>false,
+            'authorId'=>$wp_post->post_author,
+            'image'=>get_the_post_thumbnail_url($wp_post, 'full')
+        );
+        $post= new static($post_data);
+        $post->ID=absint($id);
+        return $post;
     }
     /**
      * Create wordpress draft gets WP post ID and change postModel status to draft
@@ -52,49 +123,41 @@ class PostModel implements ModelInterface
      */
     public function createDraft()
     {
-        $this->postId = $this->createPostWordPress();
-        if ($this->postId == 0) {
-            throw new MyException(Errors::text('POST_WAS_NOT_CREATED'));
+        $this->ID = $this->createPostWordPress();
+        if ($this->ID === 0) {
+            throw new MyException(Errors::text('POST_WAS_NOT_CREATED'), Errors::code('BAD_REQUEST'));
         }
         $this->getPostLinksWordpress();
         $this->status = 'draft';
     }
     /**
-     * Attach main image to wordpres post
+     * Attach main image to wordpress post
      *
-     * @return void
+     * @param null|string $image_url
+     * @param string $alt
+     * @return string|int Id of saved post featured media.
      */
-    public function addPostThumbnail()
+    public function addPostThumbnail($image_url = null, $alt = '')
     {
-        $this->attachImageToPostWordpress($this->image, $this->postId, true);
+        $url=is_null($image_url)?$this->image:$image_url;
+        $featured_image_title=!empty($alt)?$alt:$this->title;
+        return $this->attachImageToPostWordpress($url, $this->ID, true, $featured_image_title);
     }
-    /**
-     * Download and attach to post additional images
-     *
-     * @param int $quantity maximum quantity of images that should be downloaded
-     * @return void
-     */
-    public function downloadGalleryPictures($quantity = null)
-    {
-        $img_ids_array = array();
-        if (!is_null($quantity)) {
-            $gallery = array_slice($this->gallery, 0, $quantity);
-        } else {
-            $gallery = $this->gallery;
-        }
-        foreach ($gallery as $image) {
-            $img_ids_array[] = $this->attachImageToPostWordpress($image, $this->postId);
-        }
-        $this->gallery['ids'] = $img_ids_array;
-    }
+
     /**
      * Add link to the source  of the page
      *
+     * @param string $source_url
      * @return void
      */
-    public function addSource()
+    public function addSource($source_url = null)
     {
-        $this->body .= '<br> <a href="' . $this->sourceUrl . '">' . \__('Source', 'news-parser') . '</a>';
+        $source=is_null($source_url)?$this->sourceUrl:$source_url;
+        $this->body .= sprintf(
+            '<br> <a href="%s">%s</a>',
+            \esc_url_raw($source),
+            \__('Source ', NEWS_PARSER_PLUGIN_SLUG)
+        );
         $this->updatePostWordPress('post_content', $this->body);
     }
     /**
@@ -107,9 +170,9 @@ class PostModel implements ModelInterface
     {
         $data_array = array(
             'title' => $this->title,
-            'previewLink' => $this->links['previewLink'],
+            'links' => $this->links,
             'status' => $this->status,
-            'post_id' => $this->postId,
+            'post_id' => $this->ID,
         );
         $data_json = json_encode($data_array);
         switch ($format) {
@@ -122,24 +185,17 @@ class PostModel implements ModelInterface
         }
     }
     /**
-     * Create shortcode for gallery to add to the post body
-     *[$hortcode $paramName=[prams]]
+     * Facade function for WP media_sideload_image
      *
-     * @param string $hortcode name of short code
-     * @param string $paramName
-     * @return void
+     * @param string $file
+     * @param integer|string $post_id
+     * @param string $desc
+     * @param string $return
+     * @return string|\WP_Error
      */
-    public function createGalleryShortcode($shortcode, $paramName)
+    public function mediaSideloadImage($file, $post_id = 0, $desc = null, $return = 'html')
     {
-
-        $gallery = $this->gallery['ids'];
-        if (count($gallery) == 0) {
-            return;
-        }
-
-        $output = ' [' . \esc_html($shortcode) . ' ' . \esc_html($paramName) . '=' . implode(',', $gallery) . ']';
-        $this->body .= $output;
-        $this->updatePostWordPress('post_content', $this->body);
+        return media_sideload_image($file, $post_id, $desc, $return);
     }
     /**
      * Create wordpress post
@@ -159,7 +215,7 @@ class PostModel implements ModelInterface
         );
         $postId = \wp_insert_post($post_data);
         if (\is_wp_error($postId)) {
-            throw new MyException($postId->get_error_message());
+            throw new MyException($postId->get_error_message(), Errors::code('BAD_REQUEST'));
         } else {
             return $postId;
         }
@@ -172,14 +228,14 @@ class PostModel implements ModelInterface
      * @param boolean $post_thumb if image will use NewsParserPlugin\as main image of the post
      * @return int image ID
      */
-    protected function attachImageToPostWordpress($image, $id, $post_thumb = false)
+    protected function attachImageToPostWordpress($image, $id, $post_thumb = false, $alt = '')
     {
         $url = $image;
         $post_id = $id;
-        $desc = "image";
-        $img_id = \media_sideload_image($url, $post_id, $desc, 'id');
+        $desc = $alt?:"image";
+        $img_id = $this->mediaSideloadImage($url, $post_id, $desc, 'id');
         if (\is_wp_error($img_id)) {
-            throw new MyException($img_id->get_error_message());
+            throw new MyException($img_id->get_error_message().' Image url:'.esc_url_raw($url), Errors::code('BAD_REQUEST'));
         } else {
             if ($post_thumb) {
                 \set_post_thumbnail($post_id, $img_id);
@@ -195,10 +251,10 @@ class PostModel implements ModelInterface
      * @param $data new data that will be add to the field
      * @return void
      */
-    protected function updatePostWordPress(string $update_item, $data)
+    protected function updatePostWordPress($update_item, $data)
     {
         $post_array = [
-            'ID' => $this->postId,
+            'ID' => $this->ID,
             $update_item => $data,
         ];
         \wp_update_post($post_array);
@@ -210,10 +266,9 @@ class PostModel implements ModelInterface
      */
     protected function getPostLinksWordpress()
     {
-        $post_id = $this->postId;
+        $post_id = $this->ID;
         $this->links['previewLink'] = \get_post_permalink($post_id);
         $this->links['editLink'] = \get_edit_post_link($post_id, '');
         $this->links['deleteLink'] = \get_delete_post_link($post_id);
-
     }
 }

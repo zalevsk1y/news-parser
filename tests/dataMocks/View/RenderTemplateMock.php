@@ -1,0 +1,1 @@
+<div class="<?php echo $class_name ?>"><?php echo $inner_text ?></div>

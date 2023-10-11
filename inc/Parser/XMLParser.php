@@ -3,15 +3,12 @@
 namespace NewsParserPlugin\Parser;
 
 use NewsParserPlugin\Exception\MyException;
-use NewsParserPlugin\Interfaces\ParserInterface;
 use NewsParserPlugin\Message\Errors;
-use NewsParserPlugin\Utils\ChainController;
-use NewsParserPlugin\Utils\PipeController;
-use NewsParserPlugin\Utils\Sanitize;
+
 /**
  * Class for parsing XML files (using libxml) from rss-feed to get list of posts.
  *
- * PHP version 7.2.1
+ * PHP version 5.6
  *
  * @package  Parser
  * @author   Evgeniy S.Zalevskiy <2600@urk.net>
@@ -19,12 +16,16 @@ use NewsParserPlugin\Utils\Sanitize;
  *
  */
 
-class XMLParser extends ParseContent 
+class XMLParser extends Abstracts\AbstractParseContent
 {
-    
-
-    public function __construct($cache_expiration=60){
-       parent::__construct($cache_expiration);
+    /**
+    * Init function
+    *
+    * @param integer $cache_expiration
+    */
+    public function __construct($cache_expiration = 60)
+    {
+        parent::__construct($cache_expiration);
     }
     /**
      * Parse data from xml.Return array of objects with post data.
@@ -44,40 +45,32 @@ class XMLParser extends ParseContent
     {
 
         $data = $this->xmlParser($xml);
-        $structuredData = $this->formatData($data);
-        return $structuredData;
-
+        $structured_data = $this->formatData($data);
+        return $structured_data;
     }
 
     /**
      * Parse xml string to the object using simplexml_load_string
      *
      * @param string $str string in xml format
-     *
-     * @return object
+     * @throws NewsParserPlugin\Exception\MyException
+     * @return \SimpleXMLElement
      */
 
-    protected function xmlParser(string $str)
+    protected function xmlParser($str)
     {
         libxml_use_internal_errors(true);
         $data = simplexml_load_string($str);
         $errors = libxml_get_errors();
 
-        if ($errors) {
+        if (!empty($errors)) {
             libxml_clear_errors();
-            throw new MyException(Errors::text('XML_PARSING'));
+            throw new MyException(Errors::text('XML_PARSING'), Errors::code('BAD_REQUEST'));
         }
 
         return $data;
     }
-    protected function sanitizeUrl($url)
-    {
-        return htmlspecialchars($url);
-    }
-    protected function sanitizeText($str)
-    {
-        return htmlspecialchars($str);
-    }
+
     /**
      * Format data for output.
      * Structure:
@@ -88,38 +81,35 @@ class XMLParser extends ParseContent
      * [image] - main post image url
      * [status] - status of post parsed - if post was not saved as draft and draft -when post saved as draft
      *
-     * @param object $data object created by simplexml_load_string() function;
+     * @param \SimpleXMLElement $data object created by simplexml_load_string() function;
      *
-     * @return array parsed data
+     * @return object parsed data
      */
     protected function formatData($data)
     {
         $response = array();
-        $namespaces = $data->getNamespaces(true);
-        foreach ($data->channel->item as $item) {$image = null;
-
+        foreach ($data->channel->item as $item) {
             $title = (string) ($item->title);
-
-            $date = $this->sanitizeText($item->pubDate);
+            $date = \esc_html($item->pubDate);
             $description = $this->parseDescription($item->description);
             $link = $item->link;
             $image = $this->parseImage($item, $item->description);
             $response[] = (object) array(
-                'title' => esc_html($title),
-                'pubDate' => esc_html($date),
-                'description' => esc_html($description),
-                'link' => Sanitize::sanitizeURL((string)$link),
-                'image' => Sanitize::sanitizeURL((string)$image),
+                'title' => \esc_html($title),
+                'pubDate' => \esc_html($date),
+                'description' => \esc_html($description),
+                'link' => \esc_url_raw((string)$link),
+                'image' => \esc_url_raw((string)$image),
                 'status' => 'parsed',
             );
         }
         return $response;
     }
     /**
-     * Parse description of the post and cut it to 24 symbols
+     * Parse description of the post and cut it to 150 symbols
      *
-     * @param $data
-     *
+     * @uses AbstractParseContent::pipe()
+     * @param string|object $data
      * @return string
      */
 
@@ -131,7 +121,7 @@ class XMLParser extends ParseContent
         $text = $this->pipe($data)
             ->func('trim', array("data"))
             ->removeTags()
-            ->cutText(24)
+            ->cutText(150)
             ->get();
 
         return $text;
@@ -143,7 +133,8 @@ class XMLParser extends ParseContent
      * <media:content> http://www.rssboard.org/media-rss#media-content
      * <description> search image tag in description using regular expression
      *
-     * @param string $xml Object created by simplexml_load_string() function
+     * @uses AbstractParseContent::chain()
+     * @param \SimpleXMLElement $xml Object created by simplexml_load_string() function
      * @param string $text
      * @return string image url or default image rl image if false
      */
@@ -152,8 +143,8 @@ class XMLParser extends ParseContent
     {
         $image = $this->chain()
             ->parseImageEnclosure($xml)
-            ->parseImageMedia($xml)
             ->parseImageDescription($text)
+            ->parseImageMediaTag($xml)
             ->get();
         return $image ?: NEWS_PARSER_PLUGIN_NO_IMAGE_PATH;
     }
@@ -161,17 +152,18 @@ class XMLParser extends ParseContent
     /**
      * Cutting text
      *
+     * @uses AbstractParseContent::pipe()
      * @param int $length length of string
      * @param string $text text to cut
-     * @return void
+     * @return string
      */
 
     public function cutText($length, $text)
     {
         $text = $this->pipe($text)
-            ->func('explode', array(" ", "data"))
+            ->func('str_split', array("data"))
             ->func('array_slice', array('data', 0, $length))
-            ->func('implode', array(" ", "data"))
+            ->func('implode', array("", "data"))
             ->get();
         return $text . '...';
     }
@@ -194,14 +186,13 @@ class XMLParser extends ParseContent
      *
      * @param string $pattern regular expression pattern without wrapper '//'
      * @param string $string to search in
-     * @return string|boolean found data or false
+     * @return string|false found data or false
      */
     public function regExp($pattern, $string)
     {
         $string = str_replace(PHP_EOL, '', $string);
         preg_match('/' . $pattern . '/i', $string, $match);
         if (count($match)) {
-            
             return $match[1];
         }
 
@@ -211,66 +202,43 @@ class XMLParser extends ParseContent
      * Parse image according RSS 2.0 specification
      * https://en.wikipedia.org/wiki/RSS_enclosure
      *
-     * @param object $xml
-     * @return string|boolean url image or false
+     * @param \SimpleXMLElement $xml
+     * @return string|false url image or false
      */
     public function parseImageEnclosure($xml)
     {
-        $image = false;
+
         if (property_exists($xml, 'enclosure')) {
             $image = (string) $xml->enclosure->attributes()->url;
         }
-        return $image ?: false;
+        return isset($image) ?$image: false;
     }
-    /**
-     * Parse image using
-     * <media:content> http://www.rssboard.org/media-rss#media-content
-     *
-     * @param string $xml
-     * @return string|boolean image url or false
-     */
-    public function parseImageMedia($xml)
-    {
-        $image = false;
-        $media_node = $xml->children('media', true);
-        if (isset($media_node->thumbnail)) {
-            $image = (string) $media_node->thumbnail->attributes()->url;
-        }
-        return $image ?: false;
-    }
+  
     /**
      * Parse image from description using regular expression
      *
      * @param $text text of description
-     * @return string|boolean
+     * @return string|false
      */
     public function parseImageDescription($text)
     {
-        $image = false;
         if (gettype($text) == "object") {
             $text = (string) $text;
         }
         $text = trim($text);
-        $image = $this->regExp('src\=\"([^\"|\']*\.[jpg|png|tiff]..)', $text);
-        return $image ?: false;
+        $image = $this->regExp('src\=[\"\']([^\"\']*\.[jpg|png|tiff]..)', $text);
+        return isset($image) ?$image: false;
     }
     /**
-     * Function facade for Utils\ChainController;
+     * Parsing image from XML Media:Content element.
      *
-     * @return ChainController object
-     */
-    protected function chain()
-    {
-        return new ChainController($this);
-    }
-    /**
-     * Function facade for Utils\PipeController
-     *
-     * @param $input_data daat that would be transferred thru the pipe
+     * @param \SimpleXMLElement $xml
      * @return void
      */
-    protected function pipe($input_data)
+    public function parseImageMediaTag($xml)
     {
-        return new PipeController($this,$input_data);
+        $media_group=$xml->children('media', true);
+        $image=$media_group->content->attributes()['url'];
+        return isset($image) ?$image: false;
     }
 }

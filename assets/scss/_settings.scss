@@ -1,0 +1,168 @@
+.main-tabs {
+    position: relative;
+    display: inline-block;
+    padding: 1% 1%;
+    border: 1px solid #e0e0e0;
+    margin-top: 2%;
+    margin-bottom: 0;
+    border-right: none;
+    border-bottom: none;
+    cursor: pointer;
+    top: 1px;
+}
+
+.settings-main-tabs h2:last-child {
+    border-right: 1px solid #e0e0e0;
+}
+
+.settings-container {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+}
+
+.content-settings {
+    display: none;
+}
+
+.settings-content {
+    margin-top: 4%;
+    margin-left: 3%;
+}
+
+.settings-content th {
+    width: 190px;
+    font-size: 16px;
+    padding: 10px 0px 40px 0px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.settings-content td {
+    padding: 10px 20px 40px 40px;
+}
+
+.sub-settings-content {
+    margin-left: 3%;
+}
+
+.sub-settings-content th {
+    width: 190px;
+    font-size: 16px;
+    padding: 10px 0px 40px 0px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.sub-settings-content td {
+    padding: 10px 20px 40px 40px;
+}
+
+.settings-switch {
+    height: 30px;
+    width: 51px;
+    background-color: rgba(187, 187, 187);
+    border-radius: 30px;
+    position: relative;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.settings-switch::after {
+    content: "";
+    height: 26px;
+    width: 26px;
+    border-radius: 20px;
+    position: absolute;
+    z-index: 10;
+    top: 2px;
+    left: 2px;
+    background-color: rgb(227, 227, 219);
+    transition: left 0.1s;
+}
+
+.active-tab {
+    background-color: #fff;
+    border-bottom: none;
+}
+
+.switch-on::after {
+    left: 23px;
+}
+
+.switch-on {
+    background-color: #0073aa;
+}
+
+.url-input {
+    position: relative;
+    z-index: 30;
+}
+
+.input-list-container {
+    position: relative;
+    width: fit-content;
+}
+
+.site-urls-list {
+    border: 1px solid;
+    border-color: #5b9dd9;
+    box-shadow: 0 0 2px rgba( 30, 140, 190, 0.8);
+    position: absolute;
+    z-index: 20;
+    background-color: #fff;
+    top: 5px;
+    left: 0px;
+    width: 179px;
+    list-style: none;
+    padding-left: 0px;
+}
+
+.site-urls-list li {
+    cursor: pointer;
+}
+
+.settings-site {
+    position: relative;
+}
+
+.settings-button-block {
+    margin-top: 20px;
+}
+
+.button-settings {
+    width: 170px;
+    height: 40px;
+    font-size: 16px;
+    border-color: #e0e0e0;
+    border-style: none;
+    cursor: pointer;
+}
+
+.button-settings:focus {
+    outline: none;
+}
+
+.save-settings {
+    color: #fff;
+    background-color: #0073aa;
+    margin-right: 10px;
+}
+
+.site-urls-list li {
+    cursor: pointer;
+}
+.settings-mobile-vertical{
+    display:none;
+    text-align: center;
+}
+.settings-mobile-vertical img{
+    width:75%;
+}
+@media screen and (max-width:600px){
+    #settings-app{
+        display:none;
+    }
+    .settings-mobile-vertical{
+    display: block;
+    }
+}
