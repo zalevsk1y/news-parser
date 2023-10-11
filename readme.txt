@@ -2,11 +2,11 @@
 Contributors: bikkel
 Donate link: 
 Author: Evgeniy Zalevskiy
-Tags: scraper,parser,rss,news,news-parser,wordpress news-parser plugin,News-Parser,wordpress  News-Parser plugin,rss parser,autopilot,news parser, News Parser, wordpress News Parser plugin
+Tags: scraper,parser,rss,news,autopilot
 Requires PHP: 5.6
 Requires at least: 3.5.0
 Tested up to: 5.3.2
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -90,6 +90,10 @@ https://www.youtube.com/watch?v=9x56djil-b0
 If you find an issue, let us know [here](https://github.com/zalevsk1y/news-parser/issues?state=open)!
 
 == Changelog ==
+
+= 1.0.2 - 20-04-21 =
+
+* Fix: some bugs.
 
 = 1.0.1 - 20-03-21 =
 

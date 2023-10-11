@@ -92,7 +92,7 @@ export class VisualConstructor extends React.Component{
                         </div>
                     </div>
                     <div className='modal-footer'>
-                        <div type="button" className="button button-large button-primary" onClick={this.buttonClickHandler}>{this.props.saveParsingTemplate?"Save Template":"Create Post Draft"}</div>
+                        <button type="button" className="button button-large button-primary" onClick={this.buttonClickHandler}>{this.props.saveParsingTemplate?"Save Template":"Create Post Draft"}</button>
                     </div>
                 </div>
                 <div className="media-modal-backdrop"></div>

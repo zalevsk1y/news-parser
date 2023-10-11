@@ -1,10 +1,17 @@
-
+/**
+ * Class search replace image src with high resolution.a1
+ * 
+ * @since 1.0.0
+ * 
+ * @param {object} HTML document
+ */
 class ImageParser{
-    constructor(dom){
-        this.dom=dom;
+    constructor(doc){
+        if(doc===undefined) throw Error('Document argument of ImageParser constructor cannot be undefined.')
+        this.doc=doc;
     }
     replaceImageSrc(){
-        const img=this.dom.getElementsByTagName('img');
+        const img=this.doc.getElementsByTagName('img');
         this.dataSet(img);
     }
     dataSet(imgElements){
@@ -18,11 +25,11 @@ class ImageParser{
         return this;
     }
     pictureTag(imgTag,imageScr){
-        debugger;
         const parent=imgTag.parentElement,
             sourceTags=parent.tagName==='PICTURE'&&parent.getElementsByTagName('source');
             if(sourceTags.length>0)sourceTags[0].srcset=imageScr;
     }
+    //ToDo:add get picture src from wrapping tag.
     wrappingATag(imgElements){
         [...imgElements].forEach(imgTag=>{
 
@@ -38,4 +45,4 @@ class ImageParser{
 
 }
 
-export const imageParser=dom=>new ImageParser(dom);
+export const imageParser=doc=>new ImageParser(doc);
