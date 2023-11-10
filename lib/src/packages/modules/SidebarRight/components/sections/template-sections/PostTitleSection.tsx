@@ -2,6 +2,7 @@ import React, { useState, useCallback, FormEvent } from "react";
 import { InfoBox, InfoBody, InfoFooter } from "@news-parser/ui/sidebar/";
 import { useSetPostTitle } from '@news-parser/entities/sidebarTemplate/hooks';
 import { PostTitleGroup } from "../../groups/template-groups/PostTitleGroup";
+import { COMPONENTS } from "@news-parser/config/i18n";
 
 /**
  * Component representing the section for changing the post title in the sidebar.
@@ -20,7 +21,7 @@ export function PostTitleSection() {
     setNewTitle('');
   }, [newTitle]);
   return (
-    <InfoBox title='Post title'>
+    <InfoBox title={COMPONENTS.SIDEBAR_RIGHT.SECTIONS_TITLE.POST_TITLE}>
       <InfoBody>
         <PostTitleGroup newTitle={newTitle} onChange={inputChangeHandler} />
       </InfoBody>

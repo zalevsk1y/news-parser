@@ -4,6 +4,7 @@ import { useCreateWpPost,useResetSelectedPosts } from '@news-parser/entities/pos
 import { useShowMessage } from '@news-parser/entities/message/hooks'
 import { useCreateTemplate, useIsMutating } from '../hooks';
 import { useClose } from '../hooks/visual-constructor/useClose';
+import { WIDGETS } from '@news-parser/config/i18n';
 
 interface VisualConstructorFooterRss{
     rssUrl:string|false
@@ -42,7 +43,7 @@ export const VisualConstructorFooterRss:React.FC<VisualConstructorFooterRss> = (
                 className="button button-large button-primary"
                 onClick={buttonClickHandler}
             >
-                {shouldParsingTemplateToBeSaved ? "Save Template" : "Create Post"}
+                {shouldParsingTemplateToBeSaved ? WIDGETS.VISUAL_CONSTRUCTOR.SAVE_TEMPLATE_BUTTON : WIDGETS.VISUAL_CONSTRUCTOR.CREAT_POST_BUTTON}
             </button>
         </div>
     )

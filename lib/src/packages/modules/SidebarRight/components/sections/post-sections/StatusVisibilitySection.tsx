@@ -1,6 +1,7 @@
 import React from 'react';
 import { InfoBox, InfoBody } from '@news-parser/ui/sidebar/InfoBox';
 import StatusVisibilityGroup from '../../groups/post-groups/StatusVisibilityGroup';
+import { COMPONENTS } from '@news-parser/config/i18n';
 
 /**
  * Component representing the section for status and visibility in the sidebar.
@@ -9,7 +10,7 @@ import StatusVisibilityGroup from '../../groups/post-groups/StatusVisibilityGrou
  */
 
 export const StatusVisibilitySection:React.FC = () => (
-      <InfoBox title='Satus&Visibility'>
+      <InfoBox title={COMPONENTS.SIDEBAR_RIGHT.SECTIONS_TITLE.STATUS_VISIBILITY}>
         <InfoBody>
           <StatusVisibilityGroup />
         </InfoBody>

@@ -4,6 +4,7 @@ import { SidebarItemLabel, SidebarItem } from '@news-parser/ui/sidebar';
 import { Image } from '@news-parser/ui/Image';
 import { useGetPostFeaturedMedia, useGetAddFeaturedMedia, useChangeFeaturedMedia, useToggleAddFeaturedMedia } from '@news-parser/entities/sidebarTemplate/hooks'
 import config from '@news-parser/config/index';
+import { COMPONENTS } from '@news-parser/config/i18n';
 
 /**
  * React functional component for rendering a group related to the featured media.
@@ -31,8 +32,7 @@ export const FeaturedMediaGroup: React.FC = () => {
             </SidebarItem>
             <SidebarItem>
                 <p className='howto'>
-                    If you want to change featured image, select image you would like
-                    to choose in the constructor and click &apos;Change image&apos; button.
+                   {COMPONENTS.SIDEBAR_RIGHT.FEATURED_MEDIA_GROUP.FEATURED_MEDIA_CAPTION}
                 </p>
             </SidebarItem>
             <SidebarItem>
@@ -41,7 +41,7 @@ export const FeaturedMediaGroup: React.FC = () => {
                     onChange={toggleAddFeaturedMediaHandler}
                     id='no-post-featured-media-checkbox'
                 />
-                <SidebarItemLabel className='howto inline-bl' htmlFor='no-post-featured-media-checkbox'>No featured image.</SidebarItemLabel>
+                <SidebarItemLabel className='howto inline-bl' htmlFor='no-post-featured-media-checkbox'>{COMPONENTS.SIDEBAR_RIGHT.FEATURED_MEDIA_GROUP.NO_FEATURED_MEDIA}</SidebarItemLabel>
             </SidebarItem>
         </>
     )

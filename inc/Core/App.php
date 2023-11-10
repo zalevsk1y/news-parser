@@ -29,7 +29,6 @@ class App{
         $this->cronApiController=CronApiController::create($this->event);
         $this->middleware=MiddlewareController::getInstance($this->event);
         $this->cronTaskController=new CronTaskController($this->event);
-        $this->addActions();
     }
     static public function start(ContainerInterface $DI_container){
         if(self::$instance==null){
@@ -37,11 +36,5 @@ class App{
             return self::$instance;
         }
         return self::$instance;
-    }
-    protected function addActions(){
-        add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'hourly',array($this->cronTaskController,'cronTaskCallback'));
-        add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'twicedaily',array($this->cronTaskController,'cronTaskCallback'));
-        add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'daily',array($this->cronTaskController,'cronTaskCallback'));
-        add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'weekly',array($this->cronTaskController,'cronTaskCallback'));
     }
 }

@@ -15,13 +15,14 @@ function news_parser_init(){
    
     // Load script, style, and global variable configurations
 
-    //$scripts_config= include NEWS_PARSER_PLUGIN_DIR.'inc/Config/scripts-config.php';
-    //$styles_config= include NEWS_PARSER_PLUGIN_DIR.'inc/Config/styles-config.php';
+    //$scripts_config= include NEWS_PARSER_PLUGIN_DIR.'inc/Config/scripts-config-dev.php';
+    //$styles_config= include NEWS_PARSER_PLUGIN_DIR.'inc/Config/styles-config-dev.php';
 
     $scripts_config= include NEWS_PARSER_PLUGIN_DIR.'inc/Config/scripts-config.php';
     $styles_config= include NEWS_PARSER_PLUGIN_DIR.'inc/Config/styles-config.php';
     $global_variables_config= include NEWS_PARSER_PLUGIN_DIR.'inc/Config/global-variables-config.php';
-     
+    $scripts_translation_config= include NEWS_PARSER_PLUGIN_DIR.'inc/Config/scripts-translation-config.php'; 
+
     $app=Core\App::start($container);
 
     // Initialize the ScriptLoadingManager
@@ -30,6 +31,7 @@ function news_parser_init(){
     $loading_manager->setScriptsConfig($scripts_config);
     $loading_manager->setStylesConfig($styles_config);
     $loading_manager->setGlobalVariablesConfig($global_variables_config);
+    $loading_manager->setScriptsTranslationConfig($scripts_translation_config);
     $loading_manager->init();
 
     // Set up modifiers middleware for html parser
@@ -54,5 +56,19 @@ function news_parser_init(){
     $app->event->on('list:get',array(Controller\ListController::class,'get'));
     $app->event->on('html:get',array(Controller\VisualConstructorController::class,'get'));
     $app->event->on('post:create',array(Controller\PostControllerUserID::class,'create'));
+
+   // Add cron action
+
+   add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'hourly',array($app->cronTaskController,'cronTaskCallback'));
+   add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'twicedaily',array($app->cronTaskController,'cronTaskCallback'));
+   add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'daily',array($app->cronTaskController,'cronTaskCallback'));
+   add_action(NEWS_PARSER_CRON_ACTION_PREFIX.'weekly',array($app->cronTaskController,'cronTaskCallback'));
+
+   // Add WP_CLI commands
+
+   if ( defined( 'WP_CLI' ) && WP_CLI ) {
+      $invoke_autopilot=new \NewsParserPlugin\CLI\InvokeAutopilot($app->cronTaskController);
+      \WP_CLI::add_command( 'autopilot', array($invoke_autopilot,'commandCallback'));
+   }   
    
  }

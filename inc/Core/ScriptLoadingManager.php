@@ -31,7 +31,10 @@ class ScriptLoadingManager
      * @var array The scripts configuration.
      */
     protected $scriptsConfig;
-
+    /**
+     * @var array The scripts translation configuration.
+     */
+    protected $scriptsTranslationConfig;
     /**
      * @var array The styles configuration.
      */
@@ -76,7 +79,7 @@ class ScriptLoadingManager
     public function init()
     {
         \add_action('admin_enqueue_scripts', array($this, 'enqueueDependecies'));
-        \add_action('init', array($this, 'loadTextDomain'));
+       // \add_action('init', array($this, 'loadTextDomain'));
     }
 
     /**
@@ -88,7 +91,15 @@ class ScriptLoadingManager
     {
         $this->scriptsConfig = $plugin_scripts_array;
     }
-
+    /**
+     * Sets the scripts translation configuration.
+     *
+     * @param array $scripts_translation_array The scripts translation configuration array.
+     */
+    public function setScriptsTranslationConfig($scripts_translation_array)
+    {
+        $this->scriptsTranslationConfig=$scripts_translation_array;
+    }
     /**
      * Sets the styles configuration.
      *
@@ -145,6 +156,7 @@ class ScriptLoadingManager
         $this->enqueueStylesArray($this->stylesConfig[$menu_slug]);
         $this->enqueueScriptsArray($this->scriptsConfig[$menu_slug]);
         $this->enqueueGlobalVarsArray($this->globalVariablesConfig[$menu_slug]);
+        $this->setScriptTranslations($this->scriptsTranslationConfig[$menu_slug]);
     }
 
     /**
@@ -166,8 +178,18 @@ class ScriptLoadingManager
      */
     protected function enqueueScriptsArray($scripts_array)
     {
-        foreach ($scripts_array as $script_name => $script_path) {
-            \wp_enqueue_script($script_name, $script_path);
+        foreach ($scripts_array as $script_name => $script_props) {
+            \wp_enqueue_script($script_name, $script_props['path'],$script_props['depends_on']);
+        }
+    }
+    /**
+     * Enqueues script translates from the array.
+     *
+     * @param array $scripts_array The scripts array.
+     */
+    protected function setScriptTranslations($translations_array){
+        foreach ($translations_array as $script_name => $translation_domain) {
+            \wp_set_script_translations($script_name, $translation_domain);
         }
     }
 
@@ -179,7 +201,7 @@ class ScriptLoadingManager
     protected function enqueueGlobalVarsArray($global_vars_array)
     {
         foreach ($global_vars_array as $global_var) {
-            \wp_add_inline_script($global_var['script_name'], 'window.' . $global_var['name'] . '=' . json_encode($global_var['value']), 'before');
+            \wp_add_inline_script($global_var['script_name'], $global_var['data'], $global_var['position']);
         }
     }
 

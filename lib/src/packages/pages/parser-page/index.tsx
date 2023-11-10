@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {parserPageInitialState} from './reducers/initialState';
+import { parserPageInitialState } from './reducers/initialState';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 // import { composeWithDevTools } from '@redux-devtools/extension';
 
 import ErrorBoundary from "@news-parser/error-handler/index"
 import parse from './reducers';
+
 
 import Main from './components/Main';
 
@@ -18,11 +19,11 @@ import Main from './components/Main';
 const store = configureStore({
     reducer: parse,
     devTools: process.env.BUILD_MODE !== 'production',
-    preloadedState:parserPageInitialState
+    preloadedState: parserPageInitialState
 });
 
-window.addEventListener('DOMContentLoaded', () => {
 
+window.addEventListener('DOMContentLoaded', () => {
     ReactDOM.render(
         <Provider store={store}>
             <ErrorBoundary>
@@ -31,6 +32,5 @@ window.addEventListener('DOMContentLoaded', () => {
         </Provider>
         , document.getElementById('parsing-rss-app'));
 })
-
 
 

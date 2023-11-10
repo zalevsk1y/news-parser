@@ -3,6 +3,7 @@ import { SidebarItemLabel, SidebarItem } from '@news-parser/ui/sidebar';
 import { Checkbox } from "@news-parser/ui/sidebar";
 import { useToggleGroupImageRow, useGetGroupImageRow } from "@news-parser/entities/sidebarTemplate/hooks/"
 import { useToggleAddSrcSetAndSizes, useGetAddSrcSetAndSizes } from "@news-parser/entities/sidebarTemplate/hooks/"
+import { COMPONENTS } from '@news-parser/config/i18n';
 
 
 /**
@@ -26,7 +27,7 @@ export const ImageOptionsGroup: React.FC = () => {
           onChange={toggleGroupImageRowHandler}
           id='group-images-in-row-checkbox'
         />
-        <SidebarItemLabel className='howto inline-bl' htmlFor='group-images-in-row-checkbox'>Groups images in two in the row.</SidebarItemLabel>
+        <SidebarItemLabel className='howto inline-bl' htmlFor='group-images-in-row-checkbox'>{COMPONENTS.SIDEBAR_RIGHT.IMAGE_OPTIONS_GROUP.GROUR_IMAGES_IN_ROWS}</SidebarItemLabel>
       </SidebarItem>
       <SidebarItem >
         <Checkbox
@@ -34,7 +35,7 @@ export const ImageOptionsGroup: React.FC = () => {
           onChange={toggleAddSrcSetAndSizesHandler}
           id='add-images-srcset-and-sizes-checkbox'
         />
-        <SidebarItemLabel className='howto inline-bl' htmlFor='add-images-srcset-and-sizes-checkbox'>Add srcset and sizes attribures to the parsed images.</SidebarItemLabel>
+        <SidebarItemLabel className='howto inline-bl' htmlFor='add-images-srcset-and-sizes-checkbox'>{COMPONENTS.SIDEBAR_RIGHT.IMAGE_OPTIONS_GROUP.ADD_SRCSET}</SidebarItemLabel>
       </SidebarItem>
     </>
   )

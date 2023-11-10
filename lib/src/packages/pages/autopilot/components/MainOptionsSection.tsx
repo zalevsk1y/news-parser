@@ -8,6 +8,7 @@ import { ButtonWithLoading } from '../../../ui/ButtonWithLoading';
 import { DeleteTemplateButtonWithConfirmation } from './DeleteTemplateButtonWithConfirmation';
 import { useGetCronOptions, useMutateCronOptions } from '@news-parser/entities/cronOptions/hooks/';
 import { STATUS_ACTIVE, STATUS_INACTIVE } from '@news-parser/entities/cronOptions/constants';
+import { PAGES } from '@news-parser/config/i18n';
 
 export const MainOptionsBlock: React.FC = () => {
     const [isCronOptionsFetching, fetchCronOptions] = useFetchCronOptions();
@@ -25,7 +26,7 @@ export const MainOptionsBlock: React.FC = () => {
 
     return (
         <div className='mb-4 pt-2 pb-3'>
-            <h2 className='np-fs-22 mb-3'>Schedule Options</h2>
+            <h2 className='np-fs-22 mb-3'>{PAGES.AUTOPILOT.SCHEDULE_OPTIONS}</h2>
             <div className='row'>
                 <div className='input-group'>
                     <TemplateSelect className='form-select' placeholder='Select template url' aria-label='Select schedule option' onSelect={selectTemplateHandler} isFetching={isCronOptionsFetching || isDeleting} />

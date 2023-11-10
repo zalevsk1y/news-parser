@@ -2,6 +2,7 @@ import React, { useCallback, useState, useMemo } from 'react';
 import { ModalDialogWindow } from '@news-parser/components/ModalDialogWindow';
 import { useScrolling } from '../../../hooks/useScrolling';
 import { useResetCronOptions } from '@news-parser/entities/cronOptions/hooks/useResetCronOptions';
+import { PAGES } from '@news-parser/config/i18n';
 
 export type DeleteTemplateButtonProps = {
     templateId: string,
@@ -33,17 +34,17 @@ export const DeleteTemplateButtonWithConfirmation: React.FC<DeleteTemplateButton
     return (
         <>
             <ModalDialogWindow
-                title='Delete Template Confirmation'
-                modalBody={`Are you sure you want to delete the template ${templateId}? This action cannot be undone.`}
-                acceptButtonName='Delete Template'
-                dismissButtonName='Cancel'
+                title={PAGES.AUTOPILOT.DELETE_TEMPLATE_TITLE}
+                modalBody={PAGES.AUTOPILOT.DELETE_TEMPLATE_BODY}
+                acceptButtonName={PAGES.AUTOPILOT.DELETE_TEMPLATE_BUTTON}
+                dismissButtonName={PAGES.AUTOPILOT.CANCEL_DELETE_TEMPLATE_BUTTON}
                 isOpen={isConfirmWindowOpen}
                 onAccept={acceptButtonClickHandler}
                 onDismiss={closeButtonClickHandler}
                 onClose={closeButtonClickHandler}
             />
             <button className='btn btn-outline-secondary np-btn btn-lg w-100' onClick={deleteButtonClickHandler}>
-                <span className="px-4 np-fs-16">Delete Template</span>
+                <span className="px-4 np-fs-16">{PAGES.AUTOPILOT.DELETE_TEMPLATE_BUTTON}</span>
             </button>
         </>
     )

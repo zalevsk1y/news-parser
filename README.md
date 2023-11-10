@@ -14,11 +14,13 @@ News-parser is a plugin for Wordpress that allows you to easily receive the full
 *   Visual content extractor
 *   Flexible template creation system to speed up parsing
 *   Ability to parse not only from RSS XML source but also from url
+*   WP_CLI support
 
 ### Future plans
 
 *   Parsing videos from other(than YouTube) sources
 *   Saving images to the Media Library 
+*   Add AI support
 *   Have an idea? – Please, feel free to let me know. Let’s make News-Parser even better!
 
 ### Installing
@@ -88,7 +90,7 @@ Watch this short video to learn HOW TO PARSE SINGLE PAGE with news-parser plugin
 [![Alt text](http://img.youtube.com/vi/Sbke_LF-TFA/0.jpg)](https://www.youtube.com/watch?v=Sbke_LF-TFA)
 
 
-## Autopilot Function for Automatic RSS Parsing
+### Autopilot Function for Automatic RSS Parsing
 
 The autopilot function is now available to automatically parse posts from an RSS feed. Please note that the wp-cron (`https://developer.wordpress.org/plugins/cron/`) is used for scheduling the autopilot function, which triggers the task scheduler only when the website is visited. If you encounter issues with this function, you can add the following option to the wp-config.php file: `define('ALTERNATE_WP_CRON', true);`
 
@@ -110,6 +112,20 @@ To configure the autopilot settings, follow these steps:
 Watch this short video to learn HOW TO USE AUTOPILOT with news-parser plugin:
 
 [![Alt text](http://img.youtube.com/vi/Eu_5GR32nB0/0.jpg)](https://www.youtube.com/watch?v=Eu_5GR32nB0)
+
+### WP-CLI Support
+
+With the latest update, a new feature has been introduced that leverages wp-cli. This feature enables users to activate an autopilot function, allowing for automated parsing and saving of posts from RSS feeds. The autopilot function can now be accessed directly from the command-line interface, providing a convenient way to manage this process.
+
+To utilize this functionality, you'll need to install wp-cli and execute the command `wp autopilot` in the command-line interface. Additionally, you'll need to specify the desired interval at which the autopilot function should be triggered by including the additional parameter `wp autopilot --interval=`. This allows you to customize the frequency of the autopilot function according to your specific needs.
+
+By incorporating wp-cli and the new "wp autopilot" command, managing the automatic parsing and saving of posts from RSS feeds becomes more efficient and streamlined. This feature provides enhanced control and flexibility, empowering users to automate their post management tasks with ease.
+
+Example: 
+
+`wp autopilot --interval=hourly`
+
+
 ## Dependencies
 
 *  php-simple-html-dom-parser https://github.com/sunra/php-simple-html-dom-parser

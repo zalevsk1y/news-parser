@@ -14,7 +14,7 @@ Text Domain: news-parser
 
 
 
-define('NEWS_PARSER_PLUGIN_VERSION', '2.0.0');
+define('NEWS_PARSER_PLUGIN_VERSION', '2.0.1');
 define("NEWS_PARSER_PLUGIN_SLUG", 'news-parser');
 define("NEWS_PARSER_PLUGIN_ROOT_NAMESPACE", 'NewsParserPlugin');
 define("NEWS_PARSER_PLUGIN_SETTINGS_SLUG", 'news_parser_settings');

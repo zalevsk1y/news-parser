@@ -1,6 +1,7 @@
 import React from 'react';
 import { InfoBox, InfoBody } from '@news-parser/ui/sidebar/InfoBox';
 import DiscussionGroup from '../../groups/post-groups/DiscussionGroup';
+import { COMPONENTS } from '@news-parser/config/i18n';
 
 /**
  * Component representing the section for Discussion options in the sidebar.
@@ -9,7 +10,7 @@ import DiscussionGroup from '../../groups/post-groups/DiscussionGroup';
  */
 
 export const DiscussionSection:React.FC = () => (
-      <InfoBox title='Discussion'>
+      <InfoBox title={COMPONENTS.SIDEBAR_RIGHT.SECTIONS_TITLE.DISCUSSION}>
         <InfoBody>
           <DiscussionGroup />
         </InfoBody>

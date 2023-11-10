@@ -10,21 +10,13 @@ interface ParsedPostsSectionProps{
 }
 
 export const ParsedPostsSection:React.FC<ParsedPostsSectionProps> = ({ isFetching }) => {
-    const showMessage = useShowMessage();
-    const openVisualConstructor = useOpenVisualConstructor();
+    const openVisualConstructorStub = useCallback(()=>{},[]);
     const posts = useGetPosts();
-    const template = useGetTemplate();
-    const toggleSelectPost = useSelectPost();
-    const toggleSelectPostHandler = useCallback((_id:number) => {
-        if (!template) {
-            showMessage('error', 'Save parsing template first.');
-        } else {
-            toggleSelectPost(_id)
-        }
-    }, [template]);
+    const toggleSelectPostHandlerStub = useCallback((_id:number) => {
+    }, []);
     return (
         <>
-            {!isFetching&&<Posts selectPost={toggleSelectPostHandler} posts={posts} openEditor={openVisualConstructor} />}
+            {!isFetching&&<Posts selectPost={toggleSelectPostHandlerStub} posts={posts} openEditor={openVisualConstructorStub} />}
         </>
     )
 }

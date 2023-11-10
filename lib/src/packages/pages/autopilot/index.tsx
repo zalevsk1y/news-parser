@@ -9,6 +9,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import ErrorBoundary from "@news-parser/error-handler/index"
 import autopilot from './reducers';
 
+
 import Main from './components/Main';
 
 // import '@news-parser/styles/parser-rss.scss';
@@ -20,9 +21,7 @@ const store = configureStore({
 
 
 window.addEventListener('DOMContentLoaded', () => {
-
     ReactDOM.render(
-
         <Provider store={store}>
             <ErrorBoundary>
                 <Main />
@@ -30,6 +29,4 @@ window.addEventListener('DOMContentLoaded', () => {
         </Provider>
         , document.getElementById('parsing-autopilot-app'));
 })
-
-
 

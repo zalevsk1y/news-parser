@@ -1,6 +1,7 @@
 import React from 'react';
 import { SidebarItemLabel, SidebarItem } from '@news-parser/ui/sidebar';
 import { useGetDiscussionGroup, useSelectDiscussionGroup } from '@news-parser/entities/sidebar/hooks';
+import { COMPONENTS } from '@news-parser/config/i18n';
 
 
 /**
@@ -24,7 +25,7 @@ const DiscussionGroup: React.FC = () => {
           checked={allowComments}
           onChange={allowCommentsSet}
         />
-        <SidebarItemLabel htmlFor='allow-comments-checkbox'>Allow comments</SidebarItemLabel>
+        <SidebarItemLabel htmlFor='allow-comments-checkbox'>{COMPONENTS.SIDEBAR_RIGHT.DISCUSSION_GROUP.ALLOW_COMMENTS}</SidebarItemLabel>
       </SidebarItem>
       <SidebarItem>
         <input
@@ -36,7 +37,7 @@ const DiscussionGroup: React.FC = () => {
           onChange={allowPinbacksSet}
         />
         <SidebarItemLabel htmlFor='allow-pinbacks-checkbox'>
-          Allow pingbacks & trackbacks
+          {COMPONENTS.SIDEBAR_RIGHT.DISCUSSION_GROUP.ALLOW_PINGBACKS}
         </SidebarItemLabel>
       </SidebarItem>
     </>

@@ -1,25 +1,22 @@
 import React from "react";
+import { PAGES } from '@news-parser/config/i18n';
 
-export type ChangeCronStatusButtonType =  {
+export type ChangeCronStatusButtonType =  React.ButtonHTMLAttributes<HTMLButtonElement> & {
     isLoading: boolean,
     buttonName: string,
-    className:string,
-    form:string,
-    children?:React.ReactNode
 } 
 
-export const ButtonWithLoading: React.FC<ChangeCronStatusButtonType> = ({ isLoading,buttonName, children, ...otherProps }) => {
+export const ButtonWithLoading: React.FC<ChangeCronStatusButtonType> = ({ isLoading,buttonName, onClick, ...otherProps }) => {
     return (
-        <button {...otherProps} >
+        <button {...otherProps} onClick={onClick}>
             {
                 isLoading ?
                     <>
                         <span className='spinner-border spinner-border-16 np-fs-16 ' role='status' aria-hidden='true' />
-                        <span className='sr-only np-fs-16'>&nbsp;Loading...</span>
+                        <span className='sr-only np-fs-16'>&nbsp;{PAGES.AUTOPILOT.SELECT_BUTTON_LOADING}</span>
                     </> :
                      <span className='px-4 np-fs-16'>{buttonName}</span>
             }
-            {children}
         </button>
     )
 }

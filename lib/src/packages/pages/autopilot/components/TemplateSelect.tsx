@@ -1,6 +1,8 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { useGetTemplates } from '@news-parser/entities/templates/hooks/useGetTemplates';
 import { Select } from '@news-parser/components/Select';
+import { PAGES } from '@news-parser/config/i18n';
+import { ButtonWithLoading } from '@news-parser/ui/ButtonWithLoading';
 
 interface TemplateSelectProps {
     onSelect: (templateId: string) => void,
@@ -27,12 +29,7 @@ export const TemplateSelect: React.FC<TemplateSelectProps> = ({ onSelect, isFetc
                 <option value='' disabled>--{placeholder}--</option>
                 {optionsTemplates}
             </Select>
-            <button className='btn btn-primary np-btn' type='button' onClick={selectClickHandler} disabled={isFetching || selectValue == ''}>{
-                isFetching ? <><span className='spinner-border spinner-border-16 np-fs-16' role='status' aria-hidden='true' />
-                    <span className='sr-only np-fs-16'>&nbsp;Loading...</span></>
-                    : <span className='px-4 np-fs-16'>Select</span>
-            }</button>
-            
+            <ButtonWithLoading isLoading={isFetching} buttonName={PAGES.AUTOPILOT.SELECT_BUTTON} className='btn btn-primary np-btn' onClick={selectClickHandler} disabled={isFetching || selectValue == ''}/>
         </>
     )
 }
