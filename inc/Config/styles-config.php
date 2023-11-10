@@ -14,9 +14,7 @@ return  array(
     'shared'=> array(
         NEWS_PARSER_PLUGIN_SLUG . '-bootstrap'=>'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css',
         NEWS_PARSER_PLUGIN_SLUG . '-bootstrap-icons'=> 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css',
-        NEWS_PARSER_PLUGIN_SLUG . '-media_views'=>NEWS_PARSER_PLUGIN_URL . '/public/css/media-views.css',
-        NEWS_PARSER_PLUGIN_SLUG . '-152'=>NEWS_PARSER_PLUGIN_URL.'/public/css/152-'.NEWS_PARSER_PLUGIN_VERSION.'.css',
-        NEWS_PARSER_PLUGIN_SLUG . '-607'=>NEWS_PARSER_PLUGIN_URL.'/public/css/607-'.NEWS_PARSER_PLUGIN_VERSION.'.css',
+        NEWS_PARSER_PLUGIN_SLUG . '-media_views'=>NEWS_PARSER_PLUGIN_URL . '/public/css/media-views.css'
     ),
     $menu_config->menu->subs[0]->menu_slug=>array(
         NEWS_PARSER_PLUGIN_SLUG . '-parser-rss'=> NEWS_PARSER_PLUGIN_URL.'/public/css/parser_rss-'.NEWS_PARSER_PLUGIN_VERSION.'.css'

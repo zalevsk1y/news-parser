@@ -3,6 +3,7 @@ import { TagInput } from '@news-parser/components/sidebar/TagInput';
 import { SidebarItem } from '@news-parser/ui/sidebar';
 import { useSelectTag } from '@news-parser/entities/sidebar/hooks/';
 import { TagItem } from '@news-parser/ui/TagItem';
+import { COMPONENTS } from '@news-parser/config/i18n';
 
 /**
  * React functional component for rendering a group of status visibility options.
@@ -35,8 +36,8 @@ function TagsGroup() {
     <SidebarItem>
       <TagInput
         id='tag-input'
-        labelText='Add New Tag:'
-        bottomCapture='Separate with commas or the Enter key.'
+        labelText={`${COMPONENTS.SIDEBAR_RIGHT.TAG_GROUP.TAG_LABEL}:`}
+        bottomCapture={COMPONENTS.SIDEBAR_RIGHT.TAG_GROUP.TAG_CAPTION}
         onCreate={createTagHandler}
       >
         {renderTags}

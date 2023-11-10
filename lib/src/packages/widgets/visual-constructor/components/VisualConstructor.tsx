@@ -8,6 +8,7 @@ import { VisualConstructorHeader } from './VisualConstructorHeader';
 import { Frame } from './Frame';
 import { useResetSidebarTemplate } from '@news-parser/entities/sidebarTemplate/hooks/';
 import { useResetSidebar } from '@news-parser/entities/sidebar/hooks';
+import { WIDGETS } from '@news-parser/config/i18n';
 
 interface VisualConstructorProps {
     onReady?: () => void,
@@ -57,7 +58,7 @@ export const VisualConstructor: React.FC<VisualConstructorProps> = ({ onReady, c
     return (
         <div className='media-modal-wrapper' style={{ display: isOpen ? 'block' : 'none' }}>
             <div className='modal-container'>
-                <VisualConstructorHeader title='Parsing Constructor' closeHandler={closeVisualConstructor} />
+                <VisualConstructorHeader title={WIDGETS.VISUAL_CONSTRUCTOR.WIDGET_TITLE} closeHandler={closeVisualConstructor} />
                 <div className='d-flex flex-column flex-grow-1 position-relative'>
                     {!isVisualConstructorReady && <LoadingSpinner style={{ paddingBottom: '22vh' }} />}
                     <div className='modal-main'>

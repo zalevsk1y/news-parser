@@ -4,9 +4,13 @@ import SidebarRight, { SidebarRightTemplate, SidebarRightPost } from '@news-pars
 import { VisualConstructor, VisualConstructorFooterPage as VisualConstructorFooter } from '@news-parser/widgets/visual-constructor/components/index';
 import { useOpenVisualConstructor } from '@news-parser/widgets/visual-constructor/hooks';
 import { useCreateLocalPost } from '@news-parser/entities/post/hooks/';
-import { InputFormSection } from './InputFormSection';
+import { InputFormSection } from '../../../components/InputFormSection/InputFormSection';
 import { ParsedPostsSection } from './ParsedPostsSection';
+import { useShowMessage } from '@news-parser/entities/message/hooks';
+import { MESSAGE, PAGES } from '@news-parser/config/i18n';
 import '../../styles/Main.css';
+
+
 
 /**
  * Main application element.
@@ -15,13 +19,15 @@ import '../../styles/Main.css';
  */
 
 
-const Main:React.FC = () => {
+const Main: React.FC = () => {
+  const showMessage = useShowMessage();
   const openVisualConstructor = useOpenVisualConstructor();
-  const createLocalPost=useCreateLocalPost();
- 
-  const openVisualConstructorHandler = useCallback((url:string) => {
-    openVisualConstructor(false,url);
-  }, [createLocalPost,openVisualConstructor])
+  const createLocalPost = useCreateLocalPost();
+  const inputButtonName = PAGES.PARSER_PAGE.INPUT_BUTTON;
+  const invalidInputHandler = useCallback(() => showMessage('error', MESSAGE.ERROR.WRONG_URL_INPUT), [])
+  const openVisualConstructorHandler = useCallback((url: string) => {
+    openVisualConstructor(false, url);
+  }, [createLocalPost, openVisualConstructor])
   return (
     <div className="wrap">
       <VisualConstructor >
@@ -32,11 +38,15 @@ const Main:React.FC = () => {
         <VisualConstructorFooter />
       </VisualConstructor>
       <div className='parsing-title'>
-            <h1>News-Parser <b className='main-page-header'>WEB PAGE</b></h1>
-        </div>
+        <h1>News-Parser <b className='main-page-header'>WEB PAGE</b></h1>
+      </div>
       <Message />
-      <InputFormSection buttonName='Parse page' inputSubmit={openVisualConstructorHandler} />
-      <ParsedPostsSection  />
+      <InputFormSection buttonName={inputButtonName}
+        inputSubmit={openVisualConstructorHandler}
+        onInvalid={invalidInputHandler}
+        disabled={false}
+      />
+      <ParsedPostsSection />
     </div>
   );
 }

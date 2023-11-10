@@ -8,6 +8,7 @@ import {SidebarItemExpandable} from '@news-parser/components/sidebar/SidebarItem
 import { useCategoryFilter } from  '../../../hooks/useCategoryFilter';
 import { CategoriesOptionList } from './CategoriesOptionList';
 import { CategoriesCheckboxList } from './CategoriesCheckboxList';
+import { COMPONENTS } from '@news-parser/config/i18n';
 
 /**
  * React functional component for rendering a group of categories with search, checkboxes, and add functionality.
@@ -35,12 +36,12 @@ function CategoriesGroup() {
     const targetElement = event.target as HTMLInputElement;
     setFilterValue(targetElement.value)
   }, [setFilterValue]);
-  const expandButton=useMemo(() => ({value:'Add New Category',className:'pop-up-link'}),[])
+  const expandButton=useMemo(() => ({value:COMPONENTS.SIDEBAR_RIGHT.CATEGORIES_GROUP.ADD_NEW_CATEGORY,className:'pop-up-link'}),[])
   return (
     <>
       <SidebarItem>
         <div className='input-container categories-search'>
-          <label htmlFor='categories-filter-input'>Search Categories:</label>
+          <label htmlFor='categories-filter-input'>{COMPONENTS.SIDEBAR_RIGHT.CATEGORIES_GROUP.SEARCH_CATEGORIES}:</label>
           <input
             className='form-control'
             type='text'
@@ -62,7 +63,7 @@ function CategoriesGroup() {
         expandButton={expandButton}
       >
         <div className='sidebar-item-expandable-row'>
-          <label htmlFor='new-category-name-input'>New Category Name</label>
+          <label htmlFor='new-category-name-input'>{COMPONENTS.SIDEBAR_RIGHT.CATEGORIES_GROUP.NEW_CATEGORY_NAME}</label>
           <input
             className='form-control'
             value={newCategoryParams.name}
@@ -72,13 +73,13 @@ function CategoriesGroup() {
            />
         </div>
         <div className='sidebar-item-expandable-row'>
-          <label htmlFor='parent-category-select'>Parent Category</label>
+          <label htmlFor='parent-category-select'>{COMPONENTS.SIDEBAR_RIGHT.CATEGORIES_GROUP.PARENT_CATEGORY}</label>
           <br />
           <Select
             id='parent-category-select'
             onChange={newCategoryParentSelectHandler}
           >
-            <option value={0}>— Parent Category —</option>
+            <option value={0}>— {COMPONENTS.SIDEBAR_RIGHT.CATEGORIES_GROUP.PARENT_CATEGORY} —</option>
             <CategoriesOptionList id={0} categories={categories} />
           </Select>
         </div>
@@ -88,7 +89,7 @@ function CategoriesGroup() {
             className='btn btn-outline-secondary btn-sm'
             onClick={addCategoryHandler}
           >
-            Add New Category
+            {COMPONENTS.SIDEBAR_RIGHT.CATEGORIES_GROUP.ADD_NEW_CATEGORY}
           </button>
         </div>
       </SidebarItemExpandable>

@@ -6,7 +6,7 @@ Tags: scraper,parser,rss,news,autopilot
 Requires PHP: 7.2
 Requires at least: 5.2.0
 Tested up to: 6.3.1
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -20,6 +20,7 @@ News-parser is a plugin for WordPress that allows you to easily receive the full
 *   Gutenberg editor support.
 *   Autopilot Function for Automatic RSS Parsing
 *   Visual content extractor.
+*   WP-CLI support
 *   Flexible template creation system to speed up parsing.
 *   Ability to parse not only from RSS XML source but also from url.
 
@@ -71,7 +72,7 @@ To save the template, it is necessary to mark the content in the main window of 
 
 Watch this short video to learn HOW TO CREATE PARSING TEMPLATE:
 
-https://www.youtube.com/watch?v=0awSRLWsP
+https://www.youtube.com/watch?v=0awSRLWsP-I
 
 = Parse single page. =
 
@@ -104,24 +105,42 @@ Watch this short video to learn HOW TO USE AUTOPILOT with news-parser plugin:
 
 https://www.youtube.com/watch?v=Eu_5GR32nB0
 
+= WP-CLI Support  =
+
+With the latest update, a new feature has been introduced that leverages wp-cli. This feature enables users to activate an autopilot function, allowing for automated parsing and saving of posts from RSS feeds. The autopilot function can now be accessed directly from the command-line interface, providing a convenient way to manage this process.
+
+To utilize this functionality, you'll need to install wp-cli and execute the command `wp autopilot` in the command-line interface. Additionally, you'll need to specify the desired interval at which the autopilot function should be triggered by including the additional parameter `wp autopilot --interval=`. This allows you to customize the frequency of the autopilot function according to your specific needs.
+
+By incorporating wp-cli and the new "wp autopilot" command, managing the automatic parsing and saving of posts from RSS feeds becomes more efficient and streamlined. This feature provides enhanced control and flexibility, empowering users to automate their post management tasks with ease.
+
+Example: 
+
+`wp autopilot --interval=hourly`
+
+
 == Dependencies ==
 
 *  php-simple-html-dom-parser https://github.com/sunra/php-simple-html-dom-parser
 
 == Bugs ==
 
-If you find an issue, let us know [here](https://github.com/zalevsk1y/news-parser/issues?state=open) or [Discord](https://discord.gg/mxhJ9hE4)
+If you find an issue, let us know [here](https://github.com/zalevsk1y/news-parser/issues?state=open) or [Discord](https://discord.gg/NewZGdxud9)
 
 == Contacts ==
 
 *   [GitHub](https://github.com/zalevsk1y/news-parser)
-*   [Discord](https://discord.gg/mxhJ9hE4)
+*   [Discord](https://discord.gg/9XkdNfRrrK)
 *   [Instagram](https://www.instagram.com/wp_news_parser)
 
 == Changelog ==
 
+= 2.0.1 - 10-11-23 =
 
-= 2.0.0 - 11-10-23
+* Added: WP-CLI support.
+* Added: Internationalization. 
+* Fix: some bugs.
+
+= 2.0.0 - 11-10-23 =
 
 * Added: Autopilot functions for automate post parsing.
 * Added: Post options system 

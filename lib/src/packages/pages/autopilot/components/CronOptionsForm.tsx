@@ -4,7 +4,8 @@ import { configConstantsMethods } from '@news-parser/config/constants';
 import { SettingsBlock } from './SettingsBlock';
 import { CronOptions } from 'types/cronOptions';
 import { MutatCronData } from '@news-parser/entities/cronOptions/hooks/useMutateCronOptions';
-import { INTERVAL } from '../constants/index'
+import { INTERVAL } from '../constants/index';
+import { PAGES } from '@news-parser/config/i18n';
 
 export type CronOptionsFormProps = {
     id: string,
@@ -38,7 +39,7 @@ export const CronOptionsForm: React.FC<CronOptionsFormProps> = ({ id, cronOption
         <form id={id} onSubmit={submitHandler}>
             <div className='row'>
                 <SettingsBlock className='col-sm-12 mt-3'>
-                    <span className='np-fs-16'>Current status:</span>
+                    <span className='np-fs-16'>{PAGES.AUTOPILOT.CURRENT_STATUS}:</span>
                     <b className={`np-fs-16 ms-2 ${cronOptions.status == STATUS_ACTIVE ? 'text-success' : 'text-danger'}`}>
                         {cronOptions.status.toUpperCase()}
                     </b>

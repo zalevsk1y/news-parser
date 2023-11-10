@@ -23,7 +23,8 @@ trait FunctionAutoloadTrait
         }
 
     }
-    protected function executerCallback($argument,$function_callback){
+    protected function executerCallback($argument,$function_callback)
+    {
         $function_callback_path=$this->loadFunction($function_callback); 
         if(!is_null($function_callback_path)){
             include_once $function_callback_path;

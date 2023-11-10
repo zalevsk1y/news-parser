@@ -30,41 +30,52 @@ $rest_api_endpoints=array(
 return  array(
     'global'=>array(),
     'shared'=> array(
+        array(
+            'script_name'=>NEWS_PARSER_PLUGIN_SLUG.'-google-analitics',
+            'position'=>'after',
+            'data'=>"
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+            
+                gtag('config', 'G-ZPX4NQDFKG');
+          "
+        )
     ),
     $menu_config->menu->subs[0]->menu_slug=>array(
         array(
             'script_name'=>'main-parser-rss-bundle',
-            'name'=>'newsParserSettings',
-            'value'=>$nonce
+            'position'=>'before',
+            'data'=>"window.newsParserSettings=".json_encode($nonce)
         ),
         array(
             'script_name'=>'main-parser-rss-bundle',
-            'name'=>'newsParserApiEndpoints',
-            'value'=>$rest_api_endpoints
+            'position'=>'before',
+            'data'=>"window.newsParserApiEndpoints=".json_encode($rest_api_endpoints)
         )
     ),
     $menu_config->menu->subs[1]->menu_slug=>array(
         array(
             'script_name'=>'main-parser-page-bundle',
-            'name'=>'newsParserSettings',
-            'value'=>$nonce
+            'position'=>'before',
+            'data'=>"window.newsParserSettings=".json_encode($nonce)
         ),
         array(
             'script_name'=>'main-parser-page-bundle',
-            'name'=>'newsParserApiEndpoints',
-            'value'=>$rest_api_endpoints
+            'position'=>'before',
+            'data'=>"window.newsParserApiEndpoints=".json_encode($rest_api_endpoints)
         )
     ),
     $menu_config->menu->subs[2]->menu_slug=>array(
         array(
             'script_name'=>'main-parser-autopilot-bundle',
-            'name'=>'newsParserSettings',
-            'value'=>$nonce
+            'position'=>'before',
+            'data'=>"window.newsParserSettings=".json_encode($nonce)
         ),
         array(
             'script_name'=>'main-parser-autopilot-bundle',
-            'name'=>'newsParserApiEndpoints',
-            'value'=>$rest_api_endpoints
+            'position'=>'before',
+            'data'=>"window.newsParserApiEndpoints=".json_encode($rest_api_endpoints)
         )
     ),
     $menu_config->menu->subs[3]->menu_slug=>array(

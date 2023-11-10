@@ -100,7 +100,14 @@
                 </ol>
                 <p>Watch this short video to learn HOW TO USE AUTOPILOT with news-parser plugin.</p>
             <div class="youtube-video-container mb-4"><iframe  src="https://www.youtube.com/embed/Eu_5GR32nB0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-            <h3>Dependencies</h3>
+                <h4>WP-CLI Support</h4>
+                <p>With the latest update, a new feature has been introduced that leverages wp-cli. This feature enables users to activate an autopilot function, allowing for automated parsing and saving of posts from RSS feeds. The autopilot function can now be accessed directly from the command-line interface, providing a convenient way to manage this process.</p>
+                <p>To utilize this functionality, you'll need to install wp-cli and execute the command <code>wp autopilot</code> in the command-line interface. Additionally, you'll need to specify the desired interval at which the autopilot function should be triggered by including the additional parameter <code>wp autopilot --interval=</code>. This allows you to customize the frequency of the autopilot function according to your specific needs.</p>
+                <p>By incorporating wp-cli and the new "wp autopilot" command, managing the automatic parsing and saving of posts from RSS feeds becomes more efficient and streamlined. This feature provides enhanced control and flexibility, empowering users to automate their post management tasks with ease.</p>
+                <p>Example:</p>
+                <code>wp autopilot --interval=hourly</code>
+                
+                <h3>Dependencies</h3>
             <ul>
                 <li>php-simple-html-dom-parser <a
                         href="https://github.com/sunra/php-simple-html-dom-parser">https://github.com/sunra/php-simple-html-dom-parser</a>

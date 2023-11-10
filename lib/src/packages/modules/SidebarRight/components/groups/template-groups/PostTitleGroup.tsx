@@ -1,6 +1,7 @@
 import React, { ChangeEventHandler } from "react";
 import { SidebarItem } from '@news-parser/ui/sidebar';
 import { useGetPostTitle } from '@news-parser/entities/sidebarTemplate/hooks';
+import { COMPONENTS } from "@news-parser/config/i18n";
 
 export type postTitleGroupProps = {
     newTitle: string,
@@ -28,8 +29,7 @@ export const PostTitleGroup: React.FC<postTitleGroupProps> = ({ newTitle, onChan
             </SidebarItem>
             <SidebarItem>
                 <p className="howto" id='new-post-title-description'>
-                    If you want to change title, type the new title and press &quot;Change
-                    title&quot; button.
+                    {COMPONENTS.SIDEBAR_RIGHT.POST_TITLE_GROUP.POST_TITLE_CAPTION}
                 </p>
             </SidebarItem>
         </>

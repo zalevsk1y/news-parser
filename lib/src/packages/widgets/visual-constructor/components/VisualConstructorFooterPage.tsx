@@ -5,6 +5,7 @@ import { DEFAULT_POST_DATA } from '@news-parser/entities/post/constants';
 import { useIsMutating } from '../hooks';
 import { useClose } from '../hooks/visual-constructor/useClose';
 import { useGetCurrentPostAttributes } from '../hooks/visual-constructor/useGetCurrentPostAttributes';
+import { MESSAGE, WIDGETS } from '@news-parser/config/i18n';
 
 export const VisualConstructorFooterPage: React.FC = () => {
     const createWpPost = useCreateWpPost();
@@ -20,11 +21,11 @@ export const VisualConstructorFooterPage: React.FC = () => {
             .then(() => {
                 setIsMutating(false);
                 close();
-                showMessage('success', 'Post was parsed and saved.')
+                showMessage('success', MESSAGE.SUCCESS.POST_PARSED);
             })
             .catch(err=>{
                 removeLocalPost(postId)
-                showMessage('error','Post was not parsed.')
+                showMessage('error',MESSAGE.ERROR.POST_NOT_PARSED)
             })
     }, [createLocalPost, currentPostAttributes]);
     return (
@@ -34,7 +35,7 @@ export const VisualConstructorFooterPage: React.FC = () => {
                 className='button button-large button-primary'
                 onClick={buttonClickHandler}
             >
-                Create Post
+                {WIDGETS.VISUAL_CONSTRUCTOR.CREAT_POST_BUTTON}
             </button>
         </div>
     )

@@ -8,15 +8,20 @@ use NewsParserPlugin\Exception\MyException;
 class CronTaskController {
 
     protected const CRON_TABLE_NAME=NEWS_PURSER_PLUGIN_CRON_OPTIONS_NAME;
-    public function __construct(EventController $event){
+    public function __construct(EventController $event)
+    {
         $this->event=$event;
     }
-    public function cronTaskCallback($interval){
+    public function cronTaskCallback($interval)
+    {   
+        $parsed_posts_counter=0;
         $cron_options=$this->getCronOptions(array('interval',$interval));
-        foreach ($cron_options as $cron_options_data){
+        foreach ($cron_options as $cron_options_data)
+        { 
             $cron_options_model=$this->getCronOptionsModel($cron_options_data);
             if($cron_options_model->getCronCalls()<$cron_options_model->getMaxCronCalls())
             { 
+                $cron_options_post_counter=$cron_options_model->getParsedPosts();
                 $rss_list=$this->event->trigger('list:get',array($cron_options_model->getUrl()));
                 $last_parsed_post_timestamp=$cron_options_model->getTimestamp();
                 $this->parsePosts(array_filter($rss_list,function($post_data) use ($last_parsed_post_timestamp){
@@ -24,10 +29,13 @@ class CronTaskController {
                 }),$cron_options_model);
                 $cron_options_model->increaseCronCalls();
                 $cron_options_model->save();
+                $parsed_posts_counter+=$cron_options_model->getParsedPosts()-$cron_options_post_counter;
             }
         };
+        return $parsed_posts_counter;
     }
-    protected function parsePosts($posts_rss_data,$cron_options_model){
+    protected function parsePosts($posts_rss_data,$cron_options_model)
+    {
         //to avoid sorting data by pubDate use $latest_timestamp
         $latest_timestamp=$cron_options_model->getTimestamp();
         foreach (array_reverse($posts_rss_data) as $post_data){
@@ -49,10 +57,12 @@ class CronTaskController {
         }
         return $cron_options_model->setTimestamp($latest_timestamp);
     }
-    protected function getCronOptionsModel($cron_options_data){
+    protected function getCronOptionsModel($cron_options_data)
+    {
         return new CronDataModel($cron_options_data);
     }
-    protected function getCronOptions($filter_data=[]){
+    protected function getCronOptions($filter_data=[])
+    {
         if($crons_options=$this->getOption(self::CRON_TABLE_NAME)){
             return $crons_options;
             if(count($filter_data)){
